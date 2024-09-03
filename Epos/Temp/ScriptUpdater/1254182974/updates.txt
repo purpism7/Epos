@@ -1,1 +1,0 @@
-Temp/ScriptUpdater/1254182974/1826318980_U2DToURPPixelPerfectConverter.cs => Library/PackageCache/com.unity.2d.pixel-perfect@5.0.3/Editor/Converter/U2DToURPPixelPerfectConverter.cs
