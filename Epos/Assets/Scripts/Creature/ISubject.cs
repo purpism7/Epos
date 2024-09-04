@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Characters
+namespace Creature
 {
-    public interface IHero
+    public interface ISubject
     {
         
     }
-    
-    public class Hero : Character, IHero
+
+    public interface IActor : ISubject
     {
         
     }
