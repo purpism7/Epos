@@ -12,6 +12,7 @@ namespace Creature
     public interface ICharacterGeneric
     {
         void Initialize();
+        void ChainUpdate();
     }
 
     public abstract class Character : MonoBehaviour, ICharacterGeneric, IActor
@@ -21,7 +22,7 @@ namespace Creature
         private int id = 0;
         #endregion
 
-        private SkeletonAnimation _skeletonAnimation = null;
+        public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
 
         public Action.IActController IActCtr { get; private set; } = null;
 
@@ -31,13 +32,23 @@ namespace Creature
             Initialize();
         }
 
+        private void Update()
+        {
+            IActCtr?.ChainUpdate();
+        }
+
         #region ICharacterGeneric
         public virtual void Initialize()
         {
-            _skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+            SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
             IActCtr = gameObject.AddOrGetComponent<ActController>();
             IActCtr?.Initialize(this);
+        }
+
+        void ICharacterGeneric.ChainUpdate()
+        {
+            
         }
         #endregion
     }

@@ -4,14 +4,9 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public interface IAct
+    public class Idle : Act
     {
         
-    }
-    
-    public abstract class Act : IAct
-    {
-       
     }
 }
 
