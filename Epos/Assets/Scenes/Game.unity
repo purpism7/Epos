@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6965105417665459482, guid: 9ea5618f53fb14df8b3cc9d970a67137, type: 3}
       propertyPath: _animationName
-      value: 00_F_Idle
+      value: 01_F_Run
       objectReference: {fileID: 0}
     - target: {fileID: 7423149877619562870, guid: 9ea5618f53fb14df8b3cc9d970a67137, type: 3}
       propertyPath: m_LocalPosition.x
