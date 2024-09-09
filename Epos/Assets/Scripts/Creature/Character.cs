@@ -36,7 +36,7 @@ namespace Creature
         {
             IActCtr?.ChainUpdate();
         }
-
+        
         #region ICharacterGeneric
         public virtual void Initialize()
         {

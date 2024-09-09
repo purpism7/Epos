@@ -4,12 +4,11 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public class Idle : Act
+    public class Move : Act
     {
         public override void Execute(IActor iActor)
         {
-            SetAnimation(iActor, "00_B_Idle", true);
+            SetAnimation(iActor, "01_F_Run", true);
         }
     }
 }
-

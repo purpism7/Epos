@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 2602663014456339594}
   - component: {fileID: 6764151081976363789}
   - component: {fileID: 6965105417665459482}
+  - component: {fileID: 7822246143652900425}
   m_Layer: 0
   m_Name: Spine GameObject (Ch_E_01)
   m_TagString: Untagged
@@ -170,6 +171,32 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: Hit/04_B_Hit_01
+  _animationName: 01_F_Run
   loop: 1
   timeScale: 1
+--- !u!114 &7822246143652900425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4167848387425144654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f21c9538588898a45a3da22bf4779ab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootMotionBoneName: root
+  transformPositionX: 1
+  transformPositionY: 1
+  transformRotation: 0
+  rootMotionScaleX: 1
+  rootMotionScaleY: 1
+  rootMotionScaleRotation: 1
+  rootMotionTranslateXPerY: 0
+  rootMotionTranslateYPerX: 0
+  rigidBody2D: {fileID: 0}
+  applyRigidbody2DGravity: 0
+  rigidBody: {fileID: 0}
+  disableOnOverride: 1
+  animationTrackFlags: -1

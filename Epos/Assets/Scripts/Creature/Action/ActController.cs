@@ -22,6 +22,9 @@ namespace Creature.Action
 
             _iActDic = new();
             _iActDic.Clear();
+
+            IAct iAct = new Move();
+            iAct?.Execute(_iActor);
             
             return this;
         }
@@ -31,6 +34,11 @@ namespace Creature.Action
             
         }
         #endregion
+
+        private void Execute()
+        {
+            
+        }
     }
 }
 
