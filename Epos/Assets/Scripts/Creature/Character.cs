@@ -23,6 +23,7 @@ namespace Creature
         #endregion
 
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
+        public Transform Transform { get { return transform; } }
 
         public Action.IActController IActCtr { get; private set; } = null;
 

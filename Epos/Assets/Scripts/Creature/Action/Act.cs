@@ -7,11 +7,17 @@ namespace Creature.Action
     public interface IAct
     {
         void Execute(IActor iActor);
+        void ChainUpdate();
     }
     
     public abstract class Act : IAct
     {
         public abstract void Execute(IActor iActor);
+
+        public virtual void ChainUpdate()
+        {
+            
+        }
 
         protected void SetAnimation(IActor iActor, string animationName, bool loop)
         {

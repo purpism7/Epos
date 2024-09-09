@@ -12,6 +12,7 @@ namespace Creature
 
     public interface IActor : ISubject
     {
+        Transform Transform { get; }
         SkeletonAnimation SkeletonAnimation { get; }
     }
 }

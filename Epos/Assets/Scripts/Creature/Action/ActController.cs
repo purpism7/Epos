@@ -12,8 +12,8 @@ namespace Creature.Action
     public class ActController : Controller, IActController
     {
         private IActor _iActor = null;
-
         private Dictionary<System.Type, IAct> _iActDic = null;
+        private IAct _currIAct = null;
         
         #region IActController
         IActController IController<IActController, IActor>.Initialize(IActor iActor)
@@ -23,15 +23,15 @@ namespace Creature.Action
             _iActDic = new();
             _iActDic.Clear();
 
-            IAct iAct = new Move();
-            iAct?.Execute(_iActor);
+            _currIAct = new Move();
+            _currIAct?.Execute(_iActor);
             
             return this;
         }
 
         void IActController.ChainUpdate()
         {
-            
+            _currIAct?.ChainUpdate();
         }
         #endregion
 
