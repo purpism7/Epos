@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Common;
 using UnityEngine;
 
 using GameSystem;
@@ -15,7 +16,9 @@ public class MainGameManager : Singleton<MainGameManager>
         _iMgrGenericList.Clear();
         
         _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
-        _iMgrGenericList?.Add(Common.Extension.AddOrGetComponent<InputManager>(gameObject)?.Initialize());
+        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<InputManager>()?.Initialize());
+        
+        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<CharacterManager>()?.Initialize());
         
         Debug.Log("MainGameManager");
     }

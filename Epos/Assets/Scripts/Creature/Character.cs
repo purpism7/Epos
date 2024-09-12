@@ -26,17 +26,6 @@ namespace Creature
         public Transform Transform { get { return transform; } }
 
         public Action.IActController IActCtr { get; private set; } = null;
-
-        // 일단 Awake 사용 
-        private void Awake()
-        {
-            Initialize();
-        }
-
-        private void Update()
-        {
-            IActCtr?.ChainUpdate();
-        }
         
         #region ICharacterGeneric
         public virtual void Initialize()
@@ -46,10 +35,10 @@ namespace Creature
             IActCtr = gameObject.AddOrGetComponent<ActController>();
             IActCtr?.Initialize(this);
         }
-
-        void ICharacterGeneric.ChainUpdate()
+        
+        public virtual void ChainUpdate()
         {
-            
+            IActCtr?.ChainUpdate();
         }
         #endregion
     }

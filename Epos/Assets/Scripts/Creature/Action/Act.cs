@@ -4,24 +4,46 @@ using UnityEngine;
 
 namespace Creature.Action
 {
+    public class ActData
+    {
+        public IActor IActor = null;
+    }
+    
     public interface IAct
     {
-        void Execute(IActor iActor);
+        void Finish();
         void ChainUpdate();
     }
     
-    public abstract class Act : IAct
+    public abstract class Act<T> : IAct where T : ActData
     {
-        public abstract void Execute(IActor iActor);
+         protected T _data = null;
+        
+        #region IAct
+
+        public virtual void Execute(T data)
+        {
+            _data = data;
+        }
+
+        public virtual void Finish()
+        {
+            
+        }
 
         public virtual void ChainUpdate()
         {
             
         }
+        #endregion
 
-        protected void SetAnimation(IActor iActor, string animationName, bool loop)
+        protected void SetAnimation(string animationName, bool loop)
         {
-            var animationState = iActor?.SkeletonAnimation?.AnimationState;
+            var iActor = _data?.IActor;
+            if (iActor == null)
+                return;
+            
+            var animationState = iActor.SkeletonAnimation?.AnimationState;
             if (animationState == null)
                 return;
             

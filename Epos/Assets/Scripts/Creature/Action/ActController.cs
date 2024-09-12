@@ -6,10 +6,10 @@ namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
-        void ChainUpdate();
+        void MoveToTarget(Vector3 pos);
     }
     
-    public class ActController : Controller, IActController
+    public class ActController : Controller, IActController, Move.IListener
     {
         private IActor _iActor = null;
         private Dictionary<System.Type, IAct> _iActDic = null;
@@ -23,22 +23,63 @@ namespace Creature.Action
             _iActDic = new();
             _iActDic.Clear();
 
-            // _currIAct = new Move();
-            // _currIAct?.Execute(_iActor);
-            
             return this;
         }
 
-        void IActController.ChainUpdate()
+        void IController<IActController, IActor>.ChainUpdate()
         {
             _currIAct?.ChainUpdate();
         }
+        
+        void IActController.MoveToTarget(Vector3 pos)
+        {
+            Execute<Move, Move.Data>(
+                new Move.Data()
+                {
+                    IListener = this,
+                    TargetPos = pos,
+                });
+        }
         #endregion
 
-        private void Execute()
+        private void Execute<T, V>(V data) where T : Act<V>, new() where V : ActData
         {
+            if (_iActDic == null)
+            {
+                _iActDic = new();
+                _iActDic.Clear();
+            }
+
+            if (data != null)
+            {
+                data.IActor = _iActor;
+            }
             
+            System.Type type = typeof(T);
+            Act<V> act = null;
+            
+            if (_iActDic.TryGetValue(type, out IAct iAct))
+            {
+                act = iAct as Act<V>;
+            }
+            else
+            {
+                act = new T();
+                
+                _iActDic?.TryAdd(type, act);
+            }
+            
+            _currIAct?.Finish();
+            act?.Execute(data);
+            _currIAct = act;
         }
+
+        #region Move.IListener
+        void Move.IListener.Arrived()
+        {
+            Execute<Idle, ActData>(null);
+        }
+        #endregion
     }
 }
 
