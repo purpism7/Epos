@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8885421793247474533}
   - component: {fileID: 8115173464157352283}
   - component: {fileID: 1887587232362526180}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Spine GameObject (InGame_Concept_Spine_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,8 +81,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -39294783
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &8115173464157352283
@@ -172,12 +172,13 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: 101.946304, y: 136.35516}
-      - {x: -0.042129517, y: 135.62775}
-      - {x: -0.3517418, y: -0.5921478}
-      - {x: 140.4592, y: -0.055503845}
-      - {x: 213.972, y: 52.965965}
-      - {x: 211.4151, y: 133.34537}
+    - - {x: 100.817924, y: 134.47453}
+      - {x: 28.289902, y: 134.17542}
+      - {x: 1.0862427, y: 134.12325}
+      - {x: 0.89839554, y: -0.5921478}
+      - {x: 139.20908, y: 1.1946297}
+      - {x: 213.13858, y: 53.79939}
+      - {x: 212.47272, y: 133.6979}
   m_UseDelaunayMesh: 0
 --- !u!1 &6308443310697560694
 GameObject:
@@ -188,7 +189,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3692255571374633408}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Back_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}

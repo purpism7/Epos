@@ -23,8 +23,8 @@ namespace Creature.Action
             _iActDic = new();
             _iActDic.Clear();
 
-            _currIAct = new Move();
-            _currIAct?.Execute(_iActor);
+            // _currIAct = new Move();
+            // _currIAct?.Execute(_iActor);
             
             return this;
         }

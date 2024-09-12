@@ -2,15 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using UnityEditor.Rendering;
 using UnityEngine;
 
-public interface ICameraManager
+namespace GameSystem
 {
+    public interface ICameraManager : IManager
+    {
+        Camera MainCamera { get; }
+        bool IsMove { get; }
+    }
     
-}
-
-public class CameraManager : Manager, ICameraManager
+    public class CameraManager : Manager, ICameraManager
 {
     [SerializeField] 
     private Camera mainCamera = null;
@@ -21,19 +23,17 @@ public class CameraManager : Manager, ICameraManager
     private const float DirectionForceMin = 0.001f; // 설정치 이하일 경우 움직임을 멈춤
 
     // 변수 : 이동 관련
-    private bool _isMove = false;
     private Vector3 _startPosition;  // 입력 시작 위치를 기억
     private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
-   
-    // private float _halfHeight = 0;
-    // private float _height = 0;
-    // private float _width = 0;
-    // private float _dragWidth = 0;
-    
-    
-    public override void Initialize()
+
+    public Camera MainCamera { get { return mainCamera; } }
+    public bool IsMove { get; private set; }
+
+    public override IManagerGeneric Initialize()
     {
         
+        
+        return this;
     }
 
     private void Start()
@@ -45,8 +45,10 @@ public class CameraManager : Manager, ICameraManager
         // }
     }
 
-    private void LateUpdate()
+    public override void ChainLateUpdate()
     {
+        base.ChainLateUpdate();
+        
         if (mainCamera == null)
             return;
 
@@ -60,10 +62,20 @@ public class CameraManager : Manager, ICameraManager
         }
         else if (Input.GetMouseButton(0))
         {
-            if (!_isMove)
+            // if (!IsMove)
+            // {
+            //     StartMove(mouseWorldPos);
+            //     
+            //     return;
+            // }
+            
+            if (!CheckDrag(_startPosition, mouseWorldPos))
+                return;
+            
+            if (!IsMove)
             {
-                StartMove(mouseWorldPos);
-                
+                IsMove = true;
+
                 return;
             }
             
@@ -71,16 +83,21 @@ public class CameraManager : Manager, ICameraManager
         }
         else
         {
-            _isMove = false;
+            IsMove = false;
         }
 
         ReduceDirectionForce();
         UpdateCameraPosition();
     }
     
+    bool CheckDrag(Vector3 startPos, Vector3 currPos)
+    {
+        return (currPos - startPos).sqrMagnitude >= 0.01f;
+    }
+    
     private void StartMove(Vector3 startPosition) 
     {
-        _isMove = true;
+        // IsMove = true;
         _startPosition = startPosition;
         _directionForce = Vector3.zero;
     }
@@ -88,7 +105,7 @@ public class CameraManager : Manager, ICameraManager
     private void ReduceDirectionForce()
     {
         // 조작 중일때는 아무것도 안함
-        if (_isMove)
+        if (IsMove)
             return;
             
         // 감속 수치 적용
@@ -119,3 +136,5 @@ public class CameraManager : Manager, ICameraManager
     }
     
 }
+}
+

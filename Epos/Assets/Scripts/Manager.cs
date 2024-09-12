@@ -2,12 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IManager
+{
+    
+}
+
 public interface IManagerGeneric
 {
-    void Initialize();
+    IManagerGeneric Initialize();
+    void ChainUpdate();
+    void ChainLateUpdate();
 }
 
 public abstract class Manager : MonoBehaviour, IManagerGeneric
 {
-    public abstract void Initialize();
+    public abstract IManagerGeneric Initialize();
+
+    public virtual void ChainUpdate()
+    {
+        
+    }
+    
+    public virtual void ChainLateUpdate()
+    {
+        
+    }
 }
