@@ -8,8 +8,10 @@ namespace Creature.Action
     {
         public class Data : ActData
         {
+            public string Key = string.Empty;
             public IListener IListener = null;
             public Vector3 TargetPos = Vector3.zero;
+            public System.Action FinishAction = null;
         }
         
         public interface IListener
@@ -23,7 +25,8 @@ namespace Creature.Action
             
             Flip();
             
-            SetAnimation("01_F_Run", true);
+            // SetAnimation("01_F_Run", true);
+            SetAnimation(data.Key, true);
         }
 
         private void Flip()
@@ -50,7 +53,8 @@ namespace Creature.Action
             if (Vector3.Distance(iActor.Transform.position, targetPos) <= 0)
             {
                 Debug.Log("Arrived");
-                _data?.IListener?.Arrived();
+                _data.IListener?.Arrived();
+                _data.FinishAction?.Invoke();
             }
         }
     }

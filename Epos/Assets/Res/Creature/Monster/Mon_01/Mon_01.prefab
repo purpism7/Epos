@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5871529864483578102}
   - component: {fileID: 3897337437335088481}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: Mon_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 2207746172437524541}
   - component: {fileID: 3262079463833040001}
   - component: {fileID: 3715706935953659282}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Spine GameObject (Mon_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,8 +126,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -2038680451
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3715706935953659282

@@ -40,7 +40,7 @@ namespace GameSystem
                 Debug.Log("mouseWorldPos = " + mouseWorldPos);
                 
                 mouseWorldPos.z = 0;
-                MainGameManager.Get<ICharacterManager>()?.FieldHero?.MoveToTarget(mouseWorldPos);
+                // MainGameManager.Get<IFieldManager>()?.FieldHero?.MoveToTarget(mouseWorldPos);
             }
         }
     }

@@ -4,13 +4,18 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public class Idle : Act<ActData>
+    public class Idle : Act<Idle.Data>
     {
-        public override void Execute(ActData data)
+        public class Data : ActData
+        {
+            public string Key = string.Empty;
+        }
+        
+        public override void Execute(Data data)
         {
             base.Execute(data);
             
-            SetAnimation("00_F_Idle", true);
+            SetAnimation(data.Key, true);
         }
     }
 }

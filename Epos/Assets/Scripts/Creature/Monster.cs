@@ -11,6 +11,6 @@ namespace Creature
     
     public class Monster : Character, IMonster
     {
-        
+  
     }
 }

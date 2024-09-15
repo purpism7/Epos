@@ -25,7 +25,7 @@ namespace Creature
 
         void IHero.MoveToTarget(Vector3 pos)
         {
-            IActCtr?.MoveToTarget(pos);
+            IActCtr?.MoveToTarget("01_F_Run", pos);
         }
         #endregion
     }

@@ -19,6 +19,7 @@ public class MainGameManager : Singleton<MainGameManager>
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<InputManager>()?.Initialize());
         
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<CharacterManager>()?.Initialize());
+        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<FieldManager>()?.Initialize());
         
         Debug.Log("MainGameManager");
     }
