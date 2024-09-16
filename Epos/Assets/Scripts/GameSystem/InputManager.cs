@@ -37,10 +37,8 @@ namespace GameSystem
             var mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log("mouseWorldPos = " + mouseWorldPos);
-                
                 mouseWorldPos.z = 0;
-                // MainGameManager.Get<IFieldManager>()?.FieldHero?.MoveToTarget(mouseWorldPos);
+                MainGameManager.Get<IFieldManager>()?.FieldIHero?.MoveToTarget(mouseWorldPos);
             }
         }
     }

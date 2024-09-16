@@ -11,6 +11,12 @@ namespace Creature
     
     public class Monster : Character, IMonster
     {
-  
+        public override float MoveSpeed
+        {
+            get
+            {
+                return 2f;
+            }
+        }
     }
 }

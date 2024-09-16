@@ -14,6 +14,9 @@ namespace Creature
     {
         Transform Transform { get; }
         SkeletonAnimation SkeletonAnimation { get; }
+
+        // 스탯으로 대체.
+        float MoveSpeed { get; }
     }
 }
 

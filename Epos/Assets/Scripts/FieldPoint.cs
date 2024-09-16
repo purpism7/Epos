@@ -1,11 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
-using Creature;
 using Cysharp.Threading.Tasks;
+
+using Creature;
 using Unity.VisualScripting;
+using UnityEditor;
+using Vector3 = UnityEngine.Vector3;
 
 public interface IFieldPoint
 {
@@ -25,9 +29,18 @@ public class FieldPoint : MonoBehaviour, IFieldPoint
     private Monster monster = null;
 
     private bool _isActivate = false;
-    
-    #region FieldPoint
+    Collider2D[] _colliders = new Collider2D[5];
 
+    private void OnDrawGizmos()
+    {
+        if (!pointTm)
+            return;
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(pointTm.position, 5f);
+    }
+
+    #region FieldPoint
     public void Initialize()
     {
         monster?.Initialize();
@@ -49,10 +62,28 @@ public class FieldPoint : MonoBehaviour, IFieldPoint
     {
         if (!_isActivate)
             return;
+
+        if (monster == null)
+            return;
         
-        monster?.ChainUpdate();
+        monster.ChainUpdate();
         
-        return;
+        if (Physics2D.OverlapCircleNonAlloc(monster.Transform.position, 3f, _colliders) > 0)
+        {
+            foreach (var collider in _colliders)
+            {
+                if(collider == null)
+                    continue;
+
+                var hero = collider.GetComponentInParent<Hero>();
+                if (hero != null)
+                {
+                    Array.Clear(_colliders, 0, _colliders.Length);
+                    
+                    return;
+                }
+            }
+        }
     }
     #endregion
 
@@ -67,9 +98,10 @@ public class FieldPoint : MonoBehaviour, IFieldPoint
         
         if (monster == null)
             return;
-        
-        float randomX = UnityEngine.Random.Range(-2f, 2f);
-        float randomY = UnityEngine.Random.Range(-2f, 2f);
+
+        float value = 5f;
+        float randomX = UnityEngine.Random.Range(-value, value);
+        float randomY = UnityEngine.Random.Range(-value, value);
         
         var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
         monster.IActCtr?.MoveToTarget("02_Run", targetPos,

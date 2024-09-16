@@ -11,6 +11,14 @@ namespace Creature
     
     public class Hero : Character, IHero
     {
+        public override float MoveSpeed
+        {
+            get
+            {
+                return 8f;
+            }
+        }
+        
         public override void Initialize()
         {
             base.Initialize();

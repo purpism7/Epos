@@ -48,11 +48,13 @@ namespace Creature.Action
                 return;
 
             var targetPos = _data.TargetPos;
+            targetPos.z = _data.TargetPos.y;
             
-            iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * 10f);
+            iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * iActor.MoveSpeed);
             if (Vector3.Distance(iActor.Transform.position, targetPos) <= 0)
             {
                 Debug.Log("Arrived");
+                
                 _data.IListener?.Arrived();
                 _data.FinishAction?.Invoke();
             }

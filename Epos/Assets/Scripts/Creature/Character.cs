@@ -27,6 +27,9 @@ namespace Creature
 
         public Action.IActController IActCtr { get; private set; } = null;
         
+        // 임시.
+        public abstract float MoveSpeed { get; }
+
         #region ICharacterGeneric
         public virtual void Initialize()
         {

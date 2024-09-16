@@ -4,22 +4,10 @@ using Creature;
 using UnityEngine;
 
 
-public interface IField
-{
-    void Initialize();
-    void Activate();
-    void Deactivate();
-    void ChainUpdate();
-}
-
 public class Field : Part, IField
 {
     [SerializeField] 
-    private Hero fieldHero = null;
-    [SerializeField] 
     private FieldPoint[] fieldPoints = null;
-    
-    private ICharacterGeneric _fieldHero = null;
 
     #region IField
     void IField.Initialize()
@@ -81,4 +69,12 @@ public class Field : Part, IField
             fieldPoint?.Deactivate();
         }
     }
+}
+
+public interface IField
+{
+    void Initialize();
+    void Activate();
+    void Deactivate();
+    void ChainUpdate();
 }
