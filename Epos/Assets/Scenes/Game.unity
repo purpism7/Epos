@@ -696,9 +696,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f453f694addf4275988fac205bc91968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_BoundingShape2D: {fileID: 0}
+  m_BoundingShape2D: {fileID: 1045923999}
   m_Damping: 0.5
   m_MaxWindowSize: -1
+--- !u!60 &1045923999 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1887587232362526180, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+  m_PrefabInstance: {fileID: 271119225}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1198328224
 PrefabInstance:
   m_ObjectHideFlags: 0
