@@ -13,6 +13,8 @@ namespace Creature
     {
         void Initialize();
         void ChainUpdate();
+        void Activate();
+        void Deactivate();
     }
 
     public abstract class Character : MonoBehaviour, ICharacterGeneric, IActor
@@ -42,6 +44,16 @@ namespace Creature
         public virtual void ChainUpdate()
         {
             IActCtr?.ChainUpdate();
+        }
+
+        public virtual void Activate()
+        {
+            IActCtr?.Activate();
+        }
+
+        public virtual void Deactivate()
+        {
+            IActCtr?.Deactivate();
         }
         #endregion
     }

@@ -7,8 +7,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Creature;
-using Unity.VisualScripting;
-using UnityEditor;
+
 using Vector3 = UnityEngine.Vector3;
 
 public interface IFieldPoint
@@ -90,6 +89,7 @@ public class FieldPoint : MonoBehaviour, IFieldPoint
     private async UniTask RandomActionAsync()
     {
         await UniTask.WaitForSeconds(UnityEngine.Random.Range(5f, 10f));
+        
         if (!_isActivate)
             return;
         

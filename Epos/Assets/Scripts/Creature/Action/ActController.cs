@@ -15,7 +15,7 @@ namespace Creature.Action
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         
-        #region IActController
+        #region IController
         IActController IController<IActController, IActor>.Initialize(IActor iActor)
         {
             _iActor = iActor;
@@ -30,9 +30,24 @@ namespace Creature.Action
         {
             _currIAct?.ChainUpdate();
         }
-        
+
+        public override void Activate()
+        {
+            base.Activate();
+        }
+
+        public override void Deactivate()
+        {
+            base.Activate();
+        }
+        #endregion
+            
+        #region IActController
         void IActController.MoveToTarget(string key, Vector3 pos, System.Action finishAction)
         {
+            if (!IsActivate)
+                return;
+            
             Execute<Move, Move.Data>(
                 new Move.Data()
                 {
