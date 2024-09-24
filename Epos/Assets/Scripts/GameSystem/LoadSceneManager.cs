@@ -11,18 +11,26 @@ namespace GameSystem
 {
     public class LoadSceneManager : Singleton<LoadSceneManager>
     {
+        private bool _isLoad = false;
+        
         protected override void Initialize()
         {
-            // SceneManager.Loa   
             DontDestroyOnLoad(this);
+
+            _isLoad = false;
         }
 
         // 임시
         public async UniTask LoadSceneAsync(string name)
         {
+            if (_isLoad)
+                return;
+
+            _isLoad = true;
+            
             var currSceneName = SceneManager.GetActiveScene().name;
             Fade fade = null;
-            
+            Debug.Log(currSceneName);
             AsyncOperationHandle<SceneInstance> sceneInstance =
                 Addressables.LoadSceneAsync("Assets/Scenes/Load.unity", LoadSceneMode.Additive);
             sceneInstance.Completed +=
@@ -40,7 +48,7 @@ namespace GameSystem
                 };
 
             await UniTask.WaitUntil(() => fade != null);
-            await UniTask.Yield();
+            await UniTask.WaitForEndOfFrame(this);
             
             fade?.Out(
                 () =>
@@ -61,6 +69,7 @@ namespace GameSystem
                         };
                 });
 
+            _isLoad = false;
             Debug.Log("End Load Scene = " + name);
         }
     }

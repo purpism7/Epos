@@ -6,27 +6,11 @@ using UnityEngine;
 // 임시 스크립트
 public class WorldMap : MonoBehaviour
 {
-    [SerializeField] 
-    private Camera uiCamera = null;
-
-    private bool _isTouch = false;
-    
-    // Update is called once per frame
-    void FixedUpdate()
+    public void OnClickArea(int areaId)
     {
-        if (_isTouch)
-            return;
-        
-        // uiCamera.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(uiCamera.ScreenToWorldPoint(Input.mousePosition), Vector3.down, 1);
-        if (hit.collider != null)
+        if (areaId == 0)
         {
-            if (Input.GetMouseButtonUp(0))
-            {
-                _isTouch = true;
-                
-                LoadSceneManager.Instance?.LoadSceneAsync("Game");
-            }
+            LoadSceneManager.Instance?.LoadSceneAsync("Game");
         }
     }
 }
