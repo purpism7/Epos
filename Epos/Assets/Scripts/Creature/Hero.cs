@@ -4,12 +4,7 @@ using UnityEngine;
 
 namespace Creature
 {
-    public interface IHero
-    {
-        void MoveToTarget(Vector3 pos);
-    }
-    
-    public class Hero : Character, IHero
+    public class Hero : Character
     {
         public override float MoveSpeed
         {
@@ -29,13 +24,10 @@ namespace Creature
             base.ChainUpdate();
         }
         
-        #region IHero
-
-        void IHero.MoveToTarget(Vector3 pos)
+        public void MoveToTarget(Vector3 pos)
         {
             IActCtr?.MoveToTarget("01_F_Run", pos);
         }
-        #endregion
     }
 }
 

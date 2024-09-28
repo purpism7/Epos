@@ -27,7 +27,7 @@ public class Fade : MonoBehaviour
     {
         var sequence = DOTween.Sequence()
             .SetAutoKill(false)
-            .Append(progressImg?.DOFade(0, Duration))
+            .Append(progressImg?.DOFade(endValue, Duration))
             .OnComplete(() =>
             {
                 completeAction?.Invoke();

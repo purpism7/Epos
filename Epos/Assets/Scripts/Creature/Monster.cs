@@ -4,12 +4,7 @@ using UnityEngine;
 
 namespace Creature
 {
-    public interface IMonster
-    {
-        
-    }
-    
-    public class Monster : Character, IMonster
+    public class Monster : Character
     {
         public override float MoveSpeed
         {

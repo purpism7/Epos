@@ -8,7 +8,7 @@ namespace GameSystem
 {
     public interface IFieldManager : IManager
     {
-        IHero FieldIHero { get; }
+        void MoveToTarget(Vector3 pos);
     }
     
     public class FieldManager : Manager, IFieldManager
@@ -21,9 +21,6 @@ namespace GameSystem
         private List<Field> _fieldList = new();
         private IField CurrIField = null; 
         
-        // 필드 영웅은 어떻게할지이~
-        private ICharacterGeneric _fieldHero = null;
-        
         public override IManagerGeneric Initialize()
         {
             CurrIField = field;
@@ -31,7 +28,6 @@ namespace GameSystem
             CurrIField?.Activate();
 
             fieldHero?.Initialize();
-            _fieldHero = fieldHero;
             
             return this;
         }
@@ -41,15 +37,14 @@ namespace GameSystem
             base.ChainUpdate();
         
             CurrIField?.ChainUpdate();
-            _fieldHero?.ChainUpdate();
+            fieldHero?.ChainUpdate();
         }
-
-        IHero IFieldManager.FieldIHero
+        
+        void IFieldManager.MoveToTarget(Vector3 pos)
         {
-            get
-            {
-                return fieldHero;
-            }
+            fieldHero?.MoveToTarget(pos);
+            
+            MainGameManager.Get<IBattleManager>()?.BattleBegin<BattleType.Field>();
         }
     }
 }

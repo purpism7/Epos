@@ -38,7 +38,7 @@ namespace GameSystem
             if (Input.GetMouseButtonUp(0))
             {
                 mouseWorldPos.z = 0;
-                MainGameManager.Get<IFieldManager>()?.FieldIHero?.MoveToTarget(mouseWorldPos);
+                MainGameManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
             }
         }
     }

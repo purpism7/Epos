@@ -21,6 +21,8 @@ public class MainGameManager : Singleton<MainGameManager>
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<CharacterManager>()?.Initialize());
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<FieldManager>()?.Initialize());
         
+        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<BattleManager>()?.Initialize());
+        
         Debug.Log("MainGameManager");
     }
 
@@ -34,12 +36,20 @@ public class MainGameManager : Singleton<MainGameManager>
         var iMgrGenericList = Instance._iMgrGenericList;
         if (iMgrGenericList == null)
             return default;
+
+        var findIMgrGeneric = iMgrGenericList.Find(iMgrGeneric => iMgrGeneric is T);
+        if (findIMgrGeneric == null)
+        {
+            // findIMgrGeneric = 
+        }
         
         foreach (var iMgrGeneric in iMgrGenericList)
         {
             if (iMgrGeneric is T)
                 return (T)iMgrGeneric;
         }
+        
+        
 
         return default;
     }
