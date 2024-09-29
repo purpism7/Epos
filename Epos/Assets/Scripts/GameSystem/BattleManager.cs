@@ -1,49 +1,65 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
+
+using Battle;
 
 namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        public void BattleBegin<T>() where T : BattleType.Battle, new();
+        public void Begin<T>() where T : Battle.BattleType, new();
     }
     
-    public class BattleManager : Manager, IBattleManager
+    public class BattleManager : Manager, IBattleManager, BattleType.IListener
     {
-        private Dictionary<System.Type, BattleType.Battle> _battleTypeDic = null;
+        private Dictionary<System.Type, Battle.BattleType> _battleTypeDic = null;
+        private Battle.BattleType _currBattle = null;
         
         public override IManagerGeneric Initialize()
         {
             return this;
         }
 
-        public void BattleBegin<T>() where T : BattleType.Battle, new()
+        public void Begin<T>() where T : Battle.BattleType, new()
         {
+            if (_currBattle != null)
+                return;
+            
             if (_battleTypeDic == null)
             {
                 _battleTypeDic = new();
                 _battleTypeDic.Clear();
             }
 
-            BattleType.Battle battle = null;
-            if (!_battleTypeDic.TryGetValue(typeof(T), out battle))
+            Battle.BattleType battleType = null;
+            if (!_battleTypeDic.TryGetValue(typeof(T), out battleType))
             {
-                battle = new T();
+                battleType = new T();
+                battleType.Initialize(this);
        
-                _battleTypeDic?.TryAdd(typeof(T), battle);
+                _battleTypeDic?.TryAdd(typeof(T), battleType);
             }
 
-            if (battle == null)
+            if (battleType == null)
             {
                 Debug.Log("No Create = " + typeof(T));
                 
                 return;
             }
             
-            battle.Begin();
+            battleType.Begin();
+
+            _currBattle = battleType;
         }
+        
+        #region BattleType.IListener
+
+        void BattleType.IListener.End()
+        {
+            
+        }
+        #endregion
     }
 }
 

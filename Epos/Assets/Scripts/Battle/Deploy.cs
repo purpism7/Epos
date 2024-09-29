@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace BattleType
+namespace Battle
 {
-    public class Field : Battle
+    public class Deploy : BattleStep
     {
         public override void Begin()
         {
-            base.Begin();
+            
         }
     }
 }

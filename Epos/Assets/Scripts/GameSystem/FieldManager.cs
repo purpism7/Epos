@@ -44,7 +44,7 @@ namespace GameSystem
         {
             fieldHero?.MoveToTarget(pos);
             
-            MainGameManager.Get<IBattleManager>()?.BattleBegin<BattleType.Field>();
+            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field>();
         }
     }
 }
