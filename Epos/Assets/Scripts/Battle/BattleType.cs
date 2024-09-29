@@ -14,7 +14,8 @@ namespace Battle
 
         private IListener _iListener = null;
 
-        protected Queue<BattleStep> _stepQueue = null;
+        private BattleStep _firstStep = null;
+        private BattleStep _battleStep = null;
         
         public virtual void Initialize(IListener iListener)
         {
@@ -31,18 +32,24 @@ namespace Battle
             _iListener?.End();
         }
 
-        protected void AddStep<T>() where T : BattleStep, new()
+        protected void AddStep<T>(bool isFirst = false) where T : BattleStep, new()
         {
-            if (_stepQueue == null)
-            {
-                _stepQueue = new();
-                _stepQueue.Clear();
-            }
+            // if (_stepQueue == null)
+            // {
+            //     _stepQueue = new();
+            //     _stepQueue.Clear();
+            // }
             
             var step = new T();
             // step.Initialize();
-           
-            _stepQueue?.Enqueue(step);
+
+            // 이전 스텝에 chain step 연결.
+            _battleStep?.SetChainStep(step);
+            _battleStep = step;
+            if (isFirst)
+            {
+                _firstStep = step;
+            }
         }
 
         protected void BeginStep()

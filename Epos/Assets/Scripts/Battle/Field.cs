@@ -10,7 +10,7 @@ namespace Battle
         {
             base.Initialize(iListener);
 
-            AddStep<Deploy>();
+            AddStep<Step.EnemyDeploy>(true);
         }
 
         public override void Begin()

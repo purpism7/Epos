@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Battle
+namespace Battle.Step
 {
-    public class Deploy : BattleStep
+    public abstract class Deploy : BattleStep
     {
         public override void Begin()
         {
