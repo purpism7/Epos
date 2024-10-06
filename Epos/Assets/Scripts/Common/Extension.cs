@@ -19,6 +19,14 @@ namespace Common
 
             return t;
         }
+
+        public static void SetActive(this Component component, bool active)
+        {
+            if (component == null)
+                return;
+            
+            component.gameObject.SetActive(active);
+        }
     }
 }
 

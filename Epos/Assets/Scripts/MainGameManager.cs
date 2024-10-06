@@ -25,12 +25,7 @@ public class MainGameManager : Singleton<MainGameManager>
         
         Debug.Log("MainGameManager");
     }
-
-    private void Awake()
-    {
-        Initialize();
-    }
-
+    
     public static T Get<T>() where T : IManager
     {
         var iMgrGenericList = Instance._iMgrGenericList;

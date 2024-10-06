@@ -12,6 +12,9 @@ namespace Battle
 
         protected virtual void End()
         {
+            
+            Debug.Log("End " + GetType());
+            
             _chainStep?.Begin();
         }
         

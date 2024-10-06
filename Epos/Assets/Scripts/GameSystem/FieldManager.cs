@@ -14,20 +14,21 @@ namespace GameSystem
     public class FieldManager : Manager, IFieldManager
     {
         [SerializeField] 
-        private Field field = null;
+        private Parts.Field field = null;
         [SerializeField] 
         private Hero fieldHero = null;
         
-        private List<Field> _fieldList = new();
-        private IField CurrIField = null; 
+        private List<Parts.Field> _fieldList = new();
+        private Parts.IField CurrIField = null; 
         
         public override IManagerGeneric Initialize()
         {
+            field?.Initialize();
+            field?.Activate();
             CurrIField = field;
-            CurrIField?.Initialize();
-            CurrIField?.Activate();
 
             fieldHero?.Initialize();
+            fieldHero?.Activate();
             
             return this;
         }
@@ -44,7 +45,8 @@ namespace GameSystem
         {
             fieldHero?.MoveToTarget(pos);
             
-            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field>();
+            MainGameManager.Get<ICameraManager>()?.ZoomIn(CurrIField.FieldPoint.PointTm.position);
+            
         }
     }
 }

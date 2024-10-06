@@ -24,16 +24,15 @@ namespace GameSystem
             {
                 for (int j = 0; j < column; ++j)
                 {
-                    var cell = Instantiate(cellGameObj);
+                    var cell = Instantiate(cellGameObj, transform);
                     if(!cell ||
                        !cell.transform)
                         continue;
 
                     var x = i * cellSize + halfCellSize;
                     var y = j * cellSize + halfCellSize;
-                    
-                    cell.transform.position = new Vector3(x , y, 0);
-                    cell.transform.SetParent(transform);
+
+                    cell.transform.localPosition = new Vector3(x , y, 0);
                 }
             }
         }

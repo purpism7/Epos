@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,29 +6,34 @@ using UnityEngine;
 public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T _instance;
-
+    
     public static T Instance
     {
         get
         {
             if (_instance == null)
             {
-                var obj = GameObject.FindAnyObjectByType<T>();
-                if (obj == null)
-                {
-                    var gameObj = new GameObject(typeof(T).Name);
-                    _instance = gameObj.AddComponent<T>();
-                }
-                else
-                {
-                    _instance = obj;
-                }
-                
-                _instance.GetComponent<Singleton<T>>()?.Initialize();
+                Create();
             }
 
             return _instance;
         }
+    }
+
+    private static void Create()
+    {
+        var obj = FindAnyObjectByType<T>();
+        if (obj == null)
+        {
+            var gameObj = new GameObject(typeof(T).Name);
+            _instance = gameObj.AddComponent<T>();
+        }
+        else
+        {
+            _instance = obj;
+        }
+                
+        _instance.GetComponent<Singleton<T>>()?.Initialize();
     }
     
     public static bool Validate()
@@ -35,19 +41,13 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         return _instance != null;
     }
 
-    // public virtual IEnumerator CoInit()
-    // {
-    //     DontDestroyOnLoad(this);
-    //
-    //     yield break;
-    // }
-    //
-    // public virtual IEnumerator CoInit(IPreprocessingProvider iProvider)
-    // {
-    //     DontDestroyOnLoad(this);
-    //
-    //     yield break;
-    // }
-    
+    protected virtual void Awake()
+    {
+        if (_instance == null)
+        {
+            Create();    
+        }
+    }
+
     protected abstract void Initialize();
 }

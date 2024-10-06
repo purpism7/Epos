@@ -23,8 +23,12 @@ namespace GameSystem
         // 임시
         public async UniTask LoadSceneAsync(string name)
         {
+            await UniTask.Yield();
+            
             if (_isLoad)
                 return;
+            
+            Debug.Log(_isLoad);
 
             _isLoad = true;
             
@@ -65,11 +69,12 @@ namespace GameSystem
                                 {
                                     SceneManager.UnloadSceneAsync("Load");
                                 });
-                                    
+                          
+                            _isLoad = false;
                         };
                 });
 
-            _isLoad = false;
+            // _isLoad = false;
             Debug.Log("End Load Scene = " + name);
         }
     }

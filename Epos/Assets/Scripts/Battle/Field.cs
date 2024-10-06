@@ -11,6 +11,8 @@ namespace Battle
             base.Initialize(iListener);
 
             AddStep<Step.EnemyDeploy>(true);
+            AddStep<Step.AllyDeploy>();
+            AddStep<Step.BattleStart>();
         }
 
         public override void Begin()

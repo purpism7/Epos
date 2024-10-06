@@ -24,7 +24,7 @@ namespace Battle
         
         public virtual void Begin()
         {
-            
+            _firstStep?.Begin();
         }
 
         public virtual void End()
@@ -34,14 +34,7 @@ namespace Battle
 
         protected void AddStep<T>(bool isFirst = false) where T : BattleStep, new()
         {
-            // if (_stepQueue == null)
-            // {
-            //     _stepQueue = new();
-            //     _stepQueue.Clear();
-            // }
-            
             var step = new T();
-            // step.Initialize();
 
             // 이전 스텝에 chain step 연결.
             _battleStep?.SetChainStep(step);
@@ -50,11 +43,6 @@ namespace Battle
             {
                 _firstStep = step;
             }
-        }
-
-        protected void BeginStep()
-        {
-            
         }
     }
 }

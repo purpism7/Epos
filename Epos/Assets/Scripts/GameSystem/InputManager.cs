@@ -15,7 +15,7 @@ namespace GameSystem
         
         public override IManagerGeneric Initialize()
         {
-            _iCameraMgr = MainGameManager.Get<ICameraManager>();
+            _iCameraMgr = GetComponent<CameraManager>();
             
             return this;
         }
