@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Common;
 using UnityEngine;
+
+using Common;
 
 using GameSystem;
 
@@ -22,8 +23,6 @@ public class MainGameManager : Singleton<MainGameManager>
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<FieldManager>()?.Initialize());
         
         _iMgrGenericList?.Add(gameObject.AddOrGetComponent<BattleManager>()?.Initialize());
-        
-        Debug.Log("MainGameManager");
     }
     
     public static T Get<T>() where T : IManager

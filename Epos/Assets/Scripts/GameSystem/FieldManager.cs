@@ -44,9 +44,6 @@ namespace GameSystem
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
             fieldHero?.MoveToTarget(pos);
-            
-            MainGameManager.Get<ICameraManager>()?.ZoomIn(CurrIField.FieldPoint.PointTm.position);
-            
         }
     }
 }

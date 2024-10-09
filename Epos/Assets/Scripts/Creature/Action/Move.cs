@@ -6,9 +6,8 @@ namespace Creature.Action
 {
     public class Move : Act<Move.Data>
     {
-        public class Data : ActData
+        public class Data : BaseData
         {
-            public string Key = string.Empty;
             public IListener IListener = null;
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
@@ -25,7 +24,6 @@ namespace Creature.Action
             
             Flip();
             
-            // SetAnimation("01_F_Run", true);
             SetAnimation(data.Key, true);
         }
 
@@ -48,7 +46,6 @@ namespace Creature.Action
                 return;
 
             var targetPos = _data.TargetPos;
-            // targetPos.z = _data.TargetPos.y;
             
             iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * iActor.MoveSpeed);
             if (Vector3.Distance(iActor.Transform.position, targetPos) <= 0)

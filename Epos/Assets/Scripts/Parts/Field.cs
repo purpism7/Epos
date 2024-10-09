@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Creature;
+using GameSystem;
+
 namespace Parts
 {
     public interface IField
@@ -11,7 +14,7 @@ namespace Parts
         FieldPoint FieldPoint { get; }
     }
     
-    public class Field : Part, IField
+    public class Field : Part, IField, FieldPoint.IListener
     {
         [SerializeField] 
         private FieldPoint[] fieldPoints = null;
@@ -44,7 +47,11 @@ namespace Parts
     
             foreach (var fieldPoint in fieldPoints)
             {
-                fieldPoint?.Initialize();
+                fieldPoint?.Initialize(
+                    new FieldPoint.Data
+                    {
+                        IListener = this,
+                    });
             }
         }
 
@@ -83,5 +90,16 @@ namespace Parts
                 fieldPoint?.Deactivate();
             }
         }
+        
+        #region FieldPoint.IListener
+
+        void FieldPoint.IListener.Encounter(IActor iActor)
+        {
+            if (iActor == null)
+                return;
+            
+            iActor.IActCtr?.Idle();
+        }
+        #endregion
     }
 }

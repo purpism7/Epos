@@ -17,7 +17,7 @@ namespace Creature
         void Deactivate();
     }
 
-    public abstract class Character : MonoBehaviour, ICharacterGeneric, IActor
+    public abstract class Character : MonoBehaviour, ICharacterGeneric
     {
         #region Inspector
         [SerializeField] 
@@ -27,18 +27,16 @@ namespace Creature
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return transform; } }
 
-        public Action.IActController IActCtr { get; private set; } = null;
-        
+        public Action.IActController IActCtr { get; protected set; } = null;
+
         // 임시.
         public abstract float MoveSpeed { get; }
+        public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
 
         #region ICharacterGeneric
         public virtual void Initialize()
         {
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
-
-            IActCtr = gameObject.AddOrGetComponent<ActController>();
-            IActCtr?.Initialize(this);
         }
         
         public virtual void ChainUpdate()
@@ -49,11 +47,15 @@ namespace Creature
         public virtual void Activate()
         {
             IActCtr?.Activate();
+            
+            Extension.SetActive(transform, true);
         }
 
         public virtual void Deactivate()
         {
             IActCtr?.Deactivate();
+            
+            Extension.SetActive(transform, false);
         }
         #endregion
     }

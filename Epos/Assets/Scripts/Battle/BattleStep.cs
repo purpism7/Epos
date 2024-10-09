@@ -4,15 +4,27 @@ using UnityEngine;
 
 namespace Battle
 {
-    public abstract class BattleStep
+    public class BattleStep
     {
-        private BattleStep _chainStep = null;
+        public class BaseData
+        {
+            
+        }
         
-        public abstract void Begin();
+        protected BattleStep _chainStep = null;
+
+        public virtual void Initialize(BaseData data)
+        {
+            
+        }
+        
+        public virtual void Begin()
+        {
+            
+        }
 
         protected virtual void End()
         {
-            
             Debug.Log("End " + GetType());
             
             _chainStep?.Begin();
@@ -22,6 +34,20 @@ namespace Battle
         {
             _chainStep = chainStep;
         }
+    }
+    
+    public abstract class BattleStep<T> : BattleStep where T : BattleStep.BaseData
+    {
+        protected T _data = null;
+
+        public override void Initialize(BaseData data)
+        {
+            base.Initialize(data);
+            
+            _data = data as T;
+        }
+
+        public abstract override void Begin();
     }
 }
 

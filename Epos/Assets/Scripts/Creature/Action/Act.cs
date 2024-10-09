@@ -4,20 +4,21 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public class ActData
-    {
-        public IActor IActor = null;
-    }
-    
     public interface IAct
     {
         void Finish();
         void ChainUpdate();
     }
     
-    public abstract class Act<T> : IAct where T : ActData
+    public abstract class Act<T> : IAct where T : Act<T>.BaseData
     {
-         protected T _data = null;
+        public class BaseData
+        {
+            public IActor IActor = null;
+            public string Key = string.Empty;
+        }
+        
+        protected T _data = null;
         
         #region IAct
 

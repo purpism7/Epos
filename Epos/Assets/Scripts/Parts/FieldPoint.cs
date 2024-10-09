@@ -1,14 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
+using Battle.Step;
 using Common;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
 using Creature;
-
+using GameSystem;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Parts
@@ -23,7 +23,7 @@ namespace Parts
         Transform PointTm { get; }
     }
 
-    public class FieldPoint : Part, IFieldPoint
+    public class FieldPoint : Part<FieldPoint.Data>, IFieldPoint
     {
         [SerializeField]
         private Transform pointTm = null;
@@ -36,6 +36,16 @@ namespace Parts
         // 임시
         [SerializeField]
         private Monster monster = null;
+
+        public class Data : BaseData
+        {
+            public IListener IListener = null;
+        }
+        
+        public interface IListener
+        {
+            void Encounter(IActor iActor);
+        }
 
         Collider2D[] _colliders = new Collider2D[5];
 
@@ -53,9 +63,9 @@ namespace Parts
 #endif
 
         #region FieldPoint
-        public override void Initialize()
+        public override void Initialize(Data data)
         {
-            base.Initialize();
+            base.Initialize(data);
             
             monster?.Initialize();
             
@@ -80,7 +90,7 @@ namespace Parts
             
             monster.ChainUpdate();
             
-            if (Physics2D.OverlapCircleNonAlloc(monster.Transform.position, 3f, _colliders) > 0)
+            if (Physics2D.OverlapCircleNonAlloc(monster.Transform.position, 5f, _colliders) > 0)
             {
                 foreach (var collider in _colliders)
                 {
@@ -90,14 +100,47 @@ namespace Parts
                     var hero = collider.GetComponentInParent<Hero>();
                     if (hero != null)
                     {
-                        Array.Clear(_colliders, 0, _colliders.Length);
+                        _data?.IListener?.Encounter(hero);
+                        
+                        BeginFieldBattle();
+                        
+                        hero.Deactivate();
+                        monster?.Deactivate();
                         
                         return;
                     }
                 }
+                
+                Array.Clear(_colliders, 0, _colliders.Length);
             }
         }
         #endregion
+
+        private void BeginFieldBattle()
+        {
+            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field, Battle.Field.FieldData>(
+                new Battle.Field.FieldData
+                {
+                    PreprocessingData = new Preprocessing.FieldData
+                    {
+                        CameraZoomInPos = pointTm.position,
+                        CameraZoomInEndAction = () =>
+                        {
+                            
+                        },
+                    },
+                    
+                    LeftDeployData = new Battle.Step.Deploy.FieldData()
+                    {
+                        Deploy = leftDeploy,
+                    },
+                    
+                    RightDeployData = new Battle.Step.Deploy.FieldData()
+                    {
+                        Deploy = rightDeploy,
+                    },
+                });
+        }
 
         private async UniTask RandomActionAsync()
         {
@@ -117,7 +160,7 @@ namespace Parts
             float randomY = UnityEngine.Random.Range(-value, value);
             
             var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
-            monster.IActCtr?.MoveToTarget("02_Run", targetPos,
+            monster.IActCtr?.MoveToTarget(targetPos,
                 () =>
                 {
                     RandomActionAsync().Forget();

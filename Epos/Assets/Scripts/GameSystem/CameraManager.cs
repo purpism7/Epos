@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using DG.Tweening;
@@ -13,7 +14,7 @@ namespace GameSystem
         Camera MainCamera { get; }
         bool IsMove { get; }
 
-        void ZoomIn(Vector3 targetPos);
+        void ZoomIn(Vector3 targetPos, Action endAction);
     }
     
     public class CameraManager : Manager, ICameraManager
@@ -110,82 +111,35 @@ namespace GameSystem
         
         private void UpdateCameraPosition()
         {
-            // 이동 수치가 없으면 아무것도 안함
             if (_directionForce == Vector3.zero)
                 return;
             
             var currentPos = mainCamera.transform.position;
             var targetPos = currentPos + _directionForce;
 
-            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime);
+            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * 2f);
+        }
+        
+        #region Zoom In / Out
+        void ICameraManager.ZoomIn(Vector3 targetPos, Action endAction)
+        {
+            ZoomInAsync(targetPos, endAction).Forget();
         }
 
-        #region Zoom In / Out
-
-        void ICameraManager.ZoomIn(Vector3 targetPos)
-        {
+        private async UniTask ZoomInAsync(Vector3 targetPos, Action endAction)
+        { 
             var duration = 1.5f;
-            
             targetPos.z = DefaultZPos;
-            //
-            // Sequence sequence = DOTween.Sequence()
-            //     .SetAutoKill(false)
-            // // .Append(DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-            // //     orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 20f, 0.5f))
-            // .AppendInterval(0.1f)
-            //     .Join(DOTween.To(() => mainCamera.transform.position, pos => mainCamera.transform.position = pos,
-            //         targetPos, 1f).SetEase(Ease.OutBack));
-            //     
-            // sequence?.Restart();    
-            //
-
+            
             DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
                 orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 20f, duration);
-            DOTween.To(() => mainCamera.transform.position,
+            await DOTween.To(() => mainCamera.transform.position,
                 position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
-            // ZoomInAsync(targetPos).Forget();
-        }
 
-        // private async UniTask ZoomInAsync(Vector3 targetPos)
-        // {
-        //     if (virtualCamera == null)
-        //         return;
-        //
-        //    
-        //     
-        //     
-        //
-        //    
-        //    
-        //     
-        //     
-        //     bool arrived = false;
-        //     
-        //     await UniTask.WaitWhile(
-        //         () =>
-        //         {
-        //             // if (virtualCamera.m_Lens.OrthographicSize > 20f)
-        //             // {
-        //             //     virtualCamera.m_Lens.OrthographicSize -= Time.deltaTime * 10f;
-        //             // }
-        //             
-        //             virtualCamera.m_Lens.OrthographicSize = Mathf.MoveTowards(virtualCamera.m_Lens.OrthographicSize, 20f, Time.deltaTime);
-        //             
-        //             var cameraPos = mainCamera.transform.position;
-        //             mainCamera.transform.position = Vector3.Lerp(cameraPos, targetPos, Time.deltaTime);
-        //
-        //             if (Vector3.Distance(cameraPos, targetPos) <= 0)
-        //             {
-        //                 arrived = true;
-        //             }
-        //             
-        //             return !arrived;
-        //         });
-        //     
-        //     Debug.Log("End");
-        // }
-        
-        
+            await UniTask.Yield();
+            
+            endAction?.Invoke();
+        }
         
         #endregion
     }

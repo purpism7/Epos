@@ -6,7 +6,8 @@ namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
-        void MoveToTarget(string key, Vector3 pos, System.Action finishAction = null);
+        void MoveToTarget(Vector3 pos, System.Action finishAction = null);
+        void Idle();
     }
     
     public class ActController : Controller, IActController, Move.IListener
@@ -43,7 +44,7 @@ namespace Creature.Action
         #endregion
             
         #region IActController
-        void IActController.MoveToTarget(string key, Vector3 pos, System.Action finishAction)
+        void IActController.MoveToTarget(Vector3 pos, System.Action finishAction)
         {
             if (!IsActivate)
                 return;
@@ -51,32 +52,24 @@ namespace Creature.Action
             Execute<Move, Move.Data>(
                 new Move.Data()
                 {
-                    Key = key,
                     IListener = this,
                     TargetPos = pos,
                     FinishAction = finishAction,
                 });
         }
+
+        void IActController.Idle()
+        {
+            Execute<Idle, Idle.Data>();
+        }
         #endregion
 
-        private void Execute<T, V>(V data = null) where T : Act<V>, new() where V : ActData, new()
+        private void Execute<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
         {
             if (_iActDic == null)
             {
                 _iActDic = new();
                 _iActDic.Clear();
-            }
-
-            if (data != null)
-            {
-                data.IActor = _iActor;
-            }
-            else
-            {
-                data = new V()
-                {
-                    IActor = _iActor,
-                };
             }
             
             System.Type type = typeof(T);
@@ -92,6 +85,21 @@ namespace Creature.Action
                 
                 _iActDic?.TryAdd(type, act);
             }
+
+            var animationKey = _iActor.AnimationKey(act);
+            if (data != null)
+            {
+                data.IActor = _iActor;
+                data.Key = animationKey;
+            }
+            else
+            {
+                data = new V()
+                {
+                    IActor = _iActor,
+                    Key = animationKey,
+                };
+            }
             
             _currIAct?.Finish();
             act?.Execute(data);
@@ -101,11 +109,7 @@ namespace Creature.Action
         #region Move.IListener
         void Move.IListener.Arrived()
         {
-            Execute<Idle, Idle.Data>( 
-                new Idle.Data()
-                {
-                    Key = _iActor is Hero ? "00_F_Idle" : "00_Idle",
-                });
+            Execute<Idle, Idle.Data>();
         }
         #endregion
     }

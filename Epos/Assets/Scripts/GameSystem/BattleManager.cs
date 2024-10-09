@@ -8,7 +8,7 @@ namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        public void Begin<T>() where T : Battle.BattleType, new();
+        public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
     public class BattleManager : Manager, IBattleManager, BattleType.IListener
@@ -21,7 +21,7 @@ namespace GameSystem
             return this;
         }
 
-        public void Begin<T>() where T : Battle.BattleType, new()
+        public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData
         {
             if (_currBattle != null)
                 return;
@@ -35,10 +35,13 @@ namespace GameSystem
             Battle.BattleType battleType = null;
             if (!_battleTypeDic.TryGetValue(typeof(T), out battleType))
             {
-                battleType = new T();
-                battleType.Initialize(this);
+                var aBattleType = new T() as BattleType<V>;
+                aBattleType?.Initialize(data);
+                aBattleType?.SetIListener(this);
        
-                _battleTypeDic?.TryAdd(typeof(T), battleType);
+                _battleTypeDic?.TryAdd(typeof(T), aBattleType);
+
+                battleType = aBattleType;
             }
 
             if (battleType == null)
@@ -54,7 +57,6 @@ namespace GameSystem
         }
         
         #region BattleType.IListener
-
         void BattleType.IListener.End()
         {
             
