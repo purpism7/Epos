@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 namespace Battle
@@ -46,7 +45,12 @@ namespace Battle
     {
         public class BaseData
         {
+            public BattleMode BattleMode { get; private set; } = null;
 
+            protected BaseData(BattleMode mode)
+            {
+                BattleMode = mode;
+            }
         }
         
         private T _data = null;

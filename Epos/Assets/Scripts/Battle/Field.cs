@@ -1,16 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
-using Battle.Step;
 using UnityEngine;
+
+using System.Data;
+using Battle.Mode;
+using Battle.Step;
 
 namespace Battle
 {
-    public partial class Field : BattleType<Field.FieldData>
+    public class Field : BattleType<Field.Data>
     {
-        public abstract class Data : BaseData
+        public class Data : BaseData
         {
+            public Data(BattleMode mode) : base(mode)
+            {
+                
+            }
             
+            public Preprocessing.FieldData PreprocessingData = null;
+            public Deploy.FieldData LeftDeployData = null;
+            public Deploy.FieldData RightDeployData = null;
         }
 
         public new interface IListener
@@ -18,7 +27,7 @@ namespace Battle
             
         }
         
-        public override void Initialize(FieldData data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
             

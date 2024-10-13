@@ -32,9 +32,6 @@ namespace Creature
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
         
-        // Stat 으로 변경 예정.
-        public abstract float MoveSpeed { get; }
-        
         public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
 
         #region ICharacterGeneric

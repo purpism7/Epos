@@ -45,9 +45,13 @@ namespace Creature.Action
             if (iActor == null)
                 return;
 
+            if (iActor.IStat == null)
+                return;
+
             var targetPos = _data.TargetPos;
+            var moveSpeed = iActor.IStat.Get(Stat.EType.MoveSpeed);
             
-            iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * iActor.MoveSpeed);
+            iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * moveSpeed);
             if (Vector3.Distance(iActor.Transform.position, targetPos) <= 0)
             {
                 Debug.Log("Arrived");

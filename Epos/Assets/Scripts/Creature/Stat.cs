@@ -1,6 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+using System.Collections.Generic;
+using Battle.Mode;
 
 namespace Creature
 {
@@ -16,6 +18,8 @@ namespace Creature
     public interface IStat
     {
         void SetOrigin(Stat.EType eStatType, float value);
+
+        float Get(Stat.EType eStatType);
     }
     
     public class Stat : IStatGeneric, IStat
@@ -24,35 +28,38 @@ namespace Creature
         {
             None,
             
-            ActSpeed,
+            ActionSpeed,
             
             Attack,
             MoveSpeed,
         }
 
         private Dictionary<EType, float> _originStatDic = new();
-        private Dictionary<EType, float> _addStatDic = new();
+        private Dictionary<EType, float> _addedStatDic = new();
 
         #region IStatGeneric
         void IStatGeneric.Initialize(int id)
         {
             switch (id)
             {
-                case 1:
+                case 10001:
                 {
-                    SetOrigin(EType.ActSpeed, 10f);
+                    SetOrigin(EType.ActionSpeed, 10f);
+                    SetOrigin(EType.MoveSpeed, 8f); 
+                    
+                    break;
+                }
+
+                case 20001:
+                {
+                    // SetOrigin(EType.ActionSpeed, 10f);
+                    SetOrigin(EType.MoveSpeed, 2f); 
                     
                     break;
                 }
             }
         }
         
-        // 데이터화가 되기 전, 임시 코드.
-        public void SetOriginActSpeed(float actSpeed)
-        {
-            SetOrigin(EType.ActSpeed, actSpeed);
-        }
-
         void IStatGeneric.Activate()
         {
             
@@ -77,6 +84,11 @@ namespace Creature
         {
             SetOrigin(eType, value);
         }
+
+        float IStat.Get(EType eType)
+        {
+            return GetOrigin(eType) + GetAdded(eType);
+        }
         #endregion
 
         private void SetOrigin(EType eType, float value)
@@ -95,6 +107,28 @@ namespace Creature
             {
                 _originStatDic.TryAdd(eType, value);
             }
+        }
+
+        private float GetOrigin(EType eType)
+        {
+            if (_originStatDic == null)
+                return 0;
+            
+            if (_originStatDic.TryGetValue(eType, out float value))
+                return value;
+
+            return 0;
+        }
+        
+        private float GetAdded(EType eType)
+        {
+            if (_addedStatDic == null)
+                return 0;
+            
+            if (_addedStatDic.TryGetValue(eType, out float value))
+                return value;
+
+            return 0;
         }
     }
 }

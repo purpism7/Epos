@@ -7,14 +7,6 @@ namespace Creature
 {
     public class Monster : Character, IActor
     {
-        public override float MoveSpeed
-        {
-            get
-            {
-                return 2f;
-            }
-        }
-        
         public override string AnimationKey<T>(Act<T> act)
         {
             switch (act)

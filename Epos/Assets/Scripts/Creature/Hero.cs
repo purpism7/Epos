@@ -9,20 +9,10 @@ namespace Creature
 {
     public class Hero : Character, IActor
     {
-        public override float MoveSpeed
-        {
-            get
-            {
-                return 8f;
-            }
-        }
-        
         public override void Initialize()
         {
             base.Initialize();
-            
-            IStat.SetOrigin(Stat.EType.ActSpeed, 0);
-            
+
             IActCtr = gameObject.AddOrGetComponent<ActController>();
             IActCtr?.Initialize(this);
         }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Battle.Mode;
 using Battle.Step;
 using Common;
 using UnityEngine;
@@ -118,8 +119,10 @@ namespace Parts
 
         private void BeginFieldBattle()
         {
-            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field, Battle.Field.FieldData>(
-                new Battle.Field.FieldData
+            var battleMode = new TurnBased().Initialize(null);
+            
+            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field, Battle.Field.Data>(
+                new Battle.Field.Data(battleMode)
                 {
                     PreprocessingData = new Preprocessing.FieldData
                     {
