@@ -21,6 +21,8 @@ namespace Creature
         {
             base.Initialize();
             
+            IStat.SetOrigin(Stat.EType.ActSpeed, 0);
+            
             IActCtr = gameObject.AddOrGetComponent<ActController>();
             IActCtr?.Initialize(this);
         }

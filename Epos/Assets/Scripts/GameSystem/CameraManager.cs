@@ -35,7 +35,6 @@ namespace GameSystem
         private Vector3 _startPosition;  // 입력 시작 위치를 기억
         private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
         #endregion
-
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }

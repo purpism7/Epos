@@ -24,19 +24,26 @@ namespace Creature
         private int id = 0;
         #endregion
 
+        private IStatGeneric _iStatGeneric = null;
+        
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return transform; } }
 
+        public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
-
-        // 임시.
+        
+        // Stat 으로 변경 예정.
         public abstract float MoveSpeed { get; }
+        
         public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
 
         #region ICharacterGeneric
         public virtual void Initialize()
         {
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+
+            _iStatGeneric = new Stat();
+            _iStatGeneric?.Initialize(id);
         }
         
         public virtual void ChainUpdate()
@@ -46,6 +53,7 @@ namespace Creature
 
         public virtual void Activate()
         {
+            _iStatGeneric?.Activate();
             IActCtr?.Activate();
             
             Extension.SetActive(transform, true);
@@ -53,6 +61,7 @@ namespace Creature
 
         public virtual void Deactivate()
         {
+            _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
             
             Extension.SetActive(transform, false);
