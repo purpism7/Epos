@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c9c7df5a15e42d1ae665845a4a6b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 10001
 --- !u!1 &7376326210088016459
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 5574638848013443805}
   - component: {fileID: 1622154610190651600}
   - component: {fileID: 6527529688049932783}
+  - component: {fileID: 4156890648312596328}
   m_Layer: 10
   m_Name: Spine GameObject (Knight_01)
   m_TagString: Untagged
@@ -173,3 +174,38 @@ MonoBehaviour:
   _animationName: F_Idle
   loop: 1
   timeScale: 1
+--- !u!70 &4156890648312596328
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376326210088016459}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.17, y: 2.7734833}
+  m_Size: {x: 4, y: 6.766967}
+  m_Direction: 0

@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+using Creature;
 
 namespace Battle.Mode
 {
@@ -18,22 +21,39 @@ namespace Battle.Mode
             ActionSpeed,
         }
 
-        public interface IParticipant
-        {
-            
-        }
-
         private EType _eType = EType.None;
-        private Queue<IParticipant> _iParticipantQueue = null;
+        private Queue<IActor> _iActorQueue = null;
         
         public override BattleMode<Data> Initialize(Data data)
         {
-            // _eType = eType;
+            base.Initialize(data);
             
-            _iParticipantQueue = new();
-            _iParticipantQueue.Clear();
-
+            _iActorQueue = new();
+            _iActorQueue.Clear();
+            
+            Initialize();
+            
             return this;
+        }
+
+        private void Initialize()
+        {
+            if (_data == null)
+                return;
+
+            switch (_data.EType)
+            {
+                case EType.ActionSpeed:
+                {
+                    _data.AllyIActorList = _data.AllyIActorList
+                        .OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
+                    
+                    _data.EnemyIActorList = _data.EnemyIActorList
+                        .OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
+
+                    break;
+                }
+            }
         }
     }
 }

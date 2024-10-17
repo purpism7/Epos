@@ -1,21 +1,32 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 namespace Battle
 {
-    public class BattleStep
+    public interface IBattleStep
+    {
+        void Begin();
+        void SetChainStep(BattleStep step);
+        void SetLastStepEndAction(System.Action endAction);
+    }
+    
+    public class BattleStep : IBattleStep
     {
         public class BaseData
         {
             
         }
         
-        protected BattleStep _chainStep = null;
+        private BattleStep _chainStep = null;
+        private System.Action _lastStepEndAction = null;
 
-        public virtual void Initialize(BaseData data)
+        public virtual IBattleStep Initialize(BaseData data)
         {
-            
+            return this;
         }
         
         public virtual void Begin()
@@ -25,14 +36,28 @@ namespace Battle
 
         protected virtual void End()
         {
-            Debug.Log("End " + GetType());
+            BeginChainStepAsync().Forget();
+        }
+
+        private async UniTask BeginChainStepAsync()
+        {
+            await UniTask.Yield(); 
+            // await UniTask.Delay(TimeSpan.FromSeconds(1f));
+
+            Debug.Log(GetType());
             
             _chainStep?.Begin();
+            _lastStepEndAction?.Invoke();
         }
         
-        public void SetChainStep(BattleStep chainStep)
+        void IBattleStep.SetChainStep(BattleStep step)
         {
-            _chainStep = chainStep;
+            _chainStep = step;
+        }
+        
+        void IBattleStep.SetLastStepEndAction(System.Action endAction)
+        {
+            _lastStepEndAction = endAction;
         }
     }
     
@@ -40,11 +65,13 @@ namespace Battle
     {
         protected T _data = null;
 
-        public override void Initialize(BaseData data)
+        public override IBattleStep Initialize(BaseData data)
         {
             base.Initialize(data);
             
             _data = data as T;
+
+            return this;
         }
 
         public abstract override void Begin();

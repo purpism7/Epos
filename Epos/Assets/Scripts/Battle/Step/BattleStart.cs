@@ -8,7 +8,7 @@ namespace Battle.Step
     {
         public override void Begin()
         {
-            Debug.Log("Begin " + GetType());
+            End();
         }
     }
 }

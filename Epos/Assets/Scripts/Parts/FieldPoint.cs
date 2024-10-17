@@ -38,6 +38,8 @@ namespace Parts
         [SerializeField]
         private Monster monster = null;
 
+        private const float Range = 5f;
+
         public class Data : BaseData
         {
             public IListener IListener = null;
@@ -59,7 +61,7 @@ namespace Parts
                 return;
             
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pointTm.position, 5f);
+            Gizmos.DrawWireSphere(pointTm.position, Range);
         }
 #endif
 
@@ -78,6 +80,8 @@ namespace Parts
         {
             base.Activate();
             
+            monster?.Activate();
+            
             RandomActionAsync().Forget();
         }
         
@@ -91,7 +95,7 @@ namespace Parts
             
             monster.ChainUpdate();
             
-            if (Physics2D.OverlapCircleNonAlloc(monster.Transform.position, 5f, _colliders) > 0)
+            if (Physics2D.OverlapCircleNonAlloc(monster.Transform.position, Range, _colliders) > 0)
             {
                 foreach (var collider in _colliders)
                 {
@@ -116,38 +120,53 @@ namespace Parts
             }
         }
         #endregion
-
+        
         private void BeginFieldBattle()
         {
-            var battleMode = new TurnBased().Initialize(null);
+            var iBattleMgr = MainGameManager.Get<IBattleManager>();
+            if (iBattleMgr == null)
+                return;
             
-            MainGameManager.Get<IBattleManager>()?.Begin<Battle.Field, Battle.Field.Data>(
-                new Battle.Field.Data(battleMode)
+            var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
+                .SetData(new TurnBased.Data
                 {
-                    PreprocessingData = new Preprocessing.FieldData
-                    {
-                        CameraZoomInPos = pointTm.position,
-                        CameraZoomInEndAction = () =>
-                        {
-                            
-                        },
-                    },
+                    AllyIActorList = Extension.AddList<IActor, Character>(leftDeploy?.characters),
+                    EnemyIActorList = Extension.AddList<IActor, Character>(rightDeploy?.characters),
                     
-                    LeftDeployData = new Battle.Step.Deploy.FieldData()
+                    EType = TurnBased.EType.ActionSpeed,
+                })
+                .Create();
+            
+            var fieldData = new Battle.Field.Data
+            {
+                BattleMode = battleMode,
+                
+                PreprocessingData = new Preprocessing.FieldData
+                {
+                    CameraZoomInPos = pointTm.position,
+                    CameraZoomInEndAction = () =>
                     {
-                        Deploy = leftDeploy,
+
                     },
-                    
-                    RightDeployData = new Battle.Step.Deploy.FieldData()
-                    {
-                        Deploy = rightDeploy,
-                    },
-                });
+                },
+
+                LeftDeployData = new Battle.Step.Deploy.FieldData
+                {
+                    Deploy = leftDeploy,
+                },
+
+                RightDeployData = new Battle.Step.Deploy.FieldData
+                {
+                    Deploy = rightDeploy,
+                },
+            };
+            
+            iBattleMgr.Begin<Battle.Field, Battle.Field.Data>(fieldData);
         }
 
         private async UniTask RandomActionAsync()
         {
-            await UniTask.WaitForSeconds(UnityEngine.Random.Range(5f, 10f));
+            await UniTask.WaitForSeconds(UnityEngine.Random.Range(Range, Range * 2f));
             
             if (!IsActivate)
                 return;
@@ -158,7 +177,7 @@ namespace Parts
             if (monster == null)
                 return;
 
-            float value = 5f;
+            float value = Range;
             float randomX = UnityEngine.Random.Range(-value, value);
             float randomY = UnityEngine.Random.Range(-value, value);
             

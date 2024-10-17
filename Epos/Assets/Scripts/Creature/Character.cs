@@ -17,7 +17,7 @@ namespace Creature
         void Deactivate();
     }
 
-    public abstract class Character : MonoBehaviour, ICharacterGeneric
+    public abstract class Character : MonoBehaviour, ICharacterGeneric, IActor
     {
         #region Inspector
         [SerializeField] 
@@ -26,6 +26,7 @@ namespace Creature
 
         private IStatGeneric _iStatGeneric = null;
         
+        public int Id { get { return id; } }
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return transform; } }
 

@@ -34,7 +34,7 @@ namespace Creature.Action
                 return;
             
             var targetPos = _data.TargetPos;
-            iActor.Transform.eulerAngles = new Vector3(0, iActor.Transform.position.x - targetPos.x < 0 ? 180f : 0, 0);
+            iActor.Transform.eulerAngles = new Vector3(0, iActor.Transform.position.x - targetPos.x < 0 ? 0 : 180f, 0);
         }
 
         public override void ChainUpdate()
@@ -54,8 +54,6 @@ namespace Creature.Action
             iActor.Transform.position = Vector3.MoveTowards(iActor.Transform.position, targetPos, Time.deltaTime * moveSpeed);
             if (Vector3.Distance(iActor.Transform.position, targetPos) <= 0)
             {
-                Debug.Log("Arrived");
-                
                 _data.IListener?.Arrived();
                 _data.FinishAction?.Invoke();
             }

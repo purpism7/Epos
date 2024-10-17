@@ -1,21 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
-using Creature.Action;
 using UnityEngine;
+
+using Common;
+using Creature.Action;
 
 namespace Creature
 {
-    public class Monster : Character, IActor
+    public class Monster : Character
     {
         public override string AnimationKey<T>(Act<T> act)
         {
             switch (act)
             {
                 case Idle: return "00_Idle";
-                case Move: return "01_Run";
+                case Move: return "02_Run";
             }
 
             return string.Empty;
+        }
+        
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            IActCtr = gameObject.AddOrGetComponent<ActController>();
+            IActCtr?.Initialize(this);
         }
     }
 }

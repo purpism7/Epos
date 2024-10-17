@@ -22,7 +22,7 @@ namespace Battle.Step
         {
             if (_data == null)
                 return;
-
+            
             switch (_data)
             {
                 case FieldData data:
@@ -38,8 +38,6 @@ namespace Battle.Step
                     break;
                 }
             }
-            
-            
         }
     }
 }

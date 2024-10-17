@@ -27,6 +27,25 @@ namespace Common
             
             component.gameObject.SetActive(active);
         }
+        
+        public static List<T> AddList<T, V>(this V[] arrays) where T : class
+        {
+            if (arrays == null)
+                return null;
+            
+            var list = new List<T>();
+            list.Clear();
+            
+            foreach (V t in arrays)
+            {
+                if(t == null)
+                    continue;
+                
+                list.Add(t as T);
+            }
+
+            return list;
+        }
     }
 }
 

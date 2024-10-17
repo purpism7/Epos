@@ -7,7 +7,7 @@ using Creature.Action;
 
 namespace Creature
 {
-    public class Hero : Character, IActor
+    public class Hero : Character
     {
         public override void Initialize()
         {
@@ -21,7 +21,7 @@ namespace Creature
         {
             base.ChainUpdate();
         }
-        
+
         #region Act
         public void MoveToTarget(Vector3 pos)
         {
@@ -32,8 +32,8 @@ namespace Creature
         {
             switch (act)
             {
-                case Idle: return "00_F_Idle";
-                case Move: return "01_F_Run";
+                case Idle: return "F_Idle";
+                case Move: return "F_Run";
             }
 
             return string.Empty;

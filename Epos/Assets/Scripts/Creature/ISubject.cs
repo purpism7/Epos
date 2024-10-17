@@ -10,7 +10,7 @@ namespace Creature
 {
     public interface ISubject
     {
-        
+        int Id { get; }
     }
 }
 

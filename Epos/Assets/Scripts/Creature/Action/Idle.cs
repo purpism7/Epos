@@ -18,11 +18,7 @@ namespace Creature.Action
             var iActorTm = data?.IActor?.Transform;
             if (!iActorTm)
                 return;
-
-            // iActorTm.position =
-            //     new Vector3(iActorTm.position.x, iActorTm.position.y, 0);
             
-            Debug.Log("Idle");
             SetAnimation(data.Key, true);
         }
     }

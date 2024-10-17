@@ -1,24 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
+
+using Creature;
 
 namespace Battle
 {
     public class BattleMode
     {
-        
-    }
-    
-    public abstract class BattleMode<T> : BattleMode where T : BattleMode<T>.BaseData
-    {
         public class BaseData
+        {
+            public List<IActor> AllyIActorList = null;
+            public List<IActor> EnemyIActorList = null;
+        }
+        
+        public virtual void Add()
         {
             
         }
-
+    }
+    
+    public abstract class BattleMode<T> : BattleMode where T : BattleMode.BaseData
+    {
         protected T _data = null;
-        
-        public abstract BattleMode<T> Initialize(T data);
+
+        public virtual BattleMode<T> Initialize(T data)
+        {
+            _data = data;
+
+            return this;
+        }
     }
 }
 

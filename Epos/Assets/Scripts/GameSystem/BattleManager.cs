@@ -13,8 +13,10 @@ namespace GameSystem
     
     public class BattleManager : Manager, IBattleManager, BattleType.IListener
     {
-        private Dictionary<System.Type, Battle.BattleType> _battleTypeDic = null;
-        private Battle.BattleType _currBattle = null;
+        private Dictionary<System.Type, BattleType> _battleTypeDic = null;
+        private Battle.BattleType _currBattleType = null;
+
+        // private Dictionary<System.Type, BattleMode> _battleModeDic = null;
         
         public override IManagerGeneric Initialize()
         {
@@ -23,7 +25,7 @@ namespace GameSystem
 
         public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData
         {
-            if (_currBattle != null)
+            if (_currBattleType != null)
                 return;
             
             if (_battleTypeDic == null)
@@ -53,7 +55,7 @@ namespace GameSystem
             
             battleType.Begin();
 
-            _currBattle = battleType;
+            _currBattleType = battleType;
         }
         
         #region BattleType.IListener

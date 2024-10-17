@@ -11,11 +11,12 @@ namespace Battle
             void End();
         }
         
-        private BattleStep _firstStep = null;
-        private BattleStep _battleStep = null;
+        private IBattleStep _firstStep = null;
+        private IBattleStep _lastStep = null;
+        
         protected IListener _iListener = null;
         
-        public virtual void Begin()
+        public void Begin()
         {
             _firstStep?.Begin();
         }
@@ -25,19 +26,29 @@ namespace Battle
             _iListener?.End();
         }
         
-        protected void AddStep<T>(BattleStep.BaseData data = null) where T : BattleStep, new()
+        protected void AddStep<T>(BattleStep.BaseData data = null, bool isLast = false) where T : BattleStep, new()
         {
             var step = new T();
-            step.Initialize(data);
+            var iBattleStep = step.Initialize(data);
 
             // 이전 스텝에 chain step 연결.
-            _battleStep?.SetChainStep(step);
-            _battleStep = step;
+            _lastStep?.SetChainStep(step);
+            _lastStep = step;
             
             if (_firstStep == null)
             {
                 _firstStep = step;
             }
+
+            if (isLast)
+            {
+                iBattleStep?.SetLastStepEndAction(EndLastStep);
+            }
+        }
+
+        private void EndLastStep()
+        {
+            Debug.Log("EndLastStep");
         }
     }
     
@@ -45,16 +56,11 @@ namespace Battle
     {
         public class BaseData
         {
-            public BattleMode BattleMode { get; private set; } = null;
-
-            protected BaseData(BattleMode mode)
-            {
-                BattleMode = mode;
-            }
+            public BattleMode BattleMode { get; set; } = null;
         }
         
-        private T _data = null;
-        
+        protected T _data = null;
+
         public virtual void Initialize(T data)
         {
             _data = data;
