@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 namespace Creature.Action
@@ -11,15 +12,12 @@ namespace Creature.Action
             
         }
         
-        public override void Execute(Data data)
+        public override void Execute()
         {
-            base.Execute(data);
-
-            var iActorTm = data?.IActor?.Transform;
-            if (!iActorTm)
+            if (_data == null)
                 return;
             
-            SetAnimation(data.Key, true);
+            SetAnimation(_data.AnimationKey, true);
         }
     }
 }

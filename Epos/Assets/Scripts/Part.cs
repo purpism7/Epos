@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Part : MonoBehaviour
 {
+    [SerializeField]
+    private Transform rootTm = null;
+    
     public bool IsActivate { get; private set; } = false;
 
     public virtual void Initialize()
@@ -14,16 +17,16 @@ public class Part : MonoBehaviour
     
     public virtual void Activate()
     {
-        Extension.SetActive(transform, true);
-        
         IsActivate = true;
+        
+        Extension.SetActive(rootTm, true);
     }
 
     public virtual void Deactivate()
     {
-        Extension.SetActive(transform, false);
-        
         IsActivate = false;
+        
+        Extension.SetActive(rootTm, false);
     }
 }
 

@@ -1,30 +1,30 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Battle.Mode;
-using Battle.Step;
-using Common;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
 using Creature;
 using GameSystem;
+using Battle.Mode;
+using Battle.Step;
+using Common;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Parts
 {
-    public interface IFieldPoint
-    {
-        void Initialize();
-        void Activate();
-        void Deactivate();
-        void ChainUpdate();
+    // public interface IFieldPoint
+    // {
+    //     void Initialize();
+    //     void Activate();
+    //     void Deactivate();
+    //     void ChainUpdate();
+    //
+    //     Transform PointTm { get; }
+    // }
 
-        Transform PointTm { get; }
-    }
-
-    public class FieldPoint : Part<FieldPoint.Data>, IFieldPoint
+    public class FieldPoint : Part<FieldPoint.Data>//, IFieldPoint
     {
         [SerializeField]
         private Transform pointTm = null;
@@ -72,8 +72,8 @@ namespace Parts
             
             monster?.Initialize();
             
-            leftDeploy?.SetActive(false);
-            rightDeploy?.SetActive(false);
+            leftDeploy?.Deactivate();
+            rightDeploy?.Deactivate();
         }
         
         public override void Activate()
@@ -90,7 +90,8 @@ namespace Parts
             if (!IsActivate)
                 return;
 
-            if (monster == null)
+            if (monster == null ||
+                !monster.IsActivate)
                 return;
             
             monster.ChainUpdate();
@@ -111,7 +112,7 @@ namespace Parts
                         
                         hero.Deactivate();
                         monster?.Deactivate();
-                        
+              
                         return;
                     }
                 }
@@ -174,7 +175,8 @@ namespace Parts
             if (!pointTm)
                 return;
             
-            if (monster == null)
+            if (monster == null ||
+                !monster.IsActivate)
                 return;
 
             float value = Range;

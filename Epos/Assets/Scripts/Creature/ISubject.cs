@@ -11,6 +11,9 @@ namespace Creature
     public interface ISubject
     {
         int Id { get; }
+        Transform Transform { get; }
+
+        bool IsActivate { get; }
     }
 }
 

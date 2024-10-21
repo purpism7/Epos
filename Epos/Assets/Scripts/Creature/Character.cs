@@ -1,27 +1,25 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Common;
-using Creature.Action;
+
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
 using Spine.Unity;
+
+using Common;
+using Creature.Action;
+
 
 namespace Creature
 {
-    public interface ICharacterGeneric
-    {
-        void Initialize();
-        void ChainUpdate();
-        void Activate();
-        void Deactivate();
-    }
-
-    public abstract class Character : MonoBehaviour, ICharacterGeneric, IActor
+    public abstract class Character : MonoBehaviour, IActor, ICaster
     {
         #region Inspector
         [SerializeField] 
         private int id = 0;
+        [SerializeField] 
+        private Transform rootTm = null;
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
@@ -32,6 +30,7 @@ namespace Creature
 
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
+        public bool IsActivate { get; private set; } = false;
         
         public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
 
@@ -46,6 +45,9 @@ namespace Creature
         
         public virtual void ChainUpdate()
         {
+            if (!IsActivate)
+                return;
+            
             IActCtr?.ChainUpdate();
         }
 
@@ -54,7 +56,9 @@ namespace Creature
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
             
-            Extension.SetActive(transform, true);
+            IsActivate = true;
+            
+            Extension.SetActive(rootTm, true);
         }
 
         public virtual void Deactivate()
@@ -62,7 +66,9 @@ namespace Creature
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
             
-            Extension.SetActive(transform, false);
+            IsActivate = false;
+            
+            Extension.SetActive(rootTm, false);
         }
         #endregion
     }

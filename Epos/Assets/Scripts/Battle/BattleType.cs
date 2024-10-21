@@ -48,7 +48,12 @@ namespace Battle
 
         private void EndLastStep()
         {
-            Debug.Log("EndLastStep");
+            Ready();
+        }
+        
+        protected virtual void Ready()
+        {
+            
         }
     }
     
@@ -69,6 +74,13 @@ namespace Battle
         public void SetIListener(IListener iListener)
         {
             _iListener = iListener;
+        }
+
+        protected override void Ready()
+        {
+            base.Ready();
+            
+            _data?.BattleMode?.Begin();
         }
     }
 }

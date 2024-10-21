@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Common
@@ -24,6 +25,13 @@ namespace Common
         {
             if (component == null)
                 return;
+
+            SetActiveAsync(component, active).Forget();
+        }
+
+        private static async UniTask SetActiveAsync(this Component component, bool active)
+        {
+            await UniTask.Yield();
             
             component.gameObject.SetActive(active);
         }

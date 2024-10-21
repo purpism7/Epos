@@ -15,7 +15,7 @@ namespace Creature
 
     public abstract class Controller : MonoBehaviour
     {
-        public bool IsActivate { get; protected set; }
+        public bool IsActivate { get; private set; } = false;
 
         public virtual void Activate()
         {

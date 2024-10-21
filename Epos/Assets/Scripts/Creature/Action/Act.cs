@@ -6,7 +6,7 @@ namespace Creature.Action
 {
     public interface IAct
     {
-        void Finish();
+        void Execute();
         void ChainUpdate();
     }
     
@@ -14,24 +14,38 @@ namespace Creature.Action
     {
         public class BaseData
         {
-            public IActor IActor = null;
-            public string Key = string.Empty;
+            public string AnimationKey { get; private set; } = string.Empty;
+            
+            public BaseData SetAnimationKey(string key)
+            {
+                AnimationKey = key;
+
+                return this;
+            }
         }
         
         protected T _data = null;
+        protected IActor _iActor = null;
+        protected System.Action _endAction = null;
         
-        #region IAct
+        public virtual void Initialize(IActor iActor)
+        {
+            _iActor = iActor;
+        }
 
-        public virtual void Execute(T data)
+        public void SetData(T data)
         {
             _data = data;
         }
 
-        public virtual void Finish()
+        public void SetEndActAction(System.Action endAction)
         {
-            
+            _endAction = endAction;
         }
-
+        
+        #region IAct
+        public abstract void Execute();
+        
         public virtual void ChainUpdate()
         {
             
@@ -40,11 +54,10 @@ namespace Creature.Action
 
         protected void SetAnimation(string animationName, bool loop)
         {
-            var iActor = _data?.IActor;
-            if (iActor == null)
+            if (_iActor == null)
                 return;
             
-            var animationState = iActor.SkeletonAnimation?.AnimationState;
+            var animationState = _iActor.SkeletonAnimation?.AnimationState;
             if (animationState == null)
                 return;
             

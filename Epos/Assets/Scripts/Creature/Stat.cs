@@ -31,6 +31,7 @@ namespace Creature
             ActionSpeed,
             
             Attack,
+            AttackRange,
             MoveSpeed,
         }
 
@@ -41,11 +42,18 @@ namespace Creature
         void IStatGeneric.Initialize(int id)
         {
             // 임시
+            
             switch (id)
             {
                 case 10001:
+                case 10002:
+                case 10003:
+                case 10004:
+
                 {
-                    SetOrigin(EType.ActionSpeed, 10f);
+                    var actionSpeed = id % 1000f * 2;
+                    SetOrigin(EType.ActionSpeed, actionSpeed);
+                    SetOrigin(EType.AttackRange, 3f);
                     SetOrigin(EType.MoveSpeed, 8f); 
                     
                     break;

@@ -14,8 +14,8 @@ namespace Battle
             public List<IActor> AllyIActorList = null;
             public List<IActor> EnemyIActorList = null;
         }
-        
-        public virtual void Add()
+
+        public virtual void Begin()
         {
             
         }
@@ -31,6 +31,8 @@ namespace Battle
 
             return this;
         }
+
+        public abstract override void Begin();
     }
 }
 
