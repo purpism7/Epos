@@ -8,16 +8,10 @@ namespace Creature.Action
     {
         public class Data : BaseData
         {
-            // public IListener IListener = null;
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
         }
         
-        // public interface IListener
-        // {
-        //     void Arrived();
-        // }
-
         public override void Execute()
         {
             if (_data == null)
@@ -55,7 +49,6 @@ namespace Creature.Action
             iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
             if (Vector3.Distance(iActorTm.position, targetPos) <= 0)
             {
-                // _data.IListener?.Arrived();
                 _data.FinishAction?.Invoke();
                 
                 _endAction?.Invoke();

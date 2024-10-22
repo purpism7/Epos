@@ -14,9 +14,9 @@ namespace Creature.Action
 
         public interface IListener
         {
-            void Before();
+            void BeforeUse();
             void InUse();
-            void After();
+            void AfterUse();
         }
 
         private ISkillController _iSkillCtr = null;

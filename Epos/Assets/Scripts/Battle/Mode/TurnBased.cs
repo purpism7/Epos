@@ -129,7 +129,7 @@ namespace Battle.Mode
         }
 
         #region Skill.IListener
-        void Skill.IListener.Before()
+        void Skill.IListener.BeforeUse()
         {
             
         }
@@ -139,7 +139,7 @@ namespace Battle.Mode
             
         }
 
-        void Skill.IListener.After()
+        void Skill.IListener.AfterUse()
         {
             
         }
