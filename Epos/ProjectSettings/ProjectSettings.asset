@@ -160,7 +160,7 @@ PlayerSettings:
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
     Android: com.DefaultCompany.Epos
-    Standalone: com.DefaultCompany.QueensRaid
+    Standalone: com.DefaultCompany.Epos
     iPhone: com.DefaultCompany.Epos
   buildNumber:
     Bratwurst: 0
