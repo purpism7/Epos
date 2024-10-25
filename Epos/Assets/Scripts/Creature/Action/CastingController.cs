@@ -4,23 +4,23 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public interface ISkillController : IController<ISkillController, ICaster>
+    public interface ICastingController : IController<ICastingController, ICaster>
     {
  
     }
     
-    public class SkillController : Controller, ISkillController
+    public class CastingController : Controller, ICastingController
     {
         private ICaster _iCaster = null;
         
-        ISkillController IController<ISkillController, ICaster>.Initialize(ICaster iCaster)
+        ICastingController IController<ICastingController, ICaster>.Initialize(ICaster iCaster)
         {
             _iCaster = iCaster;
             
             return this;
         }
         
-        void IController<ISkillController, ICaster>.ChainUpdate()
+        void IController<ICastingController, ICaster>.ChainUpdate()
         {
             
         }

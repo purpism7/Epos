@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+
+using Common;
 
 namespace Creature.Action
 {
-    public class Skill : Act<Skill.Data>
+    public class Casting : Act<Casting.Data>
     {
         public class Data : BaseData
         {
@@ -14,12 +15,12 @@ namespace Creature.Action
 
         public interface IListener
         {
-            void BeforeUse();
+            void BeforeCasting();
             void InUse();
-            void AfterUse();
+            void AfterCasting();
         }
 
-        private ISkillController _iSkillCtr = null;
+        private ICastingController _iCastingCtr = null;
 
         public override void Initialize(IActor iActor)
         {
@@ -28,9 +29,9 @@ namespace Creature.Action
             var iActorTm = _iActor?.Transform;
             if (!iActorTm)
                 return;
-            
-            _iSkillCtr = iActorTm.gameObject.GetOrAddComponent<SkillController>();
-            _iSkillCtr?.Initialize(_iActor as ICaster);
+
+            _iCastingCtr = iActorTm.AddOrGetComponent<CastingController>();
+            _iCastingCtr?.Initialize(_iActor as ICaster);
         }
 
         public override void Execute()

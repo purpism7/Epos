@@ -7,15 +7,15 @@ namespace Common
 {
     public static class Extension
     {
-        public static T AddOrGetComponent<T>(this GameObject gameObj) where T : Component
+        public static T AddOrGetComponent<T>(this Component component) where T : Component
         {
-            if (!gameObj)
+            if (!component)
                 return default;
             
-            var t = gameObj.GetComponent<T>();
+            var t = component.GetComponent<T>();
             if (t == null)
             {
-                t = gameObj.AddComponent<T>();
+                t = component.gameObject.AddComponent<T>();
             }
 
             return t;

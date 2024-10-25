@@ -30,6 +30,9 @@ namespace Creature
             
             ActionSpeed,
             
+            ActivePoint,
+            PassivePoint,
+            
             Attack,
             AttackRange,
             MoveSpeed,
@@ -42,7 +45,6 @@ namespace Creature
         void IStatGeneric.Initialize(int id)
         {
             // 임시
-            
             switch (id)
             {
                 case 10001:

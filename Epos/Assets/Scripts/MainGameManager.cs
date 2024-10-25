@@ -17,12 +17,12 @@ public class MainGameManager : Singleton<MainGameManager>
         _iMgrGenericList.Clear();
         
         _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
-        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<InputManager>()?.Initialize());
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
         
-        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<CharacterManager>()?.Initialize());
-        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<FieldManager>()?.Initialize());
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<CharacterManager>()?.Initialize());
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<FieldManager>()?.Initialize());
         
-        _iMgrGenericList?.Add(gameObject.AddOrGetComponent<BattleManager>()?.Initialize());
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<BattleManager>()?.Initialize());
     }
     
     public static T Get<T>() where T : IManager

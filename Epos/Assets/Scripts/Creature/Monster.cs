@@ -24,7 +24,7 @@ namespace Creature
         {
             base.Initialize();
 
-            IActCtr = gameObject.AddOrGetComponent<ActController>();
+            IActCtr = transform.AddOrGetComponent<ActController>();
             IActCtr?.Initialize(this);
         }
     }

@@ -8,7 +8,7 @@ using Creature.Action;
 
 namespace Battle.Mode
 {
-    public class TurnBased : BattleMode<TurnBased.Data>, Skill.IListener
+    public class TurnBased : BattleMode<TurnBased.Data>, Casting.IListener
     {
         public class Data : BaseData
         {
@@ -61,12 +61,7 @@ namespace Battle.Mode
                     }
                     
                     _priorityIActorList = _priorityIActorList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
-                    // _data.AllyIActorList = _data.AllyIActorList
-                    //     .OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
-                    //
-                    // _data.EnemyIActorList = _data.EnemyIActorList
-                    //     .OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
-
+     
                     break;
                 }
             }
@@ -122,24 +117,24 @@ namespace Battle.Mode
                 return;
             
             iActCtr.MoveToTarget(Vector3.zero);
-            iActCtr.UseSkill(this);
+            iActCtr.CastingSpell(this);
             
 
 
         }
 
         #region Skill.IListener
-        void Skill.IListener.BeforeUse()
+        void Casting.IListener.BeforeCasting()
         {
             
         }
 
-        void Skill.IListener.InUse()
+        void Casting.IListener.InUse()
         {
             
         }
 
-        void Skill.IListener.AfterUse()
+        void Casting.IListener.AfterCasting()
         {
             
         }

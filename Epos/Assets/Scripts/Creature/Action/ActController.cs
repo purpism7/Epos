@@ -10,7 +10,7 @@ namespace Creature.Action
     {
         void MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
         void Idle();
-        void UseSkill(Skill.IListener iListener);
+        void CastingSpell(Casting.IListener iListener);
     }
     
     public class ActController : Controller, IActController
@@ -80,14 +80,14 @@ namespace Creature.Action
             Idle();
         }
 
-        void IActController.UseSkill(Skill.IListener iListener)
+        void IActController.CastingSpell(Casting.IListener iListener)
         {
-            var data = new Skill.Data
+            var data = new Casting.Data
             {
                 IListener = iListener,
             };
             
-            AddAct<Skill, Skill.Data>(data);
+            AddAct<Casting, Casting.Data>(data);
         }
         
         private void Idle()
