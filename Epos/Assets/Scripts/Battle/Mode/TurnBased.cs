@@ -116,8 +116,7 @@ namespace Battle.Mode
             if (iActCtr == null)
                 return;
             
-            iActCtr.MoveToTarget(Vector3.zero);
-            iActCtr.CastingSpell(this);
+            iActCtr.CastingSkill(this);
             
 
 

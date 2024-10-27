@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 
 namespace Creature.Action
 {
@@ -10,7 +11,7 @@ namespace Creature.Action
     {
         void MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
         void Idle();
-        void CastingSpell(Casting.IListener iListener);
+        void CastingSkill(Casting.IListener iListener);
     }
     
     public class ActController : Controller, IActController
@@ -80,7 +81,7 @@ namespace Creature.Action
             Idle();
         }
 
-        void IActController.CastingSpell(Casting.IListener iListener)
+        void IActController.CastingSkill(Casting.IListener iListener)
         {
             var data = new Casting.Data
             {
