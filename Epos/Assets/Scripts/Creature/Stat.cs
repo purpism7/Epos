@@ -63,7 +63,7 @@ namespace Creature
 
                 case 90001:
                 {
-                    // SetOrigin(EType.ActionSpeed, 10f);
+                    SetOrigin(EType.ActionSpeed, 20f);
                     SetOrigin(EType.MoveSpeed, 2f); 
                     
                     break;

@@ -11,8 +11,9 @@ namespace Creature
     public interface IActor : ISubject
     {
         SkeletonAnimation SkeletonAnimation { get; }
-        IActController IActCtr { get; }
+        
         IStat IStat { get; }
+        IActController IActCtr { get; }
 
         string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
     }

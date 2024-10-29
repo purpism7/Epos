@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Creature;
 using Creature.Action;
+
 
 namespace Battle.Mode
 {
@@ -23,8 +26,9 @@ namespace Battle.Mode
         }
 
         // private EType _eType = EType.None;
-        private Queue<IActor> _iActorQueue = null;
-        private List<IActor> _priorityIActorList = null;
+        private Queue<ICombatant> _iCombatantQueue = null;
+        private List<ICombatant> _priorityICombatantList = null;
+        private ICombatant _currICombatant = null;
         private int _turn = 0;
         
         public override BattleMode<Data> Initialize(Data data)
@@ -41,26 +45,31 @@ namespace Battle.Mode
             if (_data == null)
                 return;
 
-            _iActorQueue = new();
-            _iActorQueue.Clear();
+            _iCombatantQueue = new();
+            _iCombatantQueue.Clear();
             
             switch (_data.EType)
             {
                 case EType.ActionSpeed:
                 {
-                    _priorityIActorList = new();
-                    _priorityIActorList.Clear();
+                    _priorityICombatantList = new();
+                    _priorityICombatantList.Clear();
                     
-                    _priorityIActorList?.AddRange(_data.AllyIActorList);
-                    _priorityIActorList?.AddRange(_data.EnemyIActorList);
+                    _priorityICombatantList?.AddRange(_data.AllyICombatantList);
+                    _priorityICombatantList?.AddRange(_data.EnemyICombatantList);
 
                     // 임시로 initialize 진행. 차후 덱 편성 후 캐릭터 생성 시 진행 예정.
-                    foreach (var iActor in _priorityIActorList)
+                    foreach (var iCombatant in _priorityICombatantList)
                     {
-                        (iActor as Character)?.Initialize();
+                        var character = iCombatant as Character;
+                        if(character == null)
+                            continue;
+                        
+                        character.Initialize();
+                        character.Activate();
                     }
                     
-                    _priorityIActorList = _priorityIActorList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
+                    _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
      
                     break;
                 }
@@ -71,6 +80,11 @@ namespace Battle.Mode
         {
             StartTurn();
         }
+
+        public override void ChainUpdate()
+        {
+            _currICombatant?.IActCtr?.ChainUpdate();
+        }
         
         private void StartTurn()
         {
@@ -79,19 +93,18 @@ namespace Battle.Mode
 
             SetTurn(_turn + 1);
             
-            if (_priorityIActorList != null)
+            if (_priorityICombatantList != null)
             {
-                foreach (var iActor in _priorityIActorList)
+                foreach (var iCombatant in _priorityICombatantList)
                 {
-                    if(iActor == null)
+                    if(iCombatant == null)
                         continue;
                     
-                    _iActorQueue?.Enqueue(iActor);
+                    _iCombatantQueue?.Enqueue(iCombatant);
                 }
             }
             
-            
-            
+            ActAsync().Forget();
         }
 
         private void EndTurn()
@@ -106,20 +119,70 @@ namespace Battle.Mode
             
         }
         
-        private void Act()
+        private async UniTask ActAsync()
         {
-            var iActor = _iActorQueue?.Dequeue();
-            if (iActor == null)
+            var iCombatant = _iCombatantQueue?.Dequeue();
+            if (iCombatant == null)
                 return;
 
-            var iActCtr = iActor.IActCtr;
-            if (iActCtr == null)
-                return;
-            
-            iActCtr.CastingSkill(this);
-            
+            // var iActCtr = iActor.IActCtr;
+            // if (iActCtr == null)
+            //     return;
 
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            
+            var targetList = GetTargetList(iCombatant);
+            var skill = iCombatant.ISkillCtr?.PossibleActiveSkill;
+            
+            var target = targetList?.FirstOrDefault();
+            if (target != null)
+            {
+                var targetPos = target.Transform.position;
+                targetPos.x += skill.SkillData.Range;
+                targetPos.y -= 1f;
+                targetPos.z = 0;
+            
+                iCombatant.IActCtr?.MoveToTarget(targetPos, () => { });
+            }
+            
+            iCombatant.IActCtr?.CastingSkill(this, skill, targetList);
 
+            _currICombatant = iCombatant;
+        }
+
+        private List<ICombatant> GetTargetList(ICombatant iCombatant)
+        {
+            if (iCombatant == null)
+                return null;
+            
+            List<ICombatant> iCombatantList = null; 
+            
+            if (iCombatant is Hero)
+            {
+                iCombatantList = _data?.EnemyICombatantList;
+            }
+            else if (iCombatant is Monster)
+            {
+                iCombatantList = _data?.AllyICombatantList;
+            }
+
+            if (iCombatantList != null)
+            {
+                List<ICombatant> targetList = new();
+                targetList.Clear();
+                
+                foreach (var targetIActor in iCombatantList)
+                {
+                    if(targetIActor == null)
+                        continue;
+                    
+                    targetList.Add(targetIActor);
+                }
+
+                return targetList;
+            }
+
+            return null;
         }
 
         #region Skill.IListener

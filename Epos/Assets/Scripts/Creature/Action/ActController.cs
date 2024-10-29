@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Ability;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+
+using Common;
 
 namespace Creature.Action
 {
@@ -11,7 +14,7 @@ namespace Creature.Action
     {
         void MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
         void Idle();
-        void CastingSkill(Casting.IListener iListener);
+        void CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
     }
     
     public class ActController : Controller, IActController
@@ -21,7 +24,6 @@ namespace Creature.Action
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
         
-        #region IController
         IActController IController<IActController, IActor>.Initialize(IActor iActor)
         {
             _iActor = iActor;
@@ -31,6 +33,8 @@ namespace Creature.Action
             
             return this;
         }
+
+        #region IController
 
         void IController<IActController, IActor>.ChainUpdate()
         {
@@ -43,12 +47,13 @@ namespace Creature.Action
         public override void Activate()
         {
             base.Activate();
+            
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
-
+            
             _iActQueue?.Clear();
             Idle();
         }
@@ -72,7 +77,7 @@ namespace Creature.Action
             }
             else
             {
-                AddAct<Move, Move.Data>(data);
+                AddActAsync<Move, Move.Data>(data).Forget();
             }
         }
 
@@ -81,14 +86,19 @@ namespace Creature.Action
             Idle();
         }
 
-        void IActController.CastingSkill(Casting.IListener iListener)
+        void IActController.CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList)
         {
+            if (!IsActivate)
+                return;
+            
             var data = new Casting.Data
             {
                 IListener = iListener,
+                Skill = skill,
+                TargetList = targetList,
             };
             
-            AddAct<Casting, Casting.Data>(data);
+            AddActAsync<Casting, Casting.Data>(data).Forget();
         }
         
         private void Idle()
@@ -97,7 +107,7 @@ namespace Creature.Action
             SetCurrIAct(null);
         }
 
-        private void AddAct<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
+        private async UniTask AddActAsync<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
         {
             var act = GetAct<T, V>();
             if (act == null)
@@ -120,9 +130,11 @@ namespace Creature.Action
             
             _iActQueue?.Enqueue(act);
 
+            await UniTask.Yield();
+            
             if (_currIAct == null)
             {
-                ExecuteActAsync().Forget();
+                ExecuteAct();
             }
         }
 
@@ -173,10 +185,8 @@ namespace Creature.Action
             SetCurrIAct(act);
         }
 
-        private async UniTask ExecuteActAsync()
+        private void ExecuteAct()
         {
-            await UniTask.Yield();
-            
             if (_iActQueue.Count > 0)
             {
                 if (_iActQueue.TryDequeue(out IAct iAct))
@@ -193,7 +203,7 @@ namespace Creature.Action
         
         private void EndAct()
         {
-            ExecuteActAsync().Forget();
+            ExecuteAct();
         }
 
         private void SetCurrIAct(IAct iAct)

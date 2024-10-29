@@ -29,7 +29,9 @@ namespace Creature.Action
                 return;
             
             var targetPos = _data.TargetPos;
-            iActorTm.eulerAngles = new Vector3(0, iActorTm.position.x - targetPos.x < 0 ? 0 : 180f, 0);
+            var direction = targetPos.x - iActorTm.position.x;
+
+            iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
         }
 
         public override void ChainUpdate()

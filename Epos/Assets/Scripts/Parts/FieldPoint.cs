@@ -131,8 +131,8 @@ namespace Parts
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(new TurnBased.Data
                 {
-                    AllyIActorList = Extension.AddList<IActor, Character>(leftDeploy?.characters),
-                    EnemyIActorList = Extension.AddList<IActor, Character>(rightDeploy?.characters),
+                    AllyICombatantList = Extension.AddList<ICombatant, Character>(leftDeploy?.characters),
+                    EnemyICombatantList = Extension.AddList<ICombatant, Character>(rightDeploy?.characters),
                     
                     EType = TurnBased.EType.ActionSpeed,
                 })

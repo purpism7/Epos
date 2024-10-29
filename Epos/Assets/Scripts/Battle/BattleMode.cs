@@ -11,11 +11,16 @@ namespace Battle
     {
         public class BaseData
         {
-            public List<IActor> AllyIActorList = null;
-            public List<IActor> EnemyIActorList = null;
+            public List<ICombatant> AllyICombatantList = null;
+            public List<ICombatant> EnemyICombatantList = null;
         }
 
         public virtual void Begin()
+        {
+            
+        }
+
+        public virtual void ChainUpdate()
         {
             
         }
@@ -33,6 +38,7 @@ namespace Battle
         }
 
         public abstract override void Begin();
+        public abstract override void ChainUpdate();
     }
 }
 

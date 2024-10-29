@@ -25,6 +25,11 @@ namespace Battle
         {
             _iListener?.End();
         }
+
+        public virtual void ChainUpdate()
+        {
+            
+        }
         
         protected void AddStep<T>(BattleStep.BaseData data = null, bool isLast = false) where T : BattleStep, new()
         {
@@ -69,6 +74,13 @@ namespace Battle
         public virtual void Initialize(T data)
         {
             _data = data;
+        }
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+            
+            _data?.BattleMode?.ChainUpdate();
         }
         
         public void SetIListener(IListener iListener)

@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 using Spine.Unity;
 
+using Creature.Action;
+
 namespace Creature
 {
-    public interface ICaster : ISubject
+    public interface ICaster : IActor
     {
-        SkeletonAnimation SkeletonAnimation { get; }
-        IStat IStat { get; }
+        ISkillController ISkillCtr { get; }
     }
 }

@@ -13,7 +13,7 @@ using Creature.Action;
 
 namespace Creature
 {
-    public abstract class Character : MonoBehaviour, IActor, ICaster
+    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
     {
         #region Inspector
         [SerializeField] 
@@ -30,7 +30,18 @@ namespace Creature
 
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
-        public bool IsActivate { get; private set; } = false;
+        public ISkillController ISkillCtr { get; protected set; } = null;
+        
+        public bool IsActivate 
+        {
+            get
+            {
+                if (!rootTm)
+                    return false;
+                
+                return rootTm.gameObject.activeSelf;
+            }
+        }
         
         public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
 
@@ -41,6 +52,9 @@ namespace Creature
 
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(id);
+            
+            ISkillCtr = transform.AddOrGetComponent<SkillController>();
+            ISkillCtr?.Initialize(this);
         }
         
         public virtual void ChainUpdate()
@@ -55,8 +69,9 @@ namespace Creature
         {
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
+            ISkillCtr?.Activate();
             
-            IsActivate = true;
+            // IsActivate = true;
             
             Extension.SetActive(rootTm, true);
         }
@@ -65,8 +80,8 @@ namespace Creature
         {
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
-            
-            IsActivate = false;
+            ISkillCtr?.Deactivate();
+            // IsActivate = false;
             
             Extension.SetActive(rootTm, false);
         }

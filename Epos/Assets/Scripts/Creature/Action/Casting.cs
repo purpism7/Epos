@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
-using Common;
+using Ability;
 
 namespace Creature.Action
 {
@@ -11,6 +12,8 @@ namespace Creature.Action
         public class Data : BaseData
         {
             public IListener IListener = null;
+            public Skill Skill = null;
+            public List<ICombatant> TargetList = null;
         }
 
         public interface IListener
@@ -20,18 +23,9 @@ namespace Creature.Action
             void AfterCasting();
         }
 
-        private ICastingController _iCastingCtr = null;
-
         public override void Initialize(IActor iActor)
         {
             base.Initialize(iActor);
-
-            var iActorTm = _iActor?.Transform;
-            if (!iActorTm)
-                return;
-
-            _iCastingCtr = iActorTm.AddOrGetComponent<CastingController>();
-            _iCastingCtr?.Initialize(_iActor as ICaster);
         }
 
         public override void Execute()
@@ -39,6 +33,7 @@ namespace Creature.Action
             if (_data == null)
                 return;
 
+            // _iSkillCtr?.Casting(_data.TargetList);
         }
     }
 }

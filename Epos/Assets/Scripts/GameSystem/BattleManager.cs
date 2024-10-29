@@ -57,7 +57,14 @@ namespace GameSystem
 
             _currBattleType = battleType;
         }
-        
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+            
+            _currBattleType?.ChainUpdate();
+        }
+
         #region BattleType.IListener
         void BattleType.IListener.End()
         {
