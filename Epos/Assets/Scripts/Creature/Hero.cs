@@ -34,6 +34,7 @@ namespace Creature
             {
                 case Idle: return "F_Idle";
                 case Move: return "F_Run";
+                case Casting: return "F_Hit_01";
             }
 
             return string.Empty;

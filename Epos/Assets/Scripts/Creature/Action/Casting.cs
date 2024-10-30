@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Ability;
+
 
 namespace Creature.Action
 {
@@ -32,8 +34,20 @@ namespace Creature.Action
         {
             if (_data == null)
                 return;
+            
+            CastingAsync().Forget();
+        }
 
+        private async UniTask CastingAsync()
+        {
+            _data?.IListener?.BeforeCasting();
+
+            await UniTask.Yield();
+            
+            SetAnimation(_data.AnimationKey, false);
+            _data.Skill.Casting();
             // _iSkillCtr?.Casting(_data.TargetList);
+            
         }
     }
 }

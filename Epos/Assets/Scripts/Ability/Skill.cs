@@ -32,6 +32,11 @@ namespace Ability
         {
             
         }
+
+        public virtual void Casting()
+        {
+            
+        }
     }
 }
 
