@@ -126,7 +126,7 @@ MonoBehaviour:
   unscaledTime: 0
   _animationName: 000_Idle
   loop: 1
-  timeScale: 1
+  timeScale: 5
 --- !u!1 &1716867242457449818
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +253,7 @@ MonoBehaviour:
   unscaledTime: 0
   _animationName: 000_Idle
   loop: 1
-  timeScale: 1
+  timeScale: 3
 --- !u!1 &2275939474153990238
 GameObject:
   m_ObjectHideFlags: 0
@@ -285,8 +285,8 @@ RectTransform:
   - {fileID: 7274313356170669715}
   - {fileID: 6372319685061455830}
   - {fileID: 4796546837492279335}
-  - {fileID: 4517345856858200282}
   - {fileID: 3837672581343432846}
+  - {fileID: 4517345856858200282}
   - {fileID: 2607686413518324708}
   - {fileID: 7470000043631729433}
   m_Father: {fileID: 0}
@@ -422,7 +422,7 @@ MonoBehaviour:
   unscaledTime: 0
   _animationName: 000_Idle
   loop: 1
-  timeScale: 1
+  timeScale: 2
 --- !u!1 &5659367858668168647
 GameObject:
   m_ObjectHideFlags: 0
@@ -835,4 +835,4 @@ MonoBehaviour:
   unscaledTime: 0
   _animationName: 000_Idle
   loop: 1
-  timeScale: 1
+  timeScale: 4
