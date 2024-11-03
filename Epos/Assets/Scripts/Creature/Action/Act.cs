@@ -64,6 +64,8 @@ namespace Creature.Action
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return;
+            
+            // Debug.Log(trackEntry.Animation.Duration);
         }
     }
 }

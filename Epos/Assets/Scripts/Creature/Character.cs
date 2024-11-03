@@ -10,7 +10,6 @@ using Spine.Unity;
 using Common;
 using Creature.Action;
 
-
 namespace Creature
 {
     public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
@@ -23,6 +22,11 @@ namespace Creature
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
+        
+        #region ICombatant
+
+        private ICombatant.Data _iCombatantData = null;
+        #endregion
         
         public int Id { get { return id; } }
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
@@ -84,6 +88,24 @@ namespace Creature
             // IsActivate = false;
             
             Extension.SetActive(rootTm, false);
+        }
+        #endregion
+        
+        #region ICombatant
+        void ICombatant.Initialize(ICombatant.Data data)
+        {
+            _iCombatantData = data;
+        }
+
+        EType.EFormation ICombatant.EFormation
+        {
+            get
+            {
+                if (_iCombatantData == null)
+                    return EType.EFormation.None;
+                
+                return _iCombatantData.EFormation;
+            }
         }
         #endregion
     }

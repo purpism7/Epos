@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Ability;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
 using Creature;
 using Creature.Action;
-
 
 namespace Battle.Mode
 {
@@ -76,6 +76,9 @@ namespace Battle.Mode
             }
         }
 
+        // 전투 시작 시, 패시브 스킬 발동.
+        // 전투 종료 시, 패시브 스킬 발동.
+        
         public override void Begin()
         {
             StartTurn();
@@ -121,33 +124,40 @@ namespace Battle.Mode
         
         private async UniTask ActAsync()
         {
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            
             var iCombatant = _iCombatantQueue?.Dequeue();
             if (iCombatant == null)
                 return;
-
-            // var iActCtr = iActor.IActCtr;
-            // if (iActCtr == null)
-            //     return;
-
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             var targetList = GetTargetList(iCombatant);
             var skill = iCombatant.ISkillCtr?.PossibleActiveSkill;
+
+            MoveToTarget(iCombatant, skill, targetList);
+            iCombatant.IActCtr?.CastingSkill(this, skill, targetList);
+
+            _currICombatant = iCombatant;
+        }
+
+        private void MoveToTarget(ICombatant iCombatant, Skill skill, List<ICombatant> targetList)
+        {
+            if (skill == null)
+                return;
+            
+            var skillRange = skill.SkillData.Range;
+            if (skillRange <= 0)
+                return;
             
             var target = targetList?.FirstOrDefault();
             if (target != null)
             {
                 var targetPos = target.Transform.position;
-                targetPos.x += skill.SkillData.Range;
+                targetPos.x += skillRange;
                 targetPos.y -= 1f;
                 targetPos.z = 0;
             
                 iCombatant.IActCtr?.MoveToTarget(targetPos, () => { });
             }
-            
-            iCombatant.IActCtr?.CastingSkill(this, skill, targetList);
-
-            _currICombatant = iCombatant;
         }
 
         private List<ICombatant> GetTargetList(ICombatant iCombatant)
