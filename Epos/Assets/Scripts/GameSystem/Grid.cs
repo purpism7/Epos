@@ -33,6 +33,7 @@ namespace GameSystem
                     var y = j * cellSize + halfCellSize;
 
                     cell.transform.localPosition = new Vector3(x , y, 0);
+                    cell.name = $"[{x},{y}]";
                 }
             }
         }

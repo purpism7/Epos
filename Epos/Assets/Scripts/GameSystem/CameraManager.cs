@@ -135,7 +135,7 @@ namespace GameSystem
             await DOTween.To(() => mainCamera.transform.position,
                 position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
 
-            await UniTask.Yield();
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             endAction?.Invoke();
         }

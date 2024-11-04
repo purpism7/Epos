@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 1ee5616dad59d0b4bab20faddabc118a, type: 2}
+    - target: {fileID: 2267751587642048173, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3275219824483254572, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -199,6 +203,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5944215453957855101, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5957323279393055368, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
@@ -404,7 +412,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 162.33722, y: 101.72075, z: -200}
+  m_LocalPosition: {x: 162.3371, y: 101.7025, z: -200}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -527,6 +535,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &711596580 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 1887587232362526180, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+  m_PrefabInstance: {fileID: 453219115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &734142637
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +627,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 0}
+  m_BoundingShape2D: {fileID: 711596580}
   m_ConfineScreenEdges: 1
   m_Damping: 0
 --- !u!1 &1934774203

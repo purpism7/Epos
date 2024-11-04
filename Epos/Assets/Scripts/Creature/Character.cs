@@ -23,11 +23,6 @@ namespace Creature
 
         private IStatGeneric _iStatGeneric = null;
         
-        #region ICombatant
-
-        private ICombatant.Data _iCombatantData = null;
-        #endregion
-        
         public int Id { get { return id; } }
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return transform; } }
@@ -35,6 +30,10 @@ namespace Creature
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
         public ISkillController ISkillCtr { get; protected set; } = null;
+        
+        #region ICombatant
+        public EType.EFormation EFormation { get; private set; } = EType.EFormation.None;
+        #endregion
         
         public bool IsActivate 
         {
@@ -92,20 +91,9 @@ namespace Creature
         #endregion
         
         #region ICombatant
-        void ICombatant.Initialize(ICombatant.Data data)
+        void ICombatant.SetEFormation(EType.EFormation eFormation)
         {
-            _iCombatantData = data;
-        }
-
-        EType.EFormation ICombatant.EFormation
-        {
-            get
-            {
-                if (_iCombatantData == null)
-                    return EType.EFormation.None;
-                
-                return _iCombatantData.EFormation;
-            }
+            EFormation = eFormation;
         }
         #endregion
     }

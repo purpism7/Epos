@@ -7,12 +7,7 @@ namespace Creature
 {
     public interface ICombatant : ICaster
     {
-        public class Data
-        {
-            public EType.EFormation EFormation = EType.EFormation.None;
-        }
-        
-        void Initialize(Data data);
+        void SetEFormation(EType.EFormation eFormation);
         public EType.EFormation EFormation { get; }
     }
 }
