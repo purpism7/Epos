@@ -4,25 +4,29 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Common;
-
+using Manager;
 using GameSystem;
 
-public class MainGameManager : Singleton<MainGameManager>
+public class MainManager : Singleton<MainManager>
 {
-    private List<IManagerGeneric> _iMgrGenericList = null;
+    private List<Manager.IGeneric> _iMgrGenericList = null;
     
     protected override void Initialize()
     {
-        _iMgrGenericList = new();
-        _iMgrGenericList.Clear();
+        if (_iMgrGenericList == null)
+        {
+            _iMgrGenericList = new();
+            _iMgrGenericList.Clear();
+        }
         
         _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
         _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
+       
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<Manager.FieldManager>()?.Initialize());
         
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<CharacterManager>()?.Initialize());
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<FieldManager>()?.Initialize());
-        
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<BattleManager>()?.Initialize());
+        _iMgrGenericList?.Add(new Character().Initialize());
+        _iMgrGenericList?.Add(new Formation().Initialize());
+        _iMgrGenericList?.Add(new BattleManager().Initialize());
     }
     
     public static T Get<T>() where T : IManager
@@ -31,11 +35,11 @@ public class MainGameManager : Singleton<MainGameManager>
         if (iMgrGenericList == null)
             return default;
 
-        var findIMgrGeneric = iMgrGenericList.Find(iMgrGeneric => iMgrGeneric is T);
-        if (findIMgrGeneric == null)
-        {
-            // findIMgrGeneric = 
-        }
+        // var findIMgrGeneric = iMgrGenericList.Find(iMgrGeneric => iMgrGeneric is T);
+        // if (findIMgrGeneric == null)
+        // {
+        //     // findIMgrGeneric = 
+        // }
         
         foreach (var iMgrGeneric in iMgrGenericList)
         {
@@ -43,8 +47,6 @@ public class MainGameManager : Singleton<MainGameManager>
                 return (T)iMgrGeneric;
         }
         
-        
-
         return default;
     }
 

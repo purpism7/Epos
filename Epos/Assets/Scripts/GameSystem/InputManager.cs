@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Manager;
+
 namespace GameSystem
 {
     public interface IInputManager : IManager
@@ -9,21 +11,19 @@ namespace GameSystem
         
     }
     
-    public class InputManager : Manager
+    public class InputManager : MonoBehaviour, IInputManager
     {
         private ICameraManager _iCameraMgr = null;
         
-        public override IManagerGeneric Initialize()
+        public Manager.IGeneric Initialize()
         {
             _iCameraMgr = GetComponent<CameraManager>();
             
             return this;
         }
 
-        public override void ChainUpdate()
+        void Manager.IGeneric.ChainUpdate()
         {
-            base.ChainUpdate();
-
             if (_iCameraMgr == null)
                 return;
 
@@ -38,8 +38,13 @@ namespace GameSystem
             if (Input.GetMouseButtonUp(0))
             {
                 mouseWorldPos.z = 0;
-                MainGameManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
+                MainManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
             }
+        }
+
+        void Manager.IGeneric.ChainLateUpdate()
+        {
+            
         }
     }
 }

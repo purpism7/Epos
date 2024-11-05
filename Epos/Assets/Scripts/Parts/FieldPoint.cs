@@ -10,7 +10,6 @@ using GameSystem;
 using Battle.Mode;
 using Battle.Step;
 using Common;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Parts
 {
@@ -47,7 +46,7 @@ namespace Parts
         
         public interface IListener
         {
-            void Encounter(IActor iActor);
+            void Encounter(IActor iActor); // 필드 영웅과 몬스터가 대치.
         }
 
         Collider2D[] _colliders = new Collider2D[5];
@@ -124,7 +123,7 @@ namespace Parts
         
         private void BeginFieldBattle()
         {
-            var iBattleMgr = MainGameManager.Get<IBattleManager>();
+            var iBattleMgr = MainManager.Get<IBattleManager>();
             if (iBattleMgr == null)
                 return;
             

@@ -27,7 +27,7 @@ namespace Battle.Step
             {
                 case FieldData data:
                 {
-                    MainGameManager.Get<ICameraManager>()?.ZoomIn(data.CameraZoomInPos, 
+                    MainManager.Get<ICameraManager>()?.ZoomIn(data.CameraZoomInPos, 
                         () =>
                         {
                             data.CameraZoomInEndAction?.Invoke();

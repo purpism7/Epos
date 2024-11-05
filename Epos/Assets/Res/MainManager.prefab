@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 1300418730362321927}
   - component: {fileID: -5919151402538035327}
   - component: {fileID: 2405952197149644585}
-  - component: {fileID: 2535258873023343394}
   - component: {fileID: 8832147844271384396}
   m_Layer: 0
-  m_Name: MainGameManager
+  m_Name: MainManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,18 +60,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 0}
   virtualCamera: {fileID: 0}
---- !u!114 &2535258873023343394
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498938429517928654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53f61e07048b24e8d83eb0e4f3a74f44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8832147844271384396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85,5 +72,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ba78a65bbbc4303ae9974a88a1a6d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  field: {fileID: 0}
   fieldHero: {fileID: 0}
-  fieldMonster: {fileID: 0}

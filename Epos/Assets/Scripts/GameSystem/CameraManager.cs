@@ -2,14 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 
 using DG.Tweening;
 
 namespace GameSystem
 {
-    public interface ICameraManager : IManager
+    public interface ICameraManager : Manager.IManager
     {
         Camera MainCamera { get; }
         bool IsMove { get; }
@@ -17,7 +18,7 @@ namespace GameSystem
         void ZoomIn(Vector3 targetPos, Action endAction);
     }
     
-    public class CameraManager : Manager, ICameraManager
+    public class CameraManager : MonoBehaviour, ICameraManager
     {
         [SerializeField] 
         private Camera mainCamera = null;
@@ -38,16 +39,19 @@ namespace GameSystem
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
-
-        public override IManagerGeneric Initialize()
+        
+        public Manager.IGeneric Initialize()
         {
             return this;
         }
-
-        public override void ChainLateUpdate()
+        
+        void Manager.IGeneric.ChainUpdate()
         {
-            base.ChainLateUpdate();
             
+        }
+
+        public void ChainLateUpdate()
+        {
             if (mainCamera == null)
                 return;
 

@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 // 임시 스크립트
 public class WorldMap : MonoBehaviour
 {
-    private IManagerGeneric _cameraMgrGeneric = null;
+    private Manager.IGeneric _cameraIMgr = null;
     private ICameraManager _iCameraMgr = null;
     private int _selectAreaIndex = 0;
     
@@ -16,8 +16,8 @@ public class WorldMap : MonoBehaviour
     {
         var cameraMgr = GetComponent<CameraManager>();
 
-        _cameraMgrGeneric = cameraMgr;
-        _cameraMgrGeneric?.Initialize();
+        _cameraIMgr = cameraMgr;
+        _cameraIMgr?.Initialize();
 
         _iCameraMgr = cameraMgr;
 
@@ -88,6 +88,6 @@ public class WorldMap : MonoBehaviour
 
     private void LateUpdate()
     {
-        _cameraMgrGeneric?.ChainLateUpdate();
+        _cameraIMgr?.ChainLateUpdate();
     }
 }

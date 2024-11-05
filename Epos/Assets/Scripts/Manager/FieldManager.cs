@@ -4,14 +4,15 @@ using UnityEngine;
 
 using Creature;
 
-namespace GameSystem
+namespace Manager
 {
     public interface IFieldManager : IManager
     {
         void MoveToTarget(Vector3 pos);
+        Data.Field GetFieldData(int id);
     }
     
-    public class FieldManager : Manager, IFieldManager
+    public class FieldManager : MonoBehaviour, IFieldManager
     {
         [SerializeField] 
         private Parts.Field field = null;
@@ -19,9 +20,12 @@ namespace GameSystem
         private Hero fieldHero = null;
         
         private List<Parts.Field> _fieldList = new();
-        private Parts.IField CurrIField = null; 
+        private Parts.IField CurrIField = null;
+
+        private Dictionary<int, Data.Field> _fieldDataList = null;
         
-        public override IManagerGeneric Initialize()
+        #region IGeneric
+        public Manager.IGeneric Initialize()
         {
             field?.Initialize();
             field?.Activate();
@@ -33,18 +37,38 @@ namespace GameSystem
             return this;
         }
         
-        public override void ChainUpdate()
+        void IGeneric.ChainUpdate()
         {
-            base.ChainUpdate();
-        
             CurrIField?.ChainUpdate();
             fieldHero?.ChainUpdate();
         }
+
+        void IGeneric.ChainLateUpdate()
+        {
+            
+        }
+        #endregion
         
+        #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
             fieldHero?.MoveToTarget(pos);
         }
+
+        Data.Field IFieldManager.GetFieldData(int id)
+        {
+            if (_fieldDataList == null)
+            {
+                _fieldDataList = new();
+                _fieldDataList.Clear();
+            }
+
+            if (_fieldDataList.TryGetValue(id, out Data.Field fieldData))
+                return fieldData;
+
+            return null;
+        }
+        #endregion
     }
 }
 

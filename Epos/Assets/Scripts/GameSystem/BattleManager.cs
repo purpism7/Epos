@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Battle;
+using Manager;
 
 namespace GameSystem
 {
@@ -11,14 +12,14 @@ namespace GameSystem
         public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
-    public class BattleManager : Manager, IBattleManager, BattleType.IListener
+    public class BattleManager : IBattleManager, BattleType.IListener
     {
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
 
         // private Dictionary<System.Type, BattleMode> _battleModeDic = null;
         
-        public override IManagerGeneric Initialize()
+        public IGeneric Initialize()
         {
             return this;
         }
@@ -58,11 +59,14 @@ namespace GameSystem
             _currBattleType = battleType;
         }
 
-        public override void ChainUpdate()
+        public void ChainUpdate()
         {
-            base.ChainUpdate();
-            
             _currBattleType?.ChainUpdate();
+        }
+
+        public void ChainLateUpdate()
+        {
+            
         }
 
         #region BattleType.IListener
