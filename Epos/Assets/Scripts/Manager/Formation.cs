@@ -27,8 +27,6 @@ namespace Manager
             
             _formationList?.Add(formationInfo);
             
-            Debug.Log(_formationList[0]?.CharacterIds[0,1]);
-            
             return this;
         }
 

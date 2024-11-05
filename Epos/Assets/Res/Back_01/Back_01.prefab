@@ -540,6 +540,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1385945087255656108}
+  id: 2
   pointTm: {fileID: 8180963170881293037}
   leftDeploy: {fileID: 0}
   rightDeploy: {fileID: 0}
@@ -949,6 +950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6062096390182815080}
+  id: 1
   fieldPoints:
   - {fileID: 7408787124899159903}
   - {fileID: 853053253316566952}
@@ -1169,6 +1171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1282919063172278104}
+  id: 1
   pointTm: {fileID: 1713122594278529986}
   leftDeploy: {fileID: 458317159012273399}
   rightDeploy: {fileID: 5839878923843824579}

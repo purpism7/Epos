@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Creature;
 using GameSystem;
+using Manager;
 
 namespace Parts
 {
@@ -16,6 +17,8 @@ namespace Parts
     
     public class Field : Part, IField, FieldPoint.IListener
     {
+        [SerializeField] 
+        private int id = 0;
         [SerializeField] 
         private FieldPoint[] fieldPoints = null;
     
@@ -93,12 +96,14 @@ namespace Parts
         
         #region FieldPoint.IListener
 
-        void FieldPoint.IListener.Encounter(IActor iActor)
+        void FieldPoint.IListener.Encounter(int fieldPointId, IActor iActor)
         {
             if (iActor == null)
                 return;
             
             iActor.IActCtr?.Idle();
+            
+            // MainManager.Get<IFieldManager>().GetFieldData()
         }
         #endregion
     }

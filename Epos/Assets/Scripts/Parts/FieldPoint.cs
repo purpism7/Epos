@@ -25,6 +25,8 @@ namespace Parts
 
     public class FieldPoint : Part<FieldPoint.Data>//, IFieldPoint
     {
+        [SerializeField] 
+        private int id = 0;
         [SerializeField]
         private Transform pointTm = null;
 
@@ -46,7 +48,7 @@ namespace Parts
         
         public interface IListener
         {
-            void Encounter(IActor iActor); // 필드 영웅과 몬스터가 대치.
+            void Encounter(int fieldPointId, IActor iActor); // 필드 영웅과 몬스터가 대치.
         }
 
         Collider2D[] _colliders = new Collider2D[5];
@@ -105,7 +107,7 @@ namespace Parts
                     var hero = collider.GetComponentInParent<Hero>();
                     if (hero != null)
                     {
-                        _data?.IListener?.Encounter(hero);
+                        _data?.IListener?.Encounter(id, hero);
                         
                         BeginFieldBattle();
                         

@@ -9,7 +9,7 @@ namespace Info
     public class Formation
     {
         public int Index = 0;
-        public int[,] CharacterIds = new int[2,3];
+        public int[,] CharacterIds = new int[2, 3];
     }
 }
 
