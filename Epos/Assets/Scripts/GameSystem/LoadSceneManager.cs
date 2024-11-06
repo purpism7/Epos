@@ -24,7 +24,7 @@ namespace GameSystem
             Reset();
         }
 
-        public async UniTask LoadSceneAsync(string name)
+        public async UniTask LoadSceneAsync(string loadSceneName)
         {
             await UniTask.Yield();
             
@@ -32,7 +32,7 @@ namespace GameSystem
                 return;
             
             _isLoad = true;
-            _loadSceneName = name;
+            _loadSceneName = loadSceneName;
             _sceneName = SceneManager.GetActiveScene().name;
             
             AsyncOperationHandle<SceneInstance> sceneInstance =

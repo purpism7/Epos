@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Battle;
+using Battle.Mode;
+using Battle.Step;
+using Common;
+using Creature;
 using Manager;
+using Character = Manager.Character;
 
 namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
+        void BeginFieldBattle(Parts.Deploy leftDeploy, Parts.Deploy rightDeploy, Transform pointTm);
+        // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
     public class BattleManager : IBattleManager, BattleType.IListener
@@ -24,7 +30,7 @@ namespace GameSystem
             return this;
         }
 
-        public void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData
+        private void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData
         {
             if (_currBattleType != null)
                 return;
@@ -69,6 +75,55 @@ namespace GameSystem
             
         }
 
+        #region IBattleManager
+        /// <summary>
+        /// Set Field Battle
+        /// </summary>
+        /// <param name="leftDeploy">Ally</param>
+        /// <param name="rightDeploy">Enemy</param>
+        /// <param name="pointTm">For Zoom In Camera</param>
+        void IBattleManager.BeginFieldBattle(Parts.Deploy leftDeploy, Parts.Deploy rightDeploy, Transform pointTm)
+        {
+            var battleModeData = new TurnBased.Data
+            {
+                AllyICombatantList = leftDeploy?.characters?.AddList<ICombatant, Creature.Character>(),
+                EnemyICombatantList = rightDeploy?.characters?.AddList<ICombatant, Creature.Character>(),
+
+                EType = TurnBased.EType.ActionSpeed,
+            };
+            
+            var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
+                .SetData(battleModeData)
+                .Create();
+            
+            var fieldData = new Battle.Field.Data
+            {
+                BattleMode = battleMode,
+                
+                PreprocessingData = new Preprocessing.FieldData
+                {
+                    CameraZoomInPos = pointTm.position,
+                    CameraZoomInEndAction = () =>
+                    {
+
+                    },
+                },
+
+                LeftDeployData = new Battle.Step.Deploy.FieldData
+                {
+                    Deploy = leftDeploy,
+                },
+
+                RightDeployData = new Battle.Step.Deploy.FieldData
+                {
+                    Deploy = rightDeploy,
+                },
+            };
+            
+            Begin<Field, Battle.Field.Data>(fieldData);
+        }
+        #endregion
+        
         #region BattleType.IListener
         void BattleType.IListener.End()
         {

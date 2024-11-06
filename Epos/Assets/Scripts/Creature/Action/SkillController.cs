@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-using Skill = Ability.Skill;
-
 namespace Creature.Action
 {
     public interface ISkillController : IController<ISkillController, ICaster>
     {
-        Skill PossibleActiveSkill { get; }
-        void Casting(List<ICombatant> targetList);
+        Ability.Skill GetPossibleSkill(Type.ESkillCategory eSkillCategory);
+        
+        void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
     }
     
     public class SkillController : Controller, ISkillController
@@ -31,19 +30,16 @@ namespace Creature.Action
             
         }
 
-        Skill ISkillController.PossibleActiveSkill
+        Ability.Skill ISkillController.GetPossibleSkill(Type.ESkillCategory eSkillCategory)
         {
-            get
-            {
-                return PossibleActiveSkill;
-            }
+            return PossibleSkill(eSkillCategory);
         }
         
-        void ISkillController.Casting(List<ICombatant> targetList)
+        void ISkillController.Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory)
         {
             // if (skill == null)
             //     return;
-            var skill = PossibleActiveSkill;
+            var skill = PossibleSkill(eSkillCategory);
             if (skill == null)
                 return;
 
@@ -79,10 +75,23 @@ namespace Creature.Action
 
             switch (_iCaster.Id)
             {
+                case 10003:
+                {
+                    var skill = new Ability.Skill();
+                    skill.Initialize(new Data.Skill(2, 0));
+                    skill.SetESkillCategory(Type.ESkillCategory.Passive);
+                    
+                    _skillList?.Add(skill);
+                    
+                    break;
+                }
+                
                 case 90001:
                 {
-                    var skill = new Skill();
-                    skill.Initialize(1);
+                    var skill = new Ability.Skill();
+                    skill.Initialize(new Data.Skill(1, 5f));
+                    skill.SetESkillCategory(Type.ESkillCategory.Active);
+                    
                     _skillList?.Add(skill);
                     
                     break;
@@ -90,23 +99,21 @@ namespace Creature.Action
             }
         }
 
-        private Skill PossibleActiveSkill
+        private Ability.Skill PossibleSkill(Type.ESkillCategory eSkillCategory)
         {
-            get
-            {
-                if (_skillList == null)
-                    return null;
-
-                foreach (var skill in _skillList)
-                {
-                    if(skill == null)
-                        continue;
-                    
-                    return skill;
-                }
-
+            if (_skillList == null)
                 return null;
+
+            foreach (var skill in _skillList)
+            {
+                if(skill == null)
+                    continue;
+
+                if (skill.ESkillCategory == eSkillCategory)
+                    return skill;
             }
+
+            return null;
         }
     }
 }

@@ -13,17 +13,7 @@ using Common;
 
 namespace Parts
 {
-    // public interface IFieldPoint
-    // {
-    //     void Initialize();
-    //     void Activate();
-    //     void Deactivate();
-    //     void ChainUpdate();
-    //
-    //     Transform PointTm { get; }
-    // }
-
-    public class FieldPoint : Part<FieldPoint.Data>//, IFieldPoint
+    public class FieldPoint : Part<FieldPoint.Data>
     {
         [SerializeField] 
         private int id = 0;
@@ -128,42 +118,8 @@ namespace Parts
             var iBattleMgr = MainManager.Get<IBattleManager>();
             if (iBattleMgr == null)
                 return;
-            
-            var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
-                .SetData(new TurnBased.Data
-                {
-                    AllyICombatantList = Extension.AddList<ICombatant, Character>(leftDeploy?.characters),
-                    EnemyICombatantList = Extension.AddList<ICombatant, Character>(rightDeploy?.characters),
-                    
-                    EType = TurnBased.EType.ActionSpeed,
-                })
-                .Create();
-            
-            var fieldData = new Battle.Field.Data
-            {
-                BattleMode = battleMode,
-                
-                PreprocessingData = new Preprocessing.FieldData
-                {
-                    CameraZoomInPos = pointTm.position,
-                    CameraZoomInEndAction = () =>
-                    {
 
-                    },
-                },
-
-                LeftDeployData = new Battle.Step.Deploy.FieldData
-                {
-                    Deploy = leftDeploy,
-                },
-
-                RightDeployData = new Battle.Step.Deploy.FieldData
-                {
-                    Deploy = rightDeploy,
-                },
-            };
-            
-            iBattleMgr.Begin<Battle.Field, Battle.Field.Data>(fieldData);
+            iBattleMgr.BeginFieldBattle(leftDeploy, rightDeploy, pointTm);
         }
 
         private async UniTask RandomActionAsync()

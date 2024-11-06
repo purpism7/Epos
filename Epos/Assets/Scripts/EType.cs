@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EType
+public class Type
 {
     public enum EFormation
     {
@@ -10,5 +10,21 @@ public class EType
         
         Front,
         Rear,
+    }
+    
+    public enum ETeam
+    {
+        None,
+        
+        Ally,
+        Enemy,
+    }
+    
+    public enum ESkillCategory
+    {
+        None,
+        
+        Passive,
+        Active,
     }
 }

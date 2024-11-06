@@ -4,28 +4,15 @@ using UnityEngine;
 
 namespace Ability
 {
-    // public class Skill
-    // {
-    //     public virtual void ChainUpdate()
-    //     {
-    //         
-    //     }
-    // }
-    
     public class Skill
     {
-        // public class BaseData
-        // {
-        //     public int Id = 0;
-        // }
-
         public Data.Skill SkillData { get; private set; } = null;
 
-        // private T _data = null;
-        
-        public virtual void Initialize(int id)
+        public Type.ESkillCategory ESkillCategory { get; private set; } = Type.ESkillCategory.None;
+
+        public virtual void Initialize(Data.Skill skillData)
         {
-            SkillData = new Data.Skill(id, 5f);
+            SkillData = skillData;
         }
 
         public virtual void ChainUpdate()
@@ -36,6 +23,11 @@ namespace Ability
         public virtual void Casting()
         {
             
+        }
+
+        public void SetESkillCategory(Type.ESkillCategory eSkillCategory)
+        {
+            ESkillCategory = eSkillCategory;
         }
     }
 }

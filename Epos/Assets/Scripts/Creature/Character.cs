@@ -32,7 +32,8 @@ namespace Creature
         public ISkillController ISkillCtr { get; protected set; } = null;
         
         #region ICombatant
-        public EType.EFormation EFormation { get; private set; } = EType.EFormation.None;
+        public Type.ETeam ETeam { get; private set; } = Type.ETeam.None;
+        public Type.EFormation EFormation { get; private set; } = Type.EFormation.None;
         #endregion
         
         public bool IsActivate 
@@ -91,7 +92,13 @@ namespace Creature
         #endregion
         
         #region ICombatant
-        void ICombatant.SetEFormation(EType.EFormation eFormation)
+
+        void ICombatant.SetETeam(Type.ETeam eTeam)
+        {
+            ETeam = eTeam;
+        }
+        
+        void ICombatant.SetEFormation(Type.EFormation eFormation)
         {
             EFormation = eFormation;
         }

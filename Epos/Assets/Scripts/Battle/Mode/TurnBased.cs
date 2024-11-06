@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Ability;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
+using Ability;
 using Creature;
 using Creature.Action;
 
@@ -26,27 +26,32 @@ namespace Battle.Mode
         }
 
         // private EType _eType = EType.None;
-        private Queue<ICombatant> _iCombatantQueue = null;
+        
         private List<ICombatant> _priorityICombatantList = null;
+        private Queue<ICombatant> _iCombatantQueue = null;
+        private Queue<IActController> _sequenceActQueue = null;
         private ICombatant _currICombatant = null;
+        
         private int _turn = 0;
         
         public override BattleMode<Data> Initialize(Data data)
         {
             base.Initialize(data);
             
-            Initialize();
+            _iCombatantQueue = new();
+            _iCombatantQueue.Clear();
+
+            _sequenceActQueue = new();
             
             return this;
         }
 
-        private void Initialize()
+        /// <summary>
+        /// 전투 시작.
+        /// </summary>
+        public override void Begin()
         {
-            if (_data == null)
-                return;
-
-            _iCombatantQueue = new();
-            _iCombatantQueue.Clear();
+            _iCombatantQueue?.Clear();
             
             switch (_data.EType)
             {
@@ -54,9 +59,27 @@ namespace Battle.Mode
                 {
                     _priorityICombatantList = new();
                     _priorityICombatantList.Clear();
+
+                    foreach (var iCombatant in _data?.AllyICombatantList)
+                    {
+                        if (iCombatant == null)
+                            continue;
+                        
+                        iCombatant.SetETeam(Type.ETeam.Ally);
+                        _priorityICombatantList?.Add(iCombatant);
+                    }
                     
-                    _priorityICombatantList?.AddRange(_data.AllyICombatantList);
-                    _priorityICombatantList?.AddRange(_data.EnemyICombatantList);
+                    foreach (var iCombatant in _data?.EnemyICombatantList)
+                    {
+                        if (iCombatant == null)
+                            continue;
+                        
+                        iCombatant.SetETeam(Type.ETeam.Enemy);
+                        _priorityICombatantList?.Add(iCombatant);
+                    }
+                    
+                    // _priorityICombatantList?.AddRange(_data.AllyICombatantList);
+                    // _priorityICombatantList?.AddRange(_data.EnemyICombatantList);
 
                     // 임시로 initialize 진행. 차후 덱 편성 후 캐릭터 생성 시 진행 예정.
                     foreach (var iCombatant in _priorityICombatantList)
@@ -74,14 +97,8 @@ namespace Battle.Mode
                     break;
                 }
             }
-        }
-
-        // 전투 시작 시, 패시브 스킬 발동.
-        // 전투 종료 시, 패시브 스킬 발동.
-        
-        public override void Begin()
-        {
-            StartTurn();
+            
+            StartTurnAsync().Forget();
         }
 
         public override void ChainUpdate()
@@ -89,12 +106,14 @@ namespace Battle.Mode
             _currICombatant?.IActCtr?.ChainUpdate();
         }
         
-        private void StartTurn()
+        /// <summary>
+        /// 턴 시작.
+        /// </summary>
+        private async UniTask StartTurnAsync()
         {
-            // var iActor = _iActorQueue?.Dequeue();
-            // iActor.IActCtr.MoveToTarget(Vector3.one, () => { });
-
             SetTurn(_turn + 1);
+            
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             if (_priorityICombatantList != null)
             {
@@ -119,27 +138,59 @@ namespace Battle.Mode
         {
             _turn = turn;
             Debug.Log(turn);
-            
         }
         
         private async UniTask ActAsync()
         {
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
+            _sequenceActQueue?.Clear();
+            _currICombatant = null;
+            
             var iCombatant = _iCombatantQueue?.Dequeue();
             if (iCombatant == null)
                 return;
             
+            var activeSkill = iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
+            if (activeSkill == null)
+                return;
+            
             var targetList = GetTargetList(iCombatant);
-            var skill = iCombatant.ISkillCtr?.PossibleActiveSkill;
-
-            MoveToTarget(iCombatant, skill, targetList);
-            iCombatant.IActCtr?.CastingSkill(this, skill, targetList);
+            var target = targetList?.FirstOrDefault();
+            
+            CastingPassiveSkill(iCombatant, target).Forget();
+ 
+            MoveToTarget(iCombatant, activeSkill, target);
+            iCombatant.IActCtr?.CastingSkill(this, activeSkill, targetList); 
 
             _currICombatant = iCombatant;
         }
 
-        private void MoveToTarget(ICombatant iCombatant, Skill skill, List<ICombatant> targetList)
+        private async UniTask CastingPassiveSkill(ICombatant iCombatant, ICombatant target)
+        {
+            if (_priorityICombatantList != null)
+            {
+                foreach (var confrontICombatant in _priorityICombatantList)
+                {
+                    if(confrontICombatant == null)
+                        continue;
+
+                    if (iCombatant != null)
+                    {
+                        if (iCombatant.ETeam == confrontICombatant.ETeam)
+                            continue;
+                    }
+                    
+                    var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
+                    if(passiveSkill == null)
+                        continue;
+                    
+                    
+                }
+            }
+        }
+
+        private void MoveToTarget(ICombatant iCombatant, Skill skill, ICombatant target)
         {
             if (skill == null)
                 return;
@@ -147,17 +198,16 @@ namespace Battle.Mode
             var skillRange = skill.SkillData.Range;
             if (skillRange <= 0)
                 return;
+
+            if (target == null)
+                return;
             
-            var target = targetList?.FirstOrDefault();
-            if (target != null)
-            {
-                var targetPos = target.Transform.position;
-                targetPos.x += skillRange;
-                targetPos.y -= 1f;
-                targetPos.z = 0;
+            var targetPos = target.Transform.position;
+            targetPos.x += skillRange;
+            targetPos.y -= 1f;
+            targetPos.z = 0;
             
-                iCombatant.IActCtr?.MoveToTarget(targetPos, () => { });
-            }
+            iCombatant.IActCtr?.MoveToTarget(targetPos, () => { });
         }
 
         private List<ICombatant> GetTargetList(ICombatant iCombatant)
@@ -165,17 +215,7 @@ namespace Battle.Mode
             if (iCombatant == null)
                 return null;
             
-            List<ICombatant> iCombatantList = null; 
-            
-            if (iCombatant is Hero)
-            {
-                iCombatantList = _data?.EnemyICombatantList;
-            }
-            else if (iCombatant is Monster)
-            {
-                iCombatantList = _data?.AllyICombatantList;
-            }
-
+            List<ICombatant> iCombatantList = GetConfrontList(iCombatant); 
             if (iCombatantList != null)
             {
                 List<ICombatant> targetList = new();
@@ -193,6 +233,14 @@ namespace Battle.Mode
             }
 
             return null;
+        }
+
+        private List<ICombatant> GetConfrontList(ICombatant iCombatant)
+        {
+            if (iCombatant is Hero)
+                return _data?.EnemyICombatantList;
+                
+            return _data?.AllyICombatantList;
         }
 
         #region Skill.IListener

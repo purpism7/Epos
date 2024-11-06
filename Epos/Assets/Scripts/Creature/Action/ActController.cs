@@ -15,6 +15,8 @@ namespace Creature.Action
         void MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
         void Idle();
         void CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
+
+        bool InAction { get; }
     }
     
     public class ActController : Controller, IActController
@@ -23,7 +25,9 @@ namespace Creature.Action
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
-        
+
+        public bool InAction { get; private set; } = false;
+
         IActController IController<IActController, IActor>.Initialize(IActor iActor)
         {
             _iActor = iActor;
@@ -191,6 +195,8 @@ namespace Creature.Action
             {
                 if (_iActQueue.TryDequeue(out IAct iAct))
                 {
+                    InAction = true;
+                    
                     iAct?.Execute();
                     SetCurrIAct(iAct);
 
@@ -199,6 +205,8 @@ namespace Creature.Action
             }
 
             Idle();
+
+            InAction = false;
         }
         
         private void EndAct()
