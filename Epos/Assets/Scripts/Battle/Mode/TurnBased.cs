@@ -30,7 +30,9 @@ namespace Battle.Mode
         private List<ICombatant> _priorityICombatantList = null;
         private Queue<ICombatant> _iCombatantQueue = null;
         private Queue<IActController> _sequenceActQueue = null;
-        private ICombatant _currICombatant = null;
+        
+        private IActController _iActCtr = null;
+        // private ICombatant _currICombatant = null;
         
         private int _turn = 0;
         
@@ -103,7 +105,18 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            _currICombatant?.IActCtr?.ChainUpdate();
+            if (_iActCtr != null &&
+                _iActCtr.InAction)
+                return;
+
+            if (_sequenceActQueue != null &&
+                _sequenceActQueue.Count > 0)
+            {
+                _sequenceActQueue?.TryDequeue(out _iActCtr);
+                _iActCtr?.Execute();
+            }
+            
+            // _currICombatant?.IActCtr?.ChainUpdate();
         }
         
         /// <summary>
@@ -145,7 +158,7 @@ namespace Battle.Mode
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             _sequenceActQueue?.Clear();
-            _currICombatant = null;
+            // _currICombatant = null;
             
             var iCombatant = _iCombatantQueue?.Dequeue();
             if (iCombatant == null)
@@ -159,11 +172,13 @@ namespace Battle.Mode
             var target = targetList?.FirstOrDefault();
             
             CastingPassiveSkill(iCombatant, target).Forget();
- 
+            
             MoveToTarget(iCombatant, activeSkill, target);
             iCombatant.IActCtr?.CastingSkill(this, activeSkill, targetList); 
+            
+            _sequenceActQueue?.Enqueue(iCombatant.IActCtr);
 
-            _currICombatant = iCombatant;
+            // _currICombatant = iCombatant;
         }
 
         private async UniTask CastingPassiveSkill(ICombatant iCombatant, ICombatant target)
@@ -185,7 +200,7 @@ namespace Battle.Mode
                     if(passiveSkill == null)
                         continue;
                     
-                    
+                    _sequenceActQueue?.Enqueue(confrontICombatant.IActCtr);
                 }
             }
         }

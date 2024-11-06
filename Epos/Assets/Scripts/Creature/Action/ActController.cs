@@ -12,9 +12,10 @@ namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
-        void MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
         void Idle();
-        void CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
+        IActController MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
+        IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
+        void Execute();
 
         bool InAction { get; }
     }
@@ -64,10 +65,15 @@ namespace Creature.Action
         #endregion
             
         #region IActController
-        void IActController.MoveToTarget(Vector3 pos, System.Action finishAction, bool immediately)
+        void IActController.Idle()
+        {
+            Idle();
+        }
+        
+        IActController IActController.MoveToTarget(Vector3 pos, System.Action finishAction, bool immediately)
         {
             if (!IsActivate)
-                return;
+                return this;
 
             var data = new Move.Data
             {
@@ -83,17 +89,14 @@ namespace Creature.Action
             {
                 AddActAsync<Move, Move.Data>(data).Forget();
             }
+
+            return this;
         }
 
-        void IActController.Idle()
-        {
-            Idle();
-        }
-
-        void IActController.CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList)
         {
             if (!IsActivate)
-                return;
+                return this;
             
             var data = new Casting.Data
             {
@@ -103,12 +106,44 @@ namespace Creature.Action
             };
             
             AddActAsync<Casting, Casting.Data>(data).Forget();
+
+            return this;
         }
-        
+
+        private async UniTask ExecuteAsync()
+        {
+            if (InAction)
+            {
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            }
+            
+            if (_iActQueue.Count > 0)
+            {
+                if (_iActQueue.TryDequeue(out IAct iAct))
+                {
+                    InAction = true;
+                    
+                    iAct?.Execute();
+                    SetCurrIAct(iAct);
+
+                    return;
+                }
+            }
+
+            Idle();
+        }
+
+        public void Execute()
+        {
+            ExecuteAsync().Forget();
+        }
+
         private void Idle()
         {
             Execute<Idle, Idle.Data>();
             SetCurrIAct(null);
+            
+            InAction = false;
         }
 
         private async UniTask AddActAsync<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
@@ -134,12 +169,12 @@ namespace Creature.Action
             
             _iActQueue?.Enqueue(act);
 
-            await UniTask.Yield();
-            
-            if (_currIAct == null)
-            {
-                ExecuteAct();
-            }
+            // await UniTask.Yield();
+            //
+            // if (_currIAct == null)
+            // {
+            //     ExecuteAct();
+            // }
         }
 
         private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : Act<V>.BaseData, new()
@@ -188,30 +223,10 @@ namespace Creature.Action
             
             SetCurrIAct(act);
         }
-
-        private void ExecuteAct()
-        {
-            if (_iActQueue.Count > 0)
-            {
-                if (_iActQueue.TryDequeue(out IAct iAct))
-                {
-                    InAction = true;
-                    
-                    iAct?.Execute();
-                    SetCurrIAct(iAct);
-
-                    return;
-                }
-            }
-
-            Idle();
-
-            InAction = false;
-        }
         
         private void EndAct()
         {
-            ExecuteAct();
+            Execute();
         }
 
         private void SetCurrIAct(IAct iAct)

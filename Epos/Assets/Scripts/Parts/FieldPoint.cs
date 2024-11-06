@@ -145,7 +145,7 @@ namespace Parts
                 () =>
                 {
                     RandomActionAsync().Forget();
-                });
+                }).Execute();
         }
     }
 }
