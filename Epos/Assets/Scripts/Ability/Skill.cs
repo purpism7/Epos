@@ -9,7 +9,7 @@ namespace Ability
         public Data.Skill SkillData { get; private set; } = null;
 
         public Type.ESkillCategory ESkillCategory { get; private set; } = Type.ESkillCategory.None;
-        public Type.ETeam ETargetTeam { get; private set; } = Type.ETeam.None;
+        public bool SameTeam { get; private set; } = false;
         public Type.ESkillTarget ESkillTarget { get; private set; } = Type.ESkillTarget.None;
 
         public virtual void Initialize(Data.Skill skillData)
@@ -33,9 +33,9 @@ namespace Ability
             ESkillCategory = eSkillCategory;
         }
         
-        public void SetETargetTeam(Type.ETeam eTeam)
+        public void SetSameTeam(bool sameTeam)
         {
-            ETargetTeam = eTeam;
+            SameTeam = sameTeam;
         }
         
         public void SetESkillTarget(Type.ESkillTarget eSkillTarget)

@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using Ability;
 using Creature;
 using Creature.Action;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 
 namespace Battle.Mode
@@ -29,9 +30,11 @@ namespace Battle.Mode
         // private EType _eType = EType.None;
         
         private List<ICombatant> _priorityICombatantList = null;
-        private Queue<ICombatant> _iCombatantQueue = null;
-        // private Queue<IActController> _sequenceActQueue = null;
+        private Queue<ICombatant> _castingActiveSkillICombatantQueue = null;
+        
         private List<IActController> _sequenceActList = null;
+        
+        
         
         private IActController _iActCtr = null;
 
@@ -44,8 +47,8 @@ namespace Battle.Mode
         {
             base.Initialize(data);
             
-            _iCombatantQueue = new();
-            _iCombatantQueue.Clear();
+            _castingActiveSkillICombatantQueue = new();
+            _castingActiveSkillICombatantQueue.Clear();
 
             _sequenceActList = new();
             
@@ -120,8 +123,8 @@ namespace Battle.Mode
             SetTurn(_turn + 1);
             
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            
-            _iCombatantQueue?.Clear();
+
+            _castingActiveSkillICombatantQueue?.Clear();
             
             if (_priorityICombatantList != null)
             {
@@ -130,7 +133,7 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
                     
-                    _iCombatantQueue?.Enqueue(iCombatant);
+                    _castingActiveSkillICombatantQueue?.Enqueue(iCombatant);
                 }
             }
             
@@ -155,7 +158,7 @@ namespace Battle.Mode
             _sequencIndex = 0;
             _sequenceActList?.Clear();
             
-            var attacker = _iCombatantQueue?.Dequeue();
+            var attacker = _castingActiveSkillICombatantQueue?.Dequeue();
             if (attacker == null)
                 return;
             
@@ -163,7 +166,7 @@ namespace Battle.Mode
             if (activeSkill == null)
                 return;
             
-            var targetList = GetTargetList(activeSkill.ETargetTeam, activeSkill.ESkillTarget);
+            var targetList = GetTargetList(attacker, activeSkill);
             var target = targetList?.FirstOrDefault();
             
             await CastingPassiveSkillAsync(attacker, target);
@@ -239,43 +242,37 @@ namespace Battle.Mode
             }
         }
 
-        /// <summary>
-        /// 시전 가능한 Passive Skill 추가.
-        /// 전투 전, 공격 전.
-        /// </summary>
-        /// <param name="attacker"></param>
-        /// <param name="target"></param>
         private async UniTask CastingPassiveSkillAsync(ICombatant attacker, ICombatant target)
         {
             if (_priorityICombatantList == null)
                 return;
             
-            foreach (var confrontICombatant in _priorityICombatantList)
+            foreach (var iCombatant in _priorityICombatantList)
             {
-                if(confrontICombatant == null)
+                if(iCombatant == null)
                     continue;
-
-                if (attacker != null)
-                {
-                    if (attacker.ETeam == confrontICombatant.ETeam)
-                        continue;
-                }
+                
+                // if (attacker != null)
+                // {
+                //     if (attacker.ETeam == iCombatant.ETeam)
+                //         continue;
+                // }
                     
-                var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
+                var passiveSkill = iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
                 if(passiveSkill == null)
                     continue;
                 
-                var targetList = GetTargetList(passiveSkill.ETargetTeam, passiveSkill.ESkillTarget);
+                var targetList = GetTargetList(iCombatant, passiveSkill);
                 var resTarget = target;
-                if (passiveSkill.ETargetTeam != Type.ETeam.Ally)
-                {
-                    resTarget = targetList?.FirstOrDefault();
-                }
+                // if (passiveSkill.)
+                // {
+                //     resTarget = targetList?.FirstOrDefault();
+                // }
                 
-                MoveToTarget(confrontICombatant, passiveSkill, resTarget);
-                confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
+                MoveToTarget(iCombatant, passiveSkill, resTarget);
+                iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
                     
-                _sequenceActList?.Add(confrontICombatant.IActCtr);
+                _sequenceActList?.Add(iCombatant.IActCtr);
             }
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -313,24 +310,25 @@ namespace Battle.Mode
             
             meshRenderer.sortingOrder = sortingOrder;
         }
-
-        /// <summary>
-        /// 스킬의 Target 은 스킬 사용 조건에서 추출되어야함. 
-        /// </summary>
-        /// <param name="eTargetTeam"></param>
-        /// <returns></returns>
-        private List<ICombatant> GetTargetList(Type.ETeam eTargetTeam, Type.ESkillTarget eSkillTarget)
+        
+        private List<ICombatant> GetTargetList(ICombatant attacker, Skill skill)
         {
-            List<ICombatant> iCombatantList =
-                eTargetTeam == Type.ETeam.Ally ? _data?.AllyICombatantList : _data?.EnemyICombatantList;
+            if (skill == null)
+                return null;
             
+            List<ICombatant> iCombatantList = null;
+            if (skill.SameTeam)
+                iCombatantList =  attacker.ETeam == Type.ETeam.Ally ? _data?.AllyICombatantList : _data?.EnemyICombatantList;
+            else
+                iCombatantList =  attacker.ETeam == Type.ETeam.Ally ? _data?.EnemyICombatantList : _data?.AllyICombatantList;
+
             if (iCombatantList != null)
             {
                 List<ICombatant> targetList = new();
                 targetList.Clear();
 
-                if (eSkillTarget == Type.ESkillTarget.FarOne ||
-                    eSkillTarget == Type.ESkillTarget.NearOne)
+                if (skill.ESkillTarget == Type.ESkillTarget.FarOne ||
+                    skill.ESkillTarget == Type.ESkillTarget.NearOne)
                 {
                     targetList.Add(iCombatantList.FirstOrDefault());
 

@@ -53,7 +53,7 @@ namespace Creature.Action
             _data?.IListener?.InUse();
             
             if (_data?.TargetList != null &&
-                _data.Skill?.ETargetTeam == Type.ETeam.Enemy)
+                !_data.Skill.SameTeam)
             {
                 foreach (var target in _data?.TargetList)
                 {
