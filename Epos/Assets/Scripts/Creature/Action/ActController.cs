@@ -13,7 +13,7 @@ namespace Creature.Action
     public interface IActController : IController<IActController, IActor>
     {
         void Idle();
-        IActController MoveToTarget(Vector3 pos, System.Action finishAction = null, bool immediately = false);
+        IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool immediately = false);
         IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
         void Execute();
 
@@ -26,6 +26,7 @@ namespace Creature.Action
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
+        private Vector3 _originPos = Vector3.zero;
 
         public bool InAction { get; private set; } = false;
 
@@ -53,6 +54,10 @@ namespace Creature.Action
         {
             base.Activate();
             
+            if (transform.parent)
+            {
+                _originPos = transform.parent.position;
+            }
         }
 
         public override void Deactivate()
@@ -70,14 +75,20 @@ namespace Creature.Action
             Idle();
         }
         
-        IActController IActController.MoveToTarget(Vector3 pos, System.Action finishAction, bool immediately)
+        IActController IActController.MoveToTarget(Vector3? pos, System.Action finishAction, bool immediately)
         {
             if (!IsActivate)
                 return null;
 
+            var targetPos = _originPos;
+            if (pos != null)
+            {
+                targetPos = pos.Value;
+            }
+            
             var data = new Move.Data
             {
-                TargetPos = pos,
+                TargetPos = targetPos,
                 FinishAction = finishAction,
             };
 

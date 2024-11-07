@@ -71,7 +71,7 @@ namespace Creature
                     SetOrigin(EType.PassivePoint, 1f); 
                     
                     SetOrigin(EType.ActionSpeed, 20f);
-                    SetOrigin(EType.MoveSpeed, 3f); 
+                    SetOrigin(EType.MoveSpeed, 7f); 
                     
                     break;
                 }

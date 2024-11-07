@@ -154,6 +154,8 @@ namespace Battle.Mode
                 if (_iActCtr == null ||
                     !_iActCtr.InAction)
                 {
+                    _iActCtr?.MoveToTarget()?.Execute();
+                    
                     _sequenceActQueue?.TryDequeue(out _iActCtr);
                     _iActCtr?.Execute();
                 }
@@ -167,28 +169,28 @@ namespace Battle.Mode
             _sequenceActQueue?.Clear();
             // _currICombatant = null;
             
-            var iCombatant = _iCombatantQueue?.Dequeue();
-            if (iCombatant == null)
+            var attacker = _iCombatantQueue?.Dequeue();
+            if (attacker == null)
                 return;
             
-            var activeSkill = iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
+            var activeSkill = attacker.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
             if (activeSkill == null)
                 return;
             
-            var targetList = GetTargetList(iCombatant);
+            var targetList = GetTargetList(attacker);
             var target = targetList?.FirstOrDefault();
+
+            CastingPassiveSkill(attacker, target);
             
-            CastingPassiveSkill(iCombatant, target).Forget();
-            
-            MoveToTarget(iCombatant, activeSkill, target);
-            iCombatant.IActCtr?.CastingSkill(this, activeSkill, targetList); 
-            
-            _sequenceActQueue?.Enqueue(iCombatant.IActCtr);
+            MoveToTarget(attacker, activeSkill, target);
+            attacker.IActCtr?.CastingSkill(this, activeSkill, targetList); 
+
+            _sequenceActQueue?.Enqueue(attacker.IActCtr);
             
             UpdateAsync().Forget();
         }
 
-        private async UniTask CastingPassiveSkill(ICombatant iCombatant, ICombatant target)
+        private void CastingPassiveSkill(ICombatant attacker, ICombatant target)
         {
             if (_priorityICombatantList != null)
             {
@@ -197,9 +199,9 @@ namespace Battle.Mode
                     if(confrontICombatant == null)
                         continue;
 
-                    if (iCombatant != null)
+                    if (attacker != null)
                     {
-                        if (iCombatant.ETeam == confrontICombatant.ETeam)
+                        if (attacker.ETeam == confrontICombatant.ETeam)
                             continue;
                     }
                     
@@ -215,7 +217,7 @@ namespace Battle.Mode
             }
         }
 
-        private void MoveToTarget(ICombatant iCombatant, Skill skill, ICombatant target)
+        private void MoveToTarget(ICombatant attacker, Skill skill, ICombatant target)
         {
             if (skill == null)
                 return;
@@ -232,7 +234,18 @@ namespace Battle.Mode
             targetPos.y -= 1f;
             targetPos.z = 0;
             
-            iCombatant.IActCtr?.MoveToTarget(targetPos, () => { });
+            attacker?.IActCtr?.MoveToTarget(targetPos,
+                () =>
+                {
+                    var direction = targetPos.x - attacker.Transform.position.x;
+                    
+                    attacker.Transform.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
+                });
+        }
+
+        private void MoveToReturn(ICombatant attacker)
+        {
+            attacker?.IActCtr?.MoveToTarget();
         }
 
         private List<ICombatant> GetTargetList(ICombatant iCombatant)

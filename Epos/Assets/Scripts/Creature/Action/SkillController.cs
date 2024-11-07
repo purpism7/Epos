@@ -78,7 +78,7 @@ namespace Creature.Action
                 case 10001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(3, 1f));
+                    skill.Initialize(new Data.Skill(3, 3f));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
                     
                     _skillList?.Add(skill);
@@ -100,7 +100,7 @@ namespace Creature.Action
                 case 90001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(1, 5f));
+                    skill.Initialize(new Data.Skill(1, 7f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     
                     _skillList?.Add(skill);
