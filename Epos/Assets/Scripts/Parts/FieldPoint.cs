@@ -102,7 +102,7 @@ namespace Parts
                         BeginFieldBattle();
                         
                         hero.Deactivate();
-                        monster?.Deactivate();
+                        monster.Deactivate();
               
                         return;
                     }

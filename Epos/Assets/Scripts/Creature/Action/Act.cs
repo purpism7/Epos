@@ -27,6 +27,7 @@ namespace Creature.Action
         protected T _data = null;
         protected IActor _iActor = null;
         protected System.Action _endAction = null;
+        protected float _duration = 0;
         
         public virtual void Initialize(IActor iActor)
         {
@@ -64,7 +65,8 @@ namespace Creature.Action
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return;
-            
+
+            _duration = trackEntry.Animation.Duration;
             // Debug.Log(trackEntry.Animation.Duration);
         }
     }

@@ -25,7 +25,7 @@ namespace Creature
         #region Act
         public void MoveToTarget(Vector3 pos)
         {
-            IActCtr?.MoveToTarget(pos);
+            IActCtr?.MoveToTarget(pos)?.Execute();
         }
         
         public override string AnimationKey<T>(Act<T> act)

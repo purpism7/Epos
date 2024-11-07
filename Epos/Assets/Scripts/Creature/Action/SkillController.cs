@@ -75,6 +75,17 @@ namespace Creature.Action
 
             switch (_iCaster.Id)
             {
+                case 10001:
+                {
+                    var skill = new Ability.Skill();
+                    skill.Initialize(new Data.Skill(3, 1f));
+                    skill.SetESkillCategory(Type.ESkillCategory.Passive);
+                    
+                    _skillList?.Add(skill);
+                    
+                    break;
+                }
+                
                 case 10003:
                 {
                     var skill = new Ability.Skill();

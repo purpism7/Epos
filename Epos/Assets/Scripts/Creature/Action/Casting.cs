@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -46,8 +47,10 @@ namespace Creature.Action
             
             SetAnimation(_data.AnimationKey, false);
             _data.Skill.Casting();
-            // _iSkillCtr?.Casting(_data.TargetList);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(_duration));
             
+            _endAction?.Invoke();
         }
     }
 }

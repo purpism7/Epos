@@ -73,7 +73,7 @@ namespace Creature.Action
         IActController IActController.MoveToTarget(Vector3 pos, System.Action finishAction, bool immediately)
         {
             if (!IsActivate)
-                return this;
+                return null;
 
             var data = new Move.Data
             {
@@ -96,7 +96,7 @@ namespace Creature.Action
         IActController IActController.CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList)
         {
             if (!IsActivate)
-                return this;
+                return null;
             
             var data = new Casting.Data
             {
@@ -117,7 +117,7 @@ namespace Creature.Action
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             }
             
-            if (_iActQueue.Count > 0)
+            if (_iActQueue?.Count > 0)
             {
                 if (_iActQueue.TryDequeue(out IAct iAct))
                 {

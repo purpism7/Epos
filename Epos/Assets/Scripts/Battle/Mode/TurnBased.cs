@@ -105,17 +105,8 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            if (_iActCtr != null &&
-                _iActCtr.InAction)
-                return;
-
-            if (_sequenceActQueue != null &&
-                _sequenceActQueue.Count > 0)
-            {
-                _sequenceActQueue?.TryDequeue(out _iActCtr);
-                _iActCtr?.Execute();
-            }
             
+            _iActCtr?.ChainUpdate();
             // _currICombatant?.IActCtr?.ChainUpdate();
         }
         
@@ -152,6 +143,22 @@ namespace Battle.Mode
             _turn = turn;
             Debug.Log(turn);
         }
+
+        private async UniTask UpdateAsync()
+        {
+            while (_sequenceActQueue != null &&
+                   _sequenceActQueue.Count > 0)
+            {
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                
+                if (_iActCtr == null ||
+                    !_iActCtr.InAction)
+                {
+                    _sequenceActQueue?.TryDequeue(out _iActCtr);
+                    _iActCtr?.Execute();
+                }
+            }
+        }
         
         private async UniTask ActAsync()
         {
@@ -177,8 +184,8 @@ namespace Battle.Mode
             iCombatant.IActCtr?.CastingSkill(this, activeSkill, targetList); 
             
             _sequenceActQueue?.Enqueue(iCombatant.IActCtr);
-
-            // _currICombatant = iCombatant;
+            
+            UpdateAsync().Forget();
         }
 
         private async UniTask CastingPassiveSkill(ICombatant iCombatant, ICombatant target)
@@ -199,6 +206,9 @@ namespace Battle.Mode
                     var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
                     if(passiveSkill == null)
                         continue;
+                    
+                    MoveToTarget(confrontICombatant, passiveSkill, target);
+                    confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, GetTargetList(confrontICombatant)); 
                     
                     _sequenceActQueue?.Enqueue(confrontICombatant.IActCtr);
                 }
