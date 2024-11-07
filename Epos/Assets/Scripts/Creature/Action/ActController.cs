@@ -94,6 +94,10 @@ namespace Creature.Action
             {
                 targetPos = pos.Value;
             }
+            else
+            {
+                reverse = transform.position.x - targetPos.x > 0;
+            }
             
             var data = new Move.Data
             {
@@ -182,13 +186,6 @@ namespace Creature.Action
             }
             
             _iActQueue?.Enqueue(act);
-
-            // await UniTask.Yield();
-            //
-            // if (_currIAct == null)
-            // {
-            //     ExecuteAct();
-            // }
         }
 
         private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : Act<V>.BaseData, new()

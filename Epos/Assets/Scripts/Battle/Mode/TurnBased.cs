@@ -180,11 +180,12 @@ namespace Battle.Mode
         {
             await SequenceActAsync();
 
-            Debug.Log("End");
+            // Debug.Log("End");
             await MoveToReturnAsync();
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            Debug.Log("End Move To Return");
+            // Debug.Log("End Move To Return");
+            ActAsync().Forget();
         }
         
         private async UniTask SequenceActAsync()
@@ -222,7 +223,7 @@ namespace Battle.Mode
                     
                     iActCtr.MoveToTarget(reverse: true)?.Execute();
                     
-                    SetSortingOrder(iActCtr as ICombatant, 1);
+                    SetSortingOrder(iActCtr as ICombatant, 0);
                 }
 
                 while (_sequenceActList?.Find(iActCtr => iActCtr.InAction) != null)
@@ -294,22 +295,9 @@ namespace Battle.Mode
 
             SetSortingOrder(attacker, 1);
             
-            attacker.IActCtr?.MoveToTarget(targetPos,
-                () =>
-                {
-                    Flip(attacker, targetPos);
-                });
+            attacker.IActCtr?.MoveToTarget(targetPos, reverse: targetPos.x - attacker.Transform.position.x < 0);
         }
-
-        private void Flip(ICombatant iCombatant, Vector3 targetPos)
-        {
-            if (iCombatant == null)
-                return;
-            
-            var direction = targetPos.x - iCombatant.Transform.position.x;
-            iCombatant.Transform.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
-        }
-
+        
         private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)
         {
             var meshRenderer = iCombatant?.SkeletonAnimation?.GetComponent<MeshRenderer>();
