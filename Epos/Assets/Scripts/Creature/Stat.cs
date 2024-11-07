@@ -53,15 +53,15 @@ namespace Creature
                 case 10004:
 
                 {
-                    var actionSpeed = id % 1000f * 2;
+                    var actionSpeed = id % 1000f * 3f;
                     
                     SetOrigin(EType.ActivePoint, 1f);
                     SetOrigin(EType.PassivePoint, 1f); 
                     
                     SetOrigin(EType.ActionSpeed, actionSpeed);
                     SetOrigin(EType.AttackRange, 3f);
-                    SetOrigin(EType.MoveSpeed, 8f); 
-  
+                    SetOrigin(EType.MoveSpeed, id == 10004 ? 10f : 8f); 
+                    
                     break;
                 }
 
@@ -70,7 +70,7 @@ namespace Creature
                     SetOrigin(EType.ActivePoint, 1f);
                     SetOrigin(EType.PassivePoint, 1f); 
                     
-                    SetOrigin(EType.ActionSpeed, 20f);
+                    SetOrigin(EType.ActionSpeed, 11f);
                     SetOrigin(EType.MoveSpeed, 7f); 
                     
                     break;

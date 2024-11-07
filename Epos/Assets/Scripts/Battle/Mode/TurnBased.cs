@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using Ability;
 using Creature;
 using Creature.Action;
+using UnityEditor.Rendering;
 
 namespace Battle.Mode
 {
@@ -29,9 +30,12 @@ namespace Battle.Mode
         
         private List<ICombatant> _priorityICombatantList = null;
         private Queue<ICombatant> _iCombatantQueue = null;
-        private Queue<IActController> _sequenceActQueue = null;
+        // private Queue<IActController> _sequenceActQueue = null;
+        private List<IActController> _sequenceActList = null;
         
         private IActController _iActCtr = null;
+
+        private int _sequencIndex = 0;
         // private ICombatant _currICombatant = null;
         
         private int _turn = 0;
@@ -43,7 +47,7 @@ namespace Battle.Mode
             _iCombatantQueue = new();
             _iCombatantQueue.Clear();
 
-            _sequenceActQueue = new();
+            _sequenceActList = new();
             
             return this;
         }
@@ -143,31 +147,13 @@ namespace Battle.Mode
             _turn = turn;
             Debug.Log(turn);
         }
-
-        private async UniTask UpdateAsync()
-        {
-            while (_sequenceActQueue != null &&
-                   _sequenceActQueue.Count > 0)
-            {
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-                
-                if (_iActCtr == null ||
-                    !_iActCtr.InAction)
-                {
-                    _iActCtr?.MoveToTarget()?.Execute();
-                    
-                    _sequenceActQueue?.TryDequeue(out _iActCtr);
-                    _iActCtr?.Execute();
-                }
-            }
-        }
         
         private async UniTask ActAsync()
         {
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            
-            _sequenceActQueue?.Clear();
-            // _currICombatant = null;
+
+            _sequencIndex = 0;
+            _sequenceActList?.Clear();
             
             var attacker = _iCombatantQueue?.Dequeue();
             if (attacker == null)
@@ -180,41 +166,111 @@ namespace Battle.Mode
             var targetList = GetTargetList(attacker);
             var target = targetList?.FirstOrDefault();
 
-            CastingPassiveSkill(attacker, target);
+            await CastingPassiveSkill(attacker, target);
             
             MoveToTarget(attacker, activeSkill, target);
             attacker.IActCtr?.CastingSkill(this, activeSkill, targetList); 
 
-            _sequenceActQueue?.Enqueue(attacker.IActCtr);
+            _sequenceActList?.Add(attacker.IActCtr);
             
-            UpdateAsync().Forget();
+            UpdateActAsync().Forget();
         }
-
-        private void CastingPassiveSkill(ICombatant attacker, ICombatant target)
+        
+        private async UniTask UpdateActAsync()
         {
-            if (_priorityICombatantList != null)
-            {
-                foreach (var confrontICombatant in _priorityICombatantList)
-                {
-                    if(confrontICombatant == null)
-                        continue;
+            await SequenceActAsync();
 
-                    if (attacker != null)
-                    {
-                        if (attacker.ETeam == confrontICombatant.ETeam)
-                            continue;
-                    }
-                    
-                    var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
-                    if(passiveSkill == null)
-                        continue;
-                    
-                    MoveToTarget(confrontICombatant, passiveSkill, target);
-                    confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, GetTargetList(confrontICombatant)); 
-                    
-                    _sequenceActQueue?.Enqueue(confrontICombatant.IActCtr);
+            Debug.Log("End");
+            await MoveToReturnAsync();
+            
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            Debug.Log("End Move To Return");
+        }
+        
+        private async UniTask SequenceActAsync()
+        {
+            while (_sequenceActList != null &&
+                   _sequenceActList.Count > _sequencIndex)
+            {
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                
+                if (_iActCtr == null ||
+                    !_iActCtr.InAction)
+                {
+                    _iActCtr = _sequenceActList[_sequencIndex];
+                    _iActCtr?.Execute();
+
+                    ++_sequencIndex;
                 }
             }
+            
+            await UniTask.WaitWhile(() => _iActCtr != null && _iActCtr.InAction);
+            
+            _iActCtr = null;
+        }
+
+        private async UniTask MoveToReturnAsync()
+        {
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            
+            if (_sequenceActList != null)
+            {
+                foreach (var iActCtr in _sequenceActList)
+                {
+                    if(iActCtr == null)
+                        continue;
+                    
+                    iActCtr.MoveToTarget(reverse: true)?.Execute();
+                    
+                    SetSortingOrder(iActCtr as ICombatant, 1);
+                }
+
+                while (_sequenceActList?.Find(iActCtr => iActCtr.InAction) != null)
+                {
+                    foreach (var iActCtr in _sequenceActList)
+                    {
+                        if (iActCtr.InAction)
+                            iActCtr.ChainUpdate();
+                    }
+                    
+                    await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 시전 가능한 Passive Skill 추가.
+        /// 전투 전, 공격 전.
+        /// </summary>
+        /// <param name="attacker"></param>
+        /// <param name="target"></param>
+        private async UniTask CastingPassiveSkill(ICombatant attacker, ICombatant target)
+        {
+            if (_priorityICombatantList == null)
+                return;
+            
+            foreach (var confrontICombatant in _priorityICombatantList)
+            {
+                if(confrontICombatant == null)
+                    continue;
+
+                if (attacker != null)
+                {
+                    if (attacker.ETeam == confrontICombatant.ETeam)
+                        continue;
+                }
+                    
+                var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
+                if(passiveSkill == null)
+                    continue;
+                    
+                MoveToTarget(confrontICombatant, passiveSkill, target);
+                confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, GetTargetList(confrontICombatant)); 
+                    
+                _sequenceActList?.Add(confrontICombatant.IActCtr);
+            }
+
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
         }
 
         private void MoveToTarget(ICombatant attacker, Skill skill, ICombatant target)
@@ -230,22 +286,37 @@ namespace Battle.Mode
                 return;
             
             var targetPos = target.Transform.position;
-            targetPos.x += skillRange;
+            var direction = targetPos.x - attacker.Transform.position.x;
+            
+            targetPos.x = direction < 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
             targetPos.y -= 1f;
             targetPos.z = 0;
+
+            SetSortingOrder(attacker, 1);
             
-            attacker?.IActCtr?.MoveToTarget(targetPos,
+            attacker.IActCtr?.MoveToTarget(targetPos,
                 () =>
                 {
-                    var direction = targetPos.x - attacker.Transform.position.x;
-                    
-                    attacker.Transform.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
+                    Flip(attacker, targetPos);
                 });
         }
 
-        private void MoveToReturn(ICombatant attacker)
+        private void Flip(ICombatant iCombatant, Vector3 targetPos)
         {
-            attacker?.IActCtr?.MoveToTarget();
+            if (iCombatant == null)
+                return;
+            
+            var direction = targetPos.x - iCombatant.Transform.position.x;
+            iCombatant.Transform.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
+        }
+
+        private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)
+        {
+            var meshRenderer = iCombatant?.SkeletonAnimation?.GetComponent<MeshRenderer>();
+            if (meshRenderer == null)
+                return;
+            
+            meshRenderer.sortingOrder = sortingOrder;
         }
 
         private List<ICombatant> GetTargetList(ICombatant iCombatant)

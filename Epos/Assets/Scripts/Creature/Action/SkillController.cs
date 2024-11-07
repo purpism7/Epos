@@ -97,6 +97,17 @@ namespace Creature.Action
                     break;
                 }
                 
+                case 10004:
+                {
+                    var skill = new Ability.Skill();
+                    skill.Initialize(new Data.Skill(4, 5f));
+                    skill.SetESkillCategory(Type.ESkillCategory.Active);
+                    
+                    _skillList?.Add(skill);
+                    
+                    break;
+                }
+                
                 case 90001:
                 {
                     var skill = new Ability.Skill();

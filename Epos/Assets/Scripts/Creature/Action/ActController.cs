@@ -7,13 +7,14 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Common;
+using Unity.VisualScripting;
 
 namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
         void Idle();
-        IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool immediately = false);
+        IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool reverse = false);
         IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
         void Execute();
 
@@ -57,6 +58,7 @@ namespace Creature.Action
             if (transform.parent)
             {
                 _originPos = transform.parent.position;
+                _originPos.z = 0;
             }
         }
 
@@ -75,7 +77,14 @@ namespace Creature.Action
             Idle();
         }
         
-        IActController IActController.MoveToTarget(Vector3? pos, System.Action finishAction, bool immediately)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="finishAction"></param>
+        /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
+        /// <returns></returns>
+        IActController IActController.MoveToTarget(Vector3? pos, System.Action finishAction, bool reverse)
         {
             if (!IsActivate)
                 return null;
@@ -90,16 +99,10 @@ namespace Creature.Action
             {
                 TargetPos = targetPos,
                 FinishAction = finishAction,
+                ReverseAfterArriving = reverse,
             };
 
-            if (immediately)
-            {
-                Execute<Move, Move.Data>(data);
-            }
-            else
-            {
-                AddActAsync<Move, Move.Data>(data).Forget();
-            }
+            AddActAsync<Move, Move.Data>(data).Forget();
 
             return this;
         }
@@ -136,7 +139,7 @@ namespace Creature.Action
                     
                     iAct?.Execute();
                     SetCurrIAct(iAct);
-
+                    
                     return;
                 }
             }
@@ -243,14 +246,9 @@ namespace Creature.Action
         private void SetCurrIAct(IAct iAct)
         {
             _currIAct = iAct;
+            
+            // Debug.Log(name + " = " + iAct?.GetType());
         }
-
-        // #region Move.IListener
-        // void Move.IListener.Arrived()
-        // {
-        //     // Execute<Idle, Idle.Data>();
-        // }
-        // #endregion
     }
 }
 

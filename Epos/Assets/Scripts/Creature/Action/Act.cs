@@ -67,7 +67,6 @@ namespace Creature.Action
                 return;
 
             _duration = trackEntry.Animation.Duration;
-            // Debug.Log(trackEntry.Animation.Duration);
         }
     }
 }

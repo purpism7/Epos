@@ -43,12 +43,13 @@ namespace Creature.Action
         {
             _data?.IListener?.BeforeCasting();
 
-            await UniTask.Yield();
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
             SetAnimation(_data.AnimationKey, false);
             _data.Skill.Casting();
 
             await UniTask.Delay(TimeSpan.FromSeconds(_duration));
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             _endAction?.Invoke();
         }

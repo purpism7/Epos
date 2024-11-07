@@ -10,6 +10,7 @@ namespace Creature.Action
         {
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
+            public bool ReverseAfterArriving = false;
         }
         
         public override void Execute()
@@ -28,9 +29,7 @@ namespace Creature.Action
             if (!iActorTm)
                 return;
             
-            var targetPos = _data.TargetPos;
-            var direction = targetPos.x - iActorTm.position.x;
-
+            var direction = _data.TargetPos.x - iActorTm.position.x;
             iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
         }
 
@@ -51,6 +50,15 @@ namespace Creature.Action
             iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
             if (Vector3.Distance(iActorTm.position, targetPos) <= 0)
             {
+                // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
+                if (_data.ReverseAfterArriving)
+                {
+                    var localScale = iActorTm.localScale;
+                    localScale.x *= -1f;
+                    
+                    iActorTm.localScale = localScale;
+                }
+                
                 _data.FinishAction?.Invoke();
                 
                 _endAction?.Invoke();
