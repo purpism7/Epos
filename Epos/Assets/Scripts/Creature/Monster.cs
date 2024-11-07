@@ -17,6 +17,7 @@ namespace Creature
                 case Idle: return "00_Idle";
                 case Move: return "02_Run";
                 case Casting: return "03_Hit";
+                case Damage: return "04_Damege";
             }
 
             return string.Empty;

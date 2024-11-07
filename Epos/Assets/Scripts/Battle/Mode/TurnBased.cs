@@ -57,8 +57,6 @@ namespace Battle.Mode
         /// </summary>
         public override void Begin()
         {
-            _iCombatantQueue?.Clear();
-            
             switch (_data.EType)
             {
                 case EType.ActionSpeed:
@@ -123,6 +121,8 @@ namespace Battle.Mode
             
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
+            _iCombatantQueue?.Clear();
+            
             if (_priorityICombatantList != null)
             {
                 foreach (var iCombatant in _priorityICombatantList)
@@ -134,7 +134,7 @@ namespace Battle.Mode
                 }
             }
             
-            ActAsync().Forget();
+            CastingActiveSkillAsync().Forget();
         }
 
         private void EndTurn()
@@ -148,7 +148,7 @@ namespace Battle.Mode
             Debug.Log(turn);
         }
         
-        private async UniTask ActAsync()
+        private async UniTask CastingActiveSkillAsync()
         {
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
@@ -163,10 +163,10 @@ namespace Battle.Mode
             if (activeSkill == null)
                 return;
             
-            var targetList = GetTargetList(attacker);
+            var targetList = GetTargetList(activeSkill.ETargetTeam, activeSkill.ESkillTarget);
             var target = targetList?.FirstOrDefault();
-
-            await CastingPassiveSkill(attacker, target);
+            
+            await CastingPassiveSkillAsync(attacker, target);
             
             MoveToTarget(attacker, activeSkill, target);
             attacker.IActCtr?.CastingSkill(this, activeSkill, targetList); 
@@ -185,7 +185,7 @@ namespace Battle.Mode
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             // Debug.Log("End Move To Return");
-            ActAsync().Forget();
+            CastingActiveSkillAsync().Forget();
         }
         
         private async UniTask SequenceActAsync()
@@ -221,7 +221,7 @@ namespace Battle.Mode
                     if(iActCtr == null)
                         continue;
                     
-                    iActCtr.MoveToTarget(reverse: true)?.Execute();
+                    iActCtr.MoveToTarget()?.Execute();
                     
                     SetSortingOrder(iActCtr as ICombatant, 0);
                 }
@@ -245,7 +245,7 @@ namespace Battle.Mode
         /// </summary>
         /// <param name="attacker"></param>
         /// <param name="target"></param>
-        private async UniTask CastingPassiveSkill(ICombatant attacker, ICombatant target)
+        private async UniTask CastingPassiveSkillAsync(ICombatant attacker, ICombatant target)
         {
             if (_priorityICombatantList == null)
                 return;
@@ -264,9 +264,16 @@ namespace Battle.Mode
                 var passiveSkill = confrontICombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
                 if(passiveSkill == null)
                     continue;
-                    
-                MoveToTarget(confrontICombatant, passiveSkill, target);
-                confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, GetTargetList(confrontICombatant)); 
+                
+                var targetList = GetTargetList(passiveSkill.ETargetTeam, passiveSkill.ESkillTarget);
+                var resTarget = target;
+                if (passiveSkill.ETargetTeam != Type.ETeam.Ally)
+                {
+                    resTarget = targetList?.FirstOrDefault();
+                }
+                
+                MoveToTarget(confrontICombatant, passiveSkill, resTarget);
+                confrontICombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
                     
                 _sequenceActList?.Add(confrontICombatant.IActCtr);
             }
@@ -307,16 +314,28 @@ namespace Battle.Mode
             meshRenderer.sortingOrder = sortingOrder;
         }
 
-        private List<ICombatant> GetTargetList(ICombatant iCombatant)
+        /// <summary>
+        /// 스킬의 Target 은 스킬 사용 조건에서 추출되어야함. 
+        /// </summary>
+        /// <param name="eTargetTeam"></param>
+        /// <returns></returns>
+        private List<ICombatant> GetTargetList(Type.ETeam eTargetTeam, Type.ESkillTarget eSkillTarget)
         {
-            if (iCombatant == null)
-                return null;
+            List<ICombatant> iCombatantList =
+                eTargetTeam == Type.ETeam.Ally ? _data?.AllyICombatantList : _data?.EnemyICombatantList;
             
-            List<ICombatant> iCombatantList = GetConfrontList(iCombatant); 
             if (iCombatantList != null)
             {
                 List<ICombatant> targetList = new();
                 targetList.Clear();
+
+                if (eSkillTarget == Type.ESkillTarget.FarOne ||
+                    eSkillTarget == Type.ESkillTarget.NearOne)
+                {
+                    targetList.Add(iCombatantList.FirstOrDefault());
+
+                    return targetList;
+                }
                 
                 foreach (var targetIActor in iCombatantList)
                 {
@@ -331,15 +350,7 @@ namespace Battle.Mode
 
             return null;
         }
-
-        private List<ICombatant> GetConfrontList(ICombatant iCombatant)
-        {
-            if (iCombatant is Hero)
-                return _data?.EnemyICombatantList;
-                
-            return _data?.AllyICombatantList;
-        }
-
+        
         #region Skill.IListener
         void Casting.IListener.BeforeCasting()
         {

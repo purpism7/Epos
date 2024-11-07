@@ -62,6 +62,11 @@ namespace Creature.Action
             if (animationState == null)
                 return;
             
+            var animation = _iActor.SkeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+                .Find(animation => animation.Name.Contains(animationName));
+            if (animation == null)
+                return;
+            
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return;

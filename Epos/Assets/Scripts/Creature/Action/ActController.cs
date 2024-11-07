@@ -16,6 +16,7 @@ namespace Creature.Action
         void Idle();
         IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool reverse = false);
         IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
+        void TakeDamage();
         void Execute();
 
         bool InAction { get; }
@@ -126,6 +127,14 @@ namespace Creature.Action
             AddActAsync<Casting, Casting.Data>(data).Forget();
 
             return this;
+        }
+
+        void IActController.TakeDamage()
+        {
+            if (!IsActivate)
+                return;
+
+            Execute<Damage, Damage.Data>();
         }
 
         private async UniTask ExecuteAsync()

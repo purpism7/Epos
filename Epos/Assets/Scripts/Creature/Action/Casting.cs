@@ -42,15 +42,29 @@ namespace Creature.Action
         private async UniTask CastingAsync()
         {
             _data?.IListener?.BeforeCasting();
-
+            
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
-            SetAnimation(_data.AnimationKey, false);
-            _data.Skill.Casting();
+            SetAnimation(_data?.AnimationKey, false);
+            _data?.Skill.Casting();
 
-            await UniTask.Delay(TimeSpan.FromSeconds(_duration));
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            var halfDuration = _duration / 2f;
+
+            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
+            _data?.IListener?.InUse();
             
+            if (_data?.TargetList != null &&
+                _data.Skill?.ETargetTeam == Type.ETeam.Enemy)
+            {
+                foreach (var target in _data?.TargetList)
+                {
+                    target?.IActCtr?.TakeDamage();
+                }
+            }
+
+            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
+            _data?.IListener?.AfterCasting();            
+            
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             _endAction?.Invoke();
         }
     }

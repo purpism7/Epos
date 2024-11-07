@@ -80,6 +80,8 @@ namespace Creature.Action
                     var skill = new Ability.Skill();
                     skill.Initialize(new Data.Skill(3, 3f));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
+                    skill.SetETargetTeam(Type.ETeam.Ally);
+                    skill.SetESkillTarget(Type.ESkillTarget.NearOne);
                     
                     _skillList?.Add(skill);
                     
@@ -88,9 +90,12 @@ namespace Creature.Action
                 
                 case 10003:
                 {
+                    // 소서리스
                     var skill = new Ability.Skill();
                     skill.Initialize(new Data.Skill(2, 0));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
+                    skill.SetETargetTeam(Type.ETeam.Ally);
+                    skill.SetESkillTarget(Type.ESkillTarget.All);
                     
                     _skillList?.Add(skill);
                     
@@ -99,9 +104,12 @@ namespace Creature.Action
                 
                 case 10004:
                 {
+                    // 창병
                     var skill = new Ability.Skill();
                     skill.Initialize(new Data.Skill(4, 5f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
+                    skill.SetETargetTeam(Type.ETeam.Enemy);
+                    skill.SetESkillTarget(Type.ESkillTarget.NearOne);
                     
                     _skillList?.Add(skill);
                     
@@ -113,6 +121,8 @@ namespace Creature.Action
                     var skill = new Ability.Skill();
                     skill.Initialize(new Data.Skill(1, 7f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
+                    skill.SetETargetTeam(Type.ETeam.Ally);
+                    skill.SetESkillTarget(Type.ESkillTarget.NearOne);
                     
                     _skillList?.Add(skill);
                     

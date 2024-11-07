@@ -20,6 +20,7 @@ public class Type
         Enemy,
     }
     
+    #region Skill
     public enum ESkillCategory
     {
         None,
@@ -27,4 +28,15 @@ public class Type
         Passive,
         Active,
     }
+
+    public enum ESkillTarget
+    {
+        None,
+        
+        All,
+        
+        NearOne,
+        FarOne,
+    }
+    #endregion
 }
