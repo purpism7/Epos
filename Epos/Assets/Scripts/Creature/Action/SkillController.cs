@@ -119,7 +119,7 @@ namespace Creature.Action
                 case 90001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(1, 7f));
+                    skill.Initialize(new Data.Skill(1, 4f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     skill.SetSameTeam(false);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);

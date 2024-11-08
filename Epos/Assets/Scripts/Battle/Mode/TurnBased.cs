@@ -27,16 +27,25 @@ namespace Battle.Mode
             ActionSpeed,
         }
 
+        private class TargetData
+        {
+            public ICombatant Target = null;
+            public ICombatant ChangeTarget { get; private set; } = null;
+
+            public void SetChangeTarget(ICombatant target)
+            {
+                ChangeTarget = target;
+            }
+        }
+
         private List<ICombatant> _priorityICombatantList = null;
         private Queue<ICombatant> _castingActiveSkillICombatantQueue = null;
-        private List<ICombatant> _targetList = null;
+        private List<TargetData> _targetDataList = null;
         
         private List<IActController> _sequenceActList = null;
         private IActController _iActCtr = null;
 
-        private int _sequencIndex = 0;
-        // private ICombatant _currICombatant = null;
-        
+        private int _sequenceIndex = 0;
         private int _turn = 0;
         
         public override BattleMode<Data> Initialize(Data data)
@@ -47,6 +56,7 @@ namespace Battle.Mode
             _castingActiveSkillICombatantQueue.Clear();
 
             _sequenceActList = new();
+            _targetDataList = new();
             
             return this;
         }
@@ -151,8 +161,9 @@ namespace Battle.Mode
         {
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
-            _sequencIndex = 0;
+            _sequenceIndex = 0;
             _sequenceActList?.Clear();
+            _targetDataList?.Clear();
             
             var attacker = _castingActiveSkillICombatantQueue?.Dequeue();
             if (attacker == null)
@@ -162,12 +173,27 @@ namespace Battle.Mode
             if (activeSkill == null)
                 return;
             
-            _targetList = attacker.GetTargetList(_priorityICombatantList, activeSkill);
+            var targetList = attacker.GetTargetList(_priorityICombatantList, activeSkill);
+            if (targetList != null)
+            {
+                foreach (var target in targetList)
+                {
+                    if(target == null)
+                        continue;
+
+                    _targetDataList.Add(
+                        new TargetData
+                        {
+                            Target = target,
+                        });
+                }
+            }
             
             await CastingPassiveSkillAsync(attacker);
             
-            MoveToTarget(attacker, activeSkill, _targetList);
-            attacker.IActCtr?.CastingSkill(this, activeSkill, _targetList); 
+            MoveToTarget(attacker, activeSkill, _targetDataList);
+            CastingSkill(attacker, activeSkill, _targetDataList);
+            // attacker.IActCtr?.CastingSkill(this, activeSkill, _targetList); 
 
             _sequenceActList?.Add(attacker.IActCtr);
             
@@ -189,17 +215,17 @@ namespace Battle.Mode
         private async UniTask SequenceActAsync()
         {
             while (_sequenceActList != null &&
-                   _sequenceActList.Count > _sequencIndex)
+                   _sequenceActList.Count > _sequenceIndex)
             {
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 
                 if (_iActCtr == null ||
                     !_iActCtr.InAction)
                 {
-                    _iActCtr = _sequenceActList[_sequencIndex];
+                    _iActCtr = _sequenceActList[_sequenceIndex];
                     _iActCtr?.Execute();
 
-                    ++_sequencIndex;
+                    ++_sequenceIndex;
                 }
             }
             
@@ -252,61 +278,84 @@ namespace Battle.Mode
                     continue;
                 
                 var targetList = iCombatant.GetTargetList(_priorityICombatantList, passiveSkill);
-                if (!targetList.IsNullOrEmpty())
+                if (targetList.IsNullOrEmpty())
+                    continue;
+
+                var targetDataList = new List<TargetData>();
+                targetDataList.Clear();
+                
+                foreach (var target in targetList)
                 {
-                    if (targetList.Count == 1)
-                    {
-                        var target = targetList.FirstOrDefault();
-                        if (target != null)
+                    if(target == null)
+                        continue;
+
+                    targetDataList.Add(
+                        new TargetData
                         {
-                            if (passiveSkill.SameTeam)
-                            {
-                                if(attacker.ETeam == iCombatant.ETeam)
-                                    continue;
-                                
-                                var findIndex= _targetList.FindIndex(findTarget => findTarget.Id == target.Id);
-                                if (findIndex >= 0)
-                                {
-                                    _targetList.RemoveAt(findIndex);
-                                    _targetList.Insert(findIndex, iCombatant);
-                                }
-                            
-                                MoveToTarget(iCombatant, passiveSkill, targetList);
-                                iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
-                                
-                                _sequenceActList?.Add(iCombatant.IActCtr);
-                                    
+                            Target = target,
+                        });
+                }
+                
+                if (targetList.Count == 1)
+                {
+                    var target = targetList.FirstOrDefault();
+                    if (target != null)
+                    {
+                        if (passiveSkill.SameTeam)
+                        {
+                            if(attacker.ETeam == iCombatant.ETeam)
                                 continue;
+                                
+                            var findTargetData = _targetDataList?.Find(targetData => targetData?.Target.Id == target.Id);
+                            if (findTargetData != null)
+                            {
+                                // _targetList.RemoveAt(findIndex);
+                                findTargetData.SetChangeTarget(iCombatant);
                             }
+                            
+                            MoveToTarget(iCombatant, passiveSkill, targetDataList);
+                            CastingSkill(iCombatant, passiveSkill, targetDataList);
+                            // iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
+                                
+                            _sequenceActList?.Add(iCombatant.IActCtr);
+                                    
+                            continue;
                         }
                     }
-                        
-                    MoveToTarget(iCombatant, passiveSkill, targetList);
-                    iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
-                            
-                    _sequenceActList?.Add(iCombatant.IActCtr);
                 }
+                        
+                MoveToTarget(iCombatant, passiveSkill, targetDataList);
+                CastingSkill(iCombatant, passiveSkill, targetDataList);
+                // iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
+                            
+                _sequenceActList?.Add(iCombatant.IActCtr);
             }
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
         }
 
-        private void MoveToTarget(ICombatant attacker, Skill skill, List<ICombatant> targetList)
+        private void MoveToTarget(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
         {
             if (skill == null)
                 return;
 
-            if (targetList == null ||
-                targetList.Count > 1)
+            if (targetDataList == null ||
+                targetDataList.Count > 1)
                 return;
 
-            var target = targetList?.FirstOrDefault();
-            if (target == null)
+            var targetData = targetDataList.FirstOrDefault();
+            if (targetData == null)
                 return;
             
             var skillRange = skill.SkillData.Range;
             if (skillRange <= 0)
                 return;
+
+            var target = targetData.Target;
+            if (targetData.ChangeTarget != null)
+            {
+                skillRange += 2f;
+            }
             
             var targetPos = target.Transform.position;
             var direction = targetPos.x - attacker.Transform.position.x;
@@ -318,6 +367,31 @@ namespace Battle.Mode
             SetSortingOrder(attacker, 1);
             
             attacker.IActCtr?.MoveToTarget(targetPos, reverse: targetPos.x - attacker.Transform.position.x < 0);
+        }
+
+        private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
+        {
+            if (attacker == null)
+                return;
+
+            if (targetDataList.IsNullOrEmpty())
+                return;
+
+            var targetList = new List<ICombatant>();
+            targetList.Clear();
+
+
+            foreach (var targetData in targetDataList)
+            {
+                if(targetData == null)
+                    continue;
+
+                var target = targetData.ChangeTarget != null ? targetData.ChangeTarget : targetData.Target;
+                
+                targetList.Add(target);
+            }
+            
+            attacker.IActCtr?.CastingSkill(this, skill, targetList); 
         }
         
         private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)

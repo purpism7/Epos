@@ -90,13 +90,9 @@ namespace Creature.Action
 
             var targetPos = _originPos;
             if (pos != null)
-            {
                 targetPos = pos.Value;
-            }
             else
-            {
                 reverse = transform.position.x - targetPos.x > 0;
-            }
             
             var data = new Move.Data
             {
