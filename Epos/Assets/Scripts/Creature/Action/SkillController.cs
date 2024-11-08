@@ -104,7 +104,7 @@ namespace Creature.Action
                 
                 case 10004:
                 {
-                    // 창병
+                    // 스피어
                     var skill = new Ability.Skill();
                     skill.Initialize(new Data.Skill(4, 5f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Common;
 using UnityEngine;
 
 public class Part : MonoBehaviour
@@ -19,14 +18,14 @@ public class Part : MonoBehaviour
     {
         IsActivate = true;
         
-        Extension.SetActive(rootTm, true);
+        Extensions.SetActive(rootTm, true);
     }
 
     public virtual void Deactivate()
     {
         IsActivate = false;
         
-        Extension.SetActive(rootTm, false);
+        Extensions.SetActive(rootTm, false);
     }
 }
 

@@ -1,0 +1,67 @@
+using System.Collections;
+using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using UnityEngine;
+
+public static class Extensions
+{
+    public static T AddOrGetComponent<T>(this Component component) where T : Component
+    {
+        if (!component)
+            return default;
+            
+        var t = component.GetComponent<T>();
+        if (t == null)
+        {
+            t = component.gameObject.AddComponent<T>();
+        }
+
+        return t;
+    }
+
+    public static void SetActive(this Component component, bool active)
+    {
+        if (component == null)
+            return;
+
+        SetActiveAsync(component, active).Forget();
+    }
+
+    private static async UniTask SetActiveAsync(this Component component, bool active)
+    {
+        await UniTask.Yield();
+            
+        component.gameObject.SetActive(active);
+    }
+        
+    public static List<T> AddList<T, V>(this V[] arrays) where T : class
+    {
+        if (arrays == null)
+            return null;
+            
+        var list = new List<T>();
+        list.Clear();
+            
+        foreach (V t in arrays)
+        {
+            if(t == null)
+                continue;
+                
+            list.Add(t as T);
+        }
+
+        return list;
+    }
+
+    public static bool IsNullOrEmpty<T>(this List<T> list)
+    {
+        if (list == null)
+            return true;
+
+        if (list.Count <= 0)
+            return true;
+
+        return false;
+    }
+}
+

@@ -7,7 +7,6 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Spine.Unity;
 
-using Common;
 using Creature.Action;
 
 namespace Creature
@@ -75,9 +74,7 @@ namespace Creature
             IActCtr?.Activate();
             ISkillCtr?.Activate();
             
-            // IsActivate = true;
-            
-            Extension.SetActive(rootTm, true);
+            Extensions.SetActive(rootTm, true);
         }
 
         public virtual void Deactivate()
@@ -85,9 +82,8 @@ namespace Creature
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
-            // IsActivate = false;
             
-            Extension.SetActive(rootTm, false);
+            Extensions.SetActive(rootTm, false);
         }
         #endregion
         

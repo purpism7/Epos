@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Common;
 using Manager;
 using GameSystem;
 
 public class MainManager : Singleton<MainManager>
 {
+    [SerializeField]
+    [Range(1f, 10f)]
+    private float timeScale = 1f;
+    
     private List<Manager.IGeneric> _iMgrGenericList = null;
     
     protected override void Initialize()
@@ -52,6 +55,10 @@ public class MainManager : Singleton<MainManager>
 
     private void Update()
     {
+#if UNITY_EDITOR
+        Time.timeScale = timeScale;
+#endif
+        
         if (_iMgrGenericList != null)
         {
             foreach (var iMgrGeneric in _iMgrGenericList)

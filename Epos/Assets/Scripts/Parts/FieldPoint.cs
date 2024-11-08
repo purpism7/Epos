@@ -9,7 +9,6 @@ using Creature;
 using GameSystem;
 using Battle.Mode;
 using Battle.Step;
-using Common;
 
 namespace Parts
 {

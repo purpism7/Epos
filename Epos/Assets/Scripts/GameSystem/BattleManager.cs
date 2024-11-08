@@ -5,10 +5,8 @@ using UnityEngine;
 using Battle;
 using Battle.Mode;
 using Battle.Step;
-using Common;
 using Creature;
 using Manager;
-using Character = Manager.Character;
 
 namespace GameSystem
 {
