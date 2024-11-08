@@ -265,7 +265,7 @@ namespace Battle.Mode
                                     continue;
                                 
                                 var findIndex= _targetList.FindIndex(findTarget => findTarget.Id == target.Id);
-                                if (findIndex > 0)
+                                if (findIndex >= 0)
                                 {
                                     _targetList.RemoveAt(findIndex);
                                     _targetList.Insert(findIndex, iCombatant);
@@ -311,7 +311,7 @@ namespace Battle.Mode
             var targetPos = target.Transform.position;
             var direction = targetPos.x - attacker.Transform.position.x;
             
-            targetPos.x = direction < 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
+            targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
             targetPos.y -= 1f;
             targetPos.z = 0;
 
