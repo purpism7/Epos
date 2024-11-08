@@ -1,0 +1,9 @@
+UI_Select_Arrow_01.png
+size:365,260
+filter:Linear,Linear
+pma:true
+Eff_Flare_01
+bounds:2,2,256,256
+Select_Arrow_01
+bounds:260,143,115,103
+rotate:90
