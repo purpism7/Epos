@@ -12,7 +12,7 @@ namespace Parts
     {
         void ChainUpdate();
         
-        FieldPoint FieldPoint { get; }
+        // FieldPoint FieldPoint { get; }
     }
     
     public class Field : Part, IField, FieldPoint.IListener
@@ -34,13 +34,13 @@ namespace Parts
             }
         }
     
-        FieldPoint IField.FieldPoint
-        {
-            get
-            {
-                return fieldPoints[0];
-            }
-        }
+        // FieldPoint IField.FieldPoint
+        // {
+        //     get
+        //     {
+        //         return fieldPoints[0];
+        //     }
+        // }
         #endregion
     
         public override void Initialize()
@@ -102,8 +102,8 @@ namespace Parts
                 return;
             
             iActor.IActCtr?.Idle();
-            
-            // MainManager.Get<IFieldManager>().GetFieldData()
+
+            MainManager.Get<IFieldManager>()?.Encounter();
         }
         #endregion
     }

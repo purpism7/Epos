@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 36982547135949279}
   - component: {fileID: 6745781381860749889}
   - component: {fileID: 991772631496345602}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Spine GameObject (UI_Select_Arrow_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,8 +81,8 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -2038680451
-  m_SortingLayer: 2
+  m_SortingLayerID: -39294783
+  m_SortingLayer: 1
   m_SortingOrder: 3
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &991772631496345602
@@ -137,8 +137,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8196366267296346501}
-  m_Layer: 10
-  m_Name: UI_Select_Arrow_01
+  - component: {fileID: 965753655994234142}
+  m_Layer: 8
+  m_Name: FieldIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -160,6 +161,19 @@ Transform:
   - {fileID: 3827475770071584400}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &965753655994234142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374470745469089694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9c74915008c41f199945301bcb9be0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 3827475770071584400}
 --- !u!1 &2911368005975025235
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,7 +183,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3827475770071584400}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

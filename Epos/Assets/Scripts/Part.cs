@@ -6,8 +6,17 @@ public class Part : MonoBehaviour
 {
     [SerializeField]
     private Transform rootTm = null;
-    
-    public bool IsActivate { get; private set; } = false;
+
+    public bool IsActivate 
+    {
+        get
+        {
+            if (!rootTm)
+                return false;
+                
+            return rootTm.gameObject.activeSelf;
+        }
+    }
 
     public virtual void Initialize()
     {
@@ -16,15 +25,11 @@ public class Part : MonoBehaviour
     
     public virtual void Activate()
     {
-        IsActivate = true;
-        
         Extensions.SetActive(rootTm, true);
     }
 
     public virtual void Deactivate()
     {
-        IsActivate = false;
-        
         Extensions.SetActive(rootTm, false);
     }
 }
@@ -43,5 +48,12 @@ public class Part<T> : Part where T : Part<T>.BaseData
         base.Initialize();
 
         _data = data;
+    }
+    
+    public virtual void Activate(T data)
+    {
+        _data = data;
+        
+        base.Activate();
     }
 }

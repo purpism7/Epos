@@ -22,9 +22,9 @@ namespace Creature
         }
 
         #region Act
-        public void MoveToTarget(Vector3 pos)
+        public void MoveToTarget(Vector3 pos, System.Action finishAction)
         {
-            IActCtr?.MoveToTarget(pos)?.Execute();
+            IActCtr?.MoveToTarget(pos, finishAction: finishAction)?.Execute();
         }
         
         public override string AnimationKey<T>(Act<T> act)

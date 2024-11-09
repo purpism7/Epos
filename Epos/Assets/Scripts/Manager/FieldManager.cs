@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature;
-using Data;
+using Parts;
+using Field = Data.Field;
 
 namespace Manager
 {
     public interface IFieldManager : IManager
     {
         void MoveToTarget(Vector3 pos);
-        Data.Field GetFieldData(int id);
+
+        void Encounter();
+        // Data.Field GetFieldData(int id);
     }
     
     public class FieldManager : MonoBehaviour, IFieldManager
@@ -19,6 +22,8 @@ namespace Manager
         private Parts.Field field = null;
         [SerializeField] 
         private Hero fieldHero = null;
+        [SerializeField] 
+        private FieldIndicator fieldIndicator = null;
         
         private List<Parts.Field> _fieldList = new();
         private Parts.IField CurrIField = null;
@@ -42,6 +47,8 @@ namespace Manager
             _fieldDataList?.Add(new Field(1));
             _fieldDataList?.Add(new Field(2));
             
+            fieldIndicator?.Deactivate();
+            
             return this;
         }
         
@@ -60,29 +67,44 @@ namespace Manager
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
-            fieldHero?.MoveToTarget(pos);
+            fieldHero?.MoveToTarget(pos,
+                () =>
+                {
+                    fieldIndicator?.Deactivate();
+                });
+            
+            fieldIndicator?.Activate(
+                new FieldIndicator.Data
+                {
+                    TargetPos = pos,
+                });
+        }
+
+        void IFieldManager.Encounter()
+        {
+            fieldIndicator?.Deactivate();
         }
 
         // Data conatainer 로 변경 할 것.
-        Data.Field IFieldManager.GetFieldData(int fieldPointId)
-        {
-            if (_fieldDataList == null)
-                return null;
-            
-            foreach (var fieldData in _fieldDataList)
-            {
-                if (fieldData == null)
-                    continue;
-
-                if (fieldData.FieldPointId == fieldPointId)
-                    return fieldData;
-            }
-
-            // if (_fieldDataList.TryGetValue(id, out Data.Field fieldData))
-            //     return fieldData;
-
-            return null;
-        }
+        // Data.Field IFieldManager.GetFieldData(int fieldPointId)
+        // {
+        //     if (_fieldDataList == null)
+        //         return null;
+        //     
+        //     foreach (var fieldData in _fieldDataList)
+        //     {
+        //         if (fieldData == null)
+        //             continue;
+        //
+        //         if (fieldData.FieldPointId == fieldPointId)
+        //             return fieldData;
+        //     }
+        //
+        //     // if (_fieldDataList.TryGetValue(id, out Data.Field fieldData))
+        //     //     return fieldData;
+        //
+        //     return null;
+        // }
         #endregion
     }
 }
