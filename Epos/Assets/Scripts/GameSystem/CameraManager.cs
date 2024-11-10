@@ -1,12 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Cinemachine;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
 using DG.Tweening;
+using Manager;
+using Vector3 = UnityEngine.Vector3;
 
 namespace GameSystem
 {
@@ -36,12 +39,18 @@ namespace GameSystem
         private Vector3 _startPosition;  // 입력 시작 위치를 기억
         private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
         #endregion
+
+        private Creature.Hero _fieldHero = null;
+        private bool _return = true;
+        private float _returnTime = 0;
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
         
         public Manager.IGeneric Initialize()
         {
+            _return = true;
+            
             return this;
         }
         
@@ -56,6 +65,21 @@ namespace GameSystem
                 return;
 
             if (virtualCamera == null)
+                return;
+
+            FieldChainLateUpdate();
+        }
+
+        private void FieldChainLateUpdate()
+        {
+            if (!_fieldHero)
+            {
+                _fieldHero = MainManager.Get<IFieldManager>()?.FieldHero;
+
+                return;
+            }
+
+            if (!_fieldHero.IsActivate)
                 return;
             
             var mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -72,6 +96,9 @@ namespace GameSystem
                 {
                     IsMove = true;
 
+                    _return = false;
+                    _returnTime = 0;
+                    
                     return;
                 }
                 
@@ -79,7 +106,16 @@ namespace GameSystem
             }
             else
             {
+                if (IsMove)
+                    _return = true;
+
+                if (_return)
+                    _returnTime += Time.deltaTime;
+                
                 IsMove = false;
+
+                if (CameraReturnToCharacter())
+                    return;
             }
 
             ReduceDirectionForce();
@@ -122,6 +158,43 @@ namespace GameSystem
 
             mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * 2f);
         }
+
+        private bool CameraReturnToCharacter()
+        {
+            if (mainCamera == null)
+                return false;
+            
+            if (IsMove ||
+                _returnTime < 1f)
+                return false;
+            
+            var pos = _fieldHero.Transform.position;
+            pos.z = -10f;
+                    
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, pos, Time.deltaTime * 2f);
+
+            return true;
+        }
+        //
+        // private void ActiveFollow()
+        // {
+        //     if (virtualCamera == null)
+        //         return;
+        //     
+        //     if (virtualCamera.Follow)
+        //         return;
+        //             
+        //     virtualCamera.Follow = _followTargetTm;
+        // }
+        //
+        // private void DeactiveFollow()
+        // {
+        //     if (!virtualCamera?.Follow)
+        //         return;
+        //     
+        //     virtualCamera.Follow = null;
+        //     // virtualCamera.transform.localPosition = Vector3.zero;
+        // }
         
         #region Zoom In / Out
         void ICameraManager.ZoomIn(Vector3 targetPos, Action endAction)
@@ -143,7 +216,6 @@ namespace GameSystem
             
             endAction?.Invoke();
         }
-        
         #endregion
     }
 }

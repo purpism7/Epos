@@ -11,8 +11,9 @@ namespace Manager
     public interface IFieldManager : IManager
     {
         void MoveToTarget(Vector3 pos);
-
         void Encounter();
+
+        Hero FieldHero { get; }
         // Data.Field GetFieldData(int id);
     }
     
@@ -67,6 +68,9 @@ namespace Manager
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
+            if (!fieldHero.IsActivate)
+                return;
+            
             fieldHero?.MoveToTarget(pos,
                 () =>
                 {
@@ -83,6 +87,14 @@ namespace Manager
         void IFieldManager.Encounter()
         {
             fieldIndicator?.Deactivate();
+        }
+
+        Hero IFieldManager.FieldHero
+        {
+            get
+            {
+                return fieldHero;
+            }
         }
 
         // Data conatainer 로 변경 할 것.
