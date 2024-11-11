@@ -6,7 +6,7 @@ using UnityEngine;
 namespace Data
 {
     // 테이블 데이터 (json) 로 변경 될 예정.
-    public class Skill
+    public class Skill : Base
     {
         public int Id { get; private set; } = 0;
         public float Range { get; private set; } = 0;
