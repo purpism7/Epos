@@ -8,7 +8,7 @@ namespace Creature.Action
     {
         Ability.Skill GetPossibleSkill(Type.ESkillCategory eSkillCategory);
         
-        void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
+        // void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
     }
     
     public class SkillController : Controller, ISkillController
@@ -35,35 +35,37 @@ namespace Creature.Action
             return PossibleSkill(eSkillCategory);
         }
         
-        void ISkillController.Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory)
-        {
-            // if (skill == null)
-            //     return;
-            var skill = PossibleSkill(eSkillCategory);
-            if (skill == null)
-                return;
-
-            var target = targetList?.FirstOrDefault();
-            if (target == null)
-                return;
-
-            // var targetPos = target.Transform.position;
-            // targetPos.x += skill.SkillData.Range;
-            // targetPos.y -= 1f;
-            // targetPos.z = 0;
-            // Debug.Log("TargetPos = " + targetPos);
-            // var speed = _iCaster.IStat.Get(Stat.EType.MoveSpeed);
-            // var distance = Vector3.Distance(_iCaster.Transform.position, targetPos);
-            // var duration = distance / speed;
-            //
-            // _iCaster?.IActCtr?.MoveToTarget(targetPos, () => { }, true);
-            
-            // _iCaster.Transform.DOMove(targetPos, duration)
-            //     .OnComplete(() =>
-            //     {
-            //         
-            //     });
-        }
+        // void ISkillController.Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory)
+        // {
+        //     // if (skill == null)
+        //     //     return;
+        //     var skill = PossibleSkill(eSkillCategory);
+        //     if (skill == null)
+        //         return;
+        //
+        //     var target = targetList?.FirstOrDefault();
+        //     if (target == null)
+        //         return;
+        //
+        //     _iCaster?.IStat?.Add(eSkillCategory == Type.ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
+        //    
+        //     // var targetPos = target.Transform.position;
+        //     // targetPos.x += skill.SkillData.Range;
+        //     // targetPos.y -= 1f;
+        //     // targetPos.z = 0;
+        //     // Debug.Log("TargetPos = " + targetPos);
+        //     // var speed = _iCaster.IStat.Get(Stat.EType.MoveSpeed);
+        //     // var distance = Vector3.Distance(_iCaster.Transform.position, targetPos);
+        //     // var duration = distance / speed;
+        //     //
+        //     // _iCaster?.IActCtr?.MoveToTarget(targetPos, () => { }, true);
+        //     
+        //     // _iCaster.Transform.DOMove(targetPos, duration)
+        //     //     .OnComplete(() =>
+        //     //     {
+        //     //         
+        //     //     });
+        // }
 
         private void CreateSkillList()
         {
@@ -141,8 +143,22 @@ namespace Creature.Action
                 if(skill == null)
                     continue;
 
-                if (skill.ESkillCategory == eSkillCategory)
-                    return skill;
+                if (skill.ESkillCategory != eSkillCategory)
+                    continue;
+                
+                if (eSkillCategory == Type.ESkillCategory.Active)
+                {
+                    if (_iCaster?.IStat?.Get(Stat.EType.ActivePoint) < 1)
+                        continue;
+                }
+
+                if (eSkillCategory == Type.ESkillCategory.Passive)
+                {
+                    if (_iCaster?.IStat?.Get(Stat.EType.PassivePoint) < 1)
+                        continue;
+                }
+                
+                return skill;
             }
 
             return null;

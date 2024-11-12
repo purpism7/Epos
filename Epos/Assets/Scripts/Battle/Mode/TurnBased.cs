@@ -8,8 +8,6 @@ using Cysharp.Threading.Tasks;
 using Ability;
 using Creature;
 using Creature.Action;
-using Unity.VisualScripting;
-using UnityEditor.Rendering;
 
 namespace Battle.Mode
 {
@@ -116,9 +114,7 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            
             _iActCtr?.ChainUpdate();
-            // _currICombatant?.IActCtr?.ChainUpdate();
         }
         
         /// <summary>
@@ -126,10 +122,6 @@ namespace Battle.Mode
         /// </summary>
         private async UniTask StartTurnAsync()
         {
-            SetTurn(_turn + 1);
-            
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
             _castingActiveSkillICombatantQueue?.Clear();
             
             if (_priorityICombatantList != null)
@@ -139,16 +131,33 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
                     
+                    // if(iCombatant.IStat?.Get(Stat.EType.ActivePoint) <= 0)
+                    //     continue;
+
+                    if (iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active) == null)
+                        continue;
+                    
                     _castingActiveSkillICombatantQueue?.Enqueue(iCombatant);
                 }
             }
+
+            if (_castingActiveSkillICombatantQueue?.Count <= 0)
+            {
+                End();
+                
+                return;
+            }
+            
+            SetTurn(_turn + 1);
+            
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             CastingActiveSkillAsync().Forget();
         }
 
         private void EndTurn()
         {
-            
+            StartTurnAsync().Forget();
         }
 
         private void SetTurn(int turn)
@@ -165,11 +174,12 @@ namespace Battle.Mode
             _sequenceActList?.Clear();
             _targetDataList?.Clear();
             
-            var attacker = _castingActiveSkillICombatantQueue?.Dequeue();
-            if (attacker == null)
+            ICombatant attacker = null;
+            if (_castingActiveSkillICombatantQueue == null ||
+                !_castingActiveSkillICombatantQueue.TryDequeue(out attacker))
                 return;
             
-            var activeSkill = attacker.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
+            var activeSkill = attacker?.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
             if (activeSkill == null)
                 return;
             
@@ -209,6 +219,15 @@ namespace Battle.Mode
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             // Debug.Log("End Move To Return");
+
+            if (_castingActiveSkillICombatantQueue == null ||
+                _castingActiveSkillICombatantQueue.Count <= 0)
+            {
+                EndTurn();
+
+                return;
+            }
+            
             CastingActiveSkillAsync().Forget();
         }
         
@@ -379,8 +398,7 @@ namespace Battle.Mode
 
             var targetList = new List<ICombatant>();
             targetList.Clear();
-
-
+            
             foreach (var targetData in targetDataList)
             {
                 if(targetData == null)

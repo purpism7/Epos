@@ -22,10 +22,15 @@ namespace Battle
         {
             base.Initialize(data);
             
-            AddStep<Step.Preprocessing>(data.PreprocessingData);
-            AddStep<Step.EnemyDeploy>(data.RightDeployData);
-            AddStep<Step.AllyDeploy>(data.LeftDeployData);
+            AddStep<Step.Preprocessing>(_data.PreprocessingData);
+            AddStep<Step.EnemyDeploy>(_data.RightDeployData);
+            AddStep<Step.AllyDeploy>(_data.LeftDeployData);
             AddStep<Step.BattleStart>(isLast: true);
+        }
+
+        public override void End()
+        {
+            base.End();
         }
     }
 }

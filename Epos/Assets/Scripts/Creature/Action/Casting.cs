@@ -35,6 +35,9 @@ namespace Creature.Action
         {
             if (_data == null)
                 return;
+
+            var eSkillCategory = _data.Skill.ESkillCategory;
+            _iActor?.IStat?.Add(eSkillCategory == Type.ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
             
             CastingAsync().Forget();
         }

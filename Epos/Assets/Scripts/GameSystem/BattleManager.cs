@@ -43,7 +43,6 @@ namespace GameSystem
             if (!_battleTypeDic.TryGetValue(typeof(T), out battleType))
             {
                 var aBattleType = new T() as BattleType<V>;
-                aBattleType?.Initialize(data);
                 aBattleType?.SetIListener(this);
        
                 _battleTypeDic?.TryAdd(typeof(T), aBattleType);
@@ -58,6 +57,7 @@ namespace GameSystem
                 return;
             }
             
+            (battleType as BattleType<V>)?.Initialize(data);
             battleType.Begin();
 
             _currBattleType = battleType;
@@ -125,7 +125,7 @@ namespace GameSystem
         #region BattleType.IListener
         void BattleType.IListener.End()
         {
-            
+            Debug.Log("End Battle");
         }
         #endregion
     }

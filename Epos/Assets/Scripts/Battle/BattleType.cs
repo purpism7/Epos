@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Battle
 {
-    public class BattleType
+    public class BattleType : BattleMode.IListener
     {
         public interface IListener
         {
@@ -19,6 +19,7 @@ namespace Battle
         public void Begin()
         {
             _firstStep?.Begin();
+            _firstStep = null;
         }
 
         public virtual void End()
@@ -41,13 +42,12 @@ namespace Battle
             _lastStep = step;
             
             if (_firstStep == null)
-            {
                 _firstStep = step;
-            }
 
             if (isLast)
             {
                 iBattleStep?.SetLastStepEndAction(EndLastStep);
+                _lastStep = null;
             }
         }
 
@@ -60,13 +60,20 @@ namespace Battle
         {
             
         }
+        
+        #region BattleMode.IListener
+        void BattleMode.IListener.End()
+        {
+            End();
+        }
+        #endregion
     }
     
     public abstract class BattleType<T> : BattleType where T : BattleType<T>.BaseData
     {
         public class BaseData
         {
-            public BattleMode BattleMode { get; set; } = null;
+            public BattleMode BattleMode = null;
         }
         
         protected T _data = null;
@@ -74,6 +81,8 @@ namespace Battle
         public virtual void Initialize(T data)
         {
             _data = data;
+            
+            _data?.BattleMode?.SetIListener(this);
         }
 
         public override void ChainUpdate()

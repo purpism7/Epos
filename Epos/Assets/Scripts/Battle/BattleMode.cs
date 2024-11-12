@@ -15,14 +15,28 @@ namespace Battle
             public List<ICombatant> EnemyICombatantList = null;
         }
 
+        public interface IListener
+        {
+            void End();
+        }
+
+        protected IListener _iListener = null;
+        
         public virtual void Begin()
         {
+            // _iListener = iListener;
             
+            Debug.Log("BattleMode Begin");
         }
 
         public virtual void ChainUpdate()
         {
             
+        }
+        
+        public void SetIListener(IListener iListener)
+        {
+            _iListener = iListener;
         }
     }
     
@@ -39,6 +53,11 @@ namespace Battle
 
         public abstract override void Begin();
         public abstract override void ChainUpdate();
+
+        protected virtual void End()
+        {
+            _iListener?.End();
+        }
     }
 }
 

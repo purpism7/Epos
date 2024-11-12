@@ -206,3 +206,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 10004
   rootTm: {fileID: 2251387211079859013}
+  actionSpeed: 12
+  moveSpeed: 10
+  attack: 1
+  attackRange: 4

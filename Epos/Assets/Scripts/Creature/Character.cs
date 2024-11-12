@@ -35,6 +35,33 @@ namespace Creature
         public Type.EFormation EFormation { get; private set; } = Type.EFormation.None;
         #endregion
         
+        #region Temp Stat
+        [Header("Temp Stat")]
+        [SerializeField] 
+        [Range(1f, 100f)]
+        [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]
+        private float actionSpeed = 1f;
+        [SerializeField] 
+        [Range(1f, 100f)]
+        [Tooltip("이동 속도.")]
+        private float moveSpeed = 1f;
+        [SerializeField] 
+        [Range(1f, 100f)]
+        [Tooltip("공격력.")]
+        private float attack = 1f;
+        [SerializeField] 
+        [Range(0f, 100f)]
+        [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
+        private float attackRange = 1f;
+        
+        [SerializeField] 
+        [Range(1f, 5f)]
+        private float activePoint = 1f;
+        [SerializeField] 
+        [Range(1f, 5f)]
+        private float passivePoint = 1f;
+        #endregion
+        
         public bool IsActivate 
         {
             get
@@ -58,6 +85,8 @@ namespace Creature
             
             ISkillCtr = transform.AddOrGetComponent<SkillController>();
             ISkillCtr?.Initialize(this);
+            
+            SetOriginStat();
         }
         
         public virtual void ChainUpdate()
@@ -97,6 +126,20 @@ namespace Creature
         void ICombatant.SetEFormation(Type.EFormation eFormation)
         {
             EFormation = eFormation;
+        }
+        #endregion
+        
+        #region Temp Stat
+
+        private void SetOriginStat()
+        {
+            IStat?.SetOrigin(Stat.EType.ActionSpeed, actionSpeed);
+            IStat?.SetOrigin(Stat.EType.MoveSpeed, moveSpeed);
+            IStat?.SetOrigin(Stat.EType.Attack, attack);
+            IStat?.SetOrigin(Stat.EType.AttackRange, attackRange);
+            
+            IStat?.SetOrigin(Stat.EType.ActivePoint, activePoint);
+            IStat?.SetOrigin(Stat.EType.PassivePoint, passivePoint);
         }
         #endregion
     }

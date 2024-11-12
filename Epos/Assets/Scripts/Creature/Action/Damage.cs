@@ -18,5 +18,7 @@ namespace Creature.Action
             
             SetAnimation(_data.AnimationKey, false);
         }
+        
+        
     }
 }

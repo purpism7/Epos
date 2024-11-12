@@ -2,7 +2,6 @@ using System.Collections;
 using UnityEngine;
 
 using System.Collections.Generic;
-using Battle.Mode;
 
 namespace Creature
 {
@@ -18,6 +17,7 @@ namespace Creature
     public interface IStat
     {
         void SetOrigin(Stat.EType eStatType, float value);
+        void Add(Stat.EType eStatType, float value);
 
         float Get(Stat.EType eStatType);
     }
@@ -44,38 +44,7 @@ namespace Creature
         #region IStatGeneric
         void IStatGeneric.Initialize(int id)
         {
-            // 임시
-            switch (id)
-            {
-                case 10001:
-                case 10002:
-                case 10003:
-                case 10004:
-
-                {
-                    var actionSpeed = id % 1000f * 3f;
-                    
-                    SetOrigin(EType.ActivePoint, 1f);
-                    SetOrigin(EType.PassivePoint, 1f); 
-                    
-                    SetOrigin(EType.ActionSpeed, actionSpeed);
-                    SetOrigin(EType.AttackRange, 3f);
-                    SetOrigin(EType.MoveSpeed, id == 10004 ? 10f : 8f); 
-                    
-                    break;
-                }
-
-                case 90001:
-                {
-                    SetOrigin(EType.ActivePoint, 1f);
-                    SetOrigin(EType.PassivePoint, 1f); 
-                    
-                    SetOrigin(EType.ActionSpeed, 11f);
-                    SetOrigin(EType.MoveSpeed, 7f); 
-                    
-                    break;
-                }
-            }
+            
         }
         
         void IStatGeneric.Activate()
@@ -102,10 +71,16 @@ namespace Creature
         {
             SetOrigin(eType, value);
         }
+        
+        void IStat.Add(EType eType, float value)
+        {
+            SetAdded(eType, value);
+        }
 
         float IStat.Get(EType eType)
         {
-            return GetOrigin(eType) + GetAdded(eType);
+            var curr = GetOrigin(eType) + GetAdded(eType);
+            return curr;
         }
         #endregion
 
@@ -118,13 +93,23 @@ namespace Creature
             }
 
             if (_originStatDic.ContainsKey(eType))
-            {
                 _originStatDic[eType] = value;
-            }
             else
-            {
                 _originStatDic.TryAdd(eType, value);
+        }
+        
+        private void SetAdded(EType eType, float value)
+        {
+            if (_addedStatDic == null)
+            {
+                _addedStatDic = new();
+                _addedStatDic.Clear();
             }
+
+            if (_addedStatDic.ContainsKey(eType))
+                _addedStatDic[eType] += value;
+            else
+                _addedStatDic.TryAdd(eType, value);
         }
 
         private float GetOrigin(EType eType)

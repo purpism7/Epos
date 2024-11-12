@@ -47,6 +47,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 90001
   rootTm: {fileID: 9067786674166319913}
+  actionSpeed: 10
+  moveSpeed: 9
+  attack: 1
+  attackRange: 2
 --- !u!1 &7525692459730496249
 GameObject:
   m_ObjectHideFlags: 0
