@@ -48,9 +48,11 @@ MonoBehaviour:
   id: 10001
   rootTm: {fileID: 7668903545576191951}
   actionSpeed: 3
-  moveSpeed: 8
+  moveSpeed: 20
   attack: 1
   attackRange: 3
+  activePoint: 1
+  passivePoint: 1
 --- !u!1 &6721083934532127383
 GameObject:
   m_ObjectHideFlags: 0
