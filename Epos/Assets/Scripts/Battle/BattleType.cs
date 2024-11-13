@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Battle.Step;
 using UnityEngine;
 
 namespace Battle
@@ -22,9 +23,9 @@ namespace Battle
             _firstStep = null;
         }
 
-        public virtual void End()
+        protected virtual void End()
         {
-            _iListener?.End();
+            
         }
 
         public virtual void ChainUpdate()
@@ -45,20 +46,25 @@ namespace Battle
                 _firstStep = step;
 
             if (isLast)
-            {
                 iBattleStep?.SetLastStepEndAction(EndLastStep);
-                _lastStep = null;
-            }
         }
 
         private void EndLastStep()
         {
-            Ready();
+            if (_lastStep is BattleStart)
+                Ready();
+                
+            _lastStep = null;
         }
         
         protected virtual void Ready()
         {
             
+        }
+
+        protected void BattleEnd()
+        {
+            _iListener?.End();
         }
         
         #region BattleMode.IListener

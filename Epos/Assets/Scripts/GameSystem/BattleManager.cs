@@ -12,7 +12,7 @@ namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        void BeginFieldBattle(Parts.Deploy leftDeploy, Parts.Deploy rightDeploy, Transform pointTm);
+        void BeginFieldBattle(Parts.Forces leftForces, Parts.Forces rightForces, Transform pointTm);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -77,15 +77,15 @@ namespace GameSystem
         /// <summary>
         /// Set Field Battle
         /// </summary>
-        /// <param name="leftDeploy">Ally</param>
-        /// <param name="rightDeploy">Enemy</param>
+        /// <param name="leftForces">Ally</param>
+        /// <param name="rightForces">Enemy</param>
         /// <param name="pointTm">For Zoom In Camera</param>
-        void IBattleManager.BeginFieldBattle(Parts.Deploy leftDeploy, Parts.Deploy rightDeploy, Transform pointTm)
+        void IBattleManager.BeginFieldBattle(Parts.Forces leftForces, Parts.Forces rightForces, Transform pointTm)
         {
             var battleModeData = new TurnBased.Data
             {
-                AllyICombatantList = leftDeploy?.characters?.AddList<ICombatant, Creature.Character>(),
-                EnemyICombatantList = rightDeploy?.characters?.AddList<ICombatant, Creature.Character>(),
+                AllyICombatantList = leftForces?.characters?.AddList<ICombatant, Creature.Character>(),
+                EnemyICombatantList = rightForces?.characters?.AddList<ICombatant, Creature.Character>(),
 
                 EType = TurnBased.EType.ActionSpeed,
             };
@@ -107,14 +107,15 @@ namespace GameSystem
                     },
                 },
 
-                LeftDeployData = new Battle.Step.Deploy.FieldData
+                LeftForcesData = new Battle.Step.Forces.FieldData
                 {
-                    Deploy = leftDeploy,
+                    Forces = leftForces,
+                    
                 },
 
-                RightDeployData = new Battle.Step.Deploy.FieldData
+                RightForcesData = new Battle.Step.Forces.FieldData
                 {
-                    Deploy = rightDeploy,
+                    Forces = rightForces,
                 },
             };
             

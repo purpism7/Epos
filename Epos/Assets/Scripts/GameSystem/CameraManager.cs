@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
 using Cinemachine;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
 using DG.Tweening;
-using Manager;
 using Vector3 = UnityEngine.Vector3;
+
+using Manager;
 
 namespace GameSystem
 {
@@ -19,6 +19,7 @@ namespace GameSystem
         bool IsMove { get; }
 
         void ZoomIn(Vector3 targetPos, Action endAction);
+        void ZoomOut(Action endAction);
     }
     
     public class CameraManager : MonoBehaviour, ICameraManager
@@ -211,6 +212,26 @@ namespace GameSystem
                 orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 20f, duration);
             await DOTween.To(() => mainCamera.transform.position,
                 position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
+
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            
+            endAction?.Invoke();
+        }
+
+        void ICameraManager.ZoomOut(Action endAction)
+        {
+            ZoomOutAsync(endAction).Forget();
+        }
+        
+        private async UniTask ZoomOutAsync(Action endAction)
+        { 
+            var duration = 1.5f;
+            // targetPos.z = DefaultZPos;
+            
+            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
+                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration);
+            // await DOTween.To(() => mainCamera.transform.position,
+            //     position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             

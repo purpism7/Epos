@@ -6,18 +6,18 @@ using GameSystem;
 
 namespace Battle.Step
 {
-    public partial class Preprocessing : BattleStep<Preprocessing.Data>
+    public partial class Postprocessing : BattleStep<Postprocessing.Data>
     {
         public class Data : BaseData
         {
             public System.Type Type { get; private set; } = null;
-            
+
             protected Data(System.Type type)
             {
                 Type = type;
             }
         }
-        
+
         public override void Begin()
         {
             if (_data == null)
@@ -27,10 +27,10 @@ namespace Battle.Step
             {
                 case FieldData data:
                 {
-                    MainManager.Get<ICameraManager>()?.ZoomIn(data.CameraZoomInPos, 
+                    MainManager.Get<ICameraManager>()?.ZoomOut( 
                         () =>
                         {
-                            data.CameraZoomInEndAction?.Invoke();
+                            data.CameraZoomOutEndAction?.Invoke();
 
                             End();
                         });
@@ -41,4 +41,5 @@ namespace Battle.Step
         }
     }
 }
+
 

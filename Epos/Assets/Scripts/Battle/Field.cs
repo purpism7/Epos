@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using System.Data;
 using Battle.Mode;
 using Battle.Step;
-
 
 namespace Battle
 {
@@ -14,8 +15,8 @@ namespace Battle
         public class Data : BaseData
         {
             public Preprocessing.FieldData PreprocessingData = null;
-            public Deploy.FieldData LeftDeployData = null;
-            public Deploy.FieldData RightDeployData = null;
+            public Forces.FieldData LeftForcesData = null;
+            public Forces.FieldData RightForcesData = null;
         }
         
         public override void Initialize(Data data)
@@ -23,15 +24,27 @@ namespace Battle
             base.Initialize(data);
             
             AddStep<Step.Preprocessing>(_data.PreprocessingData);
-            AddStep<Step.EnemyDeploy>(_data.RightDeployData);
-            AddStep<Step.AllyDeploy>(_data.LeftDeployData);
+            AddStep<Step.EnemyForces>(_data.RightForcesData);
+            AddStep<Step.AllyForces>(_data.LeftForcesData);
             AddStep<Step.BattleStart>(isLast: true);
         }
 
-        public override void End()
+        protected override void End()
         {
             base.End();
-        }
+            
+            AddStep<BattleResult>();
+            AddStep<Step.EnemyForces>(_data.RightForcesData?.SetBattleState(false));
+            AddStep<Step.AllyForces>(_data.LeftForcesData?.SetBattleState(false));
+            AddStep<Postprocessing>(new Postprocessing.FieldData());
+            AddStep<BattleEnd>(
+                new BattleEnd.Data
+                {
+                    EndAction = BattleEnd,
+                },true);
+            
+            Begin();
+        }   
     }
 }
 

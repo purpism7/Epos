@@ -542,8 +542,8 @@ MonoBehaviour:
   rootTm: {fileID: 1385945087255656108}
   id: 2
   pointTm: {fileID: 8180963170881293037}
-  leftDeploy: {fileID: 0}
-  rightDeploy: {fileID: 0}
+  leftForces: {fileID: 0}
+  rightForces: {fileID: 0}
   monster: {fileID: 4021097364266083313}
 --- !u!1 &2990099879681215174
 GameObject:
@@ -1173,8 +1173,8 @@ MonoBehaviour:
   rootTm: {fileID: 1282919063172278104}
   id: 1
   pointTm: {fileID: 1713122594278529986}
-  leftDeploy: {fileID: 458317159012273399}
-  rightDeploy: {fileID: 5839878923843824579}
+  leftForces: {fileID: 458317159012273399}
+  rightForces: {fileID: 5839878923843824579}
   monster: {fileID: 8798286856338735060}
 --- !u!1 &8361640775423803677
 GameObject:

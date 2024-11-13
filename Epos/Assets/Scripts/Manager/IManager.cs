@@ -15,4 +15,19 @@ namespace Manager
     {
         
     }
+
+    // public abstract class Manager
+    // {
+    //     public bool IsActivate { get; private set; } = false;
+    //
+    //     public virtual void Activate()
+    //     {
+    //         IsActivate = true;
+    //     }
+    //     
+    //     public virtual void Deactivate()
+    //     {
+    //         IsActivate = false;
+    //     }
+    // }
 }

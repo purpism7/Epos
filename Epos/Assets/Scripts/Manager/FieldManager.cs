@@ -11,8 +11,10 @@ namespace Manager
     public interface IFieldManager : IManager
     {
         void MoveToTarget(Vector3 pos);
-        void Encounter();
 
+        void Activate();
+        void Deactivate();
+        
         Hero FieldHero { get; }
         // Data.Field GetFieldData(int id);
     }
@@ -31,6 +33,8 @@ namespace Manager
 
         // 임시.
         private List<Data.Field> _fieldDataList = null;
+
+        public bool IsActivate { get; private set; } = false;
         
         #region IGeneric
         public Manager.IGeneric Initialize()
@@ -64,6 +68,16 @@ namespace Manager
             
         }
         #endregion
+
+        public void Activate()
+        {
+            fieldHero?.Activate();
+        }
+
+        public void Deactivate()
+        {
+            fieldIndicator?.Deactivate();
+        }
         
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
@@ -83,12 +97,7 @@ namespace Manager
                     TargetPos = pos,
                 });
         }
-
-        void IFieldManager.Encounter()
-        {
-            fieldIndicator?.Deactivate();
-        }
-
+        
         Hero IFieldManager.FieldHero
         {
             get

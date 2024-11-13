@@ -42,7 +42,6 @@ namespace Battle
         private async UniTask BeginChainStepAsync()
         {
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            // await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
             Debug.Log(GetType());
             

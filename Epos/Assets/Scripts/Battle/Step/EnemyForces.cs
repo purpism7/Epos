@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Battle.Step
 {
-    public class EnemyDeploy : Deploy
+    public class EnemyForces : Forces
     {
         
     }
