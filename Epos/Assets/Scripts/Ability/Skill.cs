@@ -6,13 +6,13 @@ namespace Ability
 {
     public class Skill
     {
-        public Data.Skill SkillData { get; private set; } = null;
+        public Datas.Skill SkillData { get; private set; } = null;
 
         public Type.ESkillCategory ESkillCategory { get; private set; } = Type.ESkillCategory.None;
         public bool SameTeam { get; private set; } = false;
         public Type.ESkillTarget ESkillTarget { get; private set; } = Type.ESkillTarget.None;
 
-        public virtual void Initialize(Data.Skill skillData)
+        public virtual void Initialize(Datas.Skill skillData)
         {
             SkillData = skillData;
         }

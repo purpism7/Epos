@@ -1,14 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
+
+using GameSystem;
 
 // 임시 스크립트
 public class WorldMap : MonoBehaviour
 {
-    private Manager.IGeneric _cameraIMgr = null;
+    private Entities.IGeneric _cameraIMgr = null;
     private ICameraManager _iCameraMgr = null;
     private int _selectAreaIndex = 0;
     

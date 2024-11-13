@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Creature;
 
-namespace Manager
+namespace Entities
 {
     public interface ICharacterManager : IManager
     {

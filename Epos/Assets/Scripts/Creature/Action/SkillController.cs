@@ -80,7 +80,7 @@ namespace Creature.Action
                 case 10001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(3, 3f));
+                    skill.Initialize(new Datas.Skill(3, 3f));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
                     skill.SetSameTeam(true);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);
@@ -94,7 +94,7 @@ namespace Creature.Action
                 {
                     // 소서리스
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(2, 0));
+                    skill.Initialize(new Datas.Skill(2, 0));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
                     skill.SetSameTeam(true);
                     skill.SetESkillTarget(Type.ESkillTarget.All);
@@ -108,7 +108,7 @@ namespace Creature.Action
                 {
                     // 스피어
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(4, 5f));
+                    skill.Initialize(new Datas.Skill(4, 5f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     skill.SetSameTeam(false);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);
@@ -121,7 +121,7 @@ namespace Creature.Action
                 case 90001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Data.Skill(1, 4f));
+                    skill.Initialize(new Datas.Skill(1, 4f));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     skill.SetSameTeam(false);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);

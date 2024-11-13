@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Manager;
+using Entities;
 using GameSystem;
 
 public class MainManager : Singleton<MainManager>
@@ -12,7 +12,7 @@ public class MainManager : Singleton<MainManager>
     [Range(1f, 10f)]
     private float timeScale = 1f;
     
-    private List<Manager.IGeneric> _iMgrGenericList = null;
+    private List<IGeneric> _iMgrGenericList = null;
     
     protected override void Initialize()
     {
@@ -25,7 +25,7 @@ public class MainManager : Singleton<MainManager>
         _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
         _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
        
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<Manager.FieldManager>()?.Initialize());
+        _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         
         _iMgrGenericList?.Add(new Character().Initialize());
         _iMgrGenericList?.Add(new Formation().Initialize());

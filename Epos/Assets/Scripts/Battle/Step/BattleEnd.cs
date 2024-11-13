@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Manager;
 using UnityEngine;
+
+using Entities;
 
 namespace Battle.Step
 {

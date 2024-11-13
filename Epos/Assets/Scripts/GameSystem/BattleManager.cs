@@ -6,7 +6,7 @@ using Battle;
 using Battle.Mode;
 using Battle.Step;
 using Creature;
-using Manager;
+using Entities;
 
 namespace GameSystem
 {

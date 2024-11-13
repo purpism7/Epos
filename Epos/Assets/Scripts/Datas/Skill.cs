@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Ability;
 using UnityEngine;
 
-namespace Data
+namespace Datas
 {
     // 테이블 데이터 (json) 로 변경 될 예정.
     public class Skill : Base

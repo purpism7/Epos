@@ -853,6 +853,10 @@ PrefabInstance:
       propertyPath: virtualCamera
       value: 
       objectReference: {fileID: 734142639}
+    - target: {fileID: 2405952197149644585, guid: ed1ea00baccfd4e5484e1fb759bbe248, type: 3}
+      propertyPath: cameraZoomInOutDuration
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8832147844271384396, guid: ed1ea00baccfd4e5484e1fb759bbe248, type: 3}
       propertyPath: field
       value: 

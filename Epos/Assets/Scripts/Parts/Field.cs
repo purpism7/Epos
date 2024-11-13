@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature;
-using GameSystem;
-using Manager;
+using Entities;
 
 namespace Parts
 {

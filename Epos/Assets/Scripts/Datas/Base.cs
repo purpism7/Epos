@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Newtonsoft.Json;
 
-namespace Data
+namespace Datas
 {
     public class Base
     {

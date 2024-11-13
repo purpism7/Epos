@@ -4,14 +4,14 @@ using UnityEngine;
 
 using Newtonsoft.Json;
 
-namespace Data
+namespace Datas
 {
     public abstract class Container
     {
         public abstract void Initialize(Container container);
     }
     
-    public class Container<T, V> : Container where T : Container, new() where V : Data.Base
+    public class Container<T, V> : Container where T : Container, new() where V : Datas.Base
     {
         private static T _instance = default(T);
 

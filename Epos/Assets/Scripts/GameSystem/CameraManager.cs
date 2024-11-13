@@ -9,11 +9,11 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Vector3 = UnityEngine.Vector3;
 
-using Manager;
+using Entities;
 
 namespace GameSystem
 {
-    public interface ICameraManager : Manager.IManager
+    public interface ICameraManager : Entities.IManager
     {
         Camera MainCamera { get; }
         bool IsMove { get; }
@@ -24,6 +24,10 @@ namespace GameSystem
     
     public class CameraManager : MonoBehaviour, ICameraManager
     {
+        [SerializeField] 
+        [Range(0.1f, 5f)]
+        private float zoomInOutDuration = 1f;
+        
         [SerializeField] 
         private Camera mainCamera = null;
         [SerializeField] 
@@ -48,14 +52,14 @@ namespace GameSystem
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
         
-        public Manager.IGeneric Initialize()
+        public Entities.IGeneric Initialize()
         {
             _return = true;
             
             return this;
         }
         
-        void Manager.IGeneric.ChainUpdate()
+        void Entities.IGeneric.ChainUpdate()
         {
             
         }
@@ -176,26 +180,6 @@ namespace GameSystem
 
             return true;
         }
-        //
-        // private void ActiveFollow()
-        // {
-        //     if (virtualCamera == null)
-        //         return;
-        //     
-        //     if (virtualCamera.Follow)
-        //         return;
-        //             
-        //     virtualCamera.Follow = _followTargetTm;
-        // }
-        //
-        // private void DeactiveFollow()
-        // {
-        //     if (!virtualCamera?.Follow)
-        //         return;
-        //     
-        //     virtualCamera.Follow = null;
-        //     // virtualCamera.transform.localPosition = Vector3.zero;
-        // }
         
         #region Zoom In / Out
         void ICameraManager.ZoomIn(Vector3 targetPos, Action endAction)
@@ -205,7 +189,7 @@ namespace GameSystem
 
         private async UniTask ZoomInAsync(Vector3 targetPos, Action endAction)
         { 
-            var duration = 1.5f;
+            var duration = zoomInOutDuration;
             targetPos.z = DefaultZPos;
             
             DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
@@ -225,13 +209,10 @@ namespace GameSystem
         
         private async UniTask ZoomOutAsync(Action endAction)
         { 
-            var duration = 1.5f;
-            // targetPos.z = DefaultZPos;
+            var duration = zoomInOutDuration;
             
             await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration);
-            // await DOTween.To(() => mainCamera.transform.position,
-            //     position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
+                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration).SetEase(Ease.Linear);
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             

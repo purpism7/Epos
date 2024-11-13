@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Manager;
+using Entities;
 
 namespace GameSystem
 {
@@ -15,14 +15,14 @@ namespace GameSystem
     {
         private ICameraManager _iCameraMgr = null;
         
-        public Manager.IGeneric Initialize()
+        public Entities.IGeneric Initialize()
         {
             _iCameraMgr = GetComponent<CameraManager>();
             
             return this;
         }
 
-        void Manager.IGeneric.ChainUpdate()
+        void Entities.IGeneric.ChainUpdate()
         {
             if (_iCameraMgr == null)
                 return;
@@ -42,7 +42,7 @@ namespace GameSystem
             }
         }
 
-        void Manager.IGeneric.ChainLateUpdate()
+        void Entities.IGeneric.ChainLateUpdate()
         {
             
         }

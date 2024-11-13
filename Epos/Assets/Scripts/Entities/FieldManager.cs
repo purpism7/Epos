@@ -4,9 +4,8 @@ using UnityEngine;
 
 using Creature;
 using Parts;
-using Field = Data.Field;
 
-namespace Manager
+namespace Entities
 {
     public interface IFieldManager : IManager
     {
@@ -16,10 +15,9 @@ namespace Manager
         void Deactivate();
         
         Hero FieldHero { get; }
-        // Data.Field GetFieldData(int id);
     }
     
-    public class FieldManager : MonoBehaviour, IFieldManager
+    public class FieldManager : Manager, IFieldManager
     {
         [SerializeField] 
         private Parts.Field field = null;
@@ -32,33 +30,35 @@ namespace Manager
         private Parts.IField CurrIField = null;
 
         // 임시.
-        private List<Data.Field> _fieldDataList = null;
-
-        public bool IsActivate { get; private set; } = false;
+        private List<Datas.Field> _fieldDataList = null;
         
         #region IGeneric
-        public Manager.IGeneric Initialize()
+        public Entities.IGeneric Initialize()
         {
             field?.Initialize();
             field?.Activate();
             CurrIField = field;
 
             fieldHero?.Initialize();
-            fieldHero?.Activate();
 
-            _fieldDataList = new List<Field>();
+            _fieldDataList = new();
             _fieldDataList?.Clear();
             
-            _fieldDataList?.Add(new Field(1));
-            _fieldDataList?.Add(new Field(2));
+            _fieldDataList?.Add(new Datas.Field(1));
+            _fieldDataList?.Add(new Datas.Field(2));
             
             fieldIndicator?.Deactivate();
+            
+            Activate();
             
             return this;
         }
         
         void IGeneric.ChainUpdate()
         {
+            if (!IsActivate)
+                return;
+            
             CurrIField?.ChainUpdate();
             fieldHero?.ChainUpdate();
         }
@@ -69,13 +69,17 @@ namespace Manager
         }
         #endregion
 
-        public void Activate()
+        public override void Activate()
         {
+            base.Activate();
+            
             fieldHero?.Activate();
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
+            base.Deactivate();
+            
             fieldIndicator?.Deactivate();
         }
         
