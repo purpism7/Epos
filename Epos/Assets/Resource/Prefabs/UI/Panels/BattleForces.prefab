@@ -1801,6 +1801,7 @@ RectTransform:
   m_Children:
   - {fileID: 7800403464920603337}
   - {fileID: 6360527547896552758}
+  - {fileID: 1643344829269802736}
   m_Father: {fileID: 2459090045857678642}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2749,7 +2750,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7800403464920603337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8562,8 +8563,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2459090045857678642}
+  - component: {fileID: 607693200362314458}
   m_Layer: 5
-  m_Name: UI_BattleField
+  m_Name: BattleForces
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8582,14 +8584,26 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2335910119050227253}
-  - {fileID: 1643344829269802736}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &607693200362314458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816339590326626395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5912ddff19844a40ba8db102f676d9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 2335910119050227253}
 --- !u!1 &5820264731081906879
 GameObject:
   m_ObjectHideFlags: 0
@@ -9291,7 +9305,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6163435027404183724}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9299,7 +9313,7 @@ RectTransform:
   - {fileID: 2321014887625286198}
   - {fileID: 7878381248048330267}
   - {fileID: 2796844724271278398}
-  m_Father: {fileID: 2459090045857678642}
+  m_Father: {fileID: 2335910119050227253}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}

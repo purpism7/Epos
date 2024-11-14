@@ -36,12 +36,13 @@ namespace Battle
             AddStep<BattleResult>();
             AddStep<Step.EnemyForces>(_data.RightForcesData?.SetBattleState(false));
             AddStep<Step.AllyForces>(_data.LeftForcesData?.SetBattleState(false));
-            AddStep<Postprocessing>(new Postprocessing.FieldData());
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {
                     EndAction = BattleEnd,
-                },true);
+                });
+            
+            AddStep<Postprocessing>(new Postprocessing.FieldData(), isLast: true);
             
             Begin();
         }   
