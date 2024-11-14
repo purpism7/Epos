@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7c12e5c2f914d1ea86fb408f802229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootRectTm: {fileID: 0}
   panelGameObjs:
   - {fileID: 5816339590326626395, guid: 0263e4b880dd9a143a3b96cdb7c2315a, type: 3}
+  - {fileID: 2811893561039449302, guid: 4aba81817eb6603458b22940bc6feb33, type: 3}

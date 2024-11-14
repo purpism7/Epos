@@ -40,7 +40,7 @@ namespace UI
 
         protected T _data = null;
 
-        public virtual Panel<T> Initialize(T data)
+        public virtual Panel<T> Initialize(T data = null)
         {
             _data = data;
 

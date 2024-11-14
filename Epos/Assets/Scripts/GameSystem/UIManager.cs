@@ -22,7 +22,7 @@ namespace GameSystem
             
         }
 
-        public Panel<V> GetPanel<T, V>() where T : Panel where V : Panel<V>.Base 
+        public T GetPanel<T, V>() where T : Panel where V : Panel<V>.Base 
         {
             if (_cachedPanelDic == null)
             {
@@ -32,7 +32,7 @@ namespace GameSystem
 
             Panel basePanel = null;
             if (_cachedPanelDic.TryGetValue(typeof(T), out basePanel))
-                return basePanel as Panel<V>;
+                return basePanel as T;
             
             foreach (var panelGameObj in panelGameObjs)
             {
@@ -42,12 +42,14 @@ namespace GameSystem
                 if (panelGameObj.GetComponent<T>() != null)
                 { 
                     basePanel = Instantiate(panelGameObj, rootRectTm)?.GetComponent<T>();
-                    var panel = (basePanel as Panel<V>)?.Initialize(null);
+                    var panel = (basePanel as Panel<V>)?.Initialize();
                    
                     if(panel != null)
                         _cachedPanelDic?.TryAdd(typeof(T), panel);
                     
-                    return panel;
+                    basePanel?.transform.SetAsLastSibling();
+                    
+                    return panel as T;
                 }
             }
 

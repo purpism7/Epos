@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -22,6 +23,14 @@ namespace Battle.Step
             battleForces?.Activate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            
+            var battleState = UIManager.Instance?.GetPanel<BattleState, BattleState.Data>();
+            if (battleState != null)
+            {
+                battleState.Activate();
+                
+                await battleState.StartAsync();
+            }
 
             End();
         }
