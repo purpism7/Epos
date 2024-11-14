@@ -26,7 +26,12 @@ namespace Battle
             AddStep<Step.Preprocessing>(_data.PreprocessingData);
             AddStep<Step.EnemyForces>(_data.RightForcesData);
             AddStep<Step.AllyForces>(_data.LeftForcesData);
-            AddStep<Step.BattleStart>(isLast: true);
+            AddStep<Step.BattleStart>(
+                new BattleStart.Data
+                {
+                    LeftForces = _data?.LeftForcesData?.Forces,
+                    RightForces = _data?.RightForcesData?.Forces,
+                }, isLast: true);
         }
 
         protected override void End()
@@ -34,8 +39,8 @@ namespace Battle
             base.End();
             
             AddStep<BattleResult>();
-            AddStep<Step.EnemyForces>(_data.RightForcesData?.SetBattleState(false));
-            AddStep<Step.AllyForces>(_data.LeftForcesData?.SetBattleState(false));
+            AddStep<Step.EnemyForces>(_data?.RightForcesData?.SetBattleState(false));
+            AddStep<Step.AllyForces>(_data?.LeftForcesData?.SetBattleState(false));
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {

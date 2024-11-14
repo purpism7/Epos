@@ -8,7 +8,8 @@ namespace UI.Panels
     {
         public class Data : Base
         {
-            
+            public Parts.Forces LeftForces = null;
+            public Parts.Forces RightForces = null;
         }
 
         public override Panel<Data> Initialize(Data data)

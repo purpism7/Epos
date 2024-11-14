@@ -10,8 +10,14 @@ using UI.Panels;
 
 namespace Battle.Step
 {
-    public class BattleStart : BattleStep
+    public class BattleStart : BattleStep<BattleStart.Data>
     {
+        public class Data : BaseData
+        {
+            public Parts.Forces LeftForces = null;
+            public Parts.Forces RightForces = null;
+        }
+        
         public override void Begin()
         {
             BeginAsync().Forget();
@@ -19,7 +25,13 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            var battleForces = UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>();
+            var battleForcesData = new BattleForces.Data
+            {
+                LeftForces = _data?.LeftForces,
+                RightForces = _data?.RightForces,
+            };
+            
+            var battleForces = UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>(battleForcesData);
             battleForces?.Activate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
