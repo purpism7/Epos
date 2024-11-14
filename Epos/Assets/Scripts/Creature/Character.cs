@@ -60,6 +60,9 @@ namespace Creature
         [SerializeField] 
         [Range(1f, 5f)]
         private float passivePoint = 1f;
+
+        [SerializeField] 
+        private int position = 0;
         #endregion
         
         public bool IsActivate 
@@ -117,7 +120,6 @@ namespace Creature
         #endregion
         
         #region ICombatant
-
         void ICombatant.SetETeam(Type.ETeam eTeam)
         {
             ETeam = eTeam;

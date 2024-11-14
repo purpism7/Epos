@@ -298,7 +298,7 @@ GameObject:
   - component: {fileID: 1888070224554425137}
   - component: {fileID: 6988835147447106020}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 534061225135150462}
   - component: {fileID: 4546532024417220945}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1083,7 +1083,7 @@ GameObject:
   - component: {fileID: 3871460078902795897}
   - component: {fileID: 2926348761071236207}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1187,7 +1187,7 @@ GameObject:
   - component: {fileID: 4169308968122151431}
   - component: {fileID: 283771716037941141}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1241,7 +1241,7 @@ GameObject:
   - component: {fileID: 504740901763055296}
   - component: {fileID: 2083336852301019086}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1294,7 +1294,7 @@ GameObject:
   - component: {fileID: 5634095772579211877}
   - component: {fileID: 6010783749335436028}
   m_Layer: 8
-  m_Name: Cell(Clone)
+  m_Name: 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1531,6 +1531,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3937927859288321932, guid: fcd6d2d8031df419da24329cbc1fae89, type: 3}
+      propertyPath: position
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5574638848013443805, guid: fcd6d2d8031df419da24329cbc1fae89, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1659,6 +1663,10 @@ PrefabInstance:
     - target: {fileID: 4240301434440348742, guid: 0945c3d7f7e464636927970f23fd790f, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4366589773000503401, guid: 0945c3d7f7e464636927970f23fd790f, type: 3}
+      propertyPath: position
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7022339563562859597, guid: 0945c3d7f7e464636927970f23fd790f, type: 3}
       propertyPath: m_Name
@@ -1822,6 +1830,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4275010657848950537, guid: 7bd9a6930f5bf4696b89e0215f9e30b9, type: 3}
+      propertyPath: position
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8159939368441593953, guid: 7bd9a6930f5bf4696b89e0215f9e30b9, type: 3}
       propertyPath: m_Name
       value: Spear_01
@@ -1915,6 +1927,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8828800496452245790, guid: f9398e4d1d9e54060bbe2518868cfa48, type: 3}
+      propertyPath: position
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1947,6 +1963,10 @@ PrefabInstance:
     - target: {fileID: 2207746172437524541, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3897337437335088481, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
+      propertyPath: position
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.x
