@@ -33,6 +33,9 @@ namespace Creature
         #region ICombatant
         public Type.ETeam ETeam { get; private set; } = Type.ETeam.None;
         public Type.EFormation EFormation { get; private set; } = Type.EFormation.None;
+
+        public int Position { get { return position; } }
+
         #endregion
         
         #region Temp Stat

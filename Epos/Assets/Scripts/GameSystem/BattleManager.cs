@@ -82,13 +82,22 @@ namespace GameSystem
         /// <param name="pointTm">For Zoom In Camera</param>
         void IBattleManager.BeginFieldBattle(Parts.Forces leftForces, Parts.Forces rightForces, Transform pointTm)
         {
+            if (leftForces?.CharacterList == null)
+                return;
+            
+            if (rightForces?.CharacterList == null)
+                return;
+            
             var battleModeData = new TurnBased.Data
             {
-                AllyICombatantList = leftForces?.characters?.AddList<ICombatant, Creature.Character>(),
-                EnemyICombatantList = rightForces?.characters?.AddList<ICombatant, Creature.Character>(),
+                // AllyICombatantList = leftForces?.CharacterList,
+                // EnemyICombatantList = rightForces?.characters?.AddList<ICombatant, Creature.Character>(),
 
                 EType = TurnBased.EType.ActionSpeed,
             };
+            
+            battleModeData.AllyICombatantList?.AddRange(leftForces.CharacterList);
+            battleModeData.EnemyICombatantList?.AddRange(rightForces.CharacterList);
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(battleModeData)

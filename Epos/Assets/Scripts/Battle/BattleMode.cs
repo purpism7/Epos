@@ -11,8 +11,8 @@ namespace Battle
     {
         public class BaseData
         {
-            public List<ICombatant> AllyICombatantList = null;
-            public List<ICombatant> EnemyICombatantList = null;
+            public List<ICombatant> AllyICombatantList = new();
+            public List<ICombatant> EnemyICombatantList = new();
         }
 
         public interface IListener
