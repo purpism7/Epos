@@ -193,7 +193,7 @@ namespace GameSystem
             targetPos.z = DefaultZPos;
             
             DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 20f, duration);
+                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 22f, duration);
             await DOTween.To(() => mainCamera.transform.position,
                 position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
 

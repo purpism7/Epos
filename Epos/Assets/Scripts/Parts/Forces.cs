@@ -13,21 +13,21 @@ namespace Parts
         [SerializeField]
         private Character[] characters = null;
 
-        public List<Character> CharacterList { get; private set; } = null;
+        public List<Character> CharacterList { get; private set; } = new List<Character>() { null, null, null, null, null, null };
 
         private void Awake()
         {
+            var height = 2*Camera.main.orthographicSize;
+            var width = height*Camera.main.aspect;
+            Debug.Log(height);
+            Debug.Log(width);
+            
             if (characters != null)
             {
                 if (CharacterList == null)
                 {
                     CharacterList = new();
                     CharacterList.Clear();
-                }
-
-                for (int i = 0; i < 6; ++i)
-                {
-                    CharacterList?.Add(null);
                 }
 
                 for (int i = 0; i < characters.Length; ++i)

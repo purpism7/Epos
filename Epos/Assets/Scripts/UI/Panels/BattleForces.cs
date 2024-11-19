@@ -38,18 +38,35 @@ namespace UI.Panels
                 for (int i = 0; i < leftForces.Count; ++i)
                 {
                     if (leftForces[i] != null)
-                    {
-                        var gameObj = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
-                    }
+                        Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
                     else
-                    {
-                        var gameObj = Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
-                    }
+                        Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
                 }
             }
             
-            
+            var rightForces = _data?.RightForces?.CharacterList;
+            if (rightForces != null)
+            {
+                for (int i = 0; i < rightForces.Count; ++i)
+                {
+                    if (rightForces[i] != null)
+                        Instantiate(combatantGamaObj, rightForces[i].Position <= 3 ? rightFrontRootRectTm : rightRearRootRectTm);
+                    else
+                        Instantiate(emptyGamaObj, i <= 2 ? rightFrontRootRectTm : rightRearRootRectTm);
+                }
+            }
+
             return this;
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            rightFrontRootRectTm.RemoveAllChild();
+            rightRearRootRectTm.RemoveAllChild();
+            leftFrontRootRectTm.RemoveAllChild();
+            leftRearRootRectTm.RemoveAllChild();
         }
     }
 }

@@ -63,5 +63,16 @@ public static class Extensions
 
         return false;
     }
+    
+    public static void RemoveAllChild(this Transform tm)
+    {
+        if (!tm)
+            return;
+
+        for (int i = tm.childCount - 1; i >= 0; --i)
+        {
+            GameObject.DestroyImmediate(tm.GetChild(i)?.gameObject);
+        }
+    }
 }
 
