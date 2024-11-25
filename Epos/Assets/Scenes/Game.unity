@@ -408,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.319756, y: 58.75228, z: -10}
+  m_LocalPosition: {x: 56.515633, y: 58.768738, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -464,7 +464,7 @@ PrefabInstance:
     - target: {fileID: 3275219824483254572, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: -461323606263768899, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
     - target: {fileID: 3692255571374633408, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -505,6 +505,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5944215453957855101, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -9205948487866487716, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
     - target: {fileID: 5957323279393055368, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -513,6 +517,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: Back_01
       objectReference: {fileID: 0}
+    - target: {fileID: 8122079187832189069, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -4765174112071296094, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+    - target: {fileID: 8125798318114913385, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1992718785888554365, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+    - target: {fileID: 9105797995318780776, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 918144009061108171, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+    - target: {fileID: 9213058545074314798, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8688199454448045369, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
