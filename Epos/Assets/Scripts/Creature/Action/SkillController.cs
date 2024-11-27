@@ -29,6 +29,11 @@ namespace Creature.Action
         {
             
         }
+        
+        void IController<ISkillController, ICaster>.ChainFixedUpdate()
+        {
+            
+        }
 
         Ability.Skill ISkillController.GetPossibleSkill(Type.ESkillCategory eSkillCategory)
         {

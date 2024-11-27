@@ -9,6 +9,7 @@ namespace Creature
     {
         T Initialize(V v);
         void ChainUpdate();
+        void ChainFixedUpdate();
         void Activate();
         void Deactivate();
     }

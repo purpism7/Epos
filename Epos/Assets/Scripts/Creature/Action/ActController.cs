@@ -49,6 +49,14 @@ namespace Creature.Action
             
             _currIAct?.ChainUpdate();
         }
+        
+        void IController<IActController, IActor>.ChainFixedUpdate()
+        {
+            if (!IsActivate)
+                return;
+            
+            _currIAct?.ChainFixedUpdate();
+        }
 
         public override void Activate()
         {

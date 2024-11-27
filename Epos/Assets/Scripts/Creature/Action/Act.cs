@@ -8,6 +8,7 @@ namespace Creature.Action
     {
         void Execute();
         void ChainUpdate();
+        void ChainFixedUpdate();
     }
     
     public abstract class Act<T> : IAct where T : Act<T>.BaseData
@@ -48,6 +49,11 @@ namespace Creature.Action
         public abstract void Execute();
         
         public virtual void ChainUpdate()
+        {
+            
+        }
+
+        public virtual void ChainFixedUpdate()
         {
             
         }

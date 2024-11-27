@@ -26,6 +26,8 @@ namespace Creature
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return transform; } }
 
+        public Rigidbody2D Rigidbody2D { get; private set; } = null;
+
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
         public ISkillController ISkillCtr { get; protected set; } = null;
@@ -85,7 +87,8 @@ namespace Creature
         public virtual void Initialize()
         {
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
-
+            Rigidbody2D = GetComponentInChildren<Rigidbody2D>();
+            
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(id);
             
@@ -101,6 +104,14 @@ namespace Creature
                 return;
             
             IActCtr?.ChainUpdate();
+        }
+
+        public virtual void ChainFixedUpdate()
+        {
+            if (!IsActivate)
+                return;
+            
+            IActCtr?.ChainFixedUpdate();
         }
 
         public virtual void Activate()

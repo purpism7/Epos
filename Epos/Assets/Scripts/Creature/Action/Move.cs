@@ -28,27 +28,39 @@ namespace Creature.Action
             var iActorTm = _iActor?.Transform;
             if (!iActorTm)
                 return;
+
+            var rigidbody = _iActor.Rigidbody2D;
+            if (rigidbody == null)
+                return;
             
-            var direction = _data.TargetPos.x - iActorTm.position.x;
+            var direction = _data.TargetPos.x - rigidbody.position.x;
             iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
         }
 
-        public override void ChainUpdate()
+        public override void ChainFixedUpdate()
         {
-            base.ChainUpdate();
+            base.ChainFixedUpdate();
 
             var iActorTm = _iActor?.Transform;
             if (!iActorTm)
+                return;
+
+            var rigidbody = _iActor.Rigidbody2D;
+            if (rigidbody == null)
                 return;
             
             if (_iActor?.IStat == null)
                 return;
 
-            var targetPos = _data.TargetPos;
+            Vector2 targetPos = _data.TargetPos;
             var moveSpeed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
+            var direction = (targetPos - rigidbody.position).normalized;
             
-            iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
-            if (Vector3.Distance(iActorTm.position, targetPos) <= 0)
+            Vector2 resPos = rigidbody.position + direction * moveSpeed * Time.fixedDeltaTime;
+            rigidbody.MovePosition(resPos);
+            
+            // iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
+            if (Vector2.Distance(rigidbody.position, targetPos) <= 0.1f)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 if (_data.ReverseAfterArriving)

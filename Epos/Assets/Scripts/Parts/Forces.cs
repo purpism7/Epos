@@ -17,10 +17,10 @@ namespace Parts
 
         private void Awake()
         {
-            var height = 2*Camera.main.orthographicSize;
-            var width = height*Camera.main.aspect;
-            Debug.Log(height);
-            Debug.Log(width);
+            // var height = 2*Camera.main.orthographicSize;
+            // var width = height*Camera.main.aspect;
+            // Debug.Log(height);
+            // Debug.Log(width);
             
             if (characters != null)
             {

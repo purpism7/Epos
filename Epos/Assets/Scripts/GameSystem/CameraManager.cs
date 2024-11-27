@@ -174,7 +174,7 @@ namespace GameSystem
                 return false;
             
             var pos = _fieldHero.Transform.position;
-            pos.z = -10f;
+            pos.z = -100f;
                     
             mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, pos, Time.deltaTime * 2f);
 

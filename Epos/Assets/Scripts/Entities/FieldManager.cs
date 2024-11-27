@@ -67,6 +67,11 @@ namespace Entities
         {
             
         }
+        
+        void FixedUpdate()
+        {
+            fieldHero?.ChainFixedUpdate();
+        }
         #endregion
 
         public override void Activate()

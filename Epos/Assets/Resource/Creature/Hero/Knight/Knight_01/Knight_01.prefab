@@ -53,6 +53,7 @@ MonoBehaviour:
   attackRange: 3
   activePoint: 1
   passivePoint: 1
+  position: 0
 --- !u!1 &6721083934532127383
 GameObject:
   m_ObjectHideFlags: 0
@@ -97,7 +98,8 @@ GameObject:
   - component: {fileID: 5574638848013443805}
   - component: {fileID: 1622154610190651600}
   - component: {fileID: 6527529688049932783}
-  - component: {fileID: 4156890648312596328}
+  - component: {fileID: 7286075113177348456}
+  - component: {fileID: 1857636776841303065}
   m_Layer: 10
   m_Name: Spine GameObject (Knight_01)
   m_TagString: Untagged
@@ -213,7 +215,34 @@ MonoBehaviour:
   _animationName: F_Idle
   loop: 1
   timeScale: 1
---- !u!70 &4156890648312596328
+--- !u!50 &7286075113177348456
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376326210088016459}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!70 &1857636776841303065
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
