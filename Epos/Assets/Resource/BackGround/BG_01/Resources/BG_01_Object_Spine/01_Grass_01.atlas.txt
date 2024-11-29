@@ -1,0 +1,6 @@
+01_Grass_01.png
+size:64,38
+filter:Linear,Linear
+pma:true
+Grass_01
+bounds:2,2,60,34

@@ -1,0 +1,11 @@
+01_Grass_12.png
+size:273,173
+filter:Linear,Linear
+pma:true
+Grass_12
+bounds:2,5,152,166
+offsets:0,4,161,170
+Grass_12_S
+bounds:156,2,169,115
+offsets:24,1,228,117
+rotate:90

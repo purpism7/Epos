@@ -1,0 +1,13 @@
+01_Grass_06.png
+size:261,65
+filter:Linear,Linear
+pma:true
+Leaf_01
+bounds:195,6,64,57
+offsets:2,1,67,59
+Leaf_02
+bounds:105,15,88,48
+offsets:1,3,90,55
+Leaf_03
+bounds:2,2,101,61
+offsets:0,0,103,61

@@ -1,0 +1,7 @@
+01_Grass_18.png
+size:83,46
+filter:Linear,Linear
+pma:true
+Grass_18
+bounds:2,2,79,42
+offsets:0,0,79,44

@@ -1,0 +1,11 @@
+01_Grass_09.png
+size:296,126
+filter:Linear,Linear
+pma:true
+Layer 1
+bounds:2,2,212,122
+offsets:1,2,214,125
+Layer 2
+bounds:216,26,98,78
+offsets:0,1,98,79
+rotate:90
