@@ -12,7 +12,7 @@ namespace Creature.Action
     public interface IActController : IController<IActController, IActor>
     {
         void Idle();
-        IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool reverse = false);
+        IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, bool reverse = false, bool isJumpMove = false);
         IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
         void TakeDamage();
         void Execute();
@@ -91,7 +91,7 @@ namespace Creature.Action
         /// <param name="finishAction"></param>
         /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
         /// <returns></returns>
-        IActController IActController.MoveToTarget(Vector3? pos, System.Action finishAction, bool reverse)
+        IActController IActController.MoveToTarget(Vector3? pos, System.Action finishAction, bool reverse, bool isJumpMove)
         {
             if (!IsActivate)
                 return null;
@@ -107,6 +107,7 @@ namespace Creature.Action
                 TargetPos = targetPos,
                 FinishAction = finishAction,
                 ReverseAfterArriving = reverse,
+                IsJumpMove = isJumpMove,
             };
 
             AddActAsync<Move, Move.Data>(data).Forget();
@@ -185,10 +186,9 @@ namespace Creature.Action
             {
                 data = new V();
             }
-
-            data.SetAnimationKey(_iActor?.AnimationKey(act));
             
             act.SetData(data);
+            data.SetAnimationKey(_iActor?.AnimationKey(act)); 
             
             if (_iActQueue == null)
             {

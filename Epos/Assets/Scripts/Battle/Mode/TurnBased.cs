@@ -385,7 +385,7 @@ namespace Battle.Mode
 
             SetSortingOrder(attacker, 1);
             
-            attacker.IActCtr?.MoveToTarget(targetPos, reverse: targetPos.x - attacker.Transform.position.x < 0);
+            attacker.IActCtr?.MoveToTarget(targetPos, reverse: targetPos.x - attacker.Transform.position.x < 0, isJumpMove: true);
         }
 
         private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)

@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using System.Text;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using Spine.Unity;
 
 using Creature.Action;
+using UnityEngine.AI;
 
 namespace Creature
 {
@@ -27,6 +28,7 @@ namespace Creature
         public Transform Transform { get { return transform; } }
 
         public Rigidbody2D Rigidbody2D { get; private set; } = null;
+        public NavMeshAgent NavMeshAgent { get; private set; } = null;
 
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
         public Action.IActController IActCtr { get; protected set; } = null;
@@ -88,6 +90,12 @@ namespace Creature
         {
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
             Rigidbody2D = GetComponentInChildren<Rigidbody2D>();
+            NavMeshAgent = GetComponentInChildren<NavMeshAgent>();
+            if (NavMeshAgent != null)
+            {
+                NavMeshAgent.updateRotation = false;
+                NavMeshAgent.updateUpAxis = false;
+            }
             
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(id);

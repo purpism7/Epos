@@ -98,8 +98,8 @@ GameObject:
   - component: {fileID: 5574638848013443805}
   - component: {fileID: 1622154610190651600}
   - component: {fileID: 6527529688049932783}
-  - component: {fileID: 7286075113177348456}
   - component: {fileID: 1857636776841303065}
+  - component: {fileID: 159401871900177479}
   m_Layer: 10
   m_Name: Spine GameObject (Knight_01)
   m_TagString: Untagged
@@ -170,7 +170,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2038680451
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &6527529688049932783
 MonoBehaviour:
@@ -215,33 +215,6 @@ MonoBehaviour:
   _animationName: F_Idle
   loop: 1
   timeScale: 1
---- !u!50 &7286075113177348456
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7376326210088016459}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!70 &1857636776841303065
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -277,3 +250,25 @@ CapsuleCollider2D:
   m_Offset: {x: -0.17, y: 2.7734833}
   m_Size: {x: 4, y: 6.766967}
   m_Direction: 0
+--- !u!195 &159401871900177479
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376326210088016459}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.9562869
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 12.620858
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

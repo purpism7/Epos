@@ -172,11 +172,13 @@ namespace GameSystem
             if (IsMove ||
                 _returnTime < 1f)
                 return false;
-            
-            var pos = _fieldHero.Transform.position;
-            pos.z = -100f;
-                    
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, pos, Time.deltaTime * 2f);
+
+            var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
+            if (navMeshTm == null)
+                return false;
+
+            var targetPos = new Vector3(navMeshTm.position.x, navMeshTm.position.y, -100f);
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPos, Time.deltaTime * 2f);
 
             return true;
         }
