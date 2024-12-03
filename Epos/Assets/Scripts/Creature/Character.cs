@@ -25,7 +25,7 @@ namespace Creature
         
         public int Id { get { return id; } }
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
-        public Transform Transform { get { return transform; } }
+        public Transform Transform { get { return SkeletonAnimation?.transform; } }
 
         public Rigidbody2D Rigidbody2D { get; private set; } = null;
         public NavMeshAgent NavMeshAgent { get; private set; } = null;
