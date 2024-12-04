@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3012357251148038877}
   - component: {fileID: 6976926253417098611}
   - component: {fileID: 1604934875798974843}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Spine GameObject (Knight_02)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4963792176149010982}
   - component: {fileID: 8828800496452245790}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Knight_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,9 @@ MonoBehaviour:
   moveSpeed: 10
   attack: 1
   attackRange: 3
+  activePoint: 1
+  passivePoint: 1
+  position: 0
 --- !u!1 &6630495643290675065
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523370855086918746}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

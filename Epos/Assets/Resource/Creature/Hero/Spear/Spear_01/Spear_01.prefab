@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8169614562942490756}
   - component: {fileID: 7816740663478584368}
   - component: {fileID: 1150515514663263}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Spine GameObject (Spear_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,9 +80,9 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -2038680451
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1150515514663263
 MonoBehaviour:
@@ -124,7 +124,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: 
+  _animationName: F_Idle
   loop: 1
   timeScale: 1
 --- !u!1 &5621257734662546313
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1921535892578390556}
   - component: {fileID: 8634592414891274069}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Spear_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8223724037266528934}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}

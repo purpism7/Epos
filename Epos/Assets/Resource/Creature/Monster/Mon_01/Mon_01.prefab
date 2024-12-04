@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5871529864483578102}
   - component: {fileID: 3897337437335088481}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Mon_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,6 +51,9 @@ MonoBehaviour:
   moveSpeed: 9
   attack: 1
   attackRange: 2
+  activePoint: 1
+  passivePoint: 1
+  position: 0
 --- !u!1 &7525692459730496249
 GameObject:
   m_ObjectHideFlags: 0
@@ -60,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9067786674166319913}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +98,7 @@ GameObject:
   - component: {fileID: 2207746172437524541}
   - component: {fileID: 3262079463833040001}
   - component: {fileID: 3715706935953659282}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Spine GameObject (Mon_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

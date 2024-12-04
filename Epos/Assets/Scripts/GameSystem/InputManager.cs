@@ -38,17 +38,26 @@ namespace GameSystem
             if (Input.GetMouseButtonUp(0))
             {
                 var mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+                mouseWorldPos.z = 0;
                 
                 // var ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                var hit = Physics2D.Raycast(mouseWorldPos, mainCamera.transform.forward);
-                if (hit)
+                var hits = Physics2D.RaycastAll(mouseWorldPos, mainCamera.transform.forward);
+                if (hits != null)
                 {
-                    // 임시 
-                    if (!hit.transform.name.Contains("Back_01"))
-                        return;
+                    for (int i = 0; i < hits.Length; ++i)
+                    {
+                        var hit = hits[i];
+                        if(!hit)
+                            continue;
+
+                        if (hit.transform.gameObject.layer == 9)
+                            return;
+                        // if (!hit.transform.name.Contains("Back_01"))
+                        //     return;
+                    }
                 }
                 
-                mouseWorldPos.z = 0;
+               
                 MainManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
             }
         }

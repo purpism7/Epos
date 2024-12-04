@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4116651218225978462}
   - component: {fileID: 6547586942930900359}
   - component: {fileID: 9128856760621428351}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Spine GameObject (Sorceress_01)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1282084179352172078}
   - component: {fileID: 4366589773000503401}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Sorceress_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,6 +178,9 @@ MonoBehaviour:
   moveSpeed: 3
   attack: 1
   attackRange: 0
+  activePoint: 1
+  passivePoint: 1
+  position: 0
 --- !u!1 &7936353644045159701
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +190,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3845542005009121353}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
