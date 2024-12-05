@@ -95,6 +95,8 @@ namespace Creature
             {
                 NavMeshAgent.updateRotation = false;
                 NavMeshAgent.updateUpAxis = false;
+                
+                NavMeshAgent.enabled = position <= 0;
             }
             
             _iStatGeneric = new Stat();

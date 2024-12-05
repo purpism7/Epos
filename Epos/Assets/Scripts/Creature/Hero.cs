@@ -34,8 +34,8 @@ namespace Creature
                 case Idle: return "F_Idle";
                 case Move move:
                 {
-                    if (move.IsJumpMove)
-                        return "F_Jump";
+                    // if (move.IsJumpMove)
+                    //     return "F_Jump";
                     
                     return "F_Run";
                 }

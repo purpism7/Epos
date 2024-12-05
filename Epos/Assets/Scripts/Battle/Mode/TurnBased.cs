@@ -264,7 +264,7 @@ namespace Battle.Mode
                     if(iActCtr == null)
                         continue;
                     
-                    iActCtr.MoveToTarget()?.Execute();
+                    iActCtr.MoveToTarget(isJumpMove: true)?.Execute();
                     
                     SetSortingOrder(iActCtr as ICombatant, 0);
                 }
