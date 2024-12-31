@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creator;
 using UnityEngine;
 
 using Creature;
@@ -50,6 +51,8 @@ namespace Entities
             fieldIndicator?.Deactivate();
             
             Activate();
+
+           
             
             return this;
         }
