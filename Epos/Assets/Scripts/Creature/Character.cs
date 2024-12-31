@@ -8,6 +8,7 @@ using Cysharp.Threading.Tasks;
 using Spine.Unity;
 
 using Creature.Action;
+using Unity.VisualScripting;
 using UnityEngine.AI;
 
 namespace Creature
@@ -27,7 +28,7 @@ namespace Creature
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Transform Transform { get { return SkeletonAnimation?.transform; } }
 
-        public Rigidbody2D Rigidbody2D { get; private set; } = null;
+        // public Rigidbody2D Rigidbody2D { get; private set; } = null;
         public NavMeshAgent NavMeshAgent { get; private set; } = null;
 
         public IStat IStat { get { return _iStatGeneric?.Stat; } }
@@ -89,15 +90,6 @@ namespace Creature
         public virtual void Initialize()
         {
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
-            Rigidbody2D = GetComponentInChildren<Rigidbody2D>();
-            NavMeshAgent = GetComponentInChildren<NavMeshAgent>();
-            if (NavMeshAgent != null)
-            {
-                NavMeshAgent.updateRotation = false;
-                NavMeshAgent.updateUpAxis = false;
-                
-                NavMeshAgent.enabled = position <= 0;
-            }
             
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(id);
@@ -142,6 +134,37 @@ namespace Creature
             Extensions.SetActive(rootTm, false);
         }
         #endregion
+        
+        public void EnableNavmeshAgent()
+        {
+            NavMeshAgent = SkeletonAnimation?.AddOrGetComponent<NavMeshAgent>();
+            if (NavMeshAgent != null)
+            {
+                NavMeshAgent.enabled = true;
+                
+                NavMeshAgent.baseOffset = 0.5f;
+                NavMeshAgent.speed = 3.5f;
+                NavMeshAgent.angularSpeed = 200f;
+                NavMeshAgent.acceleration = 100f;
+                NavMeshAgent.radius = 0.5f;
+                NavMeshAgent.height = 2f;
+                
+                NavMeshAgent.updateRotation = false;
+                NavMeshAgent.updateUpAxis = false;
+                
+                NavMeshAgent.isStopped = false;
+                NavMeshAgent.ResetPath();
+            }
+        }
+
+        public void DisableNavmeshAgent()
+        {
+            if (NavMeshAgent == null)
+                return;
+            
+            NavMeshAgent.isStopped = true;
+            NavMeshAgent.enabled = false;
+        }
         
         #region ICombatant
         void ICombatant.SetETeam(Type.ETeam eTeam)

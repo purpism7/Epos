@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 
 public static class Extensions
 {
@@ -73,6 +74,16 @@ public static class Extensions
         {
             GameObject.DestroyImmediate(tm.GetChild(i)?.gameObject);
         }
+    }
+
+    public static void Initialize(this Transform tm)
+    {
+        if (!tm)
+            return;
+        
+        tm.position = Vector3.zero;
+        tm.rotation = Quaternion.identity;
+        tm.localScale = Vector3.one;
     }
 }
 

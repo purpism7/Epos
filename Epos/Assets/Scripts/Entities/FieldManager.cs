@@ -23,10 +23,9 @@ namespace Entities
         [SerializeField] 
         private Parts.Field field = null;
         [SerializeField] 
-        private Hero fieldHero = null;
-        [SerializeField] 
         private FieldIndicator fieldIndicator = null;
-        
+
+        private Hero _fieldHero = null;
         private List<Parts.Field> _fieldList = new();
         private Parts.IField CurrIField = null;
 
@@ -40,7 +39,7 @@ namespace Entities
             field?.Activate();
             CurrIField = field;
 
-            fieldHero?.Initialize();
+            CreateFieldHero();
 
             _fieldDataList = new();
             _fieldDataList?.Clear();
@@ -51,8 +50,6 @@ namespace Entities
             fieldIndicator?.Deactivate();
             
             Activate();
-
-           
             
             return this;
         }
@@ -63,7 +60,7 @@ namespace Entities
                 return;
             
             CurrIField?.ChainUpdate();
-            fieldHero?.ChainUpdate();
+            _fieldHero?.ChainUpdate();
         }
 
         void IGeneric.ChainLateUpdate()
@@ -73,7 +70,7 @@ namespace Entities
         
         void FixedUpdate()
         {
-            fieldHero?.ChainFixedUpdate();
+            _fieldHero?.ChainFixedUpdate();
         }
         #endregion
 
@@ -81,7 +78,7 @@ namespace Entities
         {
             base.Activate();
             
-            fieldHero?.Activate();
+            _fieldHero?.Activate();
         }
 
         public override void Deactivate()
@@ -90,14 +87,26 @@ namespace Entities
             
             fieldIndicator?.Deactivate();
         }
+
+        private void CreateFieldHero()
+        {
+            _fieldHero = MainManager.Get<ICharacterManager>()?.Create<Hero>(10001);
+            if (_fieldHero == null)
+                return;
+            
+            _fieldHero.Initialize();
+            _fieldHero.transform.Initialize();
+            _fieldHero.EnableNavmeshAgent();
+            _fieldHero.Activate();
+        }
         
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
-            if (!fieldHero.IsActivate)
+            if (!_fieldHero.IsActivate)
                 return;
             
-            fieldHero?.MoveToTarget(pos,
+            _fieldHero?.MoveToTarget(pos,
                 () =>
                 {
                     fieldIndicator?.Deactivate();
@@ -114,7 +123,7 @@ namespace Entities
         {
             get
             {
-                return fieldHero;
+                return _fieldHero;
             }
         }
 

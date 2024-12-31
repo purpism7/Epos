@@ -28,7 +28,7 @@ namespace GameSystem
             //     return obj as T;
             
             Debug.Log(addressableName);
-            var handler = Addressables.LoadAssetAsync<T>(name);
+            var handler = Addressables.LoadAssetAsync<T>(addressableName);
             if (!handler.IsValid())
                 return default(T);
 

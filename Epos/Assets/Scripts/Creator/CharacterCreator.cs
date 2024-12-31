@@ -23,7 +23,8 @@ namespace Creator
         {
             get
             {
-                GameObject gameObj = AddressableManager.Instance.LoadAssetByNameAsync<GameObject>(_id.ToString());
+                GameObject loadGameObj = AddressableManager.Instance.LoadAssetByNameAsync<GameObject>(_id.ToString());
+                var gameObj = GameObject.Instantiate(loadGameObj);
                 if (!gameObj)
                     return null;
                 

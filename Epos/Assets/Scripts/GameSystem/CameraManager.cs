@@ -174,7 +174,7 @@ namespace GameSystem
                 return false;
 
             var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
-            if (navMeshTm == null)
+            if (!navMeshTm)
                 return false;
 
             var targetPos = new Vector3(navMeshTm.position.x, navMeshTm.position.y, -100f);

@@ -8730,6 +8730,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 8169614562942490756, guid: 7bd9a6930f5bf4696b89e0215f9e30b9, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8634592414891274069, guid: 7bd9a6930f5bf4696b89e0215f9e30b9, type: 3}
       propertyPath: position
       value: 1

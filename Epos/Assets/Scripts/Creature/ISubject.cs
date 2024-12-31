@@ -13,7 +13,7 @@ namespace Creature
     {
         int Id { get; }
         Transform Transform { get; }
-        Rigidbody2D Rigidbody2D { get; }
+        // Rigidbody2D Rigidbody2D { get; }
         NavMeshAgent NavMeshAgent { get; }
 
         bool IsActivate { get; }

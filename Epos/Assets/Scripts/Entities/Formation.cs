@@ -20,10 +20,17 @@ namespace Entities
                 _formationList = new();
                 _formationList.Clear();
             }
-            
+
+            // MainManager.Get<ICharacterManager>()?.Create<Hero>(10001);
             // 저장된 데이터로 변경될 예정.
             var formationInfo = new Info.Formation();
+            formationInfo.Index = 1;
+            formationInfo.CharacterIds[0, 0] = 10004;
             formationInfo.CharacterIds[0, 1] = 10001;
+            formationInfo.CharacterIds[0, 2] = 10002;
+            formationInfo.CharacterIds[1, 0] = 0;
+            formationInfo.CharacterIds[1, 1] = 10003;
+            formationInfo.CharacterIds[1, 2] = 0;
             
             _formationList?.Add(formationInfo);
             
