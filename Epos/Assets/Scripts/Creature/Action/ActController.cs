@@ -143,9 +143,7 @@ namespace Creature.Action
         private async UniTask ExecuteAsync()
         {
             if (InAction)
-            {
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            }
             
             if (_iActQueue?.Count > 0)
             {
@@ -188,7 +186,8 @@ namespace Creature.Action
             }
             
             act.SetData(data);
-            data.SetAnimationKey(_iActor?.AnimationKey(act)); 
+            var animationKey = _iActor?.AnimationKey(act);
+            data.SetAnimationKey(animationKey); 
             
             if (_iActQueue == null)
             {
