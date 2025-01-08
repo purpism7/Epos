@@ -481,14 +481,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 2255169783914190378, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-      propertyPath: m_IgnoreFromBuild
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2255169783914190378, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-      propertyPath: m_AffectedAgents.Array.data[0]
-      value: -1
-      objectReference: {fileID: 0}
+    - target: {fileID: 2357629004322823777, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 1992718785888554365, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
     - target: {fileID: 3194993203461009358, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -585,10 +581,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: -4765174112071296094, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-    - target: {fileID: 8125798318114913385, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 1992718785888554365, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
     - target: {fileID: 8493388974335655867, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -613,9 +605,7 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 8688199454448045369, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-    m_RemovedComponents:
-    - {fileID: 1760664208371573764, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-    - {fileID: 8593244902083243924, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1040,7 +1030,7 @@ MonoBehaviour:
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: dc5896a8d1bed40ca9000ca4cc937718, type: 2}
+  m_NavMeshData: {fileID: 0}
 --- !u!1 &1934774203
 GameObject:
   m_ObjectHideFlags: 0
