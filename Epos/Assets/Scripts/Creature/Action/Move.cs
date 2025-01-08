@@ -10,10 +10,13 @@ namespace Creature.Action
         {
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
-            public bool ReverseAfterArriving = false;
             public bool IsJumpMove = false;
+            
+            public int DirectionAfterArriving = 1;
         }
 
+        private Vector3 _prevPos = Vector3.zero;
+        
         public bool IsJumpMove { get { return _data != null ? _data.IsJumpMove : false; } }
 
         public override void Execute()
@@ -30,6 +33,9 @@ namespace Creature.Action
                 _iActor.NavMeshAgent.speed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
                 _iActor?.NavMeshAgent?.SetDestination(_data.TargetPos);
             }
+
+            if(_iActor?.Transform)
+                _prevPos = _iActor.Transform.position;
         }
 
         // private void Flip()
@@ -63,26 +69,24 @@ namespace Creature.Action
                 var moveSpeed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
 
                 iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
-                // iActorTm.position = Vector3.MoveTowards();
             }
             
-            Vector2 direction = _data.TargetPos - iActorTm.position;
+            Vector2 direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
-                iActorTm.localScale = new Vector3(1, 1, 1);
-            else if (direction.x < 0)
                 iActorTm.localScale = new Vector3(-1, 1, 1);
+            else if (direction.x < 0)
+                iActorTm.localScale = Vector3.one;
+
+            _prevPos = iActorTm.position;
             
             var distance = Vector2.Distance(iActorTm.position, _data.TargetPos);
             if (distance < 1f)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
-                if (_data.ReverseAfterArriving)
-                {
-                    var localScale = iActorTm.localScale;
-                    localScale.x *= -1f;
+                var localScale = iActorTm.localScale;
+                localScale.x *= _data.DirectionAfterArriving;
                     
-                    iActorTm.localScale = localScale;
-                }
+                iActorTm.localScale = localScale;
                 
                 _data.FinishAction?.Invoke();
                 

@@ -40,7 +40,7 @@ namespace Battle.Mode
         private Queue<ICombatant> _castingActiveSkillICombatantQueue = null;
         private List<TargetData> _targetDataList = null;
         
-        private List<IActController> _sequenceActList = null;
+        private List<ICombatant> _sequenceActList = null;
         private IActController _iActCtr = null;
 
         private int _sequenceIndex = 0;
@@ -205,7 +205,7 @@ namespace Battle.Mode
             CastingSkill(attacker, activeSkill, _targetDataList);
             // attacker.IActCtr?.CastingSkill(this, activeSkill, _targetList); 
 
-            _sequenceActList?.Add(attacker.IActCtr);
+            _sequenceActList?.Add(attacker);
             
             UpdateActAsync().Forget();
         }
@@ -213,12 +213,9 @@ namespace Battle.Mode
         private async UniTask UpdateActAsync()
         {
             await SequenceActAsync();
-
-            // Debug.Log("End");
             await MoveToReturnAsync();
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            // Debug.Log("End Move To Return");
 
             if (_castingActiveSkillICombatantQueue == null ||
                 _castingActiveSkillICombatantQueue.Count <= 0)
@@ -241,7 +238,7 @@ namespace Battle.Mode
                 if (_iActCtr == null ||
                     !_iActCtr.InAction)
                 {
-                    _iActCtr = _sequenceActList[_sequenceIndex];
+                    _iActCtr = _sequenceActList[_sequenceIndex]?.IActCtr;
                     _iActCtr?.Execute();
 
                     ++_sequenceIndex;
@@ -259,22 +256,26 @@ namespace Battle.Mode
             
             if (_sequenceActList != null)
             {
-                foreach (var iActCtr in _sequenceActList)
+                foreach (var iCombatant in _sequenceActList)
                 {
-                    if(iActCtr == null)
+                    if(iCombatant == null)
                         continue;
                     
-                    iActCtr.MoveToTarget(isJumpMove: true)?.Execute();
+                    var directionForArriving = iCombatant.ETeam == Type.ETeam.Ally ? -1 : 1;
+                    iCombatant.IActCtr?.MoveToTarget(direction: directionForArriving, isJumpMove: true)?.Execute();
                     
-                    SetSortingOrder(iActCtr as ICombatant, 0);
+                    SetSortingOrder(iCombatant, 0);
                 }
 
-                while (_sequenceActList?.Find(iActCtr => iActCtr.InAction) != null)
+                while (_sequenceActList?.Find(iCombatant => iCombatant.IActCtr.InAction) != null)
                 {
-                    foreach (var iActCtr in _sequenceActList)
+                    foreach (var iCombatant in _sequenceActList)
                     {
-                        if (iActCtr.InAction)
-                            iActCtr.ChainUpdate();
+                        if(iCombatant?.IActCtr == null)
+                            continue;
+                        
+                        if (iCombatant.IActCtr.InAction)
+                            iCombatant.IActCtr.ChainUpdate();
                     }
                     
                     await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -336,7 +337,7 @@ namespace Battle.Mode
                             CastingSkill(iCombatant, passiveSkill, targetDataList);
                             // iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
                                 
-                            _sequenceActList?.Add(iCombatant.IActCtr);
+                            _sequenceActList?.Add(iCombatant);
                                     
                             continue;
                         }
@@ -347,7 +348,7 @@ namespace Battle.Mode
                 CastingSkill(iCombatant, passiveSkill, targetDataList);
                 // iCombatant.IActCtr?.CastingSkill(this, passiveSkill, targetList); 
                             
-                _sequenceActList?.Add(iCombatant.IActCtr);
+                _sequenceActList?.Add(iCombatant);
             }
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -384,8 +385,9 @@ namespace Battle.Mode
             targetPos.z = 0;
 
             SetSortingOrder(attacker, 1);
-            
-            attacker.IActCtr?.MoveToTarget(targetPos, reverse: targetPos.x - attacker.Transform.position.x < 0, isJumpMove: true);
+
+            var directionForArriving = attacker.ETeam == Type.ETeam.Ally ? 1 : -1;
+            attacker.IActCtr?.MoveToTarget(targetPos, direction: directionForArriving, isJumpMove: true);
         }
 
         private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
