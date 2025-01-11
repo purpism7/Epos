@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Parts;
+using UI.Parts;
 
 namespace UI.Panels
 {
@@ -35,12 +36,22 @@ namespace UI.Panels
             var leftForces = _data?.LeftForces?.CharacterList;
             if (leftForces != null)
             {
+                GameObject battleCombatantGameObject = null;
                 for (int i = 0; i < leftForces.Count; ++i)
                 {
                     if (leftForces[i] != null)
-                        Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
+                        battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
                     else
-                        Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
+                        battleCombatantGameObject = Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
+
+                    if (battleCombatantGameObject)
+                    {
+                        var battleCombatant = battleCombatantGameObject.GetComponent<BattleCombatant>();
+                        battleCombatant?.Initialize(new BattleCombatant.Data()
+                        {
+                            Id = leftForces[i].Id,
+                        });
+                    }
                 }
             }
             

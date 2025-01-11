@@ -6,7 +6,7 @@ public class Part : MonoBehaviour
 {
     [SerializeField]
     private Transform rootTm = null;
-
+    
     public bool IsActivate 
     {
         get

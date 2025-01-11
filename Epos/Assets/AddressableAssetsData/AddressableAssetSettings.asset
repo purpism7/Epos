@@ -48,6 +48,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a54af3151049044d89a137ea017416e1, type: 2}
   - {fileID: 11400000, guid: 73b3f2a8da7b548a5ba4f227d49ca31b, type: 2}
   - {fileID: 11400000, guid: 78e4cdc3a283745608aa9b436c271758, type: 2}
+  - {fileID: 11400000, guid: 3248d2f227a0e4d8b8efd8447db28727, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -90,6 +91,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - Scene
+    - Atlas
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 553ceee3839714f5aa57ef90dd51f279, type: 2}
