@@ -47,10 +47,11 @@ namespace UI.Panels
                     if (battleCombatantGameObject)
                     {
                         var battleCombatant = battleCombatantGameObject.GetComponent<BattleCombatant>();
-                        battleCombatant?.Initialize(new BattleCombatant.Data()
-                        {
-                            Id = leftForces[i].Id,
-                        });
+                        battleCombatant?.Initialize(
+                            new BattleCombatant.Data()
+                            {
+                                ICombatant = leftForces[i],
+                            });
                     }
                 }
             }

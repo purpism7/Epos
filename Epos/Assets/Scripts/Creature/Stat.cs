@@ -36,6 +36,9 @@ namespace Creature
             Attack,
             AttackRange,
             MoveSpeed,
+            
+            Hp,
+            MaxHp,
         }
 
         private Dictionary<EType, float> _originStatDic = new();

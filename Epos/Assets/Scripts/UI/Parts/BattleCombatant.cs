@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creature;
 using GameSystem;
 using TMPro;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace UI.Parts
     {
         public class Data : BaseData
         {
-            public int Id = 0;
+            public ICombatant ICombatant = null;
         }
         
         [SerializeField] 
@@ -33,14 +34,27 @@ namespace UI.Parts
 
         private void SetCombatantImg()
         {
-            if (_data == null)
+            var iCombatant = _data?.ICombatant;
+            if (iCombatant == null)
                 return;
             
             if (combatantImg == null)
                 return;
-
-            var sprite = ResourceManager.Instance.AtlasLoader?.GetCharacterSprite($"s_{_data.Id}");
+            
+            var sprite = ResourceManager.Instance.AtlasLoader?.GetCharacterSprite($"s_{iCombatant.Id}");
             combatantImg.sprite = sprite;
+        }
+
+        private void SetHpProgress()
+        {
+            var iCombatant = _data?.ICombatant;
+            if (iCombatant?.IStat == null)
+                return;
+
+            if (hpProgress == null)
+                return;
+
+            hpProgress.fillAmount = iCombatant.IStat.Get(Stat.EType.Hp) / iCombatant.IStat.Get(Stat.EType.MaxHp);
         }
     }
 }
