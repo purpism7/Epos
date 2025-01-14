@@ -15,6 +15,7 @@ namespace Creature.Action
         public class Data : BaseData
         {
             public IListener IListener = null;
+            public ICaster ICaster = null;
             public Skill Skill = null;
             public List<ICombatant> TargetList = null;
         }
@@ -60,7 +61,7 @@ namespace Creature.Action
             {
                 foreach (var target in _data?.TargetList)
                 {
-                    target?.IActCtr?.TakeDamage();
+                    target?.IActCtr?.TakeDamage(_data?.ICaster);
                 }
             }
 

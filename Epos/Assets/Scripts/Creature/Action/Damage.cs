@@ -8,7 +8,7 @@ namespace Creature.Action
     {
         public class Data : BaseData
         {
-            
+            public ICaster ICaster = null;
         }
         
         public override void Execute()
@@ -17,8 +17,10 @@ namespace Creature.Action
                 return;
             
             SetAnimation(_data.AnimationKey, false);
+
+            var iCasterIStat = _data?.ICaster?.IStat;
+            if(iCasterIStat != null)
+                _iActor?.IStat?.Add(Stat.EType.Hp, iCasterIStat.Get(Stat.EType.Attack));
         }
-        
-        
     }
 }

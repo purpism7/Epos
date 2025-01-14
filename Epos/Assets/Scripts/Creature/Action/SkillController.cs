@@ -40,38 +40,6 @@ namespace Creature.Action
             return PossibleSkill(eSkillCategory);
         }
         
-        // void ISkillController.Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory)
-        // {
-        //     // if (skill == null)
-        //     //     return;
-        //     var skill = PossibleSkill(eSkillCategory);
-        //     if (skill == null)
-        //         return;
-        //
-        //     var target = targetList?.FirstOrDefault();
-        //     if (target == null)
-        //         return;
-        //
-        //     _iCaster?.IStat?.Add(eSkillCategory == Type.ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
-        //    
-        //     // var targetPos = target.Transform.position;
-        //     // targetPos.x += skill.SkillData.Range;
-        //     // targetPos.y -= 1f;
-        //     // targetPos.z = 0;
-        //     // Debug.Log("TargetPos = " + targetPos);
-        //     // var speed = _iCaster.IStat.Get(Stat.EType.MoveSpeed);
-        //     // var distance = Vector3.Distance(_iCaster.Transform.position, targetPos);
-        //     // var duration = distance / speed;
-        //     //
-        //     // _iCaster?.IActCtr?.MoveToTarget(targetPos, () => { }, true);
-        //     
-        //     // _iCaster.Transform.DOMove(targetPos, duration)
-        //     //     .OnComplete(() =>
-        //     //     {
-        //     //         
-        //     //     });
-        // }
-
         private void CreateSkillList()
         {
             if (_skillList == null)
@@ -85,7 +53,7 @@ namespace Creature.Action
                 case 10001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Datas.Skill(3, 3f));
+                    skill.Initialize(new Datas.Skill(3, 3f, _iCaster.IStat.Get(Stat.EType.Attack)));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
                     skill.SetSameTeam(true);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);
@@ -99,7 +67,7 @@ namespace Creature.Action
                 {
                     // 소서리스
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Datas.Skill(2, 0));
+                    skill.Initialize(new Datas.Skill(2, 0, _iCaster.IStat.Get(Stat.EType.Attack)));
                     skill.SetESkillCategory(Type.ESkillCategory.Passive);
                     skill.SetSameTeam(true);
                     skill.SetESkillTarget(Type.ESkillTarget.All);
@@ -113,7 +81,7 @@ namespace Creature.Action
                 {
                     // 스피어
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Datas.Skill(4, 5f));
+                    skill.Initialize(new Datas.Skill(4, 5f, _iCaster.IStat.Get(Stat.EType.Attack)));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     skill.SetSameTeam(false);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);
@@ -126,7 +94,7 @@ namespace Creature.Action
                 case 90001:
                 {
                     var skill = new Ability.Skill();
-                    skill.Initialize(new Datas.Skill(1, 4f));
+                    skill.Initialize(new Datas.Skill(1, 4f, _iCaster.IStat.Get(Stat.EType.Attack)));
                     skill.SetESkillCategory(Type.ESkillCategory.Active);
                     skill.SetSameTeam(false);
                     skill.SetESkillTarget(Type.ESkillTarget.NearOne);

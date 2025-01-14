@@ -13,8 +13,8 @@ namespace Creature.Action
     {
         void Idle();
         IActController MoveToTarget(Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false);
-        IActController CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList);
-        void TakeDamage();
+        IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList);
+        void TakeDamage(ICaster iCaster);
         void Execute();
 
         bool InAction { get; }
@@ -115,7 +115,7 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, Skill skill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
@@ -132,12 +132,17 @@ namespace Creature.Action
             return this;
         }
 
-        void IActController.TakeDamage()
+        void IActController.TakeDamage(ICaster iCaster)
         {
             if (!IsActivate)
                 return;
 
-            Execute<Damage, Damage.Data>();
+            var data = new Damage.Data
+            {
+                ICaster = iCaster,
+            };
+            
+            Execute<Damage, Damage.Data>(data);
         }
 
         private async UniTask ExecuteAsync()

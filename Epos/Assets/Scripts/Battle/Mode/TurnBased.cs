@@ -191,7 +191,7 @@ namespace Battle.Mode
                     if(target == null)
                         continue;
 
-                    _targetDataList.Add(
+                    _targetDataList?.Add(
                         new TargetData
                         {
                             Target = target,
@@ -411,7 +411,7 @@ namespace Battle.Mode
                 targetList.Add(target);
             }
             
-            attacker.IActCtr?.CastingSkill(this, skill, targetList); 
+            attacker.IActCtr?.CastingSkill(this, attacker, skill, targetList); 
         }
         
         private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)

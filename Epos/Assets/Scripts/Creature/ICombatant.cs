@@ -12,8 +12,7 @@ namespace Creature
         
         void SetEFormation(Type.EFormation eFormation);
         public Type.EFormation EFormation { get; }
-
+        
         int Position { get; }
-
     }
 }

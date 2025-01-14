@@ -10,11 +10,13 @@ namespace Datas
     {
         public int Id { get; private set; } = 0;
         public float Range { get; private set; } = 0;
+        public float Attack { get; private set; } = 0;
 
-        public Skill(int id, float range)
+        public Skill(int id, float range, float attack)
         {
             Id = id;
             Range = range;
+            Attack = attack;
         }
     }
 }
