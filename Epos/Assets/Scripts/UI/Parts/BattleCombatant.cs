@@ -29,7 +29,9 @@ namespace UI.Parts
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-
+            
+            data?.ICombatant?.SetEventHandler(OnRefreshCharacter);
+            
             SetCombatantImg();
         }
 
@@ -46,16 +48,20 @@ namespace UI.Parts
             combatantImg.sprite = sprite;
         }
 
-        private void SetHpProgress()
+        private void SetHpProgress(IStat iStat)
         {
-            var iCombatant = _data?.ICombatant;
-            if (iCombatant?.IStat == null)
+            if (iStat == null)
                 return;
 
             if (hpProgress == null)
                 return;
 
-            hpProgress.fillAmount = iCombatant.IStat.Get(Stat.EType.Hp) / iCombatant.IStat.Get(Stat.EType.MaxHp);
+            hpProgress.fillAmount = iStat.Get(Stat.EType.Hp) / iStat.Get(Stat.EType.MaxHp);
+        }
+
+        private void OnRefreshCharacter(IActor iActor)
+        {
+            SetHpProgress(iActor?.IStat);
         }
     }
 }
