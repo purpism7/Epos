@@ -26,7 +26,7 @@ namespace Entities
         private FieldIndicator fieldIndicator = null;
 
         private Hero _fieldHero = null;
-        private List<Parts.Field> _fieldList = new();
+        // private List<Parts.Field> _fieldList = new();
         private Parts.IField CurrIField = null;
 
         // 임시.

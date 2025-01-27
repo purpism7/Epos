@@ -19,8 +19,14 @@ namespace Creature.Action
             SetAnimation(_data.AnimationKey, false);
 
             var iCasterIStat = _data?.ICaster?.IStat;
-            if(iCasterIStat != null)
-                _iActor?.IStat?.Add(Stat.EType.Hp, iCasterIStat.Get(Stat.EType.Attack));
+            if (iCasterIStat != null)
+            {
+                var damage = iCasterIStat.Get(Stat.EType.Attack);
+                
+                _iActor?.IStat?.Add(Stat.EType.Hp, damage);
+                
+                
+            }
             
             _iActor?.EventHandler?.Invoke(_data?.ICaster);
         }

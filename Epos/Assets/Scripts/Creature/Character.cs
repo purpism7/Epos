@@ -75,8 +75,14 @@ namespace Creature
         [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
         private float attackRange = 1f;
 
-        [SerializeField] [Range(1f, 5f)] private float activePoint = 1f;
-        [SerializeField] [Range(1f, 5f)] private float passivePoint = 1f;
+        [SerializeField] 
+        [Range(0f, 100f)]
+        private float maxHp = 1f;
+        
+        [SerializeField] 
+        [Range(1f, 5f)] private float activePoint = 1f;
+        [SerializeField] 
+        [Range(1f, 5f)] private float passivePoint = 1f;
 
         [SerializeField] private int position = 0;
 
@@ -99,12 +105,12 @@ namespace Creature
 
         public virtual void Initialize()
         {
-            EventHandler = null;
+            // EventHandler = null;
 
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
             _iStatGeneric = new Stat();
-            _iStatGeneric?.Initialize(id);
+            _iStatGeneric?.Initialize(this);
 
             ISkillCtr = transform.AddOrGetComponent<SkillController>();
             ISkillCtr?.Initialize(this);
@@ -182,7 +188,6 @@ namespace Creature
         }
 
         #region ISubject
-
         void ISubject.SetEventHandler(System.Action<IActor> eventHandler)
         {
             EventHandler += eventHandler;
@@ -212,6 +217,8 @@ namespace Creature
             IStat?.SetOrigin(Stat.EType.MoveSpeed, moveSpeed);
             IStat?.SetOrigin(Stat.EType.Attack, attack);
             IStat?.SetOrigin(Stat.EType.AttackRange, attackRange);
+            IStat?.SetOrigin(Stat.EType.Hp, maxHp);
+            IStat?.SetOrigin(Stat.EType.MaxHp, maxHp);
 
             IStat?.SetOrigin(Stat.EType.ActivePoint, activePoint);
             IStat?.SetOrigin(Stat.EType.PassivePoint, passivePoint);

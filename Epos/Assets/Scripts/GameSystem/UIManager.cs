@@ -1,16 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks.Triggers;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using UI;
+using UI.Panels;
 
 namespace GameSystem
 {
     public class UIManager : Singleton<UIManager>
     {
+        private const string UIPath = "Assets/Resource/Prefabs";
+        
         [SerializeField] 
         private RectTransform rootRectTm = null;
+        [SerializeField] 
+        private RectTransform worldUIRootRectTm = null;
         
         [SerializeField] 
         private GameObject[] panelGameObjs = null;
@@ -19,7 +25,24 @@ namespace GameSystem
          
         protected override void Initialize()
         {
-            
+            LoadAssetAsync().Forget();
+
+
+            var reFullName = typeof(BattleForces).FullName.Replace('.', '/');
+            var component =
+                AddressableManager.Instance?.LoadAssetByNameAsync<BattleForces>(
+                    $"{UIPath}/{reFullName}.prefab");
+        }
+
+        private async UniTask LoadAssetAsync()
+        {
+            // await AddressableManager.Instance.LoadAssetAsync<Component>("UI",
+            //     (asyncOperationHandle) =>
+            //     {
+            //         var spriteAtlas = asyncOperationHandle.Result;
+            //         if (spriteAtlas != null)
+            //             _spriteAtlasDic?.TryAdd(spriteAtlas.name, spriteAtlas);
+            //     });
         }
 
         public T GetPanel<T, V>(V data = null) where T : Panel where V : Panel<V>.Base 
@@ -54,6 +77,15 @@ namespace GameSystem
             }
 
             return null;
+        }
+
+        public T Get<T>() where T : Object
+        {
+            var reFullName = typeof(T).FullName?.Replace('.', '/');
+            var t = AddressableManager.Instance?.LoadAssetByNameAsync<T>($"{UIPath}/{reFullName}.prefab");
+
+            
+            return t;
         }
     }
 }

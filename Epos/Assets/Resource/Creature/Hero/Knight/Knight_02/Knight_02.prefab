@@ -178,6 +178,7 @@ MonoBehaviour:
   moveSpeed: 10
   attack: 1
   attackRange: 3
+  maxHp: 41.2
   activePoint: 1
   passivePoint: 1
   position: 0

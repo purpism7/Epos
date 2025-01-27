@@ -7,7 +7,7 @@ namespace Creature
 {
     public interface IStatGeneric
     {
-        void Initialize(int id);
+        void Initialize(IActor iActor);
         void Activate();
         void Deactivate();
 
@@ -41,13 +41,14 @@ namespace Creature
             MaxHp,
         }
 
+        private IActor _iActor = null;
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, float> _addedStatDic = new();
 
         #region IStatGeneric
-        void IStatGeneric.Initialize(int id)
+        void IStatGeneric.Initialize(IActor iActor)
         {
-            
+            _iActor = iActor;
         }
         
         void IStatGeneric.Activate()
@@ -62,10 +63,7 @@ namespace Creature
 
         Stat IStatGeneric.Stat
         {
-            get
-            {
-                return this;
-            }
+            get { return this; }
         }
         #endregion
         
@@ -78,6 +76,8 @@ namespace Creature
         void IStat.Add(EType eType, float value)
         {
             SetAdded(eType, value);
+            
+            _iActor?.EventHandler?.Invoke(_iActor);
         }
 
         float IStat.Get(EType eType)

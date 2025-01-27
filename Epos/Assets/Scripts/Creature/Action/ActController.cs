@@ -123,6 +123,7 @@ namespace Creature.Action
             var data = new Casting.Data
             {
                 IListener = iListener,
+                ICaster = iCaster,
                 Skill = skill,
                 TargetList = targetList,
             };
