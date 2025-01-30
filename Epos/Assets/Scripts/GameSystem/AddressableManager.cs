@@ -29,6 +29,7 @@ namespace GameSystem
 
             var result = handler.Result;
             // _cachedDic?.Add(addressableName, result);
+            Addressables.Release(handler);
             
             return result;
         }

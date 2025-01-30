@@ -12,7 +12,7 @@ namespace GameSystem
 
         protected override void Initialize()
         {
-            
+            DontDestroyOnLoad(this);
         }
 
         public async UniTask InitializeAsync()

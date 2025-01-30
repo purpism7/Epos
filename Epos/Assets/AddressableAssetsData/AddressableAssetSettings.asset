@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2ebd946aa93264a6ca52816211c4ef18
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: d1603cac8eeba40dc1c86bb402ecb84b
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
     - default
     - Scene
     - Atlas
+    - UI
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 553ceee3839714f5aa57ef90dd51f279, type: 2}

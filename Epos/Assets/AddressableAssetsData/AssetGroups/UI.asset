@@ -12,11 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: UI
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: UI
   m_Data:
     m_SerializedData: []
   m_GUID: 5b656d2fcb38b4f188886527a58f5bf8
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 774988f105f674565afb54bba6ee74c2
+    m_Address: Assets/Resource/Prefabs/UI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: c55ad9b8bdc8c46adbd254f994d03a22, type: 2}
   m_SchemaSet:

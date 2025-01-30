@@ -22,27 +22,27 @@ namespace GameSystem
         private GameObject[] panelGameObjs = null;
 
         private Dictionary<System.Type, Panel> _cachedPanelDic = null;
+        private Dictionary<System.Type, GameObject> _uIGameObjDic = null;
          
         protected override void Initialize()
         {
+            DontDestroyOnLoad(this);
+            
+            _uIGameObjDic = new();
+            _uIGameObjDic.Clear();
+            
             LoadAssetAsync().Forget();
-
-
-            var reFullName = typeof(BattleForces).FullName.Replace('.', '/');
-            var component =
-                AddressableManager.Instance?.LoadAssetByNameAsync<BattleForces>(
-                    $"{UIPath}/{reFullName}.prefab");
         }
 
         private async UniTask LoadAssetAsync()
         {
-            // await AddressableManager.Instance.LoadAssetAsync<Component>("UI",
-            //     (asyncOperationHandle) =>
-            //     {
-            //         var spriteAtlas = asyncOperationHandle.Result;
-            //         if (spriteAtlas != null)
-            //             _spriteAtlasDic?.TryAdd(spriteAtlas.name, spriteAtlas);
-            //     });
+            await AddressableManager.Instance.LoadAssetAsync<GameObject>("UI",
+                (asyncOperationHandle) =>
+                {
+                    var gameObj = asyncOperationHandle.Result;
+                    if (gameObj)
+                        _uIGameObjDic?.TryAdd(gameObj.GetType(), gameObj);
+                });
         }
 
         public T GetPanel<T, V>(V data = null) where T : Panel where V : Panel<V>.Base 
@@ -57,26 +57,20 @@ namespace GameSystem
             if (_cachedPanelDic.TryGetValue(typeof(T), out basePanel))
                 return basePanel as T;
             
-            foreach (var panelGameObj in panelGameObjs)
-            {
-                if(!panelGameObj)
-                    continue;
-                
-                if (panelGameObj.GetComponent<T>() != null)
-                { 
-                    basePanel = Instantiate(panelGameObj, rootRectTm)?.GetComponent<T>();
-                    var panel = (basePanel as Panel<V>)?.Initialize(data);
-                   
-                    if(panel != null)
-                        _cachedPanelDic?.TryAdd(typeof(T), panel);
-                    
-                    basePanel?.transform.SetAsLastSibling();
-                    
-                    return panel as T;
-                }
-            }
+            var reFullName = typeof(T).FullName?.Replace('.', '/');
+            var gameObj = AddressableManager.Instance?.LoadAssetByNameAsync<GameObject>($"{UIPath}/{reFullName}.prefab");
+            if (!gameObj)
+                return null;
 
-            return null;
+            basePanel = gameObj.GetComponent<T>();
+            
+            var panel = (basePanel as Panel<V>)?.Initialize(data);
+            if(panel != null)
+                _cachedPanelDic?.TryAdd(typeof(T), panel);
+                    
+            basePanel?.transform.SetAsLastSibling();
+            
+            return panel as T;
         }
 
         public T Get<T>() where T : Object
