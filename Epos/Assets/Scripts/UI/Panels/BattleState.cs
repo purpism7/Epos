@@ -13,7 +13,7 @@ namespace UI.Panels
         [SerializeField] 
         private RectTransform winRectTm = null;
         
-        public class Data : Base
+        public class Data : BaseData
         {
             
         }

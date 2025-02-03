@@ -9,7 +9,7 @@ namespace UI.Panels
 {
     public class BattleForces : Panel<BattleForces.Data>
     {
-        public class Data : Base
+        public class Data : BaseData
         {
             public Forces LeftForces = null;
             public Forces RightForces = null;

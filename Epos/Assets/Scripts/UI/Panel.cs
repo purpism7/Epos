@@ -3,40 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace UI
-{
-    public class Panel : MonoBehaviour
+{ 
+    public abstract class Panel<T> : Component where T : Component.BaseData
     {
-        [SerializeField]
-        private Transform rootTm = null;
-        
-        public bool IsActivate 
-        {
-            get
-            {
-                if (!rootTm)
-                    return false;
-                
-                return rootTm.gameObject.activeSelf;
-            }
-        }
-        
-        public virtual void Activate()
-        {
-            Extensions.SetActive(rootTm, true);
-        }
-        
-        public virtual void Deactivate()
-        {
-            Extensions.SetActive(rootTm, false);
-        }
-    }
-    
-    public abstract class Panel<T> : Panel where T : Panel<T>.Base
-    {
-        public class Base
-        {
-            
-        }
+        // public class Base
+        // {
+        //     
+        // }
 
         protected T _data = null;
 

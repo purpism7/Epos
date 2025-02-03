@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,19 +18,16 @@ namespace GameSystem
         private RectTransform rootRectTm = null;
         [SerializeField] 
         private RectTransform worldUIRootRectTm = null;
-        
-        [SerializeField] 
-        private GameObject[] panelGameObjs = null;
 
-        private Dictionary<System.Type, Panel> _cachedPanelDic = null;
-        private Dictionary<System.Type, GameObject> _uIGameObjDic = null;
+        private List<UI.Component> _cachedUIComponentList = null;
+        private Dictionary<System.Type, UI.Component> _componentDic = null;
          
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
             
-            _uIGameObjDic = new();
-            _uIGameObjDic.Clear();
+            _componentDic = new();
+            _componentDic.Clear();
             
             LoadAssetAsync().Forget();
         }
@@ -41,45 +39,64 @@ namespace GameSystem
                 {
                     var gameObj = asyncOperationHandle.Result;
                     if (gameObj)
-                        _uIGameObjDic?.TryAdd(gameObj.GetType(), gameObj);
+                    {
+                        var component = gameObj.GetComponent<UI.Component>();
+                        if (component == null)
+                            return;
+                        
+                        Debug.Log(component.name);
+                        _componentDic?.TryAdd(component.GetType(), component);
+                    }
                 });
         }
 
-        public T GetPanel<T, V>(V data = null) where T : Panel where V : Panel<V>.Base 
+        private UI.Component Get<T>() where T : UI.Component
         {
-            if (_cachedPanelDic == null)
+            if (_cachedUIComponentList == null)
             {
-                _cachedPanelDic = new();
-                _cachedPanelDic.Clear();
+                _cachedUIComponentList = new();
+                _cachedUIComponentList.Clear();
             }
 
-            Panel basePanel = null;
-            if (_cachedPanelDic.TryGetValue(typeof(T), out basePanel))
-                return basePanel as T;
-            
-            var reFullName = typeof(T).FullName?.Replace('.', '/');
-            var gameObj = AddressableManager.Instance?.LoadAssetByNameAsync<GameObject>($"{UIPath}/{reFullName}.prefab");
-            if (!gameObj)
+            UI.Component component = _cachedUIComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            if (component != null)
+            {
+                (component as T)?.Activate();
+                return component as T;
+            }
+ 
+            // GameObject gameObj = null;
+            if (_componentDic != null)
+                _componentDic.TryGetValue(typeof(T), out component);
+
+            // if (!gameObj)
+            // {
+            //     var reFullName = typeof(T).FullName?.Replace('.', '/');
+            //     gameObj = AddressableManager.Instance?.LoadAssetByNameAsync<GameObject>($"{UIPath}/{reFullName}.prefab");
+            //     if (!gameObj)
+            //         return null;
+            // }
+            if (component == null)
                 return null;
 
-            basePanel = gameObj.GetComponent<T>();
-            
-            var panel = (basePanel as Panel<V>)?.Initialize(data);
-            if(panel != null)
-                _cachedPanelDic?.TryAdd(typeof(T), panel);
-                    
-            basePanel?.transform.SetAsLastSibling();
-            
-            return panel as T;
-        }
-
-        public T Get<T>() where T : Object
-        {
-            var reFullName = typeof(T).FullName?.Replace('.', '/');
-            var t = AddressableManager.Instance?.LoadAssetByNameAsync<T>($"{UIPath}/{reFullName}.prefab");
-
+            var t = Instantiate(component.gameObject, rootRectTm)?.GetComponent<T>();
+            if(t != null)
+                _cachedUIComponentList?.Add(t);
+            // component = gameObj.GetComponent<T>();
+            // if(component != null)
+            //     _cachedUIComponentDic?.TryAdd(typeof(T), component);
             
             return t;
+        }
+
+        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.Component.BaseData
+        {
+            var component = Get<T>();
+            
+            var panel = (component as Panel<V>)?.Initialize(data);
+            panel?.transform.SetAsLastSibling();
+ 
+            return panel as T;
         }
     }
 }
