@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using Creator;
 using Cysharp.Threading.Tasks;
 
 using Entities;
@@ -30,16 +30,21 @@ namespace Battle.Step
                 LeftForces = _data?.LeftForces,
                 RightForces = _data?.RightForces,
             };
-            
-            var battleForces = UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>(battleForcesData);
-            battleForces?.Activate();
+
+
+            UICreator<BattleForces, BattleForces.Data>.Get?
+                .SetData()
+                .Create()?.Activate();
+                
+            // UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>(battleForcesData);
+            // battleForces?.Activate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
             var battleState = UIManager.Instance?.GetPanel<BattleState, BattleState.Data>();
             if (battleState != null)
             {
-                battleState.Activate();
+                // battleState.Activate();
                 
                 await battleState.StartAsync();
             }

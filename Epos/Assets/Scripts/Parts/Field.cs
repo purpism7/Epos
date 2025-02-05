@@ -14,7 +14,7 @@ namespace Parts
         // FieldPoint FieldPoint { get; }
     }
     
-    public class Field : Part, IField, FieldPoint.IListener
+    public class Field : UI.Component, IField, FieldPoint.IListener
     {
         [SerializeField] 
         private int id = 0;

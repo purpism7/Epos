@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
+
 using UnityEngine;
+
+using GameSystem;
 
 namespace Parts
 {
@@ -14,9 +16,11 @@ namespace Parts
             public int Damage = 0;
         }
 
-        public override void Initialize(Data data)
+        public override Part<Damage.Data> Initialize(Data data)
         {
             base.Initialize(data);
+
+            return this;
         }
 
         public override void Activate(Data data)
@@ -34,10 +38,12 @@ namespace Parts
                 return;
 
             var screenPos = mainCamera.WorldToScreenPoint(_data.TargetTm.position);
+            screenPos.z = 0;
             Vector2 viewPos = mainCamera.ScreenToViewportPoint(screenPos);
-            viewPos -= Vector2.one * 0.5f;
+            // viewPos -= Vector2.one;
 
-            transform.position = new Vector2(viewPos.x, viewPos.y);
+            transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(viewPos.x, viewPos.y);
+            // transform.position = new Vector2(viewPos.x, viewPos.y);
         }
     }
 }

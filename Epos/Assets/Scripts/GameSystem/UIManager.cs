@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Creator;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -18,10 +19,10 @@ namespace GameSystem
         private RectTransform rootRectTm = null;
         [SerializeField] 
         private RectTransform worldUIRootRectTm = null;
-
+        
         private List<UI.Component> _cachedUIComponentList = null;
         private Dictionary<System.Type, UI.Component> _componentDic = null;
-         
+        
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
@@ -50,7 +51,7 @@ namespace GameSystem
                 });
         }
 
-        private UI.Component Get<T>() where T : UI.Component
+        public UI.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : UI.Component
         {
             if (_cachedUIComponentList == null)
             {
@@ -60,10 +61,55 @@ namespace GameSystem
 
             UI.Component component = _cachedUIComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
             if (component != null)
-            {
-                (component as T)?.Activate();
                 return component as T;
+            else
+            {
+                if (_componentDic != null)
+                    _componentDic.TryGetValue(typeof(T), out component);
+
+                if (component == null)
+                    return null;
+                
+                component = Instantiate(component.gameObject)?.GetComponent<T>();
+                if (component != null)
+                {
+                    var rectTm = component.GetComponent<RectTransform>();
+                    if (rectTm)
+                    {
+                        rectTm.anchoredPosition = Vector2.one;
+                        rectTm.transform.localScale = Vector3.one;   
+                    }
+                    
+                    _cachedUIComponentList?.Add(component);
+                }
             }
+            
+            if (!rootTm)
+            {
+                if (worldUI)
+                    rootTm = worldUIRootRectTm;
+                else
+                    rootTm = rootRectTm;
+            }
+            
+            component?.transform.SetParent(rootTm);
+
+            return component;
+        }
+        
+        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.Component.BaseData
+        {
+            initialize = false;
+            
+            if (_cachedUIComponentList == null)
+            {
+                _cachedUIComponentList = new();
+                _cachedUIComponentList.Clear();
+            }
+
+            UI.Component component = _cachedUIComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            if (component != null)
+                return component as T;
  
             // GameObject gameObj = null;
             if (_componentDic != null)
@@ -79,24 +125,49 @@ namespace GameSystem
             if (component == null)
                 return null;
 
-            var t = Instantiate(component.gameObject, rootRectTm)?.GetComponent<T>();
-            if(t != null)
-                _cachedUIComponentList?.Add(t);
-            // component = gameObj.GetComponent<T>();
-            // if(component != null)
-            //     _cachedUIComponentDic?.TryAdd(typeof(T), component);
-            
-            return t;
+            component = Instantiate(component.gameObject, rootTm)?.GetComponent<T>();
+            if(component != null)
+                _cachedUIComponentList?.Add(component);
+
+            initialize = true;
+            // component?.GetComponent<T>()?.Initialize(data);
+ 
+            return component;
         }
 
         public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.Component.BaseData
         {
-            var component = Get<T>();
+            bool initialize = false;
+            var component = Get<T, V>(data, rootRectTm, out initialize);
+
+            var panel = component as Panel<V>;
+            if(initialize)
+                panel?.Initialize(data);
             
-            var panel = (component as Panel<V>)?.Initialize(data);
-            panel?.transform.SetAsLastSibling();
+            component?.transform.SetAsLastSibling();
+            
+            panel?.Activate(data);
  
             return panel as T;
+        }
+        
+        public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.BaseData
+        {
+            if (!rootTm)
+                rootTm = worldUI ? worldUIRootRectTm : rootRectTm;
+            
+            bool initialize = false;
+            var component = Get<T, V>(data, rootTm, out initialize);
+            
+            var part = component as Part<V>;
+            if(initialize)
+                part?.Initialize(data);
+            
+            component?.transform.SetAsLastSibling();
+            
+            part?.Activate(data);
+ 
+            return part as T;
         }
     }
 }

@@ -12,9 +12,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         get
         {
             if (_instance == null)
-            {
                 Create();
-            }
 
             return _instance;
         }
@@ -22,6 +20,9 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     private static void Create()
     {
+        if (!Application.isPlaying)
+            return;
+        
         var obj = FindAnyObjectByType<T>();
         if (obj == null)
         {
@@ -44,9 +45,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected virtual void Awake()
     {
         if (_instance == null)
-        {
-            Create();    
-        }
+            Create();  
     }
 
     protected abstract void Initialize();

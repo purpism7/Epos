@@ -7,6 +7,7 @@ using TMPro;
 
 using Creature;
 using GameSystem;
+using Parts;
 
 namespace UI.Parts
 {
@@ -26,13 +27,15 @@ namespace UI.Parts
         [SerializeField] 
         private Image hpProgress = null;
 
-        public override void Initialize(Data data)
+        public override Part<Data> Initialize(Data data)
         {
             base.Initialize(data);
             
             data?.ICombatant?.SetEventHandler(OnRefreshCharacter);
             
             SetCombatantImg();
+            
+            return this;
         }
 
         private void SetCombatantImg()
@@ -62,6 +65,12 @@ namespace UI.Parts
         private void OnRefreshCharacter(IActor iActor)
         {
             SetHpProgress(iActor?.IStat);
+            
+            var damage = UIManager.Instance?.GetPart<Damage, Damage.Data>(
+                new Damage.Data
+                {
+                    TargetTm = _data?.ICombatant?.Transform,
+                }, true);
         }
     }
 }

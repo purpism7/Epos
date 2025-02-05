@@ -2,52 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Part : MonoBehaviour
+public class Part<T> : UI.Component where T : UI.Component.BaseData
 {
-    [SerializeField]
-    private Transform rootTm = null;
-    
-    public bool IsActivate 
-    {
-        get
-        {
-            if (!rootTm)
-                return false;
-                
-            return rootTm.gameObject.activeSelf;
-        }
-    }
-
-    public virtual void Initialize()
-    {
-        
-    }
-    
-    public virtual void Activate()
-    {
-        Extensions.SetActive(rootTm, true);
-    }
-
-    public virtual void Deactivate()
-    {
-        Extensions.SetActive(rootTm, false);
-    }
-}
-
-public class Part<T> : Part where T : Part<T>.BaseData
-{
-    public class BaseData
-    {
-        
-    }
-    
     protected T _data = null;
 
-    public virtual void Initialize(T data)
+    public virtual Part<T> Initialize(T data)
     {
         base.Initialize();
 
         _data = data;
+
+        return this;
     }
     
     public virtual void Activate(T data)

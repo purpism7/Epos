@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem;
 using UnityEngine;
 
 using Parts;
@@ -7,7 +8,7 @@ using UI.Parts;
 
 namespace UI.Panels
 {
-    public class BattleForces : Panel<BattleForces.Data>
+    public class BattleForces : UI.Panel<BattleForces.Data>
     {
         public class Data : BaseData
         {
@@ -29,29 +30,29 @@ namespace UI.Panels
         [SerializeField] 
         private RectTransform leftRearRootRectTm = null;
 
-        public override Panel<Data> Initialize(Data data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
 
             var leftForces = _data?.LeftForces?.CharacterList;
             if (leftForces != null)
             {
-                GameObject battleCombatantGameObject = null;
+                // BattleCombatant battleCombatant = null;
+                // GameObject battleCombatantGameObject = null;
                 for (int i = 0; i < leftForces.Count; ++i)
                 {
                     if (leftForces[i] != null)
-                        battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
-                    else
-                        battleCombatantGameObject = Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
-
-                    if (battleCombatantGameObject)
                     {
-                        var battleCombatant = battleCombatantGameObject.GetComponent<BattleCombatant>();
-                        battleCombatant?.Initialize(
+                        UIManager.Instance?.GetPart<BattleCombatant, BattleCombatant.Data>(
                             new BattleCombatant.Data()
                             {
                                 ICombatant = leftForces[i],
-                            });
+                            }, false, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
+                    }
+                    // battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
+                    else
+                    {
+                        Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
                     }
                 }
             }
@@ -67,8 +68,6 @@ namespace UI.Panels
                         Instantiate(emptyGamaObj, i <= 2 ? rightFrontRootRectTm : rightRearRootRectTm);
                 }
             }
-
-            return this;
         }
 
         public override void Deactivate()

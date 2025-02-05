@@ -7,7 +7,7 @@ using Creature;
 
 namespace Parts
 {
-    public class Forces : Part
+    public class Forces : UI.Component
     {
         // 임시. 캐릭터 데이터 추가 후 생성 방식으로 변경.
         [SerializeField]

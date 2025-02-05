@@ -1,8 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 
 namespace UI.Panels
 {
@@ -18,11 +19,9 @@ namespace UI.Panels
             
         }
 
-        public override Panel<Data> Initialize(Data data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            return this;
         }
 
         public override void Deactivate()
