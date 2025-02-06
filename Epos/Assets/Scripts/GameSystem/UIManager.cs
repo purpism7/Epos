@@ -73,13 +73,6 @@ namespace GameSystem
                 component = Instantiate(component.gameObject)?.GetComponent<T>();
                 if (component != null)
                 {
-                    var rectTm = component.GetComponent<RectTransform>();
-                    if (rectTm)
-                    {
-                        rectTm.anchoredPosition = Vector2.one;
-                        rectTm.transform.localScale = Vector3.one;   
-                    }
-                    
                     _cachedUIComponentList?.Add(component);
                 }
             }
@@ -92,7 +85,7 @@ namespace GameSystem
                     rootTm = rootRectTm;
             }
             
-            component?.transform.SetParent(rootTm);
+            component.transform.SetParent(rootTm);
 
             return component;
         }
