@@ -1,0 +1,6 @@
+Back_01_Water_04.png
+size:627,293
+filter:Linear,Linear
+pma:true
+Layer 1
+bounds:2,2,623,289

@@ -1,0 +1,26 @@
+Back_01_Water_01.png
+size:7208,6535
+filter:Linear,Linear
+pma:true
+Layer 1
+bounds:2,4355,7037,2178
+offsets:1,1,7039,2180
+Layer 2
+bounds:2,2175,7037,2178
+offsets:1,1,7039,2180
+Water_02
+bounds:2,2,5853,2171
+offsets:0,0,5853,2180
+Water_04
+bounds:7041,5881,652,165
+rotate:90
+
+Back_01_Water_01_2.png
+size:5857,3970
+filter:Linear,Linear
+pma:true
+Water_01
+bounds:2,1798,5853,2170
+offsets:0,0,5853,2180
+Water_03
+bounds:2,2,3941,1794

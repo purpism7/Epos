@@ -1,0 +1,15 @@
+Back_01_Water_03.png
+size:1867,702
+filter:Linear,Linear
+pma:true
+Layer 1
+bounds:625,4,696,619
+offsets:1,1,698,621
+rotate:90
+Layer 2
+bounds:2,2,698,621
+rotate:90
+Layer 3
+bounds:1246,4,696,619
+offsets:1,1,698,621
+rotate:90
