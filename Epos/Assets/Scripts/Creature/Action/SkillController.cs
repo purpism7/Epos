@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+
+using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
@@ -13,6 +16,10 @@ namespace Creature.Action
     
     public class SkillController : Controller, ISkillController
     {
+        #region Inspector
+        [SerializeField] private Skill[] skills = null;
+        #endregion
+        
         private ICaster _iCaster = null;
         private List<Ability.Skill> _skillList = null;
         
