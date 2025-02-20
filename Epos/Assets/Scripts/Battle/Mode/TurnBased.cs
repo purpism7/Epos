@@ -5,7 +5,7 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-using Ability;
+using Datas.ScriptableObjects;
 using Creature;
 using Creature.Action;
 
@@ -367,7 +367,7 @@ namespace Battle.Mode
             if (targetData == null)
                 return;
             
-            var skillRange = skill.SkillData.Range;
+            var skillRange = skill.Range;
             if (skillRange <= 0)
                 return;
 

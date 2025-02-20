@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-using Ability;
 using Creature;
 
 public static class BattleExtensions
 {
-    public static List<ICombatant> GetTargetList(this ICombatant attacker, List<ICombatant> iCombatantList, Skill skill)
+    public static List<ICombatant> GetTargetList(this ICombatant attacker, List<ICombatant> iCombatantList, Datas.ScriptableObjects.Skill skill)
     {
         if (attacker == null)
             return null;

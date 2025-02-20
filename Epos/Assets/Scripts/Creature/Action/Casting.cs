@@ -5,7 +5,7 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-using Ability;
+using Datas.ScriptableObjects;
 
 
 namespace Creature.Action
@@ -49,7 +49,7 @@ namespace Creature.Action
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);
-            _data?.Skill.Casting();
+            // _data?.Skill.Casting();
 
             var halfDuration = _duration / 2f;
 

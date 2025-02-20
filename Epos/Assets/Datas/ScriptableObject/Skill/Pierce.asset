@@ -17,3 +17,4 @@ MonoBehaviour:
   Point: 1
   ESkillTarget: 2
   Range: 5
+  SameTeam: 0

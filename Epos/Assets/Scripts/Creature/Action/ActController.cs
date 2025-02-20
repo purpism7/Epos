@@ -5,7 +5,7 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-using Ability;
+using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
