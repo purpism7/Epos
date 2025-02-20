@@ -30,10 +30,9 @@ namespace Battle.Step
                 LeftForces = _data?.LeftForces,
                 RightForces = _data?.RightForces,
             };
-
-
+            
             UICreator<BattleForces, BattleForces.Data>.Get?
-                .SetData()
+                .SetData(battleForcesData)
                 .Create()?.Activate();
                 
             // UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>(battleForcesData);

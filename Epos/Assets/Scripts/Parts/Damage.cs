@@ -16,11 +16,9 @@ namespace Parts
             public int Damage = 0;
         }
 
-        public override Part<Damage.Data> Initialize(Data data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
-
-            return this;
         }
 
         public override void Activate(Data data)

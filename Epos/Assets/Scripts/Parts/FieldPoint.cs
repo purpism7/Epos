@@ -56,7 +56,7 @@ namespace Parts
 #endif
 
         #region FieldPoint
-        public override Part<Data> Initialize(Data data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
             
@@ -64,8 +64,6 @@ namespace Parts
             
             leftForces?.Deactivate();
             rightForces?.Deactivate();
-
-            return this;
         }
         
         public override void Activate()

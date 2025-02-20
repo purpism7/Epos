@@ -11,6 +11,7 @@ namespace Creator
     public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.Component.BaseData
     {
         private V _data = null;
+        private RectTransform _rootRectTm = null;
   
         public UICreator<T, V> SetData(V data = null) 
         {
@@ -19,9 +20,16 @@ namespace Creator
             return this;
         }
         
+        public UICreator<T, V> SetRoot(RectTransform rootRectTm)
+        {
+            _rootRectTm = rootRectTm;   
+            
+            return this;
+        }
+        
         public T Create()
         {
-            var component = UIManager.Instance?.Get<T>() as UI.Component<V>;
+            var component = UIManager.Instance?.Get<T>(_rootRectTm) as UI.Component<V>;
             
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)

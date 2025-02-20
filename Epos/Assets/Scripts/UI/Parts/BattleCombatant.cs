@@ -27,15 +27,13 @@ namespace UI.Parts
         [SerializeField] 
         private Image hpProgress = null;
 
-        public override Part<Data> Initialize(Data data)
+        public override void Initialize(Data data)
         {
             base.Initialize(data);
             
             data?.ICombatant?.SetEventHandler(OnRefreshCharacter);
             
             SetCombatantImg();
-            
-            return this;
         }
 
         private void SetCombatantImg()

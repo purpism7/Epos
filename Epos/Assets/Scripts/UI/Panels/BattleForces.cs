@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Creator;
 using UnityEngine;
 
 using GameSystem;
@@ -43,11 +44,15 @@ namespace UI.Panels
                 {
                     if (leftForces[i] != null)
                     {
-                        UIManager.Instance?.GetPart<BattleCombatant, BattleCombatant.Data>(
-                            new BattleCombatant.Data()
-                            {
-                                ICombatant = leftForces[i],
-                            }, false, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
+                         // UICreator<BattleCombatant, BattleCombatant.Data>()
+                             
+                         UICreator<BattleCombatant, BattleCombatant.Data>.Get?
+                             .SetData(new BattleCombatant.Data()
+                             {
+                                 ICombatant = leftForces[i],
+                             })
+                             .SetRoot(leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm)
+                             .Create()?.Activate();
                     }
                     // battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
                     else
@@ -63,7 +68,15 @@ namespace UI.Panels
                 for (int i = 0; i < rightForces.Count; ++i)
                 {
                     if (rightForces[i] != null)
-                        Instantiate(combatantGamaObj, rightForces[i].Position <= 3 ? rightFrontRootRectTm : rightRearRootRectTm);
+                    {
+                        UICreator<BattleCombatant, BattleCombatant.Data>.Get?
+                            .SetData(new BattleCombatant.Data()
+                            {
+                                ICombatant = rightForces[i],
+                            })
+                            .SetRoot(rightForces[i].Position <= 3 ? rightFrontRootRectTm : rightRearRootRectTm)
+                            .Create()?.Activate();
+                    }
                     else
                         Instantiate(emptyGamaObj, i <= 2 ? rightFrontRootRectTm : rightRearRootRectTm);
                 }
