@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Part<T> : UI.Component<T> where T : UI.Component.BaseData
 {
-    protected T _data = null;
+    // protected T _data = null;
 
     // public virtual Part<T> Initialize(T data)
     // {
