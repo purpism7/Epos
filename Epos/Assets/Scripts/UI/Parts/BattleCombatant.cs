@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using Creator;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +15,7 @@ namespace UI.Parts
 {
     public class BattleCombatant : Part<BattleCombatant.Data>
     {
-        public class Data : BaseData
+        public class Data : UI.Component.Data
         {
             public ICombatant ICombatant = null;
         }
@@ -63,12 +65,17 @@ namespace UI.Parts
         private void OnRefreshCharacter(IActor iActor)
         {
             SetHpProgress(iActor?.IStat);
+
+            var data = new Damage.Data
+            {
+                TargetTm = _data?.ICombatant?.Transform,
+                Damage = iActor != null ? (int)iActor.IStat.Get(Stat.EType.Attack) : 0,
+            };
             
-            var damage = UIManager.Instance?.GetPart<Damage, Damage.Data>(
-                new Damage.Data
-                {
-                    TargetTm = _data?.ICombatant?.Transform,
-                }, true);
+            UICreator<Damage, Damage.Data>.Get?
+                .SetData(data)
+                .Create()?
+                .Activate(data);
         }
     }
 }

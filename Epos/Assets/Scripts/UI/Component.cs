@@ -6,13 +6,13 @@ namespace UI
 {
     public class Component : MonoBehaviour
     {
-        public class BaseData
+        public class Data
         {
             
         }
         
         [SerializeField]
-        private Transform rootTm = null;
+        protected Transform rootTm = null;
         
         public virtual void Initialize()
         {
@@ -41,7 +41,7 @@ namespace UI
         }
     }
     
-    public abstract class Component<T> : Component where T : Component.BaseData
+    public abstract class Component<T> : Component where T : Component.Data
     {
         protected T _data = null;
 

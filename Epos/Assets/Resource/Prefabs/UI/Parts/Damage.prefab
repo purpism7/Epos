@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
+  rootRectTm: {fileID: 7265674374223708273}
 --- !u!1 &6997416976588392212
 GameObject:
   m_ObjectHideFlags: 0

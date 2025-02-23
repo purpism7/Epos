@@ -11,7 +11,7 @@ namespace UI.Panels
 {
     public class BattleForces : UI.Panel<BattleForces.Data>
     {
-        public class Data : BaseData
+        public class Data : UI.Component.Data
         {
             public Forces LeftForces = null;
             public Forces RightForces = null;

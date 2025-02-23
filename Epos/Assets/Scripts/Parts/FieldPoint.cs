@@ -30,7 +30,7 @@ namespace Parts
 
         private const float Range = 5f;
 
-        public class Data : BaseData
+        public class Data : UI.Component.Data
         {
             public IListener IListener = null;
         }

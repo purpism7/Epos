@@ -1,47 +1,57 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+
 using GameSystem;
+using UI;
 
 namespace Parts
 {
-    public class Damage : Part<Damage.Data>
+    public class Damage : PartWorld<Damage.Data>
     {
-        public class Data : BaseData
+        public class Data : PartWorld<Data>.Data
         {
-            public Transform TargetTm = null;
+            // public Transform TargetTm = null;
             public int Damage = 0;
         }
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
+            
+            
         }
-
+        
         public override void Activate(Data data)
         {
             base.Activate(data);
+
+            MoveAsync().Forget();
         }
 
-        private void Update()
+        private async UniTask MoveAsync()
         {
+            if (!rootRectTm)
+                return;
+
             if (!_data?.TargetTm)
                 return;
             
-            var mainCamera = MainManager.Get<ICameraManager>()?.MainCamera;
-            if (mainCamera == null)
+            var startPos = GetScreenPos(_data.TargetTm.position);
+            if (startPos == null) 
                 return;
-
-            var screenPos = mainCamera.WorldToScreenPoint(_data.TargetTm.position);
-            screenPos.z = 0;
-            Vector2 viewPos = mainCamera.ScreenToViewportPoint(screenPos);
-            // viewPos -= Vector2.one;
-
-            transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(viewPos.x, viewPos.y);
-            // transform.position = new Vector2(viewPos.x, viewPos.y);
+            
+            rootRectTm.anchoredPosition = startPos.Value;
+            var endPos = startPos.Value;
+            endPos.y += 100f;   
+            
+            await rootRectTm.DOLocalMove(endPos, 2f).SetUpdate(true).SetEase(Ease.Linear);
+            
+            Deactivate();
         }
     }
 }

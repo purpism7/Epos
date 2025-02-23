@@ -8,7 +8,7 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Creator
 {
-    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.Component.BaseData
+    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.Component.Data
     {
         private V _data = null;
         private RectTransform _rootRectTm = null;

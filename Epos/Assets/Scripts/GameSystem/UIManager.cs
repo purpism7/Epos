@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Creator;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -14,14 +13,16 @@ namespace GameSystem
     public class UIManager : Singleton<UIManager>
     {
         private const string UIPath = "Assets/Resource/Prefabs";
-        
-        [SerializeField] 
-        private RectTransform rootRectTm = null;
-        [SerializeField] 
-        private RectTransform worldUIRootRectTm = null;
+
+        [SerializeField] private Camera uiCamera = null;
+        [SerializeField] private RectTransform rootRectTm = null;
+        [SerializeField] private RectTransform worldUIRootRectTm = null;
         
         private List<UI.Component> _cachedUIComponentList = null;
         private Dictionary<System.Type, UI.Component> _componentDic = null;
+
+        public Camera UICamera => uiCamera;
+        public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
         
         protected override void Initialize()
         {
@@ -90,7 +91,7 @@ namespace GameSystem
             return component;
         }
         
-        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.Component.BaseData
+        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.Component.Data
         {
             initialize = false;
             
@@ -128,7 +129,7 @@ namespace GameSystem
             return component;
         }
 
-        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.Component.BaseData
+        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.Component.Data
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);
@@ -144,7 +145,7 @@ namespace GameSystem
             return panel as T;
         }
         
-        public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.BaseData
+        public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
         {
             if (!rootTm)
                 rootTm = worldUI ? worldUIRootRectTm : rootRectTm;

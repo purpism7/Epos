@@ -22,7 +22,6 @@ namespace Creature
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
-        
 
         public int Id
         {
@@ -36,7 +35,6 @@ namespace Creature
             get { return SkeletonAnimation?.transform; }
         }
 
-        // public Rigidbody2D Rigidbody2D { get; private set; } = null;
         public NavMeshAgent NavMeshAgent { get; private set; } = null;
 
         public IStat IStat

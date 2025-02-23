@@ -447,5 +447,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b7c12e5c2f914d1ea86fb408f802229, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiCamera: {fileID: 7558752344286945958}
   rootRectTm: {fileID: 4954122302973636030}
   worldUIRootRectTm: {fileID: 7751095136212407}
