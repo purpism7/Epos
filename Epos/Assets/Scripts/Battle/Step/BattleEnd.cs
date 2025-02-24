@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Creator;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -25,9 +26,9 @@ namespace Battle.Step
 
         private async UniTask BeginAsync()
         {
-            var battleForces = UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>();
-            battleForces?.Deactivate();
-
+            UICreator<BattleForces, BattleForces.Data>.Get?
+                .Create()?.Deactivate();
+            
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
             MainManager.Get<IFieldManager>()?.Activate();

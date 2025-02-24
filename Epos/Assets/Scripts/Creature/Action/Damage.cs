@@ -24,11 +24,9 @@ namespace Creature.Action
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
                 
                 _iActor?.IStat?.Add(Stat.EType.Hp, damage);
-                
-                
             }
             
-            _iActor?.EventHandler?.Invoke(_data?.ICaster);
+            // _iActor?.EventHandler?.Invoke(_data?.ICaster);
         }
     }
 }

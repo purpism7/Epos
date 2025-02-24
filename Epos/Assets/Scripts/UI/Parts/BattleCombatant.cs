@@ -33,9 +33,16 @@ namespace UI.Parts
         {
             base.Initialize(data);
             
-            data?.ICombatant?.SetEventHandler(OnRefreshCharacter);
+            data?.ICombatant?.Add(OnChanged);
             
             SetCombatantImg();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            _data.ICombatant?.Remove(OnChanged);
         }
 
         private void SetCombatantImg()
@@ -62,7 +69,7 @@ namespace UI.Parts
             hpProgress.fillAmount = iStat.Get(Stat.EType.Hp) / iStat.Get(Stat.EType.MaxHp);
         }
 
-        private void OnRefreshCharacter(IActor iActor)
+        private void OnChanged(IActor iActor)
         {
             SetHpProgress(iActor?.IStat);
 

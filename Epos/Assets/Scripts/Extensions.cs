@@ -31,7 +31,10 @@ public static class Extensions
     private static async UniTask SetActiveAsync(this Component component, bool active)
     {
         await UniTask.Yield();
-            
+
+        if (component == null)
+            return;
+        
         component.gameObject.SetActive(active);
     }
         

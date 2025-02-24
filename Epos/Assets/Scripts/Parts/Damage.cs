@@ -49,7 +49,7 @@ namespace Parts
             var endPos = startPos.Value;
             endPos.y += 100f;   
             
-            await rootRectTm.DOLocalMove(endPos, 2f).SetUpdate(true).SetEase(Ease.Linear);
+            await rootRectTm.DOLocalMove(endPos, 1f).SetUpdate(true).SetEase(Ease.Linear);
             
             Deactivate();
         }

@@ -17,9 +17,6 @@ namespace Creature
         NavMeshAgent NavMeshAgent { get; }
 
         bool IsActivate { get; }
-
-        void SetEventHandler(System.Action<IActor> eventHandler);
-        System.Action<IActor> EventHandler { get; }
     }
 }
 

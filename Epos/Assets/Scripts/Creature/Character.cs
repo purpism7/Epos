@@ -185,12 +185,17 @@ namespace Creature
             NavMeshAgent.enabled = false;
         }
 
-        #region ISubject
-        void ISubject.SetEventHandler(System.Action<IActor> eventHandler)
+        #region IActor
+        void IActor.Add(System.Action<IActor> eventHandler)
         {
             EventHandler += eventHandler;
         }
-
+        
+        void IActor.Remove(System.Action<IActor> eventHandler)
+        {
+            EventHandler -= eventHandler;
+        }
+        
         #endregion
 
         #region ICombatant
