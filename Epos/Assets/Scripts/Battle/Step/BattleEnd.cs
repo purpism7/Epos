@@ -26,11 +26,9 @@ namespace Battle.Step
 
         private async UniTask BeginAsync()
         {
-            UICreator<BattleForces, BattleForces.Data>.Get?
-                .Create()?.Deactivate();
+            UIManager.Instance?.CurrPanel?.Deactivate();
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
             MainManager.Get<IFieldManager>()?.Activate();
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);

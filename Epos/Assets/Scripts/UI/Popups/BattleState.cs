@@ -5,9 +5,9 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-namespace UI.Panels
+namespace UI.Popups
 {
-    public class BattleState : Panel<BattleState.Data>
+    public class BattleState : Popup<BattleState.Data>
     {
         [SerializeField] 
         private RectTransform startRectTm = null;

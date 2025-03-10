@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 using Entities;
 using GameSystem;
 using UI.Panels;
+using UI.Popups;
+using UnityEngine;
 
 namespace Battle.Step
 {
@@ -40,7 +42,9 @@ namespace Battle.Step
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
-            var battleState = UIManager.Instance?.GetPanel<BattleState, BattleState.Data>();
+            var battleState = UICreator<BattleState, BattleState.Data>.Get
+                ?.SetRoot(UIManager.Instance?.CurrPanel.GetComponent<RectTransform>()).Create();
+            // var battleState = UIManager.Instance?.GetPopup<BattleState, BattleState.Data>();
             if (battleState != null)
             {
                 // battleState.Activate();

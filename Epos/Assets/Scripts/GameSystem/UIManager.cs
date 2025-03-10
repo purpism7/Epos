@@ -12,7 +12,7 @@ namespace GameSystem
 {
     public class UIManager : Singleton<UIManager>
     {
-        private const string UIPath = "Assets/Resource/Prefabs";
+        // private const string UIPath = "Assets/Resource/Prefabs";
 
         [SerializeField] private Camera uiCamera = null;
         [SerializeField] private RectTransform rootRectTm = null;
@@ -23,7 +23,9 @@ namespace GameSystem
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
-        
+        public UI.Component CurrPanel { get; private set; } = null;
+
+
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
@@ -122,7 +124,7 @@ namespace GameSystem
             component = Instantiate(component.gameObject, rootTm)?.GetComponent<T>();
             if(component != null)
                 _cachedUIComponentList?.Add(component);
-
+            
             initialize = true;
             // component?.GetComponent<T>()?.Initialize(data);
  
@@ -139,29 +141,52 @@ namespace GameSystem
                 panel?.Initialize(data);
             
             component?.transform.SetAsLastSibling();
-            
             panel?.Activate(data);
- 
+            
+            // CurrPanel = panel;
+            
             return panel as T;
         }
         
-        public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
+        public T GetPopup<T, V>(V data = null) where T : UI.Component where V : UI.Component.Data
         {
-            if (!rootTm)
-                rootTm = worldUI ? worldUIRootRectTm : rootRectTm;
-            
             bool initialize = false;
-            var component = Get<T, V>(data, rootTm, out initialize);
-            
-            var part = component as Part<V>;
+            var component = Get<T, V>(data, rootRectTm, out initialize);
+
+            var panel = component as Panel<V>;
             if(initialize)
-                part?.Initialize(data);
+                panel?.Initialize(data);
             
             component?.transform.SetAsLastSibling();
+            panel?.Activate(data);
             
-            part?.Activate(data);
- 
-            return part as T;
+            // CurrPanel = panel;
+            
+            return panel as T;
+        }
+        
+        // public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
+        // {
+        //     if (!rootTm)
+        //         rootTm = worldUI ? worldUIRootRectTm : rootRectTm;
+        //     
+        //     bool initialize = false;
+        //     var component = Get<T, V>(data, rootTm, out initialize);
+        //     
+        //     var part = component as Part<V>;
+        //     if(initialize)
+        //         part?.Initialize(data);
+        //     
+        //     component?.transform.SetAsLastSibling();
+        //     
+        //     part?.Activate(data);
+        //
+        //     return part as T;
+        // }
+
+        public void SetPanel(UI.Component component)
+        {
+            CurrPanel = component;
         }
     }
 }

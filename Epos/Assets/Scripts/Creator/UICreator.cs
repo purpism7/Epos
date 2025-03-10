@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using GameSystem;
+
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+
+using GameSystem;
+using UI;
+using Unity.VisualScripting;
 
 namespace Creator
 {
@@ -38,8 +41,17 @@ namespace Creator
                 rectTm.sizeDelta = Vector2.zero;
                 rectTm.transform.localScale = Vector3.one;   
             }
+
+            if (component is Panel<V>)
+                UIManager.Instance?.SetPanel(component);
+
+            if (component as Popup<V>)
+            {
+                Debug.Log("popup");
+            }
             
             component?.Initialize(_data);
+            
             // if (_component == null)
             //     return null;
             
