@@ -860,6 +860,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2964611807831639109, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
   m_PrefabInstance: {fileID: 926572344}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &926572347 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4038006720755959941, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+  m_PrefabInstance: {fileID: 926572344}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1045976954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8196366267296346501, guid: 88fe0cf70d5f58f49b96c9c2b6702039, type: 3}
@@ -1204,6 +1215,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DayNightCycle
       objectReference: {fileID: 0}
+    - target: {fileID: 7561258906288811352, guid: 369aa3eb04bc34634ac3108f5a60a2e5, type: 3}
+      propertyPath: timeTMP
+      value: 
+      objectReference: {fileID: 926572347}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

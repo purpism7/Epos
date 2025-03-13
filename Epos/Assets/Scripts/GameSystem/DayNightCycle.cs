@@ -9,10 +9,11 @@ namespace GameSystem
     public class DayNightCycle : MonoBehaviour
     {
         [SerializeField] private Light2D light2d = null;
-
-        private float _dayLenght = 60f; // 하루의 길이.
+        [SerializeField] private TextMeshProUGUI timeTMP = null;
+        
+        private float _dayLenght = 60f; // 하루의 길이(초).
         private float _dayIntensity = 1f;
-        private float _nightIntensity = 0.3f;
+        private float _nightIntensity = 0.4f;
 
         private Color _dayColor = Color.white;
         private Color _nightColor = new Color(30 / 255f, 130 / 255f, 255 / 255f);
@@ -29,6 +30,8 @@ namespace GameSystem
                 _timeOfDay = 0;
 
             UpdateLighting();
+            
+            timeTMP?.SetText($"{_timeOfDay}");
         }
 
         private void UpdateLighting()

@@ -5,6 +5,7 @@ using UnityEngine;
 
 using Entities;
 using GameSystem;
+using TMPro;
 
 public class MainManager : Singleton<MainManager>
 {
@@ -13,8 +14,7 @@ public class MainManager : Singleton<MainManager>
     private float timeScale = 1f;
     
     private List<IGeneric> _iMgrGenericList = null;
-
-    public DayNightCycle _dayNightCycle = null;
+    private DayNightCycle _dayNightCycle = null;
     
     protected override void Initialize()
     {
@@ -33,7 +33,7 @@ public class MainManager : Singleton<MainManager>
         _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         _iMgrGenericList?.Add(new BattleManager().Initialize());
 
-        // _dayNightCycle = FindObjectOfType<DayNightCycle>();
+        _dayNightCycle = FindObjectOfType<DayNightCycle>();
     }
     
     public static T Get<T>() where T : IManager
