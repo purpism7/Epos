@@ -33,7 +33,7 @@ public class MainManager : Singleton<MainManager>
         _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         _iMgrGenericList?.Add(new BattleManager().Initialize());
 
-        _dayNightCycle = FindObjectOfType<DayNightCycle>();
+        // _dayNightCycle = FindObjectOfType<DayNightCycle>();
     }
     
     public static T Get<T>() where T : IManager
