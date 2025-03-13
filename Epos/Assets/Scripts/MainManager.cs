@@ -13,6 +13,8 @@ public class MainManager : Singleton<MainManager>
     private float timeScale = 1f;
     
     private List<IGeneric> _iMgrGenericList = null;
+
+    public DayNightCycle _dayNightCycle = null;
     
     protected override void Initialize()
     {
@@ -30,6 +32,8 @@ public class MainManager : Singleton<MainManager>
         
         _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         _iMgrGenericList?.Add(new BattleManager().Initialize());
+
+        _dayNightCycle = FindObjectOfType<DayNightCycle>();
     }
     
     public static T Get<T>() where T : IManager
@@ -58,6 +62,7 @@ public class MainManager : Singleton<MainManager>
 #if UNITY_EDITOR
         Time.timeScale = timeScale;
 #endif
+        _dayNightCycle?.ChainUpdate();
         
         if (_iMgrGenericList != null)
         {
