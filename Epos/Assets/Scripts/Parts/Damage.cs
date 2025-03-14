@@ -6,6 +6,8 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
+using TMPro;
+
 using GameSystem;
 using UI;
 
@@ -22,14 +24,16 @@ namespace Parts
         public override void Initialize(Data data)
         {
             base.Initialize(data);
-            
-            
         }
-        
+
+        [SerializeField] private TextMeshProUGUI damageTMP = null;
+
         public override void Activate(Data data)
         {
             base.Activate(data);
 
+            damageTMP?.SetText($"{data.Damage}");
+            
             MoveAsync().Forget();
         }
 
