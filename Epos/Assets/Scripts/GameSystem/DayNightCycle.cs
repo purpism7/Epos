@@ -19,8 +19,12 @@ namespace GameSystem
         private Color _nightColor = new Color(30 / 255f, 130 / 255f, 255 / 255f);
         
         private float _timeOfDay = 1f; // 현재 시간 (0 - 1 범위로, 0은 낮 시작, 1은 다시 밤 시작)
-
-        public bool IsNight { get { return _timeOfDay >= 0.5f; } }
+private int _hours 0;
+        
+        public bool IsNight
+        {
+            get { return _hours >= 18 && _hours < 24 || _hours >= 0 && _hours < 6; }
+        }
 
         public void ChainUpdate()
         {
@@ -76,7 +80,7 @@ namespace GameSystem
             string dayNight = IsNight ? "Night" : "Day";
 
             float time = _timeOfDay * 24f;
-            int hours = Mathf.FloorToInt(time);
+            _hours = Mathf.FloorToInt(time);
             int minutes = (int)((time - hours) * 60);
             int seconds = (int)(((time - hours) * 60 - minutes) * 60f);
             timeTMP?.SetText( $"{dayNight} {hours}:{minutes}:{seconds}");
