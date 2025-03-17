@@ -187,9 +187,7 @@ namespace Creature.Action
                 return;
             
             if (data == null)
-            {
                 data = new V();
-            }
             
             act.SetData(data);
             var animationKey = _iActor?.AnimationKey(act);

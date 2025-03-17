@@ -63,13 +63,14 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
             
-            if (_data.IsJumpMove)
+            if (_iActor?.NavMeshAgent == null)
             {
                 Vector2 targetPos = _data.TargetPos;
                 var moveSpeed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
 
                 iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
             }
+            // else
             
             Vector2 direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
@@ -89,7 +90,6 @@ namespace Creature.Action
                 iActorTm.localScale = localScale;
                 
                 _data.FinishAction?.Invoke();
-                
                 _endAction?.Invoke();
             }
         }
