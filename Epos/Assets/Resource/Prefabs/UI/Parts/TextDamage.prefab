@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 7946180968541680286}
   - component: {fileID: 9198603828502850193}
   m_Layer: 5
-  m_Name: Damage
+  m_Name: TextDamage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 150}
+  m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9198603828502850193
 MonoBehaviour:

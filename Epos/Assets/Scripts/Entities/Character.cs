@@ -9,7 +9,7 @@ namespace Entities
 {
     public interface ICharacterManager : IManager
     {
-        T Create<T>(int id) where T : Creature.Character;
+        T Create<T>(int id, Transform rootTm) where T : Creature.Character;
     }
 
     public class Character : ICharacterManager
@@ -30,7 +30,7 @@ namespace Entities
         {
             
         }
-        T ICharacterManager.Create<T>(int id)
+        T ICharacterManager.Create<T>(int id, Transform rootTm)
         {
             if (_cachedDic == null)
             {
@@ -43,6 +43,7 @@ namespace Entities
             {
                 character = new CharacterCreator<T>()
                     .SetId(id)
+                    .SetRoot(rootTm)
                     .Create;
             }
 

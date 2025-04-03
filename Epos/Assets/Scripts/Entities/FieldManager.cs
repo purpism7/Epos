@@ -90,7 +90,7 @@ namespace Entities
 
         private void CreateFieldHero()
         {
-            _fieldHero = MainManager.Get<ICharacterManager>()?.Create<Hero>(10001);
+            _fieldHero = MainManager.Get<ICharacterManager>()?.Create<Hero>(10001, field.transform);
             if (_fieldHero == null)
                 return;
             

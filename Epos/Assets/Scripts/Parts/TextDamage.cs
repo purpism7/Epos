@@ -13,12 +13,12 @@ using UI;
 
 namespace Parts
 {
-    public class Damage : PartWorld<Damage.Data>
+    public class TextDamage : PartWorld<TextDamage.Data>
     {
         public class Data : PartWorld<Data>.Data
         {
             // public Transform TargetTm = null;
-            public int Damage = 0;
+            public float Damage = 0;
         }
 
         public override void Initialize(Data data)

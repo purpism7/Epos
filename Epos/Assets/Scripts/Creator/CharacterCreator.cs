@@ -12,10 +12,17 @@ namespace Creator
     public class CharacterCreator<T> where T : Creature.Character
     {
         private int _id = 0;
+        private Transform _roootTm = null;
 
         public CharacterCreator<T> SetId(int id)
         {
             _id = id;
+            return this;
+        }
+
+        public CharacterCreator<T> SetRoot(Transform rootTm)
+        {
+            _roootTm = rootTm;
             return this;
         }
         
@@ -24,7 +31,7 @@ namespace Creator
             get
             {
                 GameObject loadGameObj = AddressableManager.Instance.LoadAssetByNameAsync<GameObject>(_id.ToString());
-                var gameObj = GameObject.Instantiate(loadGameObj);
+                var gameObj = GameObject.Instantiate(loadGameObj, _roootTm);
                 if (!gameObj)
                     return null;
                 

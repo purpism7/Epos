@@ -77,7 +77,7 @@ namespace Creature
         {
             SetAdded(eType, value);
             
-            _iActor?.EventHandler?.Invoke(_iActor);
+            // _iActor?.EventHandler?.Invoke(_iActor);
         }
 
         float IStat.Get(EType eType)

@@ -33,7 +33,7 @@ namespace UI.Parts
         {
             base.Initialize(data);
             
-            data?.ICombatant?.Add(OnChanged);
+            // data?.ICombatant?.Add(OnChanged);
             
             SetCombatantImg();
         }
@@ -42,7 +42,7 @@ namespace UI.Parts
         {
             base.Deactivate();
             
-            _data.ICombatant?.Remove(OnChanged);
+            // _data.ICombatant?.Remove(OnChanged);
         }
 
         private void SetCombatantImg()
@@ -66,23 +66,26 @@ namespace UI.Parts
             if (hpProgress == null)
                 return;
 
-            hpProgress.fillAmount = iStat.Get(Stat.EType.Hp) / iStat.Get(Stat.EType.MaxHp);
+            float hp = iStat.Get(Stat.EType.Hp);
+            float maxHp = iStat.Get(Stat.EType.MaxHp);
+            
+            hpProgress.fillAmount = hp / maxHp;
         }
 
-        private void OnChanged(IActor iActor)
+        private void OnChanged(DamageEventData damageEventData)
         {
-            SetHpProgress(iActor?.IStat);
-
-            var data = new Damage.Data
-            {
-                TargetTm = _data?.ICombatant?.Transform,
-                Damage = iActor != null ? (int)iActor.IStat.Get(Stat.EType.Attack) : 0,
-            };
-            
-            UICreator<Damage, Damage.Data>.Get?
-                .SetData(data)
-                .Create()?
-                .Activate(data);
+            // var data = new TextDamage.Data
+            // {
+            //     TargetTm = _data?.ICombatant?.Transform,
+            //     Damage = iActor != null ? iActor.IStat.Get(Stat.EType.Attack) : 0,
+            // };
+            //
+            // UICreator<TextDamage, TextDamage.Data>.Get?
+            //     .SetData(data)
+            //     .Create()?
+            //     .Activate(data);
+            //
+            // SetHpProgress(iActor?.IStat);
         }
     }
 }

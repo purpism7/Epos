@@ -51,7 +51,7 @@ MonoBehaviour:
   rootTm: {fileID: 7668903545576191951}
   actionSpeed: 3
   moveSpeed: 20
-  attack: 1
+  attack: 2
   attackRange: 3
   maxHp: 50.4
   activePoint: 1
@@ -169,7 +169,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
+  m_StaticShadowCaster: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1

@@ -12,7 +12,7 @@ using Creature.Action;
 
 namespace Creature
 {
-    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
+    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant, IEventHandler<EventData>
     {
         #region Inspector
 
@@ -44,8 +44,11 @@ namespace Creature
 
         public Action.IActController IActCtr { get; protected set; } = null;
         public ISkillController ISkillCtr { get; protected set; } = null;
-        
-        public System.Action<IActor> EventHandler { get; private set; } = null;
+
+        // public System.Action<T> EventHandler<T>() where T : GameSystem.EventData
+        // {
+        //     
+        // }
 
         #region ICombatant
 
@@ -147,7 +150,7 @@ namespace Creature
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
 
-            EventHandler = null;
+            // EventHandler = null;
 
             Extensions.SetActive(rootTm, false);
         }
@@ -186,16 +189,16 @@ namespace Creature
         }
 
         #region IActor
-        void IActor.Add(System.Action<IActor> eventHandler)
-        {
-            EventHandler += eventHandler;
-        }
-        
-        void IActor.Remove(System.Action<IActor> eventHandler)
-        {
-            EventHandler -= eventHandler;
-        }
-        
+        // void IActor.Add(System.Action<IActor> eventHandler)
+        // {
+        //     EventHandler += eventHandler;
+        // }
+        //
+        // void IActor.Remove(System.Action<IActor> eventHandler)
+        // {
+        //     EventHandler -= eventHandler;
+        // }
+        //
         #endregion
 
         #region ICombatant
@@ -210,6 +213,14 @@ namespace Creature
             EFormation = eFormation;
         }
 
+        #endregion
+        
+        #region IEventHandler
+
+        void IEventHandler<EventData>.Add()
+        {
+            
+        }
         #endregion
 
         #region Temp Stat
