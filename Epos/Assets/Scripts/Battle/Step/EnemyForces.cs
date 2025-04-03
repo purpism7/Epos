@@ -4,10 +4,9 @@ using UnityEngine;
 
 namespace Battle.Step
 {
-    public class AllyForces : Forces
+    public class EnemyParty : Party
     {
-       
+        
     }
 }
-
 

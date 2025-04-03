@@ -12,7 +12,7 @@ namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        void BeginFieldBattle(Parts.Forces leftForces, Parts.Forces rightForces, Transform pointTm);
+        void BeginFieldBattle(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -80,12 +80,12 @@ namespace GameSystem
         /// <param name="leftForces">Ally</param>
         /// <param name="rightForces">Enemy</param>
         /// <param name="pointTm">For Zoom In Camera</param>
-        void IBattleManager.BeginFieldBattle(Parts.Forces leftForces, Parts.Forces rightForces, Transform pointTm)
+        void IBattleManager.BeginFieldBattle(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
         {
-            if (leftForces?.CharacterList == null)
+            if (left?.CharacterList == null)
                 return;
             
-            if (rightForces?.CharacterList == null)
+            if (right?.CharacterList == null)
                 return;
             
             var battleModeData = new TurnBased.Data
@@ -96,8 +96,8 @@ namespace GameSystem
                 EType = TurnBased.EType.ActionSpeed,
             };
             
-            battleModeData.AllyICombatantList?.AddRange(leftForces.CharacterList);
-            battleModeData.EnemyICombatantList?.AddRange(rightForces.CharacterList);
+            battleModeData.AllyICombatantList?.AddRange(left.CharacterList);
+            battleModeData.EnemyICombatantList?.AddRange(right.CharacterList);
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(battleModeData)
@@ -116,15 +116,15 @@ namespace GameSystem
                     },
                 },
 
-                LeftForcesData = new Battle.Step.Forces.FieldData
+                LeftPartyData = new Battle.Step.Party.FieldData
                 {
-                    Forces = leftForces,
+                    PartyLocation = left,
                     
                 },
 
-                RightForcesData = new Battle.Step.Forces.FieldData
+                RightPartyData = new Battle.Step.Party.FieldData
                 {
-                    Forces = rightForces,
+                    PartyLocation = right,
                 },
             };
             

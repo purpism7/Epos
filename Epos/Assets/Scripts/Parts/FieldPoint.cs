@@ -20,9 +20,9 @@ namespace Parts
         private Transform pointTm = null;
 
         [SerializeField] 
-        private Forces leftForces = null;
+        private PartyLocation leftPartyLocation = null;
         [SerializeField] 
-        private Forces rightForces = null;
+        private PartyLocation rightPartyLocation = null;
         
         // 임시
         [SerializeField]
@@ -62,8 +62,8 @@ namespace Parts
             
             monster?.Initialize();
             
-            leftForces?.Deactivate();
-            rightForces?.Deactivate();
+            leftPartyLocation?.Deactivate();
+            rightPartyLocation?.Deactivate();
         }
         
         public override void Activate()
@@ -118,12 +118,13 @@ namespace Parts
             if (iBattleMgr == null)
                 return;
 
-            iBattleMgr.BeginFieldBattle(leftForces, rightForces, pointTm);
+            iBattleMgr.BeginFieldBattle(leftPartyLocation, rightPartyLocation, pointTm);
         }
 
         private async UniTask RandomActionAsync()
         {
-            await UniTask.WaitForSeconds(UnityEngine.Random.Range(Range, Range * 2f));
+            var delaySec = UnityEngine.Random.Range(Range, Range * 2f);
+            await UniTask.Delay(TimeSpan.FromSeconds(delaySec));
             
             if (!IsActivate)
                 return;

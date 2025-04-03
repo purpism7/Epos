@@ -1,14 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Creator;
+using UnityEngine;
+
 using Cysharp.Threading.Tasks;
 
 using Entities;
 using GameSystem;
 using UI.Panels;
 using UI.Popups;
-using UnityEngine;
+using Creator;
+
 
 namespace Battle.Step
 {
@@ -16,8 +18,8 @@ namespace Battle.Step
     {
         public class Data : BaseData
         {
-            public Parts.Forces LeftForces = null;
-            public Parts.Forces RightForces = null;
+            public Parts.PartyLocation Left = null;
+            public Parts.PartyLocation Right = null;
         }
         
         public override void Begin()
@@ -29,8 +31,8 @@ namespace Battle.Step
         {
             var battleForcesData = new BattleForces.Data
             {
-                LeftForces = _data?.LeftForces,
-                RightForces = _data?.RightForces,
+                Left = _data?.Left,
+                Right = _data?.Right,
             };
             
             UICreator<BattleForces, BattleForces.Data>.Get?

@@ -13,8 +13,8 @@ namespace UI.Panels
     {
         public class Data : UI.Component.Data
         {
-            public Forces LeftForces = null;
-            public Forces RightForces = null;
+            public PartyLocation Left = null;
+            public PartyLocation Right = null;
         }
 
         [SerializeField] 
@@ -35,7 +35,7 @@ namespace UI.Panels
         {
             base.Initialize(data);
 
-            var leftForces = _data?.LeftForces?.CharacterList;
+            var leftForces = _data?.Left?.CharacterList;
             if (leftForces != null)
             {
                 // BattleCombatant battleCombatant = null;
@@ -62,7 +62,7 @@ namespace UI.Panels
                 }
             }
             
-            var rightForces = _data?.RightForces?.CharacterList;
+            var rightForces = _data?.Right?.CharacterList;
             if (rightForces != null)
             {
                 for (int i = 0; i < rightForces.Count; ++i)

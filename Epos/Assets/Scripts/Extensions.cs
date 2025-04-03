@@ -38,24 +38,24 @@ public static class Extensions
         component.gameObject.SetActive(active);
     }
         
-    public static List<T> AddList<T, V>(this V[] arrays) where T : class
-    {
-        if (arrays == null)
-            return null;
-            
-        var list = new List<T>();
-        list.Clear();
-            
-        foreach (V t in arrays)
-        {
-            if(t == null)
-                continue;
-                
-            list.Add(t as T);
-        }
-
-        return list;
-    }
+    // public static List<T> AddList<T, V>(this V[] arrays) where T : class
+    // {
+    //     if (arrays == null)
+    //         return null;
+    //         
+    //     var list = new List<T>();
+    //     list.Clear();
+    //         
+    //     foreach (V t in arrays)
+    //     {
+    //         if(t == null)
+    //             continue;
+    //             
+    //         list.Add(t as T);
+    //     }
+    //
+    //     return list;
+    // }
 
     public static bool IsNullOrEmpty<T>(this List<T> list)
     {
@@ -63,6 +63,17 @@ public static class Extensions
             return true;
 
         if (list.Count <= 0)
+            return true;
+
+        return false;
+    }
+    
+    public static bool IsNullOrEmpty<T>(this T[] arrays)
+    {
+        if (arrays == null)
+            return true;
+
+        if (arrays.Length <= 0)
             return true;
 
         return false;

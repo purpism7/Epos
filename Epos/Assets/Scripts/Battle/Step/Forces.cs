@@ -6,11 +6,11 @@ using Cysharp.Threading.Tasks;
 
 namespace Battle.Step
 {
-    public abstract class Forces : BattleStep<Forces.FieldData>
+    public abstract class Party : BattleStep<Party.FieldData>
     {
         public class FieldData : BaseData
         {
-            public Parts.Forces Forces = null;
+            public Parts.PartyLocation PartyLocation = null;
             public bool BattleStart { get; private set; } = true;
 
             public FieldData SetBattleState(bool battleStart)
@@ -32,9 +32,9 @@ namespace Battle.Step
                 return;
             
             if(_data.BattleStart)
-                _data.Forces?.Activate();
+                _data.PartyLocation?.Activate();
             else 
-                _data.Forces?.Deactivate();
+                _data.PartyLocation?.Deactivate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             

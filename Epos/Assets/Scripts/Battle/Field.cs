@@ -15,8 +15,8 @@ namespace Battle
         public class Data : BaseData
         {
             public Preprocessing.FieldData PreprocessingData = null;
-            public Forces.FieldData LeftForcesData = null;
-            public Forces.FieldData RightForcesData = null;
+            public Party.FieldData LeftPartyData = null;
+            public Party.FieldData RightPartyData = null;
         }
         
         public override void Initialize(Data data)
@@ -24,13 +24,13 @@ namespace Battle
             base.Initialize(data);
             
             AddStep<Step.Preprocessing>(_data.PreprocessingData);
-            AddStep<Step.EnemyForces>(_data.RightForcesData);
-            AddStep<Step.AllyForces>(_data.LeftForcesData);
+            AddStep<Step.EnemyParty>(_data.RightPartyData);
+            AddStep<Step.AllyParty>(_data.LeftPartyData);
             AddStep<Step.BattleStart>(
                 new BattleStart.Data
                 {
-                    LeftForces = _data?.LeftForcesData?.Forces,
-                    RightForces = _data?.RightForcesData?.Forces,
+                    Left = _data?.LeftPartyData?.PartyLocation,
+                    Right = _data?.RightPartyData?.PartyLocation,
                 }, isLast: true);
         }
 
@@ -39,8 +39,8 @@ namespace Battle
             base.End();
             
             AddStep<BattleResult>();
-            AddStep<Step.EnemyForces>(_data?.RightForcesData?.SetBattleState(false));
-            AddStep<Step.AllyForces>(_data?.LeftForcesData?.SetBattleState(false));
+            AddStep<Step.EnemyParty>(_data?.RightPartyData?.SetBattleState(false));
+            AddStep<Step.AllyParty>(_data?.LeftPartyData?.SetBattleState(false));
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {
