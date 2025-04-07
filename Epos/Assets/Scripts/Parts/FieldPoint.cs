@@ -42,7 +42,7 @@ namespace Parts
 
         Collider2D[] _colliders = new Collider2D[5];
 
-        public Transform PointTm { get { return pointTm; } }
+        // public Transform PointTm { get { return pointTm; } }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
@@ -62,7 +62,7 @@ namespace Parts
             
             monster?.Initialize();
             
-            leftPartyLocation?.Deactivate();
+            // leftPartyLocation?.Deactivate();
             rightPartyLocation?.Deactivate();
         }
         
@@ -141,7 +141,8 @@ namespace Parts
             float randomY = UnityEngine.Random.Range(-value, value);
             
             var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
-            monster.IActCtr?.MoveToTarget(targetPos,
+            monster.IActCtr?.MoveToTarget(monster.IStat.Get(Stat.EType.MoveSpeed), 
+                targetPos,
                 () =>
                 {
                     RandomActionAsync().Forget();

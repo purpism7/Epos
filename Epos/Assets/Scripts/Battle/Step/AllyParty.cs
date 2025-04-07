@@ -6,7 +6,10 @@ namespace Battle.Step
 {
     public class AllyParty : Party
     {
-       
+        public override void Begin()
+        {
+            base.Begin();
+        }
     }
 }
 

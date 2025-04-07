@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -93,28 +95,58 @@ namespace Battle.Mode
                     // _priorityICombatantList?.AddRange(_data.EnemyICombatantList);
 
                     // 임시로 initialize 진행. 차후 덱 편성 후 캐릭터 생성 시 진행 예정.
-                    foreach (var iCombatant in _priorityICombatantList)
-                    {
-                        var character = iCombatant as Character;
-                        if(character == null)
-                            continue;
-                        
-                        character.Initialize();
-                        character.Activate();
-                    }
+                    // foreach (var iCombatant in _priorityICombatantList)
+                    // {
+                    //     var character = iCombatant as Character;
+                    //     if(character == null)
+                    //         continue;
+                    //     
+                    //     character.Initialize();
+                    //     character.Activate();
+                    // }
                     
                     _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
      
                     break;
                 }
             }
-            
-            StartTurnAsync().Forget();
+
+            AllyAppearanceAsync().Forget();
         }
 
         public override void ChainUpdate()
         {
             _iActCtr?.ChainUpdate();
+        }
+
+        private async UniTask AllyAppearanceAsync()
+        {
+            var allyICombatantList = _data?.AllyICombatantList;
+            if (allyICombatantList.IsNullOrEmpty())
+                return;
+            
+            for (int i = 0; i < allyICombatantList.Count; ++i)
+            {
+                var iCombatant = allyICombatantList[i];
+                if(iCombatant == null)
+                    continue;
+
+                var originPos = iCombatant.Transform.position;
+                originPos.x += 30f;
+                
+                iCombatant.IActCtr?.MoveToTarget(7f, originPos)?.Execute();
+
+                await UniTask.WaitWhile(
+                    () =>
+                    {
+                        (iCombatant as Hero)?.ChainUpdate();
+                        return iCombatant.IActCtr.InAction;
+                    });
+            }
+
+            await UniTask.Yield();
+            
+            StartTurnAsync().Forget();
         }
         
         /// <summary>
@@ -262,7 +294,7 @@ namespace Battle.Mode
                         continue;
                     
                     var directionForArriving = iCombatant.ETeam == Type.ETeam.Ally ? -1 : 1;
-                    iCombatant.IActCtr?.MoveToTarget(direction: directionForArriving, isJumpMove: true)?.Execute();
+                    iCombatant.IActCtr?.MoveToTarget(iCombatant.IStat.Get(Stat.EType.MoveSpeed), direction: directionForArriving, isJumpMove: true)?.Execute();
                     
                     SetSortingOrder(iCombatant, 0);
                 }
@@ -373,9 +405,7 @@ namespace Battle.Mode
 
             var target = targetData.Target;
             if (targetData.ChangeTarget != null)
-            {
                 skillRange += 2f;
-            }
             
             var targetPos = target.Transform.position;
             var direction = targetPos.x - attacker.Transform.position.x;
@@ -387,7 +417,7 @@ namespace Battle.Mode
             SetSortingOrder(attacker, 1);
 
             var directionForArriving = attacker.ETeam == Type.ETeam.Ally ? 1 : -1;
-            attacker.IActCtr?.MoveToTarget(targetPos, direction: directionForArriving, isJumpMove: true);
+            attacker.IActCtr?.MoveToTarget(attacker.IStat.Get(Stat.EType.MoveSpeed), targetPos, direction: directionForArriving, isJumpMove: true);
         }
 
         private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)

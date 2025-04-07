@@ -55,7 +55,7 @@ namespace Creature
         public Type.ETeam ETeam { get; private set; } = Type.ETeam.None;
         public Type.EFormation EFormation { get; private set; } = Type.EFormation.None;
 
-        public int Position
+        public int PartyPosition
         {
             get { return position; }
         }
@@ -213,6 +213,10 @@ namespace Creature
             EFormation = eFormation;
         }
 
+        void ICombatant.SetPosition(Vector3 pos)
+        {
+            transform.position = pos;
+        }
         #endregion
         
         #region IEventHandler

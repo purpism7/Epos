@@ -9,12 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a49a887a44f4add934e193cc41df15, type: 3}
-  m_Name: Party_1
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: Monster_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  Id: 1
-  PositionInfos:
-  - Position: 1
-    CharacterId: 10001
-  - Position: 3
-    CharacterId: 10002
+  m_Group: {fileID: 11400000, guid: 39af458f9ef9b40048aa43fb6fdbdbf1, type: 2}
+  m_StaticContent: 0

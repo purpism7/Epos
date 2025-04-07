@@ -8,6 +8,7 @@ namespace Creature.Action
     {
         public class Data : BaseData
         {
+            public float MoveSpeed = 1f;
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
@@ -30,7 +31,7 @@ namespace Creature.Action
             if (_iActor?.NavMeshAgent != null &&
                 !_data.IsJumpMove)
             {
-                _iActor.NavMeshAgent.speed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
+                _iActor.NavMeshAgent.speed = _data.MoveSpeed;
                 _iActor?.NavMeshAgent?.SetDestination(_data.TargetPos);
             }
 
@@ -66,7 +67,7 @@ namespace Creature.Action
             if (_iActor?.NavMeshAgent == null)
             {
                 Vector2 targetPos = _data.TargetPos;
-                var moveSpeed = _iActor.IStat.Get(Stat.EType.MoveSpeed);
+                var moveSpeed = _data.MoveSpeed;
 
                 iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
             }

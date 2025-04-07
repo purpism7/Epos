@@ -7,6 +7,8 @@ namespace GameSystem
 {
     public class Grid : MonoBehaviour
     {
+        private const float CellSize = 8f;
+        
         [SerializeField] 
         private int row = 0; // 행
         [SerializeField] 
@@ -18,13 +20,18 @@ namespace GameSystem
         [SerializeField] 
         private GameObject cellGameObj = null;
 
-#if UNITY_EDITOR
-        public void RePosition()
-        {
-            var childTms = GetComponentsInChildren<Transform>(true);
-            if (childTms.IsNullOrEmpty())
-                return;
+        private List<Transform> _cellTmList = null;
 
+
+        public void Initialize()
+        {
+            if (_cellTmList == null)
+            {
+                _cellTmList = new();
+                _cellTmList?.Clear();
+            }
+            
+            var childTms = GetComponentsInChildren<Transform>(true);
             var resChildTmList = new List<Transform>();
             resChildTmList.Clear();
             
@@ -38,17 +45,46 @@ namespace GameSystem
                     
                 resChildTmList.Add(childTm);
             }
+            
+            _cellTmList?.AddRange(resChildTmList);
+        }
+        
+#if UNITY_EDITOR
+        public void RePosition()
+        {
+            // var childTms = GetComponentsInChildren<Transform>(true);
+            if (_cellTmList.IsNullOrEmpty())
+                return;
+
+            // if (_cellTmList == null)
+            //     _cellTmList = new();
+            
+            // _cellTmList?.Clear();
+
+            // var resChildTmList = new List<Transform>();
+            // resChildTmList.Clear();
+            //
+            // foreach (var childTm in _cellTmList)
+            // {
+            //     if(!childTm || childTm.parent != transform)
+            //         continue;
+            //     
+            //     if(childTm == transform)
+            //         continue;
+            //         
+            //     resChildTmList.Add(childTm);
+            // }
 
             int index = 0;
             for (int i = 0; i < row; ++i)
             {
                 for (int j = 0; j < column; ++j)
                 {
-                    if(resChildTmList.Count <= index)
+                    if(_cellTmList.Count <= index)
                         continue;
 
-                    SetCellPosition(resChildTmList[index], i, j);
-                    resChildTmList[index].name = $"[{i},{j}]";
+                    SetCellPosition(_cellTmList[index], i, j);
+                    _cellTmList[index].name = $"[{i},{j}]-{index}";
                     
                     ++index;
                 }
@@ -57,6 +93,13 @@ namespace GameSystem
         
         public void Generate()
         {
+            if (_cellTmList == null)
+                _cellTmList = new();
+            
+            _cellTmList?.Clear();
+            
+            transform.RemoveAllChild();
+            
             for (int i = 0; i < row; ++i)
             {
                 for (int j = 0; j < column; ++j)
@@ -66,9 +109,15 @@ namespace GameSystem
                        !cell.transform)
                         continue;
 
+                    var boxCollider = cell.GetComponent<BoxCollider>();
+                    if (boxCollider != null)
+                        boxCollider.size = Vector3.one * CellSize;
+
                     SetCellPosition(cell.transform, i, j);
                    
-                    cell.name = $"[{j},{i}]";
+                    cell.name = $"[{j},{i}]-{_cellTmList?.Count}";
+                    
+                    _cellTmList?.Add(cell.transform);
                 }
             }
         }
@@ -91,12 +140,18 @@ namespace GameSystem
 
         private float GetCellPos(int index)
         {
-            float cellSize = 8f;
-            float halfCellSize = cellSize * 0.5f;
-                
-            return index * cellSize + halfCellSize;
+            float halfCellSize = CellSize * 0.5f;
+            return index * CellSize + halfCellSize;
         }
 #endif
+
+        public Transform GetCellTm(int index)
+        {
+            if (_cellTmList.IsNullOrEmpty())
+                return null;
+
+            return _cellTmList[index];
+        }
     }
 }
 

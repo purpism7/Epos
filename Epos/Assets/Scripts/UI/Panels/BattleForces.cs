@@ -35,52 +35,52 @@ namespace UI.Panels
         {
             base.Initialize(data);
 
-            var leftForces = _data?.Left?.CharacterList;
-            if (leftForces != null)
-            {
-                // BattleCombatant battleCombatant = null;
-                // GameObject battleCombatantGameObject = null;
-                for (int i = 0; i < leftForces.Count; ++i)
-                {
-                    if (leftForces[i] != null)
-                    {
-                         // UICreator<BattleCombatant, BattleCombatant.Data>()
-                             
-                         UICreator<BattleCombatant, BattleCombatant.Data>.Get?
-                             .SetData(new BattleCombatant.Data()
-                             {
-                                 ICombatant = leftForces[i],
-                             })
-                             .SetRoot(leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm)
-                             .Create()?.Activate();
-                    }
-                    // battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
-                    else
-                    {
-                        Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
-                    }
-                }
-            }
+            // var leftForces = _data?.Left?.CharacterList;
+            // if (leftForces != null)
+            // {
+            //     // BattleCombatant battleCombatant = null;
+            //     // GameObject battleCombatantGameObject = null;
+            //     for (int i = 0; i < leftForces.Count; ++i)
+            //     {
+            //         if (leftForces[i] != null)
+            //         {
+            //              // UICreator<BattleCombatant, BattleCombatant.Data>()
+            //                  
+            //              UICreator<BattleCombatant, BattleCombatant.Data>.Get?
+            //                  .SetData(new BattleCombatant.Data()
+            //                  {
+            //                      ICombatant = leftForces[i],
+            //                  })
+            //                  .SetRoot(leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm)
+            //                  .Create()?.Activate();
+            //         }
+            //         // battleCombatantGameObject = Instantiate(combatantGamaObj, leftForces[i].Position <= 3 ? leftFrontRootRectTm : leftRearRootRectTm);
+            //         else
+            //         {
+            //             Instantiate(emptyGamaObj, i <= 2 ? leftFrontRootRectTm : leftRearRootRectTm);
+            //         }
+            //     }
+            // }
             
-            var rightForces = _data?.Right?.CharacterList;
-            if (rightForces != null)
-            {
-                for (int i = 0; i < rightForces.Count; ++i)
-                {
-                    if (rightForces[i] != null)
-                    {
-                        UICreator<BattleCombatant, BattleCombatant.Data>.Get?
-                            .SetData(new BattleCombatant.Data()
-                            {
-                                ICombatant = rightForces[i],
-                            })
-                            .SetRoot(rightForces[i].Position <= 3 ? rightFrontRootRectTm : rightRearRootRectTm)
-                            .Create()?.Activate();
-                    }
-                    else
-                        Instantiate(emptyGamaObj, i <= 2 ? rightFrontRootRectTm : rightRearRootRectTm);
-                }
-            }
+            // var rightForces = _data?.Right?.CharacterList;
+            // if (rightForces != null)
+            // {
+            //     for (int i = 0; i < rightForces.Count; ++i)
+            //     {
+            //         if (rightForces[i] != null)
+            //         {
+            //             UICreator<BattleCombatant, BattleCombatant.Data>.Get?
+            //                 .SetData(new BattleCombatant.Data()
+            //                 {
+            //                     ICombatant = rightForces[i],
+            //                 })
+            //                 .SetRoot(rightForces[i].Position <= 3 ? rightFrontRootRectTm : rightRearRootRectTm)
+            //                 .Create()?.Activate();
+            //         }
+            //         else
+            //             Instantiate(emptyGamaObj, i <= 2 ? rightFrontRootRectTm : rightRearRootRectTm);
+            //     }
+            // }
         }
 
         public override void Deactivate()

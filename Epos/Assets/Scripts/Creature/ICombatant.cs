@@ -13,6 +13,7 @@ namespace Creature
         void SetEFormation(Type.EFormation eFormation);
         public Type.EFormation EFormation { get; }
         
-        int Position { get; }
+        int PartyPosition { get; }
+        void SetPosition(Vector3 position);
     }
 }

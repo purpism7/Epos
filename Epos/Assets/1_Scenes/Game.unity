@@ -601,11 +601,23 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5839878923843824579, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: characterIds.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5839878923843824579, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: 'characterIds.Array.data[0]'
+      value: 90001
+      objectReference: {fileID: 0}
     - target: {fileID: 5944215453957855101, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5957323279393055368, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6112850716245119509, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
@@ -623,7 +635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6621760584776078033, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7411865415780246552, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Creature;
@@ -11,42 +12,32 @@ namespace Parts
     {
         // 임시. 캐릭터 데이터 추가 후 생성 방식으로 변경.
         [SerializeField]
-        private Character[] characters = null;
+        private int[] characterIds = null;
 
-        public List<Character> CharacterList { get; private set; } = new List<Character>() { null, null, null, null, null, null };
+        [SerializeField] private Transform characterRootTm = null;
+        [SerializeField] private GameSystem.Grid grid = null;
 
-        private void Awake()
-        {
-            // var height = 2*Camera.main.orthographicSize;
-            // var width = height*Camera.main.aspect;
-            // Debug.Log(height);
-            // Debug.Log(width);
-            
-            if (characters != null)
-            {
-                if (CharacterList == null)
-                {
-                    CharacterList = new();
-                    CharacterList.Clear();
-                }
-
-                for (int i = 0; i < characters.Length; ++i)
-                {
-                    var character = characters[i];
-                    if (character.Position > 0)
-                    {
-                        if (CharacterList?.Count > character.Position - 1)
-                            CharacterList[character.Position - 1] = character;
-                    }
-                }
-            }
-        }
-
+        public List<int> CharacterList => characterIds?.ToList(); 
+        
+        public Transform CharacterRootTm => characterRootTm;
+        
         public override void Initialize()
         {
             base.Initialize();
+            
+            grid?.Initialize();
+        }
 
-           
+        public Vector3 GetPartyPosition(int index)
+        {
+            if(grid == null)
+                return Vector3.zero;
+
+            var cellTm = grid.GetCellTm(index);
+            if(!cellTm)
+                return Vector3.zero;
+            
+            return cellTm.position;
         }
     }
 }

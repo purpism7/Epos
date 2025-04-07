@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Battle;
 using Battle.Mode;
 using Battle.Step;
@@ -82,22 +84,35 @@ namespace GameSystem
         /// <param name="pointTm">For Zoom In Camera</param>
         void IBattleManager.BeginFieldBattle(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
         {
-            if (left?.CharacterList == null)
+            if (left == null)
                 return;
-            
-            if (right?.CharacterList == null)
+
+            if (right == null)
+                return;
+
+            left.Initialize();
+            right.Initialize();
+
+            BeginFieldBattleAsync(left, right, pointTm).Forget();
+        }
+
+        private async UniTask BeginFieldBattleAsync(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
+        {
+            var partyInfo = MainManager.Get<IParty>().GetParty(1)?.PositionInfos;
+            if (partyInfo.IsNullOrEmpty())
                 return;
             
             var battleModeData = new TurnBased.Data
             {
-                // AllyICombatantList = leftForces?.CharacterList,
-                // EnemyICombatantList = rightForces?.characters?.AddList<ICombatant, Creature.Character>(),
-
                 EType = TurnBased.EType.ActionSpeed,
             };
+
+            var enemyICombatantList = await SetEnemyICombatantsAsync(right);
             
-            battleModeData.AllyICombatantList?.AddRange(left.CharacterList);
-            battleModeData.EnemyICombatantList?.AddRange(right.CharacterList);
+            var allyICombatantList = await SetAllyICombatantsAsync(left);
+            battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
+            
+           
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(battleModeData)
@@ -129,6 +144,64 @@ namespace GameSystem
             };
             
             Begin<Field, Battle.Field.Data>(fieldData);
+        }
+
+        private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Parts.PartyLocation left)
+        {
+            var partyInfo = MainManager.Get<IParty>().GetParty(1)?.PositionInfos;
+            if (partyInfo.IsNullOrEmpty())
+                return null;
+
+            List<ICombatant> iCombatantList = new();
+            iCombatantList.Clear();
+            
+            for (int i = 0; i < partyInfo.Length; ++i)
+            {
+                var info = partyInfo[i];
+                if(info == null)
+                    continue;
+                
+                var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, left.CharacterRootTm);
+                await UniTask.WaitUntil(() => hero != null);
+                hero?.Activate();
+                
+                var pos = left.GetPartyPosition(hero.PartyPosition);
+                pos.x -= 30f;
+                
+                ICombatant iCombatant = hero;
+                iCombatant.SetPosition(pos);
+                
+                iCombatantList.Add(iCombatant);
+            }
+
+            return iCombatantList;
+        }
+        
+        private async UniTask<List<ICombatant>> SetEnemyICombatantsAsync(Parts.PartyLocation right)
+        {
+            if (right.CharacterList.IsNullOrEmpty())
+                return null;
+
+            List<ICombatant> iCombatantList = new();
+            iCombatantList.Clear();
+            
+            for (int i = 0; i < right.CharacterList.Count; ++i)
+            {
+                var characterId = right.CharacterList[i];
+               
+                var monster = MainManager.Get<ICharacterManager>().Create<Monster>(characterId, right.CharacterRootTm);
+                await UniTask.WaitUntil(() => monster != null);
+                monster?.Activate();
+                
+                var pos = right.GetPartyPosition(monster.PartyPosition);
+                
+                ICombatant iCombatant = monster;
+                iCombatant.SetPosition(pos);
+                
+                iCombatantList.Add(iCombatant);
+            }
+
+            return iCombatantList;
         }
         #endregion
         
