@@ -163,6 +163,7 @@ namespace GameSystem
                 
                 var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, left.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
+                hero?.Initialize();
                 hero?.Activate();
                 
                 var pos = left.GetPartyPosition(hero.PartyPosition);
@@ -191,6 +192,7 @@ namespace GameSystem
                
                 var monster = MainManager.Get<ICharacterManager>().Create<Monster>(characterId, right.CharacterRootTm);
                 await UniTask.WaitUntil(() => monster != null);
+                monster?.Initialize();
                 monster?.Activate();
                 
                 var pos = right.GetPartyPosition(monster.PartyPosition);

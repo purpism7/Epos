@@ -125,12 +125,18 @@ namespace Battle.Mode
             if (allyICombatantList.IsNullOrEmpty())
                 return;
             
-            for (int i = 0; i < allyICombatantList.Count; ++i)
+            for (int i = 0; i < allyICombatantList?.Count; ++i)
             {
                 var iCombatant = allyICombatantList[i];
                 if(iCombatant == null)
                     continue;
 
+                var hero = iCombatant as Hero;
+                if(hero == null)
+                    continue;
+                
+                hero.Activate();
+                
                 var originPos = iCombatant.Transform.position;
                 originPos.x += 30f;
                 
@@ -139,13 +145,12 @@ namespace Battle.Mode
                 await UniTask.WaitWhile(
                     () =>
                     {
-                        (iCombatant as Hero)?.ChainUpdate();
+                        hero?.ChainUpdate();
                         return iCombatant.IActCtr.InAction;
                     });
             }
 
-            await UniTask.Yield();
-            
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             StartTurnAsync().Forget();
         }
         
@@ -183,7 +188,6 @@ namespace Battle.Mode
             SetTurn(_turn + 1);
             
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            
             CastingActiveSkillAsync().Forget();
         }
 
