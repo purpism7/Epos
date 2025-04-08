@@ -88,6 +88,7 @@ namespace Battle.Mode
                             continue;
                         
                         iCombatant.SetETeam(Type.ETeam.Enemy);
+                        iCombatant.IActCtr?.SetPosition(iCombatant.Transform.position);
                         _priorityICombatantList?.Add(iCombatant);
                     }
                     
@@ -134,20 +135,23 @@ namespace Battle.Mode
                 var hero = iCombatant as Hero;
                 if(hero == null)
                     continue;
-                
+     
                 hero.Activate();
                 
                 var originPos = iCombatant.Transform.position;
                 originPos.x += 30f;
                 
-                iCombatant.IActCtr?.MoveToTarget(7f, originPos)?.Execute();
+                iCombatant.IActCtr?.MoveToTarget(8f, originPos)?.Execute();
 
                 await UniTask.WaitWhile(
                     () =>
                     {
-                        hero?.ChainUpdate();
+                        hero.ChainUpdate();
                         return iCombatant.IActCtr.InAction;
                     });
+                
+                // 현재 위치 저장.
+                iCombatant.IActCtr?.SetPosition(iCombatant.Transform.position);
             }
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
@@ -215,10 +219,12 @@ namespace Battle.Mode
                 !_castingActiveSkillICombatantQueue.TryDequeue(out attacker))
                 return;
             
+            // 사용 가능 한 AcitveSkill 가져오기.
             var activeSkill = attacker?.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
             if (activeSkill == null)
                 return;
             
+            // ActiveSkill 로 TargetList 가져오기. 
             var targetList = attacker.GetTargetList(_priorityICombatantList, activeSkill);
             if (targetList != null)
             {
@@ -319,6 +325,7 @@ namespace Battle.Mode
             }
         }
 
+        // ActiveSkill 사용 전, 사용 가능한 PassiveSkill 가져오기.
         private async UniTask CastingPassiveSkillAsync(ICombatant attacker)
         {
             if (_priorityICombatantList == null)
@@ -390,6 +397,7 @@ namespace Battle.Mode
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
         }
 
+        // Target 에게 이동하여 ActiveSkill 사용하기.
         private void MoveToTarget(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
         {
             if (skill == null)
@@ -441,7 +449,6 @@ namespace Battle.Mode
                     continue;
 
                 var target = targetData.ChangeTarget != null ? targetData.ChangeTarget : targetData.Target;
-                
                 targetList.Add(target);
             }
             

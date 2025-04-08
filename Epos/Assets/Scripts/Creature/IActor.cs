@@ -16,7 +16,6 @@ namespace Creature
         IActController IActCtr { get; }
 
         string AnimationKey<T>(Act<T> act) where T : Act<T>.BaseData;
-        
         // void Add<T>(System.Action<T> eventHandler) where T : EventData;
         // void Remove<T>(System.Action<T> eventHandler);
         // System.Action<T> EventHandler<T>();

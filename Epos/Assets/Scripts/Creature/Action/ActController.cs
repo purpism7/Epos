@@ -18,6 +18,8 @@ namespace Creature.Action
         void Execute();
 
         bool InAction { get; }
+
+        void SetPosition(Vector3 position);
     }
     
     public class ActController : Controller, IActController
@@ -26,7 +28,7 @@ namespace Creature.Action
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
-        private Vector3 _originPos = Vector3.zero;
+        private Vector3 _currPosition = Vector3.zero;
 
         public bool InAction { get; private set; } = false;
 
@@ -61,12 +63,6 @@ namespace Creature.Action
         public override void Activate()
         {
             base.Activate();
-            
-            if (transform.parent)
-            {
-                _originPos = transform.parent.position;
-                _originPos.z = 0;
-            }
         }
 
         public override void Deactivate()
@@ -96,7 +92,7 @@ namespace Creature.Action
             if (!IsActivate)
                 return null;
 
-            var targetPos = _originPos;
+            var targetPos = _currPosition;
             if (pos != null)
                 targetPos = pos.Value;
             // else
@@ -229,6 +225,12 @@ namespace Creature.Action
             
             return act;
         }
+        
+        void IActController.SetPosition(Vector3 position)
+        {
+            _currPosition = position;
+            _currPosition.z = 0;
+        }
         #endregion
 
         private void Execute<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
@@ -238,9 +240,7 @@ namespace Creature.Action
                 return;
             
             if (data == null)
-            {
                 data = new V();
-            }
 
             data.SetAnimationKey(_iActor?.AnimationKey(act));
             

@@ -13,12 +13,15 @@ MonoBehaviour:
   m_Name: Hero
   m_EditorClassIdentifier: 
   m_GroupName: Hero
-  m_Data:
-    m_SerializedData: []
   m_GUID: 97a4a26d170f8409bb7792add8d444fc
   m_SerializeEntries:
-  - m_GUID: fcd6d2d8031df419da24329cbc1fae89
-    m_Address: 10001
+  - m_GUID: 0945c3d7f7e464636927970f23fd790f
+    m_Address: 10003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7bd9a6930f5bf4696b89e0215f9e30b9
+    m_Address: 10004
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -27,8 +30,8 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 0945c3d7f7e464636927970f23fd790f
-    m_Address: 10003
+  - m_GUID: fcd6d2d8031df419da24329cbc1fae89
+    m_Address: 10001
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

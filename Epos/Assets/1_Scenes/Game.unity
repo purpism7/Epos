@@ -605,10 +605,6 @@ PrefabInstance:
       propertyPath: characterIds.Array.size
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5839878923843824579, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
-      propertyPath: 'characterIds.Array.data[0]'
-      value: 90001
-      objectReference: {fileID: 0}
     - target: {fileID: 5944215453957855101, guid: b04b4aaa5921146c484d1e0ebb6437cc, type: 3}
       propertyPath: m_Mesh
       value: 

@@ -108,11 +108,11 @@ namespace GameSystem
             };
 
             var enemyICombatantList = await SetEnemyICombatantsAsync(right);
+            battleModeData.EnemyICombatantList?.AddRange(enemyICombatantList);
             
             var allyICombatantList = await SetAllyICombatantsAsync(left);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
             
-           
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(battleModeData)
@@ -166,11 +166,11 @@ namespace GameSystem
                 hero?.Initialize();
                 hero?.Activate();
                 
-                var pos = left.GetPartyPosition(hero.PartyPosition);
+                var pos = left.GetPartyPosition(info.Position);
                 pos.x -= 30f;
                 
                 ICombatant iCombatant = hero;
-                iCombatant.SetPosition(pos);
+                iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
             }

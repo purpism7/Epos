@@ -20,12 +20,5 @@ namespace Datas.ScriptableObjects
         }
         
         public PositionInfo[] PositionInfos = null;
-        // public Type.ESkillCategory ESkillCategory = Type.ESkillCategory.None;
-        // public int Point = 0;
-        //
-        // public Type.ESkillTarget ESkillTarget = Type.ESkillTarget.None;
-        // public float Range  = 0;
-        //
-        // public bool SameTeam = false;
     }
 }
