@@ -92,20 +92,6 @@ namespace Battle.Mode
                         _priorityICombatantList?.Add(iCombatant);
                     }
                     
-                    // _priorityICombatantList?.AddRange(_data.AllyICombatantList);
-                    // _priorityICombatantList?.AddRange(_data.EnemyICombatantList);
-
-                    // 임시로 initialize 진행. 차후 덱 편성 후 캐릭터 생성 시 진행 예정.
-                    // foreach (var iCombatant in _priorityICombatantList)
-                    // {
-                    //     var character = iCombatant as Character;
-                    //     if(character == null)
-                    //         continue;
-                    //     
-                    //     character.Initialize();
-                    //     character.Activate();
-                    // }
-                    
                     _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
      
                     break;
