@@ -1,0 +1,767 @@
+fileFormatVersion: 2
+guid: 2353bb7cd87bb6d43b7d84bce7eb7769
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 6181676952936330058
+    second: Battle_End_Win_01_0
+  - first:
+      213: 3372240333280094871
+    second: Battle_End_Win_01_1
+  - first:
+      213: 2527944402463787380
+    second: Battle_End_Win_01_2
+  - first:
+      213: -5288510405736522220
+    second: Battle_End_Win_01_3
+  - first:
+      213: -7228310342022995345
+    second: Battle_End_Win_01_4
+  - first:
+      213: 7976621461933108608
+    second: Battle_End_Win_01_5
+  - first:
+      213: -433078139033271293
+    second: Battle_End_Win_01_6
+  - first:
+      213: -3651198728735943213
+    second: Battle_End_Win_01_7
+  - first:
+      213: -3573111297243091130
+    second: Battle_End_Win_01_8
+  - first:
+      213: 4043248221554600906
+    second: Battle_End_Win_01_9
+  - first:
+      213: -1783139187824014659
+    second: Battle_End_Win_01_10
+  - first:
+      213: -6907007040810536657
+    second: Battle_End_Win_01_11
+  - first:
+      213: 6825903241567165970
+    second: Battle_End_Win_01_12
+  - first:
+      213: 4624577141049069741
+    second: Battle_End_Win_01_13
+  - first:
+      213: 7399151049719921013
+    second: Battle_End_Win_01_14
+  - first:
+      213: 8104715606295578644
+    second: Battle_End_Win_01_15
+  - first:
+      213: 7722838660762588051
+    second: Battle_End_Win_01_16
+  - first:
+      213: -6421241946270491814
+    second: Battle_End_Win_01_17
+  - first:
+      213: 1461210375948158931
+    second: Battle_End_Win_01_18
+  - first:
+      213: 7307026619401389931
+    second: Battle_End_Win_01_19
+  - first:
+      213: -8515886641221327844
+    second: Battle_End_Win_01_20
+  - first:
+      213: -6224555168422392637
+    second: Battle_End_Win_01_21
+  - first:
+      213: -9171339557337207714
+    second: Battle_End_Win_01_22
+  - first:
+      213: -5975265900447427590
+    second: Battle_End_Win_01_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Battle_End_Win_01_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 851
+        width: 547
+        height: 404
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a433dffcf6ab9c550800000000000000
+      internalID: 6181676952936330058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_1
+      rect:
+        serializedVersion: 2
+        x: 549
+        y: 852
+        width: 212
+        height: 393
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 79aa76a57ba9cce20800000000000000
+      internalID: 3372240333280094871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_2
+      rect:
+        serializedVersion: 2
+        x: 764
+        y: 1028
+        width: 14
+        height: 167
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4798ac85a00151320800000000000000
+      internalID: 2527944402463787380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_3
+      rect:
+        serializedVersion: 2
+        x: 836
+        y: 877
+        width: 329
+        height: 328
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41e1e134ecf6b96b0800000000000000
+      internalID: -5288510405736522220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_4
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 878
+        width: 254
+        height: 290
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f62ef698a02efab90800000000000000
+      internalID: -7228310342022995345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_5
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 1066
+        width: 94
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08da74a25f6a2be60800000000000000
+      internalID: 7976621461933108608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_6
+      rect:
+        serializedVersion: 2
+        x: 1513
+        y: 1066
+        width: 100
+        height: 101
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3044fe22ab56df9f0800000000000000
+      internalID: -433078139033271293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_7
+      rect:
+        serializedVersion: 2
+        x: 1613
+        y: 1121
+        width: 110
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d51651e916545dc0800000000000000
+      internalID: -3651198728735943213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_8
+      rect:
+        serializedVersion: 2
+        x: 1613
+        y: 975
+        width: 145
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64fe3e0d432c96ec0800000000000000
+      internalID: -3573111297243091130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_9
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 996
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: acbed70e5d08c1830800000000000000
+      internalID: 4043248221554600906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_10
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 961
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbacbac2b540147e0800000000000000
+      internalID: -1783139187824014659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_11
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 975
+        width: 91
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f21bd57f0b16520a0800000000000000
+      internalID: -6907007040810536657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_12
+      rect:
+        serializedVersion: 2
+        x: 1519
+        y: 975
+        width: 94
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21e5cc045da7abe50800000000000000
+      internalID: 6825903241567165970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_13
+      rect:
+        serializedVersion: 2
+        x: 1510
+        y: 975
+        width: 10
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da01f90686ccd2040800000000000000
+      internalID: 4624577141049069741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 850
+        height: 850
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 579b3066da01fa660800000000000000
+      internalID: 7399151049719921013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_15
+      rect:
+        serializedVersion: 2
+        x: 762
+        y: 851
+        width: 39
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 41800de37ebb97070800000000000000
+      internalID: 8104715606295578644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_16
+      rect:
+        serializedVersion: 2
+        x: 801
+        y: 851
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 393586838d80d2b60800000000000000
+      internalID: 7722838660762588051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_17
+      rect:
+        serializedVersion: 2
+        x: 851
+        y: 515
+        width: 642
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a5b95b7987a23e6a0800000000000000
+      internalID: -6421241946270491814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_18
+      rect:
+        serializedVersion: 2
+        x: 1494
+        y: 514
+        width: 288
+        height: 460
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3d741885813474410800000000000000
+      internalID: 1461210375948158931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_19
+      rect:
+        serializedVersion: 2
+        x: 852
+        y: 2
+        width: 446
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b674ebdfef5c76560800000000000000
+      internalID: 7307026619401389931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_20
+      rect:
+        serializedVersion: 2
+        x: 1300
+        y: 2
+        width: 349
+        height: 510
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c14228a083e71d980800000000000000
+      internalID: -8515886641221327844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_21
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 429
+        width: 110
+        height: 74
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3cc8c5dad00fd99a0800000000000000
+      internalID: -6224555168422392637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_22
+      rect:
+        serializedVersion: 2
+        x: 1651
+        y: 142
+        width: 127
+        height: 286
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5c6d62b34bd8b080800000000000000
+      internalID: -9171339557337207714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Battle_End_Win_01_23
+      rect:
+        serializedVersion: 2
+        x: 1650
+        y: 1
+        width: 134
+        height: 140
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af393556257931da0800000000000000
+      internalID: -5975265900447427590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Battle_End_Win_01_0: 6181676952936330058
+      Battle_End_Win_01_1: 3372240333280094871
+      Battle_End_Win_01_10: -1783139187824014659
+      Battle_End_Win_01_11: -6907007040810536657
+      Battle_End_Win_01_12: 6825903241567165970
+      Battle_End_Win_01_13: 4624577141049069741
+      Battle_End_Win_01_14: 7399151049719921013
+      Battle_End_Win_01_15: 8104715606295578644
+      Battle_End_Win_01_16: 7722838660762588051
+      Battle_End_Win_01_17: -6421241946270491814
+      Battle_End_Win_01_18: 1461210375948158931
+      Battle_End_Win_01_19: 7307026619401389931
+      Battle_End_Win_01_2: 2527944402463787380
+      Battle_End_Win_01_20: -8515886641221327844
+      Battle_End_Win_01_21: -6224555168422392637
+      Battle_End_Win_01_22: -9171339557337207714
+      Battle_End_Win_01_23: -5975265900447427590
+      Battle_End_Win_01_3: -5288510405736522220
+      Battle_End_Win_01_4: -7228310342022995345
+      Battle_End_Win_01_5: 7976621461933108608
+      Battle_End_Win_01_6: -433078139033271293
+      Battle_End_Win_01_7: -3651198728735943213
+      Battle_End_Win_01_8: -3573111297243091130
+      Battle_End_Win_01_9: 4043248221554600906
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
