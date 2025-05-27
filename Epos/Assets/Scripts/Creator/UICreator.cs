@@ -11,7 +11,7 @@ using Unity.VisualScripting;
 
 namespace Creator
 {
-    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.Component.Data
+    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.ComponentData
     {
         private V _data = null;
         private RectTransform _rootRectTm = null;

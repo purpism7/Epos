@@ -31,7 +31,7 @@ namespace Battle
                 {
                     Left = _data?.LeftPartyData?.PartyLocation,
                     Right = _data?.RightPartyData?.PartyLocation,
-                }, isLast: true);
+                }.WithLeftParty(_data?.LeftPartyData?.Party), isLast: true);
         }
 
         protected override void End()

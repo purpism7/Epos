@@ -8,7 +8,7 @@ namespace UI
 {
     public class PartWorld<T> : UI.Component<T> where T : PartWorld<T>.Data
     {
-        public class Data : UI.Component.Data
+        public class Data : UI.ComponentData
         {
             public Transform TargetTm = null;
             public float Height = 200f;

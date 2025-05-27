@@ -10,10 +10,10 @@ namespace Datas.ScriptableObjects
     public class Skill : ScriptableObject
     {
         public int Id = 0;
-        public Type.ESkillCategory ESkillCategory = Type.ESkillCategory.None;
+        public ESkillCategory ESkillCategory = ESkillCategory.None;
         public int Point = 0;
         
-        public Type.ESkillTarget ESkillTarget = Type.ESkillTarget.None;
+        public ESkillTarget ESkillTarget = ESkillTarget.None;
         public float Range  = 0;
 
         public bool SameTeam = false;

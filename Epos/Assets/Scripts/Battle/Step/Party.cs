@@ -11,12 +11,19 @@ namespace Battle.Step
         public class FieldData : BaseData
         {
             public Parts.PartyLocation PartyLocation = null;
+            public Datas.ScriptableObjects.Party Party { get; private set; } = null;
             public bool BattleStart { get; private set; } = true;
 
             public FieldData SetBattleState(bool battleStart)
             {
                 BattleStart = battleStart;
 
+                return this;
+            }
+
+            public FieldData WithParty(Datas.ScriptableObjects.Party party)
+            {
+                Party = party;
                 return this;
             }
         }

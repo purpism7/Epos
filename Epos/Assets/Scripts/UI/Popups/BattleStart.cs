@@ -9,7 +9,7 @@ namespace UI.Popups
 {
     public class BattleStart : Popup<BattleStart.Data>
     {
-        public class Data : UI.Component.Data
+        public class Data : UI.ComponentData
         {
             
         }

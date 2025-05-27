@@ -14,6 +14,16 @@ namespace Parts
 {
     public class FieldPoint : Part<FieldPoint.Data>
     {
+        public class Data : UI.ComponentData
+        {
+            public IListener IListener = null;
+        }
+        
+        public interface IListener
+        {
+            void Encounter(int fieldPointId, IActor iActor); // 필드 영웅과 몬스터가 대치.
+        }
+        
         [SerializeField] 
         private int id = 0;
         [SerializeField]
@@ -29,16 +39,6 @@ namespace Parts
         private Monster monster = null;
 
         private const float Range = 5f;
-
-        public class Data : UI.Component.Data
-        {
-            public IListener IListener = null;
-        }
-        
-        public interface IListener
-        {
-            void Encounter(int fieldPointId, IActor iActor); // 필드 영웅과 몬스터가 대치.
-        }
 
         Collider2D[] _colliders = new Collider2D[5];
 

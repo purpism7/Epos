@@ -7,11 +7,11 @@ namespace Creature
 {
     public interface ICombatant : ICaster
     {
-        void SetETeam(Type.ETeam eTeam);
-        public Type.ETeam ETeam { get; }
+        void SetETeam(ETeam eTeam);
+        public ETeam ETeam { get; }
         
-        void SetEFormation(Type.EFormation eFormation);
-        public Type.EFormation EFormation { get; }
+        void SetEFormation(EFormation eFormation);
+        public EFormation EFormation { get; }
         
         int PartyPosition { get; }
         void SetPosition(Vector3 position);

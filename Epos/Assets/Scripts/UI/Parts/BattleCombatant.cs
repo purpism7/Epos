@@ -15,7 +15,7 @@ namespace UI.Parts
 {
     public class BattleCombatant : Part<BattleCombatant.Data>
     {
-        public class Data : UI.Component.Data
+        public class Data : UI.ComponentData
         {
             public ICombatant ICombatant = null;
         }

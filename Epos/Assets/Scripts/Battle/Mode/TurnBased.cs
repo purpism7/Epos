@@ -78,7 +78,7 @@ namespace Battle.Mode
                         if (iCombatant == null)
                             continue;
                         
-                        iCombatant.SetETeam(Type.ETeam.Ally);
+                        iCombatant.SetETeam(ETeam.Ally);
                         _priorityICombatantList?.Add(iCombatant);
                     }
                     
@@ -87,7 +87,7 @@ namespace Battle.Mode
                         if (iCombatant == null)
                             continue;
                         
-                        iCombatant.SetETeam(Type.ETeam.Enemy);
+                        iCombatant.SetETeam(ETeam.Enemy);
                         iCombatant.IActCtr?.SetPosition(iCombatant.Transform.position);
                         _priorityICombatantList?.Add(iCombatant);
                     }
@@ -161,7 +161,7 @@ namespace Battle.Mode
                     // if(iCombatant.IStat?.Get(Stat.EType.ActivePoint) <= 0)
                     //     continue;
 
-                    if (iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active) == null)
+                    if (iCombatant.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active) == null)
                         continue;
                     
                     _castingActiveSkillICombatantQueue?.Enqueue(iCombatant);
@@ -206,7 +206,7 @@ namespace Battle.Mode
                 return;
             
             // 사용 가능 한 AcitveSkill 가져오기.
-            var activeSkill = attacker?.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Active);
+            var activeSkill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (activeSkill == null)
                 return;
             
@@ -289,7 +289,7 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
                     
-                    var directionForArriving = iCombatant.ETeam == Type.ETeam.Ally ? -1 : 1;
+                    var directionForArriving = iCombatant.ETeam == ETeam.Ally ? -1 : 1;
                     iCombatant.IActCtr?.MoveToTarget(iCombatant.IStat.Get(Stat.EType.MoveSpeed), direction: directionForArriving, isJumpMove: true)?.Execute();
                     
                     SetSortingOrder(iCombatant, 0);
@@ -322,7 +322,7 @@ namespace Battle.Mode
                 if(iCombatant == null)
                     continue;
 
-                var passiveSkill = iCombatant.ISkillCtr?.GetPossibleSkill(Type.ESkillCategory.Passive);
+                var passiveSkill = iCombatant.ISkillCtr?.GetPossibleSkill(ESkillCategory.Passive);
                 if(passiveSkill == null)
                     continue;
                 
@@ -414,7 +414,7 @@ namespace Battle.Mode
 
             SetSortingOrder(attacker, 1);
 
-            var directionForArriving = attacker.ETeam == Type.ETeam.Ally ? 1 : -1;
+            var directionForArriving = attacker.ETeam == ETeam.Ally ? 1 : -1;
             attacker.IActCtr?.MoveToTarget(attacker.IStat.Get(Stat.EType.MoveSpeed), targetPos, direction: directionForArriving, isJumpMove: true);
         }
 

@@ -93,7 +93,7 @@ namespace GameSystem
             return component;
         }
         
-        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.Component.Data
+        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.ComponentData
         {
             initialize = false;
             
@@ -131,7 +131,7 @@ namespace GameSystem
             return component;
         }
 
-        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.Component.Data
+        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.ComponentData
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);
@@ -148,7 +148,7 @@ namespace GameSystem
             return panel as T;
         }
         
-        public T GetPopup<T, V>(V data = null) where T : UI.Component where V : UI.Component.Data
+        public T GetPopup<T, V>(V data = null) where T : UI.Component where V : UI.ComponentData
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Part<T> : UI.Component<T> where T : UI.Component.Data
+public class Part<T> : UI.Component<T> where T : UI.ComponentData
 {
     // protected T _data = null;
 

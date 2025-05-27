@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Type
-{
-    public enum EFormation
-    {
-        None,
+
+public enum EFormation
+{ 
+    None,
         
-        Front,
-        Rear,
-    }
+    Front,
+    Rear,
+}
     
-    public enum ETeam
-    {
+public enum ETeam
+{
         None,
         
         Ally,
@@ -39,4 +38,4 @@ public class Type
         FarOne,
     }
     #endregion
-}
+

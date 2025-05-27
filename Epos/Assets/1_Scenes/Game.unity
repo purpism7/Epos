@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_BuildHeightMesh: 0
   m_MinRegionArea: 0
   m_HideEditorLogs: 0
-  m_NavMeshData: {fileID: 23800000, guid: 34cf2bc39e3074b85af50d9da0c7f8b9, type: 2}
+  m_NavMeshData: {fileID: 23800000, guid: da925702421b441608a711a66c30e7ce, type: 2}
 --- !u!1 &1599130169
 GameObject:
   m_ObjectHideFlags: 0
@@ -1258,6 +1258,10 @@ PrefabInstance:
     - target: {fileID: 4509933748627864656, guid: 369aa3eb04bc34634ac3108f5a60a2e5, type: 3}
       propertyPath: m_Name
       value: DayNightCycle
+      objectReference: {fileID: 0}
+    - target: {fileID: 4509933748627864656, guid: 369aa3eb04bc34634ac3108f5a60a2e5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7561258906288811352, guid: 369aa3eb04bc34634ac3108f5a60a2e5, type: 3}
       propertyPath: timeTMP

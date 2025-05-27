@@ -36,8 +36,8 @@ public static class BattleExtensions
         }
         
         // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
-        if (skill.ESkillTarget == Type.ESkillTarget.FarOne ||
-            skill.ESkillTarget == Type.ESkillTarget.NearOne)
+        if (skill.ESkillTarget == ESkillTarget.FarOne ||
+            skill.ESkillTarget == ESkillTarget.NearOne)
         {
             var target = targetList.FirstOrDefault();
             targetList.Clear();

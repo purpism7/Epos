@@ -9,7 +9,7 @@ namespace Creature.Action
 {
     public interface ISkillController : IController<ISkillController, ICaster>
     {
-        Skill GetPossibleSkill(Type.ESkillCategory eSkillCategory);
+        Skill GetPossibleSkill(ESkillCategory eSkillCategory);
         
         // void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
     }
@@ -42,7 +42,7 @@ namespace Creature.Action
             
         }
 
-        Skill ISkillController.GetPossibleSkill(Type.ESkillCategory eSkillCategory)
+        Skill ISkillController.GetPossibleSkill(ESkillCategory eSkillCategory)
         {
             return PossibleSkill(eSkillCategory);
         }
@@ -113,7 +113,7 @@ namespace Creature.Action
         //     }
         // }
 
-        private Skill PossibleSkill(Type.ESkillCategory eSkillCategory)
+        private Skill PossibleSkill(ESkillCategory eSkillCategory)
         {
             if (skills == null)
                 return null;
@@ -126,13 +126,13 @@ namespace Creature.Action
                 if (skill.ESkillCategory != eSkillCategory)
                     continue;
                 
-                if (eSkillCategory == Type.ESkillCategory.Active)
+                if (eSkillCategory == ESkillCategory.Active)
                 {
                     if (_iCaster?.IStat?.Get(Stat.EType.ActivePoint) < 1)
                         continue;
                 }
 
-                if (eSkillCategory == Type.ESkillCategory.Passive)
+                if (eSkillCategory == ESkillCategory.Passive)
                 {
                     if (_iCaster?.IStat?.Get(Stat.EType.PassivePoint) < 1)
                         continue;

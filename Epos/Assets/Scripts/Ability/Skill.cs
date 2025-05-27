@@ -8,9 +8,9 @@ namespace Ability
     {
         public Datas.Skill SkillData { get; private set; } = null;
 
-        public Type.ESkillCategory ESkillCategory { get; private set; } = Type.ESkillCategory.None;
+        public ESkillCategory ESkillCategory { get; private set; } = ESkillCategory.None;
         public bool SameTeam { get; private set; } = false;
-        public Type.ESkillTarget ESkillTarget { get; private set; } = Type.ESkillTarget.None;
+        public ESkillTarget ESkillTarget { get; private set; } = ESkillTarget.None;
 
         public virtual void Initialize(Datas.Skill skillData)
         {
@@ -28,7 +28,7 @@ namespace Ability
         }
 
         #region 데이터화 예정
-        public void SetESkillCategory(Type.ESkillCategory eSkillCategory)
+        public void SetESkillCategory(ESkillCategory eSkillCategory)
         {
             ESkillCategory = eSkillCategory;
         }
@@ -38,7 +38,7 @@ namespace Ability
             SameTeam = sameTeam;
         }
         
-        public void SetESkillTarget(Type.ESkillTarget eSkillTarget)
+        public void SetESkillTarget(ESkillTarget eSkillTarget)
         {
             ESkillTarget = eSkillTarget;
         }

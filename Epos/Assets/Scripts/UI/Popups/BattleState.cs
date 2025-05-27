@@ -14,7 +14,7 @@ namespace UI.Popups
         [SerializeField] 
         private RectTransform winRectTm = null;
         
-        public class Data : UI.Component.Data
+        public class Data : UI.ComponentData
         {
             
         }

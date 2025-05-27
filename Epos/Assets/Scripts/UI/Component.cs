@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace UI
 {
+    public class ComponentData
+    {
+            
+    }
+    
     public class Component : MonoBehaviour
     {
-        public class Data
-        {
-            
-        }
-        
         [SerializeField]
         protected Transform rootTm = null;
         
@@ -41,7 +41,7 @@ namespace UI
         }
     }
     
-    public abstract class Component<T> : Component where T : Component.Data
+    public abstract class Component<T> : Component where T : ComponentData
     {
         protected T _data = null;
 

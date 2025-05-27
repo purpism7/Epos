@@ -20,6 +20,14 @@ namespace Battle.Step
         {
             public Parts.PartyLocation Left = null;
             public Parts.PartyLocation Right = null;
+            
+            public Datas.ScriptableObjects.Party LeftParty { get; private set; } = null;
+
+            public Data WithLeftParty(Datas.ScriptableObjects.Party party)
+            {
+                LeftParty = party;
+                return this;
+            }
         }
         
         public override void Begin()
@@ -29,18 +37,15 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            var battleForcesData = new BattleForces.Data
-            {
-                Left = _data?.Left,
-                Right = _data?.Right,
-            };
+            var battleForcesData = new BattleForces.Data()
+                .WithLeftParty(_data.LeftParty)
+                .WithLeftPartyLocation(_data.Left)
+                .WithRightPartyLocation(_data.Right);
             
             UICreator<BattleForces, BattleForces.Data>.Get?
                 .SetData(battleForcesData)
-                .Create()?.Activate();
-                
-            // UIManager.Instance?.GetPanel<BattleForces, BattleForces.Data>(battleForcesData);
-            // battleForces?.Activate();
+                .Create()?
+                .Activate(battleForcesData);
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             

@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace UI
 { 
-    public abstract class Popup<T> : UI.Component<T> where T : UI.ComponentData
+    public abstract class Slot<T> : UI.Component<T> where T : UI.ComponentData
     {
-        
+       
     }
 }

@@ -52,8 +52,8 @@ namespace Creature
 
         #region ICombatant
 
-        public Type.ETeam ETeam { get; private set; } = Type.ETeam.None;
-        public Type.EFormation EFormation { get; private set; } = Type.EFormation.None;
+        public ETeam ETeam { get; private set; } = ETeam.None;
+        public EFormation EFormation { get; private set; } = EFormation.None;
 
         public int PartyPosition
         {
@@ -203,12 +203,12 @@ namespace Creature
 
         #region ICombatant
 
-        void ICombatant.SetETeam(Type.ETeam eTeam)
+        void ICombatant.SetETeam(ETeam eTeam)
         {
             ETeam = eTeam;
         }
 
-        void ICombatant.SetEFormation(Type.EFormation eFormation)
+        void ICombatant.SetEFormation(EFormation eFormation)
         {
             EFormation = eFormation;
         }
