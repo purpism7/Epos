@@ -8,7 +8,7 @@ namespace GameSystem
 {
     public class ResourceManager : Singleton<ResourceManager>
     {
-        public AtlasLoader AtlasLoader { get; private set; }
+        public AtlasLoader AtlasLoader { get; private set; } = null;
 
         protected override void Initialize()
         {

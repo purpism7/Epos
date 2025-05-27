@@ -52,39 +52,19 @@ namespace GameSystem
 #if UNITY_EDITOR
         public void RePosition()
         {
-            // var childTms = GetComponentsInChildren<Transform>(true);
             if (_cellTmList.IsNullOrEmpty())
                 return;
 
-            // if (_cellTmList == null)
-            //     _cellTmList = new();
-            
-            // _cellTmList?.Clear();
-
-            // var resChildTmList = new List<Transform>();
-            // resChildTmList.Clear();
-            //
-            // foreach (var childTm in _cellTmList)
-            // {
-            //     if(!childTm || childTm.parent != transform)
-            //         continue;
-            //     
-            //     if(childTm == transform)
-            //         continue;
-            //         
-            //     resChildTmList.Add(childTm);
-            // }
-
             int index = 0;
-            for (int i = 0; i < row; ++i)
+            for (int i = column - 1; i >= 0; --i)
             {
-                for (int j = 0; j < column; ++j)
+                for (int j = row - 1; j >= 0; --j)
                 {
                     if(_cellTmList.Count <= index)
                         continue;
 
-                    SetCellPosition(_cellTmList[index], i, j);
-                    _cellTmList[index].name = $"[{i},{j}]-{index}";
+                    SetCellPosition(_cellTmList[index], j, i);
+                    _cellTmList[index].name = $"[{j},{i}]-{index}";
                     
                     ++index;
                 }
@@ -100,9 +80,9 @@ namespace GameSystem
             
             transform.RemoveAllChild();
             
-            for (int i = 0; i < row; ++i)
+            for (int i = column - 1; i >= 0; --i)
             {
-                for (int j = 0; j < column; ++j)
+                for (int j = row - 1; j >= 0; --j)
                 {
                     var cell = Instantiate(cellGameObj, transform);
                     if(!cell ||
@@ -113,7 +93,7 @@ namespace GameSystem
                     if (boxCollider != null)
                         boxCollider.size = Vector3.one * CellSize;
 
-                    SetCellPosition(cell.transform, i, j);
+                    SetCellPosition(cell.transform, j, i);
                    
                     cell.name = $"[{j},{i}]-{_cellTmList?.Count}";
                     

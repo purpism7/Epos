@@ -165,7 +165,7 @@ namespace GameSystem
                 hero?.Initialize();
                 hero?.Activate();
                 
-                var pos = left.GetPartyPosition(info.Position);
+                var pos = left.GetPartyPosition(info.Position - 1);
                 pos.x -= 30f;
                 
                 ICombatant iCombatant = hero;

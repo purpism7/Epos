@@ -66,12 +66,18 @@ namespace UI.Panels
                     
                     for (int j = 0; j < leftPositionInfos?.Length; ++j)
                     {
-                        var position = leftPositionInfos[j].Position;
-                        if (i == position - 1)
-                        {
-                            _leftBattlePortraitSlots[i]?.Activate();
-                            break;
-                        }
+                        var positionInfo = leftPositionInfos[j];
+                        if(positionInfo == null)
+                            continue;
+                        
+                        if (i != positionInfo.Position - 1)
+                            continue;
+                        
+                        var battlePortraitSlotData = new BattlePortraitSlot.Data()
+                            .WithCharacterId(positionInfo.CharacterId);
+                            
+                        _leftBattlePortraitSlots[i]?.Activate(battlePortraitSlotData);
+                        break;
                     }
                 }
             }

@@ -54,7 +54,7 @@ namespace UI.Parts
             if (combatantImg == null)
                 return;
             
-            var sprite = ResourceManager.Instance.AtlasLoader?.GetCharacterSprite($"s_{iCombatant.Id}");
+            var sprite = ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"s_{iCombatant.Id}");
             combatantImg.sprite = sprite;
         }
 
