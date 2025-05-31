@@ -111,10 +111,12 @@ namespace Battle.Mode
             var allyICombatantList = _data?.AllyICombatantList;
             if (allyICombatantList.IsNullOrEmpty())
                 return;
+
+            var sortAllyICombatantList = allyICombatantList?.OrderBy(iCombatant => iCombatant.PartyPosition).ToList();
             
-            for (int i = 0; i < allyICombatantList?.Count; ++i)
+            for (int i = 0; i < sortAllyICombatantList?.Count; ++i)
             {
-                var iCombatant = allyICombatantList[i];
+                var iCombatant = sortAllyICombatantList[i];
                 if(iCombatant == null)
                     continue;
 
@@ -125,10 +127,9 @@ namespace Battle.Mode
                 hero.Activate();
                 
                 var originPos = iCombatant.Transform.position;
-                originPos.x += 30f;
-                
+                originPos.x += 100f;
                 iCombatant.IActCtr?.MoveToTarget(8f, originPos)?.Execute();
-
+                
                 await UniTask.WaitWhile(
                     () =>
                     {
@@ -171,7 +172,6 @@ namespace Battle.Mode
             if (_castingActiveSkillICombatantQueue?.Count <= 0)
             {
                 End();
-                
                 return;
             }
             
@@ -289,8 +289,8 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
                     
-                    var directionForArriving = iCombatant.ETeam == ETeam.Ally ? -1 : 1;
-                    iCombatant.IActCtr?.MoveToTarget(iCombatant.IStat.Get(Stat.EType.MoveSpeed), direction: directionForArriving, isJumpMove: true)?.Execute();
+                    // var directionForArriving = iCombatant.ETeam == ETeam.Ally ? 1 : -1;
+                    iCombatant.IActCtr?.MoveToTarget(iCombatant.IStat.Get(Stat.EType.MoveSpeed), isJumpMove: true)?.Execute();
                     
                     SetSortingOrder(iCombatant, 0);
                 }
@@ -414,8 +414,8 @@ namespace Battle.Mode
 
             SetSortingOrder(attacker, 1);
 
-            var directionForArriving = attacker.ETeam == ETeam.Ally ? 1 : -1;
-            attacker.IActCtr?.MoveToTarget(attacker.IStat.Get(Stat.EType.MoveSpeed), targetPos, direction: directionForArriving, isJumpMove: true);
+            // var directionForArriving = attacker.ETeam == ETeam.Ally ? 1 : -1;
+            attacker.IActCtr?.MoveToTarget(attacker.IStat.Get(Stat.EType.MoveSpeed), targetPos, isJumpMove: true);
         }
 
         private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)

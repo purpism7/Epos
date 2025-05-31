@@ -47,13 +47,14 @@ namespace Entities
                     .Create;
             }
 
-            var res = character as T;
-            if (res == null)
+            var t = character as T;
+            if (t == null)
                 return null;
             
-            res.Initialize();
+            character.SetActive(true);
+            t.Initialize();
 
-            return res;
+            return t;
         }
     }
 }

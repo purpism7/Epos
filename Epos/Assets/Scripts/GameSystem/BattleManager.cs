@@ -162,15 +162,16 @@ namespace GameSystem
                 
                 var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, left.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
-                hero?.Initialize();
-                hero?.Activate();
                 
                 var pos = left.GetPartyPosition(info.Position - 1);
-                pos.x -= 30f;
+                pos.x -= 100f;
                 
                 ICombatant iCombatant = hero;
                 iCombatant?.SetPosition(pos);
                 
+                // hero?.Initialize();
+                // hero?.Deactivate();
+  
                 iCombatantList.Add(iCombatant);
             }
 

@@ -86,7 +86,7 @@ namespace Creature.Action
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
-                localScale.x *= _data.DirectionAfterArriving;
+                localScale.x = _data.DirectionAfterArriving;
                     
                 iActorTm.localScale = localScale;
                 

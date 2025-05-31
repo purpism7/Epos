@@ -38,6 +38,8 @@ namespace Creator
                 var t = gameObj.GetComponent<T>();
                 Debug.Log(t);
                 
+                gameObj.SetActive(false);
+                
                 
                 return t;
                 // return 
