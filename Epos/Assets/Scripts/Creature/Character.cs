@@ -8,11 +8,12 @@ using Cysharp.Threading.Tasks;
 using Spine.Unity;
 
 using Creature.Action;
+using GameSystem.Event;
 
 
 namespace Creature
 {
-    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant, IEventHandler<EventData>
+    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
     {
         #region Inspector
 
@@ -216,14 +217,6 @@ namespace Creature
         void ICombatant.SetPosition(Vector3 pos)
         {
             transform.position = pos;
-        }
-        #endregion
-        
-        #region IEventHandler
-
-        void IEventHandler<EventData>.Add()
-        {
-            
         }
         #endregion
 

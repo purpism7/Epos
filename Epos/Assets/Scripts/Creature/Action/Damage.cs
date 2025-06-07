@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GameSystem.Event;
 using UnityEngine;
 
 namespace Creature.Action
@@ -24,6 +25,8 @@ namespace Creature.Action
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
                 
                 _iActor?.IStat?.Add(Stat.EType.Hp, damage);
+                
+                GameSystem.Event.EventHandler<GameSystem.Event.EventData>.Notify(new BattleCombatantEventData().WithCharacterId(_data.ICaster.Id));
             }
             
             // _iActor?.EventHandler?.Invoke(_data?.ICaster);

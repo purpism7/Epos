@@ -72,21 +72,21 @@ namespace UI.Parts
             hpProgress.fillAmount = hp / maxHp;
         }
 
-        private void OnChanged(DamageEventData damageEventData)
-        {
-            // var data = new TextDamage.Data
-            // {
-            //     TargetTm = _data?.ICombatant?.Transform,
-            //     Damage = iActor != null ? iActor.IStat.Get(Stat.EType.Attack) : 0,
-            // };
-            //
-            // UICreator<TextDamage, TextDamage.Data>.Get?
-            //     .SetData(data)
-            //     .Create()?
-            //     .Activate(data);
-            //
-            // SetHpProgress(iActor?.IStat);
-        }
+        // private void OnChanged(DamageEventData damageEventData)
+        // {
+        //     // var data = new TextDamage.Data
+        //     // {
+        //     //     TargetTm = _data?.ICombatant?.Transform,
+        //     //     Damage = iActor != null ? iActor.IStat.Get(Stat.EType.Attack) : 0,
+        //     // };
+        //     //
+        //     // UICreator<TextDamage, TextDamage.Data>.Get?
+        //     //     .SetData(data)
+        //     //     .Create()?
+        //     //     .Activate(data);
+        //     //
+        //     // SetHpProgress(iActor?.IStat);
+        // }
     }
 }
 

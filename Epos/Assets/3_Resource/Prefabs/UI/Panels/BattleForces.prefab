@@ -3713,6 +3713,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 209465870751515547}
+  - component: {fileID: 7712628850356300624}
   m_Layer: 5
   m_Name: DefensiveGroupInfo
   m_TagString: Untagged
@@ -3741,6 +3742,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
+--- !u!114 &7712628850356300624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811594785968832934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdbf408ec6c8402e9ccd55280aaf052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 4505674253577582604}
+  skillName: {fileID: 0}
 --- !u!1 &3816097547339775758
 GameObject:
   m_ObjectHideFlags: 0
@@ -5481,8 +5496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 2335910119050227253}
-  leftRootRectTm: {fileID: 8297212320792559982}
-  rightRootRectTm: {fileID: 4505674253577582604}
+  leftBattlePartyPart: {fileID: 3756406428364445266}
+  rightBattlePartyPart: {fileID: 7712628850356300624}
 --- !u!1 &5862486663323571563
 GameObject:
   m_ObjectHideFlags: 0
@@ -7468,6 +7483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8709343668547314771}
+  - component: {fileID: 3756406428364445266}
   m_Layer: 5
   m_Name: AttackGroupInfo
   m_TagString: Untagged
@@ -7496,6 +7512,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &3756406428364445266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7848850035147885068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abdbf408ec6c8402e9ccd55280aaf052, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 8297212320792559982}
+  skillName: {fileID: 0}
 --- !u!1 &7871005318367791924
 GameObject:
   m_ObjectHideFlags: 0

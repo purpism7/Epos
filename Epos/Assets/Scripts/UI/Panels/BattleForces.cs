@@ -6,6 +6,7 @@ using UnityEngine;
 
 using GameSystem;
 using Parts;
+using TMPro;
 using UI.Parts;
 using UI.Slots;
 
@@ -39,52 +40,30 @@ namespace UI.Panels
             }
         }
         
-        [SerializeField] private RectTransform leftRootRectTm = null;
-        [SerializeField] private RectTransform rightRootRectTm = null;
+        [Header("Left")]
+        [SerializeField] private BattlePartyPart leftBattlePartyPart = null;
         
-        private BattlePortraitSlot[] _leftBattlePortraitSlots = null;
-        private BattlePortraitSlot[] _rightBattlePortraitSlots = null;
+        [Header("Right")]
+        [SerializeField] private BattlePartyPart rightBattlePartyPart = null;
         
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
-            _leftBattlePortraitSlots = leftRootRectTm.GetComponentsInChildren<BattlePortraitSlot>();
-            _rightBattlePortraitSlots = rightRootRectTm.GetComponentsInChildren<BattlePortraitSlot>();
+            leftBattlePartyPart?.Initialize();
+            rightBattlePartyPart?.Initialize();
         }
 
         public override void Activate(Data data)
         {
             base.Activate(data);
+
+            var leftBattlePartyPartData = new BattlePartyPart.Data();
+            leftBattlePartyPartData.WithLeftParty(data?.LeftParty);
+            leftBattlePartyPart?.Activate(leftBattlePartyPartData);
             
-            var leftPositionInfos = data?.LeftParty?.PositionInfos;
-            if (!leftPositionInfos.IsNullOrEmpty())
-            {
-                for (int i = 0; i < _leftBattlePortraitSlots?.Length; ++i)
-                {
-                    _leftBattlePortraitSlots[i]?.Deactivate();
-                    
-                    for (int j = 0; j < leftPositionInfos?.Length; ++j)
-                    {
-                        var positionInfo = leftPositionInfos[j];
-                        if(positionInfo == null)
-                            continue;
-                        
-                        if (i != positionInfo.Position - 1)
-                            continue;
-                        
-                        var battlePortraitSlotData = new BattlePortraitSlot.Data()
-                            .WithCharacterId(positionInfo.CharacterId);
-                            
-                        _leftBattlePortraitSlots[i]?.Activate(battlePortraitSlotData);
-                        break;
-                    }
-                }
-            }
         }
         
-        
-
         public override void Deactivate()
         {
             base.Deactivate();
