@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Creator;
 using UnityEngine;
 
 using Creature;
 using Parts;
+using Common;
 
 namespace Entities
 {

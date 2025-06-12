@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using Creature;
+using GameSystem.Event;
 
 namespace UI.Slots
 {
@@ -19,14 +20,29 @@ namespace UI.Slots
         }
 
         [SerializeField] private Image characterImg = null;
+        [SerializeField] private Slider hpSlider = null;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
 
         public override void Activate(Data data)
         {
             base.Activate(data);
 
+            EventHandler.Add<SkillUseEventData>(OnSkillUse);
+
             ApplyCombatantImage();
         }
-        
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            EventHandler.Remove<SkillUseEventData>(OnSkillUse);
+        }
+
         private void ApplyCombatantImage()
         {
             if (_data == null)
@@ -37,6 +53,11 @@ namespace UI.Slots
             
             var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_data.CharacterId}");
             characterImg.sprite = sprite;
+        }
+
+        private void OnSkillUse(SkillUseEventData eventData)
+        {
+            
         }
     }
 }

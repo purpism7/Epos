@@ -3755,7 +3755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 4505674253577582604}
-  skillName: {fileID: 0}
+  skillNameTMP: {fileID: 2250476564194307961}
 --- !u!1 &3816097547339775758
 GameObject:
   m_ObjectHideFlags: 0
@@ -7525,7 +7525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 8297212320792559982}
-  skillName: {fileID: 0}
+  skillNameTMP: {fileID: 2221017030597108222}
 --- !u!1 &7871005318367791924
 GameObject:
   m_ObjectHideFlags: 0

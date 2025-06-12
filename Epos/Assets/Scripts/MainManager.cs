@@ -3,9 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 using Entities;
 using GameSystem;
-using TMPro;
+using Common;
 
 public class MainManager : Singleton<MainManager>
 {
@@ -33,7 +35,7 @@ public class MainManager : Singleton<MainManager>
         _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         _iMgrGenericList?.Add(new BattleManager().Initialize());
 
-        _dayNightCycle = FindObjectOfType<DayNightCycle>();
+        _dayNightCycle = FindFirstObjectByType<DayNightCycle>();
     }
     
     public static T Get<T>() where T : IManager

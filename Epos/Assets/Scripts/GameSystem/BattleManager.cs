@@ -9,6 +9,7 @@ using Battle.Mode;
 using Battle.Step;
 using Creature;
 using Entities;
+using Common;
 
 namespace GameSystem
 {

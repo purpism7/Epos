@@ -5,6 +5,8 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
+using Common;
+
 namespace UI.Popups
 {
     public class BattleState : Popup<BattleState.Data>

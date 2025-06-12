@@ -1768,6 +1768,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7747846030634703691}
   characterImg: {fileID: 196007275353441702}
+  hpSlider: {fileID: 4214893461378894805}
 --- !u!114 &516623566961481627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2702,7 +2703,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.791
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

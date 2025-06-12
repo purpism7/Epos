@@ -1,12 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Creator;
-using Datas.ScriptableObjects;
 using UnityEngine;
 
+using Datas.ScriptableObjects;
 using GameSystem;
 using Parts;
-using TMPro;
 using UI.Parts;
 using UI.Slots;
 
@@ -59,7 +57,7 @@ namespace UI.Panels
             base.Activate(data);
 
             var leftBattlePartyPartData = new BattlePartyPart.Data();
-            leftBattlePartyPartData.WithLeftParty(data?.LeftParty);
+            leftBattlePartyPartData.WithParty(data?.LeftParty);
             leftBattlePartyPart?.Activate(leftBattlePartyPartData);
             
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,53 +16,46 @@ namespace GameSystem.Event
     //     void OnChanged(T t);
     // }
     
-    public class EventHandler<T> where T : Event.EventData
+    public class EventHandler
     {
-        private static Dictionary<System.Type, System.Action<T>> _eventActionDic = null;
+        private readonly static Dictionary<Type, Delegate> _eventHandlers = new();
 
-        public static void Add(System.Action<T> action)
+        public static void Add<T>(Action<T> action) where T : Event.EventData
         {
-            if (_eventActionDic == null)
-            {
-                _eventActionDic = new();
-                _eventActionDic.Clear();
-            }
-            
             Debug.Log(typeof(T));
             
-            if (Remove(action))
-            {
-                _eventActionDic[typeof(T)] += action;
-                return;
-            }
-            
-            _eventActionDic?.TryAdd(typeof(T), action);
+            if (_eventHandlers.TryGetValue(typeof(T), out var handler))
+                _eventHandlers[typeof(T)] = (Action<T>)handler + action;
+            else
+                _eventHandlers[typeof(T)] = action;
+            // if (_eventHandlers.ContainsKey(typeof(T)))
+            //      _eventHandlers[typeof(T)] = (Action<T>)existing + handler;
+            // else
+            //     _eventHandlers.Add(typeof(T), handler);
         }
 
-        public static bool Remove(System.Action<T> action)
+        public static void Remove<T>(Action<T> action) where T : Event.EventData
         {
-            if (_eventActionDic == null)
-                return false;
-
-            if (_eventActionDic.ContainsKey(typeof(T)))
+            // lock (_lockObj)
             {
-                _eventActionDic[typeof(T)] -= action;
-                return true;
+                if (_eventHandlers.TryGetValue(typeof(T), out var handler))
+                {
+                    var updated = (Action<T>)handler - action;
+                    if (updated == null)
+                        _eventHandlers.Remove(typeof(T));
+                    else
+                        _eventHandlers[typeof(T)] = updated;
+                }
             }
-            
-            return false;
         }
 
-        public static void Notify(T t)
+        public static void Notify<T>(T eventData) where T : Event.EventData
         {
-            if (t == null)
+            if (eventData == null) 
                 return;
-            
-            if (_eventActionDic == null)
-                return;
-            
-            if(_eventActionDic.TryGetValue(typeof(T), out var action))
-                action?.Invoke(t);
+
+            if (_eventHandlers.TryGetValue(typeof(T), out var handler))
+                ((Action<T>)handler)?.Invoke(eventData);
         }
     }
     

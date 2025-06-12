@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 using TMPro;
@@ -7,7 +8,7 @@ using UI.Parts;
 
 using Datas.ScriptableObjects;
 using GameSystem.Event;
-using EventData = Spine.EventData;
+using Common;
 
 namespace UI.Parts
 {
@@ -17,14 +18,14 @@ namespace UI.Parts
         {
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
             
-            public Data WithLeftParty(Party party)
+            public Data WithParty(Party party)
             {
                 Party = party;
                 return this;
             }
         }
         
-        [SerializeField] private TextMeshProUGUI skillName = null;
+        [SerializeField] private TextMeshProUGUI skillNameTMP = null;
 
         private BattlePortraitSlot[] _battlePortraitSlots = null;
         
@@ -34,7 +35,8 @@ namespace UI.Parts
             
             _battlePortraitSlots = rootTm.GetComponentsInChildren<BattlePortraitSlot>();
             
-            EventHandler<GameSystem.Event.BattleCombatantEventData>.Add(OnChanged);
+            EventHandler.Add<GameSystem.Event.StatChangedEventData>(OnStatChanged);
+            EventHandler.Add<GameSystem.Event.SkillUseEventData>(OnSkillUse);
         }
 
         public override void Activate(Data data)
@@ -44,6 +46,14 @@ namespace UI.Parts
             ApplyParty();
             
             // EventHandler<>
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            EventHandler.Remove<GameSystem.Event.StatChangedEventData>(OnStatChanged);
+            EventHandler.Remove<GameSystem.Event.SkillUseEventData>(OnSkillUse);
         }
 
         private void ApplyParty()
@@ -74,9 +84,17 @@ namespace UI.Parts
             }
         }
 
-        private void OnChanged(BattleCombatantEventData eventData)
+        private void OnStatChanged(StatChangedEventData eventData)
         {
-            Debug.Log(eventData.CharacterId);
+            // Debug.Log(eventData.CharaerId);
+        }
+
+        private void OnSkillUse(SkillUseEventData eventData)
+        {
+            // _data.Party?.PositionInfos
+            
+            Debug.Log(eventData.Skill.name);
+            skillNameTMP?.SetText(eventData.Skill?.name);
         }
     }
 }

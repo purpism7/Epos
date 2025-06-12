@@ -6,6 +6,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
+using GameSystem.Event;
 
 
 namespace Creature.Action
@@ -46,6 +47,7 @@ namespace Creature.Action
         private async UniTask CastingAsync()
         {
             _data?.IListener?.BeforeCasting();
+            GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data?.ICaster, _data?.Skill));
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);

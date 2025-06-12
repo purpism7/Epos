@@ -10,6 +10,8 @@ using Cysharp.Threading.Tasks;
 using Datas.ScriptableObjects;
 using Creature;
 using Creature.Action;
+using Common;
+using GameSystem.Event;
 
 namespace Battle.Mode
 {

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Common;
+
 namespace GameSystem
 {
     public class Grid : MonoBehaviour

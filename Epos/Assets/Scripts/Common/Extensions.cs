@@ -4,7 +4,9 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-public static class Extensions
+namespace Common
+{
+    public static class Extensions
 {
     public static T AddOrGetComponent<T>(this Component component) where T : Component
     {
@@ -100,4 +102,6 @@ public static class Extensions
         tm.localScale = Vector3.one;
     }
 }
+}
+
 

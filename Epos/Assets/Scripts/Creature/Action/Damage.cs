@@ -26,7 +26,7 @@ namespace Creature.Action
                 
                 _iActor?.IStat?.Add(Stat.EType.Hp, damage);
                 
-                GameSystem.Event.EventHandler<GameSystem.Event.EventData>.Notify(new BattleCombatantEventData().WithCharacterId(_data.ICaster.Id));
+                EventHandler.Notify(new StatChangedEventData(_iActor?.IStat));
             }
             
             // _iActor?.EventHandler?.Invoke(_data?.ICaster);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Creature.Action;
+using Common;
 
 namespace Creature
 {
