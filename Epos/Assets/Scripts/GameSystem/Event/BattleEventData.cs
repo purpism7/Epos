@@ -18,13 +18,13 @@ namespace GameSystem.Event
 
     public class SkillUseEventData : EventData
     {
-        public ICaster ICaster { get; private set; } = null;
         public Skill Skill { get; private set; } = null;
+        public ETeam ETeam { get; private set; } = ETeam.None;
 
-        public SkillUseEventData(ICaster iCaster, Skill skill)
+        public SkillUseEventData(Skill skill, ETeam eTeam)
         {
-            ICaster = iCaster;
             Skill = skill;
+            ETeam = eTeam;
         }
     }
 }

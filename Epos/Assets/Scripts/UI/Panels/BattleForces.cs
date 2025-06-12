@@ -57,7 +57,9 @@ namespace UI.Panels
             base.Activate(data);
 
             var leftBattlePartyPartData = new BattlePartyPart.Data();
-            leftBattlePartyPartData.WithParty(data?.LeftParty);
+            leftBattlePartyPartData
+                .WithParty(data?.LeftParty)
+                .WithETeam(ETeam.Ally);
             leftBattlePartyPart?.Activate(leftBattlePartyPartData);
             
         }

@@ -17,10 +17,17 @@ namespace UI.Parts
         public class Data : UI.ComponentData
         {
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
-            
+            public ETeam ETeam { get; private set; } = ETeam.None;
+
             public Data WithParty(Party party)
             {
                 Party = party;
+                return this;
+            }
+            
+            public Data WithETeam(ETeam eTeam)
+            {
+                ETeam = eTeam;
                 return this;
             }
         }
@@ -91,7 +98,12 @@ namespace UI.Parts
 
         private void OnSkillUse(SkillUseEventData eventData)
         {
-            // _data.Party?.PositionInfos
+            if (eventData == null ||
+                _data == null)
+                return;
+            
+            if (eventData.ETeam != _data.ETeam)
+                return;
             
             Debug.Log(eventData.Skill.name);
             skillNameTMP?.SetText(eventData.Skill?.name);

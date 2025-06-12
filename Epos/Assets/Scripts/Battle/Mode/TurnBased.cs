@@ -233,7 +233,6 @@ namespace Battle.Mode
             
             MoveToTarget(attacker, activeSkill, _targetDataList);
             CastingSkill(attacker, activeSkill, _targetDataList);
-            // attacker.IActCtr?.CastingSkill(this, activeSkill, _targetList); 
 
             _sequenceActList?.Add(attacker);
             
@@ -291,7 +290,6 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
                     
-                    // var directionForArriving = iCombatant.ETeam == ETeam.Ally ? 1 : -1;
                     iCombatant.IActCtr?.MoveToTarget(iCombatant.IStat.Get(Stat.EType.MoveSpeed), isJumpMove: true)?.Execute();
                     
                     SetSortingOrder(iCombatant, 0);
@@ -455,7 +453,7 @@ namespace Battle.Mode
         #region Skill.IListener
         void Casting.IListener.BeforeCasting()
         {
-            
+
         }
 
         void Casting.IListener.InUse()

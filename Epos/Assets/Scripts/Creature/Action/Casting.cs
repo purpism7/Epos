@@ -47,7 +47,15 @@ namespace Creature.Action
         private async UniTask CastingAsync()
         {
             _data?.IListener?.BeforeCasting();
-            GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data?.ICaster, _data?.Skill));
+            if (_data != null)
+            {
+                ETeam eTeam = ETeam.None;
+                var iCombatant = _data.ICaster as ICombatant;
+                if (iCombatant != null)
+                    eTeam = iCombatant.ETeam;
+                
+                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, eTeam));
+            }
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);

@@ -22,7 +22,7 @@ namespace GameSystem.Event
 
         public static void Add<T>(Action<T> action) where T : Event.EventData
         {
-            Debug.Log(typeof(T));
+            // Debug.Log(typeof(T));
             
             if (_eventHandlers.TryGetValue(typeof(T), out var handler))
                 _eventHandlers[typeof(T)] = (Action<T>)handler + action;
