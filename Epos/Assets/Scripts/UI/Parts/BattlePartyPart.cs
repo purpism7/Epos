@@ -14,7 +14,7 @@ namespace UI.Parts
 {
     public class BattlePartyPart : Part<BattlePartyPart.Data>
     {
-        public class Data : UI.ComponentData
+        public class Data : Common.ComponentData
         {
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
             public ETeam ETeam { get; private set; } = ETeam.None;
@@ -50,9 +50,9 @@ namespace UI.Parts
         {
             base.Activate(data);
 
-            ApplyParty();
+            skillNameTMP?.SetText(string.Empty);
             
-            // EventHandler<>
+            ApplyParty();
         }
 
         public override void Deactivate()

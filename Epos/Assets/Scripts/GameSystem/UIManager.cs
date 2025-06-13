@@ -18,12 +18,12 @@ namespace GameSystem
         [SerializeField] private RectTransform rootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
         
-        private List<UI.Component> _cachedUIComponentList = null;
-        private Dictionary<System.Type, UI.Component> _componentDic = null;
+        private List<Common.Component> _cachedComponentList = null;
+        private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
-        public UI.Component CurrPanel { get; private set; } = null;
+        public Common.Component CurrPanel { get; private set; } = null;
 
 
         protected override void Initialize()
@@ -44,25 +44,25 @@ namespace GameSystem
                     var gameObj = asyncOperationHandle.Result;
                     if (gameObj)
                     {
-                        var component = gameObj.GetComponent<UI.Component>();
+                        var component = gameObj.GetComponent<Common.Component>();
                         if (component == null)
                             return;
                         
-                        Debug.Log(component.name);
+                        // Debug.Log(component.name);
                         _componentDic?.TryAdd(component.GetType(), component);
                     }
                 });
         }
 
-        public UI.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : UI.Component
+        public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component
         {
-            if (_cachedUIComponentList == null)
+            if (_cachedComponentList == null)
             {
-                _cachedUIComponentList = new();
-                _cachedUIComponentList.Clear();
+                _cachedComponentList = new();
+                _cachedComponentList.Clear();
             }
 
-            UI.Component component = _cachedUIComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
             if (component != null)
                 return component as T;
             else
@@ -76,7 +76,7 @@ namespace GameSystem
                 component = Instantiate(component.gameObject)?.GetComponent<T>();
                 if (component != null)
                 {
-                    _cachedUIComponentList?.Add(component);
+                    _cachedComponentList?.Add(component);
                 }
             }
             
@@ -88,22 +88,22 @@ namespace GameSystem
                     rootTm = rootRectTm;
             }
             
-            component.transform.SetParent(rootTm);
+            component?.transform.SetParent(rootTm);
 
             return component;
         }
         
-        private UI.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : UI.Component where V : UI.ComponentData
+        private Common.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : Common.Component where V : Common.ComponentData
         {
             initialize = false;
             
-            if (_cachedUIComponentList == null)
+            if (_cachedComponentList == null)
             {
-                _cachedUIComponentList = new();
-                _cachedUIComponentList.Clear();
+                _cachedComponentList = new();
+                _cachedComponentList.Clear();
             }
 
-            UI.Component component = _cachedUIComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
             if (component != null)
                 return component as T;
  
@@ -123,7 +123,7 @@ namespace GameSystem
 
             component = Instantiate(component.gameObject, rootTm)?.GetComponent<T>();
             if(component != null)
-                _cachedUIComponentList?.Add(component);
+                _cachedComponentList?.Add(component);
             
             initialize = true;
             // component?.GetComponent<T>()?.Initialize(data);
@@ -131,7 +131,7 @@ namespace GameSystem
             return component;
         }
 
-        public T GetPanel<T, V>(V data = null) where T : UI.Component where V : UI.ComponentData
+        public T GetPanel<T, V>(V data = null) where T : Common.Component where V : Common.ComponentData
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);
@@ -148,7 +148,7 @@ namespace GameSystem
             return panel as T;
         }
         
-        public T GetPopup<T, V>(V data = null) where T : UI.Component where V : UI.ComponentData
+        public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.ComponentData
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);
@@ -184,7 +184,7 @@ namespace GameSystem
         //     return part as T;
         // }
 
-        public void SetPanel(UI.Component component)
+        public void SetPanel(Common.Component component)
         {
             CurrPanel = component;
         }

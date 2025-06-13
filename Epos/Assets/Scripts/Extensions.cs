@@ -4,15 +4,13 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 
-namespace Common
-{
-    public static class Extensions
+public static class Extensions
 {
     public static T AddOrGetComponent<T>(this Component component) where T : Component
     {
         if (!component)
             return default;
-            
+                
         var t = component.GetComponent<T>();
         if (t == null)
         {
@@ -36,29 +34,10 @@ namespace Common
 
         if (component == null)
             return;
-        
+            
         component.gameObject.SetActive(active);
-    }
-        
-    // public static List<T> AddList<T, V>(this V[] arrays) where T : class
-    // {
-    //     if (arrays == null)
-    //         return null;
-    //         
-    //     var list = new List<T>();
-    //     list.Clear();
-    //         
-    //     foreach (V t in arrays)
-    //     {
-    //         if(t == null)
-    //             continue;
-    //             
-    //         list.Add(t as T);
-    //     }
-    //
-    //     return list;
-    // }
-
+    }  
+    
     public static bool IsNullOrEmpty<T>(this List<T> list)
     {
         if (list == null)
@@ -80,7 +59,7 @@ namespace Common
 
         return false;
     }
-    
+        
     public static void RemoveAllChild(this Transform tm)
     {
         if (!tm)
@@ -96,12 +75,34 @@ namespace Common
     {
         if (!tm)
             return;
-        
+            
         tm.position = Vector3.zero;
         tm.rotation = Quaternion.identity;
         tm.localScale = Vector3.one;
     }
-}
+            
+        // public static List<T> AddList<T, V>(this V[] arrays) where T : class
+        // {
+        //     if (arrays == null)
+        //         return null;
+        //         
+        //     var list = new List<T>();
+        //     list.Clear();
+        //         
+        //     foreach (V t in arrays)
+        //     {
+        //         if(t == null)
+        //             continue;
+        //             
+        //         list.Add(t as T);
+        //     }
+        //
+        //     return list;
+        // }
+    
+        
+        
+        
 }
 
 

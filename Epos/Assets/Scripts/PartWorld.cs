@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace UI
 {
-    public class PartWorld<T> : UI.Component<T> where T : PartWorld<T>.Data
+    public class PartWorld<T> : Common.Component<T> where T : PartWorld<T>.Data
     {
-        public class Data : UI.ComponentData
+        public class Data : Common.ComponentData
         {
             public Transform TargetTm = null;
             public float Height = 200f;

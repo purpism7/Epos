@@ -5496,8 +5496,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 2335910119050227253}
-  leftBattlePartyPart: {fileID: 3756406428364445266}
-  rightBattlePartyPart: {fileID: 7712628850356300624}
+  allyBattlePartyPart: {fileID: 3756406428364445266}
+  enemyBattlePartyPart: {fileID: 7712628850356300624}
 --- !u!1 &5862486663323571563
 GameObject:
   m_ObjectHideFlags: 0

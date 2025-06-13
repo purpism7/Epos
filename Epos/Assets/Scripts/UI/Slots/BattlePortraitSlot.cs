@@ -8,7 +8,7 @@ namespace UI.Slots
 {
     public class BattlePortraitSlot : Slot<BattlePortraitSlot.Data>
     {
-        public class Data : ComponentData
+        public class Data : Common.ComponentData
         {
             public int CharacterId { get; private set; } = 0;
 

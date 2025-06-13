@@ -4,7 +4,7 @@ using UnityEngine;
 
 using Common;
 
-namespace UI
+namespace Common
 {
     public class ComponentData
     {

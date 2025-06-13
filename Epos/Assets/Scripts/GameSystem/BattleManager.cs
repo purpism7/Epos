@@ -99,8 +99,8 @@ namespace GameSystem
 
         private async UniTask BeginFieldBattleAsync(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
         {
-            var party = MainManager.Get<IParty>().GetParty(1);
-            var partyInfo = party?.PositionInfos;
+            var allyParty = MainManager.Get<IParty>().GetParty(1);
+            var partyInfo = allyParty?.PositionInfos;
             if (partyInfo.IsNullOrEmpty())
                 return;
             
@@ -119,7 +119,17 @@ namespace GameSystem
                 .SetData(battleModeData)
                 .Create();
             
-            var fieldData = new Battle.Field.Data
+            var allyFieldData = new Battle.Step.Party.FieldData
+            {
+                PartyLocation = left,
+            }.WithParty(allyParty);
+
+            var enemyFieldData = new Battle.Step.Party.FieldData
+            {
+                PartyLocation = right,
+            };
+            
+            var fieldData = new Battle.Field.Data(allyFieldData, enemyFieldData)
             {
                 BattleMode = battleMode,
                 
@@ -130,16 +140,6 @@ namespace GameSystem
                     {
 
                     },
-                },
-
-                LeftPartyData = new Battle.Step.Party.FieldData
-                {
-                    PartyLocation = left,
-                }.WithParty(party),
-
-                RightPartyData = new Battle.Step.Party.FieldData
-                {
-                    PartyLocation = right,
                 },
             };
             

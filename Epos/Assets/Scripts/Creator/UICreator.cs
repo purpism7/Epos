@@ -11,7 +11,7 @@ using Unity.VisualScripting;
 
 namespace Creator
 {
-    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : UI.Component where V : UI.ComponentData
+    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : Common.Component where V : Common.ComponentData
     {
         private V _data = null;
         private RectTransform _rootRectTm = null;
@@ -32,7 +32,7 @@ namespace Creator
         
         public T Create()
         {
-            var component = UIManager.Instance?.Get<T>(_rootRectTm) as UI.Component<V>;
+            var component = UIManager.Instance?.Get<T>(_rootRectTm) as Common.Component<V>;
             
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)

@@ -14,7 +14,7 @@ namespace Parts
 {
     public class FieldPoint : Part<FieldPoint.Data>
     {
-        public class Data : UI.ComponentData
+        public class Data : Common.ComponentData
         {
             public IListener IListener = null;
         }

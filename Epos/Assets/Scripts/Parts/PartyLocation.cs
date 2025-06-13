@@ -8,7 +8,7 @@ using Creature;
 
 namespace Parts
 {
-    public class PartyLocation : UI.Component
+    public class PartyLocation : Common.Component
     {
         // 임시. 캐릭터 데이터 추가 후 생성 방식으로 변경.
         [SerializeField]

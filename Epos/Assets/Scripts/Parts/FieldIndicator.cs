@@ -7,7 +7,7 @@ namespace Parts
 {
     public class FieldIndicator : Part<FieldIndicator.Data>
     {
-        public class Data : UI.ComponentData
+        public class Data : Common.ComponentData
         {
             public Vector3 TargetPos = Vector3.zero;
         }

@@ -7,71 +7,74 @@ using GameSystem;
 using Parts;
 using UI.Parts;
 using UI.Slots;
+using Common;
 
 namespace UI.Panels
 {
     public class BattleForces : UI.Panel<BattleForces.Data>
     {
-        public class Data : UI.ComponentData
+        public class Data : Common.ComponentData
         {
-            public PartyLocation LeftPartyLocation { get; private set; } = null;
-            public PartyLocation RightPartyLocation = null;
+            public Party AllyParty { get; private set; } = null;
+            public Party EnemyParty { get; private set; } = null;
 
-            public Party LeftParty { get; private set; } = null;
-
-            public Data WithLeftPartyLocation(PartyLocation partyLocation)
+            public Data(Party allyParty, Party enemyParty)
             {
-                LeftPartyLocation = partyLocation;
-                return this;
-            }
-            
-            public Data WithRightPartyLocation(PartyLocation partyLocation)
-            {
-                RightPartyLocation = partyLocation;
-                return this;
-            }
-
-            public Data WithLeftParty(Party party)
-            {
-                LeftParty = party;
-                return this;
+                AllyParty = allyParty;
+                EnemyParty = enemyParty;
             }
         }
         
-        [Header("Left")]
-        [SerializeField] private BattlePartyPart leftBattlePartyPart = null;
+        [Header("Ally")]
+        [SerializeField] private BattlePartyPart allyBattlePartyPart = null;
         
-        [Header("Right")]
-        [SerializeField] private BattlePartyPart rightBattlePartyPart = null;
+        [Header("Enemy")]
+        [SerializeField] private BattlePartyPart enemyBattlePartyPart = null;
         
         public override void Initialize(Data data)
         {
             base.Initialize(data);
 
-            leftBattlePartyPart?.Initialize();
-            rightBattlePartyPart?.Initialize();
+            allyBattlePartyPart?.Initialize();
+            enemyBattlePartyPart?.Initialize();
         }
 
         public override void Activate(Data data)
         {
             base.Activate(data);
 
-            var leftBattlePartyPartData = new BattlePartyPart.Data();
-            leftBattlePartyPartData
-                .WithParty(data?.LeftParty)
-                .WithETeam(ETeam.Ally);
-            leftBattlePartyPart?.Activate(leftBattlePartyPartData);
-            
+            ActivateAllyBattleParty();
+            ActivateEnemyBattleParty();
         }
         
         public override void Deactivate()
         {
             base.Deactivate();
 
+            allyBattlePartyPart?.Deactivate();
+            enemyBattlePartyPart?.Deactivate();
             // rightFrontRootRectTm.RemoveAllChild();
             // rightRearRootRectTm.RemoveAllChild();
             // leftFrontRootRectTm.RemoveAllChild();
             // leftRearRootRectTm.RemoveAllChild();
+        }
+
+        private void ActivateAllyBattleParty()
+        {
+            var battlePartyPartData = new BattlePartyPart.Data();
+            battlePartyPartData
+                .WithParty(_data?.AllyParty)
+                .WithETeam(ETeam.Ally);
+            allyBattlePartyPart?.Activate(battlePartyPartData);
+        }
+
+        private void ActivateEnemyBattleParty()
+        {
+            var battlePartyPartData = new BattlePartyPart.Data();
+            battlePartyPartData
+                .WithParty(_data?.EnemyParty)
+                .WithETeam(ETeam.Enemy);
+            enemyBattlePartyPart?.Activate(battlePartyPartData);
         }
     }
 }

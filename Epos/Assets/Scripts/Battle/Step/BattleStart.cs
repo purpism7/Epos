@@ -11,22 +11,19 @@ using UI.Panels;
 using UI.Popups;
 using Creator;
 
-
 namespace Battle.Step
 {
     public class BattleStart : BattleStep<BattleStart.Data>
     {
         public class Data : BaseData
         {
-            public Parts.PartyLocation Left = null;
-            public Parts.PartyLocation Right = null;
-            
-            public Datas.ScriptableObjects.Party LeftParty { get; private set; } = null;
+            public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
+            public Datas.ScriptableObjects.Party EnemyParty { get; private set; } = null;
 
-            public Data WithLeftParty(Datas.ScriptableObjects.Party party)
+            public Data(Datas.ScriptableObjects.Party allyParty, Datas.ScriptableObjects.Party enemyParty)
             {
-                LeftParty = party;
-                return this;
+                AllyParty = allyParty;
+                EnemyParty = enemyParty;
             }
         }
         
@@ -37,10 +34,7 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            var battleForcesData = new BattleForces.Data()
-                .WithLeftParty(_data.LeftParty)
-                .WithLeftPartyLocation(_data.Left)
-                .WithRightPartyLocation(_data.Right);
+            var battleForcesData = new BattleForces.Data(_data?.AllyParty, _data?.EnemyParty);
             
             UICreator<BattleForces, BattleForces.Data>.Get?
                 .SetData(battleForcesData)

@@ -15,8 +15,14 @@ namespace Battle
         public class Data : BaseData
         {
             public Preprocessing.FieldData PreprocessingData = null;
-            public Party.FieldData LeftPartyData = null;
-            public Party.FieldData RightPartyData = null;
+            public Party.FieldData AllyPartyData { get; private set; } = null;
+            public Party.FieldData EnemyPartyData { get; private set; } = null;
+
+            public Data(Party.FieldData allyPartyData, Party.FieldData enemyPartyData)
+            {
+                AllyPartyData = allyPartyData;
+                EnemyPartyData = enemyPartyData;
+            }
         }
         
         public override void Initialize(Data data)
@@ -24,14 +30,11 @@ namespace Battle
             base.Initialize(data);
             
             AddStep<Step.Preprocessing>(_data.PreprocessingData);
-            AddStep<Step.EnemyParty>(_data.RightPartyData);
-            AddStep<Step.AllyParty>(_data.LeftPartyData);
+            AddStep<Step.EnemyParty>(_data.EnemyPartyData);
+            AddStep<Step.AllyParty>(_data.AllyPartyData);
             AddStep<Step.BattleStart>(
-                new BattleStart.Data
-                {
-                    Left = _data?.LeftPartyData?.PartyLocation,
-                    Right = _data?.RightPartyData?.PartyLocation,
-                }.WithLeftParty(_data?.LeftPartyData?.Party), isLast: true);
+                new BattleStart.Data(_data?.AllyPartyData?.Party, _data?.EnemyPartyData?.Party), 
+                isLast: true);
         }
 
         protected override void End()
@@ -39,8 +42,8 @@ namespace Battle
             base.End();
             
             AddStep<BattleResult>();
-            AddStep<Step.EnemyParty>(_data?.RightPartyData?.SetBattleState(false));
-            AddStep<Step.AllyParty>(_data?.LeftPartyData?.SetBattleState(false));
+            AddStep<Step.EnemyParty>(_data?.EnemyPartyData?.SetBattleState(false));
+            AddStep<Step.AllyParty>(_data?.AllyPartyData?.SetBattleState(false));
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {
