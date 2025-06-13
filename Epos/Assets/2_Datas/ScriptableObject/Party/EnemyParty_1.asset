@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 69a49a887a44f4add934e193cc41df15, type: 3}
-  m_Name: Party_1
+  m_Name: EnemyParty_1
   m_EditorClassIdentifier: 
   Id: 1
-  eTeam: 1
+  eTeam: 2
   PositionInfos:
   - Position: 3
-    CharacterId: 10001
-  - Position: 5
-    CharacterId: 10003
-  - Position: 1
-    CharacterId: 10002
-  - Position: 4
-    CharacterId: 10004
+    CharacterId: 90001

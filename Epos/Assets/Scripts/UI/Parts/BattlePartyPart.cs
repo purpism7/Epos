@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ using UI.Parts;
 using Datas.ScriptableObjects;
 using GameSystem.Event;
 using Common;
+using EventHandler = GameSystem.Event.EventHandler;
 
 namespace UI.Parts
 {
@@ -98,7 +100,9 @@ namespace UI.Parts
 
         private void OnSkillUse(SkillUseEventData eventData)
         {
-            if (eventData == null ||
+            skillNameTMP?.SetText(string.Empty);
+            
+            if (eventData?.Skill == null ||
                 _data == null)
                 return;
             

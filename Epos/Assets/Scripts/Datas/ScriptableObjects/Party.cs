@@ -12,7 +12,8 @@ namespace Datas.ScriptableObjects
     public class Party : ScriptableObject
     {
         public int Id = 0;
-
+        [SerializeField] private ETeam eTeam = ETeam.None;
+        
         [Serializable]
         public class PositionInfo
         {
@@ -21,5 +22,6 @@ namespace Datas.ScriptableObjects
         }
         
         public PositionInfo[] PositionInfos = null;
+        public ETeam ETeam => eTeam;
     }
 }

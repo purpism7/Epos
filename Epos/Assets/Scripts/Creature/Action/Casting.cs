@@ -48,14 +48,7 @@ namespace Creature.Action
         {
             _data?.IListener?.BeforeCasting();
             if (_data != null)
-            {
-                ETeam eTeam = ETeam.None;
-                var iCombatant = _data.ICaster as ICombatant;
-                if (iCombatant != null)
-                    eTeam = iCombatant.ETeam;
-                
-                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, eTeam));
-            }
+                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, ETeam));
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);
@@ -76,10 +69,26 @@ namespace Creature.Action
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _data?.IListener?.AfterCasting();            
+            _data?.IListener?.AfterCasting();      
             
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             _endAction?.Invoke();
+            
+            if (_data != null)
+                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(null, ETeam));
+        }
+
+        private ETeam ETeam
+        {
+            get
+            {
+                ETeam eTeam = ETeam.None;
+                var iCombatant = _data.ICaster as ICombatant;
+                if (iCombatant != null)
+                    eTeam = iCombatant.ETeam;
+
+                return eTeam;
+            }
         }
     }
 }

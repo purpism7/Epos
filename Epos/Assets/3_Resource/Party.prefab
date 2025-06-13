@@ -110,4 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   row: 2
   column: 3
+  rowOffsetXList:
+  - 0
+  - 0
   cellGameObj: {fileID: 5766430387326212650, guid: ac8daa8a28ada4e7685917c7151d451d, type: 3}

@@ -97,7 +97,7 @@ namespace GameSystem
             BeginFieldBattleAsync(left, right, pointTm).Forget();
         }
 
-        private async UniTask BeginFieldBattleAsync(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
+        private async UniTask BeginFieldBattleAsync(Parts.PartyLocation allyPartyLocation, Parts.PartyLocation enemyPartyLocation, Transform pointTm)
         {
             var allyParty = MainManager.Get<IParty>().GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
@@ -109,10 +109,10 @@ namespace GameSystem
                 EType = TurnBased.EType.ActionSpeed,
             };
 
-            var enemyICombatantList = await SetEnemyICombatantsAsync(right);
+            var enemyICombatantList = await SetEnemyICombatantsAsync(enemyPartyLocation);
             battleModeData.EnemyICombatantList?.AddRange(enemyICombatantList);
             
-            var allyICombatantList = await SetAllyICombatantsAsync(left);
+            var allyICombatantList = await SetAllyICombatantsAsync(allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
@@ -121,13 +121,13 @@ namespace GameSystem
             
             var allyFieldData = new Battle.Step.Party.FieldData
             {
-                PartyLocation = left,
+                PartyLocation = allyPartyLocation,
             }.WithParty(allyParty);
 
             var enemyFieldData = new Battle.Step.Party.FieldData
             {
-                PartyLocation = right,
-            };
+                PartyLocation = enemyPartyLocation,
+            }.WithParty(enemyPartyLocation.EnmeyParty);
             
             var fieldData = new Battle.Field.Data(allyFieldData, enemyFieldData)
             {
@@ -148,16 +148,16 @@ namespace GameSystem
 
         private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Parts.PartyLocation left)
         {
-            var partyInfo = MainManager.Get<IParty>().GetParty(1)?.PositionInfos;
-            if (partyInfo.IsNullOrEmpty())
+            var positionInfos = MainManager.Get<IParty>().GetParty(1)?.PositionInfos;
+            if (positionInfos.IsNullOrEmpty())
                 return null;
 
             List<ICombatant> iCombatantList = new();
             iCombatantList.Clear();
             
-            for (int i = 0; i < partyInfo?.Length; ++i)
+            for (int i = 0; i < positionInfos?.Length; ++i)
             {
-                var info = partyInfo[i];
+                var info = positionInfos[i];
                 if(info == null)
                     continue;
                 
@@ -170,33 +170,36 @@ namespace GameSystem
                 ICombatant iCombatant = hero;
                 iCombatant?.SetPosition(pos);
                 
-                // hero?.Initialize();
-                // hero?.Deactivate();
-  
                 iCombatantList.Add(iCombatant);
             }
 
             return iCombatantList;
         }
         
-        private async UniTask<List<ICombatant>> SetEnemyICombatantsAsync(Parts.PartyLocation right)
+        private async UniTask<List<ICombatant>> SetEnemyICombatantsAsync(Parts.PartyLocation partyLocation)
         {
-            if (right.CharacterList.IsNullOrEmpty())
+            // if (right.CharacterList.IsNullOrEmpty())
+            //     return null;
+            
+            var positionInfos = partyLocation?.EnmeyParty?.PositionInfos;
+            if (positionInfos.IsNullOrEmpty())
                 return null;
 
             List<ICombatant> iCombatantList = new();
             iCombatantList.Clear();
             
-            for (int i = 0; i < right.CharacterList.Count; ++i)
+            for (int i = 0; i < positionInfos?.Length; ++i)
             {
-                var characterId = right.CharacterList[i];
+                var info = positionInfos[i];
+                if(info == null)
+                    continue;
                
-                var monster = MainManager.Get<ICharacterManager>().Create<Monster>(characterId, right.CharacterRootTm);
+                var monster = MainManager.Get<ICharacterManager>().Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => monster != null);
                 monster?.Initialize();
                 monster?.Activate();
                 
-                var pos = right.GetPartyPosition(monster.PartyPosition);
+                var pos = partyLocation.GetPartyPosition(info.Position);
                 
                 ICombatant iCombatant = monster;
                 iCombatant.SetPosition(pos);

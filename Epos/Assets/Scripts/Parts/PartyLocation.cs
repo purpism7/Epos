@@ -5,19 +5,23 @@ using System.Linq;
 using UnityEngine;
 
 using Creature;
+using Datas.ScriptableObjects;
 
 namespace Parts
 {
     public class PartyLocation : Common.Component
     {
         // 임시. 캐릭터 데이터 추가 후 생성 방식으로 변경.
+        // [SerializeField]
+        // private int[] characterIds = null;
         [SerializeField]
-        private int[] characterIds = null;
+        private Party enemyParty = null;
 
         [SerializeField] private Transform characterRootTm = null;
         [SerializeField] private GameSystem.Grid grid = null;
 
-        public List<int> CharacterList => characterIds?.ToList(); 
+        // public List<int> CharacterList => characterIds?.ToList(); 
+        public Party EnmeyParty => enemyParty;
         
         public Transform CharacterRootTm => characterRootTm;
         

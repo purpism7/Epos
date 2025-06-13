@@ -4315,6 +4315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 8140457533997870285}
   characterIds: 
+  enemyParty: {fileID: 0}
   characterRootTm: {fileID: 4776034989073263724}
   grid: {fileID: 8366905261009964658}
 --- !u!1 &3770720509010425472
@@ -11454,6 +11455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 294352912331399190}
   characterIds: 915f0100
+  enemyParty: {fileID: 11400000, guid: 35aa933c674554d36a5a19633a1d2b46, type: 2}
   characterRootTm: {fileID: 4374613406659792674}
   grid: {fileID: 6113136820010487708}
 --- !u!1 &8905920356401065777
