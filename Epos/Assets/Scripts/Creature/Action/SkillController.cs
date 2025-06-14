@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 using Datas.ScriptableObjects;
+using Common;
 
 namespace Creature.Action
 {

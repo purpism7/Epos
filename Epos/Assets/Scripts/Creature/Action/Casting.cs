@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
 using GameSystem.Event;
+using Common;
 
 
 namespace Creature.Action

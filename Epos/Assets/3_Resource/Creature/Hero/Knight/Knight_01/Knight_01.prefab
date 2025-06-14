@@ -48,10 +48,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 10001
+  eClass: 1
   rootTm: {fileID: 7668903545576191951}
   actionSpeed: 3
   moveSpeed: 20
-  attack: 2
+  attack: 1.5
   attackRange: 3
   maxHp: 50.4
   activePoint: 1

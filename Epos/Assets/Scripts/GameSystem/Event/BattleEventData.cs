@@ -2,16 +2,18 @@ using UnityEngine;
 
 using Creature;
 using Datas.ScriptableObjects;
+using Common;
 
 namespace GameSystem.Event
 {
     public class StatChangedEventData : EventData
     {
-        // public int CharacterId { get; private set; } = 0;
+        public int CharacterId { get; private set; } = 0;
         public IStat IStat { get; private set; } = null; 
         
-        public StatChangedEventData(IStat iStat)
+        public StatChangedEventData(int characterId, IStat iStat)
         {
+            CharacterId = characterId;
             IStat = iStat;
         }
     }

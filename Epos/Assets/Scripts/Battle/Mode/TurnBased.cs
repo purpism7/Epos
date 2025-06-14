@@ -12,6 +12,7 @@ using Creature;
 using Creature.Action;
 using Common;
 using GameSystem.Event;
+using EventHandler = GameSystem.Event.EventHandler;
 
 namespace Battle.Mode
 {
@@ -82,6 +83,8 @@ namespace Battle.Mode
                         
                         iCombatant.SetETeam(ETeam.Ally);
                         _priorityICombatantList?.Add(iCombatant);
+                        
+                        EventHandler.Notify(new StatChangedEventData(iCombatant.Id, iCombatant.IStat));
                     }
                     
                     foreach (var iCombatant in _data?.EnemyICombatantList)
@@ -92,6 +95,8 @@ namespace Battle.Mode
                         iCombatant.SetETeam(ETeam.Enemy);
                         iCombatant.IActCtr?.SetPosition(iCombatant.Transform.position);
                         _priorityICombatantList?.Add(iCombatant);
+                        
+                        EventHandler.Notify(new StatChangedEventData(iCombatant.Id, iCombatant.IStat));
                     }
                     
                     _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();

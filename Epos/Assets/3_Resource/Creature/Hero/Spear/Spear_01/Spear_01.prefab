@@ -180,7 +180,7 @@ MonoBehaviour:
   rootTm: {fileID: 8223724037266528934}
   actionSpeed: 9
   moveSpeed: 3
-  attack: 2.6
+  attack: 3.1
   attackRange: 0
   maxHp: 26.4
   activePoint: 1

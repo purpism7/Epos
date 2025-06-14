@@ -43,15 +43,14 @@ namespace UI.Parts
             base.Initialize();
             
             _battlePortraitSlots = rootTm.GetComponentsInChildren<BattlePortraitSlot>();
-            
-            EventHandler.Add<GameSystem.Event.StatChangedEventData>(OnStatChanged);
-            EventHandler.Add<GameSystem.Event.SkillUseEventData>(OnSkillUse);
         }
 
         public override void Activate(Data data)
         {
             base.Activate(data);
 
+            EventHandler.Add<GameSystem.Event.SkillUseEventData>(OnSkillUse);
+            
             skillNameTMP?.SetText(string.Empty);
             
             ApplyParty();
@@ -61,7 +60,6 @@ namespace UI.Parts
         {
             base.Deactivate();
             
-            EventHandler.Remove<GameSystem.Event.StatChangedEventData>(OnStatChanged);
             EventHandler.Remove<GameSystem.Event.SkillUseEventData>(OnSkillUse);
         }
 
@@ -83,21 +81,28 @@ namespace UI.Parts
                         
                     if (i != positionInfo.Position - 1)
                         continue;
+
+                    EClass eClass = EClass.None;
+                    switch (positionInfo.CharacterId)
+                    {
+                        case 10001:
+                        case 10002:
+                            eClass = EClass.Knight;
+                            break;
                         
-                    var battlePortraitSlotData = new BattlePortraitSlot.Data()
-                        .WithCharacterId(positionInfo.CharacterId);
+                        case 10003:
+                            eClass = EClass.Priest;
+                            break;
+                    }
+                    
+                    var battlePortraitSlotData = new BattlePortraitSlot.Data(positionInfo.CharacterId, eClass);
                             
                     _battlePortraitSlots[i]?.Activate(battlePortraitSlotData);
                     break;
                 }
             }
         }
-
-        private void OnStatChanged(StatChangedEventData eventData)
-        {
-            // Debug.Log(eventData.CharaerId);
-        }
-
+        
         private void OnSkillUse(SkillUseEventData eventData)
         {
             skillNameTMP?.SetText(string.Empty);

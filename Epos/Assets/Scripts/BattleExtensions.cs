@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 using Creature;
+using Common;
 
 public static class BattleExtensions
 {

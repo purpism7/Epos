@@ -9,7 +9,6 @@ namespace Creature
 {
     public class Monster : Character
     {
-        
         public override string AnimationKey<T>(Act<T> act)
         {
             switch (act)

@@ -17,10 +17,9 @@ namespace Creature
     public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
     {
         #region Inspector
-
         [SerializeField] private int id = 0;
+        [SerializeField] private EClass eClass = EClass.None;
         [SerializeField] private Transform rootTm = null;
-
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
@@ -54,7 +53,7 @@ namespace Creature
 
         #region ICombatant
 
-        public ETeam ETeam { get; private set; } = ETeam.None;
+        public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
         public EFormation EFormation { get; private set; } = EFormation.None;
 
         public int PartyPosition

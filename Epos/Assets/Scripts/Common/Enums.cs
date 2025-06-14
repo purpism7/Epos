@@ -2,17 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public enum EFormation
-{ 
-    None,
-        
-    Front,
-    Rear,
-}
-    
-public enum ETeam
+namespace Common
 {
+    public enum EClass
+    {
+        None,
+        
+        Knight,
+        Archer,
+        Assassin,
+        Mechanic,
+        Priest,
+    }
+    
+    public enum EFormation
+    { 
+        None,
+        
+        Front,
+        Rear,
+    }
+    
+    public enum ETeam
+    {
         None,
         
         Ally,
@@ -38,4 +50,8 @@ public enum ETeam
         FarOne,
     }
     #endregion
+}
+
+    
+   
 
