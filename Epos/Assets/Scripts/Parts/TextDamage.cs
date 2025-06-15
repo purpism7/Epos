@@ -51,9 +51,10 @@ namespace Parts
             
             rootRectTm.anchoredPosition = startPos.Value;
             var endPos = startPos.Value;
-            endPos.y += 100f;   
+            endPos.y += 50f;   
             
-            await rootRectTm.DOLocalMove(endPos, 1f).SetUpdate(true).SetEase(Ease.Linear);
+            // await rootRectTm.DOLocalMove(endPos, 1f).SetUpdate(true).SetEase(Ease.Linear);
+            await rootRectTm.DOLocalMoveY(endPos.y, 0.5f).SetEase(Ease.OutBack);
             
             Deactivate();
         }

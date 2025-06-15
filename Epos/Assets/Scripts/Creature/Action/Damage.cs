@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem.Event;
+using Creator;
 using UnityEngine;
+
+using GameSystem.Event;
+using Parts;
 
 namespace Creature.Action
 {
@@ -26,9 +29,19 @@ namespace Creature.Action
                 
                 _iActor?.IStat?.Add(Stat.EType.Hp, -damage);
                 
+                UICreator<TextDamage, TextDamage.Data>.Get?
+                    .Create()?
+                    .Activate(new TextDamage.Data
+                    {
+                        TargetTm = _iActor?.Transform,
+                        Damage = damage
+                    });
+                
                 if(_iActor != null)
                     EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
             }
+            
+            
             
             // _iActor?.EventHandler?.Invoke(_data?.ICaster);
         }
