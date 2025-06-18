@@ -47,11 +47,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _Ambient: 0.5
-    - _Bevel: 0.5
+    - _Bevel: 1
     - _BevelClamp: 0
-    - _BevelOffset: 0
-    - _BevelRoundness: 0
-    - _BevelWidth: 0
+    - _BevelOffset: -0.134
+    - _BevelRoundness: 1
+    - _BevelWidth: 0.5
     - _BumpFace: 0
     - _BumpOutline: 0
     - _ColorMask: 15
@@ -65,7 +65,7 @@ Material:
     - _GlowOuter: 0.05
     - _GlowPower: 0.75
     - _GradientScale: 5
-    - _LightAngle: 3.1416
+    - _LightAngle: 4.66
     - _MaskSoftnessX: 0
     - _MaskSoftnessY: 0
     - _OutlineSoftness: 0
@@ -103,7 +103,7 @@ Material:
     - _FaceColor: {r: 1, g: 1, b: 1, a: 1}
     - _GlowColor: {r: 0, g: 1, b: 0, a: 0.5}
     - _MaskCoord: {r: 0, g: 0, b: 32767, a: 32767}
-    - _OutlineColor: {r: 0.6666667, g: 0.45098042, b: 0.16862746, a: 1}
+    - _OutlineColor: {r: 0.6666667, g: 0.4509804, b: 0.16862746, a: 1}
     - _ReflectFaceColor: {r: 0, g: 0, b: 0, a: 1}
     - _ReflectOutlineColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
@@ -318,33 +318,101 @@ MonoBehaviour:
   m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: 39
+    m_Width: 30
     m_Height: 45
   - m_X: 0
     m_Y: 45
-    m_Width: 21
+    m_Width: 30
     m_Height: 45
   - m_X: 0
     m_Y: 90
     m_Width: 27
-    m_Height: 33
-  m_FreeGlyphRects:
-  - m_X: 39
-    m_Y: 0
-    m_Width: 88
-    m_Height: 127
+    m_Height: 45
   - m_X: 0
-    m_Y: 123
-    m_Width: 127
-    m_Height: 4
-  - m_X: 21
-    m_Y: 45
-    m_Width: 106
+    m_Y: 135
+    m_Width: 27
+    m_Height: 45
+  - m_X: 0
+    m_Y: 180
+    m_Width: 27
     m_Height: 45
   - m_X: 27
+    m_Y: 90
+    m_Width: 27
+    m_Height: 45
+  - m_X: 30
+    m_Y: 0
+    m_Width: 27
+    m_Height: 45
+  - m_X: 30
     m_Y: 45
-    m_Width: 100
-    m_Height: 82
+    m_Width: 27
+    m_Height: 45
+  - m_X: 27
+    m_Y: 135
+    m_Width: 27
+    m_Height: 45
+  - m_X: 27
+    m_Y: 180
+    m_Width: 27
+    m_Height: 45
+  - m_X: 54
+    m_Y: 90
+    m_Width: 27
+    m_Height: 45
+  - m_X: 57
+    m_Y: 0
+    m_Width: 21
+    m_Height: 45
+  - m_X: 57
+    m_Y: 45
+    m_Width: 21
+    m_Height: 45
+  - m_X: 78
+    m_Y: 0
+    m_Width: 15
+    m_Height: 45
+  - m_X: 78
+    m_Y: 45
+    m_Width: 30
+    m_Height: 33
+  - m_X: 93
+    m_Y: 0
+    m_Width: 30
+    m_Height: 33
+  - m_X: 54
+    m_Y: 135
+    m_Width: 27
+    m_Height: 33
+  m_FreeGlyphRects:
+  - m_X: 0
+    m_Y: 225
+    m_Width: 255
+    m_Height: 30
+  - m_X: 81
+    m_Y: 78
+    m_Width: 174
+    m_Height: 177
+  - m_X: 78
+    m_Y: 78
+    m_Width: 177
+    m_Height: 12
+  - m_X: 93
+    m_Y: 33
+    m_Width: 162
+    m_Height: 12
+  - m_X: 108
+    m_Y: 33
+    m_Width: 147
+    m_Height: 222
+  - m_X: 123
+    m_Y: 0
+    m_Width: 132
+    m_Height: 255
+  - m_X: 54
+    m_Y: 168
+    m_Width: 201
+    m_Height: 87
   m_FontFeatureTable:
     m_MultipleSubstitutionRecords: []
     m_LigatureSubstitutionRecords: []
