@@ -1,0 +1,52 @@
+Skill_Ch_E_01.png
+size:1024,1024
+filter:Linear,Linear
+pma:true
+scale:0.2
+Hair
+bounds:2,379,460,245
+offsets:0,0,463,245
+Head
+bounds:353,97,220,358
+rotate:90
+Layer 10
+bounds:464,579,51,45
+offsets:0,1,51,46
+Layer 11
+bounds:918,282,88,102
+offsets:2,0,91,102
+Layer 13
+bounds:713,155,203,162
+offsets:0,0,205,162
+Layer 15
+bounds:869,829,180,130
+rotate:90
+Layer 16
+bounds:2,626,606,383
+offsets:1,0,607,384
+Layer 18
+bounds:713,35,118,133
+rotate:90
+Layer 19
+bounds:825,386,175,162
+rotate:90
+Layer 2
+bounds:464,319,359,242
+Layer 21
+bounds:2,146,349,231
+offsets:3,0,352,231
+Layer 22
+bounds:610,563,446,257
+offsets:11,0,457,257
+rotate:90
+Layer 23
+bounds:869,570,114,140
+rotate:90
+Layer 3
+bounds:848,51,150,102
+Layer 8
+bounds:2,64,88,80
+Layer 9
+bounds:918,186,88,94
+Ribbon
+bounds:869,686,128,141
