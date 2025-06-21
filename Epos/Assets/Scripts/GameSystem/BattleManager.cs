@@ -10,6 +10,8 @@ using Battle.Step;
 using Creature;
 using Entities;
 using Common;
+using Parts;
+using Field = Battle.Field;
 
 namespace GameSystem
 {
@@ -103,16 +105,13 @@ namespace GameSystem
             var partyInfo = allyParty?.PositionInfos;
             if (partyInfo.IsNullOrEmpty())
                 return;
-            
-            var battleModeData = new TurnBased.Data
-            {
-                EType = TurnBased.EType.ActionSpeed,
-            };
+
+            var battleModeData = new TurnBased.Data(TurnBased.EType.ActionSpeed);
 
             var enemyICombatantList = await SetEnemyICombatantsAsync(enemyPartyLocation);
             battleModeData.EnemyICombatantList?.AddRange(enemyICombatantList);
-            
-            var allyICombatantList = await SetAllyICombatantsAsync(allyPartyLocation);
+
+            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
@@ -146,9 +145,9 @@ namespace GameSystem
             Begin<Field, Battle.Field.Data>(fieldData);
         }
 
-        private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Parts.PartyLocation left)
+        private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Datas.ScriptableObjects.Party party, PartyLocation partyLocation)
         {
-            var positionInfos = MainManager.Get<IParty>().GetParty(1)?.PositionInfos;
+            var positionInfos = party?.PositionInfos;
             if (positionInfos.IsNullOrEmpty())
                 return null;
 
@@ -161,10 +160,10 @@ namespace GameSystem
                 if(info == null)
                     continue;
                 
-                var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, left.CharacterRootTm);
+                var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
                 
-                var pos = left.GetPartyPosition(info.Position - 1);
+                var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 pos.x -= 100f;
                 
                 ICombatant iCombatant = hero;

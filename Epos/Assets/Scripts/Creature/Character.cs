@@ -54,12 +54,12 @@ namespace Creature
         #region ICombatant
 
         public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
-        public EFormation EFormation { get; private set; } = EFormation.None;
+        // public EFormation EFormation { get; private set; } = EFormation.None;
 
-        public int PartyPosition
-        {
-            get { return position; }
-        }
+        // public int PartyPosition
+        // {
+        //     get { return position; }
+        // }
 
         #endregion
 
@@ -209,10 +209,10 @@ namespace Creature
             ETeam = eTeam;
         }
 
-        void ICombatant.SetEFormation(EFormation eFormation)
-        {
-            EFormation = eFormation;
-        }
+        // void ICombatant.SetEFormation(EFormation eFormation)
+        // {
+        //     EFormation = eFormation;
+        // }
 
         void ICombatant.SetPosition(Vector3 pos)
         {

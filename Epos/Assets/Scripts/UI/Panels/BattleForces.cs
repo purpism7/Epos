@@ -8,6 +8,8 @@ using Parts;
 using UI.Parts;
 using UI.Slots;
 using Common;
+using GameSystem.Event;
+using TMPro;
 
 namespace UI.Panels
 {
@@ -24,6 +26,8 @@ namespace UI.Panels
                 EnemyParty = enemyParty;
             }
         }
+
+        [SerializeField] private TextMeshProUGUI useSkillNameTMP = null;
         
         [Header("Ally")]
         [SerializeField] private BattlePartyPart allyBattlePartyPart = null;
@@ -42,9 +46,13 @@ namespace UI.Panels
         public override void Activate(Data data)
         {
             base.Activate(data);
-
+            
+            useSkillNameTMP?.SetText(string.Empty);
+            
             ActivateAllyBattleParty();
             ActivateEnemyBattleParty();
+            
+            EventHandler.Add<SkillUseEventData>(OnSkillUse);
         }
         
         public override void Deactivate()
@@ -53,10 +61,8 @@ namespace UI.Panels
 
             allyBattlePartyPart?.Deactivate();
             enemyBattlePartyPart?.Deactivate();
-            // rightFrontRootRectTm.RemoveAllChild();
-            // rightRearRootRectTm.RemoveAllChild();
-            // leftFrontRootRectTm.RemoveAllChild();
-            // leftRearRootRectTm.RemoveAllChild();
+            
+            EventHandler.Remove<SkillUseEventData>(OnSkillUse);
         }
 
         private void ActivateAllyBattleParty()
@@ -75,6 +81,21 @@ namespace UI.Panels
                 .WithParty(_data?.EnemyParty)
                 .WithETeam(ETeam.Enemy);
             enemyBattlePartyPart?.Activate(battlePartyPartData);
+        }
+
+        private void OnSkillUse(SkillUseEventData eventData)
+        {
+            useSkillNameTMP?.SetText(string.Empty);
+            
+            if (eventData?.Skill == null ||
+                _data == null)
+                return;
+            
+            // if (eventData.ETeam != _data.ETeam)
+            //     return;
+            
+            Debug.Log(eventData.Skill.name);
+            useSkillNameTMP?.SetText(eventData.Skill?.name);
         }
     }
 }

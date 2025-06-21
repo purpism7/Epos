@@ -20,7 +20,12 @@ namespace Battle.Mode
     {
         public class Data : BaseData
         {
-            public EType EType = EType.None;
+            public EType EType { get; private set; } = EType.None;
+
+            public Data(EType eType)
+            {
+                EType = eType;
+            }
         }
         
         public enum EType
@@ -119,11 +124,11 @@ namespace Battle.Mode
             if (allyICombatantList.IsNullOrEmpty())
                 return;
 
-            var sortAllyICombatantList = allyICombatantList?.OrderBy(iCombatant => iCombatant.PartyPosition).ToList();
+            // var sortAllyICombatantList = allyICombatantList?.OrderBy(iCombatant => iCombatant.PartyPosition).ToList();
             
-            for (int i = 0; i < sortAllyICombatantList?.Count; ++i)
+            for (int i = 0; i < allyICombatantList?.Count; ++i)
             {
-                var iCombatant = sortAllyICombatantList[i];
+                var iCombatant = allyICombatantList[i];
                 if(iCombatant == null)
                     continue;
 

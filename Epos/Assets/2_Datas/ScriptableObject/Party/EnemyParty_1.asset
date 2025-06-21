@@ -17,3 +17,5 @@ MonoBehaviour:
   PositionInfos:
   - Position: 3
     CharacterId: 90001
+  - Position: 2
+    CharacterId: 90002

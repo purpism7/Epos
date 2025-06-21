@@ -5496,6 +5496,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 2335910119050227253}
+  useSkillNameTMP: {fileID: 1941798754909949530}
   allyBattlePartyPart: {fileID: 3756406428364445266}
   enemyBattlePartyPart: {fileID: 7712628850356300624}
 --- !u!1 &5862486663323571563
