@@ -124,11 +124,11 @@ namespace Battle.Mode
             if (allyICombatantList.IsNullOrEmpty())
                 return;
 
-            // var sortAllyICombatantList = allyICombatantList?.OrderBy(iCombatant => iCombatant.PartyPosition).ToList();
+            var sortAllyICombatantList = allyICombatantList?.OrderBy(iCombatant => iCombatant.PartyPosition).ToList();
             
-            for (int i = 0; i < allyICombatantList?.Count; ++i)
+            for (int i = 0; i < sortAllyICombatantList?.Count; ++i)
             {
-                var iCombatant = allyICombatantList[i];
+                var iCombatant = sortAllyICombatantList[i];
                 if(iCombatant == null)
                     continue;
 

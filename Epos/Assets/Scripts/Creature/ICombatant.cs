@@ -15,7 +15,8 @@ namespace Creature
         // void SetEFormation(EFormation eFormation);
         // public EFormation EFormation { get; }
         
-        // int PartyPosition { get; }
+        int PartyPosition { get; }
+        void SetPartyPosition(int partPosition);
         void SetPosition(Vector3 position);
     }
 }

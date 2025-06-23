@@ -13,6 +13,7 @@ namespace Common
         Assassin,
         Mechanic,
         Priest,
+        Wizard,
     }
     
     public enum EFormation

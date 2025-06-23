@@ -71,8 +71,7 @@ namespace Creature.Action
 
                 iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
             }
-            // else
-            
+
             Vector2 direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
                 iActorTm.localScale = new Vector3(-1, 1, 1);

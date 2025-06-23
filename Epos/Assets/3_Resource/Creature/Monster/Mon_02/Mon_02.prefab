@@ -55,7 +55,7 @@ MonoBehaviour:
   attack: 23.3
   attackRange: 2
   maxHp: 30.7
-  activePoint: 1
+  activePoint: 5
   passivePoint: 1
   position: 2
 --- !u!114 &5657995243914497316

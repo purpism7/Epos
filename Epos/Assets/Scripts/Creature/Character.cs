@@ -23,6 +23,7 @@ namespace Creature
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
+        private int _partyPosition = 0;
 
         public int Id
         {
@@ -56,11 +57,7 @@ namespace Creature
         public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
         // public EFormation EFormation { get; private set; } = EFormation.None;
 
-        // public int PartyPosition
-        // {
-        //     get { return position; }
-        // }
-
+        public int PartyPosition => _partyPosition;
         #endregion
 
         #region Temp Stat
@@ -82,11 +79,11 @@ namespace Creature
         private float maxHp = 1f;
         
         [SerializeField] 
-        [Range(1f, 5f)] private float activePoint = 1f;
+        [Range(1, 5)] private float activePoint = 1f;
         [SerializeField] 
-        [Range(1f, 5f)] private float passivePoint = 1f;
+        [Range(1, 5)] private float passivePoint = 1f;
 
-        [SerializeField] private int position = 0;
+        // [SerializeField] private int position = 0;
 
         #endregion
 
@@ -214,6 +211,11 @@ namespace Creature
         //     EFormation = eFormation;
         // }
 
+        void ICombatant.SetPartyPosition(int partyPosition)
+        {
+            partyPosition = partyPosition;
+        }
+        
         void ICombatant.SetPosition(Vector3 pos)
         {
             transform.position = pos;

@@ -56,8 +56,7 @@ MonoBehaviour:
   attackRange: 3
   maxHp: 50.4
   activePoint: 1
-  passivePoint: 1
-  position: 3
+  passivePoint: 2
 --- !u!114 &-3612029396317345574
 MonoBehaviour:
   m_ObjectHideFlags: 0

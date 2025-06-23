@@ -74,8 +74,9 @@ namespace UI.Slots
             
             if (classImg == null)
                 return;
-            
-            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetSprite("Common", $"Img_Class_{_data.EClass}");
+
+            var spriteName = $"Img_Class_{_data.EClass}";
+            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetSprite("Common", spriteName);
             classImg.sprite = sprite;
             
             classImg?.SetActive(true);

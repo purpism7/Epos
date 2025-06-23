@@ -6,11 +6,11 @@ using TMPro;
 
 using UI.Slots;
 using UI.Parts;
-
-using Datas.ScriptableObjects;
 using GameSystem.Event;
 using Common;
+using Entities;
 using EventHandler = GameSystem.Event.EventHandler;
+using Party = Datas.ScriptableObjects.Party;
 
 namespace UI.Parts
 {
@@ -81,7 +81,8 @@ namespace UI.Parts
                         
                     if (i != positionInfo.Position - 1)
                         continue;
-
+                    
+                    // 데이터화
                     EClass eClass = EClass.None;
                     switch (positionInfo.CharacterId)
                     {
@@ -91,13 +92,17 @@ namespace UI.Parts
                             break;
                         
                         case 10003:
-                            eClass = EClass.Priest;
+                            eClass = EClass.Wizard;
+                            break;
+                        
+                        case 10004:
+                            eClass = EClass.Assassin;
                             break;
                     }
                     
                     var battlePortraitSlotData = new BattlePortraitSlot.Data(positionInfo.CharacterId, eClass);
-                            
                     _battlePortraitSlots[i]?.Activate(battlePortraitSlotData);
+                    
                     break;
                 }
             }
@@ -109,6 +114,9 @@ namespace UI.Parts
             
             if (eventData?.Skill == null ||
                 _data == null)
+                return;
+
+            if (eventData.Skill.ESkillCategory != ESkillCategory.Passive)
                 return;
             
             if (eventData.ETeam != _data.ETeam)
