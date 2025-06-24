@@ -195,12 +195,16 @@ namespace Battle.Mode
 
         private void EndTurn()
         {
+            EventHandler.Notify<TurnBasedEventData>(new EndTurnEventData(_turn));
+            
             StartTurnAsync().Forget();
         }
 
         private void SetTurn(int turn)
         {
             _turn = turn;
+            
+            EventHandler.Notify<TurnBasedEventData>(new StartTurnEventData(_turn));
             Debug.Log(turn);
         }
         
@@ -448,7 +452,15 @@ namespace Battle.Mode
                 targetList.Add(target);
             }
             
-            attacker.IActCtr?.CastingSkill(this, attacker, skill, targetList); 
+            attacker.IActCtr?.CastingSkill(this, attacker, skill, targetList);
+
+            // if (skill.ESkillCategory == ESkillCategory.Active)
+            {
+                var eventData = new SkillUseEventData();
+                eventData.WithSkill(skill);
+                eventData.WithETeam(attacker.ETeam);
+                GameSystem.Event.EventHandler.Notify(eventData);
+            }
         }
         
         private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)

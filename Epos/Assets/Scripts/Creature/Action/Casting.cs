@@ -48,8 +48,8 @@ namespace Creature.Action
         private async UniTask CastingAsync()
         {
             _data?.IListener?.BeforeCasting();
-            if (_data != null)
-                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, ETeam));
+            // if (_data != null)
+            //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, ETeam));
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);
@@ -63,7 +63,7 @@ namespace Creature.Action
             if (_data?.TargetList != null &&
                 !_data.Skill.SameTeam)
             {
-                foreach (var target in _data?.TargetList)
+                foreach (var target in _data.TargetList)
                 {
                     target?.IActCtr?.TakeDamage(_data?.ICaster);
                 }
@@ -75,8 +75,8 @@ namespace Creature.Action
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             _endAction?.Invoke();
             
-            if (_data != null)
-                GameSystem.Event.EventHandler.Notify(new SkillUseEventData(null, ETeam));
+            // if (_data != null)
+            //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData().WithETeam(ETeam));
         }
 
         private ETeam ETeam

@@ -49,7 +49,8 @@ namespace UI.Parts
         {
             base.Activate(data);
 
-            EventHandler.Add<GameSystem.Event.SkillUseEventData>(OnSkillUse);
+            EventHandler.Add<SkillUseEventData>(OnSkillUse);
+            EventHandler.Add<TurnBasedEventData>(OnTurnBased);
             
             skillNameTMP?.SetText(string.Empty);
             
@@ -61,6 +62,7 @@ namespace UI.Parts
             base.Deactivate();
             
             EventHandler.Remove<GameSystem.Event.SkillUseEventData>(OnSkillUse);
+            EventHandler.Remove<TurnBasedEventData>(OnTurnBased);
         }
 
         private void ApplyParty()
@@ -110,8 +112,6 @@ namespace UI.Parts
         
         private void OnSkillUse(SkillUseEventData eventData)
         {
-            skillNameTMP?.SetText(string.Empty);
-            
             if (eventData?.Skill == null ||
                 _data == null)
                 return;
@@ -122,8 +122,27 @@ namespace UI.Parts
             if (eventData.ETeam != _data.ETeam)
                 return;
             
+            // skillNameTMP?.SetText(string.Empty);
+            
             Debug.Log(eventData.Skill.name);
             skillNameTMP?.SetText(eventData.Skill?.name);
+        }
+
+        private void OnTurnBased(TurnBasedEventData eventData)
+        {
+            switch (eventData)
+            {
+                case StartTurnEventData startTurnEventData:
+                {
+                    break;
+                }
+                
+                case EndTurnEventData endTurnEventData:
+                {
+                    skillNameTMP?.SetText(string.Empty);
+                    break;
+                }
+            }
         }
     }
 }
