@@ -39,6 +39,14 @@
 #define HAS_ON_POSTPROCESS_PREFAB
 #endif
 
+#if UNITY_2021_2_OR_NEWER
+#define TEXT_ASSET_HAS_GET_DATA_BYTES
+#endif
+
+#if TEXT_ASSET_HAS_GET_DATA_BYTES
+#define HAS_ANY_UNSAFE_OPTIONS
+#endif
+
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
@@ -353,6 +361,18 @@ namespace Spine.Unity.Editor {
 					SkeletonRenderer.fixPrefabOverrideViaMeshFilterGlobal = settings.FindProperty("fixPrefabOverrideViaMeshFilter").boolValue;
 
 					EditorGUILayout.PropertyField(settings.FindProperty("removePrefabPreviewMeshes"), new GUIContent("Optimize Preview Meshes", "When enabled, Spine prefab preview meshes will be removed in a pre-build step to reduce build size. This increases build time as all prefabs in the project will be processed."));
+				}
+#endif
+
+#if HAS_ANY_UNSAFE_OPTIONS
+				GUILayout.Space(20);
+				EditorGUILayout.LabelField("Unsafe Build Defines", EditorStyles.boldLabel);
+				using (new GUILayout.HorizontalScope()) {
+					EditorGUILayout.PrefixLabel(new GUIContent("Direct data access", "Allow unsafe direct data access. Currently affects reading .skel.bytes files, reading with fewer allocations."));
+					if (GUILayout.Button("Enable", GUILayout.Width(64)))
+						SpineBuildEnvUtility.EnableBuildDefine(SpineBuildEnvUtility.SPINE_ALLOW_UNSAFE_CODE);
+					if (GUILayout.Button("Disable", GUILayout.Width(64)))
+						SpineBuildEnvUtility.DisableBuildDefine(SpineBuildEnvUtility.SPINE_ALLOW_UNSAFE_CODE);
 				}
 #endif
 

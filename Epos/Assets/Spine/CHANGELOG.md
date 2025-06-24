@@ -123,7 +123,7 @@
 
 ### Unity
 
-- **Officially supported Unity versions are 2017.1-2023.1**.
+- **Officially supported Unity versions are 2017.1-6000.0**.
 
 - **Additions**
 
@@ -163,6 +163,19 @@
   - SkeletonGraphic: You can now offset the skeleton mesh relative to the pivot via a newly added green circle handle. This allows you to e.g. frame only the face of a skeleton inside a masked frame. Previously offsetting the pivot downwards fails when `Layout Scale Mode` scales the mesh smaller and towards the pivot (e.g. the feet) and thus out of the frame. Now you can keep the pivot in the center of the `RectTransform` while offsetting only the mesh downwards, keeping the desired skeleton area (e.g. the face) centered while resizing. Moving the new larger green circle handle moves the mesh offset, while moving the blue pivot circle handle moves the pivot as usual.
   - `Universal Render Pipeline/Spine/Skeleton` shader now performs proper alpha-testing when `Depth Write` is enabled, using the existing `Shadow alpha cutoff` parameter.
   - `SkeletonRootMotion` components now provide a public `Initialize()` method which is automatically called when calling `skeletonAnimation.Initialize(true)` to update the necessary skeleton references. If a different root bone shall be used, be sure to set `skeletonRootMotion.rootMotionBoneName` before calling `skeletonAnimation.Initialize(true)`.
+  - Skeleton Mecanim: Added new `Mix Mode` `Match`. When selected, Spine animation weights are calculated to best match the provided Mecanim clip weights. This mix mode is recommended on any layer using blend tree nodes.
+  - URP Shaders: Added `ZWrite` variant of outline shader `Universal Render Pipeline/Spine/Outline/Skeleton-OutlineOnly ZWrite`. Suitable for e.g. depth of field (DoF) effect where writing to the depth buffer is required. Note that for DoF effect, `Render Queue` needs to be set to `Alpha Test`.
+  - SkeletonGraphic: Exposed `SetScaledPivotOffset` as public method outside of the editor to support programatically moving mesh offsets at runtime based on mesh bounds.
+  - SkeletonMecanim: Added `Scene Preview` option to preview an Animation Clip for e.g. easier event placement. When enabled, the Animation Clip selected in the Animation window is previewed in the Scene and Game views. Lock the `SkeletonMecanim` Inspector window, open the Animation window and select the Animation Clip. Then in the Animation window scrub through the timeline to see the current animation frame previewed.
+  - `Universal Render Pipeline/Spine/Skeleton Lit` shader now supports [Adaptive Probe Volumes (APV)](https://docs.unity3d.com/6000.0/Documentation/Manual/urp/probevolumes-concept.html) introduced in Unity 6. The shader also provides a new material property `APV per Pixel` to either calculate APV lighting contribution per pixel (the default) or per vertex.
+  - `Universal Render Pipeline/Spine/Sprite` shader now also supports [Adaptive Probe Volumes (APV)](https://docs.unity3d.com/6000.0/Documentation/Manual/urp/probevolumes-concept.html) introduced in Unity 6. APV lighting contribution is automatically calculated per pixel.
+  - All Spine Outline shaders, including the URP outline shaders, now provide an additional parameter `Fill`. Enable it to also fill the opaque area inside the outline with the outline color. Prevents a semi-transparent gap between outline and skeleton. Defaults to `disabled` to maintain existing behaviour.
+  - Added example component `RenderExistingMeshGraphic` (similar to `RenderExistingMesh`) to render a `SkeletonGraphic` mesh again with different materials. This might be required by e.g. URP and SkeletonGraphic outline shaders skipping additional render passes. To add a second outline variant of your SkeletonGraphic:
+    1. Add a GameObject at the same hierarchy level as the reference SkeletonGraphic and move it before the reference SkeletonGraphic to render behind.
+    2. Add a `RenderExistingMeshGraphic` component.
+    3. In the `RenderExistingMeshGraphic` component Inspector at `Reference Skeleton Graphic` assign the original `SkeletonGraphic` object.
+    4. At `Replacement Material` assign e.g. the included _SkeletonGraphicDefaultOutline_ material to replace all materials with this material. Alternatively, if `Multiple CanvasRenderers` is enabled at the reference SkeletonGraphic, you can add entries to the `Replacement Materials` list and at each entry assign the original SkeletonGraphic material (e.g. _SkeletonGraphicDefault_) to be replaced and the respective `Replacement Material` (e.g. _SkeletonGraphicDefaultOutline_).
+  - Added option for unsafe direct data loading when loading skeleton binary data to avoid some allocations, enabled via build define `SPINE_ALLOW_UNSAFE`. This define can be set via Spine Preferences, setting `Unsafe Build Defines - Direct data access`. The define is disabled by default to maintain existing behaviour. Changed asmdef setting for spine-unity assembly to allow unsafe code, has no effect other than allowing setting the `SPINE_ALLOW_UNSAFE` define.
 
 - **Breaking changes**
 
@@ -343,6 +356,7 @@
   - `VertexEffect` has been removed.
 
 ### Cocos2d-x
+- Renamed `SkeletonRenderer` to `SkeletonRendererCocos2dX` to avoid name clash with spine-cpp class.
 
 ### SFML
 
