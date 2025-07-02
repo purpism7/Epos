@@ -13,7 +13,7 @@ namespace UI.Slots
         {
             public int CharacterId { get; private set; } = 0;
             public EClass EClass { get; private set; } = EClass.None;
-            
+
             public Data(int characterId, EClass eClass)
             {
                 CharacterId = characterId;
@@ -60,9 +60,13 @@ namespace UI.Slots
                 return;
             
             var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_data.CharacterId}");
+
+            // Character Id 가 없을 경우, 몬스터 이미지로 적용.
+            if (sprite == null)
+                sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCommonSprite("Img_Monster_Normal");
+
             characterImg.sprite = sprite;
-            
-            characterImg?.SetActive(true);
+            characterImg.SetActive(true);
         }
 
         private void ApplyClassImage()
@@ -73,6 +77,9 @@ namespace UI.Slots
                 return;
             
             if (classImg == null)
+                return;
+
+            if (_data.EClass == EClass.None)
                 return;
 
             var spriteName = $"Img_Class_{_data.EClass}";

@@ -35,6 +35,11 @@ namespace GameSystem
             return null;
         }
 
+        public Sprite GetCommonSprite(string spriteName)
+        {
+            return GetSprite("Common", spriteName);
+        }
+
         public Sprite GetCharacterSprite(string spriteName)
         {
             return GetSprite("CharacterUI", spriteName);

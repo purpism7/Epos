@@ -193,12 +193,12 @@ namespace GameSystem
                 if(info == null)
                     continue;
                
-                var monster = MainManager.Get<ICharacterManager>().Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
+                var monster = MainManager.Get<ICharacterManager>()?.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => monster != null);
-                monster?.Initialize();
-                monster?.Activate();
+                monster.Initialize();
+                monster.Activate();
                 
-                var pos = partyLocation.GetPartyPosition(info.Position);
+                var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 
                 ICombatant iCombatant = monster;
                 iCombatant.SetPosition(pos);
