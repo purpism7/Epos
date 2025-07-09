@@ -29,9 +29,15 @@ namespace Battle
         {
             base.Initialize(data);
             
-            AddStep<Step.Preprocessing>(_data.PreprocessingData);
-            AddStep<Step.EnemyParty>(_data.EnemyPartyData);
-            AddStep<Step.AllyParty>(_data.AllyPartyData);
+            if(_data?.PreprocessingData != null)
+                AddStep<Step.Preprocessing>(_data?.PreprocessingData);
+
+            if (_data?.EnemyPartyData != null)
+                AddStep<Step.EnemyParty>(_data?.EnemyPartyData);
+
+            if (_data?.AllyPartyData != null)
+                AddStep<Step.AllyParty>(_data?.AllyPartyData);
+
             AddStep<Step.BattleStart>(
                 new BattleStart.Data(_data?.AllyPartyData?.Party, _data?.EnemyPartyData?.Party), 
                 isLast: true);
@@ -42,15 +48,21 @@ namespace Battle
             base.End();
             
             AddStep<BattleResult>();
-            AddStep<Step.EnemyParty>(_data?.EnemyPartyData?.SetBattleState(false));
-            AddStep<Step.AllyParty>(_data?.AllyPartyData?.SetBattleState(false));
+           
+            if (_data?.EnemyPartyData != null)
+                AddStep<Step.EnemyParty>(_data?.EnemyPartyData?.SetBattleState(false));
+
+            if (_data?.AllyPartyData != null)
+                AddStep<Step.AllyParty>(_data?.AllyPartyData?.SetBattleState(false));
+
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {
                     EndAction = BattleEnd,
-                });
-            
-            AddStep<Postprocessing>(new Postprocessing.FieldData(), isLast: true);
+                }, _data.PreprocessingData == null);
+
+            if (_data?.PreprocessingData != null)
+                AddStep<Postprocessing>(new Postprocessing.FieldData(), isLast: true);
             
             Begin();
         }   

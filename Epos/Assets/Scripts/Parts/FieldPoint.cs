@@ -118,7 +118,7 @@ namespace Parts
             if (iBattleMgr == null)
                 return;
 
-            iBattleMgr.BeginFieldBattle(leftPartyLocation, rightPartyLocation, pointTm);
+            iBattleMgr.BeginTurnBased(leftPartyLocation, rightPartyLocation, pointTm);
         }
 
         private async UniTask RandomActionAsync()

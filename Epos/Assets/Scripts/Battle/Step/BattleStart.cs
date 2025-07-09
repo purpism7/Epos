@@ -34,12 +34,16 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            var battleForcesData = new BattleForces.Data(_data?.AllyParty, _data?.EnemyParty);
-            
-            UICreator<BattleForces, BattleForces.Data>.Get?
-                .SetData(battleForcesData)
-                .Create()?
-                .Activate(battleForcesData);
+            if(_data?.AllyParty != null &&
+               _data?.EnemyParty != null)
+            {
+                var battleForcesData = new BattleForces.Data(_data?.AllyParty, _data?.EnemyParty);
+
+                UICreator<BattleForces, BattleForces.Data>.Get?
+                    .SetData(battleForcesData)
+                    .Create()?
+                    .Activate(battleForcesData);
+            }
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             

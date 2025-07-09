@@ -17,7 +17,8 @@ namespace GameSystem
 {
     public interface IBattleManager : IManager
     {
-        void BeginFieldBattle(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
+        void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
+        void BeginRealTime(Grid heroGrid);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -79,13 +80,7 @@ namespace GameSystem
         }
 
         #region IBattleManager
-        /// <summary>
-        /// Set Field Battle
-        /// </summary>
-        /// <param name="leftForces">Ally</param>
-        /// <param name="rightForces">Enemy</param>
-        /// <param name="pointTm">For Zoom In Camera</param>
-        void IBattleManager.BeginFieldBattle(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
+        void IBattleManager.BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
         {
             if (left == null)
                 return;
@@ -96,10 +91,10 @@ namespace GameSystem
             left.Initialize();
             right.Initialize();
 
-            BeginFieldBattleAsync(left, right, pointTm).Forget();
+            BeginTurnBasedAsync(left, right, pointTm).Forget();
         }
 
-        private async UniTask BeginFieldBattleAsync(Parts.PartyLocation allyPartyLocation, Parts.PartyLocation enemyPartyLocation, Transform pointTm)
+        private async UniTask BeginTurnBasedAsync(Parts.PartyLocation allyPartyLocation, Parts.PartyLocation enemyPartyLocation, Transform pointTm)
         {
             var allyParty = MainManager.Get<IParty>().GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
@@ -208,8 +203,38 @@ namespace GameSystem
 
             return iCombatantList;
         }
+
+        void IBattleManager.BeginRealTime(Grid heroGrid)
+        {
+            var allyParty = MainManager.Get<IParty>().GetParty(1);
+            var partyInfo = allyParty?.PositionInfos;
+            if (partyInfo.IsNullOrEmpty())
+                return;
+
+            var heroICombatantList = new List<ICombatant>();
+            heroICombatantList.Clear();
+
+            for (int i = 0; i < partyInfo.Length; ++i)
+            {
+                var positionInfo = partyInfo[i];
+                if (positionInfo == null)
+                    continue;
+
+                var hero = MainManager.Get<ICharacterManager>().Create<Creature.Hero>(positionInfo.CharacterId, heroGrid.transform.parent);
+                if (hero == null)
+                    continue;
+
+                hero.Initialize();
+                hero.Activate();
+
+                heroICombatantList?.Add(hero);
+            }
+
+            //Begin<Battle.Mode.RealTime, Battle.Mode.RealTime.Data>();
+            Begin<Field, Field.Data>();
+        }
         #endregion
-        
+
         #region BattleType.IListener
         void BattleType.IListener.End()
         {

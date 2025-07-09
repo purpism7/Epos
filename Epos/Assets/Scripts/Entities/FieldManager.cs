@@ -35,21 +35,21 @@ namespace Entities
         #region IGeneric
         public Entities.IGeneric Initialize()
         {
-            field?.Initialize();
-            field?.Activate();
-            CurrIField = field;
+            //field?.Initialize();
+            //field?.Activate();
+            //CurrIField = field;
 
-            CreateFieldHero();
+            //CreateFieldHero();
 
-            _fieldDataList = new();
-            _fieldDataList?.Clear();
+            //_fieldDataList = new();
+            //_fieldDataList?.Clear();
             
-            _fieldDataList?.Add(new Datas.Field(1));
-            _fieldDataList?.Add(new Datas.Field(2));
+            //_fieldDataList?.Add(new Datas.Field(1));
+            //_fieldDataList?.Add(new Datas.Field(2));
             
-            fieldIndicator?.Deactivate();
+            //fieldIndicator?.Deactivate();
             
-            Activate();
+            //Activate();
             
             return this;
         }

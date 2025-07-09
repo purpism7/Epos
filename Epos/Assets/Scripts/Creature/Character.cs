@@ -213,7 +213,7 @@ namespace Creature
 
         void ICombatant.SetPartyPosition(int partyPosition)
         {
-            partyPosition = partyPosition;
+            _partyPosition = partyPosition;
         }
         
         void ICombatant.SetPosition(Vector3 pos)

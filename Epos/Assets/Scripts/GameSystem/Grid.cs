@@ -9,13 +9,13 @@ namespace GameSystem
 {
     public class Grid : MonoBehaviour
     {
-        private const float CellSize = 8f;
-        
         [SerializeField] 
         private int row = 0; // 행
         [SerializeField] 
         private int column = 0; // 열
-        
+        [SerializeField]
+        private int cellSize = 5;
+
         [SerializeField]
         private List<float> rowOffsetXList = new();
         
@@ -93,7 +93,7 @@ namespace GameSystem
 
                     var boxCollider = cell.GetComponent<BoxCollider>();
                     if (boxCollider != null)
-                        boxCollider.size = Vector3.one * CellSize;
+                        boxCollider.size = Vector3.one * cellSize;
 
                     SetCellPosition(cell.transform, j, i);
                    
@@ -122,8 +122,8 @@ namespace GameSystem
 
         private float GetCellPos(int index)
         {
-            float halfCellSize = CellSize * 0.5f;
-            return index * CellSize + halfCellSize;
+            float halfCellSize = cellSize * 0.5f;
+            return index * cellSize + halfCellSize;
         }
 #endif
 

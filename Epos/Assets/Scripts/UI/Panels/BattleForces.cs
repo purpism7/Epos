@@ -67,19 +67,19 @@ namespace UI.Panels
 
         private void ActivateAllyBattleParty()
         {
-            var battlePartyPartData = new BattlePartyPart.Data();
-            battlePartyPartData
+            var battlePartyPartData = new BattlePartyPart.Data()
                 .WithParty(_data?.AllyParty)
                 .WithETeam(ETeam.Ally);
+
             allyBattlePartyPart?.Activate(battlePartyPartData);
         }
 
         private void ActivateEnemyBattleParty()
         {
-            var battlePartyPartData = new BattlePartyPart.Data();
-            battlePartyPartData
+            var battlePartyPartData = new BattlePartyPart.Data()
                 .WithParty(_data?.EnemyParty)
                 .WithETeam(ETeam.Enemy);
+
             enemyBattlePartyPart?.Activate(battlePartyPartData);
         }
 
