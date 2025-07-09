@@ -18,7 +18,7 @@ namespace GameSystem
     public interface IBattleManager : IManager
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
-        void BeginRealTime(Grid heroGrid);
+        void BeginRealTime(PartyLocation allyPartyLocation);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -106,7 +106,7 @@ namespace GameSystem
             var enemyICombatantList = await SetEnemyICombatantsAsync(enemyPartyLocation);
             battleModeData.EnemyICombatantList?.AddRange(enemyICombatantList);
 
-            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
+            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation, -100f);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
@@ -140,7 +140,7 @@ namespace GameSystem
             Begin<Field, Battle.Field.Data>(fieldData);
         }
 
-        private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Datas.ScriptableObjects.Party party, PartyLocation partyLocation)
+        private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Datas.ScriptableObjects.Party party, PartyLocation partyLocation, float offsetX = 0)
         {
             var positionInfos = party?.PositionInfos;
             if (positionInfos.IsNullOrEmpty())
@@ -159,7 +159,7 @@ namespace GameSystem
                 await UniTask.WaitUntil(() => hero != null);
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
-                pos.x -= 100f;
+                pos.x += offsetX;
                 
                 ICombatant iCombatant = hero;
                 iCombatant?.SetPosition(pos);
@@ -168,6 +168,39 @@ namespace GameSystem
             }
 
             return iCombatantList;
+        }
+        
+        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation)
+        {
+            BeginRealTimeAsync(allyPartyLocation).Forget();
+        }
+
+        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation)
+        {
+            var allyParty = MainManager.Get<IParty>().GetParty(1);
+            var partyInfo = allyParty?.PositionInfos;
+            if (partyInfo.IsNullOrEmpty())
+                return;
+            
+            var battleModeData = new RealTime.Data();
+            var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
+                .SetData(battleModeData)
+                .Create();
+            
+            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
+            battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
+            
+            var allyFieldData = new Battle.Step.Party.FieldData
+            {
+                PartyLocation = allyPartyLocation,
+            }.WithParty(allyParty);
+            
+            var fieldData = new Battle.Field.Data(allyFieldData, null)
+            {
+                BattleMode = battleMode,
+            };
+            
+            Begin<Field, Field.Data>(fieldData);
         }
         
         private async UniTask<List<ICombatant>> SetEnemyICombatantsAsync(Parts.PartyLocation partyLocation)
@@ -202,36 +235,6 @@ namespace GameSystem
             }
 
             return iCombatantList;
-        }
-
-        void IBattleManager.BeginRealTime(Grid heroGrid)
-        {
-            var allyParty = MainManager.Get<IParty>().GetParty(1);
-            var partyInfo = allyParty?.PositionInfos;
-            if (partyInfo.IsNullOrEmpty())
-                return;
-
-            var heroICombatantList = new List<ICombatant>();
-            heroICombatantList.Clear();
-
-            for (int i = 0; i < partyInfo.Length; ++i)
-            {
-                var positionInfo = partyInfo[i];
-                if (positionInfo == null)
-                    continue;
-
-                var hero = MainManager.Get<ICharacterManager>().Create<Creature.Hero>(positionInfo.CharacterId, heroGrid.transform.parent);
-                if (hero == null)
-                    continue;
-
-                hero.Initialize();
-                hero.Activate();
-
-                heroICombatantList?.Add(hero);
-            }
-
-            //Begin<Battle.Mode.RealTime, Battle.Mode.RealTime.Data>();
-            Begin<Field, Field.Data>();
         }
         #endregion
 

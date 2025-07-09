@@ -15,16 +15,13 @@ namespace GameSystem
         private int column = 0; // 열
         [SerializeField]
         private int cellSize = 5;
-
         [SerializeField]
         private List<float> rowOffsetXList = new();
-        
         [SerializeField] 
         private GameObject cellGameObj = null;
 
         private List<Transform> _cellTmList = null;
-
-
+        
         public void Initialize()
         {
             if (_cellTmList == null)

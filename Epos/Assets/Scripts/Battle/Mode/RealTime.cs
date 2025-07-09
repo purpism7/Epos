@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using UnityEngine;
+
 using Common;
+using Creature;
 using Creature.Action;
 using GameSystem.Event;
-using UnityEngine;
 
 
 namespace Battle.Mode
@@ -11,7 +14,6 @@ namespace Battle.Mode
         public class Data : BaseData
         {
 
-
         }
 
         public override BattleMode<Data> Initialize(Data data)
@@ -20,18 +22,24 @@ namespace Battle.Mode
 
             return this;
         }
-
-        /// <summary>
-        /// 전투 시작.
-        /// </summary>
+        
         public override void Begin()
         {
+            Debug.Log("Begin()");   
             
+            for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
+            {
+                var iActCtr = _data?.AllyICombatantList[i]?.IActCtr;
+                // iActCtr.Move
+            }
         }
 
         public override void ChainUpdate()
         {
-            
+            for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
+            {
+                _data?.AllyICombatantList[i]?.IActCtr?.ChainUpdate();
+            }
         }
     }
 }

@@ -15,13 +15,13 @@ namespace Battle
         public class Data : BaseData
         {
             public Preprocessing.FieldData PreprocessingData = null;
-            public Party.FieldData AllyPartyData { get; private set; } = null;
-            public Party.FieldData EnemyPartyData { get; private set; } = null;
+            public Party.FieldData AllyFieldData { get; private set; } = null;
+            public Party.FieldData EnemyFieldData { get; private set; } = null;
 
-            public Data(Party.FieldData allyPartyData, Party.FieldData enemyPartyData)
+            public Data(Party.FieldData allyFieldData, Party.FieldData enemyFieldData)
             {
-                AllyPartyData = allyPartyData;
-                EnemyPartyData = enemyPartyData;
+                AllyFieldData = allyFieldData;
+                EnemyFieldData = enemyFieldData;
             }
         }
         
@@ -32,14 +32,14 @@ namespace Battle
             if(_data?.PreprocessingData != null)
                 AddStep<Step.Preprocessing>(_data?.PreprocessingData);
 
-            if (_data?.EnemyPartyData != null)
-                AddStep<Step.EnemyParty>(_data?.EnemyPartyData);
+            if (_data?.EnemyFieldData != null)
+                AddStep<Step.EnemyParty>(_data?.EnemyFieldData);
 
-            if (_data?.AllyPartyData != null)
-                AddStep<Step.AllyParty>(_data?.AllyPartyData);
+            if (_data?.AllyFieldData != null)
+                AddStep<Step.AllyParty>(_data?.AllyFieldData);
 
             AddStep<Step.BattleStart>(
-                new BattleStart.Data(_data?.AllyPartyData?.Party, _data?.EnemyPartyData?.Party), 
+                new BattleStart.Data(_data?.AllyFieldData?.Party, _data?.EnemyFieldData?.Party), 
                 isLast: true);
         }
 
@@ -49,17 +49,17 @@ namespace Battle
             
             AddStep<BattleResult>();
            
-            if (_data?.EnemyPartyData != null)
-                AddStep<Step.EnemyParty>(_data?.EnemyPartyData?.SetBattleState(false));
+            if (_data?.EnemyFieldData != null)
+                AddStep<Step.EnemyParty>(_data?.EnemyFieldData?.SetBattleState(false));
 
-            if (_data?.AllyPartyData != null)
-                AddStep<Step.AllyParty>(_data?.AllyPartyData?.SetBattleState(false));
+            if (_data?.AllyFieldData != null)
+                AddStep<Step.AllyParty>(_data?.AllyFieldData?.SetBattleState(false));
 
             AddStep<BattleEnd>(
                 new BattleEnd.Data
                 {
                     EndAction = BattleEnd,
-                }, _data.PreprocessingData == null);
+                }, _data?.PreprocessingData == null);
 
             if (_data?.PreprocessingData != null)
                 AddStep<Postprocessing>(new Postprocessing.FieldData(), isLast: true);
