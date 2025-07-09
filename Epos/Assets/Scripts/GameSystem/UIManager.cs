@@ -25,6 +25,8 @@ namespace GameSystem
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
         public Common.Component CurrPanel { get; private set; } = null;
 
+        public bool IsEndLoad { get; private set; } = false;
+
 
         protected override void Initialize()
         {
@@ -38,6 +40,8 @@ namespace GameSystem
 
         private async UniTask LoadAssetAsync()
         {
+            IsEndLoad = false;
+
             await AddressableManager.Instance.LoadAssetAsync<GameObject>("UI",
                 (asyncOperationHandle) =>
                 {
@@ -48,10 +52,12 @@ namespace GameSystem
                         if (component == null)
                             return;
                         
-                        // Debug.Log(component.name);
+                         //Debug.Log(component.name);
                         _componentDic?.TryAdd(component.GetType(), component);
                     }
                 });
+
+            IsEndLoad = true;
         }
 
         public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component

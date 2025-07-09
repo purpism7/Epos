@@ -20,10 +20,9 @@ public class RealTimeField : MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private async UniTask Start()
     {
-        
-
+        await UniTask.WaitUntil(() => UIManager.Instance.IsEndLoad);
         MainManager.Get<IBattleManager>()?.BeginRealTime(heroGrid);
     }
 }

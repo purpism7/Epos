@@ -77,15 +77,15 @@ namespace GameSystem
 
         private void FieldChainLateUpdate()
         {
-            if (!_fieldHero)
-            {
-                _fieldHero = MainManager.Get<IFieldManager>()?.FieldHero;
+            //if (!_fieldHero)
+            //{
+            //    _fieldHero = MainManager.Get<IFieldManager>()?.FieldHero;
 
-                return;
-            }
+            //    return;
+            //}
 
-            if (!_fieldHero.IsActivate)
-                return;
+            //if (!_fieldHero.IsActivate)
+            //    return;
             
             var mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonDown(0))

@@ -103,6 +103,9 @@ namespace Entities
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
+            if (_fieldHero == null)
+                return;
+
             if (!_fieldHero.IsActivate)
                 return;
             

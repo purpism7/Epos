@@ -353,7 +353,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 1003199837}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -665,7 +666,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroRootTm: {fileID: 453530856}
   heroGrid: {fileID: 894468098}
-  heroParty: {fileID: 0}
 --- !u!1 &657000579
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,6 +777,11 @@ MonoBehaviour:
   - 0
   - -3
   cellGameObj: {fileID: 5766430387326212650, guid: ac8daa8a28ada4e7685917c7151d451d, type: 3}
+--- !u!20 &1003199837 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7558752344286945958, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+  m_PrefabInstance: {fileID: 447249408}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1004637065
 GameObject:
   m_ObjectHideFlags: 0

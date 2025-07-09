@@ -48,8 +48,10 @@ namespace Battle.Step
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
             var battleStart = UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Data>.Get
-                ?.SetRoot(UIManager.Instance?.CurrPanel.GetComponent<RectTransform>()).Create();
-            
+                ?.SetRoot(UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>())
+                .Create();
+            battleStart?.Activate();
+
             // var battleState = UIManager.Instance?.GetPopup<BattleState, BattleState.Data>();
             if (battleStart != null)
             {
