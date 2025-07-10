@@ -12,7 +12,8 @@ namespace Creature.Action
             public Vector3 TargetPos = Vector3.zero;
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
-            
+            public bool UseNavMesh = false;
+
             public int DirectionAfterArriving = 1;
         }
 
@@ -27,15 +28,15 @@ namespace Creature.Action
 
             // Flip();
             SetAnimation(_data.AnimationKey, true);
-            
+
             if (_iActor?.NavMeshAgent != null &&
-                !_data.IsJumpMove)
+                _data.UseNavMesh)
             {
                 _iActor.NavMeshAgent.speed = _data.MoveSpeed;
                 _iActor?.NavMeshAgent?.SetDestination(_data.TargetPos);
             }
 
-            if(_iActor?.Transform)
+            if (_iActor?.Transform)
                 _prevPos = _iActor.Transform.position;
         }
 
@@ -64,7 +65,8 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
             
-            if (_iActor?.NavMeshAgent == null)
+            if (_data != null &&
+                !_data.UseNavMesh)
             {
                 Vector2 targetPos = _data.TargetPos;
                 var moveSpeed = _data.MoveSpeed;

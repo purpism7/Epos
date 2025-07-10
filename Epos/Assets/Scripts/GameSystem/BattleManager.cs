@@ -18,7 +18,7 @@ namespace GameSystem
     public interface IBattleManager : IManager
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
-        void BeginRealTime(PartyLocation allyPartyLocation);
+        void BeginRealTime(PartyLocation allyPartyLocation, Monster[] mosnters);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -170,12 +170,12 @@ namespace GameSystem
             return iCombatantList;
         }
         
-        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation)
+        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, Monster[] monsters)
         {
-            BeginRealTimeAsync(allyPartyLocation).Forget();
+            BeginRealTimeAsync(allyPartyLocation, monsters).Forget();
         }
 
-        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation)
+        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, Monster[] monsters)
         {
             var allyParty = MainManager.Get<IParty>().GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
@@ -189,12 +189,23 @@ namespace GameSystem
             
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
+
+            if(!monsters.IsNullOrEmpty())
+            {
+                for (int i = 0; i < monsters.Length; ++i)
+                {
+                    monsters[i]?.Initialize();
+                }
+            }
             
+            //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
+            battleModeData.EnemyICombatantList?.AddRange(monsters);
+
             var allyFieldData = new Battle.Step.Party.FieldData
             {
                 PartyLocation = allyPartyLocation,
             }.WithParty(allyParty);
-            
+
             var fieldData = new Battle.Field.Data(allyFieldData, null)
             {
                 BattleMode = battleMode,

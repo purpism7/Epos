@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: 93d72a6c7944b46b0acba1c60610a491, type: 2}
+  - {fileID: 11400000, guid: e091172c8a06a443ebcdea70e7b13dcd, type: 2}
 --- !u!114 &7260368330449216564
 MonoBehaviour:
   m_ObjectHideFlags: 0

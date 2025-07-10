@@ -12,7 +12,7 @@ namespace Creature.Action
     public interface IActController : IController<IActController, IActor>
     {
         void Idle();
-        IActController MoveToTarget(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false);
+        IActController MoveToTarget(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
         IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList);
         void TakeDamage(ICaster iCaster);
         void Execute();
@@ -87,7 +87,7 @@ namespace Creature.Action
         /// <param name="finishAction"></param>
         /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
         /// <returns></returns>
-        IActController IActController.MoveToTarget(float moveSpeed, Vector3? pos, System.Action finishAction, int direction, bool isJumpMove)
+        IActController IActController.MoveToTarget(float moveSpeed, Vector3? pos, System.Action finishAction, int direction, bool isJumpMove, bool useNavMesh)
         {
             if (!IsActivate)
                 return null;
@@ -105,6 +105,7 @@ namespace Creature.Action
                 FinishAction = finishAction,
                 DirectionAfterArriving = direction,
                 IsJumpMove = isJumpMove,
+                UseNavMesh = useNavMesh,
             };
 
             AddActAsync<Move, Move.Data>(data).Forget();

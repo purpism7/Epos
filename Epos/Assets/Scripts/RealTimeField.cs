@@ -13,6 +13,11 @@ public class RealTimeField : MonoBehaviour
     [SerializeField]
     private PartyLocation partyLocation = null;
 
+    [SerializeField]
+    private Transform monsterRootTm = null;
+   
+    private Monster[] _monsters = null;
+
     private async UniTask Awake()
     {
         // MainManager.Instance
@@ -24,8 +29,11 @@ public class RealTimeField : MonoBehaviour
     private async UniTask Start()
     {
         partyLocation?.Initialize();
-        
+
+        if(monsterRootTm)
+            _monsters = monsterRootTm.GetComponentsInChildren<Monster>(true);
+
         await UniTask.WaitUntil(() => UIManager.Instance.IsEndLoad);
-        MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation);
+        MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, _monsters);
     }
 }
