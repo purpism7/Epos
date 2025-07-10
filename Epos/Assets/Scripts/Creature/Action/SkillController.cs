@@ -127,17 +127,17 @@ namespace Creature.Action
                 if (skill.ESkillCategory != eSkillCategory)
                     continue;
                 
-                if (eSkillCategory == ESkillCategory.Active)
-                {
-                    if (_iCaster?.IStat?.Get(Stat.EType.ActivePoint) < 1)
-                        continue;
-                }
-
-                if (eSkillCategory == ESkillCategory.Passive)
-                {
-                    if (_iCaster?.IStat?.Get(Stat.EType.PassivePoint) < 1)
-                        continue;
-                }
+                // if (eSkillCategory == ESkillCategory.Active)
+                // {
+                //     if (_iCaster?.IStat?.Get(Stat.EType.ActivePoint) < 1)
+                //         continue;
+                // }
+                //
+                // if (eSkillCategory == ESkillCategory.Passive)
+                // {
+                //     if (_iCaster?.IStat?.Get(Stat.EType.PassivePoint) < 1)
+                //         continue;
+                // }
                 
                 return skill;
             }

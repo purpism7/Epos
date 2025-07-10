@@ -483,7 +483,7 @@ namespace Battle.Mode
             
         }
 
-        void Casting.IListener.AfterCasting()
+        void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
             
         }

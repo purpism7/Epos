@@ -13,7 +13,7 @@ namespace Creature.Action
     {
         void Idle();
         IActController MoveToTarget(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
-        IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList);
         void TakeDamage(ICaster iCaster);
         void Execute();
 
@@ -113,7 +113,7 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
@@ -121,7 +121,7 @@ namespace Creature.Action
             var data = new Casting.Data
             {
                 IListener = iListener,
-                ICaster = iCaster,
+                ICombatant = iCombatant,
                 Skill = skill,
                 TargetList = targetList,
             };

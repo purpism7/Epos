@@ -71,7 +71,8 @@ namespace Creature.Action
                 Vector2 targetPos = _data.TargetPos;
                 var moveSpeed = _data.MoveSpeed;
 
-                iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
+                // iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
+                iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
             }
 
             Vector2 direction = _prevPos - iActorTm.position;

@@ -1,11 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Common;
 using Creature;
 using Creature.Action;
-using GameSystem.Event;
-using System.Reflection;
 
 
 namespace Battle.Mode
@@ -31,42 +30,17 @@ namespace Battle.Mode
             for (int i = 0; i < _data?.EnemyICombatantList.Count; ++i)
             {
                 var enemy = _data?.EnemyICombatantList[i];
+                enemy?.SetETeam(ETeam.Enemy);
                 enemy?.Activate();
             }
 
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
                 var attacker = _data?.AllyICombatantList[i];
+                attacker?.SetETeam(ETeam.Ally);
                 attacker?.Activate();
 
-                var target = FindClosestICombatant(_data?.EnemyICombatantList, attacker);
-                if(target != null)
-                {
-                    var skill = attacker.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
-                    if (skill == null)
-                        continue;
-
-                    var skillRange = skill.Range;
-                    if (skillRange <= 0)
-                        continue;
-
-                    var targetPos = target.Transform.position;
-                    var direction = targetPos.x - attacker.Transform.position.x;
-
-                    targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
-                    //targetPos.y -= 1f;
-                    targetPos.z = 0;
-
-                    attacker?.IActCtr?.MoveToTarget(2f, targetPos,
-                        () =>
-                        {
-
-
-                        }, isJumpMove: false, useNavMesh: false);
-                    attacker?.IActCtr.CastingSkill(this, attacker, skill, new List<ICombatant>() { target });
-                    attacker?.IActCtr?.Execute();
-                }
-               
+                MoveToAttack(attacker);
             }
         }
 
@@ -83,28 +57,62 @@ namespace Battle.Mode
             }
         }
 
-        private ICombatant FindClosestICombatant(List<ICombatant> iCombatantList, ICombatant refICombatant)
+        // private ICombatant FindClosestICombatant(List<ICombatant> iCombatantList, ICombatant refICombatant)
+        // {
+        //     if (iCombatantList.IsNullOrEmpty())
+        //         return null;
+        //
+        //     ICombatant closestEnemyIComtant = null;
+        //     float closestDistance = 99999f;
+        //     for (int i = 0; i < iCombatantList.Count; ++i)
+        //     {
+        //         if (iCombatantList[i] == null)
+        //             continue;
+        //
+        //         var distance = Vector2.Distance(iCombatantList[i].Transform.position, refICombatant.Transform.position);
+        //         if (closestEnemyIComtant == null ||
+        //             closestDistance > distance)
+        //         {
+        //             closestEnemyIComtant = iCombatantList[i];
+        //             closestDistance = distance;
+        //         }
+        //     }
+        //
+        //     return closestEnemyIComtant;
+        // }
+        private void MoveToAttack(ICombatant attacker)
         {
-            if (iCombatantList.IsNullOrEmpty())
-                return null;
+            var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
+            if (skill == null)
+                return;
 
-            ICombatant closestEnemyIComtant = null;
-            float closestDistance = 99999f;
-            for (int i = 0; i < iCombatantList.Count; ++i)
-            {
-                if (iCombatantList[i] == null)
-                    continue;
+            var targetList = attacker.GetTargetList(_data?.EnemyICombatantList, skill);
+            if(targetList.IsNullOrEmpty())
+                return;
+                
+            var target = targetList.FirstOrDefault();
+            if(target == null)
+                return;
+                
+            var skillRange = skill.Range;
+            if (skillRange <= 0)
+                return;
+               
+            var targetPos = target.Transform.position;
+            var direction = targetPos.x - attacker.Transform.position.x;
 
-                var distance = Vector2.Distance(iCombatantList[i].Transform.position, refICombatant.Transform.position);
-                if (closestEnemyIComtant == null ||
-                    closestDistance > distance)
+            targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
+            //targetPos.y -= 1f;
+            targetPos.z = 0;
+
+            attacker.IActCtr?.MoveToTarget(10f, targetPos,
+                () =>
                 {
-                    closestEnemyIComtant = iCombatantList[i];
-                    closestDistance = distance;
-                }
-            }
 
-            return closestEnemyIComtant;
+
+                }, isJumpMove: false, useNavMesh: false);
+            attacker.IActCtr?.CastingSkill(this, attacker, skill, targetList);
+            attacker.IActCtr?.Execute();
         }
 
         #region Casting.IListener
@@ -118,9 +126,9 @@ namespace Battle.Mode
 
         }
 
-        void Casting.IListener.AfterCasting()
+        void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
-
+            MoveToAttack(iCombatant);
         }
         #endregion
     }

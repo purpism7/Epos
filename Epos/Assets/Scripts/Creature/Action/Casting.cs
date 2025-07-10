@@ -17,7 +17,7 @@ namespace Creature.Action
         public class Data : BaseData
         {
             public IListener IListener = null;
-            public ICaster ICaster = null;
+            public ICombatant ICombatant = null;
             public Skill Skill = null;
             public List<ICombatant> TargetList = null;
         }
@@ -26,7 +26,7 @@ namespace Creature.Action
         {
             void BeforeCasting();
             void InUse();
-            void AfterCasting();
+            void AfterCasting(ICombatant iCombatant);
         }
 
         public override void Initialize(IActor iActor)
@@ -65,32 +65,32 @@ namespace Creature.Action
             {
                 foreach (var target in _data.TargetList)
                 {
-                    target?.IActCtr?.TakeDamage(_data?.ICaster);
+                    target?.IActCtr?.TakeDamage(_data?.ICombatant);
                 }
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _data?.IListener?.AfterCasting();      
+            _data?.IListener?.AfterCasting(_data?.ICombatant);      
             
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             _endAction?.Invoke();
             
             // if (_data != null)
             //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData().WithETeam(ETeam));
         }
 
-        private ETeam ETeam
-        {
-            get
-            {
-                ETeam eTeam = ETeam.None;
-                var iCombatant = _data.ICaster as ICombatant;
-                if (iCombatant != null)
-                    eTeam = iCombatant.ETeam;
-
-                return eTeam;
-            }
-        }
+        // private ETeam ETeam
+        // {
+        //     get
+        //     {
+        //         ETeam eTeam = ETeam.None;
+        //         var iCombatant = _data.ICombatant;
+        //         if (iCombatant != null)
+        //             eTeam = iCombatant.ETeam;
+        //
+        //         return eTeam;
+        //     }
+        // }
     }
 }
 

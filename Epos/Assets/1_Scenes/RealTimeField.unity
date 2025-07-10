@@ -695,6 +695,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partyLocation: {fileID: 59561317}
+  monsterRootTm: {fileID: 1266116244}
 --- !u!1001 &573595885
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -35,6 +35,9 @@ public static class BattleExtensions
                     targetList.Add(iCombatant);
             }
         }
+
+        if (targetList.IsNullOrEmpty())
+            return null;
         
         // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
         if (skill.ESkillTarget == ESkillTarget.FarOne ||
