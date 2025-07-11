@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Common;
+using GameSystem;
 
 namespace Common
 {
@@ -11,15 +12,18 @@ namespace Common
             
     }
     
-    public class Component : MonoBehaviour
+    public class Component : MonoBehaviour, IPoolable
     {
         [SerializeField]
         protected Transform rootTm = null;
-        
+
+        private bool _isActivate = false;
+
         public virtual void Initialize()
         {
             
         }
+
         
         public bool IsActivate 
         {
@@ -28,17 +32,21 @@ namespace Common
                 if (!rootTm)
                     return false;
                 
-                return rootTm.gameObject.activeSelf;
+                return _isActivate;
             }
         }
         
         public virtual void Activate()
         {
+            _isActivate = true;
+
             Extensions.SetActive(rootTm, true);
         }
         
         public virtual void Deactivate()
         {
+            _isActivate = false;
+
             Extensions.SetActive(rootTm, false);
         }
     }

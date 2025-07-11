@@ -25,6 +25,14 @@ namespace GameSystem
 
         }
 
+        public void Add(IPoolable iPoolable)
+        {
+            if (iPoolable == null)
+                return;
+
+            _iPoolableList?.Add(iPoolable);
+        }
+
         public T Get<T>() where T : Component
         {
             if (_iPoolableList.IsNullOrEmpty())

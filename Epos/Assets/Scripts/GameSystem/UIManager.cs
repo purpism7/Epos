@@ -18,7 +18,7 @@ namespace GameSystem
         [SerializeField] private RectTransform rootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
         
-        private List<Common.Component> _cachedComponentList = null;
+        //private List<Common.Component> _cachedComponentList = null;
         private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
@@ -26,6 +26,8 @@ namespace GameSystem
         public Common.Component CurrPanel { get; private set; } = null;
 
         public bool IsEndLoad { get; private set; } = false;
+
+        private ObjectPooler _objectPooler = null;
 
 
         protected override void Initialize()
@@ -62,17 +64,22 @@ namespace GameSystem
 
         public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component
         {
-            if (_cachedComponentList == null)
-            {
-                _cachedComponentList = new();
-                _cachedComponentList.Clear();
-            }
+            //if (_cachedComponentList == null)
+            //{
+            //    _cachedComponentList = new();
+            //    _cachedComponentList.Clear();
+            //}
 
-            Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
-            if (component != null)
-                return component as T;
-            else
-            {
+            var iPoolable = _objectPooler.Get<T>();
+            if (iPoolable != null)
+                return iPoolable;
+
+            //Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            //if (component != null)
+            //    return component as T;
+            //else
+            //{
+                Common.Component component = null;
                 if (_componentDic != null)
                     _componentDic.TryGetValue(typeof(T), out component);
 
@@ -81,10 +88,8 @@ namespace GameSystem
                 
                 component = Instantiate(component.gameObject)?.GetComponent<T>();
                 if (component != null)
-                {
-                    _cachedComponentList?.Add(component);
-                }
-            }
+                    _objectPooler?.Add(component);
+            //}
             
             if (!rootTm)
             {
@@ -103,16 +108,21 @@ namespace GameSystem
         {
             initialize = false;
             
-            if (_cachedComponentList == null)
-            {
-                _cachedComponentList = new();
-                _cachedComponentList.Clear();
-            }
+            //if (_cachedComponentList == null)
+            //{
+            //    _cachedComponentList = new();
+            //    _cachedComponentList.Clear();
+            //}
 
-            Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
-            if (component != null)
-                return component as T;
- 
+            var iPoolable = _objectPooler.Get<T>();
+            if (iPoolable != null)
+                return iPoolable;
+
+            //Common.Component component = _cachedComponentList?.Find(component => component != null && !component.IsActivate && component.GetType() == typeof(T));
+            //if (component != null)
+            //    return component as T;
+
+            Common.Component component = null;
             // GameObject gameObj = null;
             if (_componentDic != null)
                 _componentDic.TryGetValue(typeof(T), out component);
@@ -129,7 +139,8 @@ namespace GameSystem
 
             component = Instantiate(component.gameObject, rootTm)?.GetComponent<T>();
             if(component != null)
-                _cachedComponentList?.Add(component);
+                _objectPooler?.Add(component);
+            //_cachedComponentList?.Add(component);
             
             initialize = true;
             // component?.GetComponent<T>()?.Initialize(data);

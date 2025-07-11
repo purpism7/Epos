@@ -12,7 +12,7 @@ using UI;
 
 namespace Parts
 {
-    public class TextDamage : PartWorld<TextDamage.Data>, GameSystem.IPoolable
+    public class TextDamage : PartWorld<TextDamage.Data>
     {
         public class Data : PartWorld<Data>.Data
         {
