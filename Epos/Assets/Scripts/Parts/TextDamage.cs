@@ -1,3 +1,4 @@
+using GameSystem;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,15 +6,13 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-
 using TMPro;
 
-using GameSystem;
 using UI;
 
 namespace Parts
 {
-    public class TextDamage : PartWorld<TextDamage.Data>
+    public class TextDamage : PartWorld<TextDamage.Data>, GameSystem.IPoolable
     {
         public class Data : PartWorld<Data>.Data
         {
