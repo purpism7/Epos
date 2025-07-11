@@ -1,52 +1,64 @@
 fileFormatVersion: 2
-guid: b89ca9ea05a0ca848b1bd1b84da9ae17
+guid: e09e1ae728da1a34aac5e7ac260794e4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3586181604261804384
-    second: Mon_01_0
+      213: -6076864064986402602
+    second: Mon_03_0
   - first:
-      213: 1796796376082440559
-    second: Mon_01_1
+      213: 3969023754820834375
+    second: Mon_03_1
   - first:
-      213: -2961146935470883675
-    second: Mon_01_2
+      213: -424142347215712396
+    second: Mon_03_2
   - first:
-      213: -5791567070893688227
-    second: Mon_01_3
+      213: 4685517824192486547
+    second: Mon_03_3
   - first:
-      213: 1131295489550630893
-    second: Mon_01_4
+      213: 8980985644544552877
+    second: Mon_03_4
   - first:
-      213: 7716993659191823675
-    second: Mon_01_5
+      213: -2599889076759222315
+    second: Mon_03_5
   - first:
-      213: 6318073307820281781
-    second: Mon_01_6
+      213: -4050020726594098401
+    second: Mon_03_6
   - first:
-      213: -1034122198563388309
-    second: Mon_01_7
+      213: 1572293472847695092
+    second: Mon_03_7
   - first:
-      213: -3682358610579829739
-    second: Mon_01_8
+      213: 2184838411776376918
+    second: Mon_03_8
   - first:
-      213: 5653501136742866204
-    second: Mon_01_9
+      213: 8182864320406754751
+    second: Mon_03_9
   - first:
-      213: 3926803864903956566
-    second: Mon_01_10
+      213: 8615703501693982687
+    second: Mon_03_10
   - first:
-      213: -5715183624393387974
-    second: Mon_01_11
+      213: 5266990327904321132
+    second: Mon_03_11
   - first:
-      213: -6214536992960589844
-    second: Mon_01_12
+      213: 4756297290324537934
+    second: Mon_03_12
   - first:
-      213: -4237816232596220528
-    second: Mon_01_13
+      213: -1650423514706129091
+    second: Mon_03_13
   - first:
-      213: 1423106537697211075
-    second: Mon_01_14
+      213: 5543913606992118535
+    second: Mon_03_14
+  - first:
+      213: 3237869686921773731
+    second: Mon_03_15
+  - first:
+      213: -1186480965293471813
+    second: Mon_03_16
+  - first:
+      213: -8127533368941798115
+    second: Mon_03_17
+  - first:
+      213: 302589630352078653
+    second: Mon_03_18
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,17 +163,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Mon_01_0
+      name: Mon_03_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 191
-        width: 32
-        height: 55
+        x: 1
+        y: 61
+        width: 13
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,20 +195,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 069b01e2b2da4c130800000000000000
-      internalID: 3586181604261804384
+      spriteID: 6d0362a5454aaaba0800000000000000
+      internalID: -6076864064986402602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_1
+      name: Mon_03_1
       rect:
         serializedVersion: 2
-        x: 38
-        y: 220
-        width: 57
-        height: 42
+        x: 12
+        y: 78
+        width: 15
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +217,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f616a12c8c08fe810800000000000000
-      internalID: 1796796376082440559
+      spriteID: 744de23831ec41730800000000000000
+      internalID: 3969023754820834375
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_2
+      name: Mon_03_2
       rect:
         serializedVersion: 2
-        x: 102
-        y: 208
-        width: 89
-        height: 60
+        x: 14
+        y: 60
+        width: 22
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +239,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ac758f0d84e7e6d0800000000000000
-      internalID: -2961146935470883675
+      spriteID: 47fc10c48c42d1af0800000000000000
+      internalID: -424142347215712396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_3
+      name: Mon_03_3
       rect:
         serializedVersion: 2
-        x: 193
-        y: 210
-        width: 21
-        height: 29
+        x: 26
+        y: 74
+        width: 28
+        height: 19
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,85 +261,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5a388e1f6830afa0800000000000000
-      internalID: -5791567070893688227
+      spriteID: 39c11cbd2ad460140800000000000000
+      internalID: 4685517824192486547
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_4
+      name: Mon_03_4
       rect:
         serializedVersion: 2
-        x: 216
-        y: 146
-        width: 60
-        height: 89
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: defbaaef04b23bf00800000000000000
-      internalID: 1131295489550630893
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_5
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 127
-        width: 34
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b3d021eb8d4481b60800000000000000
-      internalID: 7716993659191823675
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_6
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 127
-        width: 60
-        height: 90
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5bf4189e23e4ea750800000000000000
-      internalID: 6318073307820281781
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_7
-      rect:
-        serializedVersion: 2
-        x: 102
-        y: 171
-        width: 12
+        x: 53
+        y: 75
+        width: 28
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -324,20 +283,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b648844e65f06a1f0800000000000000
-      internalID: -1034122198563388309
+      spriteID: dafe5f34cded2ac70800000000000000
+      internalID: 8980985644544552877
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_8
+      name: Mon_03_5
       rect:
         serializedVersion: 2
-        x: 124
-        y: 147
-        width: 90
-        height: 60
+        x: 61
+        y: 55
+        width: 22
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,20 +305,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51cc9c88a52a5ecc0800000000000000
-      internalID: -3682358610579829739
+      spriteID: 5d72954d8a65bebd0800000000000000
+      internalID: -2599889076759222315
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_9
+      name: Mon_03_6
       rect:
         serializedVersion: 2
-        x: 104
-        y: 149
-        width: 16
-        height: 20
+        x: 81
+        y: 77
+        width: 13
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,20 +327,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c1d53d09455457e40800000000000000
-      internalID: 5653501136742866204
+      spriteID: f1ba36a6b9f6bc7c0800000000000000
+      internalID: -4050020726594098401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_10
+      name: Mon_03_7
       rect:
         serializedVersion: 2
-        x: 105
-        y: 127
-        width: 16
-        height: 20
+        x: 92
+        y: 74
+        width: 31
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,20 +349,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6583b3e5f4fce7630800000000000000
-      internalID: 3926803864903956566
+      spriteID: 4fc80cb4598e1d510800000000000000
+      internalID: 1572293472847695092
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_11
+      name: Mon_03_8
       rect:
         serializedVersion: 2
-        x: 127
-        y: 3
-        width: 108
-        height: 142
+        x: 2
+        y: 38
+        width: 38
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -412,20 +371,108 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a3017e126c69fa0b0800000000000000
-      internalID: -5715183624393387974
+      spriteID: 6504f81b5fa125e10800000000000000
+      internalID: 2184838411776376918
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_12
+      name: Mon_03_9
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 54
+        width: 28
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fb51017aebf5f8170800000000000000
+      internalID: 8182864320406754751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_10
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 62
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd71f84dfa0219770800000000000000
+      internalID: 8615703501693982687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_11
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 45
+        width: 40
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6eb72a2ccb181940800000000000000
+      internalID: 5266990327904321132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_12
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 56
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e4272f38f23c10240800000000000000
+      internalID: 4756297290324537934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_13
       rect:
         serializedVersion: 2
         x: 1
         y: 1
-        width: 124
-        height: 124
+        width: 48
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -434,42 +481,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cef4f0be78781c9a0800000000000000
-      internalID: -6214536992960589844
+      spriteID: d3f4df4ce848819e0800000000000000
+      internalID: -1650423514706129091
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Mon_01_13
+      name: Mon_03_14
       rect:
         serializedVersion: 2
-        x: 239
-        y: 60
-        width: 36
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 095d7b0e6904035c0800000000000000
-      internalID: -4237816232596220528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_14
-      rect:
-        serializedVersion: 2
-        x: 237
+        x: 42
         y: 1
-        width: 41
-        height: 57
+        width: 59
+        height: 27
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -478,8 +503,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c27af82bd3efb310800000000000000
-      internalID: 1423106537697211075
+      spriteID: 703483a7d00ffec40800000000000000
+      internalID: 5543913606992118535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_15
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 28
+        width: 27
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3a24af543593fec20800000000000000
+      internalID: 3237869686921773731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_16
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 28
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb78bea29d5c88fe0800000000000000
+      internalID: -1186480965293471813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_17
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 11
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d1d17146673353f80800000000000000
+      internalID: -8127533368941798115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Mon_03_18
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 1
+        width: 17
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d373ad56aa3033400800000000000000
+      internalID: 302589630352078653
       vertices: []
       indices: 
       edges: []
@@ -498,21 +611,25 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Mon_01_0: 3586181604261804384
-      Mon_01_1: 1796796376082440559
-      Mon_01_10: 3926803864903956566
-      Mon_01_11: -5715183624393387974
-      Mon_01_12: -6214536992960589844
-      Mon_01_13: -4237816232596220528
-      Mon_01_14: 1423106537697211075
-      Mon_01_2: -2961146935470883675
-      Mon_01_3: -5791567070893688227
-      Mon_01_4: 1131295489550630893
-      Mon_01_5: 7716993659191823675
-      Mon_01_6: 6318073307820281781
-      Mon_01_7: -1034122198563388309
-      Mon_01_8: -3682358610579829739
-      Mon_01_9: 5653501136742866204
+      Mon_03_0: -6076864064986402602
+      Mon_03_1: 3969023754820834375
+      Mon_03_10: 8615703501693982687
+      Mon_03_11: 5266990327904321132
+      Mon_03_12: 4756297290324537934
+      Mon_03_13: -1650423514706129091
+      Mon_03_14: 5543913606992118535
+      Mon_03_15: 3237869686921773731
+      Mon_03_16: -1186480965293471813
+      Mon_03_17: -8127533368941798115
+      Mon_03_18: 302589630352078653
+      Mon_03_2: -424142347215712396
+      Mon_03_3: 4685517824192486547
+      Mon_03_4: 8980985644544552877
+      Mon_03_5: -2599889076759222315
+      Mon_03_6: -4050020726594098401
+      Mon_03_7: 1572293472847695092
+      Mon_03_8: 2184838411776376918
+      Mon_03_9: 8182864320406754751
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
