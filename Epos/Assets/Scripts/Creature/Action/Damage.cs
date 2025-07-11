@@ -13,6 +13,7 @@ namespace Creature.Action
         public class Data : BaseData
         {
             public ICaster ICaster = null;
+            public bool PlayAnimation = true;
         }
         
         public override void Execute()
@@ -20,7 +21,8 @@ namespace Creature.Action
             if (_data == null)
                 return;
             
-            SetAnimation(_data.AnimationKey, false);
+            //if(_data.PlayAnimation)
+                //SetAnimation(_data.AnimationKey, false);
 
             var iCasterIStat = _data?.ICaster?.IStat;
             if (iCasterIStat != null)
@@ -40,10 +42,6 @@ namespace Creature.Action
                 if(_iActor != null)
                     EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
             }
-            
-            
-            
-            // _iActor?.EventHandler?.Invoke(_data?.ICaster);
         }
     }
 }

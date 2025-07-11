@@ -25,7 +25,16 @@ namespace Creature
         #region Act
         public void MoveToTarget(Vector3 pos, System.Action finishAction)
         {
-            IActCtr?.MoveToTarget(IStat.Get(Stat.EType.MoveSpeed), pos, finishAction: finishAction, isJumpMove: false)?.Execute();
+            var moveData = new Move.Data
+            {
+                TargetPos = pos,
+                MoveSpeed = IStat.Get(Stat.EType.MoveSpeed),
+                FinishAction = finishAction,
+                IsJumpMove = false,
+                UseNavMesh = true
+            };
+
+            IActCtr?.MoveToTargetPosition(moveData)?.Execute();
         }
         
         public override string AnimationKey<T>(Act<T> act)

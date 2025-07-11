@@ -1,13 +1,12 @@
+using Common;
+using Cysharp.Threading.Tasks;
+using Datas.ScriptableObjects;
+using GameSystem.Event;
+using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-using Cysharp.Threading.Tasks;
-
-using Datas.ScriptableObjects;
-using GameSystem.Event;
-using Common;
 
 
 namespace Creature.Action
@@ -20,6 +19,7 @@ namespace Creature.Action
             public ICombatant ICombatant = null;
             public Skill Skill = null;
             public List<ICombatant> TargetList = null;
+            public bool PlayAnimation = true;
         }
 
         public interface IListener
@@ -65,14 +65,14 @@ namespace Creature.Action
             {
                 foreach (var target in _data.TargetList)
                 {
-                    target?.IActCtr?.TakeDamage(_data?.ICombatant);
+                    target?.IActCtr?.TakeDamage(_data?.ICombatant, _data.PlayAnimation);
                 }
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _data?.IListener?.AfterCasting(_data?.ICombatant);      
             
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             _endAction?.Invoke();
             
             // if (_data != null)

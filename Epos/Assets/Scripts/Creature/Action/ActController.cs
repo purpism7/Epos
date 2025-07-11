@@ -1,20 +1,23 @@
+using Cysharp.Threading.Tasks;
+using Datas.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst;
 using UnityEngine;
-
-using Cysharp.Threading.Tasks;
-
-using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
         void Idle();
-        IActController MoveToTarget(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
+
+        IActController MoveToTargetPosition(Move.Data data);
+        //IActController MoveToTargetPosition(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
+        IActController MoveToTarget(Move.Data data);
+       
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList);
-        void TakeDamage(ICaster iCaster);
+        void TakeDamage(ICaster iCaster, bool playAnimation);
         void Execute();
 
         bool InAction { get; }
@@ -87,28 +90,44 @@ namespace Creature.Action
         /// <param name="finishAction"></param>
         /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
         /// <returns></returns>
-        IActController IActController.MoveToTarget(float moveSpeed, Vector3? pos, System.Action finishAction, int direction, bool isJumpMove, bool useNavMesh)
+        IActController IActController.MoveToTargetPosition(Move.Data moveData)
         {
             if (!IsActivate)
                 return null;
 
+            if (moveData == null)
+                return null;
+
             var targetPos = _currPosition;
-            if (pos != null)
-                targetPos = pos.Value;
+            if (moveData.TargetPos != null)
+                targetPos = moveData.TargetPos.Value;
             // else
                 // reverse = transform.position.x - targetPos.x > 0;
             
-            var data = new Move.Data
-            {
-                MoveSpeed = moveSpeed,
-                TargetPos = targetPos,
-                FinishAction = finishAction,
-                DirectionAfterArriving = direction,
-                IsJumpMove = isJumpMove,
-                UseNavMesh = useNavMesh,
-            };
+            //var data = new Move.Data
+            //{
+            //    MoveSpeed = moveSpeed,
+            //    TargetPos = targetPos,
+            //    FinishAction = finishAction,
+            //    DirectionAfterArriving = direction,
+            //    IsJumpMove = isJumpMove,
+            //    UseNavMesh = useNavMesh,
+            //};
 
-            AddActAsync<Move, Move.Data>(data).Forget();
+            AddActAsync<Move, Move.Data>(moveData).Forget();
+
+            return this;
+        }
+
+        IActController IActController.MoveToTarget(Move.Data moveData)
+        {
+            if (!IsActivate)
+                return null;
+
+            if (moveData == null)
+                return null;
+
+            AddActAsync<Move, Move.Data>(moveData).Forget();
 
             return this;
         }
@@ -131,7 +150,7 @@ namespace Creature.Action
             return this;
         }
 
-        void IActController.TakeDamage(ICaster iCaster)
+        void IActController.TakeDamage(ICaster iCaster, bool PlayAnimation)
         {
             if (!IsActivate)
                 return;
@@ -139,6 +158,7 @@ namespace Creature.Action
             var data = new Damage.Data
             {
                 ICaster = iCaster,
+                PlayAnimation = PlayAnimation,
             };
             
             Execute<Damage, Damage.Data>(data);

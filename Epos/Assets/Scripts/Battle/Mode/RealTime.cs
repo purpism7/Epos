@@ -1,10 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-
 using Common;
 using Creature;
 using Creature.Action;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine;
 
 
 namespace Battle.Mode
@@ -32,15 +32,17 @@ namespace Battle.Mode
                 var enemy = _data?.EnemyICombatantList[i];
                 enemy?.SetETeam(ETeam.Enemy);
                 enemy?.Activate();
+
+                MoveToAttack(enemy);
             }
 
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
-                var attacker = _data?.AllyICombatantList[i];
-                attacker?.SetETeam(ETeam.Ally);
-                attacker?.Activate();
+                var ally = _data?.AllyICombatantList[i];
+                ally?.SetETeam(ETeam.Ally);
+                ally?.Activate();
 
-                MoveToAttack(attacker);
+                MoveToAttack(ally);
             }
         }
 
@@ -86,11 +88,18 @@ namespace Battle.Mode
             if (skill == null)
                 return;
 
-            var targetList = attacker.GetTargetList(_data?.EnemyICombatantList, skill);
+            List<ICombatant> iCombatantList = null;
+            if(attacker.ETeam == ETeam.Ally)
+                iCombatantList = _data?.EnemyICombatantList;
+            else if(attacker.ETeam == ETeam.Enemy)
+                iCombatantList = _data?.AllyICombatantList;
+
+            var targetList = attacker.GetTargetList(iCombatantList, skill);
             if(targetList.IsNullOrEmpty())
                 return;
                 
-            var target = targetList.FirstOrDefault();
+            var randomIndex = Random.Range(0, targetList.Count);
+            var target = targetList[randomIndex];
             if(target == null)
                 return;
                 
@@ -98,21 +107,26 @@ namespace Battle.Mode
             if (skillRange <= 0)
                 return;
                
-            var targetPos = target.Transform.position;
-            var direction = targetPos.x - attacker.Transform.position.x;
+            //var targetPos = target.Transform.position;
+            //var direction = targetPos.x - attacker.Transform.position.x;
 
-            targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
-            //targetPos.y -= 1f;
-            targetPos.z = 0;
+            //targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
+            ////targetPos.y -= 1f;
+            //targetPos.z = 0;
 
-            attacker.IActCtr?.MoveToTarget(10f, targetPos,
-                () =>
-                {
+            var offsetPosition = new Vector3(skillRange, 0, 0);
 
+            var moveData = new Move.Data
+            {
+                MoveSpeed = 10f,
+                IsJumpMove = false,
+                UseNavMesh = false,
+            }.WithTargetTm(target.Transform)
+            .WithOffsetPosition(offsetPosition);
 
-                }, isJumpMove: false, useNavMesh: false);
-            attacker.IActCtr?.CastingSkill(this, attacker, skill, targetList);
-            attacker.IActCtr?.Execute();
+            attacker.IActCtr?.MoveToTarget(moveData)?
+                .CastingSkill(this, attacker, skill, targetList)?
+                .Execute();
         }
 
         #region Casting.IListener

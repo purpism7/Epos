@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Creature.Action
 {
@@ -9,12 +10,26 @@ namespace Creature.Action
         public class Data : BaseData
         {
             public float MoveSpeed = 1f;
-            public Vector3 TargetPos = Vector3.zero;
+            public Transform TargetTm { get; private set; } = null;
+            public Vector3? TargetPos = null;
+            public Vector3? OffsetPosition { get; private set; } = null;
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
-            public bool UseNavMesh = false;
+            public bool UseNavMesh = true;
 
             public int DirectionAfterArriving = 1;
+
+            public Data WithTargetTm(Transform targetTm)
+            {
+                TargetTm = targetTm;
+                return this;
+            }
+
+            public Data WithOffsetPosition(Vector3 position)
+            {
+                OffsetPosition = position;
+                return this;
+            }
         }
 
         private Vector3 _prevPos = Vector3.zero;
@@ -30,10 +45,18 @@ namespace Creature.Action
             SetAnimation(_data.AnimationKey, true);
 
             if (_iActor?.NavMeshAgent != null &&
+                _data != null &&
                 _data.UseNavMesh)
             {
+                var targetPos = Vector2.zero;
+                if (_data.TargetTm)
+                    targetPos = _data.TargetTm.position;
+
+                if (_data.TargetPos != null)
+                    targetPos = _data.TargetPos.Value;
+
                 _iActor.NavMeshAgent.speed = _data.MoveSpeed;
-                _iActor?.NavMeshAgent?.SetDestination(_data.TargetPos);
+                _iActor?.NavMeshAgent?.SetDestination(targetPos);
             }
 
             if (_iActor?.Transform)
@@ -62,20 +85,39 @@ namespace Creature.Action
             if (!iActorTm)
                 return;
 
+            if (_data != null &&
+               _data.UseNavMesh)
+                return;
+
             if (_iActor?.IStat == null)
                 return;
-            
-            if (_data != null &&
-                !_data.UseNavMesh)
-            {
-                Vector2 targetPos = _data.TargetPos;
-                var moveSpeed = _data.MoveSpeed;
 
-                // iActorTm.position = Vector3.Lerp(iActorTm.position, targetPos, Time.deltaTime * moveSpeed);
-                iActorTm.position = Vector3.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
+            Vector3 targetPos = Vector3.zero;
+            if (_data.TargetTm)
+                targetPos = _data.TargetTm.position;
+
+            if (_data.TargetPos != null)
+                targetPos = _data.TargetPos.Value;
+
+            var direction = targetPos - iActorTm.position;
+            Vector3 offsetPosition = Vector3.zero;
+            float offsetDistance = 0;
+
+            if (_data.OffsetPosition != null)
+            {
+                offsetPosition = _data.OffsetPosition.Value;
+                offsetDistance = offsetPosition.x;
+
+                targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
+                targetPos.y += offsetPosition.y;
             }
 
-            Vector2 direction = _prevPos - iActorTm.position;
+            Debug.Log(offsetPosition);
+
+            var moveSpeed = _data.MoveSpeed;
+            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
+
+            direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
                 iActorTm.localScale = new Vector3(-1, 1, 1);
             else if (direction.x < 0)
@@ -83,8 +125,9 @@ namespace Creature.Action
 
             _prevPos = iActorTm.position;
             
-            var distance = Vector2.Distance(iActorTm.position, _data.TargetPos);
-            if (distance < 1f)
+            var distance = Vector2.Distance(iActorTm.position, targetPos);
+            Debug.Log(distance);
+            if (distance < offsetDistance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;

@@ -141,12 +141,18 @@ namespace Parts
             float randomY = UnityEngine.Random.Range(-value, value);
             
             var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
-            monster.IActCtr?.MoveToTarget(monster.IStat.Get(Stat.EType.MoveSpeed), 
-                targetPos,
-                () =>
+            var moveData = new Creature.Action.Move.Data
+            {
+                MoveSpeed = monster.IStat.Get(Stat.EType.MoveSpeed),
+                TargetPos = targetPos,
+                FinishAction = () =>
                 {
                     RandomActionAsync().Forget();
-                }).Execute();
+                },
+            };
+
+            monster.IActCtr?.MoveToTargetPosition(moveData)
+                .Execute();
         }
     }
 }
