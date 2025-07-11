@@ -126,7 +126,6 @@ namespace Creature.Action
             _prevPos = iActorTm.position;
             
             var distance = Vector2.Distance(iActorTm.position, targetPos);
-            Debug.Log(distance);
             if (distance < offsetDistance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.

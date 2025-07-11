@@ -33,6 +33,8 @@ namespace GameSystem
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
+
+            _objectPooler = FindFirstObjectByType<ObjectPooler>();
             
             _componentDic = new();
             _componentDic.Clear();
