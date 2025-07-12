@@ -18,7 +18,7 @@ namespace GameSystem
     public interface IBattleManager : IManager
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
-        void BeginRealTime(PartyLocation allyPartyLocation, Monster[] mosnters);
+        void BeginRealTime(PartyLocation allyPartyLocation, Monster[] mosnters, Transform[] wayPointTms);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -170,19 +170,21 @@ namespace GameSystem
             return iCombatantList;
         }
         
-        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, Monster[] monsters)
+        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, Monster[] monsters, Transform[] wayPointTms)
         {
-            BeginRealTimeAsync(allyPartyLocation, monsters).Forget();
+            BeginRealTimeAsync(allyPartyLocation, monsters, wayPointTms).Forget();
         }
 
-        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, Monster[] monsters)
+        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, Monster[] monsters, Transform[] wayPointTms)
         {
             var allyParty = MainManager.Get<IParty>().GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
             if (partyInfo.IsNullOrEmpty())
                 return;
             
-            var battleModeData = new RealTime.Data();
+            var battleModeData = new RealTime.Data()
+                .WithWayPointTm(wayPointTms);
+            
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
                 .Create();
@@ -209,6 +211,8 @@ namespace GameSystem
             var fieldData = new Battle.Field.Data(allyFieldData, null)
             {
                 BattleMode = battleMode,
+                
+                
             };
             
             Begin<Field, Field.Data>(fieldData);

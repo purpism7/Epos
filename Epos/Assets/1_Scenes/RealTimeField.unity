@@ -313,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 300022552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 61.252575, y: 32.966053, z: -100}
+  m_LocalPosition: {x: 33.78658, y: 20.256853, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -442,7 +442,7 @@ Camera:
   far clip plane: 300
   field of view: 40
   orthographic: 1
-  orthographic size: 32
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -549,7 +549,7 @@ Transform:
   m_GameObject: {fileID: 366462208}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 39.2, y: 28.6, z: 0}
+  m_LocalPosition: {x: 33, y: 24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -806,6 +806,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   partyLocation: {fileID: 59561317}
   monsterRootTm: {fileID: 1266116244}
+  wayPointTms:
+  - {fileID: 366462209}
 --- !u!1001 &573595885
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1198,7 +1200,7 @@ Transform:
   m_GameObject: {fileID: 1266116243}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.6, y: 5.45, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1889,7 +1891,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 32
+    OrthographicSize: 20
     NearClipPlane: 0.1
     FarClipPlane: 300
     Dutch: 0

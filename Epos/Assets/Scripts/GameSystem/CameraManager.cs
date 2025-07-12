@@ -18,6 +18,7 @@ namespace GameSystem
         Camera MainCamera { get; }
         bool IsMove { get; }
 
+        void MoveToTarget(Vector3 targetPosition);
         void ZoomIn(Vector3 targetPos, Action endAction);
         void ZoomOut(Action endAction);
     }
@@ -48,6 +49,8 @@ namespace GameSystem
         private Creature.Hero _fieldHero = null;
         private bool _return = true;
         private float _returnTime = 0;
+
+        private Vector3? _targetPosition = null;
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
@@ -71,7 +74,7 @@ namespace GameSystem
 
             if (virtualCamera == null)
                 return;
-
+            
             FieldChainLateUpdate();
         }
 
@@ -119,7 +122,7 @@ namespace GameSystem
                 
                 IsMove = false;
 
-                if (CameraReturnToCharacter())
+                if (MoveToTarget())
                     return;
             }
 
@@ -164,23 +167,33 @@ namespace GameSystem
             mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * 2f);
         }
 
-        private bool CameraReturnToCharacter()
+        private bool MoveToTarget()
         {
             if (mainCamera == null)
+                return false;
+
+            if (_targetPosition == null)
                 return false;
             
             if (IsMove ||
                 _returnTime < 1f)
                 return false;
 
-            var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
-            if (!navMeshTm)
-                return false;
+            // var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
+            // if (!navMeshTm)
+            //     return false;
 
-            var targetPos = new Vector3(navMeshTm.position.x, navMeshTm.position.y, -100f);
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPos, Time.deltaTime * 2f);
+            var targetPosition = _targetPosition.Value;
+            targetPosition.z = -100f;
+            
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime * 2f);
 
             return true;
+        }
+
+        public void MoveToTarget(Vector3 targetPosition)
+        {
+            _targetPosition = targetPosition;
         }
         
         #region Zoom In / Out

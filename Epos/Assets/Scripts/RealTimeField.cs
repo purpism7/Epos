@@ -15,6 +15,8 @@ public class RealTimeField : MonoBehaviour
 
     [SerializeField]
     private Transform monsterRootTm = null;
+
+    [SerializeField] private Transform[] wayPointTms = null;
    
     private Monster[] _monsters = null;
 
@@ -34,6 +36,6 @@ public class RealTimeField : MonoBehaviour
             _monsters = monsterRootTm.GetComponentsInChildren<Monster>(true);
 
         await UniTask.WaitUntil(() => UIManager.Instance.IsEndLoad);
-        MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, _monsters);
+        MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, _monsters, wayPointTms);
     }
 }

@@ -3,6 +3,8 @@ using Creature;
 using Creature.Action;
 using System.Collections.Generic;
 using System.Linq;
+using Entities;
+using GameSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -13,7 +15,13 @@ namespace Battle.Mode
     {
         public class Data : BaseData
         {
+            public Transform[] WayPointTms { get; private set; } = null;
 
+            public Data WithWayPointTm(Transform[] wayPointTms)
+            {
+                WayPointTms = wayPointTms;
+                return this;
+            }
         }
 
         public override BattleMode<Data> Initialize(Data data)
@@ -26,6 +34,8 @@ namespace Battle.Mode
         public override void Begin()
         {
             Debug.Log("Begin()");
+            
+            MainManager.Get<ICameraManager>().MoveToTarget(_data.WayPointTms[0].position);
 
             for (int i = 0; i < _data?.EnemyICombatantList.Count; ++i)
             {
@@ -58,30 +68,7 @@ namespace Battle.Mode
                 _data?.EnemyICombatantList[i].IActCtr?.ChainUpdate();
             }
         }
-
-        // private ICombatant FindClosestICombatant(List<ICombatant> iCombatantList, ICombatant refICombatant)
-        // {
-        //     if (iCombatantList.IsNullOrEmpty())
-        //         return null;
-        //
-        //     ICombatant closestEnemyIComtant = null;
-        //     float closestDistance = 99999f;
-        //     for (int i = 0; i < iCombatantList.Count; ++i)
-        //     {
-        //         if (iCombatantList[i] == null)
-        //             continue;
-        //
-        //         var distance = Vector2.Distance(iCombatantList[i].Transform.position, refICombatant.Transform.position);
-        //         if (closestEnemyIComtant == null ||
-        //             closestDistance > distance)
-        //         {
-        //             closestEnemyIComtant = iCombatantList[i];
-        //             closestDistance = distance;
-        //         }
-        //     }
-        //
-        //     return closestEnemyIComtant;
-        // }
+        
         private void MoveToAttack(ICombatant attacker)
         {
             var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);

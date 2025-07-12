@@ -38,10 +38,18 @@ public static class BattleExtensions
 
         if (targetList.IsNullOrEmpty())
             return null;
+
+        if (skill.ESkillTarget == ESkillTarget.NearOne)
+        {
+            var target = FindClosestICombatant(targetList, attacker);
+            targetList.Clear();
+            targetList.Add(target);
+            
+            return targetList;
+        }
         
         // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
-        if (skill.ESkillTarget == ESkillTarget.FarOne ||
-            skill.ESkillTarget == ESkillTarget.NearOne)
+        if (skill.ESkillTarget == ESkillTarget.FarOne)
         {
             var target = targetList.FirstOrDefault();
             targetList.Clear();
@@ -49,5 +57,29 @@ public static class BattleExtensions
         }
 
         return targetList;
+    }
+    
+    private static ICombatant FindClosestICombatant(List<ICombatant> iCombatantList, ICombatant refICombatant)
+    {
+        if (iCombatantList.IsNullOrEmpty())
+            return null;
+        
+        ICombatant closestEnemyIComtant = null;
+        float closestDistance = 99999f;
+        for (int i = 0; i < iCombatantList.Count; ++i)
+        {
+            if (iCombatantList[i] == null)
+                continue;
+        
+            var distance = Vector2.Distance(iCombatantList[i].Transform.position, refICombatant.Transform.position);
+            if (closestEnemyIComtant == null ||
+                closestDistance > distance)
+            {
+                closestEnemyIComtant = iCombatantList[i];
+                closestDistance = distance;
+            }
+        }
+        
+        return closestEnemyIComtant;
     }
 }
