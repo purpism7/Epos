@@ -45,8 +45,6 @@ namespace GameSystem.Event
             IStat = iStat;
         }
     }
-
-   
     
     #region Skill
     public class SkillUseEventData : EventData

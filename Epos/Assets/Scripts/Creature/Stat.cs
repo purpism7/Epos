@@ -7,7 +7,7 @@ namespace Creature
 {
     public interface IStatGeneric
     {
-        void Initialize(IActor iActor);
+        void Initialize(Character character);
         void Activate();
         void Deactivate();
 
@@ -40,15 +40,14 @@ namespace Creature
             Hp,
             MaxHp,
         }
-
-        private IActor _iActor = null;
+        
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, float> _addedStatDic = new();
 
         #region IStatGeneric
-        void IStatGeneric.Initialize(IActor iActor)
+        void IStatGeneric.Initialize(Character character)
         {
-            _iActor = iActor;
+            
         }
         
         void IStatGeneric.Activate()
@@ -76,16 +75,18 @@ namespace Creature
         void IStat.Add(EType eType, float value)
         {
             SetAdded(eType, value);
-            
-            // _iActor?.EventHandler?.Invoke(_iActor);
         }
 
         float IStat.Get(EType eType)
         {
-            var curr = GetOrigin(eType) + GetAdded(eType);
-            return curr;
+            return GetCurrent(eType);
         }
         #endregion
+
+        private float GetCurrent(EType eType)
+        {
+            return GetOrigin(eType) + GetAdded(eType);
+        }
 
         private void SetOrigin(EType eType, float value)
         {

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Spine;
 using UnityEngine;
 
 namespace Creature.Action
@@ -59,6 +60,11 @@ namespace Creature.Action
         }
         #endregion
 
+        protected virtual void OnCompleted(TrackEntry trackEntry)
+        {
+            
+        }
+
         protected void SetAnimation(string animationName, bool loop)
         {
             if (_iActor == null)
@@ -76,6 +82,9 @@ namespace Creature.Action
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return;
+
+            trackEntry.Complete -= OnCompleted;
+            trackEntry.Complete += OnCompleted;
 
             _duration = trackEntry.Animation.Duration;
         }

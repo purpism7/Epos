@@ -10,16 +10,20 @@ using Spine.Unity;
 using Creature.Action;
 using GameSystem.Event;
 using Common;
+using EventHandler = GameSystem.Event.EventHandler;
 
 
 namespace Creature
 {
     public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
     {
+
         #region Inspector
+
         [SerializeField] private int id = 0;
         [SerializeField] private EClass eClass = EClass.None;
         [SerializeField] private Transform rootTm = null;
+
         #endregion
 
         private IStatGeneric _iStatGeneric = null;
@@ -46,18 +50,14 @@ namespace Creature
 
         public Action.IActController IActCtr { get; protected set; } = null;
         public ISkillController ISkillCtr { get; protected set; } = null;
-
-        // public System.Action<T> EventHandler<T>() where T : GameSystem.EventData
-        // {
-        //     
-        // }
-
+        
         #region ICombatant
 
         public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
         // public EFormation EFormation { get; private set; } = EFormation.None;
 
         public int PartyPosition => _partyPosition;
+
         #endregion
 
         #region Temp Stat
@@ -74,14 +74,10 @@ namespace Creature
         [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
         private float attackRange = 1f;
 
-        [SerializeField] 
-        [Range(0f, 100f)]
-        private float maxHp = 1f;
-        
-        [SerializeField] 
-        [Range(1, 5)] private float activePoint = 1f;
-        [SerializeField] 
-        [Range(1, 5)] private float passivePoint = 1f;
+        [SerializeField] [Range(0f, 100f)] private float maxHp = 1f;
+
+        [SerializeField] [Range(1, 5)] private float activePoint = 1f;
+        [SerializeField] [Range(1, 5)] private float passivePoint = 1f;
 
         // [SerializeField] private int position = 0;
 
@@ -115,6 +111,8 @@ namespace Creature
             ISkillCtr?.Initialize(this);
 
             SetOriginStat();
+            
+            EventHandler.Add<StatChangedEventData>(OnChangedEventData);
         }
 
         public virtual void ChainUpdate()
@@ -148,8 +146,8 @@ namespace Creature
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
 
-            // EventHandler = null;
-
+            EventHandler.Remove<StatChangedEventData>(OnChangedEventData);
+            
             Extensions.SetActive(rootTm, false);
         }
 
@@ -187,6 +185,7 @@ namespace Creature
         }
 
         #region IActor
+
         // void IActor.Add(System.Action<IActor> eventHandler)
         // {
         //     EventHandler += eventHandler;
@@ -197,6 +196,7 @@ namespace Creature
         //     EventHandler -= eventHandler;
         // }
         //
+
         #endregion
 
         #region ICombatant
@@ -215,11 +215,12 @@ namespace Creature
         {
             _partyPosition = partyPosition;
         }
-        
+
         void ICombatant.SetPosition(Vector3 pos)
         {
             transform.position = pos;
         }
+
         #endregion
 
         #region Temp Stat
@@ -238,5 +239,16 @@ namespace Creature
         }
 
         #endregion
+        
+        private void OnChangedEventData(StatChangedEventData data)
+        {
+            var iStat = data?.IStat;
+            if (iStat == null)
+                return;
+            
+            var hp = data.IStat.Get(Stat.EType.Hp);
+            if (hp <= 0)
+                IActCtr?.Die();
+        }
     }
 }

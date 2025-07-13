@@ -17,6 +17,7 @@ namespace Creature
                 case Move: return "02_Run";
                 case Casting: return "03_Hit";
                 case Damage: return "04_Damege";
+                case Creature.Action.Die: return "04_Damege";
             }
 
             return string.Empty;

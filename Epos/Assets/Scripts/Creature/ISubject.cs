@@ -11,12 +11,16 @@ namespace Creature
 {
     public interface ISubject
     {
+        
         int Id { get; }
+        
+        bool IsActivate { get; }
+        void Activate();
+        void Deactivate();
+        
         Transform Transform { get; }
         // Rigidbody2D Rigidbody2D { get; }
         NavMeshAgent NavMeshAgent { get; }
-
-        bool IsActivate { get; }
     }
 }
 

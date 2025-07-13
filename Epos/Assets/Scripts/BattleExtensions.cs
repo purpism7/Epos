@@ -23,6 +23,9 @@ public static class BattleExtensions
         {
             if(iCombatant == null)
                 continue;
+            
+            if(!iCombatant.IsActivate)
+                continue;
 
             if (skill.SameTeam)
             {

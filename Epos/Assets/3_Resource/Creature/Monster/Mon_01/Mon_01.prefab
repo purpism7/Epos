@@ -47,15 +47,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 90001
+  eClass: 0
   rootTm: {fileID: 9067786674166319913}
   actionSpeed: 10
   moveSpeed: 1
-  attack: 14.8
+  attack: 1
   attackRange: 2
   maxHp: 30.7
   activePoint: 1
   passivePoint: 1
-  position: 2
 --- !u!114 &1449554498354231400
 MonoBehaviour:
   m_ObjectHideFlags: 0

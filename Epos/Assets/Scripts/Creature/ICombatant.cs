@@ -9,8 +9,6 @@ namespace Creature
 {
     public interface ICombatant : ICaster
     {
-        void Activate();
-
         void SetETeam(ETeam eTeam);
         public ETeam ETeam { get; }
         

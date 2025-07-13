@@ -15,8 +15,9 @@ namespace Creature.Action
         IActController MoveToTargetPosition(Move.Data data);
         //IActController MoveToTargetPosition(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
         IActController MoveToTarget(Move.Data data);
-       
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList);
+        IActController Die();
+        
         void TakeDamage(ICaster iCaster, bool playAnimation);
         void Execute();
 
@@ -101,19 +102,7 @@ namespace Creature.Action
             var targetPos = _currPosition;
             if (moveData.TargetPos != null)
                 targetPos = moveData.TargetPos.Value;
-            // else
-                // reverse = transform.position.x - targetPos.x > 0;
-            
-            //var data = new Move.Data
-            //{
-            //    MoveSpeed = moveSpeed,
-            //    TargetPos = targetPos,
-            //    FinishAction = finishAction,
-            //    DirectionAfterArriving = direction,
-            //    IsJumpMove = isJumpMove,
-            //    UseNavMesh = useNavMesh,
-            //};
-
+         
             AddActAsync<Move, Move.Data>(moveData).Forget();
 
             return this;
@@ -147,6 +136,13 @@ namespace Creature.Action
             
             AddActAsync<Casting, Casting.Data>(data).Forget();
 
+            return this;
+        }
+
+        IActController IActController.Die()
+        {
+            Execute<Die, Die.Data>();
+            
             return this;
         }
 
