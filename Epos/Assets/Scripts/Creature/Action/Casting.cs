@@ -53,9 +53,12 @@ namespace Creature.Action
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);
-            // _data?.Skill.Casting();
 
+
+            // _data?.Skill.Casting();
+            Debug.Log(_duration);
             var halfDuration = _duration / 2f;
+            
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _data?.IListener?.InUse();
@@ -73,10 +76,17 @@ namespace Creature.Action
             _data?.IListener?.AfterCasting(_data?.ICombatant);      
             
             //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            _endAction?.Invoke();
+           
             
             // if (_data != null)
             //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData().WithETeam(ETeam));
+        }
+
+        protected override void OnCompleted(TrackEntry trackEntry)
+        {
+            base.OnCompleted(trackEntry);
+
+            _endAction?.Invoke();
         }
 
         // private ETeam ETeam

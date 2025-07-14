@@ -40,14 +40,20 @@ namespace Creature
             Hp,
             MaxHp,
         }
+
+        public interface IListener
+        {
+            void OnStatChanged(EType eType, float value);
+        }
         
+        private IListener _iListener = null;
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, float> _addedStatDic = new();
 
         #region IStatGeneric
         void IStatGeneric.Initialize(Character character)
         {
-            
+            _iListener = character;
         }
         
         void IStatGeneric.Activate()
@@ -114,6 +120,8 @@ namespace Creature
                 _addedStatDic[eType] += value;
             else
                 _addedStatDic.TryAdd(eType, value);
+
+            _iListener?.OnStatChanged(eType, GetCurrent(eType));
         }
 
         private float GetOrigin(EType eType)

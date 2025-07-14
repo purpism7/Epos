@@ -33,7 +33,7 @@ public class RealTimeField : MonoBehaviour
         partyLocation?.Initialize();
 
         if(monsterRootTm)
-            _monsters = monsterRootTm.GetComponentsInChildren<Monster>(true);
+            _monsters = monsterRootTm.GetComponentsInChildren<Monster>();
 
         await UniTask.WaitUntil(() => UIManager.Instance.IsEndLoad);
         MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, _monsters, wayPointTms);

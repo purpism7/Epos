@@ -15,7 +15,7 @@ using EventHandler = GameSystem.Event.EventHandler;
 
 namespace Creature
 {
-    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant
+    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant, Stat.IListener
     {
 
         #region Inspector
@@ -111,8 +111,6 @@ namespace Creature
             ISkillCtr?.Initialize(this);
 
             SetOriginStat();
-            
-            EventHandler.Add<StatChangedEventData>(OnChangedEventData);
         }
 
         public virtual void ChainUpdate()
@@ -146,8 +144,6 @@ namespace Creature
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
 
-            EventHandler.Remove<StatChangedEventData>(OnChangedEventData);
-            
             Extensions.SetActive(rootTm, false);
         }
 
@@ -240,15 +236,14 @@ namespace Creature
 
         #endregion
         
-        private void OnChangedEventData(StatChangedEventData data)
+
+        #region Stat.IListener
+        void Stat.IListener.OnStatChanged(Stat.EType eType, float value)
         {
-            var iStat = data?.IStat;
-            if (iStat == null)
-                return;
-            
-            var hp = data.IStat.Get(Stat.EType.Hp);
-            if (hp <= 0)
+            if (eType == Stat.EType.Hp &&
+                value <= 0)
                 IActCtr?.Die();
         }
+        #endregion
     }
 }

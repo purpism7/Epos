@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Creator;
 using UnityEngine;
 
+using Creator;
 using GameSystem.Event;
 using Parts;
 
@@ -38,9 +38,6 @@ namespace Creature.Action
                         TargetTm = _iActor?.Transform,
                         Damage = damage
                     });
-                
-                if(_iActor != null)
-                    EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
             }
         }
     }
