@@ -9,7 +9,7 @@ namespace GameSystem
         bool IsActivate { get; }
     }
 
-    public class ObjectPooler : MonoBehaviour
+    public class ObjectPooler
     {
         private List<IPoolable> _iPoolableList = new();
 

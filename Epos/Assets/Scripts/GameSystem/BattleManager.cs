@@ -12,6 +12,7 @@ using Entities;
 using Common;
 using Parts;
 using Field = Battle.Field;
+using VContainer.Unity;
 
 namespace GameSystem
 {
@@ -22,7 +23,7 @@ namespace GameSystem
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
-    public class BattleManager : IBattleManager, BattleType.IListener
+    public class BattleManager : IBattleManager, BattleType.IListener, ITickable
     {
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
@@ -69,9 +70,16 @@ namespace GameSystem
             _currBattleType = battleType;
         }
 
-        public void ChainUpdate()
+        #region ITickable
+        void ITickable.Tick()
         {
             _currBattleType?.ChainUpdate();
+        }
+        #endregion
+
+        public void ChainUpdate()
+        {
+           
         }
 
         public void ChainLateUpdate()
