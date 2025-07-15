@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer.Unity;
 
 using UI;
 using UI.Panels;
+using VContainer;
 
 namespace GameSystem
 {
-    public class UIManager : Singleton<UIManager>
+    public class UIManager :  Singleton<UIManager>
     {
         // private const string UIPath = "Assets/Resource/Prefabs";
 
@@ -28,12 +30,11 @@ namespace GameSystem
         public bool IsEndLoad { get; private set; } = false;
 
         private ObjectPooler _objectPooler = null;
-
-
+        
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
-
+        
             _objectPooler = FindFirstObjectByType<ObjectPooler>();
             
             _componentDic = new();
