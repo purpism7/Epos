@@ -147,6 +147,8 @@ namespace Creature
             Extensions.SetActive(rootTm, false);
         }
 
+        
+
         #endregion
 
         public void EnableNavmeshAgent()

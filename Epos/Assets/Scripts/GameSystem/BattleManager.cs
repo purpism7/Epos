@@ -18,7 +18,7 @@ namespace GameSystem
     public interface IBattleManager : IManager
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
-        void BeginRealTime(PartyLocation allyPartyLocation, Monster[] mosnters, Transform[] wayPointTms);
+        void BeginRealTime(PartyLocation allyPartyLocation, WayPoint[] wayPoints);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -170,12 +170,12 @@ namespace GameSystem
             return iCombatantList;
         }
         
-        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, Monster[] monsters, Transform[] wayPointTms)
+        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, WayPoint[] wayPoints)
         {
-            BeginRealTimeAsync(allyPartyLocation, monsters, wayPointTms).Forget();
+            BeginRealTimeAsync(allyPartyLocation, wayPoints).Forget();
         }
 
-        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, Monster[] monsters, Transform[] wayPointTms)
+        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, WayPoint[] wayPoints)
         {
             var allyParty = MainManager.Get<IParty>().GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
@@ -183,7 +183,7 @@ namespace GameSystem
                 return;
             
             var battleModeData = new RealTime.Data()
-                .WithWayPointTm(wayPointTms);
+                .WithWayPoints(wayPoints);
             
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
@@ -192,16 +192,9 @@ namespace GameSystem
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
 
-            if(!monsters.IsNullOrEmpty())
-            {
-                for (int i = 0; i < monsters.Length; ++i)
-                {
-                    monsters[i]?.Initialize();
-                }
-            }
-            
+                     
             //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
-            battleModeData.EnemyICombatantList?.AddRange(monsters);
+            //battleModeData.EnemyICombatantList?.AddRange(monsters);
 
             var allyFieldData = new Battle.Step.Party.FieldData
             {
