@@ -100,7 +100,7 @@ namespace Parts
             if (iActor == null)
                 return;
             
-            iActor.IActCtr?.Idle();
+            // iActor.IActCtr?.Idle();
 
             MainManager.Get<IFieldManager>()?.Deactivate();
         }

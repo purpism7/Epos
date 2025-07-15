@@ -29,14 +29,11 @@ namespace GameSystem
 
         public bool IsEndLoad { get; private set; } = false;
 
-        [Inject]
-        private ObjectPooler _objectPooler = null;
+        [Inject] private ObjectPooler _objectPooler = null;
         
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
-        
-            //_objectPooler = FindFirstObjectByType<ObjectPooler>();
             
             _componentDic = new();
             _componentDic.Clear();

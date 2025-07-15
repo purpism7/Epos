@@ -10,8 +10,6 @@ namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
-        void Idle();
-
         IActController MoveToTargetPosition(Move.Data data);
         //IActController MoveToTargetPosition(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
         IActController MoveToTarget(Move.Data data);
@@ -79,11 +77,6 @@ namespace Creature.Action
         #endregion
             
         #region IActController
-        void IActController.Idle()
-        {
-            Idle();
-        }
-        
         /// <summary>
         /// 
         /// </summary>

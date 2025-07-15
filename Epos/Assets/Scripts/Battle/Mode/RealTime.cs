@@ -1,12 +1,15 @@
+using System;
 using Common;
 using Creature;
 using Creature.Action;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using Entities;
 using GameSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 
 namespace Battle.Mode
@@ -95,7 +98,7 @@ namespace Battle.Mode
                 enemy?.SetETeam(ETeam.Enemy);
                 enemy?.Activate();
 
-                MoveToAttack(enemy);
+                MoveToAttackAsync(enemy).Forget();
             }
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
@@ -104,15 +107,17 @@ namespace Battle.Mode
                 ally?.SetETeam(ETeam.Ally);
                 ally?.Activate();
 
-                MoveToAttack(ally);
+                MoveToAttackAsync(ally).Forget();
             }
         }
 
-        private void MoveToAttack(ICombatant attacker)
+        private async UniTask MoveToAttackAsync(ICombatant attacker, float delay = 0)
         {
             var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (skill == null)
                 return;
+            
+            await UniTask.Delay(TimeSpan.FromSeconds(delay));
 
             List<ICombatant> iCombatantList = null;
             if(attacker.ETeam == ETeam.Ally)
@@ -123,18 +128,24 @@ namespace Battle.Mode
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if(targetList.IsNullOrEmpty())
             {
-                attacker?.IActCtr?.Idle();
+                attacker.IActCtr?.Execute();
                 return;
             }
                 
             var randomIndex = Random.Range(0, targetList.Count);
             var target = targetList[randomIndex];
-            if(target == null)
+            if (target == null)
+            {
+                attacker.IActCtr?.Execute();
                 return;
+            }
                 
             var skillRange = skill.Range;
             if (skillRange <= 0)
+            {
+                attacker.IActCtr?.Execute();
                 return;
+            }
                
             //var targetPos = target.Transform.position;
             //var direction = targetPos.x - attacker.Transform.position.x;
@@ -171,7 +182,7 @@ namespace Battle.Mode
 
         void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
-            MoveToAttack(iCombatant);
+            MoveToAttackAsync(iCombatant, 1f).Forget();
         }
         #endregion
     }
