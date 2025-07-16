@@ -50,7 +50,7 @@ MonoBehaviour:
   eClass: 0
   rootTm: {fileID: 9067786674166319913}
   actionSpeed: 10
-  moveSpeed: 1
+  moveSpeed: 7.4
   attack: 1
   attackRange: 2
   maxHp: 30.7

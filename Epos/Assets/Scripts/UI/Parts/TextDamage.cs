@@ -19,13 +19,13 @@ namespace Parts
             // public Transform TargetTm = null;
             public float Damage = 0;
         }
+        
+        [SerializeField] private TextMeshProUGUI damageTMP = null;
 
         public override void Initialize(Data data)
         {
             base.Initialize(data);
         }
-
-        [SerializeField] private TextMeshProUGUI damageTMP = null;
 
         public override void Activate(Data data)
         {

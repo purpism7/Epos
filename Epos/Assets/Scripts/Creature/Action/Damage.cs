@@ -28,7 +28,6 @@ namespace Creature.Action
             if (iCasterIStat != null)
             {
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
-                
                 _iActor?.IStat?.Add(Stat.EType.Hp, -damage);
                 
                 UICreator<TextDamage, TextDamage.Data>.Get?

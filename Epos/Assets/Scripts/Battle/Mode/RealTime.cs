@@ -4,6 +4,7 @@ using Creature;
 using Creature.Action;
 using System.Collections.Generic;
 using System.Linq;
+using Creator;
 using Cysharp.Threading.Tasks;
 using Entities;
 using GameSystem;
@@ -11,6 +12,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 using Datas.ScriptableObjects;
+using UI.Parts;
 
 
 namespace Battle.Mode
@@ -57,6 +59,15 @@ namespace Battle.Mode
         {
             Debug.Log("Begin()");
 
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var ally = _data?.AllyICombatantList[i];
+                ally?.SetETeam(ETeam.Ally);
+                ally?.Activate();
+
+                MoveToAttackAsync(ally).Forget();
+            }
+            
             StartCombatAtWaypoint();
         }
 
@@ -82,8 +93,6 @@ namespace Battle.Mode
             {
                 _currWayPoint?.EnemyICombatantList[i].IActCtr?.ChainUpdate();
             }
-
-            
         }
 
         private void StartCombatAtWaypoint()
@@ -98,17 +107,16 @@ namespace Battle.Mode
                 var enemy = _currWayPoint?.EnemyICombatantList[i];
                 enemy?.SetETeam(ETeam.Enemy);
                 enemy?.Activate();
+                
+                UICreator<HpProgress, HpProgress.Data>.Get?
+                    .Create()?
+                    .Activate(new HpProgress.Data
+                    {
+                        TargetTm = enemy?.Transform,
+                        // Damage = damage
+                    });
 
                 MoveToAttackAsync(enemy).Forget();
-            }
-
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            {
-                var ally = _data?.AllyICombatantList[i];
-                ally?.SetETeam(ETeam.Ally);
-                ally?.Activate();
-
-                MoveToAttackAsync(ally).Forget();
             }
         }
 
@@ -160,7 +168,7 @@ namespace Battle.Mode
 
             var moveData = new Move.Data
             {
-                MoveSpeed = 10f,
+                MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
                 FinishAction = () =>
                 {
                     FinishMoveToTarget(attacker, skill, targetList);
