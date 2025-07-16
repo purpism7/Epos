@@ -579,11 +579,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.05
+      value: -4.7
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.64
+      value: 2.6
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -888,10 +888,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10099b239b4ac343a4bc1a6f7cd1bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentReference:
-    TypeName: 
-  autoRun: 1
-  autoInjectGameObjects: []
   partyLocation: {fileID: 59561317}
   wayPoints:
   - {fileID: 366462210}
@@ -980,11 +976,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18
+      value: 3.9
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.21
+      value: -17
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1284,6 +1280,10 @@ PrefabInstance:
     - target: {fileID: 2688141788299131903, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
       propertyPath: m_Name
       value: Mon_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688141788299131903, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4259856410611604491, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
       propertyPath: m_Mesh
@@ -2197,6 +2197,10 @@ PrefabInstance:
     - target: {fileID: 2688141788299131903, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
       propertyPath: m_Name
       value: Mon_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688141788299131903, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4259856410611604491, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
       propertyPath: m_Mesh

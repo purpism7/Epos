@@ -10,6 +10,7 @@ using GameSystem;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Datas.ScriptableObjects;
 
 
 namespace Battle.Mode
@@ -116,7 +117,8 @@ namespace Battle.Mode
             var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (skill == null)
                 return;
-            
+
+            await UniTask.Yield();
             await UniTask.Delay(TimeSpan.FromSeconds(delay));
 
             List<ICombatant> iCombatantList = null;
@@ -159,13 +161,24 @@ namespace Battle.Mode
             var moveData = new Move.Data
             {
                 MoveSpeed = 10f,
+                FinishAction = () =>
+                {
+                    FinishMoveToTarget(attacker, skill, targetList);
+                },
                 IsJumpMove = false,
                 UseNavMesh = false,
             }.WithTargetTm(target.Transform)
             .WithOffsetPosition(offsetPosition);
 
-            attacker.IActCtr?.MoveToTarget(moveData)?
-                .CastingSkill(this, attacker, skill, targetList)?
+            attacker.IActCtr?
+                .MoveToTarget(moveData)?
+                .Execute();
+        }
+
+        private void FinishMoveToTarget(ICombatant attacker, Skill skill, List<ICombatant> targetList)
+        {
+            attacker?.IActCtr?
+                .CastingSkill(this, attacker, skill, targetList)
                 .Execute();
         }
 
@@ -182,7 +195,7 @@ namespace Battle.Mode
 
         void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
-            MoveToAttackAsync(iCombatant, 1f).Forget();
+            MoveToAttackAsync(iCombatant).Forget();
         }
         #endregion
     }

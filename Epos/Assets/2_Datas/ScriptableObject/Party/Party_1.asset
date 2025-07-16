@@ -15,11 +15,7 @@ MonoBehaviour:
   Id: 1
   eTeam: 1
   PositionInfos:
-  - Position: 3
-    CharacterId: 10001
-  - Position: 5
-    CharacterId: 10003
-  - Position: 1
-    CharacterId: 10002
   - Position: 4
     CharacterId: 10004
+  - Position: 3
+    CharacterId: 10001
