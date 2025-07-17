@@ -48,8 +48,6 @@ namespace Common
             _isActivate = false;
 
             Extensions.SetActive(rootTm, false);
-            
-            
         }
     }
     

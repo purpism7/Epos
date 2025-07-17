@@ -1,3 +1,4 @@
+using Creature;
 using UnityEngine;
 
 namespace  UI.Parts
@@ -6,7 +7,7 @@ namespace  UI.Parts
     {
         public class Data : PartWorld<Data>.Data
         {
-            
+            public ICombatant ICombatant = null;
         }
 
         public override void Initialize(Data data)
@@ -17,7 +18,7 @@ namespace  UI.Parts
         private void LateUpdate()
         {
             //if(_data?.TargetTm)
-
+            Debug.Log(_data?.ICombatant?.IStat?.Get(Stat.EType.Hp));
             ChainLateUpdate();
         }
     }

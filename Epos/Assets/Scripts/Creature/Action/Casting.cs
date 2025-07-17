@@ -6,7 +6,8 @@ using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
+using Vector3 = UnityEngine.Vector3;
 
 
 namespace Creature.Action
@@ -39,27 +40,35 @@ namespace Creature.Action
             if (_data == null)
                 return;
 
-            var eSkillCategory = _data.Skill.ESkillCategory;
-            _iActor?.IStat?.Add(eSkillCategory == ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
-            
+            // var eSkillCategory = _data.Skill.ESkillCategory;
+            // _iActor?.IStat?.Add(eSkillCategory == ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
+
+            LookAtTarget();
             CastingAsync().Forget();
+        }
+
+        private void LookAtTarget()
+        {
+            var target = _data.TargetList.FirstOrDefault();
+            if (target == null)
+                return;
+            
+            var direction = target.Transform.position - _data.ICombatant.Transform.position;
+            if (direction.x > 0)
+                _data.ICombatant.Transform.localScale = Vector3.one;
+            else if (direction.x < 0)
+                _data.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
         }
 
         private async UniTask CastingAsync()
         {
             _data?.IListener?.BeforeCasting();
-            // if (_data != null)
-            //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData(_data.Skill, ETeam));
-            
+          
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             SetAnimation(_data?.AnimationKey, false);
-
-
-            // _data?.Skill.Casting();
-            Debug.Log(_duration);
+            
             var halfDuration = _duration / 2f;
             
-
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _data?.IListener?.InUse();
             
@@ -74,12 +83,6 @@ namespace Creature.Action
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _data?.IListener?.AfterCasting(_data?.ICombatant);      
-            
-            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-           
-            
-            // if (_data != null)
-            //     GameSystem.Event.EventHandler.Notify(new SkillUseEventData().WithETeam(ETeam));
         }
 
         protected override void OnCompleted(TrackEntry trackEntry)

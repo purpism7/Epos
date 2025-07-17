@@ -68,7 +68,7 @@ namespace Battle.Mode
                 MoveToAttackAsync(ally).Forget();
             }
             
-            StartCombatAtWaypoint();
+            StartCombatAtWaypointAsync().Forget();
         }
 
         public override void ChainUpdate()
@@ -78,7 +78,7 @@ namespace Battle.Mode
                 if(_currWayPoint.AliveMonsterCount <= 0)
                 {
                     _currWayPoint = null;
-                    StartCombatAtWaypoint();
+                    StartCombatAtWaypointAsync().Forget();
 
                     return;
                 }
@@ -95,11 +95,26 @@ namespace Battle.Mode
             }
         }
 
-        private void StartCombatAtWaypoint()
+        private void CreateHpProgress(ICombatant iCombatant)
+        {
+            var hpProgress = UICreator<HpProgress, HpProgress.Data>.Get?
+                .Create();
+
+            hpProgress?.Activate(new HpProgress.Data
+            {
+                TargetTm = iCombatant.Transform,
+                ICombatant = iCombatant,
+                // Damage = damage
+            });
+        }
+
+        private async UniTask StartCombatAtWaypointAsync()
         {
             if (!_wayPointQueue.TryDequeue(out _currWayPoint))
                 return;
 
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            
             MainManager.Get<ICameraManager>().MoveToTarget(_currWayPoint.Position);
 
             for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
@@ -111,14 +126,7 @@ namespace Battle.Mode
                 enemy.SetETeam(ETeam.Enemy);
                 enemy.Activate();
 
-                var hpProgress = UICreator<HpProgress, HpProgress.Data>.Get?
-                   .Create();
-
-                hpProgress?.Activate(new HpProgress.Data
-                   {
-                       TargetTm = enemy.Transform,
-                       // Damage = damage
-                   });
+                CreateHpProgress(enemy);
 
                 MoveToAttackAsync(enemy).Forget();
             }
