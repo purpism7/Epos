@@ -11,7 +11,7 @@ namespace Creature
     public interface IActor : ISubject
     {
         SkeletonAnimation SkeletonAnimation { get; }
-        
+
         IStat IStat { get; }
         IActController IActCtr { get; }
 

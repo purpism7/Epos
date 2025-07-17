@@ -1,17 +1,10 @@
+using Common;
+using Creature.Action;
+using Spine;
+using Spine.Unity;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-using Cysharp.Threading.Tasks;
-using Spine.Unity;
-
-using Creature.Action;
-using GameSystem.Event;
-using Common;
-using Spine;
-using EventHandler = GameSystem.Event.EventHandler;
 
 
 namespace Creature
@@ -34,6 +27,8 @@ namespace Creature
         {
             get { return id; }
         }
+
+        public Vector3 HeadPos { get; private set; } = Vector3.zero;
 
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
 
@@ -112,8 +107,15 @@ namespace Creature
             ISkillCtr?.Initialize(this);
 
             SetOriginStat();
-            
-            Debug.Log(GetSkeletonHeight(SkeletonAnimation.skeleton));
+
+            Renderer renderer = GetComponentInChildren<Renderer>();
+            if (renderer != null)
+            {
+                Debug.Log(renderer.bounds.max);
+                HeadPos = renderer.bounds.max;
+            }
+                //Height += GetSkeletonHeight(SkeletonAnimation.skeleton);
+            //Debug.Log(GetSkeletonHeight(SkeletonAnimation.skeleton));
         }
 
         public virtual void ChainUpdate()

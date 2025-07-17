@@ -13,7 +13,8 @@ namespace Creature
     {
         
         int Id { get; }
-        
+        Vector3 HeadPos { get; }
+
         bool IsActivate { get; }
         void Activate();
         void Deactivate();

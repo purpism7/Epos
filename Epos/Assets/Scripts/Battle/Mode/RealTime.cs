@@ -105,16 +105,20 @@ namespace Battle.Mode
             for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
             {
                 var enemy = _currWayPoint?.EnemyICombatantList[i];
-                enemy?.SetETeam(ETeam.Enemy);
-                enemy?.Activate();
-                
-                UICreator<HpProgress, HpProgress.Data>.Get?
-                    .Create()?
-                    .Activate(new HpProgress.Data
-                    {
-                        TargetTm = enemy?.Transform,
-                        // Damage = damage
-                    });
+                if (enemy == null)
+                    continue;
+
+                enemy.SetETeam(ETeam.Enemy);
+                enemy.Activate();
+
+                var hpProgress = UICreator<HpProgress, HpProgress.Data>.Get?
+                   .Create();
+
+                hpProgress?.Activate(new HpProgress.Data
+                   {
+                       TargetTm = enemy.Transform,
+                       // Damage = damage
+                   });
 
                 MoveToAttackAsync(enemy).Forget();
             }

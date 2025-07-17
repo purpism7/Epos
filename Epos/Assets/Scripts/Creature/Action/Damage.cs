@@ -35,7 +35,10 @@ namespace Creature.Action
                     .Activate(new TextDamage.Data
                     {
                         TargetTm = _iActor?.Transform,
-                        Damage = damage
+                        //Height = _iActor.Height,
+                        HeadPos = _iActor.HeadPos,
+
+                        Damage = damage,
                     });
             }
         }

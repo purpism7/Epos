@@ -112,7 +112,7 @@ namespace Creature.Action
                 targetPos.y += offsetPosition.y;
             }
 
-            Debug.Log(offsetPosition);
+            //Debug.Log(offsetPosition);
 
             var moveSpeed = _data.MoveSpeed;
             iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);

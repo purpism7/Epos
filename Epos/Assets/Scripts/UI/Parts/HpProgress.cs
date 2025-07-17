@@ -16,6 +16,8 @@ namespace  UI.Parts
 
         private void LateUpdate()
         {
+            //if(_data?.TargetTm)
+
             ChainLateUpdate();
         }
     }

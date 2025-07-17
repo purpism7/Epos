@@ -34,16 +34,18 @@ namespace GameSystem
         protected override void Initialize()
         {
             DontDestroyOnLoad(this);
+         
             
-            _componentDic = new();
-            _componentDic.Clear();
-            
-            LoadAssetAsync().Forget();
+            //LoadAssetAsync().Forget();
         }
 
         public async UniTask InitializeAsync()
         {
-            
+
+            _componentDic = new();
+            _componentDic.Clear();
+
+            await LoadAssetAsync();
         }
 
         private async UniTask LoadAssetAsync()

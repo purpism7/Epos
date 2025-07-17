@@ -11,7 +11,8 @@ namespace UI
         public class Data : Common.ComponentData
         {
             public Transform TargetTm = null;
-            public float Height = 200f;
+            public float Height = 0f;
+            public Vector3 HeadPos = Vector3.zero;
         }
         
         [SerializeField] protected RectTransform rootRectTm = null;
@@ -47,7 +48,22 @@ namespace UI
             var uiCamera = UIManager.Instance?.UICamera;
             if (uiCamera == null)
                 return null;
-            
+
+            //Vector3 worldPo = _data.TargetTm.position;// + Vector3.up;
+            //targetPos.y += _data.HeadPos.y;
+            //Vector3 screenPos = worldCamera.WorldToScreenPoint(worldPos);
+
+            //// 2. È­¸é ÁÂÇ¥ ¡æ UI ·ÎÄÃ ÁÂÇ¥ º¯È¯
+            //if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            //    uiParentCanvas,
+            //    screenPos,
+            //    uiCamera,
+            //    out Vector2 localPos))
+            //{
+            //    uiTarget.anchoredPosition = localPos;
+            //}
+
+
             var screenPos = camera.WorldToScreenPoint(targetPos);
 
             Vector2 localPos = Vector2.zero;
