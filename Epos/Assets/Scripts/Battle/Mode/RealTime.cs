@@ -114,11 +114,16 @@ namespace Battle.Mode
 
         private async UniTask StartCombatAtWaypointAsync()
         {
+            
+
             if (!_wayPointQueue.TryDequeue(out _currWayPoint))
                 return;
 
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
+            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            //await UniTask.DelayFrame(12);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+
             MainManager.Get<ICameraManager>().MoveToTarget(_currWayPoint.Position);
 
             for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
@@ -191,7 +196,7 @@ namespace Battle.Mode
                 },
                 IsJumpMove = false,
                 UseNavMesh = false,
-            }.WithTargetTm(target.Transform)
+            }.WithTargetICombatant(target)
             .WithOffsetPosition(offsetPosition);
 
             attacker.IActCtr?

@@ -7,6 +7,8 @@ using Spine.Unity;
 
 using Common;
 using Creature.Action;
+using GameSystem;
+using VContainer;
 
 namespace Creature
 {
@@ -57,6 +59,9 @@ namespace Creature
         public int PartyPosition => _partyPosition;
 
         #endregion
+
+        [Inject]
+        BattleManager _battleManager = null;
 
         #region Temp Stat
 
@@ -117,9 +122,8 @@ namespace Creature
                 Debug.Log(Height);
                 //HeadPos = renderer.bounds.max;
             }
-            //var height = GetSkeletonHeight(SkeletonAnimation?.skeleton);
-            //Debug.Log("head = " + height);
-            //Debug.Log(GetSkeletonHeight(SkeletonAnimation.skeleton));
+
+            Debug.Log(_battleManager);
         }
 
         public virtual void ChainUpdate()
@@ -255,30 +259,5 @@ namespace Creature
                 IActCtr?.Die();
         }
         #endregion
-        
-        float GetSkeletonHeight(Skeleton skeleton)
-        {
-            float minY = float.MaxValue;
-            float maxY = float.MinValue;
-
-            foreach (Slot slot in skeleton.DrawOrder)
-            {
-                Attachment attachment = slot.Attachment;
-                if (attachment is RegionAttachment regionAttachment)
-                {
-                    float[] vertices = new float[8];
-                    regionAttachment.ComputeWorldVertices(slot, vertices, 0, 2);
-
-                    for (int i = 1; i < vertices.Length; i += 2)
-                    {
-                        float y = vertices[i];
-                        minY = Mathf.Min(minY, y);
-                        maxY = Mathf.Max(maxY, y);
-                    }
-                }
-            }
-
-            return maxY - minY;
-        }
     }
 }

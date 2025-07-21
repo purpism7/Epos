@@ -11,6 +11,7 @@ namespace Creature.Action
         {
             public float MoveSpeed = 1f;
             public Transform TargetTm { get; private set; } = null;
+            public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
             public Vector3? OffsetPosition { get; private set; } = null;
             public System.Action FinishAction = null;
@@ -22,6 +23,12 @@ namespace Creature.Action
             public Data WithTargetTm(Transform targetTm)
             {
                 TargetTm = targetTm;
+                return this;
+            }
+
+            public Data WithTargetICombatant(ICombatant targetICombatant)
+            {
+                TargetICombatant = targetICombatant;
                 return this;
             }
 
@@ -48,12 +55,7 @@ namespace Creature.Action
                 _data != null &&
                 _data.UseNavMesh)
             {
-                var targetPos = Vector2.zero;
-                if (_data.TargetTm)
-                    targetPos = _data.TargetTm.position;
-
-                if (_data.TargetPos != null)
-                    targetPos = _data.TargetPos.Value;
+                var targetPos = TargetPos;
 
                 _iActor.NavMeshAgent.speed = _data.MoveSpeed;
                 _iActor?.NavMeshAgent?.SetDestination(targetPos);
@@ -77,6 +79,27 @@ namespace Creature.Action
         //     iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
         // }
 
+        private Vector3 TargetPos
+        {
+            get
+            {
+                Vector3 targetPos = Vector3.zero;
+                if(_data != null)
+                {
+                    if (_data.TargetTm)
+                        targetPos = _data.TargetTm.position;
+
+                    if (_data.TargetPos != null)
+                        targetPos = _data.TargetPos.Value;
+
+                    if (_data.TargetICombatant != null)
+                        targetPos = _data.TargetICombatant.Transform.position;
+                }
+
+                return targetPos;
+            }
+        }
+
         public override void ChainUpdate()
         {
             base.ChainUpdate();
@@ -92,12 +115,13 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
 
-            Vector3 targetPos = Vector3.zero;
-            if (_data.TargetTm)
-                targetPos = _data.TargetTm.position;
+            if(!_data.TargetICombatant.IsActivate)
+            {
+                End();
+                return;
+            }
 
-            if (_data.TargetPos != null)
-                targetPos = _data.TargetPos.Value;
+            Vector3 targetPos = TargetPos;
 
             var direction = targetPos - iActorTm.position;
             Vector3 offsetPosition = Vector3.zero;
@@ -133,10 +157,15 @@ namespace Creature.Action
                 localScale.x = _data.DirectionAfterArriving;
                     
                 iActorTm.localScale = localScale;
-                
-                _data.FinishAction?.Invoke();
-                _endAction?.Invoke();
+
+                End();
             }
+        }
+
+        private void End()
+        {
+            _data.FinishAction?.Invoke();
+            _endAction?.Invoke();
         }
     }
 }

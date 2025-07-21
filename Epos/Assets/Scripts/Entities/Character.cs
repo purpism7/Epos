@@ -16,7 +16,7 @@ namespace Entities
     public class Character : ICharacterManager
     {
         private Dictionary<int, Creature.Character> _cachedDic = null;
-        
+
         public IGeneric Initialize()
         {
             return this;

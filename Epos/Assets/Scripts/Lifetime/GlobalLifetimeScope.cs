@@ -6,6 +6,7 @@ using VContainer.Unity;
 
 using GameSystem;
 using Scene;
+using Creature;
 
 namespace Lifetime
 {
@@ -24,6 +25,7 @@ namespace Lifetime
 
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Singleton).As<IBattleManager>();
+            //builder.RegisterEntryPoint<Character>(VContainer.Lifetime.Singleton).AsSelf();
             builder.Register<ObjectPooler>(VContainer.Lifetime.Singleton).AsSelf();
 
             builder.RegisterComponentInHierarchy<SceneInitializer>()
