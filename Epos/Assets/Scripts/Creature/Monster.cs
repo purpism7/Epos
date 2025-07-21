@@ -31,7 +31,8 @@ namespace Creature
             IActCtr?.Initialize(this);
 
             // юс╫ц.
-            Transform.localScale = new Vector3(-1f, 1f, 1f);
+            if(Transform)
+                Transform.localScale = new Vector3(-1f, 1f, 1f);
         }
     }
 }

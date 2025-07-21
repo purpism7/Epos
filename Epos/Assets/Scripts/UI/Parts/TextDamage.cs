@@ -16,8 +16,13 @@ namespace Parts
     {
         public class Data : PartWorld<Data>.Data
         {
-            // public Transform TargetTm = null;
-            public float Damage = 0;
+            public float Damage { get; private set; } = 0;
+
+            public Data WithDamage(float damage)
+            {
+                Damage = damage;
+                return this;
+            }
         }
         
         [SerializeField] private TextMeshProUGUI damageTMP = null;
@@ -50,10 +55,10 @@ namespace Parts
             
             rootRectTm.anchoredPosition = startPos.Value;
             var endPos = startPos.Value;
-            endPos.y += 50f;   
+            endPos.y += 70f;   
             
             // await rootRectTm.DOLocalMove(endPos, 1f).SetUpdate(true).SetEase(Ease.Linear);
-            await rootRectTm.DOLocalMoveY(endPos.y, 0.5f).SetEase(Ease.OutBack);
+            await rootRectTm.DOLocalMoveY(endPos.y, 0.6f).SetEase(Ease.OutBack);
             
             Deactivate();
         }

@@ -11,8 +11,7 @@ namespace UI
         public class Data : Common.ComponentData
         {
             public Transform TargetTm = null;
-            public float Height = 0f;
-            public Vector3 HeadPos = Vector3.zero;
+            public Vector2 Offset = Vector2.zero;
         }
         
         [SerializeField] protected RectTransform rootRectTm = null;
@@ -27,10 +26,12 @@ namespace UI
             if (!rootRectTm)
                 return;
 
-            if (!_data?.TargetTm)
-                return;
+            Vector3? pos = null;
+            if (_data?.TargetTm)
+                pos = GetScreenPos(_data.TargetTm.position);
+            //else if (_data?.TargetPos != null)
+            //    pos = GetScreenPos(_data.TargetPos.Value);
 
-            var pos = GetScreenPos(_data.TargetTm.position);
             if(pos != null)
                 rootRectTm.anchoredPosition = pos.Value;
         }
@@ -49,26 +50,14 @@ namespace UI
             if (uiCamera == null)
                 return null;
 
-            //Vector3 worldPo = _data.TargetTm.position;// + Vector3.up;
-            //targetPos.y += _data.HeadPos.y;
-            //Vector3 screenPos = worldCamera.WorldToScreenPoint(worldPos);
-
-            //// 2. È­¸é ÁÂÇ¥ ¡æ UI ·ÎÄÃ ÁÂÇ¥ º¯È¯
-            //if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            //    uiParentCanvas,
-            //    screenPos,
-            //    uiCamera,
-            //    out Vector2 localPos))
-            //{
-            //    uiTarget.anchoredPosition = localPos;
-            //}
-
+            targetPos.x += _data.Offset.x;
+            targetPos.y += _data.Offset.y;
 
             var screenPos = camera.WorldToScreenPoint(targetPos);
 
             Vector2 localPos = Vector2.zero;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(worldUIRootRectTm, screenPos, uiCamera, out localPos);
-            localPos.y += _data.Height;
+            //localPos.y += _data.Height;
             
             return localPos;
         } 

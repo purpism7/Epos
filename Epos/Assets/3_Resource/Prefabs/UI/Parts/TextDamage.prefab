@@ -1374,6 +1374,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
   rootRectTm: {fileID: 7265674374223708273}
+  offeset: {x: 0, y: 1.8}
   damageTMP: {fileID: 6941750160458423882}
 --- !u!1 &7168341589145363496
 GameObject:

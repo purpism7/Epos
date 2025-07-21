@@ -7,7 +7,13 @@ namespace  UI.Parts
     {
         public class Data : PartWorld<Data>.Data
         {
-            public ICombatant ICombatant = null;
+            public ICombatant ICombatant { get; private set; } = null;
+
+            public Data WithCombatant(ICombatant iCombatant)
+            {
+                ICombatant = iCombatant;
+                return this;
+            }
         }
 
         public override void Initialize(Data data)
@@ -18,7 +24,7 @@ namespace  UI.Parts
         private void LateUpdate()
         {
             //if(_data?.TargetTm)
-            Debug.Log(_data?.ICombatant?.IStat?.Get(Stat.EType.Hp));
+            //Debug.Log(_data?.ICombatant?.IStat?.Get(Stat.EType.Hp));
             ChainLateUpdate();
         }
     }

@@ -100,12 +100,16 @@ namespace Battle.Mode
             var hpProgress = UICreator<HpProgress, HpProgress.Data>.Get?
                 .Create();
 
-            hpProgress?.Activate(new HpProgress.Data
+            var targetPos = iCombatant.Transform.position;
+            targetPos.y += iCombatant.Height;
+
+            var data = new HpProgress.Data
             {
                 TargetTm = iCombatant.Transform,
-                ICombatant = iCombatant,
-                // Damage = damage
-            });
+                Offset = new Vector2(0, iCombatant.Height),
+            }.WithCombatant(iCombatant);
+
+            hpProgress?.Activate(data);
         }
 
         private async UniTask StartCombatAtWaypointAsync()

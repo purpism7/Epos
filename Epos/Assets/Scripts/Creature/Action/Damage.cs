@@ -29,17 +29,17 @@ namespace Creature.Action
             {
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
                 _iActor?.IStat?.Add(Stat.EType.Hp, -damage);
-                
+
+                var data = new TextDamage.Data
+                {
+                    TargetTm = _iActor?.Transform,
+                    Offset = new Vector2(0, _iActor.Height),
+
+                }.WithDamage(damage);
+
                 UICreator<TextDamage, TextDamage.Data>.Get?
                     .Create()?
-                    .Activate(new TextDamage.Data
-                    {
-                        TargetTm = _iActor?.Transform,
-                        //Height = _iActor.Height,
-                        HeadPos = _iActor.HeadPos,
-
-                        Damage = damage,
-                    });
+                    .Activate(data);
             }
         }
     }

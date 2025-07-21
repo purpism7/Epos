@@ -1,11 +1,12 @@
-using Common;
-using Creature.Action;
-using Spine;
-using Spine.Unity;
-using System;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
+using Spine;
+using Spine.Unity;
+
+using Common;
+using Creature.Action;
 
 namespace Creature
 {
@@ -28,7 +29,8 @@ namespace Creature
             get { return id; }
         }
 
-        public Vector3 HeadPos { get; private set; } = Vector3.zero;
+
+        public float Height { get; private set; } = 0;
 
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
 
@@ -111,10 +113,12 @@ namespace Creature
             Renderer renderer = GetComponentInChildren<Renderer>();
             if (renderer != null)
             {
-                Debug.Log(renderer.bounds.max);
-                HeadPos = renderer.bounds.max;
+                Height = renderer.bounds.size.y;
+                Debug.Log(Height);
+                //HeadPos = renderer.bounds.max;
             }
-                //Height += GetSkeletonHeight(SkeletonAnimation.skeleton);
+            //var height = GetSkeletonHeight(SkeletonAnimation?.skeleton);
+            //Debug.Log("head = " + height);
             //Debug.Log(GetSkeletonHeight(SkeletonAnimation.skeleton));
         }
 

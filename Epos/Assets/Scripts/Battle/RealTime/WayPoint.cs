@@ -34,8 +34,6 @@ namespace Battle
                 monster?.Initialize();
             }
         }
-
-
     }
 }
 
