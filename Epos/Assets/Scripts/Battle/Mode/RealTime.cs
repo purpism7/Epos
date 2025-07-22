@@ -13,6 +13,7 @@ using GameSystem;
 using Creature;
 using Datas.ScriptableObjects;
 using UI.Parts;
+using VContainer;
 using Random = UnityEngine.Random;
 
 
@@ -32,6 +33,8 @@ namespace Battle.Mode
             }
         }
 
+        [Inject] private ICameraManager _iCameraManager = null;
+        
         private Queue<WayPoint> _wayPointQueue = null;
         private WayPoint _currWayPoint = null;
 
@@ -126,7 +129,7 @@ namespace Battle.Mode
                 MoveToAttackAsync(ally).Forget();
             }
 
-            MainManager.Get<ICameraManager>().MoveToTarget(_currWayPoint.Position);
+            _iCameraManager.MoveToTarget(_currWayPoint.Position);
 
             for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
             {

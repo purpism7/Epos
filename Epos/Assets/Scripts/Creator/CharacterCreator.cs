@@ -30,8 +30,8 @@ namespace Creator
         {
             get
             {
-                GameObject loadGameObj = AddressableManager.Instance.LoadAssetByNameAsync<GameObject>(_id.ToString());
-                var gameObj = LifetimeScope.Instantiate(loadGameObj, _roootTm);
+                // GameObject loadGameObj = _addressableManager.LoadAssetByNameAsync<GameObject>(_id.ToString());
+                GameObject gameObj = null;//LifetimeScope.Instantiate(loadGameObj, _roootTm);
                 
                 if (!gameObj)
                     return null;

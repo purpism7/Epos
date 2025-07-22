@@ -26,13 +26,13 @@ public class MainManager : Singleton<MainManager>
             _iMgrGenericList.Clear();
         }
         
-        _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
+        // _iMgrGenericList?.Add(GetComponent<CameraManager>()?.Initialize());
+        // _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
         
-        _iMgrGenericList?.Add(new Character().Initialize());
+        // _iMgrGenericList?.Add(new Character().Initialize());
         _iMgrGenericList?.Add(transform.AddOrGetComponent<Party>().Initialize());
         
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
+        // _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         //_iMgrGenericList?.Add(new BattleManager().Initialize());
 
         _dayNightCycle = FindFirstObjectByType<DayNightCycle>();
@@ -70,7 +70,7 @@ public class MainManager : Singleton<MainManager>
         {
             foreach (var iMgrGeneric in _iMgrGenericList)
             {
-                iMgrGeneric?.ChainUpdate();
+                // iMgrGeneric?.ChainUpdate();
             }
         }
     }
@@ -81,7 +81,7 @@ public class MainManager : Singleton<MainManager>
         {
             foreach (var iMgrGeneric in _iMgrGenericList)
             {
-                iMgrGeneric?.ChainLateUpdate();
+                // iMgrGeneric?.ChainLateUpdate();
             }
         }
     }

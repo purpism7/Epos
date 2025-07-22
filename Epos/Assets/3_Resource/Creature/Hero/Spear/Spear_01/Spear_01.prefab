@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8169614562942490756}
   - component: {fileID: 7816740663478584368}
   - component: {fileID: 1150515514663263}
+  - component: {fileID: 1405978038070760070}
   m_Layer: 12
   m_Name: Spine GameObject (Spear_01)
   m_TagString: Untagged
@@ -130,6 +131,43 @@ MonoBehaviour:
   _animationName: F_Idle
   loop: 1
   timeScale: 1
+--- !u!70 &1405978038070760070
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4238121267255577032}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.25, y: 2.03}
+  m_Size: {x: 6.13, y: 0.0001}
+  m_Direction: 0
 --- !u!1 &5621257734662546313
 GameObject:
   m_ObjectHideFlags: 0

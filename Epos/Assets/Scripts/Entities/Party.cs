@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Common;
+using VContainer;
 
 namespace Entities
 {
@@ -15,6 +18,11 @@ namespace Entities
     {
         [SerializeField] private Datas.ScriptableObjects.Party[] parties = null;
         // private Dictionary<int, Datas.ScriptableObjects.Party> _partyDic = null;
+        
+        async UniTask IGeneric.InitializeAsync(IObjectResolver container)
+        {
+            await UniTask.CompletedTask;
+        }
         
         public IGeneric Initialize()
         {
@@ -64,15 +72,15 @@ namespace Entities
 
         #region IManager
 
-        void IGeneric.ChainUpdate()
-        {
-            
-        }
-        
-        void IGeneric.ChainLateUpdate()
-        {
-            
-        }
+        // void IGeneric.ChainUpdate()
+        // {
+        //     
+        // }
+        //
+        // void IGeneric.ChainLateUpdate()
+        // {
+        //     
+        // }
         #endregion
     }
 }

@@ -7,6 +7,7 @@ using VContainer.Unity;
 using GameSystem;
 using Scene;
 using Creature;
+using Entities;
 
 namespace Lifetime
 {
@@ -24,7 +25,13 @@ namespace Lifetime
                 .AsSelf();
 
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
+            builder.Register<AddressableManager>(VContainer.Lifetime.Singleton).AsSelf();
+            
+            builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
+            builder.RegisterComponentInHierarchy<InputManager>().As<IInputManager>();
+            builder.RegisterEntryPoint<Entities.Character>(VContainer.Lifetime.Singleton).As<ICharacterManager>();
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Singleton).As<IBattleManager>();
+            
             //builder.RegisterEntryPoint<Character>(VContainer.Lifetime.Singleton).AsSelf();
             builder.Register<ObjectPooler>(VContainer.Lifetime.Singleton).AsSelf();
 
@@ -57,9 +64,17 @@ namespace Lifetime
                 .InitializeAsync();
 
             await Container.Resolve<UIManager>()
-               .InitializeAsync();
-
-            await Container.Resolve<SceneInitializer>()
+               .InitializeAsync(Container);
+            
+            await Container.Resolve<ICharacterManager>()
+                .InitializeAsync(Container);
+            
+            await Container.Resolve<IBattleManager>()
+                .InitializeAsync(Container);
+            
+            var sceneInitializer = Container.Resolve<SceneInitializer>();
+            // var lifetimeScope = sceneInitializer.GetComponent<LifetimeScope>();
+            await sceneInitializer
                 .InitializeAsync(this);
         }
     }

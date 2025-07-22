@@ -13,7 +13,7 @@ using Entities;
 
 namespace GameSystem
 {
-    public interface ICameraManager : Entities.IManager
+    public interface ICameraManager
     {
         Camera MainCamera { get; }
         bool IsMove { get; }
@@ -54,18 +54,6 @@ namespace GameSystem
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
-        
-        public Entities.IGeneric Initialize()
-        {
-            _return = true;
-            
-            return this;
-        }
-        
-        void Entities.IGeneric.ChainUpdate()
-        {
-            
-        }
 
         public void ChainLateUpdate()
         {

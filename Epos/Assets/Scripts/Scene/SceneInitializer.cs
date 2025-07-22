@@ -17,7 +17,6 @@ namespace Scene
         public virtual async UniTask InitializeAsync(LifetimeScope parentLifetimeScope)
         {
             //parentLifetimeScope.CreateChild(Configure);
-            Debug.Log(_iBattleManager);
             await UniTask.CompletedTask;
         }
 

@@ -9,14 +9,14 @@ using Cysharp.Threading.Tasks;
 
 namespace GameSystem
 {
-    public class AddressableManager : Singleton<AddressableManager>
+    public class AddressableManager : MonoBehaviour //Singleton<AddressableManager>
     {
         // private Dictionary<string, Object> _cachedDic = null;
         
-        protected override void Initialize()
-        {
-            
-        }
+        // protected override void Initialize()
+        // {
+        //     
+        // }
 
         public T LoadAssetByNameAsync<T>(string addressableName) where T : Object
         {

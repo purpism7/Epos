@@ -1,15 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 using VContainer.Unity;
 
 namespace Entities
 {
     public interface IGeneric
     {
-        IGeneric Initialize();
-        void ChainUpdate();
-        void ChainLateUpdate();
+        // IGeneric Initialize();
+        // void ChainUpdate();
+        // void ChainLateUpdate();
+        UniTask InitializeAsync(VContainer.IObjectResolver container);
     }
     
     public interface IManager : IGeneric

@@ -114,11 +114,11 @@ namespace Parts
         
         private void BeginFieldBattle()
         {
-            var iBattleMgr = MainManager.Get<IBattleManager>();
-            if (iBattleMgr == null)
-                return;
-
-            iBattleMgr.BeginTurnBased(leftPartyLocation, rightPartyLocation, pointTm);
+            // var iBattleMgr = MainManager.Get<IBattleManager>();
+            // if (iBattleMgr == null)
+            //     return;
+            //
+            // iBattleMgr.BeginTurnBased(leftPartyLocation, rightPartyLocation, pointTm);
         }
 
         private async UniTask RandomActionAsync()

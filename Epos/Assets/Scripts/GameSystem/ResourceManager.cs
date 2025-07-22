@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
-using Unity.VisualScripting;
+using VContainer;
+using VContainer.Unity;
 
 namespace GameSystem
 {
     public class ResourceManager : Singleton<ResourceManager>, IInitializable
     {
+        [Inject] private AddressableManager _addressableManager = null;
+        
         public AtlasLoader AtlasLoader { get; private set; } = null;
 
         protected override void Initialize()
@@ -23,7 +26,7 @@ namespace GameSystem
         public async UniTask InitializeAsync()
         {
             AtlasLoader = new();
-            await AtlasLoader.InitializeAsync();
+            await AtlasLoader.InitializeAsync(_addressableManager);
         }
     }
 }

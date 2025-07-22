@@ -102,7 +102,7 @@ namespace Parts
             
             // iActor.IActCtr?.Idle();
 
-            MainManager.Get<IFieldManager>()?.Deactivate();
+            // MainManager.Get<IFieldManager>()?.Deactivate();
         }
         #endregion
     }

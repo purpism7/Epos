@@ -17,8 +17,8 @@ public class WorldMap : MonoBehaviour
     {
         var cameraMgr = GetComponent<CameraManager>();
 
-        _cameraIMgr = cameraMgr;
-        _cameraIMgr?.Initialize();
+        // _cameraIMgr = cameraMgr;
+        // _cameraIMgr?.Initialize();
 
         _iCameraMgr = cameraMgr;
 
@@ -89,6 +89,6 @@ public class WorldMap : MonoBehaviour
 
     private void LateUpdate()
     {
-        _cameraIMgr?.ChainLateUpdate();
+        // _cameraIMgr?.ChainLateUpdate();
     }
 }

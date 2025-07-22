@@ -11,11 +11,11 @@ namespace GameSystem
     {
         private Dictionary<string, SpriteAtlas> _spriteAtlasDic = new();
         
-        public async UniTask InitializeAsync()
+        public async UniTask InitializeAsync(AddressableManager addressableManager)
         {
             _spriteAtlasDic?.Clear();
             
-            await AddressableManager.Instance.LoadAssetAsync<SpriteAtlas>("Atlas",
+            await addressableManager.LoadAssetAsync<SpriteAtlas>("Atlas",
                 (asyncOperationHandle) =>
                 {
                     var spriteAtlas = asyncOperationHandle.Result;

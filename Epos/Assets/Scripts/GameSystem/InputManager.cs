@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+
 using Entities;
 
 namespace GameSystem
 {
-    public interface IInputManager : IManager
+    public interface IInputManager
     {
         
     }
     
     public class InputManager : MonoBehaviour, IInputManager
     {
-        private ICameraManager _iCameraMgr = null;
+        [Inject] private ICameraManager _iCameraMgr = null;
         
-        public Entities.IGeneric Initialize()
-        {
-            _iCameraMgr = GetComponent<CameraManager>();
-            
-            return this;
-        }
+        // public Entities.IGeneric Initialize()
+        // {
+        //     _iCameraMgr = GetComponent<CameraManager>();
+        //     
+        //     return this;
+        // }
 
-        void Entities.IGeneric.ChainUpdate()
+        private void Update()
         {
             if (_iCameraMgr == null)
                 return;
@@ -58,13 +60,8 @@ namespace GameSystem
                 }
                 
                
-                MainManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
+                // MainManager.Get<IFieldManager>()?.MoveToTarget(mouseWorldPos);
             }
-        }
-
-        void Entities.IGeneric.ChainLateUpdate()
-        {
-            
         }
     }
 }

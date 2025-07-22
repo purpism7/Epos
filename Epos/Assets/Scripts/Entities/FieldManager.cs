@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,7 +9,7 @@ using Common;
 
 namespace Entities
 {
-    public interface IFieldManager : IManager
+    public interface IFieldManager
     {
         void MoveToTarget(Vector3 pos);
 
@@ -33,28 +34,28 @@ namespace Entities
         private List<Datas.Field> _fieldDataList = null;
         
         #region IGeneric
-        public Entities.IGeneric Initialize()
-        {
-            //field?.Initialize();
-            //field?.Activate();
-            //CurrIField = field;
+        // public Entities.IGeneric Initialize()
+        // {
+        //     //field?.Initialize();
+        //     //field?.Activate();
+        //     //CurrIField = field;
+        //
+        //     //CreateFieldHero();
+        //
+        //     //_fieldDataList = new();
+        //     //_fieldDataList?.Clear();
+        //     
+        //     //_fieldDataList?.Add(new Datas.Field(1));
+        //     //_fieldDataList?.Add(new Datas.Field(2));
+        //     
+        //     //fieldIndicator?.Deactivate();
+        //     
+        //     //Activate();
+        //     
+        //     return this;
+        // }
 
-            //CreateFieldHero();
-
-            //_fieldDataList = new();
-            //_fieldDataList?.Clear();
-            
-            //_fieldDataList?.Add(new Datas.Field(1));
-            //_fieldDataList?.Add(new Datas.Field(2));
-            
-            //fieldIndicator?.Deactivate();
-            
-            //Activate();
-            
-            return this;
-        }
-        
-        void IGeneric.ChainUpdate()
+        private void Update()
         {
             if (!IsActivate)
                 return;
@@ -63,10 +64,19 @@ namespace Entities
             _fieldHero?.ChainUpdate();
         }
 
-        void IGeneric.ChainLateUpdate()
-        {
-            
-        }
+        // void IGeneric.ChainUpdate()
+        // {
+        //     if (!IsActivate)
+        //         return;
+        //     
+        //     CurrIField?.ChainUpdate();
+        //     _fieldHero?.ChainUpdate();
+        // }
+
+        // void IGeneric.ChainLateUpdate()
+        // {
+        //     
+        // }
         
         void FixedUpdate()
         {

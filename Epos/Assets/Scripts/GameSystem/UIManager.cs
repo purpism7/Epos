@@ -29,6 +29,9 @@ namespace GameSystem
 
         public bool IsEndLoad { get; private set; } = false;
 
+        private IObjectResolver _container = null;
+
+        [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
         
         protected override void Initialize()
@@ -39,8 +42,9 @@ namespace GameSystem
             //LoadAssetAsync().Forget();
         }
 
-        public async UniTask InitializeAsync()
+        public async UniTask InitializeAsync(VContainer.IObjectResolver container)
         {
+            _container = container;
 
             _componentDic = new();
             _componentDic.Clear();
@@ -52,7 +56,7 @@ namespace GameSystem
         {
             IsEndLoad = false;
 
-            await AddressableManager.Instance.LoadAssetAsync<GameObject>("UI",
+            await _addressableManager.LoadAssetAsync<GameObject>("UI",
                 (asyncOperationHandle) =>
                 {
                     var gameObj = asyncOperationHandle.Result;
@@ -84,6 +88,8 @@ namespace GameSystem
                 return null;
                 
             component = Instantiate(component.gameObject)?.GetComponent<T>();
+            _container?.InjectGameObject(component?.gameObject);
+            
             if (component != null)
                 _objectPooler?.Add(component);
        

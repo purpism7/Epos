@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+using VContainer;
+using VContainer.Unity;
+
 using Creator;
 using Creature;
 using Common;
+using GameSystem;
+using Lifetime;
 
 namespace Entities
 {
@@ -15,22 +21,37 @@ namespace Entities
 
     public class Character : ICharacterManager
     {
+        [Inject] private AddressableManager _addressableManager = null;
+        
+        private IObjectResolver _container = null;
         private Dictionary<int, Creature.Character> _cachedDic = null;
 
-        public IGeneric Initialize()
+        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
         {
-            return this;
+            _container = container;
+            
+            await UniTask.CompletedTask;
         }
 
-        void IGeneric.ChainUpdate()
+        public Character()
         {
             
         }
         
-        void IGeneric.ChainLateUpdate()
-        {
-            
-        }
+        // public IGeneric Initialize()
+        // {
+        //     return this;
+        // }
+
+        // void IGeneric.ChainUpdate()
+        // {
+        //     
+        // }
+        //
+        // void IGeneric.ChainLateUpdate()
+        // {
+        //     
+        // }
         T ICharacterManager.Create<T>(int id, Transform rootTm)
         {
             if (_cachedDic == null)
@@ -42,18 +63,31 @@ namespace Entities
             Creature.Character character = null;
             if (!_cachedDic.TryGetValue(id, out character))
             {
-                character = new CharacterCreator<T>()
-                    .SetId(id)
-                    .SetRoot(rootTm)
-                    .Create;
+                GameObject loadGameObj = _addressableManager.LoadAssetByNameAsync<GameObject>(id.ToString());
+                var gameObj = LifetimeScope.Instantiate(loadGameObj, rootTm);
+
+                if (!gameObj)
+                    return null;
+                
+                _container?.InjectGameObject(gameObj);
+                character = gameObj.GetComponent<T>();
+                // var t = gameObj.GetComponent<T>();
+                // Debug.Log(t);
+                
+                gameObj.SetActive(false);
+                // character = new CharacterCreator<T>()
+                //     .SetId(id)
+                //     .SetRoot(rootTm)
+                //     .Create;
             }
 
             var t = character as T;
-            if (t == null)
+            // var t = gameObj.GetComponent<T>();
+            if (character == null)
                 return null;
             
             character.SetActive(true);
-            t.Initialize();
+            t?.Initialize();
 
             return t;
         }

@@ -27,13 +27,13 @@ namespace Battle.Step
             {
                 case FieldParam param:
                 {
-                    MainManager.Get<ICameraManager>()?.ZoomIn(param.CameraZoomInPos, 
-                        () =>
-                        {
-                            param.CameraZoomInEndAction?.Invoke();
-
-                            End();
-                        });
+                    // MainManager.Get<ICameraManager>()?.ZoomIn(param.CameraZoomInPos, 
+                    //     () =>
+                    //     {
+                    //         param.CameraZoomInEndAction?.Invoke();
+                    //
+                    //         End();
+                    //     });
                     
                     break;
                 }

@@ -11,12 +11,13 @@ using Creature;
 using Entities;
 using Common;
 using Parts;
+using VContainer;
 using Field = Battle.Field;
 using VContainer.Unity;
 
 namespace GameSystem
 {
-    public interface IBattleManager : IManager
+    public interface IBattleManager : IGeneric
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
         void BeginRealTime(PartyLocation allyPartyLocation, WayPoint[] wayPoints);
@@ -25,16 +26,21 @@ namespace GameSystem
     
     public class BattleManager : IBattleManager, BattleType.IListener, ITickable
     {
+        [Inject] private ICharacterManager _iCharacterManager = null;
+
+        private IObjectResolver _container = null;
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
-
         // private Dictionary<System.Type, BattleMode> _battleModeDic = null;
-        
-        public IGeneric Initialize()
-        {
-            return this;
-        }
 
+        
+        async UniTask IGeneric.InitializeAsync(IObjectResolver container)
+        {
+            _container = container;
+
+            await UniTask.CompletedTask;
+        }
+        
         private void Begin<T, V>(V param = null) where T : Battle.BattleType, new() where V : BattleType<V>.BattleTypeParam
         {
             if (_currBattleType != null)
@@ -76,17 +82,7 @@ namespace GameSystem
             _currBattleType?.ChainUpdate();
         }
         #endregion
-
-        public void ChainUpdate()
-        {
-           
-        }
-
-        public void ChainLateUpdate()
-        {
-            
-        }
-
+        
         #region IBattleManager
         void IBattleManager.BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm)
         {
@@ -163,7 +159,8 @@ namespace GameSystem
                 if(info == null)
                     continue;
                 
-                var hero = MainManager.Get<ICharacterManager>().Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
+                
+                var hero = _iCharacterManager?.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
@@ -196,6 +193,8 @@ namespace GameSystem
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
                 .Create();
+            
+            _container?.Inject(battleMode);
             
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);

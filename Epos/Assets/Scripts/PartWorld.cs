@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using GameSystem;
 using UnityEngine;
+
+using VContainer;
+
+using GameSystem;
 
 namespace UI
 {
@@ -16,10 +19,8 @@ namespace UI
         
         [SerializeField] protected RectTransform rootRectTm = null;
 
-        private void LateUpdate()
-        {
-            // ChainLateUpdate();
-        }
+        [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private UIManager _uiManager = null;
 
         protected virtual void ChainLateUpdate()
         {
@@ -29,24 +30,22 @@ namespace UI
             Vector3? pos = null;
             if (_param?.TargetTm)
                 pos = GetScreenPos(_param.TargetTm.position);
-            //else if (_data?.TargetPos != null)
-            //    pos = GetScreenPos(_data.TargetPos.Value);
-
+      
             if(pos != null)
                 rootRectTm.anchoredPosition = pos.Value;
         }
     
         protected Vector3? GetScreenPos(Vector3 targetPos)
         {
-            var camera = MainManager.Get<ICameraManager>()?.MainCamera;
+            var camera = _iCameraManager?.MainCamera;
             if (camera == null)
                 return null;
             
-            var worldUIRootRectTm = UIManager.Instance?.WorldUIRootRectTm;
+            var worldUIRootRectTm = _uiManager?.WorldUIRootRectTm;
             if (!worldUIRootRectTm)
                 return null;
             
-            var uiCamera = UIManager.Instance?.UICamera;
+            var uiCamera = _uiManager?.UICamera;
             if (uiCamera == null)
                 return null;
 
