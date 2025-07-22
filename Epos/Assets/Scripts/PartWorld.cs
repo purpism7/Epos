@@ -6,9 +6,9 @@ using UnityEngine;
 
 namespace UI
 {
-    public class PartWorld<T> : Common.Component<T> where T : PartWorld<T>.Data
+    public abstract class PartWorld<T> : Common.Component<T> where T : PartWorld<T>.PartParam
     {
-        public class Data : Common.ComponentData
+        public class PartParam : Common.Param
         {
             public Transform TargetTm = null;
             public Vector2 Offset = Vector2.zero;
@@ -27,8 +27,8 @@ namespace UI
                 return;
 
             Vector3? pos = null;
-            if (_data?.TargetTm)
-                pos = GetScreenPos(_data.TargetTm.position);
+            if (_param?.TargetTm)
+                pos = GetScreenPos(_param.TargetTm.position);
             //else if (_data?.TargetPos != null)
             //    pos = GetScreenPos(_data.TargetPos.Value);
 
@@ -50,8 +50,8 @@ namespace UI
             if (uiCamera == null)
                 return null;
 
-            targetPos.x += _data.Offset.x;
-            targetPos.y += _data.Offset.y;
+            targetPos.x += _param.Offset.x;
+            targetPos.y += _param.Offset.y;
 
             var screenPos = camera.WorldToScreenPoint(targetPos);
 

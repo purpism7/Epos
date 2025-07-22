@@ -12,9 +12,9 @@ using Battle.Step;
 
 namespace Parts
 {
-    public class FieldPoint : Part<FieldPoint.Data>
+    public class FieldPoint : Part<FieldPoint.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public IListener IListener = null;
         }
@@ -56,9 +56,9 @@ namespace Parts
 #endif
 
         #region FieldPoint
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
             
             monster?.Initialize();
             
@@ -96,7 +96,7 @@ namespace Parts
                     var hero = collider.GetComponentInParent<Hero>();
                     if (hero != null)
                     {
-                        _data?.IListener?.Encounter(id, hero);
+                        _param?.IListener?.Encounter(id, hero);
                         
                         BeginFieldBattle();
                         
@@ -141,7 +141,7 @@ namespace Parts
             float randomY = UnityEngine.Random.Range(-value, value);
             
             var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
-            var moveData = new Creature.Action.Move.Data
+            var moveParam = new Creature.Action.Move.Param
             {
                 MoveSpeed = monster.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPos,
@@ -151,7 +151,7 @@ namespace Parts
                 },
             };
 
-            monster.IActCtr?.MoveToTargetPosition(moveData)
+            monster.IActCtr?.MoveToTargetPosition(moveParam)
                 .Execute();
         }
     }

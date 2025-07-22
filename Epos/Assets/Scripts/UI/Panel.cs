@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 { 
-    public abstract class Panel<T> : Common.Component<T> where T : Common.ComponentData
+    public abstract class Panel<T> : Common.Component<T> where T : Common.Param
     {
         // protected T _data = null;
         //

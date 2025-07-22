@@ -13,14 +13,14 @@ using Creator;
 
 namespace Battle.Step
 {
-    public class BattleStart : BattleStep<BattleStart.Data>
+    public class BattleStart : BattleStep<BattleStart.Param>
     {
-        public class Data : BaseData
+        public class Param : BattleStepParam
         {
             public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
             public Datas.ScriptableObjects.Party EnemyParty { get; private set; } = null;
 
-            public Data(Datas.ScriptableObjects.Party allyParty, Datas.ScriptableObjects.Party enemyParty)
+            public Param(Datas.ScriptableObjects.Party allyParty, Datas.ScriptableObjects.Party enemyParty)
             {
                 AllyParty = allyParty;
                 EnemyParty = enemyParty;
@@ -34,20 +34,20 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            if(_data?.AllyParty != null &&
-               _data?.EnemyParty != null)
+            if(_param?.AllyParty != null &&
+               _param?.EnemyParty != null)
             {
-                var battleForcesData = new BattleForces.Data(_data?.AllyParty, _data?.EnemyParty);
+                var param = new BattleForces.Param(_param?.AllyParty, _param?.EnemyParty);
 
-                UICreator<BattleForces, BattleForces.Data>.Get?
-                    .SetData(battleForcesData)
+                UICreator<BattleForces, BattleForces.Param>.Get?
+                    .SetParam(param)
                     .Create()?
-                    .Activate(battleForcesData);
+                    .Activate(param);
             }
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
-            var battleStart = UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Data>.Get
+            var battleStart = UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
                 ?.SetRoot(UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>())
                 .Create();
             battleStart?.Activate();

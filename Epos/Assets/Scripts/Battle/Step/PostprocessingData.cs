@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace Battle.Step
 {
-    public partial class Postprocessing : BattleStep<Postprocessing.Data>
+    public partial class Postprocessing : BattleStep<Postprocessing.Param>
     {
-        public class FieldData : Data
+        public class FieldParam : Param
         {
             public System.Action CameraZoomOutEndAction = null;
             
-            public FieldData() : base(typeof(Field))
+            public FieldParam() : base(typeof(Field))
             {
                 
             }

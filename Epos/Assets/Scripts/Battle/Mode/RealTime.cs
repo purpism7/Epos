@@ -98,19 +98,19 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            var hpProgress = UICreator<HpProgress, HpProgress.Data>.Get?
+            var hpProgress = UICreator<HpProgress, HpProgress.Param>.Get?
                 .Create();
 
             var targetPos = iCombatant.Transform.position;
             targetPos.y += iCombatant.Height;
 
-            var data = new HpProgress.Data
+            var param = new HpProgress.Param
             {
                 TargetTm = iCombatant.Transform,
                 Offset = new Vector2(0, iCombatant.Height + 0.5f),
             }.WithCombatant(iCombatant);
 
-            hpProgress?.Activate(data);
+            hpProgress?.Activate(param);
         }
 
         private async UniTask StartCombatAtWaypointAsync()
@@ -188,8 +188,7 @@ namespace Battle.Mode
             //targetPos.z = 0;
 
             var offsetPosition = new Vector3(skillRange, 0, 0);
-
-            var moveData = new Move.Data
+            var moveParam = new Move.Param
             {
                 MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
                 FinishAction = () =>
@@ -202,7 +201,7 @@ namespace Battle.Mode
             .WithOffsetPosition(offsetPosition);
 
             attacker.IActCtr?
-                .MoveToTarget(moveData)?
+                .MoveToTarget(moveParam)?
                 .Execute();
         }
 

@@ -14,20 +14,20 @@ using Party = Datas.ScriptableObjects.Party;
 
 namespace UI.Parts
 {
-    public class BattlePartyPart : Part<BattlePartyPart.Data>
+    public class BattlePartyPart : Part<BattlePartyPart.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
             public ETeam ETeam { get; private set; } = ETeam.None;
 
-            public Data WithParty(Party party)
+            public Param WithParty(Party party)
             {
                 Party = party;
                 return this;
             }
             
-            public Data WithETeam(ETeam eTeam)
+            public Param WithETeam(ETeam eTeam)
             {
                 ETeam = eTeam;
                 return this;
@@ -45,9 +45,9 @@ namespace UI.Parts
             _battlePortraitSlots = rootTm.GetComponentsInChildren<BattlePortraitSlot>();
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            base.Activate(data);
+            base.Activate(param);
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<TurnBasedEventData>(OnTurnBased);
@@ -67,7 +67,7 @@ namespace UI.Parts
 
         private void ApplyParty()
         {
-            var positionInfos = _data?.Party?.PositionInfos;
+            var positionInfos = _param?.Party?.PositionInfos;
             if (positionInfos.IsNullOrEmpty())
                 return;
             
@@ -102,8 +102,8 @@ namespace UI.Parts
                             break;
                     }
                     
-                    var battlePortraitSlotData = new BattlePortraitSlot.Data(positionInfo.CharacterId, eClass);
-                    _battlePortraitSlots[i]?.Activate(battlePortraitSlotData);
+                    var battlePortraitSlotParam = new BattlePortraitSlot.Param(positionInfo.CharacterId, eClass);
+                    _battlePortraitSlots[i]?.Activate(battlePortraitSlotParam);
                     
                     break;
                 }
@@ -113,13 +113,13 @@ namespace UI.Parts
         private void OnSkillUse(SkillUseEventData eventData)
         {
             if (eventData?.Skill == null ||
-                _data == null)
+                _param == null)
                 return;
 
             if (eventData.Skill.ESkillCategory != ESkillCategory.Passive)
                 return;
             
-            if (eventData.ETeam != _data.ETeam)
+            if (eventData.ETeam != _param.ETeam)
                 return;
             
             // skillNameTMP?.SetText(string.Empty);

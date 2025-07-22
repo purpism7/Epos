@@ -10,9 +10,9 @@ namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
-        IActController MoveToTargetPosition(Move.Data data);
+        IActController MoveToTargetPosition(Move.Param param);
         //IActController MoveToTargetPosition(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
-        IActController MoveToTarget(Move.Data data);
+        IActController MoveToTarget(Move.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList);
         IActController Die();
         
@@ -84,32 +84,32 @@ namespace Creature.Action
         /// <param name="finishAction"></param>
         /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
         /// <returns></returns>
-        IActController IActController.MoveToTargetPosition(Move.Data moveData)
+        IActController IActController.MoveToTargetPosition(Move.Param moveParam)
         {
             if (!IsActivate)
                 return null;
 
-            if (moveData == null)
+            if (moveParam == null)
                 return null;
 
             var targetPos = _currPosition;
-            if (moveData.TargetPos != null)
-                targetPos = moveData.TargetPos.Value;
+            if (moveParam.TargetPos != null)
+                targetPos = moveParam.TargetPos.Value;
          
-            AddActAsync<Move, Move.Data>(moveData).Forget();
+            AddActAsync<Move, Move.Param>(moveParam).Forget();
 
             return this;
         }
 
-        IActController IActController.MoveToTarget(Move.Data moveData)
+        IActController IActController.MoveToTarget(Move.Param moveParam)
         {
             if (!IsActivate)
                 return null;
 
-            if (moveData == null)
+            if (moveParam == null)
                 return null;
 
-            AddActAsync<Move, Move.Data>(moveData).Forget();
+            AddActAsync<Move, Move.Param>(moveParam).Forget();
 
             return this;
         }
@@ -119,7 +119,7 @@ namespace Creature.Action
             if (!IsActivate)
                 return null;
             
-            var data = new Casting.Data
+            var castingParam = new Casting.Param
             {
                 IListener = iListener,
                 ICombatant = iCombatant,
@@ -127,14 +127,14 @@ namespace Creature.Action
                 TargetList = targetList,
             };
             
-            AddActAsync<Casting, Casting.Data>(data).Forget();
+            AddActAsync<Casting, Casting.Param>(castingParam).Forget();
 
             return this;
         }
 
         IActController IActController.Die()
         {
-            Execute<Die, Die.Data>();
+            Execute<Die, Die.Param>();
             
             return this;
         }
@@ -144,13 +144,13 @@ namespace Creature.Action
             if (!IsActivate)
                 return;
 
-            var data = new Damage.Data
+            var damageParam = new Damage.Param
             {
                 ICaster = iCaster,
                 PlayAnimation = PlayAnimation,
             };
             
-            Execute<Damage, Damage.Data>(data);
+            Execute<Damage, Damage.Param>(damageParam);
         }
 
         private async UniTask ExecuteAsync()
@@ -181,24 +181,24 @@ namespace Creature.Action
 
         private void Idle()
         {
-            Execute<Idle, Idle.Data>();
+            Execute<Idle, Idle.Param>();
             SetCurrIAct(null);
             
             InAction = false;
         }
 
-        private async UniTask AddActAsync<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
+        private async UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : Act<V>.ActParam, new()
         {
             var act = GetAct<T, V>();
             if (act == null)
                 return;
             
-            if (data == null)
-                data = new V();
+            if (param == null)
+                param = new V();
             
-            act.SetData(data);
+            act.SetParam(param);
             var animationKey = _iActor?.AnimationKey(act);
-            data.SetAnimationKey(animationKey); 
+            param.SetAnimationKey(animationKey); 
             
             if (_iActQueue == null)
             {
@@ -209,7 +209,7 @@ namespace Creature.Action
             _iActQueue?.Enqueue(act);
         }
 
-        private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : Act<V>.BaseData, new()
+        private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : Act<V>.ActParam, new()
         {
             if (_iActDic == null)
             {
@@ -243,18 +243,18 @@ namespace Creature.Action
         }
         #endregion
 
-        private void Execute<T, V>(V data = null) where T : Act<V>, new() where V : Act<V>.BaseData, new()
+        private void Execute<T, V>(V param = null) where T : Act<V>, new() where V : Act<V>.ActParam, new()
         {
             var act = GetAct<T, V>();
             if (act == null)
                 return;
             
-            if (data == null)
-                data = new V();
+            if (param == null)
+                param = new V();
 
-            data.SetAnimationKey(_iActor?.AnimationKey(act));
+            param.SetAnimationKey(_iActor?.AnimationKey(act));
             
-            act.SetData(data);
+            act.SetParam(param);
             act.Execute();
             
             SetCurrIAct(act);

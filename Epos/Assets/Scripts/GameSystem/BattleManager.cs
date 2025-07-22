@@ -35,7 +35,7 @@ namespace GameSystem
             return this;
         }
 
-        private void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData
+        private void Begin<T, V>(V param = null) where T : Battle.BattleType, new() where V : BattleType<V>.BattleTypeParam
         {
             if (_currBattleType != null)
                 return;
@@ -64,7 +64,7 @@ namespace GameSystem
                 return;
             }
             
-            (battleType as BattleType<V>)?.Initialize(data);
+            (battleType as BattleType<V>)?.Initialize(param);
             battleType.Begin();
 
             _currBattleType = battleType;
@@ -121,21 +121,21 @@ namespace GameSystem
                 .SetData(battleModeData)
                 .Create();
             
-            var allyFieldData = new Battle.Step.Party.FieldData
+            var allyFieldParam = new Battle.Step.Party.Param
             {
                 PartyLocation = allyPartyLocation,
             }.WithParty(allyParty);
 
-            var enemyFieldData = new Battle.Step.Party.FieldData
+            var enemyFieldParam = new Battle.Step.Party.Param
             {
                 PartyLocation = enemyPartyLocation,
             }.WithParty(enemyPartyLocation.EnmeyParty);
             
-            var fieldData = new Battle.Field.Data(allyFieldData, enemyFieldData)
+            var fieldParam = new Battle.Field.Param(allyFieldParam, enemyFieldParam)
             {
                 BattleMode = battleMode,
                 
-                PreprocessingData = new Preprocessing.FieldData
+                PreprocessingParam = new Preprocessing.FieldParam
                 {
                     CameraZoomInPos = pointTm.position,
                     CameraZoomInEndAction = () =>
@@ -145,7 +145,7 @@ namespace GameSystem
                 },
             };
             
-            Begin<Field, Battle.Field.Data>(fieldData);
+            Begin<Field, Battle.Field.Param>(fieldParam);
         }
 
         private async UniTask<List<ICombatant>> SetAllyICombatantsAsync(Datas.ScriptableObjects.Party party, PartyLocation partyLocation, float offsetX = 0)
@@ -204,19 +204,19 @@ namespace GameSystem
             //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             //battleModeData.EnemyICombatantList?.AddRange(monsters);
 
-            var allyFieldData = new Battle.Step.Party.FieldData
+            var allyFieldParam = new Battle.Step.Party.Param
             {
                 PartyLocation = allyPartyLocation,
             }.WithParty(allyParty);
 
-            var fieldData = new Battle.Field.Data(allyFieldData, null)
+            var fieldParam = new Battle.Field.Param(allyFieldParam, null)
             {
                 BattleMode = battleMode,
                 
                 
             };
             
-            Begin<Field, Field.Data>(fieldData);
+            Begin<Field, Field.Param>(fieldParam);
         }
         
         private async UniTask<List<ICombatant>> SetEnemyICombatantsAsync(Parts.PartyLocation partyLocation)

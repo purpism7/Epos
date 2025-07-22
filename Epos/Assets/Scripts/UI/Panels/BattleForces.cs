@@ -13,14 +13,14 @@ using TMPro;
 
 namespace UI.Panels
 {
-    public class BattleForces : UI.Panel<BattleForces.Data>
+    public class BattleForces : UI.Panel<BattleForces.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public Party AllyParty { get; private set; } = null;
             public Party EnemyParty { get; private set; } = null;
 
-            public Data(Party allyParty, Party enemyParty)
+            public Param(Party allyParty, Party enemyParty)
             {
                 AllyParty = allyParty;
                 EnemyParty = enemyParty;
@@ -35,17 +35,17 @@ namespace UI.Panels
         [Header("Enemy")]
         [SerializeField] private BattlePartyPart enemyBattlePartyPart = null;
         
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
 
             allyBattlePartyPart?.Initialize();
             enemyBattlePartyPart?.Initialize();
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            base.Activate(data);
+            base.Activate(param);
             
             useSkillNameTMP?.SetText(string.Empty);
             
@@ -67,8 +67,8 @@ namespace UI.Panels
 
         private void ActivateAllyBattleParty()
         {
-            var battlePartyPartData = new BattlePartyPart.Data()
-                .WithParty(_data?.AllyParty)
+            var battlePartyPartData = new BattlePartyPart.Param()
+                .WithParty(_param?.AllyParty)
                 .WithETeam(ETeam.Ally);
 
             allyBattlePartyPart?.Activate(battlePartyPartData);
@@ -76,8 +76,8 @@ namespace UI.Panels
 
         private void ActivateEnemyBattleParty()
         {
-            var battlePartyPartData = new BattlePartyPart.Data()
-                .WithParty(_data?.EnemyParty)
+            var battlePartyPartData = new BattlePartyPart.Param()
+                .WithParty(_param?.EnemyParty)
                 .WithETeam(ETeam.Enemy);
 
             enemyBattlePartyPart?.Activate(battlePartyPartData);
@@ -88,7 +88,7 @@ namespace UI.Panels
             useSkillNameTMP?.SetText(string.Empty);
             
             if (eventData?.Skill == null ||
-                _data == null)
+                _param == null)
                 return;
             
             // if (eventData.ETeam != _data.ETeam)

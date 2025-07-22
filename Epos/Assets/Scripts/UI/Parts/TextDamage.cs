@@ -12,13 +12,13 @@ using UI;
 
 namespace Parts
 {
-    public class TextDamage : PartWorld<TextDamage.Data>
+    public class TextDamage : PartWorld<TextDamage.Param>
     {
-        public class Data : PartWorld<Data>.Data
+        public class Param : PartWorld<Param>.PartParam
         {
             public float Damage { get; private set; } = 0;
 
-            public Data WithDamage(float damage)
+            public Param WithDamage(float damage)
             {
                 Damage = damage;
                 return this;
@@ -27,16 +27,16 @@ namespace Parts
         
         [SerializeField] private TextMeshProUGUI damageTMP = null;
 
-        public override void Initialize(Data data)
+        public override void Initialize(Param data)
         {
             base.Initialize(data);
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            base.Activate(data);
+            base.Activate(param);
 
-            damageTMP?.SetText($"{data.Damage}");
+            damageTMP?.SetText($"{param.Damage}");
             
             MoveAsync().Forget();
         }
@@ -46,10 +46,10 @@ namespace Parts
             if (!rootRectTm)
                 return;
 
-            if (!_data?.TargetTm)
+            if (!_param?.TargetTm)
                 return;
             
-            var startPos = GetScreenPos(_data.TargetTm.position);
+            var startPos = GetScreenPos(_param.TargetTm.position);
             if (startPos == null) 
                 return;
             

@@ -116,7 +116,7 @@ namespace Entities
                 });
             
             fieldIndicator?.Activate(
-                new FieldIndicator.Data
+                new FieldIndicator.Param
                 {
                     TargetPos = pos,
                 });

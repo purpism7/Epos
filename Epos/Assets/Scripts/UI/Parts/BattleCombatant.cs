@@ -13,9 +13,9 @@ using Parts;
 
 namespace UI.Parts
 {
-    public class BattleCombatant : Part<BattleCombatant.Data>
+    public class BattleCombatant : Part<BattleCombatant.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public ICombatant ICombatant = null;
         }
@@ -29,9 +29,9 @@ namespace UI.Parts
         [SerializeField] 
         private Image hpProgress = null;
 
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
             
             // data?.ICombatant?.Add(OnChanged);
             
@@ -47,7 +47,7 @@ namespace UI.Parts
 
         private void SetCombatantImg()
         {
-            var iCombatant = _data?.ICombatant;
+            var iCombatant = _param?.ICombatant;
             if (iCombatant == null)
                 return;
             

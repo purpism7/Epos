@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace Battle.Step
 {
-    public partial class Preprocessing : BattleStep<Preprocessing.Data>
+    public partial class Preprocessing : BattleStep<Preprocessing.Param>
     {
-        public class FieldData : Data
+        public class FieldParam : Preprocessing.Param
         {
             public Vector3 CameraZoomInPos;
             public System.Action CameraZoomInEndAction = null;
             
-            public FieldData() : base(typeof(Field))
+            public FieldParam() : base(typeof(Field))
             {
                 
             }

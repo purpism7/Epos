@@ -12,9 +12,9 @@ using UI.Panels;
 
 namespace Battle.Step
 {
-    public class BattleEnd : BattleStep<BattleEnd.Data>
+    public class BattleEnd : BattleStep<BattleEnd.Param>
     {
-        public class Data : BaseData
+        public class Param : BattleStepParam
         {
             public Action EndAction = null;
         }
@@ -33,7 +33,7 @@ namespace Battle.Step
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
-            _data?.EndAction?.Invoke();
+            _param?.EndAction?.Invoke();
 
             End();
         }

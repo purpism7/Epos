@@ -7,7 +7,7 @@ using GameSystem;
 
 namespace Common
 {
-    public class ComponentData
+    public class Param
     {
             
     }
@@ -51,22 +51,22 @@ namespace Common
         }
     }
     
-    public abstract class Component<T> : Component where T : ComponentData
+    public abstract class Component<T> : Component where T : Param
     {
-        protected T _data = null;
+        protected T _param = null;
 
-        public virtual void Initialize(T data)
+        public virtual void Initialize(T param)
         {
             base.Initialize();
-            
-            _data = data;
+
+            _param = param;
         }
         
-        public virtual void Activate(T data)
+        public virtual void Activate(T param)
         {
             base.Activate();
             
-            _data = data;
+            _param = param;
         }
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine.Rendering;
 
 namespace Creature.Action
 {
-    public class Move : Act<Move.Data>
+    public class Move : Act<Move.Param>
     {
-        public class Data : BaseData
+        public class Param : ActParam
         {
             public float MoveSpeed = 1f;
             public Transform TargetTm { get; private set; } = null;
@@ -20,19 +20,19 @@ namespace Creature.Action
 
             public int DirectionAfterArriving = 1;
 
-            public Data WithTargetTm(Transform targetTm)
+            public Param WithTargetTm(Transform targetTm)
             {
                 TargetTm = targetTm;
                 return this;
             }
 
-            public Data WithTargetICombatant(ICombatant targetICombatant)
+            public Param WithTargetICombatant(ICombatant targetICombatant)
             {
                 TargetICombatant = targetICombatant;
                 return this;
             }
 
-            public Data WithOffsetPosition(Vector3 position)
+            public Param WithOffsetPosition(Vector3 position)
             {
                 OffsetPosition = position;
                 return this;
@@ -41,23 +41,23 @@ namespace Creature.Action
 
         private Vector3 _prevPos = Vector3.zero;
         
-        public bool IsJumpMove { get { return _data != null ? _data.IsJumpMove : false; } }
+        public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
         public override void Execute()
         {
-            if (_data == null)
+            if (_param == null)
                 return;
 
             // Flip();
-            SetAnimation(_data.AnimationKey, true);
+            SetAnimation(_param.AnimationKey, true);
 
             if (_iActor?.NavMeshAgent != null &&
-                _data != null &&
-                _data.UseNavMesh)
+                _param != null &&
+                _param.UseNavMesh)
             {
                 var targetPos = TargetPos;
 
-                _iActor.NavMeshAgent.speed = _data.MoveSpeed;
+                _iActor.NavMeshAgent.speed = _param.MoveSpeed;
                 _iActor?.NavMeshAgent?.SetDestination(targetPos);
             }
 
@@ -75,7 +75,7 @@ namespace Creature.Action
         //     // if (rigidbody == null)
         //     //     return;
         //     
-        //     var direction = _data.TargetPos.x - iActorTm.position.x;
+        //     var direction = _param.TargetPos.x - iActorTm.position.x;
         //     iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
         // }
 
@@ -84,16 +84,16 @@ namespace Creature.Action
             get
             {
                 Vector3 targetPos = Vector3.zero;
-                if(_data != null)
+                if(_param != null)
                 {
-                    if (_data.TargetTm)
-                        targetPos = _data.TargetTm.position;
+                    if (_param.TargetTm)
+                        targetPos = _param.TargetTm.position;
 
-                    if (_data.TargetPos != null)
-                        targetPos = _data.TargetPos.Value;
+                    if (_param.TargetPos != null)
+                        targetPos = _param.TargetPos.Value;
 
-                    if (_data.TargetICombatant != null)
-                        targetPos = _data.TargetICombatant.Transform.position;
+                    if (_param.TargetICombatant != null)
+                        targetPos = _param.TargetICombatant.Transform.position;
                 }
 
                 return targetPos;
@@ -108,14 +108,14 @@ namespace Creature.Action
             if (!iActorTm)
                 return;
 
-            if (_data != null &&
-               _data.UseNavMesh)
+            if (_param != null &&
+               _param.UseNavMesh)
                 return;
 
             if (_iActor?.IStat == null)
                 return;
 
-            if(!_data.TargetICombatant.IsActivate)
+            if(!_param.TargetICombatant.IsActivate)
             {
                 End();
                 return;
@@ -127,9 +127,9 @@ namespace Creature.Action
             Vector3 offsetPosition = Vector3.zero;
             float offsetDistance = 0;
 
-            if (_data.OffsetPosition != null)
+            if (_param.OffsetPosition != null)
             {
-                offsetPosition = _data.OffsetPosition.Value;
+                offsetPosition = _param.OffsetPosition.Value;
                 offsetDistance = offsetPosition.x;
 
                 targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
@@ -138,7 +138,7 @@ namespace Creature.Action
 
             //Debug.Log(offsetPosition);
 
-            var moveSpeed = _data.MoveSpeed;
+            var moveSpeed = _param.MoveSpeed;
             iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
 
             direction = _prevPos - iActorTm.position;
@@ -154,7 +154,7 @@ namespace Creature.Action
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
-                localScale.x = _data.DirectionAfterArriving;
+                localScale.x = _param.DirectionAfterArriving;
                     
                 iActorTm.localScale = localScale;
 
@@ -164,7 +164,7 @@ namespace Creature.Action
 
         private void End()
         {
-            _data.FinishAction?.Invoke();
+            _param.FinishAction?.Invoke();
             _endAction?.Invoke();
         }
     }

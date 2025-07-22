@@ -6,13 +6,13 @@ using GameSystem;
 
 namespace Battle.Step
 {
-    public partial class Postprocessing : BattleStep<Postprocessing.Data>
+    public partial class Postprocessing : BattleStep<Postprocessing.Param>
     {
-        public class Data : BaseData
+        public class Param : BattleStep.BattleStepParam
         {
             public System.Type Type { get; private set; } = null;
 
-            protected Data(System.Type type)
+            protected Param(System.Type type)
             {
                 Type = type;
             }
@@ -20,17 +20,17 @@ namespace Battle.Step
 
         public override void Begin()
         {
-            if (_data == null)
+            if (_param == null)
                 return;
             
-            switch (_data)
+            switch (_param)
             {
-                case FieldData data:
+                case FieldParam param:
                 {
                     MainManager.Get<ICameraManager>()?.ZoomOut( 
                         () =>
                         {
-                            data.CameraZoomOutEndAction?.Invoke();
+                            param.CameraZoomOutEndAction?.Invoke();
 
                             End();
                         });

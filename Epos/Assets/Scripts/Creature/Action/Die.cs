@@ -4,9 +4,9 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public class Die : Act<Die.Data>
+    public class Die : Act<Die.Param>
     {
-        public class Data : BaseData
+        public class Param : ActParam
         {
             
         }

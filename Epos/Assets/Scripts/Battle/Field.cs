@@ -10,36 +10,36 @@ using Battle.Step;
 
 namespace Battle
 {
-    public class Field : BattleType<Field.Data>
+    public class Field : BattleType<Field.Param>
     {
-        public class Data : BaseData
+        public class Param : BattleTypeParam
         {
-            public Preprocessing.FieldData PreprocessingData = null;
-            public Party.FieldData AllyFieldData { get; private set; } = null;
-            public Party.FieldData EnemyFieldData { get; private set; } = null;
+            public Preprocessing.FieldParam PreprocessingParam = null;
+            public Party.Param AllyFieldParam { get; private set; } = null;
+            public Party.Param EnemyFieldParam { get; private set; } = null;
 
-            public Data(Party.FieldData allyFieldData, Party.FieldData enemyFieldData)
+            public Param(Party.Param allyFieldParam, Party.Param enemyFieldParam)
             {
-                AllyFieldData = allyFieldData;
-                EnemyFieldData = enemyFieldData;
+                AllyFieldParam = allyFieldParam;
+                EnemyFieldParam = enemyFieldParam;
             }
         }
         
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
             
-            if(_data?.PreprocessingData != null)
-                AddStep<Step.Preprocessing>(_data?.PreprocessingData);
+            if(_param?.PreprocessingParam != null)
+                AddStep<Step.Preprocessing>(_param?.PreprocessingParam);
 
-            if (_data?.EnemyFieldData != null)
-                AddStep<Step.EnemyParty>(_data?.EnemyFieldData);
+            if (_param?.EnemyFieldParam != null)
+                AddStep<Step.EnemyParty>(_param?.EnemyFieldParam);
 
-            if (_data?.AllyFieldData != null)
-                AddStep<Step.AllyParty>(_data?.AllyFieldData);
+            if (_param?.AllyFieldParam != null)
+                AddStep<Step.AllyParty>(_param?.AllyFieldParam);
 
             AddStep<Step.BattleStart>(
-                new BattleStart.Data(_data?.AllyFieldData?.Party, _data?.EnemyFieldData?.Party), 
+                new BattleStart.Param(_param?.AllyFieldParam?.Party, _param?.EnemyFieldParam?.Party), 
                 isLast: true);
         }
 
@@ -49,20 +49,20 @@ namespace Battle
             
             AddStep<BattleResult>();
            
-            if (_data?.EnemyFieldData != null)
-                AddStep<Step.EnemyParty>(_data?.EnemyFieldData?.SetBattleState(false));
+            if (_param?.EnemyFieldParam != null)
+                AddStep<Step.EnemyParty>(_param?.EnemyFieldParam?.SetBattleState(false));
 
-            if (_data?.AllyFieldData != null)
-                AddStep<Step.AllyParty>(_data?.AllyFieldData?.SetBattleState(false));
+            if (_param?.AllyFieldParam != null)
+                AddStep<Step.AllyParty>(_param?.AllyFieldParam?.SetBattleState(false));
 
             AddStep<BattleEnd>(
-                new BattleEnd.Data
+                new BattleEnd.Param
                 {
                     EndAction = BattleEnd,
-                }, _data?.PreprocessingData == null);
+                }, _param?.PreprocessingParam == null);
 
-            if (_data?.PreprocessingData != null)
-                AddStep<Postprocessing>(new Postprocessing.FieldData(), isLast: true);
+            if (_param?.PreprocessingParam != null)
+                AddStep<Postprocessing>(new Postprocessing.FieldParam(), isLast: true);
             
             Begin();
         }   

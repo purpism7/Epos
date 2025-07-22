@@ -7,14 +7,14 @@ using Common;
 
 namespace UI.Slots
 {
-    public class BattlePortraitSlot : Slot<BattlePortraitSlot.Data>
+    public class BattlePortraitSlot : Slot<BattlePortraitSlot.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public int CharacterId { get; private set; } = 0;
             public EClass EClass { get; private set; } = EClass.None;
 
-            public Data(int characterId, EClass eClass)
+            public Param(int characterId, EClass eClass)
             {
                 CharacterId = characterId;
                 EClass = eClass;
@@ -30,9 +30,9 @@ namespace UI.Slots
             base.Initialize();
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            base.Activate(data);
+            base.Activate(param);
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
@@ -53,13 +53,13 @@ namespace UI.Slots
         {
             characterImg?.SetActive(false);
             
-            if (_data == null)
+            if (_param == null)
                 return;
             
             if (characterImg == null)
                 return;
             
-            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_data.CharacterId}");
+            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_param.CharacterId}");
 
             // Character Id 가 없을 경우, 몬스터 이미지로 적용.
             if (sprite == null)
@@ -73,16 +73,16 @@ namespace UI.Slots
         {
             classImg?.SetActive(false);
             
-            if (_data == null)
+            if (_param == null)
                 return;
             
             if (classImg == null)
                 return;
 
-            if (_data.EClass == EClass.None)
+            if (_param.EClass == EClass.None)
                 return;
 
-            var spriteName = $"Img_Class_{_data.EClass}";
+            var spriteName = $"Img_Class_{_param.EClass}";
             var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetSprite("Common", spriteName);
             classImg.sprite = sprite;
             
@@ -98,10 +98,10 @@ namespace UI.Slots
         private void OnStatChanged(StatChangedEventData eventData)
         {
             if (eventData == null ||
-                _data == null)
+                _param == null)
                 return;
 
-            if (eventData.CharacterId != _data.CharacterId)
+            if (eventData.CharacterId != _param.CharacterId)
                 return;
             
             var iStat = eventData.IStat;

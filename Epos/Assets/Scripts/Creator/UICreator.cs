@@ -10,14 +10,14 @@ using UI;
 
 namespace Creator
 {
-    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : Common.Component where V : Common.ComponentData
+    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : Common.Component where V : Common.Param
     {
-        private V _data = null;
+        private V _param = null;
         private RectTransform _rootRectTm = null;
   
-        public UICreator<T, V> SetData(V data = null) 
+        public UICreator<T, V> SetParam(V param = null) 
         {
-            _data = data;
+            _param = param;
             
             return this;
         }
@@ -49,7 +49,7 @@ namespace Creator
                 Debug.Log("popup");
             }
             
-            component?.Initialize(_data);
+            component?.Initialize(_param);
             
             // if (_component == null)
             //     return null;

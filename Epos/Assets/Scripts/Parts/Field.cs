@@ -50,7 +50,7 @@ namespace Parts
             foreach (var fieldPoint in fieldPoints)
             {
                 fieldPoint?.Initialize(
-                    new FieldPoint.Data
+                    new FieldPoint.Param
                     {
                         IListener = this,
                     });

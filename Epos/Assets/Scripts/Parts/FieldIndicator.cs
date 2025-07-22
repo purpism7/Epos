@@ -5,21 +5,21 @@ using UnityEngine;
 
 namespace Parts
 {
-    public class FieldIndicator : Part<FieldIndicator.Data>
+    public class FieldIndicator : Part<FieldIndicator.Param>
     {
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             public Vector3 TargetPos = Vector3.zero;
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            if (data == null)
+            if (param == null)
                 return;
 
-            transform.position = data.TargetPos;
+            transform.position = param.TargetPos;
             
-            base.Activate(data);
+            base.Activate(param);
         }
     }
 }

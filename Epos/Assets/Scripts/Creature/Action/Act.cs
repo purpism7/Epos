@@ -12,13 +12,13 @@ namespace Creature.Action
         void ChainFixedUpdate();
     }
     
-    public abstract class Act<T> : IAct where T : Act<T>.BaseData
+    public abstract class Act<T> : IAct where T : Act<T>.ActParam
     {
-        public class BaseData
+        public class ActParam
         {
             public string AnimationKey { get; private set; } = string.Empty;
             
-            public BaseData SetAnimationKey(string key)
+            public ActParam SetAnimationKey(string key)
             {
                 AnimationKey = key;
 
@@ -26,7 +26,7 @@ namespace Creature.Action
             }
         }
         
-        protected T _data = null;
+        protected T _param = null;
         protected IActor _iActor = null;
         protected System.Action _endAction = null;
         protected float _duration = 0;
@@ -36,9 +36,9 @@ namespace Creature.Action
             _iActor = iActor;
         }
 
-        public void SetData(T data)
+        public void SetParam(T param)
         {
-            _data = data;
+            _param = param;
         }
 
         public void SetEndActAction(System.Action endAction)

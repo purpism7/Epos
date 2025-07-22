@@ -100,7 +100,7 @@ namespace GameSystem
             return component;
         }
         
-        private Common.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : Common.Component where V : Common.ComponentData
+        private Common.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : Common.Component where V : Common.Param
         {
             initialize = false;
 
@@ -125,24 +125,24 @@ namespace GameSystem
             return component;
         }
 
-        public T GetPanel<T, V>(V data = null) where T : Common.Component where V : Common.ComponentData
+        public T GetPanel<T, V>(V param = null) where T : Common.Component where V : Common.Param
         {
             bool initialize = false;
-            var component = Get<T, V>(data, rootRectTm, out initialize);
+            var component = Get<T, V>(param, rootRectTm, out initialize);
 
             var panel = component as Panel<V>;
             if(initialize)
-                panel?.Initialize(data);
+                panel?.Initialize(param);
             
             component?.transform.SetAsLastSibling();
-            panel?.Activate(data);
+            panel?.Activate(param);
             
             // CurrPanel = panel;
             
             return panel as T;
         }
         
-        public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.ComponentData
+        public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.Param
         {
             bool initialize = false;
             var component = Get<T, V>(data, rootRectTm, out initialize);

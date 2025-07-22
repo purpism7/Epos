@@ -5,19 +5,19 @@ using UnityEngine;
 
 namespace Creature.Action
 {
-    public class Idle : Act<Idle.Data>
+    public class Idle : Act<Idle.Param>
     {
-        public class Data : BaseData
+        public class Param : ActParam
         {
             
         }
         
         public override void Execute()
         {
-            if (_data == null)
+            if (_param == null)
                 return;
             
-            SetAnimation(_data.AnimationKey, true);
+            SetAnimation(_param.AnimationKey, true);
         }
     }
 }

@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Battle.Step;
 using UnityEngine;
+
+using Battle.Step;
 
 namespace Battle
 {
@@ -33,10 +34,10 @@ namespace Battle
             
         }
         
-        protected void AddStep<T>(BattleStep.BaseData data = null, bool isLast = false) where T : BattleStep, new()
+        protected void AddStep<T>(BattleStep.BattleStepParam param = null, bool isLast = false) where T : BattleStep, new()
         {
             var step = new T();
-            var iBattleStep = step.Initialize(data);
+            var iBattleStep = step.Initialize(param);
 
             // 이전 스텝에 chain step 연결.
             _lastStep?.SetChainStep(step);
@@ -75,27 +76,27 @@ namespace Battle
         #endregion
     }
     
-    public abstract class BattleType<T> : BattleType where T : BattleType<T>.BaseData
+    public abstract class BattleType<T> : BattleType where T : BattleType<T>.BattleTypeParam
     {
-        public class BaseData
+        public class BattleTypeParam
         {
             public BattleMode BattleMode = null;
         }
         
-        protected T _data = null;
+        protected T _param = null;
 
-        public virtual void Initialize(T data)
+        public virtual void Initialize(T param)
         {
-            _data = data;
-            
-            _data?.BattleMode?.SetIListener(this);
+            _param = param;
+
+            _param?.BattleMode?.SetIListener(this);
         }
 
         public override void ChainUpdate()
         {
             base.ChainUpdate();
             
-            _data?.BattleMode?.ChainUpdate();
+            _param?.BattleMode?.ChainUpdate();
         }
         
         public void SetIListener(IListener iListener)
@@ -107,7 +108,7 @@ namespace Battle
         {
             base.Ready();
             
-            _data?.BattleMode?.Begin();
+            _param?.BattleMode?.Begin();
         }
     }
 }

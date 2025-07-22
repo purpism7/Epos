@@ -16,7 +16,7 @@ namespace Battle
     
     public class BattleStep : IBattleStep
     {
-        public class BaseData
+        public class BattleStepParam
         {
             
         }
@@ -24,7 +24,7 @@ namespace Battle
         private BattleStep _chainStep = null;
         private System.Action _lastStepEndAction = null;
 
-        public virtual IBattleStep Initialize(BaseData data)
+        public virtual IBattleStep Initialize(BattleStepParam param)
         {
             return this;
         }
@@ -60,15 +60,15 @@ namespace Battle
         }
     }
     
-    public abstract class BattleStep<T> : BattleStep where T : BattleStep.BaseData
+    public abstract class BattleStep<T> : BattleStep where T : BattleStep.BattleStepParam
     {
-        protected T _data = null;
+        protected T _param = null;
 
-        public override IBattleStep Initialize(BaseData data)
+        public override IBattleStep Initialize(BattleStepParam param)
         {
-            base.Initialize(data);
-            
-            _data = data as T;
+            base.Initialize(param);
+
+            _param = param as T;
 
             return this;
         }

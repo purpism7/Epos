@@ -12,9 +12,9 @@ using Vector3 = UnityEngine.Vector3;
 
 namespace Creature.Action
 {
-    public class Casting : Act<Casting.Data>
+    public class Casting : Act<Casting.Param>
     {
-        public class Data : BaseData
+        public class Param : ActParam
         {
             public IListener IListener = null;
             public ICombatant ICombatant = null;
@@ -37,10 +37,10 @@ namespace Creature.Action
 
         public override void Execute()
         {
-            if (_data == null)
+            if (_param == null)
                 return;
 
-            // var eSkillCategory = _data.Skill.ESkillCategory;
+            // var eSkillCategory = _param.Skill.ESkillCategory;
             // _iActor?.IStat?.Add(eSkillCategory == ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
 
             LookAtTarget();
@@ -49,40 +49,40 @@ namespace Creature.Action
 
         private void LookAtTarget()
         {
-            var target = _data.TargetList.FirstOrDefault();
+            var target = _param.TargetList.FirstOrDefault();
             if (target == null)
                 return;
             
-            var direction = target.Transform.position - _data.ICombatant.Transform.position;
+            var direction = target.Transform.position - _param.ICombatant.Transform.position;
             if (direction.x > 0)
-                _data.ICombatant.Transform.localScale = Vector3.one;
+                _param.ICombatant.Transform.localScale = Vector3.one;
             else if (direction.x < 0)
-                _data.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
+                _param.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
         }
 
         private async UniTask CastingAsync()
         {
-            _data?.IListener?.BeforeCasting();
+            _param?.IListener?.BeforeCasting();
           
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            SetAnimation(_data?.AnimationKey, false);
+            SetAnimation(_param?.AnimationKey, false);
             
             var halfDuration = _duration / 2f;
             
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _data?.IListener?.InUse();
+            _param?.IListener?.InUse();
             
-            if (_data?.TargetList != null &&
-                !_data.Skill.SameTeam)
+            if (_param?.TargetList != null &&
+                !_param.Skill.SameTeam)
             {
-                foreach (var target in _data.TargetList)
+                foreach (var target in _param.TargetList)
                 {
-                    target?.IActCtr?.TakeDamage(_data?.ICombatant, _data.PlayAnimation);
+                    target?.IActCtr?.TakeDamage(_param?.ICombatant, _param.PlayAnimation);
                 }
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _data?.IListener?.AfterCasting(_data?.ICombatant);      
+            _param?.IListener?.AfterCasting(_param?.ICombatant);      
         }
 
         protected override void OnCompleted(TrackEntry trackEntry)
@@ -97,7 +97,7 @@ namespace Creature.Action
         //     get
         //     {
         //         ETeam eTeam = ETeam.None;
-        //         var iCombatant = _data.ICombatant;
+        //         var iCombatant = _param.ICombatant;
         //         if (iCombatant != null)
         //             eTeam = iCombatant.ETeam;
         //

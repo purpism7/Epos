@@ -4,13 +4,13 @@ using UnityEngine.UI;
 
 namespace  UI.Parts
 {
-    public class HpProgress : PartWorld<HpProgress.Data>
+    public class HpProgress : PartWorld<HpProgress.Param>
     {
-        public class Data : PartWorld<Data>.Data
+        public class Param : PartWorld<Param>.PartParam
         {
             public ICombatant ICombatant { get; private set; } = null;
 
-            public Data WithCombatant(ICombatant iCombatant)
+            public Param WithCombatant(ICombatant iCombatant)
             {
                 ICombatant = iCombatant;
                 return this;
@@ -20,19 +20,19 @@ namespace  UI.Parts
         [SerializeField]
         private Slider hpSlider = null;
 
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
         }
 
-        public override void Activate(Data data)
+        public override void Activate(Param param)
         {
-            base.Activate(data);
+            base.Activate(param);
 
             if(hpSlider != null &&
-               data?.ICombatant != null)
+               param?.ICombatant != null)
             {
-                hpSlider.maxValue = data.ICombatant.IStat.Get(Stat.EType.MaxHp);
+                hpSlider.maxValue = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
             }
         }
 
@@ -41,16 +41,16 @@ namespace  UI.Parts
             if (hpSlider == null)
                 return;
 
-            if (_data?.ICombatant == null)
+            if (_param?.ICombatant == null)
                 return;
 
-            hpSlider.value = _data.ICombatant.IStat.Get(Stat.EType.Hp);
+            hpSlider.value = _param.ICombatant.IStat.Get(Stat.EType.Hp);
         }
 
         private void LateUpdate()
         {
             //Debug.Log(?.IStat?.Get(Stat.EType.Hp));
-            if(_data.ICombatant.IsActivate)
+            if(_param.ICombatant.IsActivate)
             {
                 ChainLateUpdate();
                 UpdateHp();

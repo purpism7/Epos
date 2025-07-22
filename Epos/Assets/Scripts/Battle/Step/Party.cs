@@ -6,22 +6,22 @@ using Cysharp.Threading.Tasks;
 
 namespace Battle.Step
 {
-    public abstract class Party : BattleStep<Party.FieldData>
+    public abstract class Party : BattleStep<Party.Param>
     {
-        public class FieldData : BaseData
+        public class Param : BattleStepParam
         {
             public Parts.PartyLocation PartyLocation = null;
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
             public bool BattleStart { get; private set; } = true;
 
-            public FieldData SetBattleState(bool battleStart)
+            public Param SetBattleState(bool battleStart)
             {
                 BattleStart = battleStart;
 
                 return this;
             }
 
-            public FieldData WithParty(Datas.ScriptableObjects.Party party)
+            public Param WithParty(Datas.ScriptableObjects.Party party)
             {
                 Party = party;
                 return this;
@@ -35,13 +35,13 @@ namespace Battle.Step
 
         private async UniTask BeginAsync()
         {
-            if(_data == null)
+            if(_param == null)
                 return;
             
-            if(_data.BattleStart)
-                _data.PartyLocation?.Activate();
-            else 
-                _data.PartyLocation?.Deactivate();
+            if(_param.BattleStart)
+                _param.PartyLocation?.Activate();
+            else
+                _param.PartyLocation?.Deactivate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             

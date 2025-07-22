@@ -27,8 +27,9 @@ namespace Battle.Step
             await UniTask.Yield();
 
 
-            var battleState = UICreator<BattleState, BattleState.Data>.Get
-                ?.SetRoot(UIManager.Instance?.CurrPanel.GetComponent<RectTransform>()).Create();
+            var battleState = UICreator<BattleState, BattleState.Param>.Get?
+                .SetRoot(UIManager.Instance?.CurrPanel.GetComponent<RectTransform>())
+                .Create();
             // var battleState = UIManager.Instance?.Get<BattleState, BattleState.Data>();
             if (battleState != null)
             {

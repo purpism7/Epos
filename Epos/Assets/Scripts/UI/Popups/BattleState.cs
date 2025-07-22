@@ -9,21 +9,21 @@ using Common;
 
 namespace UI.Popups
 {
-    public class BattleState : Popup<BattleState.Data>
+    public class BattleState : Popup<BattleState.Param>
     {
         [SerializeField] 
         private RectTransform startRectTm = null;
         [SerializeField] 
         private RectTransform winRectTm = null;
         
-        public class Data : Common.ComponentData
+        public class Param : Common.Param
         {
             
         }
 
-        public override void Initialize(Data data)
+        public override void Initialize(Param param)
         {
-            base.Initialize(data);
+            base.Initialize(param);
         }
 
         public override void Deactivate()

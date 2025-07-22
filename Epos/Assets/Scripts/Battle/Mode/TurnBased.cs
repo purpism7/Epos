@@ -141,12 +141,12 @@ namespace Battle.Mode
                 var originPos = iCombatant.Transform.position;
                 originPos.x += 100f;
 
-                var moveData = new Move.Data
+                var moveParam = new Move.Param
                 {
                     MoveSpeed = 8f,
                     TargetPos = originPos,
                 };
-                iCombatant.IActCtr?.MoveToTargetPosition(moveData)?
+                iCombatant.IActCtr?.MoveToTargetPosition(moveParam)?
                     .Execute();
                 
                 await UniTask.WaitWhile(
@@ -311,13 +311,14 @@ namespace Battle.Mode
                     if(iCombatant == null)
                         continue;
 
-                    var moveData = new Move.Data
+                    var moveParam = new Move.Param
                     {
                         MoveSpeed = iCombatant.IStat.Get(Stat.EType.MoveSpeed),
                         IsJumpMove = true,
                     };
 
-                    iCombatant.IActCtr?.MoveToTargetPosition(moveData)?
+                    iCombatant.IActCtr?
+                        .MoveToTargetPosition(moveParam)?
                         .Execute();
                     
                     SetSortingOrder(iCombatant, 0);
@@ -442,14 +443,14 @@ namespace Battle.Mode
 
             SetSortingOrder(attacker, 1);
 
-            var moveData = new Move.Data
+            var moveParam = new Move.Param
             {
                 MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPos,
                 IsJumpMove = true,
             };
 
-            attacker.IActCtr?.MoveToTargetPosition(moveData);
+            attacker.IActCtr?.MoveToTargetPosition(moveParam);
         }
 
         private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)

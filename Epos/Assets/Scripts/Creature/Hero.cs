@@ -25,7 +25,7 @@ namespace Creature
         #region Act
         public void MoveToTarget(Vector3 pos, System.Action finishAction)
         {
-            var moveData = new Move.Data
+            var moveParam = new Move.Param
             {
                 TargetPos = pos,
                 MoveSpeed = IStat.Get(Stat.EType.MoveSpeed),
@@ -34,7 +34,7 @@ namespace Creature
                 UseNavMesh = true
             };
 
-            IActCtr?.MoveToTargetPosition(moveData)?.Execute();
+            IActCtr?.MoveToTargetPosition(moveParam)?.Execute();
         }
         
         public override string AnimationKey<T>(Act<T> act)
