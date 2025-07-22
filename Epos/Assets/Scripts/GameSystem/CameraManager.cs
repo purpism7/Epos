@@ -186,7 +186,7 @@ namespace GameSystem
             var targetPosition = _targetPosition.Value;
             targetPosition.z = -100f;
             
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime * 2f);
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime);
 
             return true;
         }

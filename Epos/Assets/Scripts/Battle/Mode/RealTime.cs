@@ -1,18 +1,19 @@
 using System;
-using Common;
-using Creature;
-using Creature.Action;
 using System.Collections.Generic;
 using System.Linq;
-using Creator;
+using UnityEngine;
+
 using Cysharp.Threading.Tasks;
+
+using Creature.Action;
+using Common;
+using Creator;
 using Entities;
 using GameSystem;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine;
-using Random = UnityEngine.Random;
+using Creature;
 using Datas.ScriptableObjects;
 using UI.Parts;
+using Random = UnityEngine.Random;
 
 
 namespace Battle.Mode
@@ -65,7 +66,7 @@ namespace Battle.Mode
                 ally?.SetETeam(ETeam.Ally);
                 ally?.Activate();
 
-                MoveToAttackAsync(ally).Forget();
+                //MoveToAttackAsync(ally).Forget();
             }
             
             StartCombatAtWaypointAsync().Forget();
@@ -106,7 +107,7 @@ namespace Battle.Mode
             var data = new HpProgress.Data
             {
                 TargetTm = iCombatant.Transform,
-                Offset = new Vector2(0, iCombatant.Height),
+                Offset = new Vector2(0, iCombatant.Height + 0.5f),
             }.WithCombatant(iCombatant);
 
             hpProgress?.Activate(data);
@@ -114,15 +115,16 @@ namespace Battle.Mode
 
         private async UniTask StartCombatAtWaypointAsync()
         {
-            
+            await UniTask.Delay(TimeSpan.FromSeconds(2f));
 
             if (!_wayPointQueue.TryDequeue(out _currWayPoint))
                 return;
 
-            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            //await UniTask.DelayFrame(12);
-
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var ally = _data?.AllyICombatantList[i];
+                MoveToAttackAsync(ally).Forget();
+            }
 
             MainManager.Get<ICameraManager>().MoveToTarget(_currWayPoint.Position);
 

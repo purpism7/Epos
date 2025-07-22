@@ -33,7 +33,7 @@ namespace Creature.Action
                 var data = new TextDamage.Data
                 {
                     TargetTm = _iActor?.Transform,
-                    Offset = new Vector2(0, _iActor.Height),
+                    Offset = new Vector2(0, _iActor.Height + 0.5f),
 
                 }.WithDamage(damage);
 

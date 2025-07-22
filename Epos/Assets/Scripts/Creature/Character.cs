@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.AI;
 using System;
 
+using VContainer;
 using Spine;
 using Spine.Unity;
 
 using Common;
 using Creature.Action;
 using GameSystem;
-using VContainer;
 
 namespace Creature
 {
@@ -60,8 +60,8 @@ namespace Creature
 
         #endregion
 
-        [Inject]
-        BattleManager _battleManager = null;
+        [Inject] private IBattleManager _iBattleManager = null;
+        [Inject] private ResourceManager _resourceManager = null;
 
         #region Temp Stat
 
@@ -123,7 +123,8 @@ namespace Creature
                 //HeadPos = renderer.bounds.max;
             }
 
-            Debug.Log(_battleManager);
+            
+            Debug.Log(_resourceManager);
         }
 
         public virtual void ChainUpdate()

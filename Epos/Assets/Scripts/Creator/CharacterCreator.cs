@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer.Unity;
 
 using GameSystem;
-
 
 namespace Creator
 {
@@ -31,7 +31,8 @@ namespace Creator
             get
             {
                 GameObject loadGameObj = AddressableManager.Instance.LoadAssetByNameAsync<GameObject>(_id.ToString());
-                var gameObj = GameObject.Instantiate(loadGameObj, _roootTm);
+                var gameObj = LifetimeScope.Instantiate(loadGameObj, _roootTm);
+                
                 if (!gameObj)
                     return null;
                 
