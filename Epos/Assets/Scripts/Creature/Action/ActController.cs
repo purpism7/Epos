@@ -1,17 +1,18 @@
-using Cysharp.Threading.Tasks;
-using Datas.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Burst;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
+using Datas.ScriptableObjects;
+
 namespace Creature.Action
 {
     public interface IActController : IController<IActController, IActor>
     {
         IActController MoveToTargetPosition(Move.Param param);
-        //IActController MoveToTargetPosition(float moveSpeed, Vector3? pos = null, System.Action finishAction = null, int direction = 1, bool isJumpMove = false, bool useNavMesh = true);
         IActController MoveToTarget(Move.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Skill skill, List<ICombatant> targetList);
         IActController Die();
@@ -40,7 +41,9 @@ namespace Creature.Action
 
             _iActDic = new();
             _iActDic.Clear();
-            
+
+            InitializeWeightBasedAction();
+
             return this;
         }
 
@@ -151,6 +154,12 @@ namespace Creature.Action
             };
             
             Execute<Damage, Damage.Param>(damageParam);
+        }
+
+        private void InitializeWeightBasedAction()
+        {
+            //_iWeghtBasedActionHashSet.Clear();
+            //_iWeghtBasedActionHashSet?.Add(new ApproachAttack()?.Initialize(_iActor));
         }
 
         private async UniTask ExecuteAsync()

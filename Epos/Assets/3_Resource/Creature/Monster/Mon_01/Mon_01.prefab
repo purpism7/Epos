@@ -49,6 +49,7 @@ MonoBehaviour:
   id: 90001
   eClass: 0
   rootTm: {fileID: 9067786674166319913}
+  headTm: {fileID: 0}
   actionSpeed: 10
   moveSpeed: 7.4
   attack: 1

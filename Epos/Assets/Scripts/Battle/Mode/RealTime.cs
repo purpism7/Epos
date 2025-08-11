@@ -38,9 +38,14 @@ namespace Battle.Mode
         private Queue<WayPoint> _wayPointQueue = null;
         private WayPoint _currWayPoint = null;
 
+        //private HashSet<>
+        private IWeightedActionManager _iWeightedActionMgr = new WeightedActionManager();
+
         public override BattleMode<Data> Initialize(Data data)
         {
             base.Initialize(data);
+
+            _iWeightedActionMgr?.Initialize();
 
             if (data != null &&
                 !data.WayPoints.IsNullOrEmpty())

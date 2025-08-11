@@ -185,7 +185,6 @@ MonoBehaviour:
   maxHp: 41.2
   activePoint: 1
   passivePoint: 1
-  position: 0
 --- !u!1 &6630495643290675065
 GameObject:
   m_ObjectHideFlags: 0

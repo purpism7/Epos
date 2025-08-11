@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 namespace Battle.Mode
 {
@@ -15,9 +16,11 @@ namespace Battle.Mode
             return this;
         }
         
-        public BattleMode Create()
+        public BattleMode Create(IObjectResolver container = null)
         {
             var battleMode = new T() as BattleMode<V>;
+            container?.Inject(battleMode);
+
             battleMode?.Initialize(_data);
 
             return battleMode;

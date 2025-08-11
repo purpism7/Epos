@@ -51,6 +51,14 @@ namespace Common
         FarOne,
     }
     #endregion
+
+    public enum EWeightType
+    {
+        None,
+
+        Tactics,
+        Mission,
+    }
 }
 
     

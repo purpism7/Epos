@@ -192,9 +192,9 @@ namespace GameSystem
             
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
-                .Create();
+                .Create(_container);
             
-            _container?.Inject(battleMode);
+            //_container?.Inject(battleMode);
             
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
