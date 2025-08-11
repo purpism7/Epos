@@ -4,7 +4,7 @@ namespace Creature.Action
 {
     public class CastSkill : WeightedAction<CastSkill.Param>
     {
-        public class Param : ActParam
+        public class Param : ActionParam
         {
 
         }

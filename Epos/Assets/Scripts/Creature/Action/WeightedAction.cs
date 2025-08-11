@@ -2,31 +2,40 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Common;
+using Unity.VisualScripting;
 
 namespace Creature.Action
 {
-    public interface IWeightedAciton
+    public interface IWeightedAction
     {
-        IWeightedAciton Initialize();
-
         void SetWeight(EWeightType eWeightType, int weight);
         bool CheckCondition { get; }
 
         int Weight { get; }
     }
 
-    public class WeightedAction<T> : Act<T>, IWeightedAciton where T : Act<T>.ActParam
+    public interface IWeightedActionInitializer
     {
+        IWeightedAction Initialize();
+    }
+
+    public class WeightedAction<T> : Act<T>, IWeightedActionInitializer, IWeightedAction where T : Act<T>.ActParam
+    {
+        public class ActionParam : ActParam
+        {
+
+        }
+
         protected Dictionary<EWeightType, int> _eWeightTypeDic = new();
 
         protected virtual int Weight { get; }
 
-        public IWeightedAciton Initialize()
+        public IWeightedAction Initialize()
         {
             return this;
         }
 
-        int IWeightedAciton.Weight
+        int IWeightedAction.Weight
         {
             get 
             {
@@ -40,8 +49,11 @@ namespace Creature.Action
             }
         }
 
-        void IWeightedAciton.SetWeight(EWeightType eWeightType, int weight)
+        void IWeightedAction.SetWeight(EWeightType eWeightType, int weight)
         {
+            if (eWeightType == EWeightType.None)
+                return;
+
             _eWeightTypeDic[eWeightType] = 0;
             _eWeightTypeDic[eWeightType] += weight;
         }

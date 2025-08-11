@@ -4,7 +4,7 @@ namespace Creature.Action
 {
     public class WaitingIdle : WeightedAction<WaitingIdle.Param>
     {
-        public class Param : ActParam
+        public class Param : ActionParam
         {
 
         }

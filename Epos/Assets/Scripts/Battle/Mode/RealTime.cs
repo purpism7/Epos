@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Creature.Action;
 using Common;
@@ -13,7 +14,6 @@ using GameSystem;
 using Creature;
 using Datas.ScriptableObjects;
 using UI.Parts;
-using VContainer;
 using Random = UnityEngine.Random;
 
 
@@ -39,13 +39,13 @@ namespace Battle.Mode
         private WayPoint _currWayPoint = null;
 
         //private HashSet<>
-        private IWeightedActionManager _iWeightedActionMgr = new WeightedActionManager();
+        private IWeightedActionExecutor _iWeightedActionExecutor = new WeightedActionExecutor();
 
         public override BattleMode<Data> Initialize(Data data)
         {
             base.Initialize(data);
 
-            _iWeightedActionMgr?.Initialize();
+            _iWeightedActionExecutor?.Initialize();
 
             if (data != null &&
                 !data.WayPoints.IsNullOrEmpty())
