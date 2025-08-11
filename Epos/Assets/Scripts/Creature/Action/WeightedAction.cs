@@ -9,9 +9,11 @@ namespace Creature.Action
     public interface IWeightedAction
     {
         void SetWeight(EWeightType eWeightType, int weight);
-        bool CheckCondition { get; }
-
+        
         int Weight { get; }
+
+        bool CheckCondition();
+        void Execute(IActor iActor);
     }
 
     public interface IWeightedActionInitializer
@@ -58,12 +60,15 @@ namespace Creature.Action
             _eWeightTypeDic[eWeightType] += weight;
         }
 
-        public virtual bool CheckCondition
+        void IWeightedAction.Execute(IActor iActor)
         {
-            get
-            {
-                return true;
-            }
+            SetIActor(iActor);
+            Execute();
+        }
+
+        public virtual bool CheckCondition()
+        {
+            return true;
         }
 
         public override void Execute()

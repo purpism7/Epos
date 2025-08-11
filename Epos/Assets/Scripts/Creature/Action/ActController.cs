@@ -269,7 +269,7 @@ namespace Creature.Action
             SetCurrIAct(act);
         }
         
-        private void EndAct()
+        private void EndAct(IActor iActor)
         {
             Execute();
         }

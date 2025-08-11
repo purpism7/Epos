@@ -28,7 +28,7 @@ namespace Creature.Action
         
         protected T _param = null;
         protected IActor _iActor = null;
-        protected System.Action _endAction = null;
+        protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
         
         public virtual void Initialize(IActor iActor)
@@ -36,12 +36,18 @@ namespace Creature.Action
             _iActor = iActor;
         }
 
+        protected Act<T> SetIActor(IActor iActor)
+        {
+            _iActor = iActor;
+            return this;
+        }
+        
         public void SetParam(T param)
         {
             _param = param;
         }
 
-        public void SetEndActAction(System.Action endAction)
+        public void SetEndActAction(System.Action<IActor> endAction)
         {
             _endAction = endAction;
         }

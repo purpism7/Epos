@@ -165,7 +165,7 @@ namespace Creature.Action
         private void End()
         {
             _param.FinishAction?.Invoke();
-            _endAction?.Invoke();
+            _endAction?.Invoke(_iActor);
         }
     }
 }

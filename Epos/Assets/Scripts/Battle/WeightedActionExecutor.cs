@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Creature;
 using Creature.Action;
 
 namespace Battle
@@ -10,7 +11,7 @@ namespace Battle
     {
         void Initialize();
 
-        void Execute(IActController iActCtr);
+        void Execute(IActor iActor);
     }
 
     public class WeightedActionExecutor : IWeightedActionExecutor
@@ -18,7 +19,7 @@ namespace Battle
         private SortedSet<IWeightedAction> _iSortedWeightedActionSet = new(
             Comparer<IWeightedAction>.Create((action, compAction) =>
             {
-                return action.Weight.CompareTo(compAction.Weight);
+                return compAction.Weight.CompareTo(action.Weight);
             }));
 
         private IWeightedAction _waitingIdle = null;
@@ -32,40 +33,42 @@ namespace Battle
             _waitingIdle = CreateAction<WaitingIdle.Param>();
         }
 
-        void IWeightedActionExecutor.Execute(IActController iActCtr)
+        void IWeightedActionExecutor.Execute(IActor iActor)
         {
+            Execute(iActor);
+        }
 
-
-            //iActCtr.CastingSkill
-
-            //iActCtr
+        private void Execute(IActor iActor)
+        {
+            var iWeightedAction = GetHighestPriorityAction();
+            iWeightedAction?.Execute(iActor);
         }
 
         private IWeightedAction CreateAction<T>(T t = null) where T : WeightedAction<T>.ActionParam, new()
         {
             var action = new WeightedAction<T>();
-            action?.SetParam(t);
-            action?.SetEndActAction(FinsishAction);
-            action?.Initialize();
+            
+            action.SetParam(t);
+            action.SetEndActAction(EndAction);
+            action.Initialize();
 
             return action;
         }
 
-        private void FinsishAction()
+        private void EndAction(IActor iActor)
         {
-
+            Execute(iActor);
         }
-       
 
-        //private IWeightedAciton GetHighestPriorityAction()
-        //{
-        //    foreach(var iWeightedAction in _iSortedWeightedActionSet)
-        //    {
-        //        if (iWeightedAction.CheckCondition)
-        //            return iWeightedAction;
-        //    }
+        private IWeightedAction GetHighestPriorityAction()
+        {
+            foreach(var iWeightedAction in _iSortedWeightedActionSet)
+            {
+                if (iWeightedAction.CheckCondition())
+                    return iWeightedAction;
+            }
 
-        //    return _waitingIdle;
-        //}
+            return _waitingIdle;
+        }
     }
 }

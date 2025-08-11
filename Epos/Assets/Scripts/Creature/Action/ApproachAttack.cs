@@ -18,12 +18,9 @@ namespace Creature.Action
 
         protected override int Weight => 100;
 
-        public override bool CheckCondition
+        public override bool CheckCondition()
         {
-            get 
-            {
-                return base.CheckCondition;
-            }
+            return base.CheckCondition();
         }
             
         public override void Execute()
@@ -113,7 +110,7 @@ namespace Creature.Action
 
         void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
-            _endAction?.Invoke();
+            _endAction?.Invoke(_iActor);
         }
         #endregion
     }

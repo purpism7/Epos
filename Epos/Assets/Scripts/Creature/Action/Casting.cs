@@ -89,7 +89,7 @@ namespace Creature.Action
         {
             base.OnCompleted(trackEntry);
 
-            _endAction?.Invoke();
+            _endAction?.Invoke(_iActor);
         }
 
         // private ETeam ETeam
