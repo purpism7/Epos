@@ -15,6 +15,6 @@ namespace Creature
         IStat IStat { get; }
         IActController IActCtr { get; }
 
-        string AnimationKey<T>(Act<T> act) where T : Act<T>.ActParam;
+        string AnimationKey<T>(Act<T> act) where T : ActParam;
     }
 }

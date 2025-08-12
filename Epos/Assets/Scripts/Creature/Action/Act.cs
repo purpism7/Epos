@@ -11,21 +11,21 @@ namespace Creature.Action
         void ChainUpdate();
         void ChainFixedUpdate();
     }
-    
-    public abstract class Act<T> : IAct where T : Act<T>.ActParam
-    {
-        public class ActParam
-        {
-            public string AnimationKey { get; private set; } = string.Empty;
-            
-            public ActParam SetAnimationKey(string key)
-            {
-                AnimationKey = key;
 
-                return this;
-            }
+    public class ActParam
+    {
+        public string AnimationKey { get; private set; } = string.Empty;
+
+        public ActParam SetAnimationKey(string key)
+        {
+            AnimationKey = key;
+
+            return this;
         }
-        
+    }
+
+    public abstract class Act<T> : IAct where T : ActParam
+    {
         protected T _param = null;
         protected IActor _iActor = null;
         protected System.Action<IActor> _endAction = null;

@@ -11,37 +11,37 @@ namespace Creature.Action
 {
     public class ApproachAttack : WeightedAction<ApproachAttack.Param>, Casting.IListener
     {
-        public class Param : ActionParam
+        public class Param : WeightedActionParam
         {
+            public ICombatant Attacker { get; private set; } = null;
+            public List<ICombatant> ICombatantList { get; private set; } = null;
 
+            public Param WithAttacker(ICombatant attacker)
+            {
+                Attacker = attacker;
+                return this;
+            }
+
+            public Param WithICombatantList(List<ICombatant> iCombatantList)
+            {
+                ICombatantList = iCombatantList;
+                return this;
+            }
         }
 
-        protected override int Weight => 100;
-
-        public override bool CheckCondition()
-        {
-            return base.CheckCondition();
-        }
-            
         public override void Execute()
         {
-           
+            Debug.Log("Approach Execute");
+            MoveToAttackAsync(_param?.Attacker, _param?.ICombatantList).Forget();
         }
 
-        private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList, float delay = 0)
+        private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList)
         {
             var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (skill == null)
                 return;
 
-            await UniTask.Yield();
-            await UniTask.Delay(TimeSpan.FromSeconds(delay));
-
-            //List<ICombatant> iCombatantList = null;
-            //if (attacker.ETeam == ETeam.Ally)
-            //    iCombatantList = _currWayPoint?.EnemyICombatantList;
-            //else if (attacker.ETeam == ETeam.Enemy)
-            //    iCombatantList = _data?.AllyICombatantList;
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())

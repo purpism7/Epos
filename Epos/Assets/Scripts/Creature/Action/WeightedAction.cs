@@ -1,19 +1,16 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 using Common;
-using Unity.VisualScripting;
 
 namespace Creature.Action
 {
     public interface IWeightedAction
     {
-        void SetWeight(EWeightType eWeightType, int weight);
-        
-        int Weight { get; }
+        IWeightedAction SetParam<T>(T param);
+        IWeightedAction SetEndAction(System.Action<IActor> endAction);
+        IWeightedAction SetIActor(IActor iActor);
 
-        bool CheckCondition();
-        void Execute(IActor iActor);
+        void Execute();
     }
 
     public interface IWeightedActionInitializer
@@ -21,59 +18,40 @@ namespace Creature.Action
         IWeightedAction Initialize();
     }
 
-    public class WeightedAction<T> : Act<T>, IWeightedActionInitializer, IWeightedAction where T : Act<T>.ActParam
+    public class WeightedActionParam : ActParam
     {
-        public class ActionParam : ActParam
-        {
 
-        }
+    }
 
+    public abstract class WeightedAction<T> : Act<T>, IWeightedActionInitializer, IWeightedAction where T : ActParam
+    {
         protected Dictionary<EWeightType, int> _eWeightTypeDic = new();
 
         protected virtual int Weight { get; }
 
-        public IWeightedAction Initialize()
+
+        IWeightedAction IWeightedActionInitializer.Initialize()
         {
             return this;
         }
 
-        int IWeightedAction.Weight
+        IWeightedAction IWeightedAction.SetParam<V>(V param)
         {
-            get 
-            {
-                int weight = Weight;
-                foreach(var value in _eWeightTypeDic.Values)
-                {
-                    weight += value;
-                }
-
-                return weight;
-            }
+            _param = param as T;
+            return this;
         }
 
-        void IWeightedAction.SetWeight(EWeightType eWeightType, int weight)
+        IWeightedAction IWeightedAction.SetEndAction(System.Action<IActor> endAction)
         {
-            if (eWeightType == EWeightType.None)
-                return;
-
-            _eWeightTypeDic[eWeightType] = 0;
-            _eWeightTypeDic[eWeightType] += weight;
+            _endAction = endAction;
+            return this;
         }
 
-        void IWeightedAction.Execute(IActor iActor)
+        IWeightedAction IWeightedAction.SetIActor(IActor iActor)
         {
             SetIActor(iActor);
-            Execute();
-        }
-
-        public virtual bool CheckCondition()
-        {
-            return true;
-        }
-
-        public override void Execute()
-        {
-            
+            //Execute();
+            return this;
         }
     }
 }

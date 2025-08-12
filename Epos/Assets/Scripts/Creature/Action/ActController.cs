@@ -196,7 +196,7 @@ namespace Creature.Action
             InAction = false;
         }
 
-        private async UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : Act<V>.ActParam, new()
+        private async UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
         {
             var act = GetAct<T, V>();
             if (act == null)
@@ -218,7 +218,7 @@ namespace Creature.Action
             _iActQueue?.Enqueue(act);
         }
 
-        private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : Act<V>.ActParam, new()
+        private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : ActParam, new()
         {
             if (_iActDic == null)
             {
@@ -252,7 +252,7 @@ namespace Creature.Action
         }
         #endregion
 
-        private void Execute<T, V>(V param = null) where T : Act<V>, new() where V : Act<V>.ActParam, new()
+        private void Execute<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
         {
             var act = GetAct<T, V>();
             if (act == null)

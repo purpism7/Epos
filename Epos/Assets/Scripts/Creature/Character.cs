@@ -97,7 +97,7 @@ namespace Creature
             }
         }
 
-        public abstract string AnimationKey<T>(Act<T> act) where T : Act<T>.ActParam;
+        public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
 
         #region ICharacterGeneric
 

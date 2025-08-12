@@ -2,73 +2,93 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+using Common;
 using Creature;
 using Creature.Action;
+using Creature.Action.Weight;
 
 namespace Battle
 {
+    public interface IWeightedActionRequester
+    {
+        WeightedActionParam GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction);
+    }
+
     public interface IWeightedActionExecutor
     {
-        void Initialize();
+        void Initialize(WeightedActionExecutor.IListener iListener);
 
-        void Execute(IActor iActor);
+        void Execute(ICombatant executer, IWeightedActionRequester iRequester);
     }
 
     public class WeightedActionExecutor : IWeightedActionExecutor
     {
-        private SortedSet<IWeightedAction> _iSortedWeightedActionSet = new(
-            Comparer<IWeightedAction>.Create((action, compAction) =>
+        public interface IListener
+        {
+            void End(ICombatant iCombatant);
+        }
+
+        private IListener _iListener = null;
+
+        private SortedSet<ActionWeight> _iSortedActionWeightSet = new(
+            Comparer<ActionWeight>.Create((action, compAction) =>
             {
                 return compAction.Weight.CompareTo(action.Weight);
             }));
 
         private IWeightedAction _waitingIdle = null;
 
-        void IWeightedActionExecutor.Initialize()
+        void IWeightedActionExecutor.Initialize(IListener iListener)
         {
-            _iSortedWeightedActionSet?.Clear();
-            _iSortedWeightedActionSet?.Add(CreateAction<ApproachAttack.Param>());
-            _iSortedWeightedActionSet?.Add(CreateAction<CastSkill.Param>());
+            _iListener = iListener;
 
-            _waitingIdle = CreateAction<WaitingIdle.Param>();
+            _iSortedActionWeightSet?.Clear();
+            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.ApproachAttack());
+            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.CastSkill());
+            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
+            //_iSortedActionWeightSet?.Add(CreateActionWeight<CastSkill>());
+            //_iSortedActionWeightSet?.Add(CreateActionWeight<WaitingIdle>());
+
+            //_waitingIdle = CreateActionWeight<WaitingIdle>();
         }
 
-        void IWeightedActionExecutor.Execute(IActor iActor)
+        void IWeightedActionExecutor.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            Execute(iActor);
+            var actionWeight = GetHighestPriorityActionWeight();
+            var iWeightedAction = actionWeight?.Create();
+
+            var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
+
+            iWeightedAction?.SetParam(param)?
+                .SetEndAction(EndAction)?
+                .SetIActor(executer)?
+                .Execute();
         }
 
-        private void Execute(IActor iActor)
-        {
-            var iWeightedAction = GetHighestPriorityAction();
-            iWeightedAction?.Execute(iActor);
-        }
+        //private IWeightedAction CreateAction<T, V>() where T : new() where V : WeightedActionParam
+        //{
+        //    var action = new T() as WeightedAction<V>;
+        //    //action.SetParam(tParam);
+        //    action.SetEndActAction(EndAction);
+        //    action.Initialize();
 
-        private IWeightedAction CreateAction<T>(T t = null) where T : WeightedAction<T>.ActionParam, new()
-        {
-            var action = new WeightedAction<T>();
-            
-            action.SetParam(t);
-            action.SetEndActAction(EndAction);
-            action.Initialize();
-
-            return action;
-        }
+        //    return action;
+        //}
 
         private void EndAction(IActor iActor)
         {
-            Execute(iActor);
+            _iListener?.End(iActor as ICombatant);
         }
 
-        private IWeightedAction GetHighestPriorityAction()
+        private ActionWeight GetHighestPriorityActionWeight()
         {
-            foreach(var iWeightedAction in _iSortedWeightedActionSet)
+            foreach(var actionWeight in _iSortedActionWeightSet)
             {
-                if (iWeightedAction.CheckCondition())
-                    return iWeightedAction;
+                if (actionWeight.CheckCondition())
+                    return actionWeight;
             }
 
-            return _waitingIdle;
+            return null;
         }
     }
 }

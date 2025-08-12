@@ -1,19 +1,27 @@
+using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 namespace Creature.Action
 {
     public class WaitingIdle : WeightedAction<WaitingIdle.Param>
     {
-        public class Param : ActionParam
+        public class Param : WeightedActionParam
         {
 
         }
-
-        protected override int Weight => 0;
-
         public override void Execute()
         {
+            SetAnimation(_param.AnimationKey, true);
 
+            EndAsync().Forget();
+        }
+
+        private async UniTask EndAsync()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+
+            _endAction?.Invoke(_iActor);
         }
     }
 }
