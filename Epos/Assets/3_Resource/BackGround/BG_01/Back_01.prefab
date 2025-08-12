@@ -399,6 +399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   row: 3
   column: 2
+  cellSize: 5
   rowOffsetXList:
   - 0
   - 0
@@ -5076,7 +5077,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1154425977170923402
 Transform:
   m_ObjectHideFlags: 0
@@ -9009,8 +9010,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   row: 3
   column: 2
+  cellSize: 5
   rowOffsetXList:
-  - -5
+  - 1
   - 0
   - 5
   cellGameObj: {fileID: 5766430387326212650, guid: ac8daa8a28ada4e7685917c7151d451d, type: 3}
@@ -10501,7 +10503,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6023872447191634521
 Transform:
   m_ObjectHideFlags: 0
