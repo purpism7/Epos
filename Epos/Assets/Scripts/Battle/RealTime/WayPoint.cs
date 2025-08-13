@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Battle
 {
-    public class WayPoint : MonoBehaviour
+    public class WayPoint : Common.Component
     {
         private Monster[] _monsters = null;
 
@@ -26,7 +26,7 @@ namespace Battle
             }
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             _monsters = GetComponentsInChildren<Monster>();
             foreach(var monster in _monsters)

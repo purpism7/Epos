@@ -33,25 +33,6 @@ namespace Entities
             await UniTask.CompletedTask;
         }
 
-        public Character()
-        {
-            
-        }
-        
-        // public IGeneric Initialize()
-        // {
-        //     return this;
-        // }
-
-        // void IGeneric.ChainUpdate()
-        // {
-        //     
-        // }
-        //
-        // void IGeneric.ChainLateUpdate()
-        // {
-        //     
-        // }
         T ICharacterManager.Create<T>(int id, Transform rootTm)
         {
             if (_cachedDic == null)

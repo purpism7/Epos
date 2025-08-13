@@ -1,67 +1,80 @@
+using Battle.RealTime;
+using Common;
+using Creature;
+using Cysharp.Threading.Tasks;
+using Parts;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.UIElements;
 using UnityEngine;
-
-using Creature;
-using Parts;
-using Common;
 
 namespace Entities
 {
-    public interface IFieldManager
+    public interface IFieldManager : IManager
     {
         void MoveToTarget(Vector3 pos);
 
         void Activate();
         void Deactivate();
         
-        Hero FieldHero { get; }
+        IField IField { get; }
+        //Hero FieldHero { get; }
     }
     
     public class FieldManager : Manager, IFieldManager
     {
-        [SerializeField] 
-        private Parts.Field field = null;
+        //[SerializeField] 
+        //private Parts.Field field = null;
         [SerializeField] 
         private FieldIndicator fieldIndicator = null;
 
-        private Hero _fieldHero = null;
+        //private Hero _fieldHero = null;
         // private List<Parts.Field> _fieldList = new();
-        private Parts.IField CurrIField = null;
+        public Parts.IField IField { get; private set; } = null;
 
         // 임시.
-        private List<Datas.Field> _fieldDataList = null;
-        
+        //private List<Datas.Field> _fieldDataList = null;
+
         #region IGeneric
-        // public Entities.IGeneric Initialize()
-        // {
-        //     //field?.Initialize();
-        //     //field?.Activate();
-        //     //CurrIField = field;
-        //
-        //     //CreateFieldHero();
-        //
-        //     //_fieldDataList = new();
-        //     //_fieldDataList?.Clear();
-        //     
-        //     //_fieldDataList?.Add(new Datas.Field(1));
-        //     //_fieldDataList?.Add(new Datas.Field(2));
-        //     
-        //     //fieldIndicator?.Deactivate();
-        //     
-        //     //Activate();
-        //     
-        //     return this;
-        // }
+        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
+        {
+            //_container = container;
+            IField = FindFirstObjectByType<Field>();
+            IField?.Initialize();
+            
+            //IField?.GetFieldPoint<IRealTimeFieldPoint>();
+            await UniTask.CompletedTask;
+        }
+
+        //UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
+        //{
+            //field?.Initialize();
+            //field?.Activate();
+            //CurrIField = field;
+
+            //CreateFieldHero();
+
+            //_fieldDataList = new();
+            //_fieldDataList?.Clear();
+
+            //_fieldDataList?.Add(new Datas.Field(1));
+            //_fieldDataList?.Add(new Datas.Field(2));
+
+            //fieldIndicator?.Deactivate();
+
+            //Activate();
+
+            //return this;
+        //}
 
         private void Update()
         {
             if (!IsActivate)
                 return;
             
-            CurrIField?.ChainUpdate();
-            _fieldHero?.ChainUpdate();
+            IField?.ChainUpdate();
+            //_fieldHero?.ChainUpdate();
         }
 
         // void IGeneric.ChainUpdate()
@@ -80,7 +93,7 @@ namespace Entities
         
         void FixedUpdate()
         {
-            _fieldHero?.ChainFixedUpdate();
+            //_fieldHero?.ChainFixedUpdate();
         }
         #endregion
 
@@ -88,7 +101,7 @@ namespace Entities
         {
             base.Activate();
             
-            _fieldHero?.Activate();
+            //_fieldHero?.Activate();
         }
 
         public override void Deactivate()
@@ -98,47 +111,47 @@ namespace Entities
             fieldIndicator?.Deactivate();
         }
 
-        private void CreateFieldHero()
-        {
-            _fieldHero = MainManager.Get<ICharacterManager>()?.Create<Hero>(10001, field.transform);
-            if (_fieldHero == null)
-                return;
+        //private void CreateFieldHero()
+        //{
+        //    _fieldHero = MainManager.Get<ICharacterManager>()?.Create<Hero>(10001, field.transform);
+        //    if (_fieldHero == null)
+        //        return;
             
-            _fieldHero.Initialize();
-            _fieldHero.transform.Initialize();
-            _fieldHero.EnableNavmeshAgent();
-            _fieldHero.Activate();
-        }
+        //    _fieldHero.Initialize();
+        //    _fieldHero.transform.Initialize();
+        //    _fieldHero.EnableNavmeshAgent();
+        //    _fieldHero.Activate();
+        //}
         
         #region IFieldManager
         void IFieldManager.MoveToTarget(Vector3 pos)
         {
-            if (_fieldHero == null)
-                return;
+            //if (_fieldHero == null)
+            //    return;
 
-            if (!_fieldHero.IsActivate)
-                return;
+            //if (!_fieldHero.IsActivate)
+            //    return;
             
-            _fieldHero?.MoveToTarget(pos,
-                () =>
-                {
-                    fieldIndicator?.Deactivate();
-                });
+            //_fieldHero?.MoveToTarget(pos,
+            //    () =>
+            //    {
+            //        fieldIndicator?.Deactivate();
+            //    });
             
-            fieldIndicator?.Activate(
-                new FieldIndicator.Param
-                {
-                    TargetPos = pos,
-                });
+            //fieldIndicator?.Activate(
+            //    new FieldIndicator.Param
+            //    {
+            //        TargetPos = pos,
+            //    });
         }
         
-        Hero IFieldManager.FieldHero
-        {
-            get
-            {
-                return _fieldHero;
-            }
-        }
+        //Hero IFieldManager.FieldHero
+        //{
+        //    get
+        //    {
+        //        return _fieldHero;
+        //    }
+        //}
 
         // Data conatainer 로 변경 할 것.
         // Data.Field IFieldManager.GetFieldData(int fieldPointId)

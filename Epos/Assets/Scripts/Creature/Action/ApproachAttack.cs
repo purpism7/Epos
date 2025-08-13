@@ -81,7 +81,7 @@ namespace Creature.Action
                     FinishMoveToTarget(attacker, skill, targetList);
                 },
                 IsJumpMove = false,
-                UseNavMesh = false,
+                //UseNavMesh = false,
             }.WithTargetICombatant(target)
             .WithOffsetPosition(offsetPosition);
 

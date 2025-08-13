@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7816740663478584368}
   - component: {fileID: 1150515514663263}
   - component: {fileID: 1405978038070760070}
+  - component: {fileID: 6163782941928981152}
   m_Layer: 12
   m_Name: Spine GameObject (Spear_01)
   m_TagString: Untagged
@@ -168,6 +169,28 @@ CapsuleCollider2D:
   m_Offset: {x: 0.25, y: 2.03}
   m_Size: {x: 6.13, y: 0.0001}
   m_Direction: 0
+--- !u!195 &6163782941928981152
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4238121267255577032}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 2.04
+  m_Speed: 3.5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 200
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 6.13
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5621257734662546313
 GameObject:
   m_ObjectHideFlags: 0

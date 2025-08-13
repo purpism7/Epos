@@ -31,9 +31,7 @@ namespace GameSystem
         private IObjectResolver _container = null;
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
-        // private Dictionary<System.Type, BattleMode> _battleModeDic = null;
 
-        
         async UniTask IGeneric.InitializeAsync(IObjectResolver container)
         {
             _container = container;

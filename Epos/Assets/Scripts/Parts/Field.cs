@@ -4,33 +4,39 @@ using UnityEngine;
 
 using Creature;
 using Entities;
+using Battle;
+using Battle.RealTime;
+using Unity.VisualScripting;
 
 namespace Parts
 {
     public interface IField
     {
+        void Initialize();
         void ChainUpdate();
-        
+
         // FieldPoint FieldPoint { get; }
+        T GetFieldPoint<T>() where T : class, IFieldPoint;
     }
     
-    public class Field : Common.Component, IField, FieldPoint.IListener
+    public class Field : Common.Component, IField, IFieldPointListener
     {
         [SerializeField] 
         private int id = 0;
-        [SerializeField] 
-        private FieldPoint[] fieldPoints = null;
+
+        private IFieldPoint[] _iFieldPoints = null;
+        private IFieldPoint _iFieldPoint = null;
     
         #region IField
         void IField.ChainUpdate()
         {
-            if (fieldPoints == null)
-                return;
+            //if (fieldPoints == null)
+            //    return;
     
-            foreach (var fieldPoint in fieldPoints)
-            {
-                fieldPoint?.ChainUpdate();
-            }
+            //foreach (var fieldPoint in fieldPoints)
+            //{
+            //    fieldPoint?.ChainUpdate();
+            //}
         }
     
         // FieldPoint IField.FieldPoint
@@ -44,16 +50,29 @@ namespace Parts
     
         public override void Initialize()
         {
-            if (fieldPoints == null)
-                return;
-    
-            foreach (var fieldPoint in fieldPoints)
+            _iFieldPoint = GetComponentInChildren<IFieldPoint>();
+            //_iFieldPoints = GetComponentsInChildren<IFieldPoint>();
+
+            //foreach (var iFieldPoint in _iFieldPoints)
             {
-                fieldPoint?.Initialize(
-                    new FieldPoint.Param
-                    {
-                        IListener = this,
-                    });
+                switch (_iFieldPoint)
+                {
+                    case IRealTimeFieldPoint iRealTimeFieldPoint:
+                        {
+                            var fieldPointParam = new RealTimeFieldPoint.Param();
+                            //.WithIFieldPointListener(this);
+
+                            fieldPointParam.WithIFieldPointListener(this);
+                            _iFieldPoint?.Initialize(fieldPointParam);
+
+                            break;
+                        }
+
+                    case TurnBasedFieldPoint fieldPoint:
+                        {
+                            break;
+                        }
+                }
             }
         }
 
@@ -71,39 +90,48 @@ namespace Parts
             DeactivateFieldPoints();
         }
 
+        T IField.GetFieldPoint<T>() where T : class
+        {
+            return _iFieldPoint as T;
+        }
+        //T IField.GetFieldPoint<T>()
+        //{
+        //    return _iFieldPoint as T;
+        //}
+
         private void ActivateFieldPoints()
         {
-            if (fieldPoints == null)
-                return;
+            //if (fieldPoints == null)
+            //    return;
     
-            foreach (var fieldPoint in fieldPoints)
-            {
-                fieldPoint?.Activate();
-            }
+            //foreach (var fieldPoint in fieldPoints)
+            //{
+            //    fieldPoint?.Activate();
+            //}
         }
         
         private void DeactivateFieldPoints()
         {
-            if (fieldPoints == null)
-                return;
+            //if (fieldPoints == null)
+            //    return;
     
-            foreach (var fieldPoint in fieldPoints)
-            {
-                fieldPoint?.Deactivate();
-            }
+            //foreach (var fieldPoint in fieldPoints)
+            //{
+            //    fieldPoint?.Deactivate();
+            //}
         }
         
         #region FieldPoint.IListener
 
-        void FieldPoint.IListener.Encounter(int fieldPointId, IActor iActor)
-        {
-            if (iActor == null)
-                return;
+        //void Battle.FieldPoint.IListener.Encounter(int fieldPointId, IActor iActor)
+        //{
+        //    if (iActor == null)
+        //        return;
             
-            // iActor.IActCtr?.Idle();
+        //    // iActor.IActCtr?.Idle();
 
-            // MainManager.Get<IFieldManager>()?.Deactivate();
-        }
+        //    // MainManager.Get<IFieldManager>()?.Deactivate();
+        //}
         #endregion
     }
 }

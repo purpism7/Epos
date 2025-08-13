@@ -123,8 +123,8 @@ namespace Creature
                 //HeadPos = renderer.bounds.max;
             }
 
-            
-            Debug.Log(_resourceManager);
+            EnableNavmeshAgent();
+            //Debug.Log(_resourceManager);
         }
 
         public virtual void ChainUpdate()
@@ -172,29 +172,30 @@ namespace Creature
             {
                 NavMeshAgent.enabled = true;
 
-                NavMeshAgent.baseOffset = 0.5f;
-                NavMeshAgent.speed = 3.5f;
-                NavMeshAgent.angularSpeed = 200f;
-                NavMeshAgent.acceleration = 100f;
-                NavMeshAgent.radius = 0.5f;
-                NavMeshAgent.height = 2f;
+                //NavMeshAgent.baseOffset = 0.5f;
+                //NavMeshAgent.speed = 3.5f;
+                //NavMeshAgent.angularSpeed = 200f;
+                //NavMeshAgent.acceleration = 100f;
+                //NavMeshAgent.radius = 0.5f;
+                //NavMeshAgent.height = 2f;
 
+                NavMeshAgent.transform.localRotation = Quaternion.identity;
                 NavMeshAgent.updateRotation = false;
                 NavMeshAgent.updateUpAxis = false;
 
-                NavMeshAgent.isStopped = false;
-                NavMeshAgent.ResetPath();
+                //NavMeshAgent.isStopped = false;
+                //NavMeshAgent.ResetPath();
             }
         }
 
-        public void DisableNavmeshAgent()
-        {
-            if (NavMeshAgent == null)
-                return;
+        //public void DisableNavmeshAgent()
+        //{
+        //    if (NavMeshAgent == null)
+        //        return;
 
-            NavMeshAgent.isStopped = true;
-            NavMeshAgent.enabled = false;
-        }
+        //    NavMeshAgent.isStopped = true;
+        //    NavMeshAgent.enabled = false;
+        //}
 
         #region IActor
 

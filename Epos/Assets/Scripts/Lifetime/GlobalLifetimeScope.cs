@@ -30,6 +30,7 @@ namespace Lifetime
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
             builder.RegisterComponentInHierarchy<InputManager>().As<IInputManager>();
             builder.RegisterEntryPoint<Entities.Character>(VContainer.Lifetime.Singleton).As<ICharacterManager>();
+            builder.RegisterComponentInHierarchy<FieldManager>().As<IFieldManager>();
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Singleton).As<IBattleManager>();
             
             //builder.RegisterEntryPoint<Character>(VContainer.Lifetime.Singleton).AsSelf();
@@ -68,7 +69,10 @@ namespace Lifetime
             
             await Container.Resolve<ICharacterManager>()
                 .InitializeAsync(Container);
-            
+
+            await Container.Resolve<IFieldManager>()
+               .InitializeAsync(Container);
+
             await Container.Resolve<IBattleManager>()
                 .InitializeAsync(Container);
             

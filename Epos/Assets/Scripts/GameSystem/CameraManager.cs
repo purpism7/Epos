@@ -5,11 +5,12 @@ using Cinemachine;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
-
 using DG.Tweening;
-using Vector3 = UnityEngine.Vector3;
 
 using Entities;
+
+using Vector3 = UnityEngine.Vector3;
+using VContainer;
 
 namespace GameSystem
 {
@@ -46,11 +47,14 @@ namespace GameSystem
         private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
         #endregion
 
-        private Creature.Hero _fieldHero = null;
+        //private Creature.Hero _fieldHero = null;
         private bool _return = true;
         private float _returnTime = 0;
 
         private Vector3? _targetPosition = null;
+
+        //[Inject] 
+        //private IFieldManager 
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }

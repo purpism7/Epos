@@ -9,10 +9,11 @@ using Creature;
 using GameSystem;
 using Battle.Mode;
 using Battle.Step;
+using Parts;
 
-namespace Parts
+namespace Battle
 {
-    public class FieldPoint : Part<FieldPoint.Param>
+    public class TurnBasedFieldPoint : Part<TurnBasedFieldPoint.Param>
     {
         public class Param : Common.Param
         {

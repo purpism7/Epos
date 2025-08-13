@@ -11,6 +11,7 @@ using Entities;
 using Scene;
 using GameSystem;
 using Parts;
+using Battle.RealTime;
 
 namespace Scene
 {
@@ -18,8 +19,8 @@ namespace Scene
     {
         [SerializeField]
         private PartyLocation partyLocation = null;
-        [SerializeField]
-        private WayPoint[] wayPoints = null;
+        //[SerializeField]
+        //private WayPoint[] wayPoints = null;
 
         //protected override void Configure(IContainerBuilder builder)
         //{
@@ -27,6 +28,9 @@ namespace Scene
 
         //    Debug.Log("RealTimeField Configure");
         //}
+
+        [Inject]
+        private IFieldManager _iFieldManager = null;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -38,15 +42,12 @@ namespace Scene
         public override async UniTask InitializeAsync(LifetimeScope parentLifetimeScope)
         {
             await base.InitializeAsync(parentLifetimeScope);
-
-            foreach (var wayPoint in wayPoints)
-            {
-                wayPoint?.Initialize();
-            }
-
             await UniTask.Yield();
 
             partyLocation?.Initialize();
+
+            var wayPoints = _iFieldManager.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.WayPoints;
+
             _iBattleManager?.BeginRealTime(partyLocation, wayPoints);
             //MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, wayPoints);
         }

@@ -1,6 +1,9 @@
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Rendering;
 
 namespace Creature.Action
@@ -51,14 +54,21 @@ namespace Creature.Action
             // Flip();
             SetAnimation(_param.AnimationKey, true);
 
-            if (_iActor?.NavMeshAgent != null &&
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent != null &&
                 _param != null &&
                 _param.UseNavMesh)
             {
-                var targetPos = TargetPos;
+                //var targetPos = TargetPos;
+                //var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
+                //if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
+                //{
+                //    Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
+                //}
 
-                _iActor.NavMeshAgent.speed = _param.MoveSpeed;
-                _iActor?.NavMeshAgent?.SetDestination(targetPos);
+                navMeshAgent.speed = _param.MoveSpeed;
+                
+                //_iActor?.NavMeshAgent.SamplePathPosition
             }
 
             if (_iActor?.Transform)
@@ -108,21 +118,16 @@ namespace Creature.Action
             if (!iActorTm)
                 return;
 
-            if (_param != null &&
-               _param.UseNavMesh)
-                return;
-
             if (_iActor?.IStat == null)
                 return;
 
-            if(!_param.TargetICombatant.IsActivate)
+            if (!_param.TargetICombatant.IsActivate)
             {
                 End();
                 return;
             }
 
             Vector3 targetPos = TargetPos;
-
             var direction = targetPos - iActorTm.position;
             Vector3 offsetPosition = Vector3.zero;
             float offsetDistance = 0;
@@ -136,10 +141,11 @@ namespace Creature.Action
                 targetPos.y += offsetPosition.y;
             }
 
-            //Debug.Log(offsetPosition);
-
-            var moveSpeed = _param.MoveSpeed;
-            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
+            if (_param != null &&
+              _param.UseNavMesh)
+                UpdateMovementUsingNavMesh(targetPos);
+            else 
+                UpdateMovementUsingTransform(iActorTm, targetPos);
 
             direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
@@ -148,18 +154,43 @@ namespace Creature.Action
                 iActorTm.localScale = Vector3.one;
 
             _prevPos = iActorTm.position;
-            
+
             var distance = Vector2.Distance(iActorTm.position, targetPos);
             if (distance < offsetDistance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
                 localScale.x = _param.DirectionAfterArriving;
-                    
+
                 iActorTm.localScale = localScale;
 
                 End();
             }
+        }
+
+        private void UpdateMovementUsingNavMesh(Vector3 targetPos)
+        {
+            //Vector3 targetPos = TargetPos;
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent == null)
+                return;
+
+            if (!navMeshAgent.enabled)
+                return;
+
+            var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
+            if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
+            {
+                Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
+            }
+
+            navMeshAgent?.SetDestination(targetPos);
+        }
+
+        private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
+        {
+            var moveSpeed = _param.MoveSpeed;
+            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
         }
 
         private void End()
