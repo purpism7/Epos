@@ -1,9 +1,7 @@
 URP Compatibility
 -----------------
 
-The 'ETFX 2019.4.24f1 URP Upgrade' should work for 2019.4.24f1 and up.
-
-To apply it to your URP project, double-click it and press Import.
+To upgrade the asset to URP double-click the 'ETFX URP Upgrade (6000.0.11f1)' and press Import.
 
 -----------------
 

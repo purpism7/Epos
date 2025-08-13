@@ -5,8 +5,34 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2330511446303504190, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6ebd7343ad924f74c8bb6b514d10b7cd, type: 2}
+    - target: {fileID: 2330511446303504191, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511446303504191, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511446303504191, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
+      value: 0.9999
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511446303504191, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.minScalar
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2330511446303504191, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
         type: 3}
       propertyPath: InitialModule.startColor.maxGradient.key0.g
@@ -36,6 +62,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: HCFX_Splash_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447170420696, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8c7922d378b499e4682d1444da8ccbb8, type: 2}
+    - target: {fileID: 2330511447170420697, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447170420697, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447170420697, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2330511447170420697, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
         type: 3}
@@ -117,6 +163,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2330511447719531514, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7d5cb899b7d6f314d90fe1a5baabfeb5, type: 2}
+    - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
         type: 3}
       propertyPath: CustomDataModule.color1.maxColor.b
@@ -134,6 +200,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
         type: 3}
+      propertyPath: UVModule.frameOverTime.minMaxState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330511447719531515, guid: c559f037d1f6f3c48b259cab6ef9bdbc,
+        type: 3}
       propertyPath: InitialModule.startColor.maxColor.g
       value: 1
       objectReference: {fileID: 0}
@@ -143,4 +214,7 @@ PrefabInstance:
       value: 0.26138735
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c559f037d1f6f3c48b259cab6ef9bdbc, type: 3}

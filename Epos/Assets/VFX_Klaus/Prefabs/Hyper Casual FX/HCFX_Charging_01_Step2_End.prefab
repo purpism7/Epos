@@ -5,12 +5,23 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
@@ -31,6 +42,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ShapeModule.radiusThickness
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
+      value: 0.7475
       objectReference: {fileID: 0}
     - target: {fileID: 4122723776687528984, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
@@ -712,6 +728,11 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[4].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 4122723776687528985, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2cdb00f7ebdd085439d241895abdc664, type: 2}
     - target: {fileID: 4122723776687528986, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: m_Name
@@ -776,6 +797,16 @@ PrefabInstance:
         type: 3}
       propertyPath: looping
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723777002945114, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723777002945114, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4122723777002945114, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
@@ -1402,9 +1433,29 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[4].countCurve.minCurve.m_Curve.Array.data[1].outWeight
       value: 0.33333334
       objectReference: {fileID: 0}
+    - target: {fileID: 4122723777002945115, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 263fd841b12e6624494ce37527c6ced6, type: 2}
     - target: {fileID: 4122723778392664629, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778392664629, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778392664629, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778392664629, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122723778392664629, guid: 7292a2bb23f74ca458f627ecac440374,
@@ -1442,6 +1493,11 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4122723778392664630, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c5e3927e90df9dc4f97bc39785b69bfb, type: 2}
     - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: looping
@@ -1449,8 +1505,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
       propertyPath: EmissionModule.m_BurstCount
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
@@ -1465,6 +1536,11 @@ PrefabInstance:
     - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.minMaxState
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122723778536112692, guid: 7292a2bb23f74ca458f627ecac440374,
@@ -2522,9 +2598,29 @@ PrefabInstance:
       propertyPath: m_SortingFudge
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4122723778536112693, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 460f3168467028c4e8de87165b0eb3d0, type: 2}
     - target: {fileID: 4122723778609761301, guid: 7292a2bb23f74ca458f627ecac440374,
         type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778609761301, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesX
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778609761301, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.tilesY
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4122723778609761301, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: UVModule.frameOverTime.scalar
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4122723778609761301, guid: 7292a2bb23f74ca458f627ecac440374,
@@ -2562,5 +2658,13 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.m_NumAlphaKeys
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 4122723778609761302, guid: 7292a2bb23f74ca458f627ecac440374,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c5e3927e90df9dc4f97bc39785b69bfb, type: 2}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7292a2bb23f74ca458f627ecac440374, type: 3}

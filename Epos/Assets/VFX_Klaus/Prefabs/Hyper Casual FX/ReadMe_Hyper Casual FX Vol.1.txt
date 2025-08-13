@@ -9,6 +9,7 @@ This effect is designed to work in a Built-in, URP or HRRP.
 To use in Built-in, you have to install "Shader Graph" from package manager and also your project version must be 2021.2.0 or higher.
 
 I put all the effect elements into one textures so that each prefab uses the least amount of material.
+But in [1.4] Optional version I separated materials and textures to reduce memory issues.
 
 The structure of the texture is as follows.
 
@@ -31,7 +32,7 @@ If you don't want to use the Secondary colors, change the custom data 2 mode to 
 
 Material and shader named "VFX_lab" are not used for effects. It was used in the background of Scene just to show the effect.
 
-If your project environment is 2D or 2D Experimental and you can't see the effect, please set the "Use SoftParticle Factor?" bool parameter of all materials to off.
+If you use an Orthographic Camera, and if your project environment is 2D or 2D Experimental and VR, turn off the bool parameter called "Use SoftParticle Factor?" in all materials.
 
 Thank you once again, and I hope my effect will be useful for your development.
 - Kyeoms
