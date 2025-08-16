@@ -6,13 +6,14 @@ using System;
 using VContainer;
 using Cysharp.Threading.Tasks;
 
+using Battle.RealTime;
 using Common;
 using Creator;
 using Creature;
 using Creature.Action;
 using GameSystem;
 using UI.Parts;
-
+using Unity.VisualScripting;
 
 namespace Battle.Mode
 {
@@ -32,8 +33,9 @@ namespace Battle.Mode
 
         [Inject] private ICameraManager _iCameraManager = null;
         
-        private Queue<WayPoint> _wayPointQueue = null;
-        private WayPoint _currWayPoint = null;
+        // private Queue<WayPoint> _wayPointQueue = null;
+        // private WayPoint _currWayPoint = null;
+        private IWayPointMover _iWayPointMover = null;
 
         //private HashSet<>
         private IWeightedActionExecutor _iWeightedActionExecutor = new WeightedActionExecutor();
@@ -44,59 +46,86 @@ namespace Battle.Mode
 
             _iWeightedActionExecutor?.Initialize(this);
 
-            if (data != null &&
-                !data.WayPoints.IsNullOrEmpty())
-            {
-                if(_wayPointQueue == null)
-                    _wayPointQueue = new();
-
-                _wayPointQueue.Clear();
-
-                foreach (var wayPoint in data.WayPoints)
-                {
-                    _wayPointQueue?.Enqueue(wayPoint);
-                }
-            }
-   
+            InitializeWayPointMover();
+            
             return this;
+        }
+
+        private void InitializeWayPointMover()
+        {
+            var param = new WayPointMover.Param()
+                .WithWayPoints(_data?.WayPoints);
+
+            _iWayPointMover = WayPointMover.Create(param);
         }
         
         public override void Begin()
         {
             Debug.Log("Begin()");
 
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            {
-                var ally = _data?.AllyICombatantList[i];
-                ally?.SetETeam(ETeam.Ally);
-                ally?.Activate();
-            }
-            
-            StartCombatAtWaypointAsync().Forget();
+            // for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            // {
+            //     var ally = _data?.AllyICombatantList[i];
+            //     ally?.SetETeam(ETeam.Ally);
+            //     ally?.Activate();
+            // }
+            //
+            // StartCombatAtWaypointAsync().Forget();
         }
 
         public override void ChainUpdate()
         {
-            if (_currWayPoint != null)
-            {
-                if(_currWayPoint.AliveMonsterCount <= 0)
-                {
-                    _currWayPoint = null;
-                    StartCombatAtWaypointAsync().Forget();
+            
+            
+            
+            // for()
+           
+            
+            // if (_currWayPoint != null)
+            // {
+            //     if(_currWayPoint.AliveMonsterCount <= 0)
+            //     {
+            //         _currWayPoint = null;
+            //         StartCombatAtWaypointAsync().Forget();
+            //
+            //         return;
+            //     }
+            // }
 
-                    return;
-                }
-            }
-                
+            UpdateWayPoint();
+
+            // for (int i = 0; i < _currWayPoint?.EnemyICombatantList.Count; ++i)
+            // {
+            //     _currWayPoint?.EnemyICombatantList[i].IActCtr?.ChainUpdate();
+            // }
+        }
+
+        private void UpdateWayPoint()
+        {
+            var wayPoint = _iWayPointMover?.WayPoint;
+            if (wayPoint == null)
+                return;
+
+            float closest = 10f;
+            ICombatant closestICombatant = null;
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
+                var iCombatant = _data?.AllyICombatantList[i];
+                if(iCombatant == null)
+                    continue;
+
+                var distance = Vector3.Distance(iCombatant.Transform.position, wayPoint.Position);
+                if (closestICombatant == null || 
+                    Vector3.Distance(iCombatant.Transform.position, wayPoint.Position) < closest)
+                {
+                    closest = distance;
+                    closestICombatant = iCombatant;
+                }
+                
                 _data?.AllyICombatantList[i]?.IActCtr?.ChainUpdate();
             }
-
-            for (int i = 0; i < _currWayPoint?.EnemyICombatantList.Count; ++i)
-            {
-                _currWayPoint?.EnemyICombatantList[i].IActCtr?.ChainUpdate();
-            }
+            
+            _iWayPointMover?.ChainUpdate(closestICombatant?.Transform);
         }
 
         private void CreateHpProgress(ICombatant iCombatant)
@@ -120,8 +149,8 @@ namespace Battle.Mode
         {
             await UniTask.Delay(TimeSpan.FromSeconds(2f));
 
-            if (!_wayPointQueue.TryDequeue(out _currWayPoint))
-                return;
+            // if (!_wayPointQueue.TryDequeue(out _currWayPoint))
+            //     return;
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -130,21 +159,21 @@ namespace Battle.Mode
                 _iWeightedActionExecutor?.Execute(ally, this);
             }
 
-            _iCameraManager.MoveToTarget(_currWayPoint.Position);
+            // _iCameraManager.MoveToTarget(_currWayPoint.Position);
 
-            for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
-            {
-                var enemy = _currWayPoint?.EnemyICombatantList[i];
-                if (enemy == null)
-                    continue;
-
-                enemy.SetETeam(ETeam.Enemy);
-                enemy.Activate();
-
-                CreateHpProgress(enemy);
-
-                _iWeightedActionExecutor?.Execute(enemy, this);
-            }
+            // for (int i = 0; i < _currWayPoint?.EnemyICombatantList?.Count; ++i)
+            // {
+            //     var enemy = _currWayPoint?.EnemyICombatantList[i];
+            //     if (enemy == null)
+            //         continue;
+            //
+            //     enemy.SetETeam(ETeam.Enemy);
+            //     enemy.Activate();
+            //
+            //     CreateHpProgress(enemy);
+            //
+            //     _iWeightedActionExecutor?.Execute(enemy, this);
+            // }
         }
 
         #region RealTime.IProvider
@@ -156,10 +185,10 @@ namespace Battle.Mode
                 case WeightedAction<ApproachAttack.Param> approachAttack:
                     {
                         List<ICombatant> iCombatantList = null;
-                        if (attacker.ETeam == ETeam.Ally)
-                            iCombatantList = _currWayPoint?.EnemyICombatantList;
-                        else if (attacker.ETeam == ETeam.Enemy)
-                            iCombatantList = _data?.AllyICombatantList;
+                        // if (attacker.ETeam == ETeam.Ally)
+                        //     iCombatantList = _currWayPoint?.EnemyICombatantList;
+                        // else if (attacker.ETeam == ETeam.Enemy)
+                        //     iCombatantList = _data?.AllyICombatantList;
 
                         var param = new ApproachAttack.Param()
                             .WithAttacker(attacker)

@@ -30,7 +30,7 @@ public class MainManager : Singleton<MainManager>
         // _iMgrGenericList?.Add(transform.AddOrGetComponent<InputManager>()?.Initialize());
         
         // _iMgrGenericList?.Add(new Character().Initialize());
-        _iMgrGenericList?.Add(transform.AddOrGetComponent<Party>().Initialize());
+        // _iMgrGenericList?.Add(transform.AddOrGetComponent<Party>().Initialize());
         
         // _iMgrGenericList?.Add(transform.AddOrGetComponent<Entities.FieldManager>()?.Initialize());
         //_iMgrGenericList?.Add(new BattleManager().Initialize());

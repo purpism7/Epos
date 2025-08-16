@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -14,6 +15,7 @@ using Parts;
 using VContainer;
 using Field = Battle.Field;
 using VContainer.Unity;
+using Character = Creature.Character;
 
 namespace GameSystem
 {
@@ -27,6 +29,8 @@ namespace GameSystem
     public class BattleManager : IBattleManager, BattleType.IListener, ITickable
     {
         [Inject] private ICharacterManager _iCharacterManager = null;
+        [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private IParty _iParty = null;
 
         private IObjectResolver _container = null;
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
@@ -98,7 +102,7 @@ namespace GameSystem
 
         private async UniTask BeginTurnBasedAsync(Parts.PartyLocation allyPartyLocation, Parts.PartyLocation enemyPartyLocation, Transform pointTm)
         {
-            var allyParty = MainManager.Get<IParty>().GetParty(1);
+            var allyParty = _iParty?.GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
             if (partyInfo.IsNullOrEmpty())
                 return;
@@ -157,7 +161,6 @@ namespace GameSystem
                 if(info == null)
                     continue;
                 
-                
                 var hero = _iCharacterManager?.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
                 
@@ -180,7 +183,7 @@ namespace GameSystem
 
         private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, WayPoint[] wayPoints)
         {
-            var allyParty = MainManager.Get<IParty>().GetParty(1);
+            var allyParty = _iParty?.GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
             if (partyInfo.IsNullOrEmpty())
                 return;
@@ -196,7 +199,7 @@ namespace GameSystem
             
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
-
+            _iCameraManager?.SetCharacter(allyICombatantList.First() as Character);
                      
             //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             //battleModeData.EnemyICombatantList?.AddRange(monsters);

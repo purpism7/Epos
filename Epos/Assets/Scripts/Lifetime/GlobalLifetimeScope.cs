@@ -29,8 +29,9 @@ namespace Lifetime
             
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
             builder.RegisterComponentInHierarchy<InputManager>().As<IInputManager>();
-            builder.RegisterEntryPoint<Entities.Character>(VContainer.Lifetime.Singleton).As<ICharacterManager>();
+            builder.RegisterEntryPoint<Entities.Character>().As<ICharacterManager>();
             builder.RegisterComponentInHierarchy<FieldManager>().As<IFieldManager>();
+            builder.RegisterComponentInHierarchy<Party>().As<IParty>();
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Singleton).As<IBattleManager>();
             
             //builder.RegisterEntryPoint<Character>(VContainer.Lifetime.Singleton).AsSelf();

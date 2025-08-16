@@ -74,13 +74,15 @@ namespace Creature
         [SerializeField] [Range(1f, 100f)] [Tooltip("공격력.")]
         private float attack = 1f;
 
-        [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
-        private float attackRange = 1f;
+        // [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
+        // private float attackRange = 1f;
 
         [SerializeField] [Range(0f, 100f)] private float maxHp = 1f;
 
         [SerializeField] [Range(1, 5)] private float activePoint = 1f;
         [SerializeField] [Range(1, 5)] private float passivePoint = 1f;
+        
+        [SerializeField] [Range(1f, 20f)] private float attackSight = 10f;
 
         // [SerializeField] private int position = 0;
 
@@ -99,8 +101,24 @@ namespace Creature
 
         public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
 
-        #region ICharacterGeneric
+        private void OnDrawGizmos()
+        {
+#if UNITY_EDITOR
+            if (IStat == null)
+                return;
 
+            if (!Transform)
+                return;
+
+            float attackSight = IStat.Get(Stat.EType.AttackSight);
+            // Debug.Log(attackSight);
+            
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(Transform.position, attackSight);
+#endif
+        }
+        
+        #region ICharacterGeneric
         public virtual void Initialize()
         {
             // EventHandler = null;
@@ -160,9 +178,6 @@ namespace Creature
 
             Extensions.SetActive(rootTm, false);
         }
-
-        
-
         #endregion
 
         public void EnableNavmeshAgent()
@@ -243,12 +258,14 @@ namespace Creature
             IStat?.SetOrigin(Stat.EType.ActionSpeed, actionSpeed);
             IStat?.SetOrigin(Stat.EType.MoveSpeed, moveSpeed);
             IStat?.SetOrigin(Stat.EType.Attack, attack);
-            IStat?.SetOrigin(Stat.EType.AttackRange, attackRange);
+            // IStat?.SetOrigin(Stat.EType.AttackRange, attackRange);
             IStat?.SetOrigin(Stat.EType.Hp, maxHp);
             IStat?.SetOrigin(Stat.EType.MaxHp, maxHp);
 
             IStat?.SetOrigin(Stat.EType.ActivePoint, activePoint);
             IStat?.SetOrigin(Stat.EType.PassivePoint, passivePoint);
+            
+            IStat?.SetOrigin(Stat.EType.AttackSight, attackSight);
         }
 
         #endregion

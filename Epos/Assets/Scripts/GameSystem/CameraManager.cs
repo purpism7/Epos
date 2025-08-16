@@ -20,6 +20,9 @@ namespace GameSystem
         bool IsMove { get; }
 
         void MoveToTarget(Vector3 targetPosition);
+
+        void SetCharacter(Creature.Character character);
+        
         void ZoomIn(Vector3 targetPos, Action endAction);
         void ZoomOut(Action endAction);
     }
@@ -52,6 +55,7 @@ namespace GameSystem
         private float _returnTime = 0;
 
         private Vector3? _targetPosition = null;
+        private Creature.Character _character  = null;
 
         //[Inject] 
         //private IFieldManager 
@@ -59,7 +63,8 @@ namespace GameSystem
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
 
-        public void ChainLateUpdate()
+
+        private void LateUpdate()
         {
             if (mainCamera == null)
                 return;
@@ -69,6 +74,17 @@ namespace GameSystem
             
             FieldChainLateUpdate();
         }
+
+        // public void ChainLateUpdate()
+        // {
+        //     if (mainCamera == null)
+        //         return;
+        //
+        //     if (virtualCamera == null)
+        //         return;
+        //     
+        //     FieldChainLateUpdate();
+        // }
 
         private void FieldChainLateUpdate()
         {
@@ -148,15 +164,29 @@ namespace GameSystem
             }
         }
         
+        // private void UpdateCameraPosition()
+        // {
+        //     if (_directionForce == Vector3.zero)
+        //         return;
+        //     
+        //     var currentPos = mainCamera.transform.position;
+        //     var targetPos = currentPos + _directionForce;
+        //
+        //     mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * 2f);
+        // }
+        
         private void UpdateCameraPosition()
         {
-            if (_directionForce == Vector3.zero)
+            if (!_character?.Transform)
                 return;
-            
+        
             var currentPos = mainCamera.transform.position;
-            var targetPos = currentPos + _directionForce;
-
-            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime * 2f);
+            var targetPos = _character.Transform.position;
+            targetPos.z = -50f;
+            
+            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime);
+        
+            // ReturnDistance = Vector3.Distance(currentPos, targetPos);
         }
 
         private bool MoveToTarget()
@@ -187,6 +217,12 @@ namespace GameSystem
         {
             _targetPosition = targetPosition;
         }
+        
+        public void SetCharacter(Creature.Character character)
+        {
+            _character = character;
+        }
+
         
         #region Zoom In / Out
         void ICameraManager.ZoomIn(Vector3 targetPos, Action endAction)

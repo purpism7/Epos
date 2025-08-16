@@ -39,6 +39,8 @@ namespace Creature
             
             Hp,
             MaxHp,
+            
+            AttackSight,
         }
 
         public interface IListener

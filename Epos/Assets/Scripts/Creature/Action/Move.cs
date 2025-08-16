@@ -178,10 +178,23 @@ namespace Creature.Action
             if (!navMeshAgent.enabled)
                 return;
 
-            var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
-            if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
+            // var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
+            // if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
+            // {
+            //     Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
+            // }
+            
+            if (navMeshAgent.hasPath)
             {
-                Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
+                Vector3 nextCorner = navMeshAgent.steeringTarget; // 다음 이동할 경로점
+                Vector3 dir = (nextCorner - _iActor.Transform.position).normalized;
+
+                // 회전 (Z축 기준으로 회전하는 경우)
+                // float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                // _iActor.Transform.rotation = Quaternion.Euler(0, 0, angle);
+
+                // 앞으로 이동 (회전된 방향 기준으로)
+                _iActor.Transform.position += _iActor.Transform.right * _param.MoveSpeed * Time.deltaTime;
             }
 
             navMeshAgent?.SetDestination(targetPos);
