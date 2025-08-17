@@ -85,6 +85,28 @@ namespace Creature.Action
                 _prevPos = _iActor.Transform.position;
         }
 
+        protected override void Activate()
+        {
+            base.Activate();
+
+            if (_iActor?.NavMeshAgent != null)
+            {
+                _iActor.NavMeshAgent.enabled = true;
+                _iActor.NavMeshAgent.isStopped = false;
+            }
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            if (_iActor?.NavMeshAgent != null)
+            {
+                _iActor.NavMeshAgent.isStopped = true;
+                _iActor.NavMeshAgent.enabled = false;
+            }
+        }
+
         // private void Flip()
         // {
         //     var iActorTm = _iActor?.NavMeshAgent?.transform;

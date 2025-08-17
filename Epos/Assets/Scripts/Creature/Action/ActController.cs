@@ -192,6 +192,8 @@ namespace Creature.Action
 
         private void Idle()
         {
+            _currIAct?.Deactivate();
+            
             Execute<Idle, Idle.Param>();
             SetCurrIAct(null);
             

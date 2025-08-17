@@ -113,9 +113,9 @@ namespace Battle.RealTime
             if (distance <= 1f)
             {
                 Debug.Log("Arrived");
-                Waypoint = null;
-                
                 _param?.IListener?.Arrived();
+                
+                SetWaypoint();
             }
             // WayPoint.Position
         }
