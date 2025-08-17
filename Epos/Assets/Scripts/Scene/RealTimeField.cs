@@ -46,9 +46,9 @@ namespace Scene
 
             partyLocation?.Initialize();
 
-            var wayPoints = _iFieldManager.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.WayPoints;
+            var waypoints = _iFieldManager.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.Waypoints;
 
-            _iBattleManager?.BeginRealTime(partyLocation, wayPoints);
+            _iBattleManager?.BeginRealTime(partyLocation, waypoints);
             //MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, wayPoints);
         }
     }

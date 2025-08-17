@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Battle
 {
-    public class WayPoint : Common.Component
+    public class Waypoint : Common.Component
     {
         private Monster[] _monsters = null;
 

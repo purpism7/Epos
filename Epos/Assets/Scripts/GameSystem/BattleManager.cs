@@ -22,7 +22,7 @@ namespace GameSystem
     public interface IBattleManager : IGeneric
     {
         void BeginTurnBased(Parts.PartyLocation left, Parts.PartyLocation right, Transform pointTm);
-        void BeginRealTime(PartyLocation allyPartyLocation, WayPoint[] wayPoints);
+        void BeginRealTime(PartyLocation allyPartyLocation, Waypoint[] waypoints);
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
@@ -176,12 +176,12 @@ namespace GameSystem
             return iCombatantList;
         }
         
-        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, WayPoint[] wayPoints)
+        void IBattleManager.BeginRealTime(PartyLocation allyPartyLocation, Waypoint[] waypoints)
         {
-            BeginRealTimeAsync(allyPartyLocation, wayPoints).Forget();
+            BeginRealTimeAsync(allyPartyLocation, waypoints).Forget();
         }
 
-        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, WayPoint[] wayPoints)
+        private async UniTask BeginRealTimeAsync(PartyLocation allyPartyLocation, Waypoint[] waypoints)
         {
             var allyParty = _iParty?.GetParty(1);
             var partyInfo = allyParty?.PositionInfos;
@@ -189,7 +189,7 @@ namespace GameSystem
                 return;
             
             var battleModeData = new RealTime.Data()
-                .WithWayPoints(wayPoints);
+                .WithWayPoints(waypoints);
             
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)

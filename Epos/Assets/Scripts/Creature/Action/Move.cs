@@ -17,10 +17,12 @@ namespace Creature.Action
             public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
             public Vector3? OffsetPosition { get; private set; } = null;
+            public bool ForwardDirection { get; private set; } = false;
+
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
             public bool UseNavMesh = true;
-
+            
             public int DirectionAfterArriving = 1;
 
             public Param WithTargetTm(Transform targetTm)
@@ -40,6 +42,12 @@ namespace Creature.Action
                 OffsetPosition = position;
                 return this;
             }
+
+            public Param WithForwardDirection(bool forwardDirection)
+            {
+                ForwardDirection = forwardDirection;
+                return this;
+            }
         }
 
         private Vector3 _prevPos = Vector3.zero;
@@ -50,10 +58,12 @@ namespace Creature.Action
         {
             if (_param == null)
                 return;
-
-            // Flip();
+            
+            Activate();
             SetAnimation(_param.AnimationKey, true);
 
+            _param.MoveSpeed *= 2f;
+            
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 _param != null &&
@@ -114,6 +124,9 @@ namespace Creature.Action
         {
             base.ChainUpdate();
 
+            if (!_isActivate)
+                return;
+            
             var iActorTm = _iActor?.Transform;
             if (!iActorTm)
                 return;
@@ -121,7 +134,8 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
 
-            if (!_param.TargetICombatant.IsActivate)
+            if (_param?.TargetICombatant != null &&
+                !_param.TargetICombatant.IsActivate)
             {
                 End();
                 return;
@@ -186,18 +200,31 @@ namespace Creature.Action
             
             if (navMeshAgent.hasPath)
             {
-                Vector3 nextCorner = navMeshAgent.steeringTarget; // 다음 이동할 경로점
-                Vector3 dir = (nextCorner - _iActor.Transform.position).normalized;
+                // Vector3 nextCorner = navMeshAgent.steeringTarget; // 다음 이동할 경로점
+                // Vector3 dir = (nextCorner - _iActor.Transform.position).normalized;
 
                 // 회전 (Z축 기준으로 회전하는 경우)
                 // float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
                 // _iActor.Transform.rotation = Quaternion.Euler(0, 0, angle);
 
                 // 앞으로 이동 (회전된 방향 기준으로)
-                _iActor.Transform.position += _iActor.Transform.right * _param.MoveSpeed * Time.deltaTime;
+                if(_param.ForwardDirection)
+                    _iActor.Transform.position += _iActor.Transform.right * _param.MoveSpeed * Time.deltaTime;
+                
+                // Vector3 destination = navMeshAgent.path.corners[navMeshAgent.path.corners.Length - 1];
+                // float dist = Vector3.Distance(_iActor.Transform.position, nextCorner);
+                // Debug.Log(dist);
             }
 
-            navMeshAgent?.SetDestination(targetPos);
+            navMeshAgent.SetDestination(targetPos);
+            
+           Debug.Log(navMeshAgent.hasPath);
+            if (!navMeshAgent.pathPending && 
+                navMeshAgent.remainingDistance <= 0.1f)
+            {
+                Debug.Log("타겟에 도착함");
+                End();
+            }
         }
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)

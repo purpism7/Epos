@@ -95,9 +95,9 @@ namespace Creature.Action
             if (moveParam == null)
                 return null;
 
-            var targetPos = _currPosition;
-            if (moveParam.TargetPos != null)
-                targetPos = moveParam.TargetPos.Value;
+            // var targetPos = _currPosition;
+            // if (moveParam.TargetPos != null)
+            //     targetPos = moveParam.TargetPos.Value;
          
             AddActAsync<Move, Move.Param>(moveParam).Forget();
 
@@ -174,6 +174,8 @@ namespace Creature.Action
                     InAction = true;
                     
                     iAct?.Execute();
+                    _currIAct?.Deactivate();
+                    
                     SetCurrIAct(iAct);
                     
                     return;

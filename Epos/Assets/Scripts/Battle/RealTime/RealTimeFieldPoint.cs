@@ -5,7 +5,7 @@ namespace Battle.RealTime
 {
     public interface IRealTimeFieldPoint : IFieldPoint
     {
-        WayPoint[] WayPoints { get; }
+        Waypoint[] Waypoints { get; }
     }
 
     public class RealTimeFieldPoint : FieldPoint<RealTimeFieldPoint.Param>, IRealTimeFieldPoint
@@ -15,12 +15,12 @@ namespace Battle.RealTime
       
         }
 
-        public WayPoint[] WayPoints { get; private set; } = null;
+        public Waypoint[] Waypoints { get; private set; } = null;
 
         protected override void Initialize(RealTimeFieldPoint.Param param)
         {
-            WayPoints = GetComponentsInChildren<WayPoint>();
-            foreach( var wayPoint in WayPoints)
+            Waypoints = GetComponentsInChildren<Waypoint>();
+            foreach( var wayPoint in Waypoints)
             {
                 wayPoint?.Initialize();
             }

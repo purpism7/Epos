@@ -17,6 +17,7 @@ namespace Creature.Action
             if (_param == null)
                 return;
             
+            Activate();
             SetAnimation(_param.AnimationKey, true);
         }
     }

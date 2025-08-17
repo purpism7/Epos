@@ -8,6 +8,8 @@ namespace Creature.Action
     public interface IAct
     {
         void Execute();
+        void Deactivate();
+        
         void ChainUpdate();
         void ChainFixedUpdate();
     }
@@ -30,12 +32,13 @@ namespace Creature.Action
         protected IActor _iActor = null;
         protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
+        protected bool _isActivate = false;
         
         public virtual void Initialize(IActor iActor)
         {
             _iActor = iActor;
         }
-
+        
         protected Act<T> SetIActor(IActor iActor)
         {
             _iActor = iActor;
@@ -54,6 +57,16 @@ namespace Creature.Action
         
         #region IAct
         public abstract void Execute();
+
+        protected virtual void Activate()
+        {
+            _isActivate = true;
+        }
+        
+        public virtual void Deactivate()
+        {
+            _isActivate = false;
+        }
         
         public virtual void ChainUpdate()
         {

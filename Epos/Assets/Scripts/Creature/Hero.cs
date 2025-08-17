@@ -23,19 +23,19 @@ namespace Creature
         }
 
         #region Act
-        public void MoveToTarget(Vector3 pos, System.Action finishAction)
-        {
-            var moveParam = new Move.Param
-            {
-                TargetPos = pos,
-                MoveSpeed = IStat.Get(Stat.EType.MoveSpeed),
-                FinishAction = finishAction,
-                IsJumpMove = false,
-                UseNavMesh = true
-            };
-
-            IActCtr?.MoveToTargetPosition(moveParam)?.Execute();
-        }
+        // public void MoveToTarget(Vector3 pos, System.Action finishAction)
+        // {
+        //     var moveParam = new Move.Param
+        //     {
+        //         TargetPos = pos,
+        //         MoveSpeed = IStat.Get(Stat.EType.MoveSpeed),
+        //         FinishAction = finishAction,
+        //         IsJumpMove = false,
+        //         UseNavMesh = true
+        //     };
+        //
+        //     IActCtr?.MoveToTargetPosition(moveParam)?.Execute();
+        // }
         
         public override string AnimationKey<T>(Act<T> act)
         {
