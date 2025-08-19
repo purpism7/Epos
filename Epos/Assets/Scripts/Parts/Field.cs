@@ -18,7 +18,8 @@ namespace Parts
         // FieldPoint FieldPoint { get; }
         T GetFieldPoint<T>() where T : class, IFieldPoint;
     }
-    
+
+    [ExecuteAlways]
     public class Field : Common.Component, IField, IFieldPointListener
     {
         [SerializeField] 
@@ -26,7 +27,45 @@ namespace Parts
 
         private IFieldPoint[] _iFieldPoints = null;
         private IFieldPoint _iFieldPoint = null;
-    
+
+        private Waypoint[] _waypoints = null;
+
+        void OnEnable()
+        {
+#if UNITY_EDITOR
+            _waypoints = GetComponentsInChildren<Waypoint>();
+#endif
+        }
+
+#if UNITY_EDITOR
+        void OnDrawGizmos()
+        {
+            //Debug.Log("OnDrawGizmos");
+
+            //if (!a || !b) return;
+            //Gizmos.color = color;
+            //Gizmos.DrawLine(a.position, b.position);
+
+            //if(_waypoints == null)
+            //    _waypoints = waypointRoot.GetComponentsInChildren<Waypoint>();
+
+            for (int i = 0; i < _waypoints?.Length - 1; i++)
+            {
+                if (_waypoints[i] != null)
+                {
+                    Gizmos.color = UnityEngine.Color.magenta;
+                    Gizmos.DrawSphere(_waypoints[i].Position, 1f);
+
+                    if (_waypoints[i + 1] != null)
+                    {
+                        Gizmos.color = UnityEngine.Color.magenta;
+                        Gizmos.DrawLine(_waypoints[i].Position, _waypoints[i + 1].Position);
+                    }
+                }
+            }
+        }
+#endif
+
         #region IField
         void IField.ChainUpdate()
         {

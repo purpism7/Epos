@@ -1,17 +1,16 @@
-using System.Collections.Generic;
-using UnityEngine;
-
-using Cysharp.Threading.Tasks;
-using VContainer.Unity;
-using VContainer;
-
-using Creature;
 using Battle;
+using Battle.RealTime;
+using Creature;
+using Cysharp.Threading.Tasks;
 using Entities;
-using Scene;
 using GameSystem;
 using Parts;
-using Battle.RealTime;
+using Scene;
+using System.Collections.Generic;
+using System.Drawing;
+using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 namespace Scene
 {
@@ -19,8 +18,6 @@ namespace Scene
     {
         [SerializeField]
         private PartyLocation partyLocation = null;
-        //[SerializeField]
-        //private WayPoint[] wayPoints = null;
 
         //protected override void Configure(IContainerBuilder builder)
         //{

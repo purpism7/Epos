@@ -1,10 +1,10 @@
-using Spine;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+
+using Spine;
 
 namespace Creature.Action
 {
@@ -51,6 +51,7 @@ namespace Creature.Action
         }
 
         private Vector3 _prevPos = Vector3.zero;
+        private Vector3 _targetPos = Vector3.zero;
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
@@ -63,7 +64,8 @@ namespace Creature.Action
             SetAnimation(_param.AnimationKey, true);
 
             _param.MoveSpeed *= 2f;
-            
+            _targetPos = CalcTargetPos;
+
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 _param != null &&
@@ -75,8 +77,10 @@ namespace Creature.Action
                 //{
                 //    Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
                 //}
+                //var targetPos = CalcTargetPos;
 
                 navMeshAgent.speed = _param.MoveSpeed;
+                navMeshAgent.SetDestination(_targetPos);
                 
                 //_iActor?.NavMeshAgent.SamplePathPosition
             }
@@ -142,6 +146,35 @@ namespace Creature.Action
             }
         }
 
+        private Vector3 CalcTargetPos
+        {
+            get
+            {
+                if (_iActor == null)
+                    return Vector3.zero ;
+
+                Vector3 targetPos = TargetPos;
+                var direction = targetPos - _iActor.Transform.position;
+                Vector3 offsetPosition = Vector3.zero;
+                float offsetDistance = 0;
+
+                if (_param.OffsetPosition != null)
+                {
+                    offsetPosition = _param.OffsetPosition.Value;
+                    offsetDistance = offsetPosition.x;
+
+                    targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
+                    targetPos.y += offsetPosition.y;
+                }
+
+                if (_param.ForwardDirection)
+                    targetPos.x += direction.x;
+                    //Debug.Log(direction);
+
+                return targetPos;
+            }
+        }
+
         public override void ChainUpdate()
         {
             base.ChainUpdate();
@@ -177,11 +210,14 @@ namespace Creature.Action
                 targetPos.y += offsetPosition.y;
             }
 
+            //var resTargetPos = CalcTargetPos;
+            Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
+
             if (_param != null &&
               _param.UseNavMesh)
-                UpdateMovementUsingNavMesh(targetPos);
+                UpdateMovementUsingNavMesh(_targetPos);
             else 
-                UpdateMovementUsingTransform(iActorTm, targetPos);
+                UpdateMovementUsingTransform(iActorTm, _targetPos);
 
             direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
@@ -214,33 +250,7 @@ namespace Creature.Action
             if (!navMeshAgent.enabled)
                 return;
 
-            // var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
-            // if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
-            // {
-            //     Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
-            // }
-            
-            if (navMeshAgent.hasPath)
-            {
-                // Vector3 nextCorner = navMeshAgent.steeringTarget; // 다음 이동할 경로점
-                // Vector3 dir = (nextCorner - _iActor.Transform.position).normalized;
-
-                // 회전 (Z축 기준으로 회전하는 경우)
-                // float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
-                // _iActor.Transform.rotation = Quaternion.Euler(0, 0, angle);
-
-                // 앞으로 이동 (회전된 방향 기준으로)
-                if(_param.ForwardDirection)
-                    _iActor.Transform.position += _iActor.Transform.right * _param.MoveSpeed * Time.deltaTime;
-                
-                // Vector3 destination = navMeshAgent.path.corners[navMeshAgent.path.corners.Length - 1];
-                // float dist = Vector3.Distance(_iActor.Transform.position, nextCorner);
-                // Debug.Log(dist);
-            }
-
-            navMeshAgent.SetDestination(targetPos);
-            
-           Debug.Log(navMeshAgent.hasPath);
+            Debug.Log(navMeshAgent.hasPath);
             if (!navMeshAgent.pathPending && 
                 navMeshAgent.remainingDistance <= 0.1f)
             {
@@ -248,6 +258,32 @@ namespace Creature.Action
                 End();
             }
         }
+
+        //private Vector2 StepToward(Vector2 current, Vector2 target, float step)
+        //{
+        //    var delta = target - current;
+        //    var sqr = delta.sqrMagnitude;
+        //    if (sqr < 1e-6f * 1e-6f) 
+        //        return current; // 거의 같은 위치면 그대로
+
+        //    var dir = delta / Mathf.Sqrt(sqr);   // normalized
+        //    return current + dir * step;            // dir.normalized * move
+        //}
+
+        //private Vector2 MoveStraightTrig(Vector2 current, Vector2 target)
+        //{
+        //    var dir = target - current;
+        //    var dist = dir.magnitude;
+        //    if (dir.sqrMagnitude < 1e-8f) return target;
+
+        //    float theta = Mathf.Atan2(dir.y, dir.x); // 라디안
+        //    float dx = Mathf.Cos(theta) * dist;      // Mathf.Sin/Cos는 라디안 사용
+        //    float dy = Mathf.Sin(theta) * dist;
+
+        //    // 오버슈트 방지
+        //    if (dist > dir.magnitude) return target;
+        //    return current + new Vector2(dx, dy);
+        //}
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {
