@@ -71,7 +71,7 @@ namespace Battle.Mode
                 ally?.Activate();
             }
             
-            StartCombatAtWaypointAsync().Forget();
+            CheckWaypointActionAsync().Forget();
         }
 
         public override void ChainUpdate()
@@ -100,7 +100,7 @@ namespace Battle.Mode
             if (wayPoint == null)
                 return null;
             
-            float closest = 10f;
+            float closest = 99f;
             ICombatant closestICombatant = null;
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
@@ -137,70 +137,67 @@ namespace Battle.Mode
             hpProgress?.Activate(param);
         }
 
-        private async UniTask StartCombatAtWaypointAsync()
+        private async UniTask CheckWaypointActionAsync()
         {
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
-            // if (!_wayPointQueue.TryDequeue(out _currWayPoint))
-            //     return;
+            await UniTask.Yield();
+            
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
                 return;
 
-            MoveToWaypoint(waypoint);
-
-            if (waypoint.AliveMonsterCount > 0)
-            {
-                var enemyICombatantList = waypoint.EnemyICombatantList;
-
-                for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-                {
-                    var ally = _data?.AllyICombatantList[i];
-
-                    _iWeightedActionExecutor?.Execute(ally, this);
-                }
-
-                for (int i = 0; i < enemyICombatantList?.Count; ++i)
-                {
-                    var enemy = enemyICombatantList[i];
-                    if (enemy == null)
-                        continue;
-
-                    enemy.SetETeam(ETeam.Enemy);
-                    enemy.Activate();
-
-                    CreateHpProgress(enemy);
-
-                    _iWeightedActionExecutor?.Execute(enemy, this);
-                }
-            }
+            if (waypoint.AliveMonsterCount <= 0)
+                MoveToWaypoint(waypoint);
+            else
+                BeginCombat(waypoint);
         }
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            //var enemyICombatantList = waypoint.EnemyICombatantList;
-            if (waypoint.AliveMonsterCount > 0)
-                return;
-
             _closestICombatant = ClosestICombatantToWayPoint();
             if (_closestICombatant == null)
                 return;
 
-            // monster 가 없을 경우, 이동만.
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
-                var ally = _data?.AllyICombatantList[i];
-                if (ally == null)
+                var allyICombatant = _data?.AllyICombatantList[i];
+                if (allyICombatant == null)
                     continue;
 
                 var moveParam = new Move.Param
                 {
+                    MoveSpeed = 5f,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                     TargetPos = waypoint.Position,
-                }.WithForwardDirection(_closestICombatant.Id != ally.Id);
+                }.WithForwardDirection(_closestICombatant.Id != allyICombatant.Id);
 
-                ally.IActCtr?
+                allyICombatant.IActCtr?
                     .MoveToTarget(moveParam)
                     .Execute();
+            }
+        }
+
+        private void BeginCombat(Waypoint waypoint)
+        {
+            var enemyICombatantList = waypoint?.EnemyICombatantList;
+
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var allyICombatant = _data?.AllyICombatantList[i];
+
+                _iWeightedActionExecutor?.Execute(allyICombatant, this);
+            }
+
+            for (int i = 0; i < enemyICombatantList?.Count; ++i)
+            {
+                var enemyICombatant = enemyICombatantList[i];
+                if (enemyICombatant == null)
+                    continue;
+
+                enemyICombatant.SetETeam(ETeam.Enemy);
+                enemyICombatant.Activate();
+
+                CreateHpProgress(enemyICombatant);
+
+                _iWeightedActionExecutor?.Execute(enemyICombatant, this);
             }
         }
 
@@ -235,7 +232,6 @@ namespace Battle.Mode
 
         void WaypointController.IListener.Arrived()
         {
-            // 도착하면 Idle.
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
                 var iCombatant = _data?.AllyICombatantList[i];
@@ -245,8 +241,7 @@ namespace Battle.Mode
                 iCombatant.IActCtr?.Execute();
             }
             
-            
-            StartCombatAtWaypointAsync().Forget();
+            // CheckWaypointActionAsync().Forget();
         }
         #endregion
 
@@ -255,7 +250,6 @@ namespace Battle.Mode
         {
             _iWeightedActionExecutor?.Execute(iCombatant, this);
 
-            Debug.Log(_iWaypointCtr?.Waypoint.AliveMonsterCount);
             if (_iWaypointCtr?.Waypoint.AliveMonsterCount <= 0)
             {
                 MoveToWaypoint(_iWaypointCtr?.Waypoint);

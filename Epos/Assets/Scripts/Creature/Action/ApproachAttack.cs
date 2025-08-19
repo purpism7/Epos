@@ -41,7 +41,7 @@ namespace Creature.Action
             if (skill == null)
                 return;
 
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            await UniTask.Yield();
 
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())
@@ -72,7 +72,7 @@ namespace Creature.Action
             ////targetPos.y -= 1f;
             //targetPos.z = 0;
 
-            var offsetPosition = new Vector3(skillRange, 0, 0);
+            // var offsetPosition = new Vector3(skillRange, 0, 0);
             var moveParam = new Move.Param
             {
                 MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
@@ -82,8 +82,8 @@ namespace Creature.Action
                 },
                 IsJumpMove = false,
                 //UseNavMesh = false,
-            }.WithTargetICombatant(target)
-            .WithOffsetPosition(offsetPosition);
+            }.WithTargetICombatant(target)?
+            .WithDistance(skillRange);
 
             attacker.IActCtr?
                 .MoveToTarget(moveParam)?
@@ -93,7 +93,7 @@ namespace Creature.Action
         private void FinishMoveToTarget(ICombatant attacker, Skill skill, List<ICombatant> targetList)
         {
             attacker?.IActCtr?
-                .CastingSkill(this, attacker, skill, targetList)
+                .CastingSkill(this, attacker, skill, targetList)?
                 .Execute();
         }
 

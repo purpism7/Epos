@@ -16,8 +16,9 @@ namespace Creature.Action
             public Transform TargetTm { get; private set; } = null;
             public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
-            public Vector3? OffsetPosition { get; private set; } = null;
+            // public Vector3? OffsetPosition { get; private set; } = null;
             public bool ForwardDirection { get; private set; } = false;
+            public float Distance { get; private set; } = 0;
 
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
@@ -37,15 +38,21 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithOffsetPosition(Vector3 position)
-            {
-                OffsetPosition = position;
-                return this;
-            }
+            // public Param WithOffsetPosition(Vector3 position)
+            // {
+            //     OffsetPosition = position;
+            //     return this;
+            // }
 
             public Param WithForwardDirection(bool forwardDirection)
             {
                 ForwardDirection = forwardDirection;
+                return this;
+            }
+
+            public Param WithDistance(float distance)
+            {
+                Distance = distance;
                 return this;
             }
         }
@@ -63,7 +70,7 @@ namespace Creature.Action
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
-            _param.MoveSpeed *= 2f;
+            // _param.MoveSpeed *= 2f;
             _targetPos = CalcTargetPos;
 
             var navMeshAgent = _iActor?.NavMeshAgent;
@@ -104,6 +111,11 @@ namespace Creature.Action
         {
             base.Deactivate();
 
+            DisabledNavMeshAgent();
+        }
+
+        private void DisabledNavMeshAgent()
+        {
             if (_iActor?.NavMeshAgent != null)
             {
                 _iActor.NavMeshAgent.isStopped = true;
@@ -155,17 +167,17 @@ namespace Creature.Action
 
                 Vector3 targetPos = TargetPos;
                 var direction = targetPos - _iActor.Transform.position;
-                Vector3 offsetPosition = Vector3.zero;
-                float offsetDistance = 0;
+                // Vector3 offsetPosition = Vector3.zero;
+                // float offsetDistance = 0;
 
-                if (_param.OffsetPosition != null)
-                {
-                    offsetPosition = _param.OffsetPosition.Value;
-                    offsetDistance = offsetPosition.x;
-
-                    targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
-                    targetPos.y += offsetPosition.y;
-                }
+                // if (_param.OffsetPosition != null)
+                // {
+                //     var offsetPosition = _param.OffsetPosition.Value;
+                //     // offsetDistance = offsetPosition.x;
+                //
+                //     targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
+                //     targetPos.y += offsetPosition.y;
+                // }
 
                 if (_param.ForwardDirection)
                     targetPos.x += direction.x;
@@ -197,29 +209,29 @@ namespace Creature.Action
             }
 
             Vector3 targetPos = TargetPos;
-            var direction = targetPos - iActorTm.position;
-            Vector3 offsetPosition = Vector3.zero;
-            float offsetDistance = 0;
+            // var direction = targetPos - iActorTm.position;
+            // Vector3 offsetPosition = Vector3.zero;
+            // float offsetDistance = 0;
 
-            if (_param.OffsetPosition != null)
-            {
-                offsetPosition = _param.OffsetPosition.Value;
-                offsetDistance = offsetPosition.x;
-
-                targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
-                targetPos.y += offsetPosition.y;
-            }
+            // if (_param?.OffsetPosition != null)
+            // {
+            //     var offsetPosition = _param.OffsetPosition.Value;
+            //     offsetDistance = offsetPosition.x;
+            //
+            //     targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
+            //     targetPos.y += offsetPosition.y;
+            // }
 
             //var resTargetPos = CalcTargetPos;
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             if (_param != null &&
               _param.UseNavMesh)
-                UpdateMovementUsingNavMesh(_targetPos);
+                UpdateMovementUsingNavMesh();
             else 
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
 
-            direction = _prevPos - iActorTm.position;
+            var direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
                 iActorTm.localScale = new Vector3(-1, 1, 1);
             else if (direction.x < 0)
@@ -228,7 +240,7 @@ namespace Creature.Action
             _prevPos = iActorTm.position;
 
             var distance = Vector2.Distance(iActorTm.position, targetPos);
-            if (distance < offsetDistance)
+            if (distance < _param.Distance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
@@ -240,7 +252,7 @@ namespace Creature.Action
             }
         }
 
-        private void UpdateMovementUsingNavMesh(Vector3 targetPos)
+        private void UpdateMovementUsingNavMesh()
         {
             //Vector3 targetPos = TargetPos;
             var navMeshAgent = _iActor?.NavMeshAgent;
@@ -258,32 +270,6 @@ namespace Creature.Action
                 End();
             }
         }
-
-        //private Vector2 StepToward(Vector2 current, Vector2 target, float step)
-        //{
-        //    var delta = target - current;
-        //    var sqr = delta.sqrMagnitude;
-        //    if (sqr < 1e-6f * 1e-6f) 
-        //        return current; // 거의 같은 위치면 그대로
-
-        //    var dir = delta / Mathf.Sqrt(sqr);   // normalized
-        //    return current + dir * step;            // dir.normalized * move
-        //}
-
-        //private Vector2 MoveStraightTrig(Vector2 current, Vector2 target)
-        //{
-        //    var dir = target - current;
-        //    var dist = dir.magnitude;
-        //    if (dir.sqrMagnitude < 1e-8f) return target;
-
-        //    float theta = Mathf.Atan2(dir.y, dir.x); // 라디안
-        //    float dx = Mathf.Cos(theta) * dist;      // Mathf.Sin/Cos는 라디안 사용
-        //    float dy = Mathf.Sin(theta) * dist;
-
-        //    // 오버슈트 방지
-        //    if (dist > dir.magnitude) return target;
-        //    return current + new Vector2(dx, dy);
-        //}
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {
