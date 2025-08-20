@@ -41,16 +41,16 @@ namespace Creature
         {
             switch (act)
             {
-                case Idle: return "F_Idle";
+                case Idle: return nameof(Idle);
                 case Move move:
                 {
-                    if (move.IsJumpMove)
-                        return "F_Jump";
+                    // if (move.IsJumpMove)
+                    //     return "F_Jump";
                     
-                    return "F_Run";
+                    return "Run";
                 }
-                case Casting: return "F_Hit_01";
-                case Damage: return "F_Damege";
+                case Casting: return "Skill_01";
+                case Damage: return nameof(Damage);
             }
 
             return string.Empty;

@@ -244,7 +244,7 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: F_Idle
+  _animationName: Idle
   loop: 1
   timeScale: 1
 --- !u!70 &1857636776841303065

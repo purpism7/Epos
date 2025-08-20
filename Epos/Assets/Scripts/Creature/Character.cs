@@ -132,16 +132,19 @@ namespace Creature
             ISkillCtr?.Initialize(this);
 
             SetOriginStat();
-
-            Renderer renderer = GetComponentInChildren<Renderer>();
-            if (renderer != null)
-            {
-                Height = renderer.bounds.size.y;
-                Debug.Log(Height);
-                //HeadPos = renderer.bounds.max;
-            }
+            
+            // Renderer renderer = GetComponentInChildren<Renderer>();
+            // if (renderer != null)
+            // {
+            //     Height = renderer.bounds.size.y;
+            //     Debug.Log(Height);
+            //     //HeadPos = renderer.bounds.max;
+            // }
 
             EnableNavmeshAgent();
+
+            if (NavMeshAgent != null)
+                Height = NavMeshAgent.height;
             //Debug.Log(_resourceManager);
         }
 

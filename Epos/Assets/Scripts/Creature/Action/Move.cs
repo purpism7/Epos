@@ -174,20 +174,19 @@ namespace Creature.Action
 
                 Vector3 targetPos = TargetPos;
                 var direction = targetPos - _iActor.Transform.position;
-                // Vector3 offsetPosition = Vector3.zero;
-                // float offsetDistance = 0;
-
-                // if (_param.OffsetPosition != null)
-                // {
-                //     var offsetPosition = _param.OffsetPosition.Value;
-                //     // offsetDistance = offsetPosition.x;
-                //
-                //     targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
-                //     targetPos.y += offsetPosition.y;
-                // }
 
                 if (_param.ForwardDirection)
-                    targetPos.x += direction.x;
+                {
+                    float cross = direction.x * targetPos.y - direction.y * targetPos.x;
+                    if (cross > 0)
+                    {
+                        Vector2 leftOffset = new Vector2(-direction.y, direction.x);
+                        // Vector2 leftPos = _iActor.Transform.position + leftOffset * 1f;
+                    }
+                        
+                }
+                    targetPos += direction.normalized * 5f;
+                    // targetPos.x += direction.x;
                     //Debug.Log(direction);
 
                 return targetPos;
