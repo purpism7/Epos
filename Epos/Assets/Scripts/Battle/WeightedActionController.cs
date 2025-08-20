@@ -14,14 +14,14 @@ namespace Battle
         WeightedActionParam GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction);
     }
 
-    public interface IWeightedActionExecutor
+    public interface IWeightedActionController
     {
-        void Initialize(WeightedActionExecutor.IListener iListener);
+        void Initialize(WeightedActionController.IListener iListener);
 
         void Execute(ICombatant executer, IWeightedActionRequester iRequester);
     }
 
-    public class WeightedActionExecutor : IWeightedActionExecutor
+    public class WeightedActionController : IWeightedActionController
     {
         public interface IListener
         {
@@ -38,7 +38,7 @@ namespace Battle
 
         private IWeightedAction _waitingIdle = null;
 
-        void IWeightedActionExecutor.Initialize(IListener iListener)
+        void IWeightedActionController.Initialize(IListener iListener)
         {
             _iListener = iListener;
 
@@ -52,11 +52,10 @@ namespace Battle
             //_waitingIdle = CreateActionWeight<WaitingIdle>();
         }
 
-        void IWeightedActionExecutor.Execute(ICombatant executer, IWeightedActionRequester iRequester)
+        void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
             var actionWeight = GetHighestPriorityActionWeight();
             var iWeightedAction = actionWeight?.Create();
-
             var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
 
             iWeightedAction?.SetParam(param)?

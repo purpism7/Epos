@@ -183,7 +183,7 @@ NavMeshAgent:
   m_Acceleration: 100
   avoidancePriority: 50
   m_AngularSpeed: 200
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -243,10 +243,10 @@ MonoBehaviour:
   actionSpeed: 9
   moveSpeed: 9.4
   attack: 3.1
-  attackRange: 0
   maxHp: 68.3
   activePoint: 1
   passivePoint: 1
+  attackSight: 10
 --- !u!114 &592491837666009767
 MonoBehaviour:
   m_ObjectHideFlags: 0

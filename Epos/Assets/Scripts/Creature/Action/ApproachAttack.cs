@@ -39,14 +39,17 @@ namespace Creature.Action
         {
             var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (skill == null)
+            {
+                _endAction?.Invoke(_iActor);
                 return;
+            }
 
-            await UniTask.Yield();
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
 
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())
             {
-                attacker.IActCtr?.Execute();
+                _endAction?.Invoke(_iActor);
                 return;
             }
 
@@ -54,25 +57,17 @@ namespace Creature.Action
             var target = targetList[randomIndex];
             if (target == null)
             {
-                attacker.IActCtr?.Execute();
+                _endAction?.Invoke(_iActor);
                 return;
             }
 
             var skillRange = skill.Range;
-            if (skillRange <= 0)
+            if (skillRange < 0)
             {
-                attacker.IActCtr?.Execute();
+                _endAction?.Invoke(_iActor);
                 return;
             }
 
-            //var targetPos = target.Transform.position;
-            //var direction = targetPos.x - attacker.Transform.position.x;
-
-            //targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
-            ////targetPos.y -= 1f;
-            //targetPos.z = 0;
-
-            // var offsetPosition = new Vector3(skillRange, 0, 0);
             var moveParam = new Move.Param
             {
                 MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
@@ -81,9 +76,10 @@ namespace Creature.Action
                     FinishMoveToTarget(attacker, skill, targetList);
                 },
                 IsJumpMove = false,
-                //UseNavMesh = false,
             }.WithTargetICombatant(target)?
-            .WithDistance(skillRange);
+            .WithForwardDirection(false)?
+            .WithDistance(skillRange)
+            .WithUseNavMesh(false);
 
             attacker.IActCtr?
                 .MoveToTarget(moveParam)?

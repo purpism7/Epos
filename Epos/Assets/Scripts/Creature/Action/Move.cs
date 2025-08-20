@@ -22,7 +22,7 @@ namespace Creature.Action
 
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
-            public bool UseNavMesh = true;
+            public bool UseNavMesh { get; private set; } = true;
             
             public int DirectionAfterArriving = 1;
 
@@ -43,6 +43,12 @@ namespace Creature.Action
             //     OffsetPosition = position;
             //     return this;
             // }
+
+            public Param WithUseNavMesh(bool useNavMesh)
+            {
+                UseNavMesh = useNavMesh;
+                return this;
+            }
 
             public Param WithForwardDirection(bool forwardDirection)
             {
@@ -70,27 +76,22 @@ namespace Creature.Action
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
-            // _param.MoveSpeed *= 2f;
             _targetPos = CalcTargetPos;
 
-            var navMeshAgent = _iActor?.NavMeshAgent;
-            if (navMeshAgent != null &&
-                _param != null &&
+            if (_param != null &&
                 _param.UseNavMesh)
             {
-                //var targetPos = TargetPos;
-                //var distance = Vector2.Distance(navMeshAgent.transform.position, targetPos);
-                //if (navMeshAgent.SamplePathPosition(NavMesh.AllAreas, distance, out NavMeshHit hit))
-                //{
-                //    Debug.DrawLine(navMeshAgent.transform.position, hit.position, Color.red);
-                //}
-                //var targetPos = CalcTargetPos;
+                var navMeshAgent = _iActor?.NavMeshAgent;
+                if(navMeshAgent != null)
+                {
+                    EnableNavMeshAgent();
 
-                navMeshAgent.speed = _param.MoveSpeed;
-                navMeshAgent.SetDestination(_targetPos);
-                
-                //_iActor?.NavMeshAgent.SamplePathPosition
+                    navMeshAgent.speed = _param.MoveSpeed;
+                    navMeshAgent.SetDestination(_targetPos);
+                }
             }
+            else
+                DisabledNavMeshAgent();
 
             if (_iActor?.Transform)
                 _prevPos = _iActor.Transform.position;
@@ -99,12 +100,6 @@ namespace Creature.Action
         protected override void Activate()
         {
             base.Activate();
-
-            if (_iActor?.NavMeshAgent != null)
-            {
-                _iActor.NavMeshAgent.enabled = true;
-                _iActor.NavMeshAgent.isStopped = false;
-            }
         }
 
         public override void Deactivate()
@@ -114,12 +109,24 @@ namespace Creature.Action
             DisabledNavMeshAgent();
         }
 
+        private void EnableNavMeshAgent()
+        {
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.enabled = true;
+                navMeshAgent.isStopped = false;
+            }
+        }
+
         private void DisabledNavMeshAgent()
         {
-            if (_iActor?.NavMeshAgent != null)
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent != null &&
+                navMeshAgent.enabled)
             {
-                _iActor.NavMeshAgent.isStopped = true;
-                _iActor.NavMeshAgent.enabled = false;
+                navMeshAgent.isStopped = true;
+                navMeshAgent.enabled = false;
             }
         }
 
@@ -208,28 +215,16 @@ namespace Creature.Action
                 return;
             }
 
-            Vector3 targetPos = TargetPos;
-            // var direction = targetPos - iActorTm.position;
-            // Vector3 offsetPosition = Vector3.zero;
-            // float offsetDistance = 0;
-
-            // if (_param?.OffsetPosition != null)
-            // {
-            //     var offsetPosition = _param.OffsetPosition.Value;
-            //     offsetDistance = offsetPosition.x;
-            //
-            //     targetPos.x = direction.x <= 0 ? targetPos.x + offsetPosition.x : targetPos.x - offsetPosition.x;
-            //     targetPos.y += offsetPosition.y;
-            // }
-
-            //var resTargetPos = CalcTargetPos;
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             if (_param != null &&
               _param.UseNavMesh)
                 UpdateMovementUsingNavMesh();
-            else 
+            else
+            {
+                _targetPos = CalcTargetPos;
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
+            }
 
             var direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
@@ -239,13 +234,13 @@ namespace Creature.Action
 
             _prevPos = iActorTm.position;
 
-            var distance = Vector2.Distance(iActorTm.position, targetPos);
+            var distance = Vector2.Distance(iActorTm.position, _targetPos);
             if (distance < _param.Distance)
             {
+                Debug.Log(distance);
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
                 localScale.x = _param.DirectionAfterArriving;
-
                 iActorTm.localScale = localScale;
 
                 End();
@@ -262,19 +257,19 @@ namespace Creature.Action
             if (!navMeshAgent.enabled)
                 return;
 
-            Debug.Log(navMeshAgent.hasPath);
-            if (!navMeshAgent.pathPending && 
-                navMeshAgent.remainingDistance <= 0.1f)
-            {
-                Debug.Log("타겟에 도착함");
-                End();
-            }
+            //Debug.Log(navMeshAgent.hasPath);
+            //if (!navMeshAgent.pathPending && 
+            //    navMeshAgent.remainingDistance <= 0.1f)
+            //{
+            //    Debug.Log("타겟에 도착함");
+            //    End();
+            //}
         }
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {
-            var moveSpeed = _param.MoveSpeed;
-            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, moveSpeed * Time.deltaTime);
+            var speed = _param.MoveSpeed;
+            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
         }
 
         private void End()

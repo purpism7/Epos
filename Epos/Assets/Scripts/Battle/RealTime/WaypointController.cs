@@ -105,6 +105,18 @@ namespace Battle.RealTime
         {
             if (Waypoint == null)
                 return;
+
+            for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
+            {
+                var enemyICombatant = Waypoint.EnemyICombatantList[i];
+                if (enemyICombatant == null)
+                    continue;
+
+                if (!enemyICombatant.IsActivate)
+                    continue;
+
+                enemyICombatant.IActCtr?.ChainUpdate();
+            }
             
             if (!targetTm)
                 return;

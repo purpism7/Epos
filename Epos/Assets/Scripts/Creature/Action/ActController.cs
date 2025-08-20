@@ -165,7 +165,7 @@ namespace Creature.Action
         private async UniTask ExecuteAsync()
         {
             if (InAction)
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             
             if (_iActQueue?.Count > 0)
             {

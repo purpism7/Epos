@@ -17,7 +17,7 @@ using Unity.VisualScripting;
 
 namespace Battle.Mode
 {
-    public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionExecutor.IListener, IWeightedActionRequester
+    public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionController.IListener, IWeightedActionRequester
     {
         public class Data : BaseData
         {
@@ -35,16 +35,17 @@ namespace Battle.Mode
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
+        private bool _alreadyMoving = false;
             
 
         //private HashSet<>
-        private IWeightedActionExecutor _iWeightedActionExecutor = new WeightedActionExecutor();
+        private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
 
         public override BattleMode<Data> Initialize(Data data)
         {
             base.Initialize(data);
 
-            _iWeightedActionExecutor?.Initialize(this);
+            _iWeightedActionCtr?.Initialize(this);
 
             InitializeWaypointController();
             
@@ -89,8 +90,8 @@ namespace Battle.Mode
 
                 iCombatant.IActCtr?.ChainUpdate();
             }
-            
-            if(_closestICombatant != null)
+
+            if (_closestICombatant != null)
                 _iWaypointCtr?.ChainUpdate(_closestICombatant?.Transform);
         }
 
@@ -139,6 +140,8 @@ namespace Battle.Mode
 
         private async UniTask CheckWaypointActionAsync()
         {
+            _alreadyMoving = false;
+
             await UniTask.Yield();
             
             var waypoint = _iWaypointCtr?.Waypoint;
@@ -183,7 +186,7 @@ namespace Battle.Mode
             {
                 var allyICombatant = _data?.AllyICombatantList[i];
 
-                _iWeightedActionExecutor?.Execute(allyICombatant, this);
+                _iWeightedActionCtr?.Execute(allyICombatant, this);
             }
 
             for (int i = 0; i < enemyICombatantList?.Count; ++i)
@@ -197,7 +200,19 @@ namespace Battle.Mode
 
                 CreateHpProgress(enemyICombatant);
 
-                _iWeightedActionExecutor?.Execute(enemyICombatant, this);
+                _iWeightedActionCtr?.Execute(enemyICombatant, this);
+            }
+        }
+
+        private void TransitionToIdle()
+        {
+            for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
+            {
+                var iCombatant = _data?.AllyICombatantList[i];
+                if (iCombatant == null)
+                    continue;
+
+                iCombatant.IActCtr?.Execute();
             }
         }
 
@@ -225,35 +240,32 @@ namespace Battle.Mode
 
             return null;
         }
-
         #endregion
 
         #region WaypointController.IListener
 
         void WaypointController.IListener.Arrived()
         {
-            for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
-            {
-                var iCombatant = _data?.AllyICombatantList[i];
-                if(iCombatant == null)
-                    continue;
-            
-                iCombatant.IActCtr?.Execute();
-            }
-            
-            // CheckWaypointActionAsync().Forget();
+            TransitionToIdle();
+            CheckWaypointActionAsync().Forget();
         }
         #endregion
 
-        #region WeightedActionExecutor.IListener
-        void WeightedActionExecutor.IListener.End(ICombatant iCombatant)
+        #region WeightedActionController.IListener
+        void WeightedActionController.IListener.End(ICombatant iCombatant)
         {
-            _iWeightedActionExecutor?.Execute(iCombatant, this);
-
+            Debug.Log(_iWaypointCtr?.Waypoint.AliveMonsterCount);
             if (_iWaypointCtr?.Waypoint.AliveMonsterCount <= 0)
             {
+                if (_alreadyMoving)
+                    return;
+
+                _alreadyMoving = true;
+
                 MoveToWaypoint(_iWaypointCtr?.Waypoint);
             }
+            else
+                _iWeightedActionCtr?.Execute(iCombatant, this);
         }
         #endregion
     }
