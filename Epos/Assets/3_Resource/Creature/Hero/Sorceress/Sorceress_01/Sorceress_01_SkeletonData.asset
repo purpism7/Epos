@@ -18,11 +18,9 @@ MonoBehaviour:
   skeletonJSON: {fileID: 4900000, guid: 45386a458ae8c2e45ad34db3edb59ec7, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
-    requiresBlendModeMaterials: 1
+    requiresBlendModeMaterials: 0
     applyAdditiveMaterial: 1
-    additiveMaterials:
-    - pageName: Sorceress_01_2.png
-      material: {fileID: 2100000, guid: 1ee5616dad59d0b4bab20faddabc118a, type: 2}
+    additiveMaterials: []
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
