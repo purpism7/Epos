@@ -175,17 +175,17 @@ namespace Creature.Action
                 Vector3 targetPos = TargetPos;
                 var direction = targetPos - _iActor.Transform.position;
 
-                if (_param.ForwardDirection)
-                {
-                    float cross = direction.x * targetPos.y - direction.y * targetPos.x;
-                    if (cross > 0)
-                    {
-                        Vector2 leftOffset = new Vector2(-direction.y, direction.x);
-                        // Vector2 leftPos = _iActor.Transform.position + leftOffset * 1f;
-                    }
+                //if (_param.ForwardDirection)
+                //{
+                //    float cross = direction.x * targetPos.y - direction.y * targetPos.x;
+                //    if (cross > 0)
+                //    {
+                //        Vector2 leftOffset = new Vector2(-direction.y, direction.x);
+                //        // Vector2 leftPos = _iActor.Transform.position + leftOffset * 1f;
+                //    }
                         
-                }
-                    targetPos += direction.normalized * 5f;
+                //}
+                //    targetPos += direction.normalized * 5f;
                     // targetPos.x += direction.x;
                     //Debug.Log(direction);
 
