@@ -6,6 +6,8 @@ using Common;
 using Creature;
 using Creature.Action;
 using Creature.Action.Weight;
+using Cysharp.Threading.Tasks;
+using System;
 
 namespace Battle
 {
@@ -54,6 +56,24 @@ namespace Battle
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
+            //var actionWeight = GetHighestPriorityActionWeight();
+            //var iWeightedAction = actionWeight?.Create();
+            //var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
+
+            //iWeightedAction?.SetParam(param)?
+            //    .SetEndAction(EndAction)?
+            //    .SetIActor(executer)?
+            //    .Execute();
+
+            ExecuteAsync(executer, iRequester).Forget();
+        }
+
+        private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
+        {
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            await UniTask.Yield();
+            //await UniTask.Delay(TimeSpan.FromSeconds(1f),false);
+
             var actionWeight = GetHighestPriorityActionWeight();
             var iWeightedAction = actionWeight?.Create();
             var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
