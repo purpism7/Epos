@@ -182,7 +182,7 @@ namespace GameSystem
         
             var currentPos = mainCamera.transform.position;
             var targetPos = _character.Transform.position;
-            targetPos.z = -50f;
+            targetPos.z = -100f;
             
             mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime);
         

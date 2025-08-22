@@ -129,11 +129,12 @@ namespace Battle.RealTime
                 
                 SetWaypoint();
             }
-            // WayPoint.Position
         }
 
         private void SetWaypoint()
         {
+            Waypoint = null;
+
             if (_waypointQueue == null)
                 return;
             

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4116651218225978462}
   - component: {fileID: 6547586942930900359}
   - component: {fileID: 9128856760621428351}
+  - component: {fileID: 9032060919874139366}
   m_Layer: 12
   m_Name: Spine GameObject (Sorceress_01)
   m_TagString: Untagged
@@ -65,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 32f33c65c10e10146ab144c091e7bfac, type: 2}
+  - {fileID: 2100000, guid: 8f2c8b0d5ec90d74993c037045c2076e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,9 +128,31 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 0
-  _animationName: F_Idle
+  _animationName: Idle
   loop: 1
   timeScale: 1
+--- !u!195 &9032060919874139366
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4240301434440348742}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1.87
+  m_Speed: 3.5
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 200
+  m_StoppingDistance: 0.1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 6.27
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &7022339563562859597
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,11 +204,11 @@ MonoBehaviour:
   rootTm: {fileID: 3845542005009121353}
   actionSpeed: 9
   moveSpeed: 3
-  attack: 1
-  attackRange: 0
+  attack: 10
   maxHp: 49.3
   activePoint: 1
   passivePoint: 1
+  attackSight: 10
 --- !u!114 &8938804512641210281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +222,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skills:
-  - {fileID: 11400000, guid: 4da48482ede5046b18605b951fa0c871, type: 2}
+  - {fileID: 11400000, guid: 6940aa5122b5df246942fc52160d0cc0, type: 2}
 --- !u!1 &7936353644045159701
 GameObject:
   m_ObjectHideFlags: 0

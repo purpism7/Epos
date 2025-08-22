@@ -38,8 +38,6 @@ namespace Battle
                 return compAction.Weight.CompareTo(action.Weight);
             }));
 
-        private IWeightedAction _waitingIdle = null;
-
         void IWeightedActionController.Initialize(IListener iListener)
         {
             _iListener = iListener;
@@ -56,15 +54,6 @@ namespace Battle
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            //var actionWeight = GetHighestPriorityActionWeight();
-            //var iWeightedAction = actionWeight?.Create();
-            //var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
-
-            //iWeightedAction?.SetParam(param)?
-            //    .SetEndAction(EndAction)?
-            //    .SetIActor(executer)?
-            //    .Execute();
-
             ExecuteAsync(executer, iRequester).Forget();
         }
 

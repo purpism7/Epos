@@ -13,11 +13,11 @@ namespace Creature
         {
             switch (act)
             {
-                case Idle: return "00_Idle";
-                case Move: return "02_Run";
-                case Casting: return "03_Hit";
-                case Damage: return "04_Damege";
-                case Creature.Action.Die: return "01_Damege";
+                case Idle: return nameof(Idle);
+                case Move: return "Run";
+                case Casting: return "Skill_01";
+                case Damage: return nameof(Damage);
+                case Creature.Action.Die: return nameof(Damage);
             }
 
             return string.Empty;

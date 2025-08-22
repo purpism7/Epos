@@ -1,10 +1,10 @@
+using NUnit.Framework;
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-
-using Spine;
 
 namespace Creature.Action
 {
@@ -76,7 +76,7 @@ namespace Creature.Action
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
-            _targetPos = CalcTargetPos;
+            _targetPos = TargetPos;
 
             if (_param != null &&
                 _param.UseNavMesh)
@@ -85,6 +85,8 @@ namespace Creature.Action
                 if(navMeshAgent != null)
                 {
                     EnableNavMeshAgent();
+
+                    _targetPos = CalcTargetPos;
 
                     navMeshAgent.speed = _param.MoveSpeed;
                     navMeshAgent.SetDestination(_targetPos);
@@ -173,21 +175,11 @@ namespace Creature.Action
                     return Vector3.zero ;
 
                 Vector3 targetPos = TargetPos;
-                var direction = targetPos - _iActor.Transform.position;
+                Vector3 iActorPos = _iActor.Transform.position;
+                var direction = targetPos - iActorPos;
 
-                //if (_param.ForwardDirection)
-                //{
-                //    float cross = direction.x * targetPos.y - direction.y * targetPos.x;
-                //    if (cross > 0)
-                //    {
-                //        Vector2 leftOffset = new Vector2(-direction.y, direction.x);
-                //        // Vector2 leftPos = _iActor.Transform.position + leftOffset * 1f;
-                //    }
-                        
-                //}
-                //    targetPos += direction.normalized * 5f;
-                    // targetPos.x += direction.x;
-                    //Debug.Log(direction);
+                if (_param.ForwardDirection)
+                    return targetPos + Random.insideUnitSphere.normalized * 3f;
 
                 return targetPos;
             }
@@ -214,16 +206,16 @@ namespace Creature.Action
                 return;
             }
 
-            Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
-
             if (_param != null &&
               _param.UseNavMesh)
                 UpdateMovementUsingNavMesh();
             else
             {
-                _targetPos = CalcTargetPos;
+                _targetPos = TargetPos;
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
             }
+
+            Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
             if (direction.x > 0)
@@ -236,7 +228,6 @@ namespace Creature.Action
             var distance = Vector2.Distance(iActorTm.position, _targetPos);
             if (distance < _param.Distance)
             {
-                Debug.Log(distance);
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 var localScale = iActorTm.localScale;
                 localScale.x = _param.DirectionAfterArriving;

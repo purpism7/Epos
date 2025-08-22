@@ -42,8 +42,6 @@ namespace Creature.Action
             _iActDic = new();
             _iActDic.Clear();
 
-            InitializeWeightBasedAction();
-
             return this;
         }
 
@@ -154,12 +152,6 @@ namespace Creature.Action
             };
             
             Execute<Damage, Damage.Param>(damageParam);
-        }
-
-        private void InitializeWeightBasedAction()
-        {
-            //_iWeghtBasedActionHashSet.Clear();
-            //_iWeghtBasedActionHashSet?.Add(new ApproachAttack()?.Initialize(_iActor));
         }
 
         private async UniTask ExecuteAsync()

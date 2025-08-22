@@ -35,8 +35,6 @@ namespace Battle.Mode
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
-        private bool _alreadyMoving = false;
-            
 
         //private HashSet<>
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
@@ -91,8 +89,7 @@ namespace Battle.Mode
                 iCombatant.IActCtr?.ChainUpdate();
             }
 
-            if (_closestICombatant != null)
-                _iWaypointCtr?.ChainUpdate(_closestICombatant?.Transform);
+            _iWaypointCtr?.ChainUpdate(_closestICombatant?.Transform);
         }
 
         private ICombatant ClosestICombatantToWayPoint()
@@ -132,7 +129,7 @@ namespace Battle.Mode
             var param = new HpProgress.Param
             {
                 TargetTm = iCombatant.Transform,
-                Offset = new Vector2(0, iCombatant.Height + 0.5f),
+                Offset = new Vector2(0, iCombatant.Height + 1f),
             }.WithCombatant(iCombatant);
 
             hpProgress?.Activate(param);
@@ -140,13 +137,14 @@ namespace Battle.Mode
 
         private async UniTask CheckWaypointActionAsync()
         {
-            _alreadyMoving = false;
-
             await UniTask.Yield();
             
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
+            {
+                TransitionToIdle();
                 return;
+            }
 
             if (waypoint.AliveMonsterCount <= 0)
                 MoveToWaypoint(waypoint);
@@ -156,9 +154,9 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            _closestICombatant = ClosestICombatantToWayPoint();
-            if (_closestICombatant == null)
-                return;
+            //await UniTask.Yield();
+            if(_closestICombatant == null)
+                _closestICombatant = ClosestICombatantToWayPoint();
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -166,22 +164,32 @@ namespace Battle.Mode
                 if (allyICombatant == null)
                     continue;
 
-                var moveParam = new Move.Param
-                {
-                    MoveSpeed = 5f,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
-                    TargetPos = waypoint.Position,
-                }.WithForwardDirection(_closestICombatant.Id != allyICombatant.Id);
-
-                allyICombatant.IActCtr?
-                    .MoveToTarget(moveParam)
-                    .Execute();
+                MoveToTarget(waypoint, allyICombatant);
             }
+        }
+
+        private void MoveToTarget(Waypoint waypoint, ICombatant iCombatant)
+        {
+            if (iCombatant == null)
+                return;
+
+            if (_closestICombatant == null)
+                return;
+
+            float moveSpeed = _closestICombatant.Id == iCombatant.Id ? 5.01f : 5f;
+            var moveParam = new Move.Param
+            {
+                MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
+                TargetPos = waypoint.Position,
+            }.WithForwardDirection(_closestICombatant.Id != iCombatant.Id);
+
+            iCombatant.IActCtr?
+                .MoveToTarget(moveParam)?
+                .Execute();
         }
 
         private void BeginCombat(Waypoint waypoint)
         {
-            var enemyICombatantList = waypoint?.EnemyICombatantList;
-
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
                 var allyICombatant = _data?.AllyICombatantList[i];
@@ -189,6 +197,7 @@ namespace Battle.Mode
                 _iWeightedActionCtr?.Execute(allyICombatant, this);
             }
 
+            var enemyICombatantList = waypoint?.EnemyICombatantList;
             for (int i = 0; i < enemyICombatantList?.Count; ++i)
             {
                 var enemyICombatant = enemyICombatantList[i];
@@ -202,6 +211,8 @@ namespace Battle.Mode
 
                 _iWeightedActionCtr?.Execute(enemyICombatant, this);
             }
+
+            _closestICombatant = null;
         }
 
         private void TransitionToIdle()
@@ -214,6 +225,29 @@ namespace Battle.Mode
 
                 iCombatant.IActCtr?.Execute();
             }
+        }
+
+        private async UniTask PrepareForNextActionAsync(ICombatant iCombatant)
+        {
+            var waypoint = _iWaypointCtr?.Waypoint;
+            if (waypoint == null)
+            {
+                iCombatant?.IActCtr?.Execute();
+                return;
+            }
+
+            if (waypoint.AliveMonsterCount <= 0)
+            {
+                if (_closestICombatant == null)
+                {
+                    _closestICombatant = ClosestICombatantToWayPoint();
+                    await UniTask.Yield();
+                }
+                    
+                MoveToTarget(waypoint, iCombatant);
+            }
+            else
+                _iWeightedActionCtr?.Execute(iCombatant, this);
         }
 
         #region RealTime.IProvider
@@ -254,18 +288,7 @@ namespace Battle.Mode
         #region WeightedActionController.IListener
         void WeightedActionController.IListener.End(ICombatant iCombatant)
         {
-            Debug.Log(_iWaypointCtr?.Waypoint.AliveMonsterCount);
-            if (_iWaypointCtr?.Waypoint.AliveMonsterCount <= 0)
-            {
-                if (_alreadyMoving)
-                    return;
-
-                _alreadyMoving = true;
-
-                MoveToWaypoint(_iWaypointCtr?.Waypoint);
-            }
-            else
-                _iWeightedActionCtr?.Execute(iCombatant, this);
+            PrepareForNextActionAsync(iCombatant).Forget();
         }
         #endregion
     }
