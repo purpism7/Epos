@@ -38,15 +38,6 @@ TextureImporter:
   - first:
       213: -5715183624393387974
     second: Mon_01_11
-  - first:
-      213: -6214536992960589844
-    second: Mon_01_12
-  - first:
-      213: -4237816232596220528
-    second: Mon_01_13
-  - first:
-      213: 1423106537697211075
-    second: Mon_01_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -151,6 +142,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -158,10 +162,10 @@ TextureImporter:
       name: Mon_01_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 191
-        width: 32
-        height: 55
+        x: 1
+        y: 1
+        width: 124
+        height: 124
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,10 +184,10 @@ TextureImporter:
       name: Mon_01_1
       rect:
         serializedVersion: 2
-        x: 38
-        y: 220
-        width: 57
-        height: 42
+        x: 127
+        y: 67
+        width: 32
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -202,10 +206,10 @@ TextureImporter:
       name: Mon_01_2
       rect:
         serializedVersion: 2
-        x: 102
-        y: 208
-        width: 89
-        height: 60
+        x: 162
+        y: 113
+        width: 16
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,10 +228,10 @@ TextureImporter:
       name: Mon_01_3
       rect:
         serializedVersion: 2
-        x: 193
-        y: 210
-        width: 21
-        height: 29
+        x: 309
+        y: 97
+        width: 29
+        height: 21
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -246,10 +250,10 @@ TextureImporter:
       name: Mon_01_4
       rect:
         serializedVersion: 2
-        x: 216
-        y: 146
-        width: 60
-        height: 89
+        x: 373
+        y: 63
+        width: 42
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -268,10 +272,10 @@ TextureImporter:
       name: Mon_01_5
       rect:
         serializedVersion: 2
-        x: 2
-        y: 127
-        width: 34
-        height: 57
+        x: 418
+        y: 104
+        width: 20
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -290,10 +294,10 @@ TextureImporter:
       name: Mon_01_6
       rect:
         serializedVersion: 2
-        x: 40
-        y: 127
-        width: 60
-        height: 90
+        x: 440
+        y: 105
+        width: 20
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -312,10 +316,10 @@ TextureImporter:
       name: Mon_01_7
       rect:
         serializedVersion: 2
-        x: 102
-        y: 171
-        width: 12
-        height: 16
+        x: 164
+        y: 3
+        width: 142
+        height: 108
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -334,10 +338,10 @@ TextureImporter:
       name: Mon_01_8
       rect:
         serializedVersion: 2
-        x: 124
-        y: 147
-        width: 90
-        height: 60
+        x: 309
+        y: 3
+        width: 60
+        height: 90
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -356,10 +360,10 @@ TextureImporter:
       name: Mon_01_9
       rect:
         serializedVersion: 2
-        x: 104
-        y: 149
-        width: 16
-        height: 20
+        x: 418
+        y: 65
+        width: 44
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -378,10 +382,10 @@ TextureImporter:
       name: Mon_01_10
       rect:
         serializedVersion: 2
-        x: 105
-        y: 127
-        width: 16
-        height: 20
+        x: 126
+        y: 3
+        width: 34
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -400,10 +404,10 @@ TextureImporter:
       name: Mon_01_11
       rect:
         serializedVersion: 2
-        x: 127
-        y: 3
-        width: 108
-        height: 142
+        x: 373
+        y: 2
+        width: 90
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -414,72 +418,6 @@ TextureImporter:
       bones: []
       spriteID: a3017e126c69fa0b0800000000000000
       internalID: -5715183624393387974
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_12
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 1
-        width: 124
-        height: 124
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: cef4f0be78781c9a0800000000000000
-      internalID: -6214536992960589844
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_13
-      rect:
-        serializedVersion: 2
-        x: 239
-        y: 60
-        width: 36
-        height: 44
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 095d7b0e6904035c0800000000000000
-      internalID: -4237816232596220528
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Mon_01_14
-      rect:
-        serializedVersion: 2
-        x: 237
-        y: 1
-        width: 41
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 3c27af82bd3efb310800000000000000
-      internalID: 1423106537697211075
       vertices: []
       indices: 
       edges: []
@@ -502,9 +440,6 @@ TextureImporter:
       Mon_01_1: 1796796376082440559
       Mon_01_10: 3926803864903956566
       Mon_01_11: -5715183624393387974
-      Mon_01_12: -6214536992960589844
-      Mon_01_13: -4237816232596220528
-      Mon_01_14: 1423106537697211075
       Mon_01_2: -2961146935470883675
       Mon_01_3: -5791567070893688227
       Mon_01_4: 1131295489550630893
