@@ -276,13 +276,11 @@ namespace Creature
         {
             if (eType == Stat.EType.Hp)
             {
-                _iHpProgress?.UpdateHpProgressAsync();
+                _iHpProgress?.UpdateHpProgress();
                 
                 if(value <= 0)
                     IActCtr?.Die();
             }
-               
-                // 
         }
         #endregion
     }

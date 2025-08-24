@@ -134,6 +134,9 @@ namespace Battle.RealTime
 
         void IWaypointController.ChainLateUpdate()
         {
+            if (Waypoint == null)
+                return;
+            
             for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
             {
                 var enemyICombatant = Waypoint.EnemyICombatantList[i];

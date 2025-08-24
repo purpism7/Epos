@@ -15,7 +15,7 @@ namespace  UI.Parts
         void Deactivate();
         void ChainLateUpdate();
         
-        UniTask UpdateHpProgressAsync();
+        void UpdateHpProgress();
     }
     
     public class HpProgress : PartWorld<HpProgress.Param>, IHpProgress
@@ -61,7 +61,7 @@ namespace  UI.Parts
             }
         }
         
-        async UniTask IHpProgress.UpdateHpProgressAsync()
+        void IHpProgress.UpdateHpProgress()
         {
             if (_param?.ICombatant == null)
                 return;
@@ -69,11 +69,11 @@ namespace  UI.Parts
             var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
 
             if (hpSlider != null)
-                hpSlider.DOValue(hp, 0.1f)
+                hpSlider.DOValue(hp, 0.2f)
                     .OnComplete(() =>
                     {
                         if (previewHpSlider != null)
-                            previewHpSlider.DOValue(hp, 0.1f);
+                            previewHpSlider.DOValue(hp, 0.2f);
                     });
         }
     }
