@@ -250,7 +250,7 @@ Transform:
   m_GameObject: {fileID: 300022552}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 38.911736, y: 20.38927, z: -100}
+  m_LocalPosition: {x: -88.4, y: -56.747643, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -538,7 +538,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   partyLocation: {fileID: 59561317}
-  waypointRoot: {fileID: 1000002856}
 --- !u!1 &894468096
 GameObject:
   m_ObjectHideFlags: 0
@@ -769,11 +768,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1000002856 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3361796575568428715, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
-  m_PrefabInstance: {fileID: 1601521864}
-  m_PrefabAsset: {fileID: 0}
 --- !u!20 &1003199837 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 7558752344286945958, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}

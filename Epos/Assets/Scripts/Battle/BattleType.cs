@@ -33,6 +33,11 @@ namespace Battle
         {
             
         }
+
+        public virtual void ChainLateUpdate()
+        {
+            
+        }
         
         protected void AddStep<T>(BattleStep.BattleStepParam param = null, bool isLast = false) where T : BattleStep, new()
         {
@@ -97,6 +102,13 @@ namespace Battle
             base.ChainUpdate();
             
             _param?.BattleMode?.ChainUpdate();
+        }
+
+        public override void ChainLateUpdate()
+        {
+            base.ChainLateUpdate();
+            
+            _param?.BattleMode?.ChainLateUpdate();
         }
         
         public void SetIListener(IListener iListener)

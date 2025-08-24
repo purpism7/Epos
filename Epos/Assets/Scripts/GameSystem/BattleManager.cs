@@ -26,7 +26,7 @@ namespace GameSystem
         // void Begin<T, V>(V data = null) where T : Battle.BattleType, new() where V : BattleType<V>.BaseData;
     }
     
-    public class BattleManager : IBattleManager, BattleType.IListener, ITickable
+    public class BattleManager : IBattleManager, BattleType.IListener, ITickable, ILateTickable
     {
         [Inject] private ICharacterManager _iCharacterManager = null;
         [Inject] private ICameraManager _iCameraManager = null;
@@ -82,6 +82,11 @@ namespace GameSystem
         void ITickable.Tick()
         {
             _currBattleType?.ChainUpdate();
+        }
+
+        void ILateTickable.LateTick()
+        {
+            _currBattleType?.ChainLateUpdate();
         }
         #endregion
         
@@ -199,7 +204,6 @@ namespace GameSystem
             
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
-            _iCameraManager?.SetCharacter(allyICombatantList.First() as Character);
                      
             //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             //battleModeData.EnemyICombatantList?.AddRange(monsters);

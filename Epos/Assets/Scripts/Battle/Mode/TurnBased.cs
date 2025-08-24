@@ -118,6 +118,11 @@ namespace Battle.Mode
             _iActCtr?.ChainUpdate();
         }
 
+        public override void ChainLateUpdate()
+        {
+            
+        }
+
         private async UniTask AllyAppearanceAsync()
         {
             var allyICombatantList = _data?.AllyICombatantList;

@@ -423,7 +423,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 80.2
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -511,7 +511,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 88.9
+  m_Value: 100
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -566,6 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
   rootRectTm: {fileID: 7265674374223708273}
+  previewHpSlider: {fileID: 1115762981313824182}
   hpSlider: {fileID: 2863184285930830476}
 --- !u!1 &6351044850721866953
 GameObject:
@@ -955,7 +956,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 80.2
+  m_Value: 75.6
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

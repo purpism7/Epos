@@ -21,7 +21,7 @@ namespace GameSystem
 
         void MoveToTarget(Vector3 targetPosition);
 
-        void SetCharacter(Creature.Character character);
+        void SetTargetTm(Transform targetTm);
         
         void ZoomIn(Vector3 targetPos, Action endAction);
         void ZoomOut(Action endAction);
@@ -55,7 +55,8 @@ namespace GameSystem
         private float _returnTime = 0;
 
         private Vector3? _targetPosition = null;
-        private Creature.Character _character  = null;
+        private Transform _targetTm = null;
+        // private Creature.Character _character  = null;
 
         //[Inject] 
         //private IFieldManager 
@@ -177,11 +178,11 @@ namespace GameSystem
         
         private void UpdateCameraPosition()
         {
-            if (!_character?.Transform)
+            if (!_targetTm)
                 return;
         
             var currentPos = mainCamera.transform.position;
-            var targetPos = _character.Transform.position;
+            var targetPos = _targetTm.position;
             targetPos.z = -100f;
             
             mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime);
@@ -218,9 +219,9 @@ namespace GameSystem
             _targetPosition = targetPosition;
         }
         
-        public void SetCharacter(Creature.Character character)
+        public void SetTargetTm(Transform targetTm)
         {
-            _character = character;
+            _targetTm = targetTm;
         }
 
         

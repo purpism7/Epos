@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Img_Character_BattlePortrait_2001_Happy_0: -8188095416083631111
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

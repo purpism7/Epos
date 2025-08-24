@@ -59,9 +59,9 @@ namespace Battle
 
         private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            await UniTask.Yield();
-            //await UniTask.Delay(TimeSpan.FromSeconds(1f),false);
+            // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            // await UniTask.Yield();
+            await UniTask.Delay(TimeSpan.FromSeconds(1f),false);
 
             var actionWeight = GetHighestPriorityActionWeight();
             var iWeightedAction = actionWeight?.Create();

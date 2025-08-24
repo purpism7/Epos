@@ -11,13 +11,14 @@ namespace Creature
 {
     public interface ISubject
     {
-        
         int Id { get; }
         float Height { get; }
 
         bool IsActivate { get; }
         void Activate();
         void Deactivate();
+
+        void ChainLateUpdate();
         
         Transform Transform { get; }
         // Rigidbody2D Rigidbody2D { get; }

@@ -1,10 +1,24 @@
-using Creature;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+
+using Creature;
+
 namespace  UI.Parts
 {
-    public class HpProgress : PartWorld<HpProgress.Param>
+    public interface IHpProgress
+    {
+        void Activate(HpProgress.Param param);
+        void Deactivate();
+        void ChainLateUpdate();
+        
+        UniTask UpdateHpProgressAsync();
+    }
+    
+    public class HpProgress : PartWorld<HpProgress.Param>, IHpProgress
     {
         public class Param : PartWorld<Param>.PartParam
         {
@@ -17,8 +31,8 @@ namespace  UI.Parts
             }
         }
 
-        [SerializeField]
-        private Slider hpSlider = null;
+        [SerializeField] private Slider previewHpSlider = null;
+        [SerializeField] private Slider hpSlider = null;
 
         public override void Initialize(Param param)
         {
@@ -29,34 +43,38 @@ namespace  UI.Parts
         {
             base.Activate(param);
 
-            if(hpSlider != null &&
-               param?.ICombatant != null)
+            if(param?.ICombatant != null)
             {
-                hpSlider.maxValue = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
+                var maxHp = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
+
+                if (previewHpSlider != null)
+                {
+                    previewHpSlider.value = maxHp;
+                    previewHpSlider.maxValue = maxHp;
+                }
+
+                if (hpSlider != null)
+                {
+                    hpSlider.value = maxHp;
+                    hpSlider.maxValue = maxHp;
+                }
             }
         }
-
-        private void UpdateHp()
+        
+        async UniTask IHpProgress.UpdateHpProgressAsync()
         {
-            if (hpSlider == null)
-                return;
-
             if (_param?.ICombatant == null)
                 return;
 
-            hpSlider.value = _param.ICombatant.IStat.Get(Stat.EType.Hp);
-        }
+            var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
 
-        private void LateUpdate()
-        {
-            //Debug.Log(?.IStat?.Get(Stat.EType.Hp));
-            if(_param.ICombatant.IsActivate)
-            {
-                ChainLateUpdate();
-                UpdateHp();
-            }
-            else
-                Deactivate();
+            if (hpSlider != null)
+                hpSlider.DOValue(hp, 0.1f)
+                    .OnComplete(() =>
+                    {
+                        if (previewHpSlider != null)
+                            previewHpSlider.DOValue(hp, 0.1f);
+                    });
         }
     }
 }

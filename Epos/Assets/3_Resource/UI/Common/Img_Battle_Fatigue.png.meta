@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Img_Battle_Fatigue_0: 8829772648509691727
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -9,6 +9,7 @@ namespace Battle.RealTime
     public interface IWaypointController
     {
         void ChainUpdate(Transform targetTm);
+        void ChainLateUpdate();
         
         Waypoint Waypoint { get; } 
     }
@@ -128,6 +129,21 @@ namespace Battle.RealTime
                 _param?.IListener?.Arrived();
                 
                 SetWaypoint();
+            }
+        }
+
+        void IWaypointController.ChainLateUpdate()
+        {
+            for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
+            {
+                var enemyICombatant = Waypoint.EnemyICombatantList[i];
+                if (enemyICombatant == null)
+                    continue;
+
+                if (!enemyICombatant.IsActivate)
+                    continue;
+
+                enemyICombatant.ChainLateUpdate();
             }
         }
 

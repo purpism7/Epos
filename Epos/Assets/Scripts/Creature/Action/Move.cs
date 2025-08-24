@@ -175,8 +175,8 @@ namespace Creature.Action
                     return Vector3.zero ;
 
                 Vector3 targetPos = TargetPos;
-                Vector3 iActorPos = _iActor.Transform.position;
-                var direction = targetPos - iActorPos;
+                // Vector3 iActorPos = _iActor.Transform.position;
+                // var direction = targetPos - iActorPos;
 
                 if (_param.ForwardDirection)
                     return targetPos + Random.insideUnitSphere.normalized * 3f;
@@ -218,10 +218,11 @@ namespace Creature.Action
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
-            if (direction.x > 0)
-                iActorTm.localScale = new Vector3(-1, 1, 1);
-            else if (direction.x < 0)
-                iActorTm.localScale = Vector3.one;
+            if (Mathf.Abs(direction.x) > 0.01f)
+            {
+                bool movingLeft = direction.x > 0;
+                iActorTm.localScale = new Vector3(movingLeft ? -1 : 1, 1, 1);
+            }
 
             _prevPos = iActorTm.position;
 
@@ -229,9 +230,9 @@ namespace Creature.Action
             if (distance < _param.Distance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
-                var localScale = iActorTm.localScale;
-                localScale.x = _param.DirectionAfterArriving;
-                iActorTm.localScale = localScale;
+                // var localScale = iActorTm.localScale;
+                // localScale.x = _param.DirectionAfterArriving;
+                // iActorTm.localScale = localScale;
 
                 End();
             }

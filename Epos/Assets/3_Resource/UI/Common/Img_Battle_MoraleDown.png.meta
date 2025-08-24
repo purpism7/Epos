@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Img_Battle_MoraleDown_0: 5081861371076963143
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

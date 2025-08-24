@@ -7,8 +7,10 @@ using Spine;
 using Spine.Unity;
 
 using Common;
+using Creator;
 using Creature.Action;
 using GameSystem;
+using UI.Parts;
 
 namespace Creature
 {
@@ -22,9 +24,10 @@ namespace Creature
         [SerializeField] private Transform rootTm = null;
 
         #endregion
-
+        
         private IStatGeneric _iStatGeneric = null;
         private int _partyPosition = 0;
+        private IHpProgress _iHpProgress = null;
 
         public int Id
         {
@@ -145,7 +148,6 @@ namespace Creature
 
             if (NavMeshAgent != null)
                 Height = NavMeshAgent.height;
-            //Debug.Log(_resourceManager);
         }
 
         public virtual void ChainUpdate()
@@ -154,6 +156,14 @@ namespace Creature
                 return;
 
             IActCtr?.ChainUpdate();
+        }
+
+        public virtual void ChainLateUpdate()
+        {
+            if (!IsActivate)
+                return;
+            
+            _iHpProgress?.ChainLateUpdate();
         }
 
         public virtual void ChainFixedUpdate()
@@ -178,12 +188,14 @@ namespace Creature
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
+            
+            _iHpProgress?.Deactivate();
 
             Extensions.SetActive(rootTm, false);
         }
         #endregion
 
-        public void EnableNavmeshAgent()
+        private void EnableNavmeshAgent()
         {
             NavMeshAgent = SkeletonAnimation?.AddOrGetComponent<NavMeshAgent>();
             if (NavMeshAgent != null)
@@ -206,42 +218,12 @@ namespace Creature
             }
         }
 
-        //public void DisableNavmeshAgent()
-        //{
-        //    if (NavMeshAgent == null)
-        //        return;
-
-        //    NavMeshAgent.isStopped = true;
-        //    NavMeshAgent.enabled = false;
-        //}
-
-        #region IActor
-
-        // void IActor.Add(System.Action<IActor> eventHandler)
-        // {
-        //     EventHandler += eventHandler;
-        // }
-        //
-        // void IActor.Remove(System.Action<IActor> eventHandler)
-        // {
-        //     EventHandler -= eventHandler;
-        // }
-        //
-
-        #endregion
-
         #region ICombatant
-
         void ICombatant.SetETeam(ETeam eTeam)
         {
             ETeam = eTeam;
         }
-
-        // void ICombatant.SetEFormation(EFormation eFormation)
-        // {
-        //     EFormation = eFormation;
-        // }
-
+        
         void ICombatant.SetPartyPosition(int partyPosition)
         {
             _partyPosition = partyPosition;
@@ -252,6 +234,22 @@ namespace Creature
             transform.position = pos;
         }
 
+        void ICombatant.CreateHpProgress()
+        {
+            if(_iHpProgress == null)
+                _iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get?.Create();
+
+            var targetPos = Transform.position;
+            targetPos.y += Height;
+
+            var param = new HpProgress.Param
+            {
+                TargetTm = Transform,
+                Offset = new Vector2(0, Height + 1f),
+            }.WithCombatant(this);
+
+            _iHpProgress?.Activate(param);
+        }
         #endregion
 
         #region Temp Stat
@@ -276,9 +274,15 @@ namespace Creature
         #region Stat.IListener
         void Stat.IListener.OnStatChanged(Stat.EType eType, float value)
         {
-            if (eType == Stat.EType.Hp &&
-                value <= 0)
-                IActCtr?.Die();
+            if (eType == Stat.EType.Hp)
+            {
+                _iHpProgress?.UpdateHpProgressAsync();
+                
+                if(value <= 0)
+                    IActCtr?.Die();
+            }
+               
+                // 
         }
         #endregion
     }

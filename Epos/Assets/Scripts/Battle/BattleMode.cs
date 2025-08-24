@@ -34,6 +34,11 @@ namespace Battle
             
         }
         
+        public virtual void ChainLateUpdate()
+        {
+            
+        }
+        
         public void SetIListener(IListener iListener)
         {
             _iListener = iListener;
@@ -53,6 +58,7 @@ namespace Battle
 
         public abstract override void Begin();
         public abstract override void ChainUpdate();
+        public abstract override void ChainLateUpdate();
 
         protected virtual void End()
         {

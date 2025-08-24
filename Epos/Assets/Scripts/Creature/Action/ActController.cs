@@ -179,6 +179,9 @@ namespace Creature.Action
 
         public void Execute()
         {
+            if (!IsActivate)
+                return;
+            
             ExecuteAsync().Forget();
         }
 
@@ -250,6 +253,9 @@ namespace Creature.Action
 
         private void Execute<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
         {
+            // if (!IsActivate)
+            //     return;
+            
             var act = GetAct<T, V>();
             if (act == null)
                 return;

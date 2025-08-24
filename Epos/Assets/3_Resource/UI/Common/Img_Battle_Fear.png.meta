@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Img_Battle_Fear_0: -3410750436425781793
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

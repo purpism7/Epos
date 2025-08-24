@@ -160,7 +160,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Img_Battle_Stun_0: 3297230552482574750
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

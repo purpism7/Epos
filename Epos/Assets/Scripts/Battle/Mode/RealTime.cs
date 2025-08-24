@@ -78,6 +78,11 @@ namespace Battle.Mode
             UpdateWaypoint();
         }
 
+        public override void ChainLateUpdate()
+        {
+            _iWaypointCtr?.ChainLateUpdate();
+        }
+
         private void UpdateWaypoint()
         {
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
@@ -115,24 +120,28 @@ namespace Battle.Mode
                 }
             }
 
+            if(closestICombatant != null)
+                _iCameraManager?.SetTargetTm(closestICombatant.Transform);
+            
             return closestICombatant;
         }
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            var hpProgress = UICreator<HpProgress, HpProgress.Param>.Get?
-                .Create();
-
-            var targetPos = iCombatant.Transform.position;
-            targetPos.y += iCombatant.Height;
-
-            var param = new HpProgress.Param
-            {
-                TargetTm = iCombatant.Transform,
-                Offset = new Vector2(0, iCombatant.Height + 1f),
-            }.WithCombatant(iCombatant);
-
-            hpProgress?.Activate(param);
+            iCombatant?.CreateHpProgress();
+            // var hpProgress = UICreator<HpProgress, HpProgress.Param>.Get?
+            //     .Create();
+            //
+            // var targetPos = iCombatant.Transform.position;
+            // targetPos.y += iCombatant.Height;
+            //
+            // var param = new HpProgress.Param
+            // {
+            //     TargetTm = iCombatant.Transform,
+            //     Offset = new Vector2(0, iCombatant.Height + 1f),
+            // }.WithCombatant(iCombatant);
+            //
+            // hpProgress?.Activate(param);
         }
 
         private async UniTask CheckWaypointActionAsync()

@@ -12,11 +12,10 @@ namespace Creature
         void SetETeam(ETeam eTeam);
         public ETeam ETeam { get; }
         
-        // void SetEFormation(EFormation eFormation);
-        // public EFormation EFormation { get; }
-        
         int PartyPosition { get; }
         void SetPartyPosition(int partPosition);
         void SetPosition(Vector3 position);
+
+        void CreateHpProgress();
     }
 }
