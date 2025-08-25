@@ -1,15 +1,16 @@
 using Common;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 
 using Cysharp.Threading.Tasks;
 using Spine;
 
 using Datas.ScriptableObjects;
 using GameSystem.Event;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine;
 
 
 namespace Creature.Action
@@ -73,12 +74,20 @@ namespace Creature.Action
             
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _param?.IListener?.InUse();
-            
+
             if (_param?.TargetList != null &&
                 !_param.Skill.SameTeam)
             {
                 foreach (var target in _param.TargetList)
                 {
+                    if(_param?.Skill?.ProjectilePrefab != null)
+                    {
+                        var projectileGameObj = GameObject.Instantiate(_param.Skill.ProjectilePrefab);
+                        var projectile = projectileGameObj.GetComponent<Projectile>();
+                        projectile.startPos = _param.ICombatant.Transform.position;
+                        projectile.targetPos = target.Transform.position;
+                    }
+
                     target?.IActCtr?.TakeDamage(_param?.ICombatant, _param.PlayAnimation);
                 }
             }

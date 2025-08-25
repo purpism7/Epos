@@ -18,6 +18,8 @@ namespace Datas.ScriptableObjects
         public float Range  = 0;
 
         public bool SameTeam = false;
+
+        public GameObject ProjectilePrefab = null;
     }
 }
 

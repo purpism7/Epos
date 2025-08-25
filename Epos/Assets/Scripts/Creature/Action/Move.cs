@@ -89,7 +89,7 @@ namespace Creature.Action
                     EnableNavMeshAgent();
 
                     _targetPos = CalcTargetPos;
-                    Debug.Log(navMeshAgent.enabled);
+
                     navMeshAgent.speed = _param.MoveSpeed;
                     navMeshAgent.SetDestination(_targetPos);
                 }
@@ -125,7 +125,6 @@ namespace Creature.Action
 
         private void DisableNavMeshAgent()
         {
-            Debug.Log(_iActor.Id + " = DisableNavMeshAgent");
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
