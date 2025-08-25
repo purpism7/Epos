@@ -1,19 +1,18 @@
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using System;
-
-using VContainer;
-using Cysharp.Threading.Tasks;
-
 using Battle.RealTime;
 using Common;
 using Creator;
 using Creature;
 using Creature.Action;
+using Cysharp.Threading.Tasks;
 using GameSystem;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UI.Parts;
 using Unity.VisualScripting;
+using UnityEngine;
+using VContainer;
 
 namespace Battle.Mode
 {
@@ -22,7 +21,6 @@ namespace Battle.Mode
         public class Data : BaseData
         {
             public Waypoint[] Waypoints { get; private set; } = null;
-            //public List<> WayPointTms { get; private set; } = null;
 
             public Data WithWayPoints(Waypoint[] waypoints)
             {
@@ -35,16 +33,14 @@ namespace Battle.Mode
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
-
-        //private HashSet<>
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
+        private CancellationTokenSource _weightedActionCTS = null;
 
         public override BattleMode<Data> Initialize(Data data)
         {
             base.Initialize(data);
 
             _iWeightedActionCtr?.Initialize(this);
-
             InitializeWaypointController();
             
             return this;
@@ -103,7 +99,7 @@ namespace Battle.Mode
             if (wayPoint == null)
                 return null;
             
-            float closest = 99f;
+            float closest = 999f;
             ICombatant closestICombatant = null;
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
@@ -129,19 +125,6 @@ namespace Battle.Mode
         private void CreateHpProgress(ICombatant iCombatant)
         {
             iCombatant?.CreateHpProgress();
-            // var hpProgress = UICreator<HpProgress, HpProgress.Param>.Get?
-            //     .Create();
-            //
-            // var targetPos = iCombatant.Transform.position;
-            // targetPos.y += iCombatant.Height;
-            //
-            // var param = new HpProgress.Param
-            // {
-            //     TargetTm = iCombatant.Transform,
-            //     Offset = new Vector2(0, iCombatant.Height + 1f),
-            // }.WithCombatant(iCombatant);
-            //
-            // hpProgress?.Activate(param);
         }
 
         private async UniTask CheckWaypointActionAsync()
@@ -163,7 +146,6 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            //await UniTask.Yield();
             if(_closestICombatant == null)
                 _closestICombatant = ClosestICombatantToWayPoint();
 
@@ -199,6 +181,8 @@ namespace Battle.Mode
 
         private void BeginCombat(Waypoint waypoint)
         {
+            _weightedActionCTS = new();
+
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
                 var allyICombatant = _data?.AllyICombatantList[i];
@@ -247,12 +231,12 @@ namespace Battle.Mode
 
             if (waypoint.AliveMonsterCount <= 0)
             {
+                _weightedActionCTS?.Cancel();
+                await UniTask.DelayFrame(60);
+
                 if (_closestICombatant == null)
-                {
                     _closestICombatant = ClosestICombatantToWayPoint();
-                    await UniTask.Yield();
-                }
-                    
+
                 MoveToTarget(waypoint, iCombatant);
             }
             else
@@ -282,6 +266,14 @@ namespace Battle.Mode
             }
 
             return null;
+        }
+
+        CancellationTokenSource IWeightedActionRequester.CancellationTokenSource
+        {
+            get
+            {
+                return _weightedActionCTS;
+            }
         }
         #endregion
 

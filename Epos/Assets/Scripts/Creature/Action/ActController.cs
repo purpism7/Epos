@@ -22,6 +22,7 @@ namespace Creature.Action
 
         bool InAction { get; }
 
+        void Flip(float x);
         void SetPosition(Vector3 position);
     }
     
@@ -164,9 +165,9 @@ namespace Creature.Action
                 if (_iActQueue.TryDequeue(out IAct iAct))
                 {
                     InAction = true;
-                    
-                    iAct?.Execute();
+
                     _currIAct?.Deactivate();
+                    iAct?.Execute();
                     
                     SetCurrIAct(iAct);
                     
@@ -243,7 +244,20 @@ namespace Creature.Action
             
             return act;
         }
-        
+
+        void IActController.Flip(float x)
+        {
+            if (!IsActivate)
+                return;
+
+            var skeletonAnimation = _iActor?.SkeletonAnimation;
+            if (skeletonAnimation == null)
+                return;
+
+            if (Mathf.Abs(x) > 0.01f)
+                skeletonAnimation.Skeleton.ScaleX = x > 0 ? -1f : 1f;
+        }
+
         void IActController.SetPosition(Vector3 position)
         {
             _currPosition = position;

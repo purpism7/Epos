@@ -1,10 +1,12 @@
-using NUnit.Framework;
-using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+
+using Spine;
+using Spine.Unity;
+using Cysharp.Threading.Tasks;
 
 namespace Creature.Action
 {
@@ -82,18 +84,18 @@ namespace Creature.Action
                 _param.UseNavMesh)
             {
                 var navMeshAgent = _iActor?.NavMeshAgent;
-                if(navMeshAgent != null)
+                if (navMeshAgent != null)
                 {
                     EnableNavMeshAgent();
 
                     _targetPos = CalcTargetPos;
-
+                    Debug.Log(navMeshAgent.enabled);
                     navMeshAgent.speed = _param.MoveSpeed;
                     navMeshAgent.SetDestination(_targetPos);
                 }
             }
             else
-                DisabledNavMeshAgent();
+                DisableNavMeshAgent();
 
             if (_iActor?.Transform)
                 _prevPos = _iActor.Transform.position;
@@ -108,7 +110,7 @@ namespace Creature.Action
         {
             base.Deactivate();
 
-            DisabledNavMeshAgent();
+            DisableNavMeshAgent();
         }
 
         private void EnableNavMeshAgent()
@@ -121,8 +123,9 @@ namespace Creature.Action
             }
         }
 
-        private void DisabledNavMeshAgent()
+        private void DisableNavMeshAgent()
         {
+            Debug.Log(_iActor.Id + " = DisableNavMeshAgent");
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
@@ -131,20 +134,6 @@ namespace Creature.Action
                 navMeshAgent.enabled = false;
             }
         }
-
-        // private void Flip()
-        // {
-        //     var iActorTm = _iActor?.NavMeshAgent?.transform;
-        //     if (!iActorTm)
-        //         return;
-        //
-        //     // var rigidbody = _iActor.Rigidbody2D;
-        //     // if (rigidbody == null)
-        //     //     return;
-        //     
-        //     var direction = _param.TargetPos.x - iActorTm.position.x;
-        //     iActorTm.localScale = new Vector3(direction < 0 ? -1f : 1f, 1f, 1f);
-        // }
 
         private Vector3 TargetPos
         {
@@ -175,8 +164,6 @@ namespace Creature.Action
                     return Vector3.zero ;
 
                 Vector3 targetPos = TargetPos;
-                // Vector3 iActorPos = _iActor.Transform.position;
-                // var direction = targetPos - iActorPos;
 
                 if (_param.ForwardDirection)
                     return targetPos + Random.insideUnitSphere.normalized * 3f;
@@ -206,10 +193,11 @@ namespace Creature.Action
                 return;
             }
 
-            if (_param != null &&
-              _param.UseNavMesh)
-                UpdateMovementUsingNavMesh();
-            else
+            //if (_param != null &&
+            //  _param.UseNavMesh)
+            //    UpdateMovementUsingNavMesh();
+            if(_param != null &&
+              !_param.UseNavMesh)
             {
                 _targetPos = TargetPos;
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
@@ -218,11 +206,7 @@ namespace Creature.Action
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
-            if (Mathf.Abs(direction.x) > 0.01f)
-            {
-                bool movingLeft = direction.x > 0;
-                iActorTm.localScale = new Vector3(movingLeft ? -1 : 1, 1, 1);
-            }
+            _iActor?.IActCtr?.Flip(direction.x);
 
             _prevPos = iActorTm.position;
 
@@ -238,24 +222,24 @@ namespace Creature.Action
             }
         }
 
-        private void UpdateMovementUsingNavMesh()
-        {
-            //Vector3 targetPos = TargetPos;
-            var navMeshAgent = _iActor?.NavMeshAgent;
-            if (navMeshAgent == null)
-                return;
+        //private void UpdateMovementUsingNavMesh()
+        //{
+        //    //Vector3 targetPos = TargetPos;
+        //    var navMeshAgent = _iActor?.NavMeshAgent;
+        //    if (navMeshAgent == null)
+        //        return;
 
-            if (!navMeshAgent.enabled)
-                return;
+        //    if (!navMeshAgent.enabled)
+        //        return;
 
-            //Debug.Log(navMeshAgent.hasPath);
-            //if (!navMeshAgent.pathPending && 
-            //    navMeshAgent.remainingDistance <= 0.1f)
-            //{
-            //    Debug.Log("타겟에 도착함");
-            //    End();
-            //}
-        }
+        //    //Debug.Log(navMeshAgent.hasPath);
+        //    //if (!navMeshAgent.pathPending && 
+        //    //    navMeshAgent.remainingDistance <= 0.1f)
+        //    //{
+        //    //    Debug.Log("타겟에 도착함");
+        //    //    End();
+        //    //}
+        //}
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {

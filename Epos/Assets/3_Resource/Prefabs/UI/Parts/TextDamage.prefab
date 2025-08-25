@@ -322,7 +322,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 568038751308452575}
-  - component: {fileID: 5798440004747481628}
   m_Layer: 5
   m_Name: Miss
   m_TagString: Untagged
@@ -353,23 +352,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &5798440004747481628
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545867855012421356}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 22a00ba04a05cd14e86822c9c0ac3b3f, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 22a00ba04a05cd14e86822c9c0ac3b3f, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &1689872950598284098
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +633,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2079397547392077000}
-  - component: {fileID: 676871900012260904}
   m_Layer: 5
   m_Name: Heal
   m_TagString: Untagged
@@ -679,23 +660,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &676871900012260904
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2726652041730951544}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: be0e3287a802fb34eb7d4e5c310df4dc, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &2731671172881771413
 GameObject:
   m_ObjectHideFlags: 0
@@ -841,7 +805,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 259647475304724443}
-  - component: {fileID: 1827324013221476146}
   m_Layer: 5
   m_Name: Critical_Damage
   m_TagString: Untagged
@@ -870,23 +833,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &1827324013221476146
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4034522780032355217}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 93d4adfb511543546a43cd2cbb90df79, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 93d4adfb511543546a43cd2cbb90df79, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &4649299027138234791
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,7 +842,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5837139346367275051}
-  - component: {fileID: 6961923570856190300}
   m_Layer: 5
   m_Name: Critical_Heal
   m_TagString: Untagged
@@ -925,23 +870,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &6961923570856190300
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4649299027138234791}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: 0e8243b6b7d1c844e8396d582784bcc3, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 0e8243b6b7d1c844e8396d582784bcc3, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &4656713312475145385
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,7 +1015,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7397714630608188434}
-  - component: {fileID: 2586336633589637360}
   m_Layer: 5
   m_Name: Guard
   m_TagString: Untagged
@@ -1116,23 +1043,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &2586336633589637360
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4695147144544793987}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: da6e29eee6844e641904f6a139c805be, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: da6e29eee6844e641904f6a139c805be, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &4776602959786838637
 GameObject:
   m_ObjectHideFlags: 0
@@ -1278,7 +1188,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1520779765601641798}
-  - component: {fileID: 1033729238291226538}
   m_Layer: 5
   m_Name: Damage
   m_TagString: Untagged
@@ -1306,23 +1215,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &1033729238291226538
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6033418565894100627}
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: e347e0cdcd2ba8a4fb07e39a7b7e93f7, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: e347e0cdcd2ba8a4fb07e39a7b7e93f7, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &6217973514896570865
 GameObject:
   m_ObjectHideFlags: 0
@@ -1374,7 +1266,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
   rootRectTm: {fileID: 7265674374223708273}
-  offeset: {x: 0, y: 1.8}
   damageTMP: {fileID: 6941750160458423882}
 --- !u!1 &7168341589145363496
 GameObject:

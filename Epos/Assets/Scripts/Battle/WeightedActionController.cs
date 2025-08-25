@@ -1,19 +1,22 @@
+using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+using System.Threading;
+
+using Cysharp.Threading.Tasks;
 
 using Common;
 using Creature;
 using Creature.Action;
 using Creature.Action.Weight;
-using Cysharp.Threading.Tasks;
-using System;
 
 namespace Battle
 {
     public interface IWeightedActionRequester
     {
         WeightedActionParam GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction);
+        CancellationTokenSource CancellationTokenSource { get; }
     }
 
     public interface IWeightedActionController
@@ -46,10 +49,6 @@ namespace Battle
             _iSortedActionWeightSet?.Add(new Creature.Action.Weight.ApproachAttack());
             _iSortedActionWeightSet?.Add(new Creature.Action.Weight.CastSkill());
             _iSortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
-            //_iSortedActionWeightSet?.Add(CreateActionWeight<CastSkill>());
-            //_iSortedActionWeightSet?.Add(CreateActionWeight<WaitingIdle>());
-
-            //_waitingIdle = CreateActionWeight<WaitingIdle>();
         }
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
@@ -59,9 +58,17 @@ namespace Battle
 
         private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-            // await UniTask.Yield();
-            await UniTask.Delay(TimeSpan.FromSeconds(1f),false);
+            try
+            {
+                await UniTask.DelayFrame(60, cancellationToken: iRequester.CancellationTokenSource.Token);
+                if (iRequester.CancellationTokenSource.IsCancellationRequested)
+                    return;
+
+            }
+            catch(OperationCanceledException)
+            {
+
+            }
 
             var actionWeight = GetHighestPriorityActionWeight();
             var iWeightedAction = actionWeight?.Create();
@@ -85,6 +92,10 @@ namespace Battle
 
         private void EndAction(IActor iActor)
         {
+            if (iActor != null &&
+               !iActor.IsActivate)
+                return;
+
             _iListener?.End(iActor as ICombatant);
         }
 

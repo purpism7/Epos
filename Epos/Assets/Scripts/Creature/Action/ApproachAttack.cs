@@ -31,7 +31,6 @@ namespace Creature.Action
 
         public override void Execute()
         {
-            Debug.Log("Approach Execute");
             MoveToAttackAsync(_param?.Attacker, _param?.ICombatantList).Forget();
         }
 
@@ -44,7 +43,7 @@ namespace Creature.Action
                 return;
             }
 
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            await UniTask.Yield();
 
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())
