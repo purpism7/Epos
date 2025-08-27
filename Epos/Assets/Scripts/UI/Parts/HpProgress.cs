@@ -69,11 +69,11 @@ namespace  UI.Parts
             var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
 
             if (hpSlider != null)
-                hpSlider.DOValue(hp, 0.2f)
+                hpSlider.DOValue(hp, 0.1f)
                     .OnComplete(() =>
                     {
                         if (previewHpSlider != null)
-                            previewHpSlider.DOValue(hp, 0.2f);
+                            previewHpSlider.DOValue(hp, 0.3f);
                     });
         }
     }

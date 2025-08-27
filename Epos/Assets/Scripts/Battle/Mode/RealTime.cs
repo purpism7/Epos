@@ -167,7 +167,7 @@ namespace Battle.Mode
             if (_closestICombatant == null)
                 return;
 
-            float moveSpeed = _closestICombatant.Id == iCombatant.Id ? 5.01f : 5f;
+            float moveSpeed = _closestICombatant.Id == iCombatant.Id ? 7.01f : 7f;
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
