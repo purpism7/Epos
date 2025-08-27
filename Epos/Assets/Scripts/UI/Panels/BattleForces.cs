@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using TMPro;
+
 using Datas.ScriptableObjects;
 using GameSystem;
 using Parts;
@@ -9,7 +11,6 @@ using UI.Parts;
 using UI.Slots;
 using Common;
 using GameSystem.Event;
-using TMPro;
 
 namespace UI.Panels
 {

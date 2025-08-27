@@ -59,6 +59,11 @@ namespace Battle.Step
 
                 await UniTask.Delay(TimeSpan.FromSeconds(4f));
                 battleStart.Deactivate();
+
+                 var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
+                    ?.SetRoot(UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>())
+                    .Create();
+                 battleMainView?.Activate();
             }
 
             End();
