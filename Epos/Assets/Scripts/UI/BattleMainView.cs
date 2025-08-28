@@ -8,6 +8,9 @@ using VContainer;
 using UI.Slots;
 using UnityEngine.UIElements.Experimental;
 using Battle.Step;
+using Creator;
+using System.Threading.Tasks;
+using Creature;
 
 namespace UI.View
 {
@@ -15,28 +18,56 @@ namespace UI.View
     {
         public class Param : Common.Param
         {
-            public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
+            public List<ICombatant> AllyICombatantList { get; private set; } = null;
 
-            public Param WithAllyParty(Datas.ScriptableObjects.Party allyParty)
+            public Param WithAllyICombatantList(List<ICombatant> iCombatantList)
             {
-                AllyParty = allyParty;
+                AllyICombatantList = iCombatantList;
                 return this;
             }
         }
 
+        [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
+
         private List<BattlePortraitSlot> _battlePortraitSlotList = null;
 
-        public override UniTask InitializeAsync(Param param)
+        public override async UniTask InitializeAsync(Param param)
         {
-            base.InitializeAsync(param);
-
-            return UniTask.CompletedTask;
+            await base.InitializeAsync(param);
+            await InitializeAllyBattlePortraitList();
         }
 
         [Inject]
         private void InjectInitialize()
         {
             Debug.Log("InjectInitialize");
+        }
+
+        private async UniTask InitializeAllyBattlePortraitList()
+        {
+            if (_battlePortraitSlotList == null)
+                _battlePortraitSlotList = new();
+
+            _battlePortraitSlotList?.Clear();
+
+            for (int i = 0; i < _param?.AllyICombatantList?.Count; ++i)
+            {
+                var iCombatant = _param?.AllyICombatantList[i];
+                if (iCombatant == null)
+                    continue;
+
+                var battlePortraitSlotParam = new BattlePortraitSlot.Param(iCombatant);
+
+                var battlePortraitSlot = await UICreator<BattlePortraitSlot, BattlePortraitSlot.Param>.Get
+                    .SetRoot(allyBattlePortraitRootRectTm)
+                    .SetParam(battlePortraitSlotParam)
+                    .CreateAsync();
+
+                battlePortraitSlot?.Activate(battlePortraitSlotParam);
+
+                _battlePortraitSlotList?.Add(battlePortraitSlot);
+            }
+ 
         }
     }
 }

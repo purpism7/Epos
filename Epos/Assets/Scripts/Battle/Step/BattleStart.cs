@@ -10,6 +10,7 @@ using GameSystem;
 using UI.Panels;
 using UI.Popups;
 using Creator;
+using Creature;
 
 namespace Battle.Step
 {
@@ -17,13 +18,16 @@ namespace Battle.Step
     {
         public class Param : BattleStepParam
         {
-            public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
-            public Datas.ScriptableObjects.Party EnemyParty { get; private set; } = null;
+            // public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
+            // public Datas.ScriptableObjects.Party EnemyParty { get; private set; } = null;
 
-            public Param(Datas.ScriptableObjects.Party allyParty, Datas.ScriptableObjects.Party enemyParty)
+            public List<ICombatant> AllyICombatantList { get; private set; } = null;
+
+            public Param(List<ICombatant> allyICombatantList)
             {
-                AllyParty = allyParty;
-                EnemyParty = enemyParty;
+                AllyICombatantList = allyICombatantList;
+                // AllyParty = allyParty;
+                // EnemyParty = enemyParty;
             }
         }
         
@@ -59,8 +63,8 @@ namespace Battle.Step
                 battleStart.Deactivate();               
             }
 
-            var battleMainViewParam = new UI.View.BattleMainView.Param()
-                .WithAllyParty(_param?.AllyParty);
+             var battleMainViewParam = new UI.View.BattleMainView.Param()
+                .WithAllyICombatantList(_param?.AllyICombatantList);
 
             //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
@@ -68,7 +72,6 @@ namespace Battle.Step
                 .SetRoot(rootRectTm)
                 .Create();
             battleMainView?.Activate();
-
 
             End();
         }

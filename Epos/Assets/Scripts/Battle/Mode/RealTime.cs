@@ -1,18 +1,19 @@
-using Battle.RealTime;
-using Common;
-using Creator;
-using Creature;
-using Creature.Action;
-using Cysharp.Threading.Tasks;
-using GameSystem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using UI.Parts;
-using Unity.VisualScripting;
 using UnityEngine;
+
 using VContainer;
+using Cysharp.Threading.Tasks;
+
+using Common;
+using Creator;
+using Creature;
+using Creature.Action;
+using GameSystem;
+using UI.Parts;
+using Battle.RealTime;
 
 namespace Battle.Mode
 {
@@ -42,6 +43,8 @@ namespace Battle.Mode
 
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
+
+           
             
             return this;
         }
@@ -54,7 +57,7 @@ namespace Battle.Mode
 
             _iWaypointCtr = WaypointController.Create(param);
         }
-        
+
         public override void Begin()
         {
             Debug.Log("Begin()");
@@ -65,7 +68,7 @@ namespace Battle.Mode
                 ally?.SetETeam(ETeam.Ally);
                 ally?.Activate();
             }
-            
+
             CheckWaypointActionAsync().Forget();
         }
 

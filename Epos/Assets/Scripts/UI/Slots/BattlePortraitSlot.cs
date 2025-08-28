@@ -41,7 +41,7 @@ namespace UI.Slots
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
-
+            
             ApplyCombatantImage();
             ApplyClassImage();
             ActivateHpProgress();
@@ -75,8 +75,6 @@ namespace UI.Slots
                 return;
             
             var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_param.ICombatant.Id}");
-
-            // Character Id 가 없을 경우, 몬스터 이미지로 적용.
             if (sprite == null)
                 sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCommonSprite("Img_Monster_Normal");
 

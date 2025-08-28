@@ -272,7 +272,7 @@ namespace Creature
             var param = new HpProgress.Param
             {
                 TargetTm = Transform,
-                Offset = new Vector2(0, Height + 1f),
+                Offset = new Vector2(0, Height),
             }.WithCombatant(this);
 
             _iHpProgress?.Activate(param);
