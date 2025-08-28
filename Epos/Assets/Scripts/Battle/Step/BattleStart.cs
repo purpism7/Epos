@@ -34,37 +34,41 @@ namespace Battle.Step
         
         private async UniTask BeginAsync()
         {
-            if(_param?.AllyParty != null &&
-               _param?.EnemyParty != null)
-            {
-                var param = new BattleForces.Param(_param?.AllyParty, _param?.EnemyParty);
+            //if(_param?.AllyParty != null &&
+            //   _param?.EnemyParty != null)
+            //{
+            //    var param = new BattleForces.Param(_param?.AllyParty, _param?.EnemyParty);
 
-                UICreator<BattleForces, BattleForces.Param>.Get?
-                    .SetParam(param)
-                    .Create()?
-                    .Activate(param);
-            }
+            //    UICreator<BattleForces, BattleForces.Param>.Get?
+            //        .SetParam(param)
+            //        .Create()?
+            //        .Activate(param);
+            //}
 
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
-            var battleStart = UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
-                ?.SetRoot(UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>())
-                .Create();
+            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            var rootRectTm = UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>();
+
+            var battleStart = await UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
+                .SetRoot(rootRectTm)
+                .CreateAsync();
             battleStart?.Activate();
 
-            // var battleState = UIManager.Instance?.GetPopup<BattleState, BattleState.Data>();
             if (battleStart != null)
             {
-                // battleState.Activate();
-
                 await UniTask.Delay(TimeSpan.FromSeconds(4f));
-                battleStart.Deactivate();
-
-                 var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
-                    ?.SetRoot(UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>())
-                    .Create();
-                 battleMainView?.Activate();
+                battleStart.Deactivate();               
             }
+
+            var battleMainViewParam = new UI.View.BattleMainView.Param()
+                .WithAllyParty(_param?.AllyParty);
+
+            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
+                .SetParam(battleMainViewParam)
+                .SetRoot(rootRectTm)
+                .Create();
+            battleMainView?.Activate();
+
 
             End();
         }

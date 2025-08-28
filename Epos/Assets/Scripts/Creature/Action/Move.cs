@@ -1,12 +1,13 @@
+using Cysharp.Threading.Tasks;
+using Spine;
+using Spine.Unity;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-
-using Spine;
-using Spine.Unity;
-using Cysharp.Threading.Tasks;
+using static UnityEngine.UI.Image;
 
 namespace Creature.Action
 {
@@ -165,7 +166,21 @@ namespace Creature.Action
                 Vector3 targetPos = TargetPos;
 
                 if (_param.ForwardDirection)
-                    return targetPos + Random.insideUnitSphere.normalized * 3f;
+                {
+                    Vector3 dir = (targetPos - _iActor.Transform.position).normalized;
+                    var randPos = targetPos + Random.insideUnitSphere.normalized * 5f;
+
+
+                    var direction = targetPos - _iActor.Transform.position;
+
+                    float crossZ = direction.x * _iActor.Transform.position.y - direction.y * _iActor.Transform.position.x;
+                    bool isLeft = crossZ > 0f;
+                    bool isRight = crossZ < 0f;
+
+
+                    Debug.Log(isLeft + " / " + isRight);
+                    return randPos;
+                }
 
                 return targetPos;
             }
@@ -206,6 +221,7 @@ namespace Creature.Action
 
             var direction = _prevPos - iActorTm.position;
             _iActor?.IActCtr?.Flip(direction.x);
+            _iActor?.SortingOrder(iActorTm.position.y);
 
             _prevPos = iActorTm.position;
 

@@ -11,6 +11,7 @@ using Creator;
 using Creature.Action;
 using GameSystem;
 using UI.Parts;
+using Cysharp.Threading.Tasks;
 
 namespace Creature
 {
@@ -25,6 +26,7 @@ namespace Creature
 
         #endregion
         
+        private MeshRenderer _meshRenderer = null;
         private IStatGeneric _iStatGeneric = null;
         private int _partyPosition = 0;
         private IHpProgress _iHpProgress = null;
@@ -120,6 +122,12 @@ namespace Creature
             Gizmos.DrawWireSphere(Transform.position, attackSight);
 #endif
         }
+
+        [Inject]
+        private void InjectInitialize()
+        {
+            Debug.Log("Inject Initialize");
+        }
         
         #region ICharacterGeneric
         public virtual void Initialize()
@@ -127,6 +135,7 @@ namespace Creature
             // EventHandler = null;
 
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+            _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
 
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
@@ -218,6 +227,19 @@ namespace Creature
             }
         }
 
+        #region IActor
+        void IActor.SortingOrder(float order)
+        {
+            var sortingOrder = Mathf.CeilToInt(-order * 100f);
+
+            if (_meshRenderer == null)
+                _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
+
+            if (_meshRenderer != null)
+                _meshRenderer.sortingOrder = sortingOrder;
+        }
+        #endregion
+
         #region ICombatant
         void ICombatant.SetETeam(ETeam eTeam)
         {
@@ -236,8 +258,13 @@ namespace Creature
 
         void ICombatant.CreateHpProgress()
         {
-            if(_iHpProgress == null)
-                _iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get?.Create();
+            CreateHpProgress();
+        }
+
+        private void CreateHpProgress()
+        {
+            if (_iHpProgress == null)
+                _iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
 
             var targetPos = Transform.position;
             targetPos.y += Height;

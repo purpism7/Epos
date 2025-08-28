@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
+
+using Cysharp.Threading.Tasks;
 
 using GameSystem;
 using UI;
+
+using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 namespace Creator
 {
@@ -29,16 +31,32 @@ namespace Creator
             return this;
         }
         
+
         public T Create()
         {
-            var component = UIManager.Instance?.Get<T>(_rootRectTm) as Common.Component<V>;
+            var component = GetComponent();
+            component?.InitializeAsync(_param);
+
+            return component as T;
+        }
+
+        public async UniTask<T> CreateAsync()
+        {
+            var component = GetComponent(); 
+            await component.InitializeAsync(_param);
             
+            return component as T;
+        }
+
+        private Common.Component<V> GetComponent()
+        {
+            var component = UIManager.Instance?.Get<T>(_rootRectTm) as Common.Component<V>;
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {
                 rectTm.anchoredPosition3D = Vector3.zero;
                 rectTm.sizeDelta = Vector2.zero;
-                rectTm.transform.localScale = Vector3.one;   
+                rectTm.transform.localScale = Vector3.one;
             }
 
             if (component is Panel<V>)
@@ -48,14 +66,8 @@ namespace Creator
             {
                 Debug.Log("popup");
             }
-            
-            component?.Initialize(_param);
-            
-            // if (_component == null)
-            //     return null;
-            
-            
-            return component as T;
+
+            return component;
         }
     }
 }

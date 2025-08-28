@@ -16,5 +16,6 @@ MonoBehaviour:
   ESkillCategory: 2
   Point: 1
   ESkillTarget: 2
-  Range: 6
+  Range: 5
   SameTeam: 0
+  ProjectilePrefab: {fileID: 0}

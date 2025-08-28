@@ -16,5 +16,7 @@ namespace Creature
         IActController IActCtr { get; }
 
         string AnimationKey<T>(Act<T> act) where T : ActParam;
+
+        void SortingOrder(float order);
     }
 }

@@ -57,14 +57,16 @@ namespace Battle
 #endif
 
         #region FieldPoint
-        public override void Initialize(Param param)
+        public override UniTask InitializeAsync(Param param)
         {
-            base.Initialize(param);
+            base.InitializeAsync(param);
             
             monster?.Initialize();
             
             // leftPartyLocation?.Deactivate();
             rightPartyLocation?.Deactivate();
+
+            return UniTask.CompletedTask;
         }
         
         public override void Activate()

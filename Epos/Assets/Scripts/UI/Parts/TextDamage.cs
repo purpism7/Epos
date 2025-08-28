@@ -27,9 +27,11 @@ namespace Parts
         
         [SerializeField] private TextMeshProUGUI damageTMP = null;
 
-        public override void Initialize(Param data)
+        public override UniTask InitializeAsync(Param data)
         {
-            base.Initialize(data);
+            base.InitializeAsync(data);
+
+            return UniTask.CompletedTask;
         }
 
         public override void Activate(Param param)

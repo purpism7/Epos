@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Creator;
 using GameSystem.Event;
 using Parts;
@@ -15,7 +17,9 @@ namespace Creature.Action
             public ICaster ICaster = null;
             public bool PlayAnimation = true;
         }
-        
+
+        private TextDamage _textDamage = null;
+
         public override void Execute()
         {
             if (_param == null)
@@ -30,17 +34,23 @@ namespace Creature.Action
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
                 _iActor?.IStat?.Add(Stat.EType.Hp, -damage);
 
-                var textDamageParam = new TextDamage.Param
-                {
-                    TargetTm = _iActor?.Transform,
-                    Offset = new Vector2(0, _iActor.Height + 0.5f),
-
-                }.WithDamage(damage);
-
-                UICreator<TextDamage, TextDamage.Param>.Get?
-                    .Create()?
-                    .Activate(textDamageParam);
+                ActivateTextDamage(damage);
             }
+        }
+
+        private void ActivateTextDamage(float damage)
+        {
+            var textDamageParam = new TextDamage.Param
+            {
+                TargetTm = _iActor?.Transform,
+                Offset = new Vector2(0, _iActor.Height + 0.5f),
+
+            }.WithDamage(damage);
+
+            if (_textDamage == null)
+                _textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
+
+            _textDamage?.Activate(textDamageParam);
         }
     }
 }

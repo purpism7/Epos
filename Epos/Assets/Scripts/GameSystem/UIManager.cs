@@ -131,39 +131,39 @@ namespace GameSystem
             return component;
         }
 
-        public T GetPanel<T, V>(V param = null) where T : Common.Component where V : Common.Param
-        {
-            bool initialize = false;
-            var component = Get<T, V>(param, rootRectTm, out initialize);
+        //public T GetPanel<T, V>(V param = null) where T : Common.Component where V : Common.Param
+        //{
+        //    bool initialize = false;
+        //    var component = Get<T, V>(param, rootRectTm, out initialize);
 
-            var panel = component as Panel<V>;
-            if(initialize)
-                panel?.Initialize(param);
+        //    var panel = component as Panel<V>;
+        //    if(initialize)
+        //        panel?.InitializeAsync(param);
             
-            component?.transform.SetAsLastSibling();
-            panel?.Activate(param);
+        //    component?.transform.SetAsLastSibling();
+        //    panel?.Activate(param);
             
-            // CurrPanel = panel;
+        //    // CurrPanel = panel;
             
-            return panel as T;
-        }
+        //    return panel as T;
+        //}
         
-        public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.Param
-        {
-            bool initialize = false;
-            var component = Get<T, V>(data, rootRectTm, out initialize);
+        //public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.Param
+        //{
+        //    bool initialize = false;
+        //    var component = Get<T, V>(data, rootRectTm, out initialize);
 
-            var panel = component as Panel<V>;
-            if(initialize)
-                panel?.Initialize(data);
+        //    var panel = component as Panel<V>;
+        //    if(initialize)
+        //        panel?.Initialize(data);
             
-            component?.transform.SetAsLastSibling();
-            panel?.Activate(data);
+        //    component?.transform.SetAsLastSibling();
+        //    panel?.Activate(data);
             
-            // CurrPanel = panel;
+        //    // CurrPanel = panel;
             
-            return panel as T;
-        }
+        //    return panel as T;
+        //}
         
         // public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
         // {
