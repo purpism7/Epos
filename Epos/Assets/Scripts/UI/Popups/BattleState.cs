@@ -21,9 +21,11 @@ namespace UI.Popups
             
         }
 
-        public override void Initialize(Param param)
+        public override UniTask InitializeAsync(Param param)
         {
-            base.Initialize(param);
+            base.InitializeAsync(param);
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()

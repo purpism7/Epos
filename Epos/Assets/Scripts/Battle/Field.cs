@@ -39,7 +39,7 @@ namespace Battle
                 AddStep<Step.AllyParty>(_param?.AllyFieldParam);
 
             AddStep<Step.BattleStart>(
-                new BattleStart.Param(_param?.AllyFieldParam?.Party, _param?.EnemyFieldParam?.Party), 
+                new BattleStart.Param(_param?.AllyFieldParam?.ICombatantList), 
                 isLast: true);
         }
 

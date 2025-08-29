@@ -1,7 +1,9 @@
-using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
+
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 
 public class Projectile : Common.Component<Projectile.Param>
 {
@@ -27,9 +29,11 @@ public class Projectile : Common.Component<Projectile.Param>
     Tween speedTween;
 
 
-    public override void Initialize(Param param)
+    public override UniTask InitializeAsync(Param param)
     {
-        base.Initialize(param);
+        base.InitializeAsync(param);
+
+        return UniTask.CompletedTask;
     }
 
     public override void Activate(Param param)

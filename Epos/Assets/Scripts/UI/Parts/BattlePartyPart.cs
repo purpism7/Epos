@@ -102,8 +102,8 @@ namespace UI.Parts
                             break;
                     }
                     
-                    var battlePortraitSlotParam = new BattlePortraitSlot.Param(positionInfo.CharacterId, eClass);
-                    _battlePortraitSlots[i]?.Activate(battlePortraitSlotParam);
+                    //var battlePortraitSlotParam = new BattlePortraitSlot.Param(positionInfo.CharacterId, eClass);
+                    //_battlePortraitSlots[i]?.Activate(battlePortraitSlotParam);
                     
                     break;
                 }

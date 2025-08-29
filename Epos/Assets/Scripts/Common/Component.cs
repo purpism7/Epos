@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Common;
 using GameSystem;
+using Cysharp.Threading.Tasks;
 
 namespace Common
 {
@@ -55,11 +56,13 @@ namespace Common
     {
         protected T _param = null;
 
-        public virtual void Initialize(T param)
+        public virtual UniTask InitializeAsync(T param)
         {
             base.Initialize();
 
             _param = param;
+
+            return UniTask.CompletedTask;
         }
         
         public virtual void Activate(T param)

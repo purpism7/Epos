@@ -5,6 +5,7 @@ using Creator;
 using UnityEngine;
 using UnityEngine.UI;
 
+using Cysharp.Threading.Tasks;
 using TMPro;
 
 using Creature;
@@ -29,13 +30,15 @@ namespace UI.Parts
         [SerializeField] 
         private Image hpProgress = null;
 
-        public override void Initialize(Param param)
+        public override UniTask InitializeAsync(Param param)
         {
-            base.Initialize(param);
+            base.InitializeAsync(param);
             
             // data?.ICombatant?.Add(OnChanged);
             
             SetCombatantImg();
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()

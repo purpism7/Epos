@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using Creature;
 
 namespace Battle.Step
 {
@@ -12,6 +13,8 @@ namespace Battle.Step
         {
             public Parts.PartyLocation PartyLocation = null;
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
+            public List<ICombatant> ICombatantList { get; private set; } = null;
+
             public bool BattleStart { get; private set; } = true;
 
             public Param SetBattleState(bool battleStart)
@@ -24,6 +27,12 @@ namespace Battle.Step
             public Param WithParty(Datas.ScriptableObjects.Party party)
             {
                 Party = party;
+                return this;
+            }
+
+            public Param WithICombatantList(List<ICombatant> iCombatantList)
+            {
+                ICombatantList = iCombatantList;
                 return this;
             }
         }

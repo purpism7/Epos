@@ -2,13 +2,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Creature;
+
 using Component = Common.Component;
 
 namespace Battle.RealTime
 {
     public interface IWaypointController
     {
-        void ChainUpdate(Transform targetTm);
+        void ChainUpdate(ICombatant targetICombatant);
         void ChainLateUpdate();
         
         Waypoint Waypoint { get; } 
@@ -57,6 +59,7 @@ namespace Battle.RealTime
 
         public Waypoint Waypoint { get; private set; } = null;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             var wayPoints = _param?.Waypoints;
@@ -78,6 +81,7 @@ namespace Battle.RealTime
                 }
             }
         }
+#endif
 
         private IWaypointController Initialize(Param param)
         {
@@ -102,7 +106,7 @@ namespace Battle.RealTime
             return this;
         }
         
-        void IWaypointController.ChainUpdate(Transform targetTm)
+        void IWaypointController.ChainUpdate(ICombatant targetICombatant)
         {
             if (Waypoint == null)
                 return;
@@ -119,10 +123,11 @@ namespace Battle.RealTime
                 enemyICombatant.IActCtr?.ChainUpdate();
             }
             
-            if (!targetTm)
+            if (targetICombatant == null)
                 return;
 
-            var distance = Vector3.Distance(targetTm.position, Waypoint.Position);
+            var distance = Vector3.Distance(targetICombatant.Transform.position, Waypoint.Position);
+            //Debug.Log(targetICombatant.NavMeshAgent.remainingDistance);
             if (distance <= 1f)
             {
                 Debug.Log("Arrived");

@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
+using static UnityEngine.UI.Image;
 
+using Cysharp.Threading.Tasks;
 using Spine;
 using Spine.Unity;
-using Cysharp.Threading.Tasks;
 
 namespace Creature.Action
 {
@@ -20,7 +22,7 @@ namespace Creature.Action
             public Vector3? TargetPos = null;
             // public Vector3? OffsetPosition { get; private set; } = null;
             public bool ForwardDirection { get; private set; } = false;
-            public float Distance { get; private set; } = 0;
+            public float Distance { get; private set; } = 0.1f;
 
             public System.Action FinishAction = null;
             public bool IsJumpMove = false;
@@ -73,18 +75,22 @@ namespace Creature.Action
         public override void Execute()
         {
             if (_param == null)
+            {
+                End();
                 return;
+            }
             
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
             _targetPos = TargetPos;
-
+            if(!_param.UseNavMesh && _iActor.Id == 10001)
+                Debug.Log(_targetPos);
             if (_param != null &&
                 _param.UseNavMesh)
             {
                 var navMeshAgent = _iActor?.NavMeshAgent;
-                if (navMeshAgent != null)
+                if (navMeshAgent != null )
                 {
                     EnableNavMeshAgent();
 
@@ -165,7 +171,21 @@ namespace Creature.Action
                 Vector3 targetPos = TargetPos;
 
                 if (_param.ForwardDirection)
-                    return targetPos + Random.insideUnitSphere.normalized * 3f;
+                {
+                    Vector3 dir = (targetPos - _iActor.Transform.position).normalized;
+                    var randPos = targetPos + Random.insideUnitSphere.normalized * 5f;
+
+
+                    //var direction = targetPos - _iActor.Transform.position;
+
+                    //float crossZ = direction.x * _iActor.Transform.position.y - direction.y * _iActor.Transform.position.x;
+                    //bool isLeft = crossZ > 0f;
+                    //bool isRight = crossZ < 0f;
+
+
+                    //Debug.Log(isLeft + " / " + isRight);
+                    return randPos;
+                }
 
                 return targetPos;
             }
@@ -206,6 +226,7 @@ namespace Creature.Action
 
             var direction = _prevPos - iActorTm.position;
             _iActor?.IActCtr?.Flip(direction.x);
+            _iActor?.SortingOrder(iActorTm.position.y);
 
             _prevPos = iActorTm.position;
 

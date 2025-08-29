@@ -62,22 +62,24 @@ namespace Battle
             {
                 await UniTask.DelayFrame(60, cancellationToken: iRequester.CancellationTokenSource.Token);
                 if (iRequester.CancellationTokenSource.IsCancellationRequested)
+                {
+                    EndAction(executer);
                     return;
+                }
 
+                var actionWeight = GetHighestPriorityActionWeight();
+                var iWeightedAction = actionWeight?.Create();
+                var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
+
+                iWeightedAction?.SetParam(param)?
+                    .SetEndAction(EndAction)?
+                    .SetIActor(executer)?
+                    .Execute();
             }
             catch(OperationCanceledException)
             {
 
             }
-
-            var actionWeight = GetHighestPriorityActionWeight();
-            var iWeightedAction = actionWeight?.Create();
-            var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
-
-            iWeightedAction?.SetParam(param)?
-                .SetEndAction(EndAction)?
-                .SetIActor(executer)?
-                .Execute();
         }
 
         //private IWeightedAction CreateAction<T, V>() where T : new() where V : WeightedActionParam

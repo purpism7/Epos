@@ -16,7 +16,7 @@ namespace Battle
             get
             {
                 int count = 0;
-                for(int i = 0; i < _monsters.Length; ++i)
+                for(int i = 0; i < _monsters?.Length; ++i)
                 {
                     if (_monsters[i].IsActivate)
                         ++count;

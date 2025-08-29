@@ -30,7 +30,7 @@ namespace Battle
 
         void IFieldPoint.Initialize(FieldPointParam param)
         {
-            base.Initialize(param as T);
+            base.InitializeAsync(param as T);
             //if (param is T t) 
             //    Initialize(t);
             //else throw new ArgumentException($"Expected {typeof(T).Name}, got {param?.GetType().Name}");

@@ -34,9 +34,9 @@ namespace  UI.Parts
         [SerializeField] private Slider previewHpSlider = null;
         [SerializeField] private Slider hpSlider = null;
 
-        public override void Initialize(Param param)
+        public override void Initialize()
         {
-            base.Initialize(param);
+            base.Initialize();
         }
 
         public override void Activate(Param param)

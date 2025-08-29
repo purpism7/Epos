@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
+using VContainer.Unity;
 
 using Battle;
 using Battle.Mode;
@@ -12,9 +14,7 @@ using Creature;
 using Entities;
 using Common;
 using Parts;
-using VContainer;
 using Field = Battle.Field;
-using VContainer.Unity;
 using Character = Creature.Character;
 
 namespace GameSystem
@@ -200,18 +200,16 @@ namespace GameSystem
                 .SetData(battleModeData)
                 .Create(_container);
             
-            //_container?.Inject(battleMode);
-            
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
-                     
+
             //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             //battleModeData.EnemyICombatantList?.AddRange(monsters);
 
             var allyFieldParam = new Battle.Step.Party.Param
             {
                 PartyLocation = allyPartyLocation,
-            }.WithParty(allyParty);
+            }.WithICombatantList(allyICombatantList);
 
             var fieldParam = new Battle.Field.Param(allyFieldParam, null)
             {

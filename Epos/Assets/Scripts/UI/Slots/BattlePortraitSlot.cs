@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Creature;
 using GameSystem.Event;
 using Common;
+using UI.Parts;
 
 namespace UI.Slots
 {
@@ -11,23 +12,27 @@ namespace UI.Slots
     {
         public class Param : Common.Param
         {
-            public int CharacterId { get; private set; } = 0;
+            public ICombatant ICombatant { get; private set; } = null;
             public EClass EClass { get; private set; } = EClass.None;
 
-            public Param(int characterId, EClass eClass)
+            public Param(ICombatant iCombatant)
             {
-                CharacterId = characterId;
-                EClass = eClass;
+                ICombatant = iCombatant;
             }
         }
 
         [SerializeField] private Image characterImg = null;
-        [SerializeField] private Slider hpSlider = null;
         [SerializeField] private Image classImg = null;
+
+        [SerializeField] private HpProgress hpProgress = null;
+
+        private IHpProgress _iHpProgress = null;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            hpProgress?.Initialize();
         }
 
         public override void Activate(Param param)
@@ -36,9 +41,10 @@ namespace UI.Slots
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
-
+            
             ApplyCombatantImage();
             ApplyClassImage();
+            ActivateHpProgress();
         }
 
         public override void Deactivate()
@@ -47,6 +53,15 @@ namespace UI.Slots
             
             EventHandler.Remove<SkillUseEventData>(OnSkillUse);
             EventHandler.Remove<StatChangedEventData>(OnStatChanged);
+        }
+
+        private void ActivateHpProgress()
+        {
+            hpProgress?.Activate(
+                new HpProgress.Param()
+                .WithCombatant(_param?.ICombatant));
+
+            _iHpProgress = hpProgress;
         }
 
         private void ApplyCombatantImage()
@@ -59,9 +74,7 @@ namespace UI.Slots
             if (characterImg == null)
                 return;
             
-            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_param.CharacterId}");
-
-            // Character Id 가 없을 경우, 몬스터 이미지로 적용.
+            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_param.ICombatant.Id}");
             if (sprite == null)
                 sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCommonSprite("Img_Monster_Normal");
 
@@ -101,21 +114,10 @@ namespace UI.Slots
                 _param == null)
                 return;
 
-            if (eventData.CharacterId != _param.CharacterId)
+            if (eventData.CharacterId != _param.ICombatant.Id)
                 return;
-            
-            var iStat = eventData.IStat;
-            var hp = iStat.Get(Stat.EType.Hp);
-            var maxHp = iStat.Get(Stat.EType.MaxHp);
-            Debug.Log($"{hp}/{maxHp}");
-            if (hpSlider != null)
-            {
-                hpSlider.maxValue = maxHp;
-                hpSlider.SetValueWithoutNotify(hp);
-               
-            }
-           
 
+            _iHpProgress?.UpdateHpProgress();
         }
     }
 }

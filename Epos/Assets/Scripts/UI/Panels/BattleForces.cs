@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using TMPro;
+using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
 using GameSystem;
@@ -36,12 +37,14 @@ namespace UI.Panels
         [Header("Enemy")]
         [SerializeField] private BattlePartyPart enemyBattlePartyPart = null;
         
-        public override void Initialize(Param param)
+        public override UniTask InitializeAsync(Param param)
         {
-            base.Initialize(param);
+            base.InitializeAsync(param);
 
             allyBattlePartyPart?.Initialize();
             enemyBattlePartyPart?.Initialize();
+
+            return UniTask.CompletedTask;
         }
 
         public override void Activate(Param param)
