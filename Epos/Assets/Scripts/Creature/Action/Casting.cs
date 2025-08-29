@@ -55,12 +55,14 @@ namespace Creature.Action
             var target = _param.TargetList.FirstOrDefault();
             if (target == null)
                 return;
-            
+
+           
             var direction = target.Transform.position - _param.ICombatant.Transform.position;
-            if (direction.x > 0)
-                _param.ICombatant.Transform.localScale = Vector3.one;
-            else if (direction.x < 0)
-                _param.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
+            _param.ICombatant?.IActCtr.Flip(-direction.x);
+            //if (direction.x > 0)
+            //    _param.ICombatant.Transform.localScale = Vector3.one;
+            //else if (direction.x < 0)
+            //    _param.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
         }
 
         private async UniTask CastingAsync()
@@ -80,6 +82,11 @@ namespace Creature.Action
             {
                 foreach (var target in _param.TargetList)
                 {
+                    if (target == null || 
+                        !target.IsActivate)
+                        continue;
+
+                    // Temp
                     if(_param?.Skill?.ProjectilePrefab != null)
                     {
                         var projectileGameObj = GameObject.Instantiate(_param.Skill.ProjectilePrefab);

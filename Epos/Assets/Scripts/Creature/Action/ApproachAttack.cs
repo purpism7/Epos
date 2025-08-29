@@ -43,8 +43,6 @@ namespace Creature.Action
                 return;
             }
 
-            await UniTask.Yield();
-
             var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())
             {
@@ -54,7 +52,8 @@ namespace Creature.Action
 
             var randomIndex = UnityEngine.Random.Range(0, targetList.Count);
             var target = targetList[randomIndex];
-            if (target == null)
+            if (target == null ||
+                !target.IsActivate)
             {
                 _endAction?.Invoke(_iActor);
                 return;
@@ -75,7 +74,8 @@ namespace Creature.Action
                     FinishMoveToTarget(attacker, skill, targetList);
                 },
                 IsJumpMove = false,
-            }.WithTargetICombatant(target)?
+            }
+            .WithTargetICombatant(target)?
             .WithForwardDirection(false)?
             .WithDistance(skillRange)
             .WithUseNavMesh(false);

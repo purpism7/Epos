@@ -44,8 +44,6 @@ namespace Battle.Mode
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
 
-           
-            
             return this;
         }
 
@@ -93,7 +91,7 @@ namespace Battle.Mode
                 iCombatant.IActCtr?.ChainUpdate();
             }
 
-            _iWaypointCtr?.ChainUpdate(_closestICombatant?.Transform);
+            _iWaypointCtr?.ChainUpdate(_closestICombatant);
         }
 
         private ICombatant ClosestICombatantToWayPoint()
@@ -186,13 +184,6 @@ namespace Battle.Mode
         {
             _weightedActionCTS = new();
 
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            {
-                var allyICombatant = _data?.AllyICombatantList[i];
-
-                _iWeightedActionCtr?.Execute(allyICombatant, this);
-            }
-
             var enemyICombatantList = waypoint?.EnemyICombatantList;
             for (int i = 0; i < enemyICombatantList?.Count; ++i)
             {
@@ -206,6 +197,13 @@ namespace Battle.Mode
                 CreateHpProgress(enemyICombatant);
 
                 _iWeightedActionCtr?.Execute(enemyICombatant, this);
+            }
+
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var allyICombatant = _data?.AllyICombatantList[i];
+
+                _iWeightedActionCtr?.Execute(allyICombatant, this);
             }
 
             _closestICombatant = null;
@@ -235,10 +233,13 @@ namespace Battle.Mode
             if (waypoint.AliveMonsterCount <= 0)
             {
                 _weightedActionCTS?.Cancel();
-                await UniTask.DelayFrame(60);
-
+                //await UniTask.DelayFrame(60);
+                Debug.Log(iCombatant.Id);
+                //Debug.Log(_closestICombatant?.Id);
                 if (_closestICombatant == null)
                     _closestICombatant = ClosestICombatantToWayPoint();
+                //Debug.Log("_closestICombatant =" + _closestICombatant?.Id);
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
                 MoveToTarget(waypoint, iCombatant);
             }
