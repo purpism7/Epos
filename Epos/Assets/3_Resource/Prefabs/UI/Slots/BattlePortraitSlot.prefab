@@ -1119,7 +1119,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7747846030634703691}
   characterImg: {fileID: 196007275353441702}
-  hpSlider: {fileID: 4214893461378894805}
   classImg: {fileID: 5381494022502383391}
   hpProgress: {fileID: 446908868121580358}
 --- !u!114 &516623566961481627

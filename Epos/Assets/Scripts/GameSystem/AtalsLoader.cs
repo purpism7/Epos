@@ -9,12 +9,13 @@ namespace GameSystem
 {
     public class AtlasLoader
     {
-        private Dictionary<string, SpriteAtlas> _spriteAtlasDic = new();
-        
+        private Dictionary<string, SpriteAtlas> _spriteAtlasDic = null;
+
         public async UniTask InitializeAsync(AddressableManager addressableManager)
         {
-            _spriteAtlasDic?.Clear();
-            
+            _spriteAtlasDic = new();
+            _spriteAtlasDic.Clear();
+
             await addressableManager.LoadAssetAsync<SpriteAtlas>("Atlas",
                 (asyncOperationHandle) =>
                 {

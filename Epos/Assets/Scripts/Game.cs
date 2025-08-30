@@ -12,6 +12,6 @@ public class Game : MonoBehaviour
     {
         // MainManager.Instance
         Debug.Log("Game Awake");
-        await ResourceManager.Instance.InitializeAsync();
+        // await ResourceManager.Instance.InitializeAsync();
     }
 }

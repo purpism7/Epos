@@ -67,7 +67,6 @@ namespace UI.View
 
                 _battlePortraitSlotList?.Add(battlePortraitSlot);
             }
- 
         }
     }
 }

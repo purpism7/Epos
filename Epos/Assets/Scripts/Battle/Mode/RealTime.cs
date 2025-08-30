@@ -31,6 +31,7 @@ namespace Battle.Mode
         }
 
         [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private UIManager _uiManager = null;
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
@@ -67,6 +68,8 @@ namespace Battle.Mode
                 ally?.Activate();
             }
 
+            ActivateBattleMain();
+
             CheckWaypointActionAsync().Forget();
         }
 
@@ -79,13 +82,27 @@ namespace Battle.Mode
         {
             _iWaypointCtr?.ChainLateUpdate();
         }
+        
+        private void ActivateBattleMain()
+        {
+            var rootRectTm = _uiManager?.CurrPanel?.GetComponent<RectTransform>();
+
+            var battleMainViewParam = new UI.View.BattleMainView.Param()
+               .WithAllyICombatantList(_data?.AllyICombatantList);
+
+            var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
+               .SetParam(battleMainViewParam)
+               .SetRoot(rootRectTm)
+               .Create();
+            battleMainView?.Activate();
+        }
 
         private void UpdateWaypoint()
         {
             for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
             {
                 var iCombatant = _data?.AllyICombatantList[i];
-                if(iCombatant == null)
+                if (iCombatant == null)
                     continue;
 
                 iCombatant.IActCtr?.ChainUpdate();

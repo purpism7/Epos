@@ -1,10 +1,13 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using VContainer;
+
 using Creature;
 using GameSystem.Event;
 using Common;
 using UI.Parts;
+using Mono.Cecil;
 
 namespace UI.Slots
 {
@@ -13,7 +16,7 @@ namespace UI.Slots
         public class Param : Common.Param
         {
             public ICombatant ICombatant { get; private set; } = null;
-            public EClass EClass { get; private set; } = EClass.None;
+            public EClass EClass { get; private set; } = EClass.Knight;
 
             public Param(ICombatant iCombatant)
             {
@@ -25,6 +28,8 @@ namespace UI.Slots
         [SerializeField] private Image classImg = null;
 
         [SerializeField] private HpProgress hpProgress = null;
+
+        [Inject] private GameSystem.ResourceManager _resourceManager = null;
 
         private IHpProgress _iHpProgress = null;
 
@@ -42,8 +47,8 @@ namespace UI.Slots
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
             
-            ApplyCombatantImage();
-            ApplyClassImage();
+            SetCombatantImage();
+            SetClassImage();
             ActivateHpProgress();
         }
 
@@ -59,12 +64,12 @@ namespace UI.Slots
         {
             hpProgress?.Activate(
                 new HpProgress.Param()
-                .WithCombatant(_param?.ICombatant));
+                    .WithCombatant(_param?.ICombatant));
 
             _iHpProgress = hpProgress;
         }
 
-        private void ApplyCombatantImage()
+        private void SetCombatantImage()
         {
             characterImg?.SetActive(false);
             
@@ -73,16 +78,17 @@ namespace UI.Slots
             
             if (characterImg == null)
                 return;
+
+            var AtlasLoader = _resourceManager?.AtlasLoader;
+            var spriteName = $"p_{_param.ICombatant.Id}";
             
-            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"p_{_param.ICombatant.Id}");
-            if (sprite == null)
-                sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetCommonSprite("Img_Monster_Normal");
+            var sprite = AtlasLoader?.GetCharacterSprite(spriteName);
 
             characterImg.sprite = sprite;
             characterImg.SetActive(true);
         }
 
-        private void ApplyClassImage()
+        private void SetClassImage()
         {
             classImg?.SetActive(false);
             
@@ -96,7 +102,7 @@ namespace UI.Slots
                 return;
 
             var spriteName = $"Img_Class_{_param.EClass}";
-            var sprite = GameSystem.ResourceManager.Instance?.AtlasLoader?.GetSprite("Common", spriteName);
+            var sprite = _resourceManager?.AtlasLoader?.GetCommonSprite(spriteName);
             classImg.sprite = sprite;
             
             classImg?.SetActive(true);

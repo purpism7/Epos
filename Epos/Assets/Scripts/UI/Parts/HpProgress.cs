@@ -46,17 +46,17 @@ namespace  UI.Parts
             if(param?.ICombatant != null)
             {
                 var maxHp = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
-
+                
                 if (previewHpSlider != null)
                 {
-                    previewHpSlider.value = maxHp;
                     previewHpSlider.maxValue = maxHp;
+                    previewHpSlider.value = maxHp;
                 }
 
                 if (hpSlider != null)
                 {
-                    hpSlider.value = maxHp;
                     hpSlider.maxValue = maxHp;
+                    hpSlider.value = maxHp;
                 }
             }
         }

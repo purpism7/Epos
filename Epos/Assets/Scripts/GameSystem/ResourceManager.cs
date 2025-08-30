@@ -8,21 +8,17 @@ using VContainer.Unity;
 
 namespace GameSystem
 {
-    public class ResourceManager : Singleton<ResourceManager>, IInitializable
+    public class ResourceManager : MonoBehaviour, IInitializable
     {
         [Inject] private AddressableManager _addressableManager = null;
         
         public AtlasLoader AtlasLoader { get; private set; } = null;
 
-        protected override void Initialize()
-        {
-            //DontDestroyOnLoad(this);
-        }
-
         void IInitializable.Initialize()
         {
             Debug.Log("ResourceManager Initialize");    
         }
+        
         public async UniTask InitializeAsync()
         {
             AtlasLoader = new();

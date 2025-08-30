@@ -5,6 +5,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using Spine.Unity;
 using Spine;
+using System;
 
 public static class Extensions
 {
@@ -106,46 +107,60 @@ public static class Extensions
     {
         duration = 0;
 
-        var animationState = skeletonAnimation?.AnimationState;
-        if (animationState == null)
-            return;
+        try
+        {
+            var animationState = skeletonAnimation?.AnimationState;
+            if (animationState == null)
+                return;
 
-        var animation = skeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
-            .Find(animation => animation.Name.Contains(animationName));
-        if (animation == null)
-            return;
+            var animation = skeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+                .Find(animation => animation.Name.Contains(animationName));
+            if (animation == null)
+                return;
 
-        var trackEntry = animationState.SetAnimation(0, animationName, loop);
-        if (trackEntry == null)
-            return;
+            var trackEntry = animationState.SetAnimation(0, animationName, loop);
+            if (trackEntry == null)
+                return;
 
-        trackEntry.Complete -= completedAction.Invoke;
-        trackEntry.Complete += completedAction.Invoke;
+            trackEntry.Complete -= completedAction.Invoke;
+            trackEntry.Complete += completedAction.Invoke;
 
-        duration = trackEntry.Animation.Duration;
+            duration = trackEntry.Animation.Duration;
+        }
+        catch(Exception)
+        {
+            
+        }
     }  
     
     public static void PlayAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
     {
         duration = 0;
 
-        var animationState = skeletonGraphic?.AnimationState;
-        if (animationState == null)
-            return;
-        
-        var animation = skeletonGraphic.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
-            .Find(animation => animation.Name.Contains(animationName));
-        if (animation == null)
-            return;
-        
-        var trackEntry = animationState.SetAnimation(0, animationName, loop);
-        if (trackEntry == null)
-            return;
+        try
+        {
+            var animationState = skeletonGraphic?.AnimationState;
+            if (animationState == null)
+                return;
+            
+            var animation = skeletonGraphic.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+                .Find(animation => animation.Name.Contains(animationName));
+            if (animation == null)
+                return;
+            
+            var trackEntry = animationState.SetAnimation(0, animationName, loop);
+            if (trackEntry == null)
+                return;
 
-        trackEntry.Complete -= completedAction.Invoke;
-        trackEntry.Complete += completedAction.Invoke;
+            trackEntry.Complete -= completedAction.Invoke;
+            trackEntry.Complete += completedAction.Invoke;
 
-        duration = trackEntry.Animation.Duration;
+            duration = trackEntry.Animation.Duration;
+        }
+        catch(Exception)
+        {
+            
+        }
     }  
 }
 

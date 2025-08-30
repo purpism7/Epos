@@ -57,8 +57,8 @@ namespace UI.Parts
             if (combatantImg == null)
                 return;
             
-            var sprite = ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"s_{iCombatant.Id}");
-            combatantImg.sprite = sprite;
+            // var sprite = ResourceManager.Instance?.AtlasLoader?.GetCharacterSprite($"s_{iCombatant.Id}");
+            // combatantImg.sprite = sprite;
         }
 
         private void SetHpProgress(IStat iStat)

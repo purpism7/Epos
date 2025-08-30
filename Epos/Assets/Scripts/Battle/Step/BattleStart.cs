@@ -56,23 +56,7 @@ namespace Battle.Step
         {
             _battleStart?.Deactivate();
 
-            ActivateBattleMain();
-
             End();
-        }
-
-        private void ActivateBattleMain()
-        {
-            var rootRectTm = UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>();
-
-            var battleMainViewParam = new UI.View.BattleMainView.Param()
-               .WithAllyICombatantList(_param?.AllyICombatantList);
-
-            var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
-               .SetParam(battleMainViewParam)
-               .SetRoot(rootRectTm)
-               .Create();
-            battleMainView?.Activate();
         }
     }
 }
