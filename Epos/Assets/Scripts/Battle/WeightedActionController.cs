@@ -78,7 +78,9 @@ namespace Battle
             }
             catch(OperationCanceledException)
             {
-
+                EndAction(executer);
+                // Debug.Log(executer.Id);
+                // Debug.Log(exception);
             }
         }
 

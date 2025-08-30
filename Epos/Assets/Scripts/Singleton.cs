@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using VContainer.Unity;
 
 public abstract class Singleton<T> : LifetimeScope where T : MonoBehaviour

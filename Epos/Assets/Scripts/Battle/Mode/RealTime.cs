@@ -168,12 +168,16 @@ namespace Battle.Mode
             if (_closestICombatant == null)
                 return;
 
-            float moveSpeed = _closestICombatant.Id == iCombatant.Id ? 7.01f : 7f;
+            float moveSpeed = 7f;
+            if (_closestICombatant.Id == iCombatant.Id)
+                moveSpeed += 0.01f;
+                
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = waypoint.Position,
-            }.WithForwardDirection(_closestICombatant.Id != iCombatant.Id);
+            }
+            .WithForwardDirection(_closestICombatant.Id != iCombatant.Id);
 
             iCombatant.IActCtr?
                 .MoveToTarget(moveParam)?
@@ -233,12 +237,10 @@ namespace Battle.Mode
             if (waypoint.AliveMonsterCount <= 0)
             {
                 _weightedActionCTS?.Cancel();
-                //await UniTask.DelayFrame(60);
-                Debug.Log(iCombatant.Id);
-                //Debug.Log(_closestICombatant?.Id);
+
                 if (_closestICombatant == null)
                     _closestICombatant = ClosestICombatantToWayPoint();
-                //Debug.Log("_closestICombatant =" + _closestICombatant?.Id);
+
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
                 MoveToTarget(waypoint, iCombatant);
