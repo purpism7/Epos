@@ -171,12 +171,13 @@ namespace Battle.Mode
             float moveSpeed = 7f;
             if (_closestICombatant.Id == iCombatant.Id)
                 moveSpeed += 0.01f;
-                
+
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = waypoint.Position,
             }
+            .WithLeaderTm(_closestICombatant.Transform)
             .WithForwardDirection(_closestICombatant.Id != iCombatant.Id);
 
             iCombatant.IActCtr?

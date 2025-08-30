@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using Spine.Unity;
+using Spine;
 
 public static class Extensions
 {
@@ -10,7 +12,7 @@ public static class Extensions
     {
         if (!component)
             return default;
-                
+
         var t = component.GetComponent<T>();
         if (t == null)
         {
@@ -34,10 +36,10 @@ public static class Extensions
 
         if (component == null)
             return;
-            
+
         component.gameObject.SetActive(active);
-    }  
-    
+    }
+
     public static bool IsNullOrEmpty<T>(this List<T> list)
     {
         if (list == null)
@@ -48,7 +50,7 @@ public static class Extensions
 
         return false;
     }
-    
+
     public static bool IsNullOrEmpty<T>(this T[] arrays)
     {
         if (arrays == null)
@@ -59,7 +61,7 @@ public static class Extensions
 
         return false;
     }
-        
+
     public static void RemoveAllChild(this Transform tm)
     {
         if (!tm)
@@ -75,34 +77,76 @@ public static class Extensions
     {
         if (!tm)
             return;
-            
+
         tm.position = Vector3.zero;
         tm.rotation = Quaternion.identity;
         tm.localScale = Vector3.one;
     }
-            
-        // public static List<T> AddList<T, V>(this V[] arrays) where T : class
-        // {
-        //     if (arrays == null)
-        //         return null;
-        //         
-        //     var list = new List<T>();
-        //     list.Clear();
-        //         
-        //     foreach (V t in arrays)
-        //     {
-        //         if(t == null)
-        //             continue;
-        //             
-        //         list.Add(t as T);
-        //     }
-        //
-        //     return list;
-        // }
+
+    // public static List<T> AddList<T, V>(this V[] arrays) where T : class
+    // {
+    //     if (arrays == null)
+    //         return null;
+    //         
+    //     var list = new List<T>();
+    //     list.Clear();
+    //         
+    //     foreach (V t in arrays)
+    //     {
+    //         if(t == null)
+    //             continue;
+    //             
+    //         list.Add(t as T);
+    //     }
+    //
+    //     return list;
+    // }
+
+    public static void PlayAnimation(this SkeletonAnimation skeletonAnimation, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
+    {
+        duration = 0;
+
+        var animationState = skeletonAnimation?.AnimationState;
+        if (animationState == null)
+            return;
+
+        var animation = skeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+            .Find(animation => animation.Name.Contains(animationName));
+        if (animation == null)
+            return;
+
+        var trackEntry = animationState.SetAnimation(0, animationName, loop);
+        if (trackEntry == null)
+            return;
+
+        trackEntry.Complete -= completedAction.Invoke;
+        trackEntry.Complete += completedAction.Invoke;
+
+        duration = trackEntry.Animation.Duration;
+    }  
     
+    public static void PlayAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
+    {
+        duration = 0;
+
+        var animationState = skeletonGraphic?.AnimationState;
+        if (animationState == null)
+            return;
         
+        var animation = skeletonGraphic.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+            .Find(animation => animation.Name.Contains(animationName));
+        if (animation == null)
+            return;
         
-        
+        var trackEntry = animationState.SetAnimation(0, animationName, loop);
+        if (trackEntry == null)
+            return;
+
+        trackEntry.Complete -= completedAction.Invoke;
+        trackEntry.Complete += completedAction.Invoke;
+
+        duration = trackEntry.Animation.Duration;
+    }  
 }
 
 

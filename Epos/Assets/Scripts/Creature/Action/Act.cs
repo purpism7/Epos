@@ -86,26 +86,28 @@ namespace Creature.Action
 
         protected void SetAnimation(string animationName, bool loop)
         {
-            if (_iActor == null)
-                return;
-            
-            var animationState = _iActor.SkeletonAnimation?.AnimationState;
-            if (animationState == null)
-                return;
-            
-            var animation = _iActor.SkeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
-                .Find(animation => animation.Name.Contains(animationName));
-            if (animation == null)
-                return;
-            
-            var trackEntry = animationState.SetAnimation(0, animationName, loop);
-            if (trackEntry == null)
-                return;
 
-            trackEntry.Complete -= OnCompleted;
-            trackEntry.Complete += OnCompleted;
+            _iActor?.SkeletonAnimation?.PlayAnimation(animationName, loop, OnCompleted, out _duration);
+            // if (_iActor == null)
+            //     return;
+            
+            // var animationState = _iActor.SkeletonAnimation?.AnimationState;
+            // if (animationState == null)
+            //     return;
+            
+            // var animation = _iActor.SkeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
+            //     .Find(animation => animation.Name.Contains(animationName));
+            // if (animation == null)
+            //     return;
+            
+            // var trackEntry = animationState.SetAnimation(0, animationName, loop);
+            // if (trackEntry == null)
+            //     return;
 
-            _duration = trackEntry.Animation.Duration;
+            // trackEntry.Complete -= OnCompleted;
+            // trackEntry.Complete += OnCompleted;
+
+            // _duration = trackEntry.Animation.Duration;
         }
     }
 }

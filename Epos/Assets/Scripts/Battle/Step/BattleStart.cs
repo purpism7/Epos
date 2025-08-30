@@ -11,6 +11,7 @@ using UI.Panels;
 using UI.Popups;
 using Creator;
 using Creature;
+using Spine;
 
 namespace Battle.Step
 {
@@ -30,50 +31,48 @@ namespace Battle.Step
                 // EnemyParty = enemyParty;
             }
         }
-        
+
+        private UI.Popups.BattleStart _battleStart = null;
+
         public override void Begin()
         {
-            BeginAsync().Forget();
+             ActivateBattleStartAsync().Forget();
         }
-        
-        private async UniTask BeginAsync()
+
+        private async UniTask ActivateBattleStartAsync()
         {
-            //if(_param?.AllyParty != null &&
-            //   _param?.EnemyParty != null)
-            //{
-            //    var param = new BattleForces.Param(_param?.AllyParty, _param?.EnemyParty);
-
-            //    UICreator<BattleForces, BattleForces.Param>.Get?
-            //        .SetParam(param)
-            //        .Create()?
-            //        .Activate(param);
-            //}
-
-            //await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             var rootRectTm = UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>();
 
-            //var battleStart = await UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
-            //    .SetRoot(rootRectTm)
-            //    .CreateAsync();
-            //battleStart?.Activate();
+            var battleStartParam = new UI.Popups.BattleStart.Param()
+                .WithCompletedAction(OnCompletedBattleStart);
 
-            //if (battleStart != null)
-            //{
-            //    await UniTask.Delay(TimeSpan.FromSeconds(4f));
-            //    battleStart.Deactivate();               
-            //}
+            _battleStart = await UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
+               .SetRoot(rootRectTm)
+               .CreateAsync();
+            _battleStart?.Activate(battleStartParam);
+        }
 
-            // var battleMainViewParam = new UI.View.BattleMainView.Param()
-            //    .WithAllyICombatantList(_param?.AllyICombatantList);
+        private void OnCompletedBattleStart(TrackEntry trackEntry)
+        {
+            _battleStart?.Deactivate();
 
-            ////await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            //var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
-            //    .SetParam(battleMainViewParam)
-            //    .SetRoot(rootRectTm)
-            //    .Create();
-            //battleMainView?.Activate();
+            ActivateBattleMain();
 
             End();
+        }
+
+        private void ActivateBattleMain()
+        {
+            var rootRectTm = UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>();
+
+            var battleMainViewParam = new UI.View.BattleMainView.Param()
+               .WithAllyICombatantList(_param?.AllyICombatantList);
+
+            var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
+               .SetParam(battleMainViewParam)
+               .SetRoot(rootRectTm)
+               .Create();
+            battleMainView?.Activate();
         }
     }
 }

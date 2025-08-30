@@ -21,6 +21,7 @@ namespace Creature.Action
             public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
             // public Vector3? OffsetPosition { get; private set; } = null;
+            public Transform LeaderTm { get; private set; } = null;
             public bool ForwardDirection { get; private set; } = false;
             public float Distance { get; private set; } = 0.1f;
 
@@ -42,11 +43,11 @@ namespace Creature.Action
                 return this;
             }
 
-            // public Param WithOffsetPosition(Vector3 position)
-            // {
-            //     OffsetPosition = position;
-            //     return this;
-            // }
+            public Param WithLeaderTm(Transform leaderTm)
+            {
+                LeaderTm = leaderTm;
+                return this;
+            }
 
             public Param WithUseNavMesh(bool useNavMesh)
             {
@@ -84,8 +85,7 @@ namespace Creature.Action
             SetAnimation(_param.AnimationKey, true);
 
             _targetPos = TargetPos;
-            if(!_param.UseNavMesh && _iActor.Id == 10001)
-                Debug.Log(_targetPos);
+            
             if (_param != null &&
                 _param.UseNavMesh)
             {
@@ -172,16 +172,19 @@ namespace Creature.Action
 
                 if (_param.ForwardDirection)
                 {
-                    Vector3 dir = (targetPos - _iActor.Transform.position).normalized;
                     var randPos = targetPos + Random.insideUnitSphere.normalized * 5f;
 
+                    Vector3 direction = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
+                    Vector2 desiredVelocity = (_iActor.Transform.position - targetPos).normalized;
+                     
+                    // var direction = targetPos - _iActor.Transform.position;
 
-                    //var direction = targetPos - _iActor.Transform.position;
-
+                    var crossPos = Vector3.Cross(desiredVelocity, direction);
+                    
                     //float crossZ = direction.x * _iActor.Transform.position.y - direction.y * _iActor.Transform.position.x;
-                    //bool isLeft = crossZ > 0f;
+                    bool isLeft = crossPos.z > 0f;
                     //bool isRight = crossZ < 0f;
-
+                    // Debug.Log(_iActor.Id + " = " + isLeft);
 
                     //Debug.Log(isLeft + " / " + isRight);
                     return randPos;

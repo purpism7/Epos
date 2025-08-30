@@ -78,7 +78,7 @@ MonoBehaviour:
   timeScale: 1
   freeze: 0
   layoutScaleMode: 0
-  referenceSize: {x: 1177, y: 793}
+  referenceSize: {x: 1177, y: 713}
   pivotOffset: {x: 0, y: 0}
   referenceScale: 1
   layoutScale: 1
@@ -195,6 +195,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7461648130792902697}
+  skeletonGraphic: {fileID: 334139107199203897}
 --- !u!1 &3496335655473482921
 GameObject:
   m_ObjectHideFlags: 0
