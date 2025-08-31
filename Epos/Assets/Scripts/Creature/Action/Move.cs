@@ -9,6 +9,7 @@ using static UnityEngine.UI.Image;
 using Cysharp.Threading.Tasks;
 using Spine;
 using Spine.Unity;
+using UnityEditor;
 
 namespace Creature.Action
 {
@@ -70,8 +71,20 @@ namespace Creature.Action
 
         private Vector3 _prevPos = Vector3.zero;
         private Vector3 _targetPos = Vector3.zero;
+        private Vector3 _randPos = Vector3.zero;
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            // float attackSight = IStat.Get(Stat.EType.AttackSight);
+            // Debug.Log(attackSight);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_randPos, 5f);
+        }
+#endif
 
         public override void Execute()
         {
@@ -80,17 +93,17 @@ namespace Creature.Action
                 End();
                 return;
             }
-            
+
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
             _targetPos = TargetPos;
-            
+
             if (_param != null &&
                 _param.UseNavMesh)
             {
                 var navMeshAgent = _iActor?.NavMeshAgent;
-                if (navMeshAgent != null )
+                if (navMeshAgent != null)
                 {
                     EnableNavMeshAgent();
 
@@ -172,22 +185,25 @@ namespace Creature.Action
 
                 if (_param.ForwardDirection)
                 {
-                    var randPos = targetPos + Random.insideUnitSphere.normalized * 5f;
-
-                    Vector3 direction = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
-                    Vector2 desiredVelocity = (_iActor.Transform.position - targetPos).normalized;
+                    Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
+                    Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
                      
-                    // var direction = targetPos - _iActor.Transform.position;
-
-                    var crossPos = Vector3.Cross(desiredVelocity, direction);
+                    var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
                     
-                    //float crossZ = direction.x * _iActor.Transform.position.y - direction.y * _iActor.Transform.position.x;
                     bool isLeft = crossPos.z > 0f;
-                    //bool isRight = crossZ < 0f;
-                    // Debug.Log(_iActor.Id + " = " + isLeft);
 
-                    //Debug.Log(isLeft + " / " + isRight);
-                    return randPos;
+                    Vector3 right = Vector3.right; // 월드 기준 오른쪽
+                    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
+
+                    // 반원 내 랜덤 각도 + 거리
+                    float angle = Random.Range(-90f, 90f);
+                    float distance = Random.Range(5f, 8f);
+
+                    // 회전 적용
+                    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                    Vector3 offset = rotation * baseDir * distance;
+
+                    return targetPos + offset;
                 }
 
                 return targetPos;
@@ -234,7 +250,7 @@ namespace Creature.Action
             _prevPos = iActorTm.position;
 
             var distance = Vector2.Distance(iActorTm.position, _targetPos);
-            if (distance < _param.Distance)
+            if (distance <= _param.Distance)
             {
                 // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
                 // var localScale = iActorTm.localScale;
