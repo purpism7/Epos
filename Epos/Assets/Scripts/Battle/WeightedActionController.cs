@@ -60,7 +60,7 @@ namespace Battle
         {
             try
             {
-                await UniTask.DelayFrame(60, cancellationToken: iRequester.CancellationTokenSource.Token);
+                await UniTask.DelayFrame(30, cancellationToken: iRequester.CancellationTokenSource.Token);
                 if (iRequester.CancellationTokenSource.IsCancellationRequested)
                 {
                     EndAction(executer);

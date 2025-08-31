@@ -106,9 +106,10 @@ namespace Creature
 
         public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
 
-        private void OnDrawGizmos()
-        {
 #if UNITY_EDITOR
+        private void OnDrawGizmosSelected()
+        {
+
             if (IStat == null)
                 return;
 
@@ -117,11 +118,11 @@ namespace Creature
 
             float attackSight = IStat.Get(Stat.EType.AttackSight);
             // Debug.Log(attackSight);
-            
+
             Gizmos.color = Color.green;
             Gizmos.DrawWireSphere(Transform.position, attackSight);
-#endif
         }
+#endif
 
         [Inject]
         private void InjectInitialize()

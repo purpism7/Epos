@@ -67,7 +67,7 @@ namespace  UI.Parts
                 return;
 
             var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
-
+    
             if (hpSlider != null)
                 hpSlider.DOValue(hp, 0.1f)
                     .OnComplete(() =>

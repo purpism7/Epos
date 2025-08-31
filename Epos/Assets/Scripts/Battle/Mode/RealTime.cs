@@ -173,11 +173,11 @@ namespace Battle.Mode
                 if (allyICombatant == null)
                     continue;
 
-                MoveToTarget(waypoint, allyICombatant);
+                MoveToWaypoint(waypoint, allyICombatant);
             }
         }
 
-        private void MoveToTarget(Waypoint waypoint, ICombatant iCombatant)
+        private void MoveToWaypoint(Waypoint waypoint, ICombatant iCombatant)
         {
             if (iCombatant == null)
                 return;
@@ -260,8 +260,8 @@ namespace Battle.Mode
                     _closestICombatant = ClosestICombatantToWayPoint();
 
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
-                MoveToTarget(waypoint, iCombatant);
+                Debug.Log("movetoWaypoint = " + iCombatant.Id);
+                MoveToWaypoint(waypoint, iCombatant);
             }
             else
                 _iWeightedActionCtr?.Execute(iCombatant, this);
@@ -273,7 +273,7 @@ namespace Battle.Mode
         {
             switch (iWeightedAction)
             {
-                case WeightedAction<ApproachAttack.Param> approachAttack:
+                case WeightedAction<ApproachAttack.Param>:
                     {
                         List<ICombatant> iCombatantList = null;
                         if (attacker.ETeam == ETeam.Ally)
