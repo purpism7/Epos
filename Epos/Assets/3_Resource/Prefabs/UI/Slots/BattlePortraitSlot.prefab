@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1253032321905309803}
   - component: {fileID: 1033723843112123365}
   m_Layer: 5
-  m_Name: Image_TurnOrderIcon
+  m_Name: Image_RoleOrderIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -939,7 +939,7 @@ GameObject:
   - component: {fileID: 5508639079678214121}
   - component: {fileID: 6352334994108934439}
   m_Layer: 5
-  m_Name: Image_Portrait
+  m_Name: Image_ReactionIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1311,7 +1311,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8498310245909177863}
   m_Layer: 5
-  m_Name: TurnOrder
+  m_Name: RoleOrder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1537,7 +1537,7 @@ GameObject:
   - component: {fileID: 6732381350472131798}
   - component: {fileID: 754301298031751496}
   m_Layer: 5
-  m_Name: Image_TurnOrderBg
+  m_Name: Image_RoleOrderBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
