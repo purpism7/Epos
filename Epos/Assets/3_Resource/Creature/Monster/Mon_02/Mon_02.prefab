@@ -51,7 +51,7 @@ MonoBehaviour:
   eClass: 0
   rootTm: {fileID: 2909393709685397080}
   actionSpeed: 10
-  moveSpeed: 1
+  moveSpeed: 2.4
   attack: 3
   maxHp: 27.7
   activePoint: 5

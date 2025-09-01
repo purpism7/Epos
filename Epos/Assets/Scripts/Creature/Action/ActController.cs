@@ -94,10 +94,6 @@ namespace Creature.Action
             if (moveParam == null)
                 return null;
 
-            // var targetPos = _currPosition;
-            // if (moveParam.TargetPos != null)
-            //     targetPos = moveParam.TargetPos.Value;
-         
             AddActAsync<Move, Move.Param>(moveParam).Forget();
 
             return this;
@@ -152,13 +148,13 @@ namespace Creature.Action
                 PlayAnimation = PlayAnimation,
             };
             
-            Execute<Damage, Damage.Param>(damageParam);
+            Execute<Damage, Damage.Param>(damageParam, false);
         }
 
         private async UniTask ExecuteAsync()
         {
             if (InAction)
-                await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             if (_iActQueue?.Count > 0)
             {
@@ -265,7 +261,7 @@ namespace Creature.Action
         }
         #endregion
 
-        private void Execute<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
+        private void Execute<T, V>(V param = null, bool isSet = true) where T : Act<V>, new() where V : ActParam, new()
         {
             // if (!IsActivate)
             //     return;
@@ -281,8 +277,9 @@ namespace Creature.Action
             
             act.SetParam(param);
             act.Execute();
-            
-            SetCurrIAct(act);
+
+            if(isSet)
+                SetCurrIAct(act);
         }
         
         private void EndAct(IActor iActor)

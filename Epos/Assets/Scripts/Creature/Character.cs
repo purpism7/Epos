@@ -5,13 +5,13 @@ using System;
 using VContainer;
 using Spine;
 using Spine.Unity;
+using Cysharp.Threading.Tasks;
 
 using Common;
 using Creator;
 using Creature.Action;
 using GameSystem;
 using UI.Parts;
-using Cysharp.Threading.Tasks;
 
 namespace Creature
 {
@@ -214,8 +214,9 @@ namespace Creature
 
                 //NavMeshAgent.baseOffset = 0.5f;
                 //NavMeshAgent.speed = 3.5f;
-                //NavMeshAgent.angularSpeed = 200f;
-                //NavMeshAgent.acceleration = 100f;
+                NavMeshAgent.angularSpeed = 100f;
+                NavMeshAgent.acceleration = 100f;
+                NavMeshAgent.stoppingDistance = 0.5f;
                 //NavMeshAgent.radius = 0.5f;
                 //NavMeshAgent.height = 2f;
 

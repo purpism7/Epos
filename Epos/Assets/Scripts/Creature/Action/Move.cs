@@ -185,25 +185,28 @@ namespace Creature.Action
 
                 if (_param.ForwardDirection)
                 {
-                    Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
-                    Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
-                     
-                    var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
-                    
-                    bool isLeft = crossPos.z > 0f;
+                    if(_param?.LeaderTm)
+                    {
+                        Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
+                        Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
 
-                    Vector3 right = Vector3.right; // 월드 기준 오른쪽
-                    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
+                        var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
 
-                    // 반원 내 랜덤 각도 + 거리
-                    float angle = Random.Range(-90f, 90f);
-                    float distance = Random.Range(5f, 8f);
+                        bool isLeft = crossPos.z > 0f;
 
-                    // 회전 적용
-                    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                    Vector3 offset = rotation * baseDir * distance;
+                        Vector3 right = Vector3.right; // 월드 기준 오른쪽
+                        Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
 
-                    return targetPos + offset;
+                        // 반원 내 랜덤 각도 + 거리
+                        float angle = Random.Range(-90f, 90f);
+                        float distance = Random.Range(6f, 10f);
+
+                        // 회전 적용
+                        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                        Vector3 offset = rotation * baseDir * distance;
+
+                        return targetPos + offset;
+                    }
                 }
 
                 return targetPos;
@@ -240,7 +243,7 @@ namespace Creature.Action
                 _targetPos = TargetPos;
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
             }
-
+            
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
@@ -250,15 +253,8 @@ namespace Creature.Action
             _prevPos = iActorTm.position;
 
             var distance = Vector2.Distance(iActorTm.position, _targetPos);
-            if (distance <= _param.Distance)
-            {
-                // 도착 후, 현재 바라보는 방향과 반대로 바라보기.
-                // var localScale = iActorTm.localScale;
-                // localScale.x = _param.DirectionAfterArriving;
-                // iActorTm.localScale = localScale;
-
+            if (distance < _param.Distance)
                 End();
-            }
         }
 
         //private void UpdateMovementUsingNavMesh()
@@ -288,7 +284,7 @@ namespace Creature.Action
 
         private void End()
         {
-            _param.FinishAction?.Invoke();
+            _param?.FinishAction?.Invoke();
             _endAction?.Invoke(_iActor);
         }
     }

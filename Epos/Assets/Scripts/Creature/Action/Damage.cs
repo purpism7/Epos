@@ -7,6 +7,8 @@ using Cysharp.Threading.Tasks;
 using Creator;
 using GameSystem.Event;
 using Parts;
+using UnityEditor;
+using Spine.Unity;
 
 namespace Creature.Action
 {
@@ -18,7 +20,7 @@ namespace Creature.Action
             public bool PlayAnimation = true;
         }
 
-        private TextDamage _textDamage = null;
+        //private TextDamage _textDamage = null;
 
         public override void Execute()
         {
@@ -27,6 +29,7 @@ namespace Creature.Action
             
             //if(_data.PlayAnimation)
                 //SetAnimation(_data.AnimationKey, false);
+            //_iActor.SkeletonAnimation.
 
             var iCasterIStat = _param?.ICaster?.IStat;
             if (iCasterIStat != null)
@@ -49,10 +52,9 @@ namespace Creature.Action
 
             }.WithDamage(damage);
 
-            if (_textDamage == null)
-                _textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
-
-            _textDamage?.Activate(textDamageParam);
+            //if (_textDamage == null)
+            var textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
+            textDamage?.Activate(textDamageParam);
         }
     }
 }

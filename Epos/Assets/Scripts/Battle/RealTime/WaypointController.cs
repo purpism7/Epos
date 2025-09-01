@@ -128,7 +128,7 @@ namespace Battle.RealTime
 
             var distance = Vector3.Distance(targetICombatant.Transform.position, Waypoint.Position);
             //Debug.Log(targetICombatant.NavMeshAgent.remainingDistance);
-            if (distance <= 1f)
+            if (distance < 1f)
             {
                 Debug.Log("Arrived");
                 _param?.IListener?.Arrived();

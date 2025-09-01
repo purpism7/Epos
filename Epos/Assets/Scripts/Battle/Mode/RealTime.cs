@@ -260,7 +260,7 @@ namespace Battle.Mode
                     _closestICombatant = ClosestICombatantToWayPoint();
 
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-                Debug.Log("movetoWaypoint = " + iCombatant.Id);
+                //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 MoveToWaypoint(waypoint, iCombatant);
             }
             else
