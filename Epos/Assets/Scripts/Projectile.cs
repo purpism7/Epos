@@ -28,6 +28,8 @@ public class Projectile : Common.Component<Projectile.Param>
     float currSpeed;
     Tween speedTween;
 
+    private Vector3 _lastPos = Vector3.zero;
+
 
     public override UniTask InitializeAsync(Param param)
     {
@@ -81,6 +83,18 @@ public class Projectile : Common.Component<Projectile.Param>
         if (!transform.gameObject.activeSelf)
             return;
 
+        var dir = targetPos - transform.position;
+
+        if (Physics.Raycast(_lastPos, dir.normalized, out RaycastHit hit, dir.magnitude))
+        {
+            Debug.Log("hit");
+            Extensions.SetActive(transform, false);
+            return;
+            // 충돌 지점에서 이펙트 생성
+            //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+            //Destroy(gameObject);
+        }
+
         transform.position = Vector3.MoveTowards(transform.position, targetPos, currSpeed * Time.deltaTime);
 
         var distance = Vector3.Distance(transform.position, targetPos);
@@ -88,6 +102,8 @@ public class Projectile : Common.Component<Projectile.Param>
         {
             Extensions.SetActive(transform, false);
         }
+
+        _lastPos = transform.position;
 
     }
 }

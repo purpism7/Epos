@@ -98,8 +98,11 @@ namespace GameSystem
 
             //if (!_fieldHero.IsActivate)
             //    return;
-            
-            var mouseWorldPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+            var pointerPos = Input.mousePosition;
+            if (float.IsInfinity(pointerPos.x) || float.IsInfinity(pointerPos.y))
+                return; //
+
+            var mouseWorldPos = mainCamera.ScreenToWorldPoint(pointerPos);
             if (Input.GetMouseButtonDown(0))
             {
                 StartMove(mouseWorldPos);

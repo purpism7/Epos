@@ -117,20 +117,20 @@ namespace GameSystem
                 _componentDic.TryGetValue(typeof(T), out component);
 
             if (component == null)
+                return null;
+
+            component = Instantiate(component.gameObject)?.GetComponent<T>();
+            _container?.InjectGameObject(component?.gameObject);
+
+            if (component != null)
+                _objectPooler?.Add(component);
+
+            if (component is BaseView<V> view)
             {
-                component = Instantiate(component.gameObject)?.GetComponent<T>();
-                _container?.InjectGameObject(component?.gameObject);
-
-                if (component != null)
-                    _objectPooler?.Add(component);
-
-                if (component is BaseView<V> view)
-                {
-                    view.CreatePresenter(_container);
-                    SetPanel(component);
-                }
+                view.CreatePresenter(_container);
+                SetPanel(component);
             }
-       
+
             if (!rootTm)
             {
                 if (worldUI)
