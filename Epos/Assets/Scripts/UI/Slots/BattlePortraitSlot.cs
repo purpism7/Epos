@@ -7,11 +7,10 @@ using Creature;
 using GameSystem.Event;
 using Common;
 using UI.Parts;
-using Mono.Cecil;
 
-namespace UI.Slots
+namespace UI.Slot
 {
-    public class BattlePortraitSlot : Slot<BattlePortraitSlot.Param>
+    public class BattlePortraitSlot : BaseSlot<BattlePortraitSlot.Param>
     {
         public class Param : Common.Param
         {

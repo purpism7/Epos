@@ -50,7 +50,7 @@ namespace Creator
 
         private Common.Component<V> GetComponent()
         {
-            var component = UIManager.Instance?.Get<T>(_rootRectTm) as Common.Component<V>;
+            var component = UIManager.Instance?.Get<T, V>(_rootRectTm) as Common.Component<V>;
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {
@@ -58,14 +58,9 @@ namespace Creator
                 rectTm.sizeDelta = Vector2.zero;
                 rectTm.transform.localScale = Vector3.one;
             }
-
-            if (component is Panel<V>)
-                UIManager.Instance?.SetPanel(component);
-
-            if (component as Popup<V>)
-            {
-                Debug.Log("popup");
-            }
+  
+            if (component is BasePopup<V> popup)
+                Debug.Log(popup);
 
             return component;
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 { 
-    public abstract class Popup<T> : Common.Component<T> where T : Common.Param
+    public abstract class BasePopup<T> : Common.Component<T> where T : Common.Param
     {
         
     }

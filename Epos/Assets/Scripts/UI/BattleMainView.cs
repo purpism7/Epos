@@ -1,20 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.Threading.Tasks;
 
 
 using Cysharp.Threading.Tasks;
 using VContainer;
 
-using UI.Slots;
-using UnityEngine.UIElements.Experimental;
+using UI.Slot;
 using Battle.Step;
 using Creator;
-using System.Threading.Tasks;
 using Creature;
 
 namespace UI.View
 {
-    public class BattleMainView : Common.Component<BattleMainView.Param>
+    public interface IBattleMainView : IView
+    {
+       List<ICombatant> AllyICombatantList { get; }
+       RectTransform AllyBattlePortraitRootRectTm { get; }
+    }
+
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
     {
         public class Param : Common.Param
         {
@@ -28,45 +34,39 @@ namespace UI.View
         }
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
+        [SerializeField] private Button shoutBtn = null;
 
-        private List<BattlePortraitSlot> _battlePortraitSlotList = null;
+        private IBattleMainPresenter _iPresenter = null;
+
+        public List<ICombatant> AllyICombatantList => _param?.AllyICombatantList;
+        public RectTransform AllyBattlePortraitRootRectTm => allyBattlePortraitRootRectTm;
+
+        public override void CreatePresenter(IObjectResolver iResolver)
+        {
+            _iPresenter = new BattleMainPresenter();
+            iResolver?.Inject(_iPresenter);
+        }
 
         public override async UniTask InitializeAsync(Param param)
         {
             await base.InitializeAsync(param);
-            await InitializeAllyBattlePortraitList();
+            await _iPresenter.InitializeAsync(this);
+
+            InitializeButton();
+        }
+
+        private void InitializeButton()
+        {
+            shoutBtn?.onClick?.AddListener(() =>
+            {
+                _iPresenter.OnClickShout();
+            });
         }
 
         [Inject]
         private void InjectInitialize()
         {
             Debug.Log("InjectInitialize");
-        }
-
-        private async UniTask InitializeAllyBattlePortraitList()
-        {
-            if (_battlePortraitSlotList == null)
-                _battlePortraitSlotList = new();
-
-            _battlePortraitSlotList?.Clear();
-
-            for (int i = 0; i < _param?.AllyICombatantList?.Count; ++i)
-            {
-                var iCombatant = _param?.AllyICombatantList[i];
-                if (iCombatant == null)
-                    continue;
-
-                var battlePortraitSlotParam = new BattlePortraitSlot.Param(iCombatant);
-
-                var battlePortraitSlot = await UICreator<BattlePortraitSlot, BattlePortraitSlot.Param>.Get
-                    .SetRoot(allyBattlePortraitRootRectTm)
-                    .SetParam(battlePortraitSlotParam)
-                    .CreateAsync();
-
-                battlePortraitSlot?.Activate(battlePortraitSlotParam);
-
-                _battlePortraitSlotList?.Add(battlePortraitSlot);
-            }
         }
     }
 }

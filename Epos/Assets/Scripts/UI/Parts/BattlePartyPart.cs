@@ -4,7 +4,7 @@ using UnityEngine;
 
 using TMPro;
 
-using UI.Slots;
+using UI.Slot;
 using UI.Parts;
 using GameSystem.Event;
 using Common;

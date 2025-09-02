@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UI
 { 
-    public abstract class Slot<T> : Common.Component<T> where T : Common.Param
+    public abstract class BaseSlot<T> : Common.Component<T> where T : Common.Param
     {
        
     }

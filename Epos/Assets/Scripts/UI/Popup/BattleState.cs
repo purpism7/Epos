@@ -7,9 +7,9 @@ using Cysharp.Threading.Tasks;
 
 using Common;
 
-namespace UI.Popups
+namespace UI.Popup
 {
-    public class BattleState : Popup<BattleState.Param>
+    public class BattleState : BasePopup<BattleState.Param>
     {
         [SerializeField] 
         private RectTransform startRectTm = null;

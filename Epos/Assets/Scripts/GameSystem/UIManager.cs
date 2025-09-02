@@ -74,7 +74,39 @@ namespace GameSystem
             IsEndLoad = true;
         }
 
-        public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component
+        //public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component
+        //{
+        //    var iPoolable = _objectPooler.Get<T>();
+        //    if (iPoolable != null)
+        //        return iPoolable;
+
+        //    Common.Component component = null;
+        //    if (_componentDic != null)
+        //        _componentDic.TryGetValue(typeof(T), out component);
+
+        //    if (component == null)
+        //        return null;
+                
+        //    component = Instantiate(component.gameObject)?.GetComponent<T>();
+        //    _container?.InjectGameObject(component?.gameObject);
+
+        //    if (component != null)
+        //        _objectPooler?.Add(component);
+       
+        //    if (!rootTm)
+        //    {
+        //        if (worldUI)
+        //            rootTm = worldUIRootRectTm;
+        //        else
+        //            rootTm = rootRectTm;
+        //    }
+            
+        //    component?.transform.SetParent(rootTm);
+
+        //    return component;
+        //}
+        
+        public Common.Component Get<T, V>(Transform rootTm, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
         {
             var iPoolable = _objectPooler.Get<T>();
             if (iPoolable != null)
@@ -85,13 +117,19 @@ namespace GameSystem
                 _componentDic.TryGetValue(typeof(T), out component);
 
             if (component == null)
-                return null;
-                
-            component = Instantiate(component.gameObject)?.GetComponent<T>();
-            _container?.InjectGameObject(component?.gameObject);
-            
-            if (component != null)
-                _objectPooler?.Add(component);
+            {
+                component = Instantiate(component.gameObject)?.GetComponent<T>();
+                _container?.InjectGameObject(component?.gameObject);
+
+                if (component != null)
+                    _objectPooler?.Add(component);
+
+                if (component is BaseView<V> view)
+                {
+                    view.CreatePresenter(_container);
+                    SetPanel(component);
+                }
+            }
        
             if (!rootTm)
             {
@@ -103,31 +141,6 @@ namespace GameSystem
             
             component?.transform.SetParent(rootTm);
 
-            return component;
-        }
-        
-        private Common.Component Get<T, V>(V data, Transform rootTm, out bool initialize) where T : Common.Component where V : Common.Param
-        {
-            initialize = false;
-
-            var iPoolable = _objectPooler.Get<T>();
-            if (iPoolable != null)
-                return iPoolable;
-
-            Common.Component component = null;
-            // GameObject gameObj = null;
-            if (_componentDic != null)
-                _componentDic.TryGetValue(typeof(T), out component);
-
-            if (component == null)
-                return null;
-
-            component = Instantiate(component.gameObject, rootTm)?.GetComponent<T>();
-            if(component != null)
-                _objectPooler?.Add(component);
-      
-            initialize = true;
-    
             return component;
         }
 

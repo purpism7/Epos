@@ -1,21 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using TMPro;
+using Common;
 using Cysharp.Threading.Tasks;
-
 using Datas.ScriptableObjects;
 using GameSystem;
-using Parts;
-using UI.Parts;
-using UI.Slots;
-using Common;
 using GameSystem.Event;
+using Parts;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UI.Parts;
+using UI.Slot;
+using UnityEngine;
+using VContainer;
 
 namespace UI.Panels
 {
-    public class BattleForces : UI.Panel<BattleForces.Param>
+    public class BattleForces : BaseView<BattleForces.Param>
     {
         public class Param : Common.Param
         {
@@ -36,7 +35,12 @@ namespace UI.Panels
         
         [Header("Enemy")]
         [SerializeField] private BattlePartyPart enemyBattlePartyPart = null;
-        
+
+        public override void CreatePresenter(IObjectResolver iResolver)
+        {
+            
+        }
+
         public override UniTask InitializeAsync(Param param)
         {
             base.InitializeAsync(param);

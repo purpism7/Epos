@@ -11,7 +11,7 @@ using Spine;
 
 namespace UI.Popups
 {
-    public class BattleStart : Popup<BattleStart.Param>
+    public class BattleStart : BasePopup<BattleStart.Param>
     {
         public class Param : Common.Param
         {
