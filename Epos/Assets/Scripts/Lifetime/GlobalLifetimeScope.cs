@@ -101,13 +101,13 @@ namespace Lifetime
                .InitializeAsync(Container);
             
             await Container.Resolve<ICharacterManager>()
-                .InitializeAsync(Container);
+                .InitializeAsync();
 
             await Container.Resolve<IFieldManager>()
-               .InitializeAsync(Container);
+               .InitializeAsync();
 
             await Container.Resolve<IBattleManager>()
-                .InitializeAsync(Container);
+                .InitializeAsync();
             
             var sceneInitializer = Container.Resolve<SceneInitializer>();
             // var lifetimeScope = sceneInitializer.GetComponent<LifetimeScope>();

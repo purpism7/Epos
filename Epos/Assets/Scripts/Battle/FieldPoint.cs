@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using VContainer;
 
 namespace Battle
 {
@@ -26,6 +27,8 @@ namespace Battle
 
     public abstract class FieldPoint<T> : Common.Component<T>, IFieldPoint where T : FieldPointParam
     {
+        [Inject] protected IObjectResolver _iResolver = null;
+
         protected IFieldPointListener _iFieldPointListener = null;
 
         void IFieldPoint.Initialize(FieldPointParam param)
@@ -40,7 +43,7 @@ namespace Battle
             Initialize(param as T);
         }
 
-        // ÆÄ»ý Å¬·¡½º°¡ ¿À¹ö¶óÀÌµåÇÒ ÁöÁ¡
+        // ï¿½Ä»ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         //public override void Initialize(T param)
         //{
         //    base.Initialize(param);

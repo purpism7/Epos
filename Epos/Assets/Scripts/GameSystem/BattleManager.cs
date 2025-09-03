@@ -30,16 +30,14 @@ namespace GameSystem
     {
         [Inject] private ICharacterManager _iCharacterManager = null;
         [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private IParty _iParty = null;
 
-        private IObjectResolver _iResolver = null;
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
 
-        async UniTask IGeneric.InitializeAsync(IObjectResolver iResolver)
+        async UniTask IGeneric.InitializeAsync()
         {
-            _iResolver = iResolver;
-
             await UniTask.CompletedTask;
         }
         

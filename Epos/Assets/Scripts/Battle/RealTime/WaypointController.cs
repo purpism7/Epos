@@ -27,7 +27,7 @@ namespace Battle.RealTime
             if (iWayPointCtr == null)
             {
                 var wayPointGameObj = new GameObject(nameof(WaypointController));
-                iResolver?.Inject(wayPointGameObj);
+                iResolver?.InjectGameObject(wayPointGameObj);
 
                 iWayPointCtr = wayPointGameObj.transform.AddOrGetComponent<WaypointController>()
                     .Initialize(param);
@@ -93,7 +93,7 @@ namespace Battle.RealTime
         private IWaypointController Initialize(Param param)
         {
             _param = param;
-            
+            // Debug.Log(_iResolver);
             if (param != null && 
                 !param.Waypoints.IsNullOrEmpty())
             {

@@ -12,7 +12,7 @@ namespace Entities
         // IGeneric Initialize();
         // void ChainUpdate();
         // void ChainLateUpdate();
-        UniTask InitializeAsync(VContainer.IObjectResolver container);
+        UniTask InitializeAsync();
     }
     
     public interface IManager : IGeneric

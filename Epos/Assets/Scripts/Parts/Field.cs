@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+
 using Creature;
 using Entities;
 using Battle;
 using Battle.RealTime;
-using VContainer;
+
+using System.IO.Compression;
 
 namespace Parts
 {
@@ -25,7 +28,8 @@ namespace Parts
         [SerializeField] 
         private int id = 0;
 
-        private IFieldPoint[] _iFieldPoints = null;
+        [Inject] private IObjectResolver _iResolver = null;
+
         private IFieldPoint _iFieldPoint = null;
 
         private Waypoint[] _waypoints = null;
@@ -90,6 +94,7 @@ namespace Parts
         public override void Initialize()
         {
             _iFieldPoint = GetComponentInChildren<IFieldPoint>();
+            _iResolver?.Inject(_iFieldPoint);
             //_iFieldPoints = GetComponentsInChildren<IFieldPoint>();
 
             //foreach (var iFieldPoint in _iFieldPoints)

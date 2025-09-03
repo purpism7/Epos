@@ -64,7 +64,7 @@ namespace Creator
 
         public async UniTask<T> CreateAsync()
         {
-            var component = GetComponent(); 
+            var component = GetComponent();
             await component.InitializeAsync(_param);
             
             return component as T;

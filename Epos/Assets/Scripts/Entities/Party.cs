@@ -19,7 +19,7 @@ namespace Entities
         [SerializeField] private Datas.ScriptableObjects.Party[] parties = null;
         // private Dictionary<int, Datas.ScriptableObjects.Party> _partyDic = null;
         
-        async UniTask IGeneric.InitializeAsync(IObjectResolver container)
+        async UniTask IGeneric.InitializeAsync()
         {
             await UniTask.CompletedTask;
         }

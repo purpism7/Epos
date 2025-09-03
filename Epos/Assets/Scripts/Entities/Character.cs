@@ -22,14 +22,12 @@ namespace Entities
     public class Character : ICharacterManager
     {
         [Inject] private AddressableManager _addressableManager = null;
-        
-        private IObjectResolver _container = null;
+        [Inject] private IObjectResolver _iResolver = null;
+
         private Dictionary<int, Creature.Character> _cachedDic = null;
 
-        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
+        async UniTask IGeneric.InitializeAsync()
         {
-            _container = container;
-            
             await UniTask.CompletedTask;
         }
 
@@ -50,7 +48,8 @@ namespace Entities
                 if (!gameObj)
                     return null;
                 
-                _container?.InjectGameObject(gameObj);
+                _iResolver?.InjectGameObject(gameObj);
+                
                 character = gameObj.GetComponent<T>();
                 // var t = gameObj.GetComponent<T>();
                 // Debug.Log(t);

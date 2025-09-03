@@ -57,7 +57,7 @@ namespace Battle.Mode
                 .WithIListener(this)
                 .WithWaypoints(_data?.Waypoints);
 
-         
+            Debug.Log("Realtime = " + _iResolver);
             _iWaypointCtr = WaypointController.Create(_iResolver, param);
         }
 

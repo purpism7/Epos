@@ -9,6 +9,7 @@ using Common;
 using Creature;
 using Parts;
 using Battle.RealTime;
+using VContainer;
 
 namespace Entities
 {
@@ -30,6 +31,8 @@ namespace Entities
         [SerializeField] 
         private FieldIndicator fieldIndicator = null;
 
+        [Inject] private IObjectResolver _iResolver = null;
+
         //private Hero _fieldHero = null;
         // private List<Parts.Field> _fieldList = new();
         public Parts.IField IField { get; private set; } = null;
@@ -38,10 +41,12 @@ namespace Entities
         //private List<Datas.Field> _fieldDataList = null;
 
         #region IGeneric
-        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver iResolver)
+        async UniTask IGeneric.InitializeAsync()
         {
             //_container = container;
             IField = FindFirstObjectByType<Field>();
+            _iResolver?.Inject(IField);
+            
             IField?.Initialize();
             
             //IField?.GetFieldPoint<IRealTimeFieldPoint>();
