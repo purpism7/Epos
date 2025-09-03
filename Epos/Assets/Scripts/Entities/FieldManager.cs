@@ -42,7 +42,7 @@ namespace Entities
         {
             //_container = container;
             IField = FindFirstObjectByType<Field>();
-            IField?.Initialize(iResolver);
+            IField?.Initialize();
             
             //IField?.GetFieldPoint<IRealTimeFieldPoint>();
             await UniTask.CompletedTask;
