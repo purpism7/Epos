@@ -67,6 +67,7 @@ namespace Creature
 
         [Inject] private IBattleManager _iBattleManager = null;
         [Inject] private ResourceManager _resourceManager = null;
+        [Inject] private UIFactory _uiFactory = null;
 
         #region Temp Stat
 
@@ -266,7 +267,11 @@ namespace Creature
         private void CreateHpProgress()
         {
             if (_iHpProgress == null)
-                _iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
+            {
+                var uiCreator = _uiFactory.Create<HpProgress, HpProgress.Param>();
+                _iHpProgress = uiCreator.Create();
+            }
+                //_iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
 
             var targetPos = Transform.position;
             targetPos.y += Height;

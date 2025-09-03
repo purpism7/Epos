@@ -32,13 +32,13 @@ namespace GameSystem
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private IParty _iParty = null;
 
-        private IObjectResolver _container = null;
+        private IObjectResolver _iResolver = null;
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
 
-        async UniTask IGeneric.InitializeAsync(IObjectResolver container)
+        async UniTask IGeneric.InitializeAsync(IObjectResolver iResolver)
         {
-            _container = container;
+            _iResolver = iResolver;
 
             await UniTask.CompletedTask;
         }
@@ -57,12 +57,14 @@ namespace GameSystem
             Battle.BattleType battleType = null;
             if (!_battleTypeDic.TryGetValue(typeof(T), out battleType))
             {
-                var aBattleType = new T() as BattleType<V>;
-                aBattleType?.SetIListener(this);
-       
-                _battleTypeDic?.TryAdd(typeof(T), aBattleType);
+                battleType = new T();
+                
+                var vBattleType = battleType as BattleType<V>;
+                _iResolver?.Inject(vBattleType);
 
-                battleType = aBattleType;
+                vBattleType?.SetIListener(this);
+
+                _battleTypeDic?.TryAdd(typeof(T), battleType);
             }
 
             if (battleType == null)
@@ -122,7 +124,7 @@ namespace GameSystem
             
             var battleMode = new BattleModeCreator<TurnBased, TurnBased.Data>()
                 .SetData(battleModeData)
-                .Create();
+                .Create(_iResolver);
             
             var allyFieldParam = new Battle.Step.Party.Param
             {
@@ -133,11 +135,9 @@ namespace GameSystem
             {
                 PartyLocation = enemyPartyLocation,
             }.WithParty(enemyPartyLocation.EnmeyParty);
-            
-            var fieldParam = new Battle.Field.Param(allyFieldParam, enemyFieldParam)
+
+            var fieldParam = new Battle.Field.Param(battleMode, allyFieldParam, null)
             {
-                BattleMode = battleMode,
-                
                 PreprocessingParam = new Preprocessing.FieldParam
                 {
                     CameraZoomInPos = pointTm.position,
@@ -198,8 +198,9 @@ namespace GameSystem
             
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
-                .Create(_container);
-            
+                .Create(_iResolver);
+            //_iResolver?.Inject(battleMode);
+
             var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
             battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
 
@@ -211,12 +212,7 @@ namespace GameSystem
                 PartyLocation = allyPartyLocation,
             }.WithICombatantList(allyICombatantList);
 
-            var fieldParam = new Battle.Field.Param(allyFieldParam, null)
-            {
-                BattleMode = battleMode,
-                
-                
-            };
+            var fieldParam = new Battle.Field.Param(battleMode, allyFieldParam, null);
             
             Begin<Field, Field.Param>(fieldParam);
         }
@@ -238,8 +234,8 @@ namespace GameSystem
                 var info = positionInfos[i];
                 if(info == null)
                     continue;
-               
-                var monster = MainManager.Get<ICharacterManager>()?.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
+
+                var monster = _iCharacterManager?.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => monster != null);
                 monster.Initialize();
                 monster.Activate();

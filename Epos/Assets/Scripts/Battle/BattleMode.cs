@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
+using VContainer;
+
 using Creature;
 
 namespace Battle
 {
     public class BattleMode
     {
+        
         public class BaseData
         {
             public List<ICombatant> AllyICombatantList = new();
@@ -47,6 +50,8 @@ namespace Battle
     
     public abstract class BattleMode<T> : BattleMode where T : BattleMode.BaseData
     {
+        [Inject] protected IObjectResolver _iResolver = null;
+
         protected T _data = null;
 
         public virtual BattleMode<T> Initialize(T data)

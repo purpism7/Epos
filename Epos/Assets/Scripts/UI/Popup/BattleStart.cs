@@ -9,7 +9,7 @@ using Spine.Unity;
 using Common;
 using Spine;
 
-namespace UI.Popups
+namespace UI.Popup
 {
     public class BattleStart : BasePopup<BattleStart.Param>
     {

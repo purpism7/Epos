@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+using VContainer.Unity;
+
 using Creature;
 
 using Component = Common.Component;
@@ -18,12 +21,14 @@ namespace Battle.RealTime
     
     public class WaypointController : MonoBehaviour, IWaypointController
     {
-        public static IWaypointController Create(Param param)
+        public static IWaypointController Create(IObjectResolver iResolver, Param param)
         {
             IWaypointController iWayPointCtr = FindFirstObjectByType<WaypointController>();
             if (iWayPointCtr == null)
             {
                 var wayPointGameObj = new GameObject(nameof(WaypointController));
+                iResolver?.Inject(wayPointGameObj);
+
                 iWayPointCtr = wayPointGameObj.transform.AddOrGetComponent<WaypointController>()
                     .Initialize(param);
             }
@@ -53,6 +58,8 @@ namespace Battle.RealTime
         {
             void Arrived();
         }
+
+        [Inject] private IObjectResolver _iResolver = null;
 
         private Param _param = null;
         private Queue<Waypoint> _waypointQueue = null;
@@ -95,9 +102,9 @@ namespace Battle.RealTime
 
                 _waypointQueue.Clear();
 
-                foreach (var wayPoint in param.Waypoints)
+                foreach (var waypoint in param.Waypoints)
                 {
-                    _waypointQueue?.Enqueue(wayPoint);
+                    _waypointQueue?.Enqueue(waypoint);
                 }
             }
 
@@ -161,7 +168,7 @@ namespace Battle.RealTime
 
             if (_waypointQueue == null)
                 return;
-            
+
             if (_waypointQueue.TryDequeue(out Waypoint waypoint))
                 Waypoint = waypoint;
         }

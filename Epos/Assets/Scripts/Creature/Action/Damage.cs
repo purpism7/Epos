@@ -53,8 +53,9 @@ namespace Creature.Action
             }.WithDamage(damage);
 
             //if (_textDamage == null)
-            var textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
-            textDamage?.Activate(textDamageParam);
+            //var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
+            //var textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
+            //textDamage?.Activate(textDamageParam);
         }
     }
 }

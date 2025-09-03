@@ -7,6 +7,7 @@ using Creator;
 using UI.Slot;
 using UI.View;
 using UI.Popup;
+using VContainer;
 
 
 namespace UI
@@ -19,6 +20,7 @@ namespace UI
 
     public class BattleMainPresenter : IBattleMainPresenter
     {
+        [Inject] private UIFactory _uiFactory = null;
 
         private IBattleMainView _iBattleMainView = null;
 
@@ -38,6 +40,8 @@ namespace UI
 
             _battlePortraitSlotList?.Clear();
 
+            var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>();
+
             for (int i = 0; i < _iBattleMainView?.AllyICombatantList?.Count; ++i)
             {
                 var iCombatant = _iBattleMainView?.AllyICombatantList[i];
@@ -46,7 +50,7 @@ namespace UI
 
                 var battlePortraitSlotParam = new BattlePortraitSlot.Param(iCombatant);
 
-                var battlePortraitSlot = await UICreator<BattlePortraitSlot, BattlePortraitSlot.Param>.Get
+                var battlePortraitSlot = await uiCreator
                     .SetRoot(_iBattleMainView?.AllyBattlePortraitRootRectTm)
                     .SetParam(battlePortraitSlotParam)
                     .CreateAsync();
@@ -59,7 +63,8 @@ namespace UI
 
         void IBattleMainPresenter.OnClickShout()
         {
-            var shoutPopup = UICreator<ShoutPopup, ShoutPopup.Param>.Get?
+            var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
+            var shoutPopup = uiCreator
                 .SetParam(new ShoutPopup.Param())?
                 .Create();
         }

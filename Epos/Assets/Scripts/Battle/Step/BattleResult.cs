@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Creator;
 using GameSystem;
-using UI.Popups;
 
 namespace Battle.Step
 {
     public class BattleResult : BattleStep
     {
+        [Inject] private UIFactory _uiFactory = null;
+
         public override void Begin()
         {
             BeginAsync().Forget();
@@ -26,9 +28,9 @@ namespace Battle.Step
 
             await UniTask.Yield();
 
-
-            var battleState = await UICreator<UI.Popup.BattleState, UI.Popup.BattleState.Param>.Get
-                .SetRoot(UIManager.Instance?.CurrPanel.GetComponent<RectTransform>())
+            var uiCreator = _uiFactory?.Create<UI.Popup.BattleState, UI.Popup.BattleState.Param > ();
+            var battleState = await uiCreator
+                .SetRoot(UIManager.Instance?.CurrPanelRecTm)
                 .CreateAsync();
             // var battleState = UIManager.Instance?.Get<BattleState, BattleState.Data>();
             if (battleState != null)

@@ -2,6 +2,7 @@ using Creature;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using VContainer;
 
 namespace Battle
 {
@@ -24,6 +25,12 @@ namespace Battle
 
                 return count;
             }
+        }
+
+        [Inject]
+        private void Initialize(IObjectResolver iResolver)
+        {
+            Debug.Log("Initialize Waypoint");
         }
 
         public override void Initialize()

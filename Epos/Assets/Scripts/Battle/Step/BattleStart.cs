@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Entities;
 using GameSystem;
 using UI.Panels;
-using UI.Popups;
 using Creator;
 using Creature;
 using Spine;
@@ -17,6 +17,8 @@ namespace Battle.Step
 {
     public class BattleStart : BattleStep<BattleStart.Param>
     {
+        [Inject] private UIFactory _uiFactory = null;
+
         public class Param : BattleStepParam
         {
             // public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
@@ -32,7 +34,7 @@ namespace Battle.Step
             }
         }
 
-        private UI.Popups.BattleStart _battleStart = null;
+        private UI.Popup.BattleStart _battleStart = null;
 
         public override void Begin()
         {
@@ -41,12 +43,13 @@ namespace Battle.Step
 
         private async UniTask ActivateBattleStartAsync()
         {
-            var rootRectTm = UIManager.Instance?.CurrPanel?.GetComponent<RectTransform>();
+            var rootRectTm = UIManager.Instance?.CurrPanelRecTm;
+            var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
 
-            var battleStartParam = new UI.Popups.BattleStart.Param()
+            var battleStartParam = new UI.Popup.BattleStart.Param()
                 .WithCompletedAction(OnCompletedBattleStart);
 
-            _battleStart = await UICreator<UI.Popups.BattleStart, UI.Popups.BattleStart.Param>.Get
+            _battleStart = await uiCreator
                .SetRoot(rootRectTm)
                .CreateAsync();
             _battleStart?.Activate(battleStartParam);

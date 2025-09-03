@@ -38,11 +38,11 @@ namespace Entities
         //private List<Datas.Field> _fieldDataList = null;
 
         #region IGeneric
-        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
+        async UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver iResolver)
         {
             //_container = container;
             IField = FindFirstObjectByType<Field>();
-            IField?.Initialize();
+            IField?.Initialize(iResolver);
             
             //IField?.GetFieldPoint<IRealTimeFieldPoint>();
             await UniTask.CompletedTask;

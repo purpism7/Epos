@@ -1,20 +1,42 @@
 using UnityEngine;
 
-using Cysharp.Threading.Tasks;
 using VContainer;
 using VContainer.Unity;
+using Cysharp.Threading.Tasks;
 
-using GameSystem;
-using Scene;
+using Creator;
 using Creature;
 using Entities;
+using GameSystem;
+using Scene;
+using System;
+
 
 namespace Lifetime
 {
+
     public class GlobalLifetimeScope : LifetimeScope
     {
         //[SerializeField] private GameObject uiManagerPrefab = null;
-        
+
+        public class GenericResolver// : IInstanceProvider
+        {
+            readonly Type implType;
+            readonly VContainer.Lifetime lifetime;
+
+            public GenericResolver(Type implType, VContainer.Lifetime lifetime)
+            {
+                this.implType = implType;
+                this.lifetime = lifetime;
+            }
+
+            public object CreateInstance(IObjectResolver resolver, Type type)
+            {
+                var genericType = implType.MakeGenericType(type.GetGenericArguments());
+                return Activator.CreateInstance(genericType);
+            }
+        }
+
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
@@ -37,8 +59,18 @@ namespace Lifetime
             //builder.RegisterEntryPoint<Character>(VContainer.Lifetime.Singleton).AsSelf();
             builder.Register<ObjectPooler>(VContainer.Lifetime.Singleton).AsSelf();
 
-            builder.RegisterComponentInHierarchy<SceneInitializer>()
-                .AsSelf();
+            builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
+
+            builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
+            builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
+            //builder.RegisterFactory<Type, object>(c => 
+            //    (Type type) =>
+            //    {
+            //        var repoType = typeof(UICreator).MakeGenericType(type);
+            //        return Activator.CreateInstance(repoType);
+            //    }, VContainer.Lifetime.Singleton);
+            //builder.Register(typeof(Creator<>), VContainer.Lifetime.Singleton).AsSelf();
+            //builder.Register(new GenericResolver(typeof(UICreator<>), VContainer.Lifetime.Singleton));
         }
 
         //private void RegisterUIManager(IContainerBuilder builder)

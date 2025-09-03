@@ -1,19 +1,41 @@
+using Cysharp.Threading.Tasks;
+using GameSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using Cysharp.Threading.Tasks;
+using VContainer;
 
-using GameSystem;
 using UI;
-
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
 namespace Creator
 {
-    public class UICreator<T, V> : Creator<UICreator<T, V>> where T : Common.Component where V : Common.Param
+    public class UIFactory
     {
+        readonly Func<Type, Type, object> _factory;
+        readonly private IObjectResolver _iResolver;
+
+        [Inject]
+        public UIFactory(IObjectResolver iResolver)
+        {
+            _iResolver = iResolver;
+        }
+
+        public UICreator<T, V> Create<T, V>() where T : Common.Component, new() where V : Common.Param
+        {
+
+            return _iResolver?.Resolve<UICreator<T, V>>();
+            //return (UICreator<T, V>)_factory(typeof(T), typeof(V));
+        }
+    }
+
+    public class UICreator<T, V> where T : Common.Component where V : Common.Param
+    {
+        [Inject] private UIManager _uiManager = null;
+
         private V _param = null;
         private RectTransform _rootRectTm = null;
   
@@ -50,7 +72,7 @@ namespace Creator
 
         private Common.Component<V> GetComponent()
         {
-            var component = UIManager.Instance?.Get<T, V>(_rootRectTm) as Common.Component<V>;
+            var component = _uiManager?.Get<T, V>(_rootRectTm) as Common.Component<V>;
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {

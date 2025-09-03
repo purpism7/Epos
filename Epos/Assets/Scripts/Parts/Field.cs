@@ -6,7 +6,7 @@ using Creature;
 using Entities;
 using Battle;
 using Battle.RealTime;
-using Unity.VisualScripting;
+using VContainer;
 
 namespace Parts
 {

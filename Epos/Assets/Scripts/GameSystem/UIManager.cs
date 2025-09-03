@@ -19,17 +19,19 @@ namespace GameSystem
         [SerializeField] private Camera uiCamera = null;
         [SerializeField] private RectTransform rootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
-        
+
         //private List<Common.Component> _cachedComponentList = null;
+        private IObjectResolver _container = null;
         private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
         public Common.Component CurrPanel { get; private set; } = null;
+        public RectTransform CurrPanelRecTm { get; private set; } = null;
 
         public bool IsEndLoad { get; private set; } = false;
 
-        private IObjectResolver _container = null;
+        
 
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
@@ -200,6 +202,7 @@ namespace GameSystem
         public void SetPanel(Common.Component component)
         {
             CurrPanel = component;
+            CurrPanelRecTm = component?.GetComponent<RectTransform>();
         }
     }
 }

@@ -15,6 +15,8 @@ using GameSystem;
 using UI.Parts;
 using Battle.RealTime;
 
+using Lifetime;
+
 namespace Battle.Mode
 {
     public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionController.IListener, IWeightedActionRequester
@@ -32,6 +34,7 @@ namespace Battle.Mode
 
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private UIManager _uiManager = null;
+        [Inject] private UIFactory _uiFactory = null;
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
@@ -54,7 +57,8 @@ namespace Battle.Mode
                 .WithIListener(this)
                 .WithWaypoints(_data?.Waypoints);
 
-            _iWaypointCtr = WaypointController.Create(param);
+         
+            _iWaypointCtr = WaypointController.Create(_iResolver, param);
         }
 
         public override void Begin()
@@ -85,12 +89,14 @@ namespace Battle.Mode
         
         private void ActivateBattleMain()
         {
-            var rootRectTm = _uiManager?.CurrPanel?.GetComponent<RectTransform>();
+            var rootRectTm = _uiManager?.CurrPanelRecTm;
+
+            var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>();
 
             var battleMainViewParam = new UI.View.BattleMainView.Param()
                .WithAllyICombatantList(_data?.AllyICombatantList);
 
-            var battleMainView = UICreator<UI.View.BattleMainView, UI.View.BattleMainView.Param>.Get
+            var battleMainView = uiCreator?
                .SetParam(battleMainViewParam)
                .SetRoot(rootRectTm)
                .Create();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using System.Data;
 using Battle.Mode;
@@ -18,12 +19,14 @@ namespace Battle
             public Party.Param AllyFieldParam { get; private set; } = null;
             public Party.Param EnemyFieldParam { get; private set; } = null;
 
-            public Param(Party.Param allyFieldParam, Party.Param enemyFieldParam)
+            public Param(BattleMode battleMode, Party.Param allyFieldParam, Party.Param enemyFieldParam) : base(battleMode)
             {
                 AllyFieldParam = allyFieldParam;
                 EnemyFieldParam = enemyFieldParam;
             }
         }
+
+        [Inject] private IObjectResolver _iResolver = null;
         
         public override void Initialize(Param param)
         {
