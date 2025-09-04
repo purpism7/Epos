@@ -98,45 +98,45 @@ namespace GameSystem
 
             //if (!_fieldHero.IsActivate)
             //    return;
-            var pointerPos = Input.mousePosition;
-            if (float.IsInfinity(pointerPos.x) || float.IsInfinity(pointerPos.y))
-                return; //
+            //var pointerPos = Input.mousePosition;
+            //if (float.IsInfinity(pointerPos.x) || float.IsInfinity(pointerPos.y))
+            //    return; //
 
-            var mouseWorldPos = mainCamera.ScreenToWorldPoint(pointerPos);
-            if (Input.GetMouseButtonDown(0))
-            {
-                StartMove(mouseWorldPos);
-            }
-            else if (Input.GetMouseButton(0))
-            {
-                if (!CheckDrag(_startPosition, mouseWorldPos))
-                    return;
+            //var mouseWorldPos = mainCamera.ScreenToWorldPoint(pointerPos);
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    StartMove(mouseWorldPos);
+            //}
+            //else if (Input.GetMouseButton(0))
+            //{
+            //    if (!CheckDrag(_startPosition, mouseWorldPos))
+            //        return;
                 
-                if (!IsMove)
-                {
-                    IsMove = true;
+            //    if (!IsMove)
+            //    {
+            //        IsMove = true;
 
-                    _return = false;
-                    _returnTime = 0;
+            //        _return = false;
+            //        _returnTime = 0;
                     
-                    return;
-                }
+            //        return;
+            //    }
                 
-                _directionForce = _startPosition - mouseWorldPos;
-            }
-            else
-            {
-                if (IsMove)
-                    _return = true;
+            //    _directionForce = _startPosition - mouseWorldPos;
+            //}
+            //else
+            //{
+            //    if (IsMove)
+            //        _return = true;
 
-                if (_return)
-                    _returnTime += Time.deltaTime;
+            //    if (_return)
+            //        _returnTime += Time.deltaTime;
                 
-                IsMove = false;
+            //    IsMove = false;
 
-                if (MoveToTarget())
-                    return;
-            }
+            //    if (MoveToTarget())
+            //        return;
+            //}
 
             ReduceDirectionForce();
             UpdateCameraPosition();

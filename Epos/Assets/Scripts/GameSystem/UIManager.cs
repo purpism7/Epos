@@ -122,7 +122,7 @@ namespace GameSystem
                 return null;
 
             component = Instantiate(component.gameObject)?.GetComponent<T>();
-            _container?.InjectGameObject(component?.gameObject);
+            //_container?.InjectGameObject(component?.gameObject);
 
             if (component != null)
                 _objectPooler?.Add(component);
@@ -132,6 +132,11 @@ namespace GameSystem
                 view.CreatePresenter(_container);
                 SetPanel(component);
             }
+            //else if (component is BasePopup<V> popup)
+            //{
+            //    popup.transform.parent()
+            //}
+
 
             if (!rootTm)
             {

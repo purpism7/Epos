@@ -43,8 +43,7 @@ namespace UI.View
 
         public override void CreatePresenter(IObjectResolver iResolver)
         {
-            _iPresenter = new BattleMainPresenter();
-            iResolver?.Inject(_iPresenter);
+            _iPresenter = RegisterPresenter<BattleMainPresenter>(iResolver);
         }
 
         public override async UniTask InitializeAsync(Param param)

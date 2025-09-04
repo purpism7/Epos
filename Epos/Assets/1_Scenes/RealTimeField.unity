@@ -390,6 +390,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4307059687567845074, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307059687567845074, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030458731795326513, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030458731795326513, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5030458731795326513, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272093699722758469, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6272093699722758469, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8804672290242956748, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
       propertyPath: m_Name
       value: UIManager
@@ -1304,6 +1332,10 @@ PrefabInstance:
     - target: {fileID: 1794456174197242082, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1901442739433434425, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1912578687871502141, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
       propertyPath: m_Mesh

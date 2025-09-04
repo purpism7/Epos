@@ -39,16 +39,16 @@ namespace Common
         
         public virtual void Activate()
         {
-            _isActivate = true;
-
             Extensions.SetActive(rootTm, true);
+
+            _isActivate = true;
         }
         
         public virtual void Deactivate()
         {
-            _isActivate = false;
-
             Extensions.SetActive(rootTm, false);
+
+            _isActivate = false;
         }
     }
     

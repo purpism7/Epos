@@ -23,7 +23,7 @@ namespace Battle
                 int count = 0;
                 for(int i = 0; i < _monsters?.Length; ++i)
                 {
-                    if (_monsters[i].IsActivate)
+                    if (_monsters[i].IsAlive)
                         ++count;
                 }
 

@@ -8,5 +8,12 @@ namespace UI.Popup
         {
             
         }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            Time.timeScale = 0;
+        }
     }
 }

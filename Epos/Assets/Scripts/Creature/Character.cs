@@ -15,14 +15,14 @@ using UI.Parts;
 
 namespace Creature
 {
-    public abstract class Character : MonoBehaviour, IActor, ICaster, ICombatant, Stat.IListener
+    public abstract class Character : Common.Component, IActor, ICaster, ICombatant, Stat.IListener
     {
 
         #region Inspector
 
         [SerializeField] private int id = 0;
         [SerializeField] private EClass eClass = EClass.None;
-        [SerializeField] private Transform rootTm = null;
+        //[SerializeField] private Transform rootTm = null;
 
         #endregion
         
@@ -95,17 +95,7 @@ namespace Creature
 
         #endregion
 
-        public bool IsActivate
-        {
-            get
-            {
-                if (!rootTm)
-                    return false;
-
-                return rootTm.gameObject.activeSelf;
-            }
-        }
-
+        public bool IsAlive { get { return IStat != null ? IStat.Get(Stat.EType.Hp) > 0 : false; } }
         public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
 
 #if UNITY_EDITOR
@@ -133,9 +123,10 @@ namespace Creature
         }
         
         #region ICharacterGeneric
-        public virtual void Initialize()
+        public override void Initialize()
         {
             // EventHandler = null;
+            base.Initialize();
 
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
             _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
@@ -190,24 +181,24 @@ namespace Creature
             IActCtr?.ChainFixedUpdate();
         }
 
-        public virtual void Activate()
+        public override void Activate()
         {
+            base.Activate();
+
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
             ISkillCtr?.Activate();
-
-            Extensions.SetActive(rootTm, true);
         }
 
-        public virtual void Deactivate()
+        public override void Deactivate()
         {
+            base.Deactivate();
+
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
             ISkillCtr?.Deactivate();
             
-            _iHpProgress?.Deactivate();
-
-            Extensions.SetActive(rootTm, false);
+            _iHpProgress?.Deactivate();           
         }
         #endregion
 
@@ -277,10 +268,11 @@ namespace Creature
             if (_iHpProgress == null)
             {
                 var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-                _iHpProgress = uiCreator.Create();
+                _iHpProgress = uiCreator?
+                    .SetWorldUI(true)?
+                    .Create();
             }
-            //_iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
-
+            
             var targetPos = Transform.position;
             targetPos.y += Height;
 
@@ -310,7 +302,6 @@ namespace Creature
             
             IStat?.SetOrigin(Stat.EType.AttackSight, attackSight);
         }
-
         #endregion
         
         #region Stat.IListener

@@ -60,7 +60,9 @@ namespace Creature.Action
             if(_uiCreator == null)
                 _uiCreator = _uiFactory?.Create<TextDamage, TextDamage.Param>();
 
-            var textDamage = _uiCreator?.Create();
+            var textDamage = _uiCreator?
+                .SetWorldUI(true)?
+                .Create();
             textDamage?.Activate(textDamageParam);
         }
     }

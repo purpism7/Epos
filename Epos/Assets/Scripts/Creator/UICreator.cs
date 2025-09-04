@@ -15,7 +15,6 @@ namespace Creator
 {
     public class UIFactory
     {
-        readonly Func<Type, Type, object> _factory;
         readonly private IObjectResolver _iResolver;
 
         [Inject]
@@ -38,21 +37,32 @@ namespace Creator
 
         private V _param = null;
         private RectTransform _rootRectTm = null;
+        private bool _isWorldUI = false;
+        private bool _resetSizeDelta = true;
   
         public UICreator<T, V> SetParam(V param = null) 
         {
             _param = param;
-            
             return this;
         }
         
         public UICreator<T, V> SetRoot(RectTransform rootRectTm)
         {
             _rootRectTm = rootRectTm;   
-            
             return this;
         }
-        
+
+        public UICreator<T, V> SetWorldUI(bool isWorldUI)
+        {
+            _isWorldUI = isWorldUI;
+            return this;
+        }
+
+        public UICreator<T, V> SetResetSizeDelta(bool resetSizeDelta)
+        {
+            _resetSizeDelta = resetSizeDelta;
+            return this;
+        }
 
         public T Create()
         {
@@ -72,17 +82,17 @@ namespace Creator
 
         private Common.Component<V> GetComponent()
         {
-            var component = _uiManager?.Get<T, V>(_rootRectTm) as Common.Component<V>;
+            var component = _uiManager?.Get<T, V>(_rootRectTm, worldUI: _isWorldUI) as Common.Component<V>;
+
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {
+                if (_resetSizeDelta)
+                    rectTm.sizeDelta = Vector2.zero;
+
                 rectTm.anchoredPosition3D = Vector3.zero;
-                rectTm.sizeDelta = Vector2.zero;
                 rectTm.transform.localScale = Vector3.one;
             }
-  
-            if (component is BasePopup<V> popup)
-                Debug.Log(popup);
 
             return component;
         }

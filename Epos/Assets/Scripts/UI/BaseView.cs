@@ -15,6 +15,17 @@ namespace UI
     public abstract class BaseView<T> : Common.Component<T> where T : Common.Param
     {
         public abstract void CreatePresenter(IObjectResolver iResolver);
+
+        protected V RegisterPresenter<V>(IObjectResolver iResolver)
+        {
+            using var scope = iResolver?.CreateScope(
+                (builder) =>
+                {
+                    builder.Register<V>(VContainer.Lifetime.Scoped);
+                });
+
+            return scope.Resolve<V>();
+        }
     }
 }
 
