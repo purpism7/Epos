@@ -20,9 +20,10 @@ namespace Battle.RealTime
         protected override void Initialize(RealTimeFieldPoint.Param param)
         {
             Waypoints = GetComponentsInChildren<Waypoint>();
-            foreach( var wayPoint in Waypoints)
+            foreach( var waypoint in Waypoints)
             {
-                wayPoint?.Initialize();
+                _iResolver?.Inject(waypoint);
+                waypoint?.Initialize();
             }
         }
     }

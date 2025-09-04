@@ -7,6 +7,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
+using VContainer;
 
 namespace Creature.Action
 {
@@ -28,6 +29,8 @@ namespace Creature.Action
     
     public class ActController : Controller, IActController
     {
+        [Inject] private IObjectResolver _iResolver = null;
+
         private IActor _iActor = null;
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
@@ -226,12 +229,12 @@ namespace Creature.Action
             Act<V> act = null;
             
             if (_iActDic.TryGetValue(type, out IAct iAct))
-            {
                 act = iAct as Act<V>;
-            }
             else
             {
                 act = new T();
+                _iResolver?.Inject(act);
+
                 act.Initialize(_iActor);
                 act.SetEndActAction(EndAct);
                 

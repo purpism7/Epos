@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using Spine.Unity;
+using VContainer;
 
 using Creator;
 using GameSystem.Event;
+
 using Parts;
-using UnityEditor;
-using Spine.Unity;
 
 namespace Creature.Action
 {
@@ -20,7 +21,10 @@ namespace Creature.Action
             public bool PlayAnimation = true;
         }
 
+        [Inject] private UIFactory _uiFactory = null;
+
         //private TextDamage _textDamage = null;
+        private UICreator<TextDamage, TextDamage.Param> _uiCreator = null;
 
         public override void Execute()
         {
@@ -53,9 +57,11 @@ namespace Creature.Action
             }.WithDamage(damage);
 
             //if (_textDamage == null)
-            //var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
-            //var textDamage = UICreator<TextDamage, TextDamage.Param>.Get.Create();
-            //textDamage?.Activate(textDamageParam);
+            if(_uiCreator == null)
+                _uiCreator = _uiFactory?.Create<TextDamage, TextDamage.Param>();
+
+            var textDamage = _uiCreator?.Create();
+            textDamage?.Activate(textDamageParam);
         }
     }
 }

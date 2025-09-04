@@ -63,14 +63,6 @@ namespace Lifetime
 
             builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
             builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
-            //builder.RegisterFactory<Type, object>(c => 
-            //    (Type type) =>
-            //    {
-            //        var repoType = typeof(UICreator).MakeGenericType(type);
-            //        return Activator.CreateInstance(repoType);
-            //    }, VContainer.Lifetime.Singleton);
-            //builder.Register(typeof(Creator<>), VContainer.Lifetime.Singleton).AsSelf();
-            //builder.Register(new GenericResolver(typeof(UICreator<>), VContainer.Lifetime.Singleton));
         }
 
         //private void RegisterUIManager(IContainerBuilder builder)

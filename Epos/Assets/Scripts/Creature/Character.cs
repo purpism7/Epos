@@ -65,6 +65,7 @@ namespace Creature
 
         #endregion
 
+        [Inject] protected IObjectResolver _iResolver = null;
         [Inject] private IBattleManager _iBattleManager = null;
         [Inject] private ResourceManager _resourceManager = null;
         [Inject] private UIFactory _uiFactory = null;
@@ -141,6 +142,10 @@ namespace Creature
 
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
+
+            IActCtr = transform.AddOrGetComponent<ActController>();
+            _iResolver?.Inject(IActCtr);
+            IActCtr?.Initialize(this);
 
             ISkillCtr = transform.AddOrGetComponent<SkillController>();
             ISkillCtr?.Initialize(this);
@@ -266,12 +271,15 @@ namespace Creature
 
         private void CreateHpProgress()
         {
+            if (!Transform)
+                return;
+
             if (_iHpProgress == null)
             {
-                var uiCreator = _uiFactory.Create<HpProgress, HpProgress.Param>();
+                var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
                 _iHpProgress = uiCreator.Create();
             }
-                //_iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
+            //_iHpProgress = UICreator<HpProgress, HpProgress.Param>.Get.Create();
 
             var targetPos = Transform.position;
             targetPos.y += Height;

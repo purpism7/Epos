@@ -12,9 +12,6 @@ namespace Creature
         public override void Initialize()
         {
             base.Initialize();
-
-            IActCtr = transform.AddOrGetComponent<ActController>();
-            IActCtr?.Initialize(this);
         }
 
         public override void ChainUpdate()

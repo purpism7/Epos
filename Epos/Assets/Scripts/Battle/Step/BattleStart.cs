@@ -45,7 +45,7 @@ namespace Battle.Step
         {
             var rootRectTm = UIManager.Instance?.CurrPanelRecTm;
             var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
-            Debug.Log("BattleStart = " + uiCreator);
+
             var battleStartParam = new UI.Popup.BattleStart.Param()
                 .WithCompletedAction(OnCompletedBattleStart);
 

@@ -1,13 +1,17 @@
-using Creature;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
+
 using VContainer;
+
+using Creature;
 
 namespace Battle
 {
     public class Waypoint : Common.Component
     {
+        [Inject] protected IObjectResolver _iResolver = null;
+
         private Monster[] _monsters = null;
 
         public List<ICombatant> EnemyICombatantList => _monsters.ToList<ICombatant>();
@@ -38,6 +42,7 @@ namespace Battle
             _monsters = GetComponentsInChildren<Monster>();
             foreach(var monster in _monsters)
             {
+                _iResolver?.Inject(monster);
                 monster?.Initialize();
             }
         }

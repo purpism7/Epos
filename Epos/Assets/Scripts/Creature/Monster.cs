@@ -27,12 +27,9 @@ namespace Creature
         {
             base.Initialize();
 
-            IActCtr = transform.AddOrGetComponent<ActController>();
-            IActCtr?.Initialize(this);
-
             // юс╫ц.
-            if(Transform)
-                Transform.localScale = new Vector3(-1f, 1f, 1f);
+            //if(Transform)
+            //    Transform.localScale = new Vector3(-1f, 1f, 1f);
         }
     }
 }
