@@ -87,9 +87,8 @@ namespace Creator
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {
-                if (_resetSizeDelta)
-                    rectTm.sizeDelta = Vector2.zero;
-
+                // if (_resetSizeDelta)
+                rectTm.sizeDelta = Vector2.zero;
                 rectTm.anchoredPosition3D = Vector3.zero;
                 rectTm.transform.localScale = Vector3.one;
             }

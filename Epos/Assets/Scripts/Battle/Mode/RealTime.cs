@@ -153,9 +153,8 @@ namespace Battle.Mode
             //if (_iHpProgress == null)
             {
                 var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-                //_iHpProgress = uiCreator?
-                    //.SetWorldUI(true)?
-                    //.Create();
+                uiCreator?.SetWorldUI(true)?
+                    .Create();
             }
 
             var targetPos = iCombatant.Transform.position;

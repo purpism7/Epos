@@ -262,27 +262,27 @@ namespace Creature
 
         private void CreateHpProgress()
         {
-            if (!Transform)
-                return;
+            // if (!Transform)
+            //     return;
 
-            if (_iHpProgress == null)
-            {
-                var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-                _iHpProgress = uiCreator?
-                    .SetWorldUI(true)?
-                    .Create();
-            }
+            // if (_iHpProgress == null)
+            // {
+            //     var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
+            //     _iHpProgress = uiCreator?
+            //         .SetWorldUI(true)?
+            //         .Create();
+            // }
             
-            var targetPos = Transform.position;
-            targetPos.y += Height;
+            // var targetPos = Transform.position;
+            // targetPos.y += Height;
 
-            var param = new HpProgress.Param
-            {
-                TargetTm = Transform,
-                Offset = new Vector2(0, Height),
-            }.WithCombatant(this);
+            // var param = new HpProgress.Param
+            // {
+            //     TargetTm = Transform,
+            //     Offset = new Vector2(0, Height),
+            // }.WithCombatant(this);
 
-            _iHpProgress?.Activate(param);
+            // _iHpProgress?.Activate(param);
         }
         #endregion
 
