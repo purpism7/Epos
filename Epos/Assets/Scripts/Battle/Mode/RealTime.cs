@@ -148,7 +148,24 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            iCombatant?.CreateHpProgress();
+            //iCombatant?.CreateHpProgress();
+
+            //if (_iHpProgress == null)
+            {
+                var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
+                //_iHpProgress = uiCreator?
+                    //.SetWorldUI(true)?
+                    //.Create();
+            }
+
+            var targetPos = iCombatant.Transform.position;
+            targetPos.y += iCombatant.Height;
+
+            var param = new HpProgress.Param
+            {
+                TargetTm = iCombatant.Transform,
+                Offset = new Vector2(0, iCombatant.Height),
+            }.WithCombatant(iCombatant);
         }
 
         private async UniTask CheckWaypointActionAsync()
