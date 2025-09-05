@@ -1449,6 +1449,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5749413985268674168, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5803971179516852255, guid: d968a731cd5664e8398c83beb592b5af, type: 3}
       propertyPath: attackSight
       value: 10

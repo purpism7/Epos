@@ -122,7 +122,7 @@ namespace GameSystem
                 return null;
 
             component = Instantiate(component.gameObject)?.GetComponent<T>();
-            //_container?.InjectGameObject(component?.gameObject);
+            _container?.InjectGameObject(component?.gameObject);
 
             if (component != null)
                 _objectPooler?.Add(component);

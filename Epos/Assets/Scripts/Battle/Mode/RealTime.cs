@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using UnityEngine;
-
-using VContainer;
-using Cysharp.Threading.Tasks;
-
+using Battle.RealTime;
 using Common;
 using Creator;
 using Creature;
 using Creature.Action;
+using Cysharp.Threading.Tasks;
 using GameSystem;
-using UI.Parts;
-using Battle.RealTime;
-
 using Lifetime;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using UI.Parts;
+using UnityEditor;
+using UnityEngine;
+using VContainer;
 
 namespace Battle.Mode
 {
@@ -40,6 +38,7 @@ namespace Battle.Mode
         private ICombatant _closestICombatant = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
+        private List<IHpProgress> _iHpProgressList = null;
 
         public override BattleMode<Data> Initialize(Data data)
         {
@@ -57,7 +56,6 @@ namespace Battle.Mode
                 .WithIListener(this)
                 .WithWaypoints(_data?.Waypoints);
 
-            Debug.Log("Realtime = " + _iResolver);
             _iWaypointCtr = WaypointController.Create(_iResolver, param);
         }
 
@@ -85,12 +83,20 @@ namespace Battle.Mode
         public override void ChainLateUpdate()
         {
             _iWaypointCtr?.ChainLateUpdate();
+            LateUpdateHpProgress();
+        }
+
+        private void LateUpdateHpProgress()
+        {
+            for (int i = 0; i < _iHpProgressList?.Count; ++i)
+            {
+                _iHpProgressList[i]?.ChainLateUpdate();
+            }
         }
         
         private void ActivateBattleMain()
         {
             var rootRectTm = _uiManager?.CurrPanelRecTm;
-
             var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>();
 
             var battleMainViewParam = new UI.View.BattleMainView.Param()
@@ -148,14 +154,20 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            //iCombatant?.CreateHpProgress();
-
-            //if (_iHpProgress == null)
+            if (_iHpProgressList == null)
             {
-                var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-                uiCreator?.SetWorldUI(true)?
-                    .Create();
+                _iHpProgressList = new();
+                _iHpProgressList.Clear();
             }
+
+            var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
+            var hpProgress = uiCreator?.SetWorldUI(true)?
+                .Create();
+
+            if (hpProgress == null)
+                return;
+
+            _iHpProgressList?.Add(hpProgress);
 
             var targetPos = iCombatant.Transform.position;
             targetPos.y += iCombatant.Height;
@@ -165,6 +177,8 @@ namespace Battle.Mode
                 TargetTm = iCombatant.Transform,
                 Offset = new Vector2(0, iCombatant.Height),
             }.WithCombatant(iCombatant);
+
+            hpProgress?.Activate(param);
         }
 
         private async UniTask CheckWaypointActionAsync()

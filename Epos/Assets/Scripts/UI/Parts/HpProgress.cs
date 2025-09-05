@@ -1,11 +1,10 @@
+using Creature;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using GameSystem.Event;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
-
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-
-using Creature;
 
 namespace  UI.Parts
 {
@@ -58,23 +57,52 @@ namespace  UI.Parts
                     hpSlider.maxValue = maxHp;
                     hpSlider.value = maxHp;
                 }
+
+                GameSystem.Event.EventHandler.Add<StatChangedEventData>(OnStatChanged);
             }
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            GameSystem.Event.EventHandler.Remove<StatChangedEventData>(OnStatChanged);
         }
         
         void IHpProgress.UpdateHpProgress()
+        {
+            UpdateHpProgress();
+        }
+
+        private void UpdateHpProgress()
         {
             if (_param?.ICombatant == null)
                 return;
 
             var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
-    
+
             if (hpSlider != null)
                 hpSlider.DOValue(hp, 0.1f)
                     .OnComplete(() =>
                     {
                         if (previewHpSlider != null)
                             previewHpSlider.DOValue(hp, 0.3f);
+
+                        if (hp <= 0)
+                            Deactivate();
                     });
+        }
+
+        private void OnStatChanged(StatChangedEventData eventData)
+        {
+            if (eventData == null ||
+                _param == null)
+                return;
+
+            if (eventData.CharacterId != _param.ICombatant.Id)
+                return;
+
+            UpdateHpProgress();
         }
     }
 }

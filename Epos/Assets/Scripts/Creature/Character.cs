@@ -29,7 +29,7 @@ namespace Creature
         private MeshRenderer _meshRenderer = null;
         private IStatGeneric _iStatGeneric = null;
         private int _partyPosition = 0;
-        private IHpProgress _iHpProgress = null;
+        //private IHpProgress _iHpProgress = null;
 
         public int Id
         {
@@ -170,7 +170,7 @@ namespace Creature
             if (!IsActivate)
                 return;
             
-            _iHpProgress?.ChainLateUpdate();
+            //_iHpProgress?.ChainLateUpdate();
         }
 
         public virtual void ChainFixedUpdate()
@@ -196,9 +196,7 @@ namespace Creature
 
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
-            ISkillCtr?.Deactivate();
-            
-            _iHpProgress?.Deactivate();           
+            ISkillCtr?.Deactivate();      
         }
         #endregion
 
@@ -255,35 +253,35 @@ namespace Creature
             transform.position = pos;
         }
 
-        void ICombatant.CreateHpProgress()
-        {
-            CreateHpProgress();
-        }
+        //void ICombatant.CreateHpProgress()
+        //{
+        //    CreateHpProgress();
+        //}
 
-        private void CreateHpProgress()
-        {
-            // if (!Transform)
-            //     return;
+        //private void CreateHpProgress()
+        //{
+        //    // if (!Transform)
+        //    //     return;
 
-            // if (_iHpProgress == null)
-            // {
-            //     var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-            //     _iHpProgress = uiCreator?
-            //         .SetWorldUI(true)?
-            //         .Create();
-            // }
+        //    // if (_iHpProgress == null)
+        //    // {
+        //    //     var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
+        //    //     _iHpProgress = uiCreator?
+        //    //         .SetWorldUI(true)?
+        //    //         .Create();
+        //    // }
             
-            // var targetPos = Transform.position;
-            // targetPos.y += Height;
+        //    // var targetPos = Transform.position;
+        //    // targetPos.y += Height;
 
-            // var param = new HpProgress.Param
-            // {
-            //     TargetTm = Transform,
-            //     Offset = new Vector2(0, Height),
-            // }.WithCombatant(this);
+        //    // var param = new HpProgress.Param
+        //    // {
+        //    //     TargetTm = Transform,
+        //    //     Offset = new Vector2(0, Height),
+        //    // }.WithCombatant(this);
 
-            // _iHpProgress?.Activate(param);
-        }
+        //    // _iHpProgress?.Activate(param);
+        //}
         #endregion
 
         #region Temp Stat
@@ -309,7 +307,7 @@ namespace Creature
         {
             if (eType == Stat.EType.Hp)
             {
-                _iHpProgress?.UpdateHpProgress();
+                //_iHpProgress?.UpdateHpProgress();
                 
                 if(value <= 0)
                     IActCtr?.Die();
