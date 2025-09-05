@@ -178,7 +178,7 @@ namespace Battle.Mode
                 Offset = new Vector2(0, iCombatant.Height),
             }.WithCombatant(iCombatant);
 
-            hpProgress?.Activate(param);
+            hpProgress?.ActivateAsync(param);
         }
 
         private async UniTask CheckWaypointActionAsync()

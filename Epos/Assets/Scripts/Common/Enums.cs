@@ -7,7 +7,7 @@ namespace Common
     public enum EClass
     {
         None,
-        
+
         Knight,
         Archer,
         Assassin,
@@ -15,28 +15,28 @@ namespace Common
         Priest,
         Wizard,
     }
-    
+
     public enum EFormation
-    { 
+    {
         None,
-        
+
         Front,
         Rear,
     }
-    
+
     public enum ETeam
     {
         None,
-        
+
         Ally,
         Enemy,
     }
-    
+
     #region Skill
     public enum ESkillCategory
     {
         None,
-        
+
         Passive,
         Active,
     }
@@ -44,9 +44,9 @@ namespace Common
     public enum ESkillTarget
     {
         None,
-        
+
         All,
-        
+
         NearOne,
         FarOne,
     }
@@ -58,6 +58,16 @@ namespace Common
 
         Tactics,
         Mission,
+    }
+
+    public enum EEmotionType
+    {
+        None,
+
+        Encourage,
+        CalmDown,
+        Focus,
+        FireUp,
     }
 }
 

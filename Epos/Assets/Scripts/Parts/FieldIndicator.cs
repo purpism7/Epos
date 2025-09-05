@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
-using Battle;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
+
+using Battle;
 
 namespace Parts
 {
@@ -12,14 +15,15 @@ namespace Parts
             public Vector3 TargetPos = Vector3.zero;
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
             if (param == null)
-                return;
+                return UniTask.CompletedTask;
 
+            base.ActivateAsync(param);
             transform.position = param.TargetPos;
             
-            base.Activate(param);
+            return UniTask.CompletedTask;
         }
     }
 }

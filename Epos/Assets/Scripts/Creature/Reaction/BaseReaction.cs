@@ -2,13 +2,6 @@ using UnityEngine;
 
 namespace Creature.Reaction
 {
-    public interface IReaction
-    {
-        IReaction Initialize();
-
-        
-    }
-
     public abstract class BaseReaction<T> where T : new()
     {
         private static T _instance = default;

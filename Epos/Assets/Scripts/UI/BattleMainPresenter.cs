@@ -55,7 +55,7 @@ namespace UI
                     .SetParam(battlePortraitSlotParam)
                     .CreateAsync();
 
-                battlePortraitSlot?.Activate(battlePortraitSlotParam);
+                battlePortraitSlot?.ActivateAsync(battlePortraitSlotParam);
 
                 _battlePortraitSlotList?.Add(battlePortraitSlot);
             }

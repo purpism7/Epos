@@ -10,7 +10,7 @@ namespace  UI.Parts
 {
     public interface IHpProgress
     {
-        void Activate(HpProgress.Param param);
+        UniTask ActivateAsync(HpProgress.Param param);
         void Deactivate();
         void ChainLateUpdate();
         
@@ -38,14 +38,14 @@ namespace  UI.Parts
             base.Initialize();
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
+            base.ActivateAsync(param);
 
-            if(param?.ICombatant != null)
+            if (param?.ICombatant != null)
             {
                 var maxHp = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
-                
+
                 if (previewHpSlider != null)
                 {
                     previewHpSlider.maxValue = maxHp;
@@ -60,6 +60,8 @@ namespace  UI.Parts
 
                 GameSystem.Event.EventHandler.Add<StatChangedEventData>(OnStatChanged);
             }
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()

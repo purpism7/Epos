@@ -34,13 +34,15 @@ namespace Parts
             return UniTask.CompletedTask;
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
+            base.ActivateAsync(param);
 
             damageTMP?.SetText($"{param.Damage}");
-            
+
             MoveAsync().Forget();
+
+            return UniTask.CompletedTask;
         }
 
         private async UniTask MoveAsync()

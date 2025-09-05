@@ -51,16 +51,18 @@ namespace UI.Panels
             return UniTask.CompletedTask;
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
-            
+            base.ActivateAsync(param);
+
             useSkillNameTMP?.SetText(string.Empty);
-            
+
             ActivateAllyBattleParty();
             ActivateEnemyBattleParty();
-            
+
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
+
+            return UniTask.CompletedTask;
         }
         
         public override void Deactivate()
@@ -79,7 +81,7 @@ namespace UI.Panels
                 .WithParty(_param?.AllyParty)
                 .WithETeam(ETeam.Ally);
 
-            allyBattlePartyPart?.Activate(battlePartyPartData);
+            allyBattlePartyPart?.ActivateAsync(battlePartyPartData);
         }
 
         private void ActivateEnemyBattleParty()
@@ -88,7 +90,7 @@ namespace UI.Panels
                 .WithParty(_param?.EnemyParty)
                 .WithETeam(ETeam.Enemy);
 
-            enemyBattlePartyPart?.Activate(battlePartyPartData);
+            enemyBattlePartyPart?.ActivateAsync(battlePartyPartData);
         }
 
         private void OnSkillUse(SkillUseEventData eventData)

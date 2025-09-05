@@ -38,9 +38,11 @@ public class Projectile : Common.Component<Projectile.Param>
         return UniTask.CompletedTask;
     }
 
-    public override void Activate(Param param)
+    public override UniTask ActivateAsync(Param param)
     {
-        base.Activate(param);
+        base.ActivateAsync(param);
+
+        return UniTask.CompletedTask;
     }
 
     private void LaunchTo()
@@ -90,7 +92,7 @@ public class Projectile : Common.Component<Projectile.Param>
             Debug.Log("hit");
             Extensions.SetActive(transform, false);
             return;
-            // Ãæµ¹ ÁöÁ¡¿¡¼­ ÀÌÆåÆ® »ý¼º
+            // ï¿½æµ¹ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
             //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
             //Destroy(gameObject);
         }

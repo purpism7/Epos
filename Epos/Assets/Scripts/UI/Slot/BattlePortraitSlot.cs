@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using VContainer;
+using Cysharp.Threading.Tasks;
 
 using Creature;
 using GameSystem.Event;
@@ -39,16 +40,18 @@ namespace UI.Slot
             hpProgress?.Initialize();
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
+            base.ActivateAsync(param);
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
-            
+
             SetCombatantImage();
             SetClassImage();
             ActivateHpProgress();
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()
@@ -61,7 +64,7 @@ namespace UI.Slot
 
         private void ActivateHpProgress()
         {
-            hpProgress?.Activate(
+            hpProgress?.ActivateAsync(
                 new HpProgress.Param()
                     .WithCombatant(_param?.ICombatant));
 

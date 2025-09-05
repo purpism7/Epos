@@ -52,7 +52,7 @@ namespace Battle.Step
             _battleStart = await uiCreator
                .SetRoot(rootRectTm)
                .CreateAsync();
-            _battleStart?.Activate(battleStartParam);
+            _battleStart?.ActivateAsync(battleStartParam);
         }
 
         private void OnCompletedBattleStart(TrackEntry trackEntry)

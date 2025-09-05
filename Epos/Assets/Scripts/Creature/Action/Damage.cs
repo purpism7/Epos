@@ -63,7 +63,7 @@ namespace Creature.Action
             var textDamage = _uiCreator?
                 .SetWorldUI(true)?
                 .Create();
-            textDamage?.Activate(textDamageParam);
+            textDamage?.ActivateAsync(textDamageParam);
         }
     }
 }

@@ -66,28 +66,30 @@ namespace Creator
 
         public T Create()
         {
-            var component = GetComponent();
-            component?.InitializeAsync(_param);
+            var component = GetComponent(out bool isInitialize);
+            if (isInitialize)
+                component?.InitializeAsync(_param);
 
             return component as T;
         }
 
         public async UniTask<T> CreateAsync()
         {
-            var component = GetComponent();
-            await component.InitializeAsync(_param);
+            var component = GetComponent(out bool isInitialize);
+            if(isInitialize)
+                await component.InitializeAsync(_param);
             
             return component as T;
         }
 
-        private Common.Component<V> GetComponent()
+        private Common.Component<V> GetComponent(out bool isInitialize)
         {
-            var component = _uiManager?.Get<T, V>(_rootRectTm, worldUI: _isWorldUI) as Common.Component<V>;
+            isInitialize = false;
+            var component = _uiManager?.Get<T, V>(_rootRectTm, out isInitialize, worldUI: _isWorldUI) as Common.Component<V>;
 
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)
             {
-                // if (_resetSizeDelta)
                 rectTm.sizeDelta = Vector2.zero;
                 rectTm.anchoredPosition3D = Vector3.zero;
                 rectTm.transform.localScale = Vector3.one;

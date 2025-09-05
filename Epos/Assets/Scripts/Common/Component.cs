@@ -64,12 +64,14 @@ namespace Common
 
             return UniTask.CompletedTask;
         }
-        
-        public virtual void Activate(T param)
+
+        public virtual UniTask ActivateAsync(T param)
         {
             base.Activate();
-            
+
             _param = param;
+
+            return UniTask.CompletedTask;
         }
     }
 }

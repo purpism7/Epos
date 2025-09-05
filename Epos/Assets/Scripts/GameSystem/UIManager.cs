@@ -108,8 +108,10 @@ namespace GameSystem
         //    return component;
         //}
         
-        public Common.Component Get<T, V>(Transform rootTm, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
+        public Common.Component Get<T, V>(Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
         {
+            isInitialize = false;
+
             var iPoolable = _objectPooler.Get<T>();
             if (iPoolable != null)
                 return iPoolable;
@@ -120,6 +122,8 @@ namespace GameSystem
 
             if (component == null)
                 return null;
+
+            isInitialize = true;
 
             component = Instantiate(component.gameObject)?.GetComponent<T>();
             _container?.InjectGameObject(component?.gameObject);
@@ -132,12 +136,7 @@ namespace GameSystem
                 view.CreatePresenter(_container);
                 SetPanel(component);
             }
-            //else if (component is BasePopup<V> popup)
-            //{
-            //    popup.transform.parent()
-            //}
-
-
+   
             if (!rootTm)
             {
                 if (worldUI)

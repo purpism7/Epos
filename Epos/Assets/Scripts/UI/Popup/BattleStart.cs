@@ -33,11 +33,13 @@ namespace UI.Popup
             return UniTask.CompletedTask;
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
+            base.ActivateAsync(param);
 
             skeletonGraphic?.PlayAnimation("Battle_Start_01", false, _param?.CompletedAction, out float duration);
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()

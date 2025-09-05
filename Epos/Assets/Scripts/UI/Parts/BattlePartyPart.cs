@@ -11,6 +11,7 @@ using Common;
 using Entities;
 using EventHandler = GameSystem.Event.EventHandler;
 using Party = Datas.ScriptableObjects.Party;
+using Cysharp.Threading.Tasks;
 
 namespace UI.Parts
 {
@@ -45,16 +46,18 @@ namespace UI.Parts
             _battlePortraitSlots = rootTm.GetComponentsInChildren<BattlePortraitSlot>();
         }
 
-        public override void Activate(Param param)
+        public override UniTask ActivateAsync(Param param)
         {
-            base.Activate(param);
+            base.ActivateAsync(param);
 
             EventHandler.Add<SkillUseEventData>(OnSkillUse);
             EventHandler.Add<TurnBasedEventData>(OnTurnBased);
-            
+
             skillNameTMP?.SetText(string.Empty);
-            
+
             ApplyParty();
+
+            return UniTask.CompletedTask;
         }
 
         public override void Deactivate()
