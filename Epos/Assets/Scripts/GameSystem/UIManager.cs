@@ -12,7 +12,7 @@ using VContainer;
 
 namespace GameSystem
 {
-    public class UIManager :  Singleton<UIManager>
+    public class UIManager : MonoBehaviour
     {
         // private const string UIPath = "Assets/Resource/Prefabs";
 
@@ -20,29 +20,28 @@ namespace GameSystem
         [SerializeField] private RectTransform rootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
 
+        [Inject] private AddressableManager _addressableManager = null;
+        [Inject] private ObjectPooler _objectPooler = null;
+
         //private List<Common.Component> _cachedComponentList = null;
         private IObjectResolver _container = null;
         private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
-        public Common.Component CurrPanel { get; private set; } = null;
-        public RectTransform CurrPanelRecTm { get; private set; } = null;
+        public Common.Component CurrView { get; private set; } = null;
+        public RectTransform CurrViewRectTm { get; private set; } = null;
 
         public bool IsEndLoad { get; private set; } = false;
 
         
-
-        [Inject] private AddressableManager _addressableManager = null;
-        [Inject] private ObjectPooler _objectPooler = null;
-        
-        protected override void Initialize()
-        {
-            DontDestroyOnLoad(this);
+        // protected override void Initialize()
+        // {
+        //     DontDestroyOnLoad(this);
          
             
-            //LoadAssetAsync().Forget();
-        }
+        //     //LoadAssetAsync().Forget();
+        // }
 
         public async UniTask InitializeAsync(VContainer.IObjectResolver container)
         {
@@ -111,6 +110,10 @@ namespace GameSystem
         public Common.Component Get<T, V>(Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
         {
             isInitialize = false;
+
+            if (CurrView != null &&
+                CurrView.GetType() == typeof(T))
+                return null;
 
             var iPoolable = _objectPooler.Get<T>();
             if (iPoolable != null)
@@ -205,8 +208,8 @@ namespace GameSystem
 
         public void SetPanel(Common.Component component)
         {
-            CurrPanel = component;
-            CurrPanelRecTm = component?.GetComponent<RectTransform>();
+            CurrView = component;
+            CurrViewRectTm = component?.GetComponent<RectTransform>();
         }
     }
 }

@@ -96,7 +96,7 @@ namespace Battle.Mode
         
         private void ActivateBattleMain()
         {
-            var rootRectTm = _uiManager?.CurrPanelRecTm;
+            var rootRectTm = _uiManager?.CurrViewRectTm;
             var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>();
 
             var battleMainViewParam = new UI.View.BattleMainView.Param()

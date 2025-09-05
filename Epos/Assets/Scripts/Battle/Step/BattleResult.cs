@@ -12,6 +12,7 @@ namespace Battle.Step
 {
     public class BattleResult : BattleStep
     {
+        [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
 
         public override void Begin()
@@ -30,7 +31,7 @@ namespace Battle.Step
 
             var uiCreator = _uiFactory?.Create<UI.Popup.BattleState, UI.Popup.BattleState.Param > ();
             var battleState = await uiCreator
-                .SetRoot(UIManager.Instance?.CurrPanelRecTm)
+                .SetRoot(_uiManager.CurrViewRectTm)
                 .CreateAsync();
             // var battleState = UIManager.Instance?.Get<BattleState, BattleState.Data>();
             if (battleState != null)

@@ -17,8 +17,9 @@ namespace Battle.Step
 {
     public class BattleStart : BattleStep<BattleStart.Param>
     {
+        [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
-
+        
         public class Param : BattleStepParam
         {
             // public Datas.ScriptableObjects.Party AllyParty { get; private set; } = null;
@@ -43,7 +44,7 @@ namespace Battle.Step
 
         private async UniTask ActivateBattleStartAsync()
         {
-            var rootRectTm = UIManager.Instance?.CurrPanelRecTm;
+            var rootRectTm = _uiManager?.CurrViewRectTm;
             var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
 
             var battleStartParam = new UI.Popup.BattleStart.Param()
