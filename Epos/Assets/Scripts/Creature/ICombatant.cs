@@ -15,7 +15,5 @@ namespace Creature
         int PartyPosition { get; }
         void SetPartyPosition(int partPosition);
         void SetPosition(Vector3 position);
-
-        void CreateHpProgress();
     }
 }

@@ -66,7 +66,7 @@ namespace UI
             var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
             var shoutPopup = uiCreator
                 .SetParam(new ShoutPopup.Param())?
-                .SetResetSizeDelta(false)
+                // .SetResetSizeDelta(false)
                 .Create();
         }
     }
