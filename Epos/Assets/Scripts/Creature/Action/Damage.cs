@@ -39,7 +39,7 @@ namespace Creature.Action
             if (iCasterIStat != null)
             {
                 var damage = iCasterIStat.Get(Stat.EType.Attack);
-                _iActor?.IStat?.Add(Stat.EType.Hp, -damage);
+                _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, -damage);
 
                 EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
 

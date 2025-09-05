@@ -10,6 +10,7 @@ using Cysharp.Threading.Tasks;
 using Spine;
 using Spine.Unity;
 using UnityEditor;
+using Creature.Reaction;
 
 namespace Creature.Action
 {
@@ -72,6 +73,8 @@ namespace Creature.Action
         private Vector3 _prevPos = Vector3.zero;
         private Vector3 _targetPos = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
+
+        private float _timeScale = 1f;
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
@@ -94,6 +97,8 @@ namespace Creature.Action
                 return;
             }
 
+            _timeScale = Time.timeScale;
+
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
@@ -109,7 +114,7 @@ namespace Creature.Action
 
                     _targetPos = CalcTargetPos;
 
-                    navMeshAgent.speed = _param.MoveSpeed;
+                    SetNavMeshAgentSpeed();
                     navMeshAgent.SetDestination(_targetPos);
                 }
             }
@@ -151,6 +156,20 @@ namespace Creature.Action
                 navMeshAgent.isStopped = true;
                 navMeshAgent.enabled = false;
             }
+        }
+
+        private void SetNavMeshAgentSpeed()
+        {
+            if (_param == null ||
+                !_param.UseNavMesh)
+                return;
+
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent == null)
+                return;
+            //Debug.Log(Time.timeScale);
+            _iActor.SkeletonAnimation.timeScale = Time.timeScale;
+            navMeshAgent.speed = _param.MoveSpeed * Time.timeScale;
         }
 
         private Vector3 TargetPos
@@ -243,7 +262,12 @@ namespace Creature.Action
                 _targetPos = TargetPos;
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
             }
-            
+            else
+            {
+                //if (Time.timeScale <= 0)
+                SetNavMeshAgentSpeed();
+            }
+
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;

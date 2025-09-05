@@ -68,6 +68,7 @@ namespace UI
                 .SetParam(new ShoutPopup.Param())?
                 // .SetResetSizeDelta(false)
                 .Create();
+            shoutPopup?.Activate();
         }
     }
 }

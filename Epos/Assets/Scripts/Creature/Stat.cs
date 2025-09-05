@@ -1,7 +1,7 @@
 using System.Collections;
-using UnityEngine;
-
 using System.Collections.Generic;
+using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace Creature
 {
@@ -17,7 +17,7 @@ namespace Creature
     public interface IStat
     {
         void SetOrigin(Stat.EType eStatType, float value);
-        void Add(Stat.EType eStatType, float value);
+        void Add(Stat.EType eStatType, Stat.ESubType eSubType, float value);
 
         float Get(Stat.EType eStatType);
     }
@@ -43,6 +43,15 @@ namespace Creature
             AttackSight,
         }
 
+        public enum ESubType
+        {
+            None,
+
+            Hp,
+
+            Fatigue,
+        }
+
         public interface IListener
         {
             void OnStatChanged(EType eType, float value);
@@ -50,7 +59,7 @@ namespace Creature
         
         private IListener _iListener = null;
         private Dictionary<EType, float> _originStatDic = new();
-        private Dictionary<EType, float> _addedStatDic = new();
+        private Dictionary<EType, Dictionary<ESubType, float>> _addedStatDic = new();
 
         #region IStatGeneric
         void IStatGeneric.Initialize(Character character)
@@ -80,9 +89,9 @@ namespace Creature
             SetOrigin(eType, value);
         }
         
-        void IStat.Add(EType eType, float value)
+        void IStat.Add(EType eType, ESubType eSubType, float value)
         {
-            SetAdded(eType, value);
+            SetAdded(eType, eSubType, value);
         }
 
         float IStat.Get(EType eType)
@@ -110,7 +119,7 @@ namespace Creature
                 _originStatDic.TryAdd(eType, value);
         }
         
-        private void SetAdded(EType eType, float value)
+        private void SetAdded(EType eType, ESubType eSubType, float value)
         {
             if (_addedStatDic == null)
             {
@@ -118,10 +127,42 @@ namespace Creature
                 _addedStatDic.Clear();
             }
 
-            if (_addedStatDic.ContainsKey(eType))
-                _addedStatDic[eType] += value;
+            if (!_addedStatDic.TryGetValue(eType, out var subDic) || subDic == null)
+            {
+                subDic = new Dictionary<ESubType, float>();
+                _addedStatDic?.TryAdd(eType, subDic);
+            }
+
+            if (subDic.ContainsKey(eSubType))
+                subDic[eSubType] += value;
             else
-                _addedStatDic.TryAdd(eType, value);
+                subDic[eSubType] = value;
+
+
+            //if (_addedStatDic.ContainsKey(eType))
+            //{
+            //    if (_addedStatDic[eType] == null)
+            //    {
+            //        var dic = new Dictionary<ESubType, float>();
+            //        dic.Clear();
+            //        dic.TryAdd(eSubType, value);
+
+
+            //        _addedStatDic[eType]
+            //    }
+
+
+            //    _addedStatDic[eType][eSubType] += value;
+            //}
+            //else
+            //{
+            //    var dic = new Dictionary<ESubType, float>();
+            //    dic.Clear();
+            //    dic.TryAdd(eSubType, value);
+
+            //    _addedStatDic.TryAdd(eType, dic);
+            //}
+               
 
             _iListener?.OnStatChanged(eType, GetCurrent(eType));
         }
@@ -141,11 +182,17 @@ namespace Creature
         {
             if (_addedStatDic == null)
                 return 0;
-            
-            if (_addedStatDic.TryGetValue(eType, out float value))
-                return value;
 
-            return 0;
+            float value = 0;
+            if (_addedStatDic.TryGetValue(eType, out var subDic))
+            {
+                foreach(var keyValuePair in subDic)
+                {
+                    value += keyValuePair.Value;
+                }
+            }
+
+            return value;
         }
     }
 }

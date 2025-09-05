@@ -81,7 +81,7 @@ namespace UI.Slot
             var AtlasLoader = _resourceManager?.AtlasLoader;
             var spriteName = $"p_{_param.ICombatant.Id}";
             var sprite = AtlasLoader?.GetCharacterSprite(spriteName);
-            Debug.Log(sprite);
+
             characterImg.sprite = sprite;
             characterImg.SetActive(true);
         }

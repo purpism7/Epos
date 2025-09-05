@@ -88,7 +88,7 @@ namespace  UI.Parts
                         if (previewHpSlider != null)
                             previewHpSlider.DOValue(hp, 0.3f);
 
-                        if (hp <= 0)
+                        if (!_param.ICombatant.IsAlive)
                             Deactivate();
                     });
         }

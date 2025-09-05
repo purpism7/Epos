@@ -26,7 +26,7 @@ namespace UI.Popup
         {
             base.Activate();
 
-            Time.timeScale = 0;
+            Time.timeScale = 0.2f;
         }
 
         private void InitializeButton()

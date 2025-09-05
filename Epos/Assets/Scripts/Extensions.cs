@@ -122,6 +122,8 @@ public static class Extensions
             if (trackEntry == null)
                 return;
 
+            //skeletonAnimation.Update(Time.timeScale);
+
             trackEntry.Complete -= completedAction.Invoke;
             trackEntry.Complete += completedAction.Invoke;
 
