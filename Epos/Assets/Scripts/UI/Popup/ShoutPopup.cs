@@ -22,8 +22,6 @@ namespace UI.Popup
         [SerializeField] private RectTransform shoutSlotRootRectTm = null;
         [SerializeField] private Button cancelBtn = null;
 
-        [Inject] private UIFactory _uiFactory = null;
-
         private List<ShoutSlot> _shoutSlotList = new();
 
         public override UniTask InitializeAsync(Param param)

@@ -38,7 +38,7 @@ namespace Creator
         private V _param = null;
         private RectTransform _rootRectTm = null;
         private bool _isWorldUI = false;
-        private bool _resetSizeDelta = true;
+        // private bool _resetSizeDelta = true;
   
         public UICreator<T, V> SetParam(V param = null) 
         {
@@ -58,11 +58,11 @@ namespace Creator
             return this;
         }
 
-        public UICreator<T, V> SetResetSizeDelta(bool resetSizeDelta)
-        {
-            _resetSizeDelta = resetSizeDelta;
-            return this;
-        }
+        // public UICreator<T, V> SetResetSizeDelta(bool resetSizeDelta)
+        // {
+        //     _resetSizeDelta = resetSizeDelta;
+        //     return this;
+        // }
 
         public T Create()
         {

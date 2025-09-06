@@ -2,15 +2,15 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using VContainer;
 
 using Creator;
 using UI.Slot;
 using UI.View;
 using UI.Popup;
-using VContainer;
 
 
-namespace UI
+namespace UI.Presenter
 {
     public interface IBattleMainPresenter : IPresenter<BattleMainView>
     {

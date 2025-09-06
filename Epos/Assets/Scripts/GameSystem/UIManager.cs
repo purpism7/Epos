@@ -5,10 +5,10 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using VContainer.Unity;
+using VContainer;
 
 using UI;
 using UI.Panels;
-using VContainer;
 
 namespace GameSystem
 {
@@ -17,29 +17,30 @@ namespace GameSystem
         // private const string UIPath = "Assets/Resource/Prefabs";
 
         [SerializeField] private Camera uiCamera = null;
-        [SerializeField] private RectTransform rootRectTm = null;
+        [SerializeField] private RectTransform viewRootRectTm = null;
+        [SerializeField] private RectTransform popupRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
 
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
 
-        //private List<Common.Component> _cachedComponentList = null;
         private IObjectResolver _container = null;
         private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
         public Common.Component CurrView { get; private set; } = null;
+        public Common.Component CurrPopup { get; private set; } = null;
         public RectTransform CurrViewRectTm { get; private set; } = null;
 
         public bool IsEndLoad { get; private set; } = false;
 
-        
+
         // protected override void Initialize()
         // {
         //     DontDestroyOnLoad(this);
-         
-            
+
+
         //     //LoadAssetAsync().Forget();
         // }
 
@@ -66,8 +67,8 @@ namespace GameSystem
                         var component = gameObj.GetComponent<Common.Component>();
                         if (component == null)
                             return;
-                        
-                         //Debug.Log(component.name);
+
+                        //Debug.Log(component.name);
                         _componentDic?.TryAdd(component.GetType(), component);
                     }
                 });
@@ -87,13 +88,13 @@ namespace GameSystem
 
         //    if (component == null)
         //        return null;
-                
+
         //    component = Instantiate(component.gameObject)?.GetComponent<T>();
         //    _container?.InjectGameObject(component?.gameObject);
 
         //    if (component != null)
         //        _objectPooler?.Add(component);
-       
+
         //    if (!rootTm)
         //    {
         //        if (worldUI)
@@ -101,19 +102,27 @@ namespace GameSystem
         //        else
         //            rootTm = rootRectTm;
         //    }
-            
+
         //    component?.transform.SetParent(rootTm);
 
         //    return component;
         //}
-        
+
         public Common.Component Get<T, V>(Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
         {
             isInitialize = false;
 
-            if (CurrView != null &&
-                CurrView.GetType() == typeof(T))
-                return null;
+            if (CurrView is UI.View.BaseView<V> view)
+            {
+                if (view.GetType() == typeof(T))
+                    return null;
+            }
+
+            if (CurrPopup is UI.Popup.BasePopup<V> popup)
+            {
+                if (popup.GetType() == typeof(T))
+                    return null;
+            }
 
             var iPoolable = _objectPooler.Get<T>();
             if (iPoolable != null)
@@ -134,12 +143,22 @@ namespace GameSystem
             if (component != null)
                 _objectPooler?.Add(component);
 
-            if (component is BaseView<V> view)
+            RectTransform rootRectTm = null;
+            if (component is UI.View.BaseView<V> baseView)
             {
-                view.CreatePresenter(_container);
-                SetPanel(component);
+                rootRectTm = viewRootRectTm;
+
+                baseView.CreatePresenter(_container);
+                SetCurrView(baseView);
             }
-   
+
+            if (component is UI.Popup.BasePopup<V> basePopup)
+            {
+                rootRectTm = popupRootRectTm;
+
+                SetCurrPopup(basePopup);
+            }
+
             if (!rootTm)
             {
                 if (worldUI)
@@ -147,7 +166,7 @@ namespace GameSystem
                 else
                     rootTm = rootRectTm;
             }
-            
+
             component?.transform.SetParent(rootTm);
 
             return component;
@@ -161,15 +180,15 @@ namespace GameSystem
         //    var panel = component as Panel<V>;
         //    if(initialize)
         //        panel?.InitializeAsync(param);
-            
+
         //    component?.transform.SetAsLastSibling();
         //    panel?.Activate(param);
-            
+
         //    // CurrPanel = panel;
-            
+
         //    return panel as T;
         //}
-        
+
         //public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.Param
         //{
         //    bool initialize = false;
@@ -178,15 +197,15 @@ namespace GameSystem
         //    var panel = component as Panel<V>;
         //    if(initialize)
         //        panel?.Initialize(data);
-            
+
         //    component?.transform.SetAsLastSibling();
         //    panel?.Activate(data);
-            
+
         //    // CurrPanel = panel;
-            
+
         //    return panel as T;
         //}
-        
+
         // public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
         // {
         //     if (!rootTm)
@@ -206,10 +225,15 @@ namespace GameSystem
         //     return part as T;
         // }
 
-        public void SetPanel(Common.Component component)
+        private void SetCurrView(Common.Component component)
         {
             CurrView = component;
             CurrViewRectTm = component?.GetComponent<RectTransform>();
+        }
+
+        public void SetCurrPopup(Common.Component component)
+        {
+            CurrPopup = component;
         }
     }
 }

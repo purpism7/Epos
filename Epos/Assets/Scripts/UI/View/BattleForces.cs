@@ -1,20 +1,22 @@
-using Common;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using VContainer;
+using TMPro;
 using Cysharp.Threading.Tasks;
+
 using Datas.ScriptableObjects;
+using UI.Parts;
 using GameSystem;
 using GameSystem.Event;
 using Parts;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UI.Parts;
 using UI.Slot;
-using UnityEngine;
-using VContainer;
+using Common;
 
 namespace UI.Panels
 {
-    public class BattleForces : BaseView<BattleForces.Param>
+    public class BattleForces : UI.View.BaseView<BattleForces.Param>
     {
         public class Param : Common.Param
         {
