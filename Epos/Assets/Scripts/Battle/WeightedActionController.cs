@@ -63,7 +63,7 @@ namespace Battle
                 await UniTask.DelayFrame(30, cancellationToken: iRequester.CancellationTokenSource.Token);
                 if (iRequester.CancellationTokenSource.IsCancellationRequested)
                 {
-                    EndAction(executer);
+                    EndAction(executer.IActor);
                     return;
                 }
 
@@ -73,12 +73,12 @@ namespace Battle
 
                 iWeightedAction?.SetParam(param)?
                     .SetEndAction(EndAction)?
-                    .SetIActor(executer)?
+                    .SetIActor(executer.IActor)?
                     .Execute();
             }
             catch(OperationCanceledException)
             {
-                EndAction(executer);
+                EndAction(executer.IActor);
                 // Debug.Log(executer.Id);
                 // Debug.Log(exception);
             }

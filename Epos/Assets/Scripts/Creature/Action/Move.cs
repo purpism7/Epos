@@ -186,7 +186,7 @@ namespace Creature.Action
                         targetPos = _param.TargetPos.Value;
 
                     if (_param.TargetICombatant != null)
-                        targetPos = _param.TargetICombatant.Transform.position;
+                        targetPos = _param.TargetICombatant.IActor.Transform.position;
                 }
 
                 return targetPos;
@@ -247,7 +247,7 @@ namespace Creature.Action
                 return;
 
             if (_param?.TargetICombatant != null &&
-                !_param.TargetICombatant.IsActivate)
+                !_param.TargetICombatant.IActor.IsActivate)
             {
                 End();
                 return;

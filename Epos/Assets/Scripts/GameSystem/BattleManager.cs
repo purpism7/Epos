@@ -170,7 +170,7 @@ namespace GameSystem
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 pos.x += offsetX;
                 
-                ICombatant iCombatant = hero;
+                ICombatant iCombatant = hero.ICombatant;
                 iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
@@ -240,7 +240,7 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 
-                ICombatant iCombatant = monster;
+                ICombatant iCombatant = monster.ICombatant;
                 iCombatant.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);

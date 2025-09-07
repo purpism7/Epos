@@ -15,7 +15,7 @@ using UI.Parts;
 
 namespace Creature
 {
-    public abstract class Character : Common.Component, IActor, ICaster, ICombatant, Stat.IListener
+    public abstract class Character : Common.Component, IActor, Stat.IListener
     {
 
         #region Inspector
@@ -25,17 +25,15 @@ namespace Creature
         //[SerializeField] private Transform rootTm = null;
 
         #endregion
-        
+
         private MeshRenderer _meshRenderer = null;
         private IStatGeneric _iStatGeneric = null;
-        private int _partyPosition = 0;
-        //private IHpProgress _iHpProgress = null;
+        // private int _partyPosition = 0;
 
         public int Id
         {
             get { return id; }
         }
-
 
         public float Height { get; private set; } = 0;
 
@@ -53,22 +51,23 @@ namespace Creature
             get { return _iStatGeneric?.Stat; }
         }
 
-        public Action.IActController IActCtr { get; protected set; } = null;
-        public ISkillController ISkillCtr { get; protected set; } = null;
+        public Action.IActController IActCtr { get; protected set; } = null; 
+        // public ISkillController ISkillCtr { get; protected set; } = null;
+        public Combatant ICombatant { get; protected set; } = null;
         
         #region ICombatant
 
         public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
         // public EFormation EFormation { get; private set; } = EFormation.None;
 
-        public int PartyPosition => _partyPosition;
+        // public int PartyPosition => _partyPosition;
 
         #endregion
 
         [Inject] protected IObjectResolver _iResolver = null;
-        [Inject] private IBattleManager _iBattleManager = null;
-        [Inject] private ResourceManager _resourceManager = null;
-        [Inject] private UIFactory _uiFactory = null;
+        // [Inject] private IBattleManager _iBattleManager = null;
+        // [Inject] private ResourceManager _resourceManager = null;
+        // [Inject] private UIFactory _uiFactory = null;
 
         #region Temp Stat
 
@@ -134,12 +133,12 @@ namespace Creature
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
 
-            IActCtr = transform.AddOrGetComponent<ActController>();
-            _iResolver?.Inject(IActCtr);
-            IActCtr?.Initialize(this);
+            // IActCtr = transform.AddOrGetComponent<ActController>();
+            // _iResolver?.Inject(IActCtr);
+            // IActCtr?.Initialize(this);
 
-            ISkillCtr = transform.AddOrGetComponent<SkillController>();
-            ISkillCtr?.Initialize(this);
+            // ISkillCtr = transform.AddOrGetComponent<SkillController>();
+            // ISkillCtr?.Initialize(this);
 
             SetOriginStat();
             
@@ -187,7 +186,7 @@ namespace Creature
 
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
-            ISkillCtr?.Activate();
+            // ISkillCtr?.Activate();
         }
 
         public override void Deactivate()
@@ -196,9 +195,27 @@ namespace Creature
 
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
-            ISkillCtr?.Deactivate();      
+            // ISkillCtr?.Deactivate();      
         }
         #endregion
+
+        protected void InitializeActController(IActor iActor)
+        {
+            IActCtr = new ActController();
+            _iResolver?.Inject(IActCtr);
+            IActCtr?.Initialize(iActor);
+        }
+
+        // protected void InitializeSkillController(ICaster iCaster)
+        // {
+        //     ISkillCtr = transform.AddOrGetComponent<SkillController>();
+        //     ISkillCtr?.Initialize(iCaster);
+        // }
+
+        protected void CreateCombatant()
+        {
+            ICombatant = new(this);
+        }
 
         private void EnableNavmeshAgent()
         {
@@ -238,20 +255,20 @@ namespace Creature
         #endregion
 
         #region ICombatant
-        void ICombatant.SetETeam(ETeam eTeam)
-        {
-            ETeam = eTeam;
-        }
+        // void ICombatant.SetETeam(ETeam eTeam)
+        // {
+        //     ETeam = eTeam;
+        // }
         
-        void ICombatant.SetPartyPosition(int partyPosition)
-        {
-            _partyPosition = partyPosition;
-        }
+        // void ICombatant.SetPartyPosition(int partyPosition)
+        // {
+        //     _partyPosition = partyPosition;
+        // }
 
-        void ICombatant.SetPosition(Vector3 pos)
-        {
-            transform.position = pos;
-        }
+        // void ICombatant.SetPosition(Vector3 pos)
+        // {
+        //     transform.position = pos;
+        // }
 
         //void ICombatant.CreateHpProgress()
         //{

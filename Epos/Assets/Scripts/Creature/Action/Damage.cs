@@ -35,16 +35,16 @@ namespace Creature.Action
                 //SetAnimation(_data.AnimationKey, false);
             //_iActor.SkeletonAnimation.
 
-            var iCasterIStat = _param?.ICaster?.IStat;
-            if (iCasterIStat != null)
-            {
-                var damage = iCasterIStat.Get(Stat.EType.Attack);
-                _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, -damage);
+            // var iCasterIStat = _param?.ICaster?.IStat;
+            // if (iCasterIStat != null)
+            // {
+            //     var damage = iCasterIStat.Get(Stat.EType.Attack);
+            //     _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, -damage);
 
-                EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
+            //     EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
 
-                ActivateTextDamage(damage);
-            }
+            //     ActivateTextDamage(damage);
+            // }
         }
 
         private void ActivateTextDamage(float damage)

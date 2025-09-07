@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9164072081193230191}
   - component: {fileID: 3937927859288321932}
-  - component: {fileID: -3612029396317345574}
-  - component: {fileID: 7260368330449216564}
   m_Layer: 12
   m_Name: Knight_01
   m_TagString: Untagged
@@ -47,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5c9c7df5a15e42d1ae665845a4a6b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootTm: {fileID: 7668903545576191951}
   id: 10001
   eClass: 1
-  rootTm: {fileID: 7668903545576191951}
   actionSpeed: 3
   moveSpeed: 8.1
   attack: 16
@@ -57,32 +55,6 @@ MonoBehaviour:
   activePoint: 1
   passivePoint: 2
   attackSight: 10
---- !u!114 &-3612029396317345574
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3855556603242047748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebece0a088b224201a59ef2a0867fbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skills:
-  - {fileID: 11400000, guid: e091172c8a06a443ebcdea70e7b13dcd, type: 2}
---- !u!114 &7260368330449216564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3855556603242047748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febd1171119994cb89b63439a5787b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6721083934532127383
 GameObject:
   m_ObjectHideFlags: 0

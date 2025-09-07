@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Creature.Reaction
+namespace Creature.Emotion
 {
-    public abstract class BaseReaction<T> where T : new()
+    public abstract class BaseEmotion<T> where T : new()
     {
         private static T _instance = default;
 
@@ -14,7 +14,11 @@ namespace Creature.Reaction
             return _instance;
         }
 
-        public abstract string ImageName();
+        // data 로 뺄 것.
+        public string ImageName()
+        {
+            return $"Img_Battle_{typeof(T).Name}";
+        }
     }
 }
 

@@ -57,8 +57,8 @@ namespace Creature.Action
                 return;
 
            
-            var direction = target.Transform.position - _param.ICombatant.Transform.position;
-            _param.ICombatant?.IActCtr.Flip(-direction.x);
+            var direction = target.IActor.Transform.position - _param.ICombatant.IActor.Transform.position;
+            _param.ICombatant?.IActor.IActCtr.Flip(-direction.x);
             //if (direction.x > 0)
             //    _param.ICombatant.Transform.localScale = Vector3.one;
             //else if (direction.x < 0)
@@ -83,7 +83,7 @@ namespace Creature.Action
                 foreach (var target in _param.TargetList)
                 {
                     if (target == null || 
-                        !target.IsActivate)
+                        !target.IActor.IsActivate)
                         continue;
 
                     // Temp
@@ -91,11 +91,11 @@ namespace Creature.Action
                     {
                         var projectileGameObj = GameObject.Instantiate(_param.Skill.ProjectilePrefab);
                         var projectile = projectileGameObj.GetComponent<Projectile>();
-                        projectile.startPos = _param.ICombatant.Transform.position;
-                        projectile.targetPos = target.Transform.position;
+                        projectile.startPos = _param.ICombatant.IActor.Transform.position;
+                        projectile.targetPos = target.IActor.Transform.position;
                     }
 
-                    target?.IActCtr?.TakeDamage(_param?.ICombatant, _param.PlayAnimation);
+                    target?.IActor.IActCtr?.TakeDamage(_param?.ICombatant, _param.PlayAnimation);
                 }
             }
 

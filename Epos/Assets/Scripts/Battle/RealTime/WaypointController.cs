@@ -124,16 +124,16 @@ namespace Battle.RealTime
                 if (enemyICombatant == null)
                     continue;
 
-                if (!enemyICombatant.IsActivate)
+                if (!enemyICombatant.IActor.IsActivate)
                     continue;
 
-                enemyICombatant.IActCtr?.ChainUpdate();
+                enemyICombatant.IActor.IActCtr?.ChainUpdate();
             }
             
             if (targetICombatant == null)
                 return;
 
-            var distance = Vector3.Distance(targetICombatant.Transform.position, Waypoint.Position);
+            var distance = Vector3.Distance(targetICombatant.IActor.Transform.position, Waypoint.Position);
             //Debug.Log(targetICombatant.NavMeshAgent.remainingDistance);
             if (distance < 1f)
             {
@@ -155,10 +155,10 @@ namespace Battle.RealTime
                 if (enemyICombatant == null)
                     continue;
 
-                if (!enemyICombatant.IsActivate)
+                if (!enemyICombatant.IActor.IsActivate)
                     continue;
 
-                enemyICombatant.ChainLateUpdate();
+                enemyICombatant.IActor.ChainLateUpdate();
             }
         }
 

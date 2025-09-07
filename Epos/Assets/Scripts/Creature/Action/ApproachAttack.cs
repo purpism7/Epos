@@ -53,7 +53,7 @@ namespace Creature.Action
             var randomIndex = UnityEngine.Random.Range(0, targetList.Count);
             var target = targetList[randomIndex];
             if (target == null ||
-                !target.IsActivate)
+                !target.IActor.IsActivate)
             {
                 _endAction?.Invoke(_iActor);
                 return;
@@ -68,7 +68,7 @@ namespace Creature.Action
 
             var moveParam = new Move.Param
             {
-                MoveSpeed = attacker.IStat.Get(Stat.EType.MoveSpeed),
+                MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
                 FinishAction = () =>
                 {
                     FinishMoveToTarget(attacker, skill, targetList);
@@ -80,14 +80,14 @@ namespace Creature.Action
             .WithDistance(skillRange)
             .WithUseNavMesh(false);
 
-            attacker.IActCtr?
+            attacker.IActor.IActCtr?
                 .MoveToTarget(moveParam)?
                 .Execute();
         }
 
         private void FinishMoveToTarget(ICombatant attacker, Skill skill, List<ICombatant> targetList)
         {
-            attacker?.IActCtr?
+            attacker?.IActor.IActCtr?
                 .CastingSkill(this, attacker, skill, targetList)?
                 .Execute();
         }

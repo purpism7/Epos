@@ -68,7 +68,7 @@ namespace Battle.Mode
             {
                 var ally = _data?.AllyICombatantList[i];
                 ally?.SetETeam(ETeam.Ally);
-                ally?.Activate();
+                ally?.IActor?.Activate();
             }
 
             ActivateBattleMain();
@@ -118,7 +118,7 @@ namespace Battle.Mode
                 if (iCombatant == null)
                     continue;
 
-                iCombatant.IActCtr?.ChainUpdate();
+                iCombatant.IActor?.IActCtr?.ChainUpdate();
             }
 
             _iWaypointCtr?.ChainUpdate(_closestICombatant);
@@ -138,9 +138,9 @@ namespace Battle.Mode
                 if(iCombatant == null)
                     continue;
 
-                var distance = Vector3.Distance(iCombatant.Transform.position, wayPoint.Position);
+                var distance = Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position);
                 if (closestICombatant == null || 
-                    Vector3.Distance(iCombatant.Transform.position, wayPoint.Position) < closest)
+                    Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position) < closest)
                 {
                     closest = distance;
                     closestICombatant = iCombatant;
@@ -148,7 +148,7 @@ namespace Battle.Mode
             }
 
             if(closestICombatant != null)
-                _iCameraManager?.SetTargetTm(closestICombatant.Transform);
+                _iCameraManager?.SetTargetTm(closestICombatant.IActor.Transform);
             
             return closestICombatant;
         }
@@ -170,13 +170,13 @@ namespace Battle.Mode
 
             _iHpProgressList?.Add(hpProgress);
 
-            var targetPos = iCombatant.Transform.position;
-            targetPos.y += iCombatant.Height;
+            var targetPos = iCombatant.IActor.Transform.position;
+            targetPos.y += iCombatant.IActor.Height;
 
             var param = new HpProgress.Param
             {
-                TargetTm = iCombatant.Transform,
-                Offset = new Vector2(0, iCombatant.Height),
+                TargetTm = iCombatant?.IActor?.Transform,
+                Offset = new Vector2(0, iCombatant.IActor.Height),
             }.WithCombatant(iCombatant);
 
             hpProgress?.ActivateAsync(param);
@@ -223,7 +223,7 @@ namespace Battle.Mode
                 return;
 
             float moveSpeed = 7f;
-            if (_closestICombatant.Id == iCombatant.Id)
+            if (_closestICombatant.IActor.Id == iCombatant.IActor.Id)
                 moveSpeed += 0.01f;
 
             var moveParam = new Move.Param
@@ -231,10 +231,10 @@ namespace Battle.Mode
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = waypoint.Position,
             }
-            .WithLeaderTm(_closestICombatant.Transform)
-            .WithForwardDirection(_closestICombatant.Id != iCombatant.Id);
+            .WithLeaderTm(_closestICombatant.IActor.Transform)
+            .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
 
-            iCombatant.IActCtr?
+            iCombatant.IActor.IActCtr?
                 .MoveToTarget(moveParam)?
                 .Execute();
         }
@@ -251,7 +251,7 @@ namespace Battle.Mode
                     continue;
 
                 enemyICombatant.SetETeam(ETeam.Enemy);
-                enemyICombatant.Activate();
+                enemyICombatant.IActor.Activate();
 
                 CreateHpProgress(enemyICombatant);
 
@@ -276,7 +276,7 @@ namespace Battle.Mode
                 if (iCombatant == null)
                     continue;
 
-                iCombatant.IActCtr?.Execute();
+                iCombatant.IActor?.IActCtr?.Execute();
             }
         }
 
@@ -285,7 +285,7 @@ namespace Battle.Mode
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
-                iCombatant?.IActCtr?.Execute();
+                iCombatant?.IActor?.IActCtr?.Execute();
                 return;
             }
 

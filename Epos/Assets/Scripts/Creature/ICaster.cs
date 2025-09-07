@@ -8,7 +8,7 @@ using Creature.Action;
 
 namespace Creature
 {
-    public interface ICaster : IActor
+    public interface ICaster
     {
         ISkillController ISkillCtr { get; }
     }

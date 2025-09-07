@@ -44,7 +44,7 @@ namespace  UI.Parts
 
             if (param?.ICombatant != null)
             {
-                var maxHp = param.ICombatant.IStat.Get(Stat.EType.MaxHp);
+                var maxHp = param.ICombatant.IActor.IStat.Get(Stat.EType.MaxHp);
 
                 if (previewHpSlider != null)
                 {
@@ -81,7 +81,7 @@ namespace  UI.Parts
             if (_param?.ICombatant == null)
                 return;
 
-            var hp = _param.ICombatant.IStat.Get(Stat.EType.Hp);
+            var hp = _param.ICombatant.IActor.IStat.Get(Stat.EType.Hp);
 
             if (hpSlider != null)
                 hpSlider.DOValue(hp, 0.1f)
@@ -90,7 +90,7 @@ namespace  UI.Parts
                         if (previewHpSlider != null)
                             previewHpSlider.DOValue(hp, 0.3f);
 
-                        if (!_param.ICombatant.IsAlive)
+                        if (!_param.ICombatant.IActor.IsAlive)
                             Deactivate();
                     });
         }
@@ -101,7 +101,7 @@ namespace  UI.Parts
                 _param == null)
                 return;
 
-            if (eventData.CharacterId != _param.ICombatant.Id)
+            if (eventData.CharacterId != _param.ICombatant.IActor.Id)
                 return;
 
             UpdateHpProgress();

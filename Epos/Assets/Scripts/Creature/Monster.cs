@@ -7,7 +7,7 @@ using Common;
 
 namespace Creature
 {
-    public class Monster : Character
+    public class Monster : Character, IActor
     {
         public override string AnimationKey<T>(Act<T> act)
         {
@@ -22,12 +22,15 @@ namespace Creature
 
             return string.Empty;
         }
-        
+
         public override void Initialize()
         {
             base.Initialize();
 
-            // юс╫ц.
+            InitializeActController(this);
+
+            CreateCombatant();
+            // О©╫с╫О©╫.
             //if(Transform)
             //    Transform.localScale = new Vector3(-1f, 1f, 1f);
         }

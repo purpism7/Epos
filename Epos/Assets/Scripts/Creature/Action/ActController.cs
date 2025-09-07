@@ -39,6 +39,7 @@ namespace Creature.Action
 
         public bool InAction { get; private set; } = false;
 
+        #region IController
         IActController IController<IActController, IActor>.Initialize(IActor iActor)
         {
             _iActor = iActor;
@@ -48,8 +49,6 @@ namespace Creature.Action
 
             return this;
         }
-
-        #region IController
 
         void IController<IActController, IActor>.ChainUpdate()
         {

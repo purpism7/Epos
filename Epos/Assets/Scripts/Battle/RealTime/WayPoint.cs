@@ -14,7 +14,7 @@ namespace Battle
 
         private Monster[] _monsters = null;
 
-        public List<ICombatant> EnemyICombatantList => _monsters.ToList<ICombatant>();
+        public List<ICombatant> EnemyICombatantList { get; private set; } = null;
         public Vector3 Position => transform.position;
         public int AliveMonsterCount
         {
@@ -40,10 +40,16 @@ namespace Battle
         public override void Initialize()
         {
             _monsters = GetComponentsInChildren<Monster>();
-            foreach(var monster in _monsters)
+
+            EnemyICombatantList = new();
+            EnemyICombatantList.Clear();
+
+            foreach (var monster in _monsters)
             {
                 _iResolver?.Inject(monster);
                 monster?.Initialize();
+                
+                EnemyICombatantList?.Add(monster.ICombatant);
             }
         }
     }
