@@ -285,8 +285,9 @@ Animation:
   m_GameObject: {fileID: 247677846342377179}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 7400000, guid: 99d676ee962c9a04c87c4ecc313f2053, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 99d676ee962c9a04c87c4ecc313f2053, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -2270,7 +2271,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 19, y: 7}
+  m_SizeDelta: {x: 16, y: 6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8511957913208652869
 CanvasRenderer:
@@ -2293,15 +2294,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 15f7a3e37f44e0245b5e103c6c571bcf, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 64e717796e606804bb0155ebada8788c, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -8215,8 +8216,9 @@ Animation:
   m_GameObject: {fileID: 5841983975081561520}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 7400000, guid: 1d65c008841c2a04aa6cbea77238f4d1, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1d65c008841c2a04aa6cbea77238f4d1, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -11289,8 +11291,9 @@ Animation:
   m_GameObject: {fileID: 8315685576180173620}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations: []
+  m_Animation: {fileID: 7400000, guid: 1d67240e950a6bc4b8dee5da56b024d3, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1d67240e950a6bc4b8dee5da56b024d3, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
