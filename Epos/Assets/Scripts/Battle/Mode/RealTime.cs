@@ -348,9 +348,9 @@ namespace Battle.Mode
         #endregion
 
         #region WeightedActionController.IListener
-        void WeightedActionController.IListener.End(IActor iActor)
+        void WeightedActionController.IListener.End(ICombatant iCombatatn)
         {
-            PrepareForNextActionAsync(iActor).Forget();
+            PrepareForNextActionAsync(iCombatatn).Forget();
         }
         #endregion
     }

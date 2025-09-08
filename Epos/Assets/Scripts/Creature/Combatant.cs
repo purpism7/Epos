@@ -13,15 +13,12 @@ namespace Creature
         public ISkillController ISkillCtr { get; private set; } = null;
         public ETeam ETeam { get; private set; } = ETeam.None;
 
-        private readonly ConditionalWeakTable<IActor, ICombatant> _map = new();
-
-        private void Bind(IActor actor, ICombatant combatant) => _map.Add(actor, combatant);
-        public bool TryGet(IActor actor, out ICombatant c) => _map.TryGetValue(actor, out c);
-
         public ICombatant Initialize(IActor iActor, Skill[] skills)
         {
             IActor = iActor;
-            Bind(iActor, this);
+
+            //WeakTypeMap<IActor>
+            //Bind(iActor, this);
 
             InitializeSkillController(skills);
 
