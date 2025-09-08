@@ -54,7 +54,7 @@ namespace Creature
 
         public Action.IActController IActCtr { get; protected set; } = null; 
         // public ISkillController ISkillCtr { get; protected set; } = null;
-        public ICombatant ICombatant { get; protected set; } = null;
+        // public ICombatant ICombatant { get; protected set; } = null;
         
         #region ICombatant
 
@@ -127,11 +127,13 @@ namespace Creature
             _iResolver = iResolver;
 
             using var scope = iResolver?.CreateScope(
-                builder => 
+                builder =>
                 {
                     builder.Register<ActController>(VContainer.Lifetime.Scoped).As<IActController>();
-                    builder.Register<Combatant>(VContainer.Lifetime.Scoped).As<ICombatant>().AsSelf();
+                    // builder.Register<Combatant>(VContainer.Lifetime.Scoped).As<ICombatant>().AsSelf();
                 });
+
+            IActCtr = scope?.Resolve<IActController>();
         }
         
         #region ICharacterGeneric
@@ -214,12 +216,12 @@ namespace Creature
 
         protected void InitializeActController(IActor iActor)
         {
-            IActCtr = _iResolver?.Resolve<IActController>()?.Initialize(iActor);
+            IActCtr?.Initialize(iActor);
         }
 
         protected void InitializeCombatant(IActor iActor)
         {
-            ICombatant = _iResolver?.Resolve<Combatant>()?.Initialize(iActor, skills);
+            // ICombatant = _iResolver?.Resolve<Combatant>()?.Initialize(iActor, skills);
         }
 
         // protected void InitializeSkillController(ICaster iCaster)

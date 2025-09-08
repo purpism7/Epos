@@ -12,6 +12,7 @@ namespace Battle
     {
         [Inject] protected IObjectResolver _iResolver = null;
 
+
         private Monster[] _monsters = null;
 
         public List<ICombatant> EnemyICombatantList { get; private set; } = null;
@@ -48,8 +49,8 @@ namespace Battle
             {
                 _iResolver?.Inject(monster);
                 monster?.Initialize();
-                
-                EnemyICombatantList?.Add(monster.ICombatant);
+
+                // EnemyICombatantList?.Add(monster.ICombatant);
             }
         }
     }

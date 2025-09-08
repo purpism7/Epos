@@ -13,6 +13,12 @@ namespace Creature
         public ISkillController ISkillCtr { get; private set; } = null;
         public ETeam ETeam { get; private set; } = ETeam.None;
 
+        [Inject]
+        private void InitializeInject(IObjectResolver iResolver)
+        {
+            Debug.Log("InitializeInject = " + iResolver);
+        }
+
         public ICombatant Initialize(IActor iActor, Skill[] skills)
         {
             IActor = iActor;

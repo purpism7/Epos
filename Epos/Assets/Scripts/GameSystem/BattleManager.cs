@@ -16,6 +16,7 @@ using Common;
 using Parts;
 using Field = Battle.Field;
 using Character = Creature.Character;
+using Creator;
 
 namespace GameSystem
 {
@@ -28,16 +29,25 @@ namespace GameSystem
     
     public class BattleManager : IBattleManager, BattleType.IListener, ITickable, ILateTickable
     {
+        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private ICharacterManager _iCharacterManager = null;
         [Inject] private ICameraManager _iCameraManager = null;
-        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private IParty _iParty = null;
 
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
+        private CombatantCreator _combatantCreator = null;
 
         async UniTask IGeneric.InitializeAsync()
         {
+            using var scope = _iResolver?.CreateScope(
+                builder =>
+                {
+                    builder.Register<CombatantCreator>(VContainer.Lifetime.Scoped);
+                });
+
+            _combatantCreator = scope?.Resolve<CombatantCreator>();
+
             await UniTask.CompletedTask;
         }
         
@@ -169,8 +179,9 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 pos.x += offsetX;
+
                 
-                ICombatant iCombatant = hero.ICombatant;
+                ICombatant iCombatant = _combatantCreator?.Create(hero);
                 iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
@@ -240,7 +251,7 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 
-                ICombatant iCombatant = monster.ICombatant;
+                ICombatant iCombatant = _combatantCreator?.Create(monster);
                 iCombatant.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
