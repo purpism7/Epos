@@ -4,11 +4,26 @@ using UnityEngine;
 
 using Creature.Action;
 using Common;
+using VContainer;
 
 namespace Creature
 {
     public class Monster : Character, IActor
     {
+        protected override void InitializeInject(IObjectResolver iResolver)
+        {
+            base.InitializeInject(iResolver);
+
+            InitializeActController(this);
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            InitializeCombatant(this);
+        }
+
         public override string AnimationKey<T>(Act<T> act)
         {
             switch (act)
@@ -23,16 +38,6 @@ namespace Creature
             return string.Empty;
         }
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            InitializeActController(this);
-
-            CreateCombatant();
-            // �ӽ�.
-            //if(Transform)
-            //    Transform.localScale = new Vector3(-1f, 1f, 1f);
-        }
+       
     }
 }

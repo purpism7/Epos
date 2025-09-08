@@ -12,10 +12,11 @@ using Creator;
 using Creature.Action;
 using GameSystem;
 using UI.Parts;
+using Datas.ScriptableObjects;
 
 namespace Creature
 {
-    public abstract class Character : Common.Component, IActor, Stat.IListener
+    public abstract class Character : Common.Component, Stat.IListener
     {
 
         #region Inspector
@@ -53,7 +54,7 @@ namespace Creature
 
         public Action.IActController IActCtr { get; protected set; } = null; 
         // public ISkillController ISkillCtr { get; protected set; } = null;
-        public Combatant ICombatant { get; protected set; } = null;
+        public ICombatant ICombatant { get; protected set; } = null;
         
         #region ICombatant
 
@@ -71,27 +72,31 @@ namespace Creature
 
         #region Temp Stat
 
-        [Header("Temp Stat")] [SerializeField] [Range(1f, 100f)] [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]
+        [Header("Temp Stat")] [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]
         private float actionSpeed = 1f;
 
-        [SerializeField] [Range(1f, 100f)] [Tooltip("이동 속도.")]
+        [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("이동 속도.")]
         private float moveSpeed = 1f;
 
-        [SerializeField] [Range(1f, 100f)] [Tooltip("공격력.")]
+        [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("공격력.")]
         private float attack = 1f;
 
         // [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
         // private float attackRange = 1f;
 
-        [SerializeField] [Range(0f, 100f)] private float maxHp = 1f;
+        [SerializeField] [UnityEngine.Range(0f, 100f)] private float maxHp = 1f;
 
-        [SerializeField] [Range(1, 5)] private float activePoint = 1f;
-        [SerializeField] [Range(1, 5)] private float passivePoint = 1f;
+        [SerializeField] [UnityEngine.Range(1, 5)] private float activePoint = 1f;
+        [SerializeField] [UnityEngine.Range(1, 5)] private float passivePoint = 1f;
         
-        [SerializeField] [Range(1f, 20f)] private float attackSight = 10f;
+        [SerializeField] [UnityEngine.Range(1f, 20f)] private float attackSight = 10f;
 
         // [SerializeField] private int position = 0;
 
+        #endregion
+
+        #region Temp Skill
+        [SerializeField] private Skill[] skills = null;
         #endregion
 
         public bool IsAlive { get { return IStat != null ? IStat.Get(Stat.EType.Hp) > 0 : false; } }
@@ -116,9 +121,17 @@ namespace Creature
 #endif
 
         [Inject]
-        private void InjectInitialize()
+        protected virtual void InitializeInject(IObjectResolver iResolver)
         {
             Debug.Log("Inject Initialize");
+            _iResolver = iResolver;
+
+            using var scope = iResolver?.CreateScope(
+                builder => 
+                {
+                    builder.Register<ActController>(VContainer.Lifetime.Scoped).As<IActController>();
+                    builder.Register<Combatant>(VContainer.Lifetime.Scoped).As<ICombatant>().AsSelf();
+                });
         }
         
         #region ICharacterGeneric
@@ -201,9 +214,12 @@ namespace Creature
 
         protected void InitializeActController(IActor iActor)
         {
-            IActCtr = new ActController();
-            _iResolver?.Inject(IActCtr);
-            IActCtr?.Initialize(iActor);
+            IActCtr = _iResolver?.Resolve<IActController>()?.Initialize(iActor);
+        }
+
+        protected void InitializeCombatant(IActor iActor)
+        {
+            ICombatant = _iResolver?.Resolve<Combatant>()?.Initialize(iActor, skills);
         }
 
         // protected void InitializeSkillController(ICaster iCaster)
@@ -211,11 +227,6 @@ namespace Creature
         //     ISkillCtr = transform.AddOrGetComponent<SkillController>();
         //     ISkillCtr?.Initialize(iCaster);
         // }
-
-        protected void CreateCombatant()
-        {
-            ICombatant = new(this);
-        }
 
         private void EnableNavmeshAgent()
         {
@@ -242,7 +253,7 @@ namespace Creature
         }
 
         #region IActor
-        void IActor.SortingOrder(float order)
+        public void SortingOrder(float order)
         {
             var sortingOrder = Mathf.CeilToInt(-order * 100f);
 

@@ -5,22 +5,29 @@ using UnityEngine;
 using Creature.Action;
 using Common;
 using Creature.Emotion;
+using VContainer;
 
 namespace Creature
 {
-    public class Hero : Character
+    public class Hero : Character, IEmotionalActor
     {
         public IEmotionController IEmotionCtr { get; private set; } = null;
+
+
+        protected override void InitializeInject(IObjectResolver iResolver)
+        {
+            base.InitializeInject(iResolver);
+
+            InitializeActController(this);
+        }
 
         public override void Initialize()
         {
             base.Initialize();
 
             InitializeActController(this);
-            // InitializeSkillController(this);
             InitializeEmotionController();
-
-            CreateCombatant();
+            InitializeCombatant(this);
         }
 
         public override void ChainUpdate()

@@ -18,12 +18,18 @@ namespace Creature.Action
     public class SkillController : Controller, ISkillController
     {
         #region Inspector
-        [SerializeField] private Skill[] skills = null;
+        
         #endregion
         
         private ICaster _iCaster = null;
+        private Skill[] _skills = null;
         // private List<Ability.Skill> _skillList = null;
-        
+
+        public SkillController(Skill[] skills)
+        {
+            _skills = skills;
+        }
+
         ISkillController IController<ISkillController, ICaster>.Initialize(ICaster iCaster)
         {
             _iCaster = iCaster;
@@ -116,10 +122,10 @@ namespace Creature.Action
 
         private Skill PossibleSkill(ESkillCategory eSkillCategory)
         {
-            if (skills == null)
+            if (_skills == null)
                 return null;
 
-            foreach (var skill in skills)
+            foreach (var skill in _skills)
             {
                 if(skill == null)
                     continue;

@@ -12,10 +12,8 @@ namespace Creature
     {
         IActor IActor { get; }
         
-        // Transform Transform { get; }
-
         ETeam ETeam { get; }
-        // int PartyPosition { get; }
+        //int PartyPosition { get; }
 
         void SetETeam(ETeam eTeam);
         // void SetPartyPosition(int partPosition);

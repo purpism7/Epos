@@ -15,7 +15,7 @@ namespace Battle
 {
     public interface IWeightedActionRequester
     {
-        WeightedActionParam GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction);
+        WeightedActionParam GetWeightedActionParam(ICombatant attacker, ETeam eTeam, IWeightedAction iWeightedAction);
         CancellationTokenSource CancellationTokenSource { get; }
     }
 
@@ -69,7 +69,7 @@ namespace Battle
 
                 var actionWeight = GetHighestPriorityActionWeight();
                 var iWeightedAction = actionWeight?.Create();
-                var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
+                var param = iRequester?.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
 
                 iWeightedAction?.SetParam(param)?
                     .SetEndAction(EndAction)?
@@ -100,7 +100,7 @@ namespace Battle
                !iActor.IsActivate)
                 return;
 
-            _iListener?.End(iActor as ICombatant);
+            //_iListener?.End();
         }
 
         private ActionWeight GetHighestPriorityActionWeight()

@@ -306,16 +306,16 @@ namespace Battle.Mode
 
         #region RealTime.IProvider
 
-        WeightedActionParam IWeightedActionRequester.GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction)
+        WeightedActionParam IWeightedActionRequester.GetWeightedActionParam(ICombatant attacker, ETeam eTeam, IWeightedAction iWeightedAction)
         {
             switch (iWeightedAction)
             {
                 case WeightedAction<ApproachAttack.Param>:
                     {
                         List<ICombatant> iCombatantList = null;
-                        if (attacker.ETeam == ETeam.Ally)
+                        if (eTeam == ETeam.Ally)
                             iCombatantList = _iWaypointCtr?.Waypoint?.EnemyICombatantList;
-                        else if (attacker.ETeam == ETeam.Enemy)
+                        else if (eTeam == ETeam.Enemy)
                             iCombatantList = _data?.AllyICombatantList;
 
                         var param = new ApproachAttack.Param()
@@ -348,9 +348,9 @@ namespace Battle.Mode
         #endregion
 
         #region WeightedActionController.IListener
-        void WeightedActionController.IListener.End(ICombatant iCombatant)
+        void WeightedActionController.IListener.End(IActor iActor)
         {
-            PrepareForNextActionAsync(iCombatant).Forget();
+            PrepareForNextActionAsync(iActor).Forget();
         }
         #endregion
     }
