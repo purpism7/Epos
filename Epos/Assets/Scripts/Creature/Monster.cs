@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+
 using Creature.Action;
 using Common;
-using VContainer;
 
 namespace Creature
 {
@@ -20,8 +21,6 @@ namespace Creature
         public override void Initialize()
         {
             base.Initialize();
-
-            InitializeCombatant(this);
         }
 
         public override string AnimationKey<T>(Act<T> act)

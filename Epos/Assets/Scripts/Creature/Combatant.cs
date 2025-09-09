@@ -11,6 +11,10 @@ namespace Creature
     {
         public IActor IActor { get; private set; } = null;
         public ISkillController ISkillCtr { get; private set; } = null;
+
+        public Transform Transform { get { return IActor?.Transform; } }
+        public IStat IStat { get { return IActor?.IStat; } }
+
         public ETeam ETeam { get; private set; } = ETeam.None;
 
         [Inject]
@@ -22,9 +26,6 @@ namespace Creature
         public ICombatant Initialize(IActor iActor, Skill[] skills)
         {
             IActor = iActor;
-
-            //WeakTypeMap<IActor>
-            //Bind(iActor, this);
 
             InitializeSkillController(skills);
 
@@ -38,7 +39,7 @@ namespace Creature
 
         void ICombatant.SetPosition(Vector3 position)
         {
-
+            Transform.position = position;
         }
 
         private void InitializeSkillController(Skill[] skills)

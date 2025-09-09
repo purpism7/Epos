@@ -5,6 +5,7 @@ using System.Linq;
 using VContainer;
 
 using Creature;
+using Creator;
 
 namespace Battle
 {
@@ -45,12 +46,14 @@ namespace Battle
             EnemyICombatantList = new();
             EnemyICombatantList.Clear();
 
+            var combatantCreator = _iResolver?.Resolve<CombatantCreator>();
+
             foreach (var monster in _monsters)
             {
                 _iResolver?.Inject(monster);
                 monster?.Initialize();
 
-                // EnemyICombatantList?.Add(monster.ICombatant);
+                EnemyICombatantList?.Add(combatantCreator?.Create(monster, monster.Skills));
             }
         }
     }

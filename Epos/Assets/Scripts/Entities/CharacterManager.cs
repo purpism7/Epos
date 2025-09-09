@@ -19,7 +19,7 @@ namespace Entities
         T Create<T>(int id, Transform rootTm) where T : Creature.Character;
     }
 
-    public class Character : ICharacterManager
+    public class CharacterManager : ICharacterManager
     {
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private IObjectResolver _iResolver = null;

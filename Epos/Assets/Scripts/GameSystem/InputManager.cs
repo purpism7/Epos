@@ -13,7 +13,7 @@ namespace GameSystem
         
     }
     
-    public class InputManager : MonoBehaviour, IInputManager
+    public class InputManager : Manager, IInputManager
     {
         [Inject] private ICameraManager _iCameraMgr = null;
         

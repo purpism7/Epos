@@ -40,13 +40,7 @@ namespace GameSystem
 
         async UniTask IGeneric.InitializeAsync()
         {
-            using var scope = _iResolver?.CreateScope(
-                builder =>
-                {
-                    builder.Register<CombatantCreator>(VContainer.Lifetime.Scoped);
-                });
-
-            _combatantCreator = scope?.Resolve<CombatantCreator>();
+            _combatantCreator = _iResolver?.Resolve<CombatantCreator>();
 
             await UniTask.CompletedTask;
         }
@@ -179,9 +173,8 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 pos.x += offsetX;
-
                 
-                ICombatant iCombatant = _combatantCreator?.Create(hero);
+                ICombatant iCombatant = _combatantCreator?.Create(hero, hero.Skills);
                 iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
@@ -251,8 +244,8 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 
-                ICombatant iCombatant = _combatantCreator?.Create(monster);
-                iCombatant.SetPosition(pos);
+                ICombatant iCombatant = _combatantCreator?.Create(monster, monster.Skills);
+                iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
             }

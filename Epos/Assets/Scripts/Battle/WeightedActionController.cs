@@ -30,7 +30,7 @@ namespace Battle
     {
         public interface IListener
         {
-            void End(ICombatant iCombatant);
+            void End(IActor iActor);
         }
 
         private IListener _iListener = null;
@@ -100,7 +100,7 @@ namespace Battle
                !iActor.IsActivate)
                 return;
 
-            //_iListener?.End();
+            _iListener?.End(iActor);
         }
 
         private ActionWeight GetHighestPriorityActionWeight()

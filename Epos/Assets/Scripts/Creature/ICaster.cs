@@ -10,6 +10,9 @@ namespace Creature
 {
     public interface ICaster
     {
+        Transform Transform { get; }
+        IStat IStat { get; }
+
         ISkillController ISkillCtr { get; }
     }
 }

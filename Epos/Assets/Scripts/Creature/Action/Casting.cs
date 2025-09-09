@@ -20,10 +20,16 @@ namespace Creature.Action
         public class Param : ActParam
         {
             public IListener IListener = null;
-            public ICombatant ICombatant = null;
+            public ICaster ICaster { get; private set; } = null;
             public Skill Skill = null;
             public List<ICombatant> TargetList = null;
             public bool PlayAnimation = true;
+
+            public Param WithICaster(ICaster iCaster)
+            {
+                ICaster = iCaster;
+                return this;
+            }
         }
 
         public interface IListener
@@ -43,9 +49,6 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            // var eSkillCategory = _param.Skill.ESkillCategory;
-            // _iActor?.IStat?.Add(eSkillCategory == ESkillCategory.Active ? Stat.EType.ActivePoint : Stat.EType.PassivePoint, -1f);
-
             LookAtTarget();
             CastingAsync().Forget();
         }
@@ -56,13 +59,11 @@ namespace Creature.Action
             if (target == null)
                 return;
 
-           
-            var direction = target.IActor.Transform.position - _param.ICombatant.IActor.Transform.position;
-            _param.ICombatant?.IActor.IActCtr.Flip(-direction.x);
-            //if (direction.x > 0)
-            //    _param.ICombatant.Transform.localScale = Vector3.one;
-            //else if (direction.x < 0)
-            //    _param.ICombatant.Transform.localScale = new Vector3(-1, 1, 1);
+            if(_param?.ICaster is ICombatant iCombatant)
+            {
+                var direction = target.IActor.Transform.position - iCombatant.Transform.position;
+                iCombatant?.IActor?.IActCtr?.Flip(-direction.x);
+            }
         }
 
         private async UniTask CastingAsync()
@@ -86,21 +87,22 @@ namespace Creature.Action
                         !target.IActor.IsActivate)
                         continue;
 
+                    var iCaster = _param?.ICaster;
                     // Temp
-                    if(_param?.Skill?.ProjectilePrefab != null)
+                    if (_param?.Skill?.ProjectilePrefab != null)
                     {
                         var projectileGameObj = GameObject.Instantiate(_param.Skill.ProjectilePrefab);
                         var projectile = projectileGameObj.GetComponent<Projectile>();
-                        projectile.startPos = _param.ICombatant.IActor.Transform.position;
+                        projectile.startPos = iCaster.Transform.position;
                         projectile.targetPos = target.IActor.Transform.position;
                     }
 
-                    target?.IActor.IActCtr?.TakeDamage(_param?.ICombatant, _param.PlayAnimation);
+                    target?.IActor?.IActCtr?.TakeDamage(iCaster as ICombatant, _param.PlayAnimation);
                 }
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _param?.IListener?.AfterCasting(_param?.ICombatant);      
+            _param?.IListener?.AfterCasting(_param?.ICaster as ICombatant);      
         }
 
         protected override void OnCompleted(TrackEntry trackEntry)

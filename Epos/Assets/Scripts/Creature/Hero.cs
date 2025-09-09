@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+
 using Creature.Action;
 using Common;
 using Creature.Emotion;
-using VContainer;
 
 namespace Creature
 {
@@ -27,7 +28,6 @@ namespace Creature
 
             InitializeActController(this);
             InitializeEmotionController();
-            InitializeCombatant(this);
         }
 
         public override void ChainUpdate()

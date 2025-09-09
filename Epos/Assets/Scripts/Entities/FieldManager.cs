@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Common;
 using Creature;
 using Parts;
 using Battle.RealTime;
-using VContainer;
+using VContainer.Unity;
 
 namespace Entities
 {
@@ -17,19 +18,19 @@ namespace Entities
     {
         void MoveToTarget(Vector3 pos);
 
-        void Activate();
-        void Deactivate();
+        //void Activate();
+        //void Deactivate();
         
         IField IField { get; }
         //Hero FieldHero { get; }
     }
     
-    public class FieldManager : Manager, IFieldManager
+    public class FieldManager : IFieldManager, ITickable
     {
         //[SerializeField] 
         //private Parts.Field field = null;
-        [SerializeField] 
-        private FieldIndicator fieldIndicator = null;
+        //[SerializeField] 
+        //private FieldIndicator fieldIndicator = null;
 
         [Inject] private IObjectResolver _iResolver = null;
 
@@ -44,7 +45,7 @@ namespace Entities
         async UniTask IGeneric.InitializeAsync()
         {
             //_container = container;
-            IField = FindFirstObjectByType<Field>();
+            IField = GameObject.FindFirstObjectByType<Field>();
             _iResolver?.Inject(IField);
             
             IField?.Initialize();
@@ -55,29 +56,36 @@ namespace Entities
 
         //UniTask IGeneric.InitializeAsync(VContainer.IObjectResolver container)
         //{
-            //field?.Initialize();
-            //field?.Activate();
-            //CurrIField = field;
+        //field?.Initialize();
+        //field?.Activate();
+        //CurrIField = field;
 
-            //CreateFieldHero();
+        //CreateFieldHero();
 
-            //_fieldDataList = new();
-            //_fieldDataList?.Clear();
+        //_fieldDataList = new();
+        //_fieldDataList?.Clear();
 
-            //_fieldDataList?.Add(new Datas.Field(1));
-            //_fieldDataList?.Add(new Datas.Field(2));
+        //_fieldDataList?.Add(new Datas.Field(1));
+        //_fieldDataList?.Add(new Datas.Field(2));
 
-            //fieldIndicator?.Deactivate();
+        //fieldIndicator?.Deactivate();
 
-            //Activate();
+        //Activate();
 
-            //return this;
+        //return this;
         //}
+
+        #region ITickable
+        void ITickable.Tick()
+        {
+            IField?.ChainUpdate();
+        }
+        #endregion
 
         private void Update()
         {
-            if (!IsActivate)
-                return;
+            //if (!IsActivate)
+            //    return;
             
             IField?.ChainUpdate();
             //_fieldHero?.ChainUpdate();
@@ -103,19 +111,19 @@ namespace Entities
         }
         #endregion
 
-        public override void Activate()
-        {
-            base.Activate();
+        //public override void Activate()
+        //{
+        //    base.Activate();
             
-            //_fieldHero?.Activate();
-        }
+        //    //_fieldHero?.Activate();
+        //}
 
-        public override void Deactivate()
-        {
-            base.Deactivate();
+        //public override void Deactivate()
+        //{
+        //    base.Deactivate();
             
-            fieldIndicator?.Deactivate();
-        }
+        //    fieldIndicator?.Deactivate();
+        //}
 
         //private void CreateFieldHero()
         //{

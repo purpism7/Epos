@@ -27,9 +27,13 @@ namespace Creature
 
         #endregion
 
+        [Inject] protected IObjectResolver _iResolver = null;
+        // [Inject] private IBattleManager _iBattleManager = null;
+        // [Inject] private ResourceManager _resourceManager = null;
+        // [Inject] private UIFactory _uiFactory = null;
+
         private MeshRenderer _meshRenderer = null;
         private IStatGeneric _iStatGeneric = null;
-        // private int _partyPosition = 0;
 
         public int Id
         {
@@ -52,23 +56,8 @@ namespace Creature
             get { return _iStatGeneric?.Stat; }
         }
 
-        public Action.IActController IActCtr { get; protected set; } = null; 
-        // public ISkillController ISkillCtr { get; protected set; } = null;
-        // public ICombatant ICombatant { get; protected set; } = null;
-        
-        #region ICombatant
-
-        public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
-        // public EFormation EFormation { get; private set; } = EFormation.None;
-
-        // public int PartyPosition => _partyPosition;
-
-        #endregion
-
-        [Inject] protected IObjectResolver _iResolver = null;
-        // [Inject] private IBattleManager _iBattleManager = null;
-        // [Inject] private ResourceManager _resourceManager = null;
-        // [Inject] private UIFactory _uiFactory = null;
+        public Action.IActController IActCtr { get; protected set; } = null;
+        public Skill[] Skills => skills;
 
         #region Temp Stat
 
@@ -98,6 +87,7 @@ namespace Creature
         #region Temp Skill
         [SerializeField] private Skill[] skills = null;
         #endregion
+
 
         public bool IsAlive { get { return IStat != null ? IStat.Get(Stat.EType.Hp) > 0 : false; } }
         public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
@@ -130,7 +120,6 @@ namespace Creature
                 builder =>
                 {
                     builder.Register<ActController>(VContainer.Lifetime.Scoped).As<IActController>();
-                    // builder.Register<Combatant>(VContainer.Lifetime.Scoped).As<ICombatant>().AsSelf();
                 });
 
             IActCtr = scope?.Resolve<IActController>();
@@ -219,17 +208,6 @@ namespace Creature
             IActCtr?.Initialize(iActor);
         }
 
-        protected void InitializeCombatant(IActor iActor)
-        {
-            // ICombatant = _iResolver?.Resolve<Combatant>()?.Initialize(iActor, skills);
-        }
-
-        // protected void InitializeSkillController(ICaster iCaster)
-        // {
-        //     ISkillCtr = transform.AddOrGetComponent<SkillController>();
-        //     ISkillCtr?.Initialize(iCaster);
-        // }
-
         private void EnableNavmeshAgent()
         {
             NavMeshAgent = SkeletonAnimation?.AddOrGetComponent<NavMeshAgent>();
@@ -265,53 +243,6 @@ namespace Creature
             if (_meshRenderer != null)
                 _meshRenderer.sortingOrder = sortingOrder;
         }
-        #endregion
-
-        #region ICombatant
-        // void ICombatant.SetETeam(ETeam eTeam)
-        // {
-        //     ETeam = eTeam;
-        // }
-        
-        // void ICombatant.SetPartyPosition(int partyPosition)
-        // {
-        //     _partyPosition = partyPosition;
-        // }
-
-        // void ICombatant.SetPosition(Vector3 pos)
-        // {
-        //     transform.position = pos;
-        // }
-
-        //void ICombatant.CreateHpProgress()
-        //{
-        //    CreateHpProgress();
-        //}
-
-        //private void CreateHpProgress()
-        //{
-        //    // if (!Transform)
-        //    //     return;
-
-        //    // if (_iHpProgress == null)
-        //    // {
-        //    //     var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-        //    //     _iHpProgress = uiCreator?
-        //    //         .SetWorldUI(true)?
-        //    //         .Create();
-        //    // }
-            
-        //    // var targetPos = Transform.position;
-        //    // targetPos.y += Height;
-
-        //    // var param = new HpProgress.Param
-        //    // {
-        //    //     TargetTm = Transform,
-        //    //     Offset = new Vector2(0, Height),
-        //    // }.WithCombatant(this);
-
-        //    // _iHpProgress?.Activate(param);
-        //}
         #endregion
 
         #region Temp Stat

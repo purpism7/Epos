@@ -34,6 +34,7 @@ namespace Battle.Mode
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
+        [Inject] private WeakTypeMap<IActor> _iActorMap = null;
         
         private IWaypointController _iWaypointCtr = null;
         private ICombatant _closestICombatant = null;
@@ -348,9 +349,39 @@ namespace Battle.Mode
         #endregion
 
         #region WeightedActionController.IListener
-        void WeightedActionController.IListener.End(ICombatant iCombatatn)
+        void WeightedActionController.IListener.End(IActor iActor)
         {
-            PrepareForNextActionAsync(iCombatatn).Forget();
+            //ICombatant iCombatant = null;
+            //for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            //{
+            //    iCombatant = _data?.AllyICombatantList[i];
+            //    if (iCombatant == null)
+            //        continue;
+
+            //    if (iCombatant.IActor == iActor)
+            //        break;
+
+            //    iCombatant = null;
+            //}
+
+            //if(iCombatant == null)
+            //{
+            //    var enemyICombatantList = _iWaypointCtr?.Waypoint?.EnemyICombatantList;
+            //    for (int i = 0; i < enemyICombatantList?.Count; ++i)
+            //    {
+            //        iCombatant = enemyICombatantList[i];
+            //        if (iCombatant == null)
+            //            continue;
+
+            //        if (iCombatant.IActor == iActor)
+            //            break;
+
+            //        iCombatant = null;
+            //    }
+            //}
+            if(_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
+                PrepareForNextActionAsync(iCombatant).Forget();
+
         }
         #endregion
     }

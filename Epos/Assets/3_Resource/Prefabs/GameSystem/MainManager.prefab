@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1300418730362321927}
   - component: {fileID: -5919151402538035327}
   - component: {fileID: 2405952197149644585}
-  - component: {fileID: 8832147844271384396}
   - component: {fileID: 5071690148882738100}
   m_Layer: 0
   m_Name: MainManager
@@ -47,6 +46,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3df6e2106258e457eaa3d0790208cb85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
   timeScale: 1
 --- !u!114 &2405952197149644585
 MonoBehaviour:
@@ -63,20 +66,6 @@ MonoBehaviour:
   zoomInOutDuration: 1
   mainCamera: {fileID: 0}
   virtualCamera: {fileID: 0}
---- !u!114 &8832147844271384396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498938429517928654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56ba78a65bbbc4303ae9974a88a1a6d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  field: {fileID: 0}
-  fieldIndicator: {fileID: 0}
 --- !u!114 &5071690148882738100
 MonoBehaviour:
   m_ObjectHideFlags: 0
