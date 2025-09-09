@@ -27,7 +27,7 @@ namespace GameSystem
         void ZoomOut(Action endAction);
     }
     
-    public class CameraManager : MonoBehaviour, ICameraManager
+    public class CameraManager : Manager, ICameraManager
     {
         [SerializeField] 
         [Range(0.1f, 5f)]

@@ -5,6 +5,7 @@ using System.Linq;
 using VContainer;
 
 using Creature;
+using Creator;
 
 namespace Battle
 {
@@ -12,9 +13,10 @@ namespace Battle
     {
         [Inject] protected IObjectResolver _iResolver = null;
 
+
         private Monster[] _monsters = null;
 
-        public List<ICombatant> EnemyICombatantList => _monsters.ToList<ICombatant>();
+        public List<ICombatant> EnemyICombatantList { get; private set; } = null;
         public Vector3 Position => transform.position;
         public int AliveMonsterCount
         {
@@ -40,10 +42,18 @@ namespace Battle
         public override void Initialize()
         {
             _monsters = GetComponentsInChildren<Monster>();
-            foreach(var monster in _monsters)
+
+            EnemyICombatantList = new();
+            EnemyICombatantList.Clear();
+
+            var combatantCreator = _iResolver?.Resolve<CombatantCreator>();
+
+            foreach (var monster in _monsters)
             {
                 _iResolver?.Inject(monster);
                 monster?.Initialize();
+
+                EnemyICombatantList?.Add(combatantCreator?.Create(monster, monster.Skills));
             }
         }
     }

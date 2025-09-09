@@ -68,6 +68,10 @@ namespace Common
         CalmDown,
         Focus,
         FireUp,
+        Relax,
+        DemandMore,
+        Praise,
+        Berate,
     }
 }
 

@@ -16,6 +16,7 @@ using Common;
 using Parts;
 using Field = Battle.Field;
 using Character = Creature.Character;
+using Creator;
 
 namespace GameSystem
 {
@@ -28,16 +29,19 @@ namespace GameSystem
     
     public class BattleManager : IBattleManager, BattleType.IListener, ITickable, ILateTickable
     {
+        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private ICharacterManager _iCharacterManager = null;
         [Inject] private ICameraManager _iCameraManager = null;
-        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private IParty _iParty = null;
 
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;
         private Battle.BattleType _currBattleType = null;
+        private CombatantCreator _combatantCreator = null;
 
         async UniTask IGeneric.InitializeAsync()
         {
+            _combatantCreator = _iResolver?.Resolve<CombatantCreator>();
+
             await UniTask.CompletedTask;
         }
         
@@ -170,7 +174,7 @@ namespace GameSystem
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 pos.x += offsetX;
                 
-                ICombatant iCombatant = hero;
+                ICombatant iCombatant = _combatantCreator?.Create(hero, hero.Skills);
                 iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
@@ -240,8 +244,8 @@ namespace GameSystem
                 
                 var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 
-                ICombatant iCombatant = monster;
-                iCombatant.SetPosition(pos);
+                ICombatant iCombatant = _combatantCreator?.Create(monster, monster.Skills);
+                iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
             }

@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7073784840371986948}
   - component: {fileID: 2874762546086907469}
-  - component: {fileID: 5657995243914497316}
-  - component: {fileID: 6962163701262451015}
   m_Layer: 8
   m_Name: Mon_02
   m_TagString: Untagged
@@ -47,9 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375917495ba2490d90ce1f0c3348deb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rootTm: {fileID: 2909393709685397080}
   id: 90002
   eClass: 0
-  rootTm: {fileID: 2909393709685397080}
   actionSpeed: 10
   moveSpeed: 2.4
   attack: 3
@@ -57,32 +55,6 @@ MonoBehaviour:
   activePoint: 5
   passivePoint: 1
   attackSight: 10
---- !u!114 &5657995243914497316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2688141788299131903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebece0a088b224201a59ef2a0867fbbc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  skills:
-  - {fileID: 11400000, guid: e091172c8a06a443ebcdea70e7b13dcd, type: 2}
---- !u!114 &6962163701262451015
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2688141788299131903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: febd1171119994cb89b63439a5787b70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &3375962914077628976
 GameObject:
   m_ObjectHideFlags: 0

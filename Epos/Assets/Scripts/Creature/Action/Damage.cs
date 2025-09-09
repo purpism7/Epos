@@ -17,8 +17,14 @@ namespace Creature.Action
     {
         public class Param : ActParam
         {
-            public ICaster ICaster = null;
+            public ICombatant ICombatant { get; private set; } = null;
             public bool PlayAnimation = true;
+
+            public Param WithICombatant(ICombatant iCombatant)
+            {
+                ICombatant = iCombatant;
+                return this;
+            }
         }
 
         [Inject] private UIFactory _uiFactory = null;
@@ -35,7 +41,7 @@ namespace Creature.Action
                 //SetAnimation(_data.AnimationKey, false);
             //_iActor.SkeletonAnimation.
 
-            var iCasterIStat = _param?.ICaster?.IStat;
+             var iCasterIStat = _param?.ICombatant?.IActor?.IStat;
             if (iCasterIStat != null)
             {
                 var damage = iCasterIStat.Get(Stat.EType.Attack);

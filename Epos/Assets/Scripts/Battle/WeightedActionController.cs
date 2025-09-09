@@ -15,7 +15,7 @@ namespace Battle
 {
     public interface IWeightedActionRequester
     {
-        WeightedActionParam GetWeightedActionParam(ICombatant attacker, IWeightedAction iWeightedAction);
+        WeightedActionParam GetWeightedActionParam(ICombatant attacker, ETeam eTeam, IWeightedAction iWeightedAction);
         CancellationTokenSource CancellationTokenSource { get; }
     }
 
@@ -30,7 +30,7 @@ namespace Battle
     {
         public interface IListener
         {
-            void End(ICombatant iCombatant);
+            void End(IActor iActor);
         }
 
         private IListener _iListener = null;
@@ -63,22 +63,22 @@ namespace Battle
                 await UniTask.DelayFrame(30, cancellationToken: iRequester.CancellationTokenSource.Token);
                 if (iRequester.CancellationTokenSource.IsCancellationRequested)
                 {
-                    EndAction(executer);
+                    EndAction(executer.IActor);
                     return;
                 }
 
                 var actionWeight = GetHighestPriorityActionWeight();
                 var iWeightedAction = actionWeight?.Create();
-                var param = iRequester?.GetWeightedActionParam(executer, iWeightedAction);
+                var param = iRequester?.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
 
                 iWeightedAction?.SetParam(param)?
                     .SetEndAction(EndAction)?
-                    .SetIActor(executer)?
+                    .SetIActor(executer.IActor)?
                     .Execute();
             }
             catch(OperationCanceledException)
             {
-                EndAction(executer);
+                EndAction(executer.IActor);
                 // Debug.Log(executer.Id);
                 // Debug.Log(exception);
             }
@@ -100,7 +100,7 @@ namespace Battle
                !iActor.IsActivate)
                 return;
 
-            _iListener?.End(iActor as ICombatant);
+            _iListener?.End(iActor);
         }
 
         private ActionWeight GetHighestPriorityActionWeight()

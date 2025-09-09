@@ -24,7 +24,7 @@ public static class BattleExtensions
             if(iCombatant == null)
                 continue;
             
-            if(!iCombatant.IsActivate)
+            if(!iCombatant.IActor.IsActivate)
                 continue;
 
             if (skill.SameTeam)
@@ -74,7 +74,7 @@ public static class BattleExtensions
             if (iCombatantList[i] == null)
                 continue;
         
-            var distance = Vector2.Distance(iCombatantList[i].Transform.position, refICombatant.Transform.position);
+            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, refICombatant.IActor.Transform.position);
             if (closestEnemyIComtant == null ||
                 closestDistance > distance)
             {

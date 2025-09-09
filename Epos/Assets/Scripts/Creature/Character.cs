@@ -12,10 +12,11 @@ using Creator;
 using Creature.Action;
 using GameSystem;
 using UI.Parts;
+using Datas.ScriptableObjects;
 
 namespace Creature
 {
-    public abstract class Character : Common.Component, IActor, ICaster, ICombatant, Stat.IListener
+    public abstract class Character : Common.Component, Stat.IListener
     {
 
         #region Inspector
@@ -25,17 +26,19 @@ namespace Creature
         //[SerializeField] private Transform rootTm = null;
 
         #endregion
-        
+
+        [Inject] protected IObjectResolver _iResolver = null;
+        // [Inject] private IBattleManager _iBattleManager = null;
+        // [Inject] private ResourceManager _resourceManager = null;
+        // [Inject] private UIFactory _uiFactory = null;
+
         private MeshRenderer _meshRenderer = null;
         private IStatGeneric _iStatGeneric = null;
-        private int _partyPosition = 0;
-        //private IHpProgress _iHpProgress = null;
 
         public int Id
         {
             get { return id; }
         }
-
 
         public float Height { get; private set; } = 0;
 
@@ -54,46 +57,37 @@ namespace Creature
         }
 
         public Action.IActController IActCtr { get; protected set; } = null;
-        public ISkillController ISkillCtr { get; protected set; } = null;
-        
-        #region ICombatant
-
-        public Common.ETeam ETeam { get; private set; } = Common.ETeam.None;
-        // public EFormation EFormation { get; private set; } = EFormation.None;
-
-        public int PartyPosition => _partyPosition;
-
-        #endregion
-
-        [Inject] protected IObjectResolver _iResolver = null;
-        [Inject] private IBattleManager _iBattleManager = null;
-        [Inject] private ResourceManager _resourceManager = null;
-        [Inject] private UIFactory _uiFactory = null;
+        public Skill[] Skills => skills;
 
         #region Temp Stat
 
-        [Header("Temp Stat")] [SerializeField] [Range(1f, 100f)] [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]
+        [Header("Temp Stat")] [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]
         private float actionSpeed = 1f;
 
-        [SerializeField] [Range(1f, 100f)] [Tooltip("이동 속도.")]
+        [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("이동 속도.")]
         private float moveSpeed = 1f;
 
-        [SerializeField] [Range(1f, 100f)] [Tooltip("공격력.")]
+        [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("공격력.")]
         private float attack = 1f;
 
         // [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
         // private float attackRange = 1f;
 
-        [SerializeField] [Range(0f, 100f)] private float maxHp = 1f;
+        [SerializeField] [UnityEngine.Range(0f, 100f)] private float maxHp = 1f;
 
-        [SerializeField] [Range(1, 5)] private float activePoint = 1f;
-        [SerializeField] [Range(1, 5)] private float passivePoint = 1f;
+        [SerializeField] [UnityEngine.Range(1, 5)] private float activePoint = 1f;
+        [SerializeField] [UnityEngine.Range(1, 5)] private float passivePoint = 1f;
         
-        [SerializeField] [Range(1f, 20f)] private float attackSight = 10f;
+        [SerializeField] [UnityEngine.Range(1f, 20f)] private float attackSight = 10f;
 
         // [SerializeField] private int position = 0;
 
         #endregion
+
+        #region Temp Skill
+        [SerializeField] private Skill[] skills = null;
+        #endregion
+
 
         public bool IsAlive { get { return IStat != null ? IStat.Get(Stat.EType.Hp) > 0 : false; } }
         public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
@@ -117,9 +111,18 @@ namespace Creature
 #endif
 
         [Inject]
-        private void InjectInitialize()
+        protected virtual void InitializeInject(IObjectResolver iResolver)
         {
             Debug.Log("Inject Initialize");
+            _iResolver = iResolver;
+
+            using var scope = iResolver?.CreateScope(
+                builder =>
+                {
+                    builder.Register<ActController>(VContainer.Lifetime.Scoped).As<IActController>();
+                });
+
+            IActCtr = scope?.Resolve<IActController>();
         }
         
         #region ICharacterGeneric
@@ -134,12 +137,12 @@ namespace Creature
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
 
-            IActCtr = transform.AddOrGetComponent<ActController>();
-            _iResolver?.Inject(IActCtr);
-            IActCtr?.Initialize(this);
+            // IActCtr = transform.AddOrGetComponent<ActController>();
+            // _iResolver?.Inject(IActCtr);
+            // IActCtr?.Initialize(this);
 
-            ISkillCtr = transform.AddOrGetComponent<SkillController>();
-            ISkillCtr?.Initialize(this);
+            // ISkillCtr = transform.AddOrGetComponent<SkillController>();
+            // ISkillCtr?.Initialize(this);
 
             SetOriginStat();
             
@@ -187,7 +190,7 @@ namespace Creature
 
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
-            ISkillCtr?.Activate();
+            // ISkillCtr?.Activate();
         }
 
         public override void Deactivate()
@@ -196,9 +199,14 @@ namespace Creature
 
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
-            ISkillCtr?.Deactivate();      
+            // ISkillCtr?.Deactivate();      
         }
         #endregion
+
+        protected void InitializeActController(IActor iActor)
+        {
+            IActCtr?.Initialize(iActor);
+        }
 
         private void EnableNavmeshAgent()
         {
@@ -225,7 +233,7 @@ namespace Creature
         }
 
         #region IActor
-        void IActor.SortingOrder(float order)
+        public void SortingOrder(float order)
         {
             var sortingOrder = Mathf.CeilToInt(-order * 100f);
 
@@ -235,53 +243,6 @@ namespace Creature
             if (_meshRenderer != null)
                 _meshRenderer.sortingOrder = sortingOrder;
         }
-        #endregion
-
-        #region ICombatant
-        void ICombatant.SetETeam(ETeam eTeam)
-        {
-            ETeam = eTeam;
-        }
-        
-        void ICombatant.SetPartyPosition(int partyPosition)
-        {
-            _partyPosition = partyPosition;
-        }
-
-        void ICombatant.SetPosition(Vector3 pos)
-        {
-            transform.position = pos;
-        }
-
-        //void ICombatant.CreateHpProgress()
-        //{
-        //    CreateHpProgress();
-        //}
-
-        //private void CreateHpProgress()
-        //{
-        //    // if (!Transform)
-        //    //     return;
-
-        //    // if (_iHpProgress == null)
-        //    // {
-        //    //     var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-        //    //     _iHpProgress = uiCreator?
-        //    //         .SetWorldUI(true)?
-        //    //         .Create();
-        //    // }
-            
-        //    // var targetPos = Transform.position;
-        //    // targetPos.y += Height;
-
-        //    // var param = new HpProgress.Param
-        //    // {
-        //    //     TargetTm = Transform,
-        //    //     Offset = new Vector2(0, Height),
-        //    // }.WithCombatant(this);
-
-        //    // _iHpProgress?.Activate(param);
-        //}
         #endregion
 
         #region Temp Stat

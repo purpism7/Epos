@@ -82,7 +82,7 @@ namespace UI.Slot
                 return;
 
             var AtlasLoader = _resourceManager?.AtlasLoader;
-            var spriteName = $"p_{_param.ICombatant.Id}";
+            var spriteName = $"p_{_param.ICombatant.IActor.Id}";
             var sprite = AtlasLoader?.GetCharacterSprite(spriteName);
 
             characterImg.sprite = sprite;
@@ -121,7 +121,7 @@ namespace UI.Slot
                 _param == null)
                 return;
 
-            if (eventData.CharacterId != _param.ICombatant.Id)
+            if (eventData.CharacterId != _param.ICombatant.IActor.Id)
                 return;
 
             _iHpProgress?.UpdateHpProgress();

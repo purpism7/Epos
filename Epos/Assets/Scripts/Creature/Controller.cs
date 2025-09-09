@@ -6,7 +6,7 @@ using VContainer;
 
 namespace Creature
 {
-    public interface IController<T, V> where V : ISubject
+    public interface IController<T, V> //where V : ISubject
     {
         T Initialize(V v);
         void ChainUpdate();
@@ -15,7 +15,7 @@ namespace Creature
         void Deactivate();
     }
 
-    public abstract class Controller : MonoBehaviour
+    public abstract class Controller
     {
         public bool IsActivate { get; private set; } = false;
 

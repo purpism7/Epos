@@ -8,8 +8,11 @@ using Creature.Action;
 
 namespace Creature
 {
-    public interface ICaster : IActor
+    public interface ICaster
     {
+        Transform Transform { get; }
+        IStat IStat { get; }
+
         ISkillController ISkillCtr { get; }
     }
 }
