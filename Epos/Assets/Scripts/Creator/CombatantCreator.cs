@@ -19,7 +19,7 @@ namespace Creator
             _iResolver?.Inject(combatant);
             _map?.Set<ICombatant>(iActor, combatant);
 
-            return combatant?.Initialize(iActor, skills );
+            return combatant?.Initialize(iActor, skills);
         }
     }
 }

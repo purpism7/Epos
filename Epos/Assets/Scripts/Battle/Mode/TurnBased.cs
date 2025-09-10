@@ -418,9 +418,9 @@ namespace Battle.Mode
         }
 
         // Target 에게 이동하여 ActiveSkill 사용하기.
-        private void MoveToTarget(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
+        private void MoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<TargetData> targetDataList)
         {
-            if (skill == null)
+            if (iSkill == null)
                 return;
 
             if (targetDataList == null ||
@@ -431,7 +431,7 @@ namespace Battle.Mode
             if (targetData == null)
                 return;
             
-            var skillRange = skill.Range;
+            var skillRange = iSkill.Range;
             if (skillRange <= 0)
                 return;
 
@@ -458,7 +458,7 @@ namespace Battle.Mode
             attacker.IActor.IActCtr?.MoveToTargetPosition(moveParam);
         }
 
-        private void CastingSkill(ICombatant attacker, Skill skill, List<TargetData> targetDataList)
+        private void CastingSkill(ICombatant attacker, Ability.ISkill iSkill, List<TargetData> targetDataList)
         {
             if (attacker == null)
                 return;
@@ -478,13 +478,14 @@ namespace Battle.Mode
                 targetList.Add(target);
             }
             
-            attacker.IActor.IActCtr?.CastingSkill(this, attacker, skill, targetList);
+            attacker.IActor.IActCtr?.CastingSkill(this, attacker, iSkill, targetList);
 
             // if (skill.ESkillCategory == ESkillCategory.Active)
             {
-                var eventData = new SkillUseEventData();
-                eventData.WithSkill(skill);
-                eventData.WithETeam(attacker.ETeam);
+                var eventData = new SkillUseEventData()
+                    .WithISkill(iSkill)
+                    .WithETeam(attacker.ETeam);
+   
                 GameSystem.Event.EventHandler.Notify(eventData);
             }
         }

@@ -15,7 +15,7 @@ namespace Creature.Action
     {
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
-        IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Ability.ISkill iSkill, List<ICombatant> targetList);
         IActController Die();
         
         void TakeDamage(ICombatant iCombatant, bool playAnimation);
@@ -114,7 +114,7 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICaster iCaster, Skill skill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, ICaster iCaster, Ability.ISkill iSkill, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
@@ -122,7 +122,7 @@ namespace Creature.Action
             var castingParam = new Casting.Param
             {
                 IListener = iListener,
-                Skill = skill,
+                ISkill = iSkill,
                 TargetList = targetList,
             }.WithICaster(iCaster);
             

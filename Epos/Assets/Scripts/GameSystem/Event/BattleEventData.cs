@@ -49,12 +49,12 @@ namespace GameSystem.Event
     #region Skill
     public class SkillUseEventData : EventData
     {
-        public Skill Skill { get; private set; } = null;
+        public Ability.ISkill ISkill { get; private set; } = null;
         public ETeam ETeam { get; private set; } = ETeam.None;
 
-        public SkillUseEventData WithSkill(Skill skill)
+        public SkillUseEventData WithISkill(Ability.ISkill iSkill)
         {
-            Skill = skill;
+            ISkill = iSkill;
             return this;
         }
 

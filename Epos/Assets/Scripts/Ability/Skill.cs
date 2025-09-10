@@ -3,18 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Common;
+using Datas.ScriptableObjects;
+using GameSystem.Event;
 
 namespace Ability
 {
-    public class Skill
+    public interface ISkill
     {
-        public Datas.Skill SkillData { get; private set; } = null;
+        ESkillTarget ESkillTarget { get; }
+        float Range { get; }
+        bool SameTeam { get; }
 
-        public ESkillCategory ESkillCategory { get; private set; } = ESkillCategory.None;
-        public bool SameTeam { get; private set; } = false;
-        public ESkillTarget ESkillTarget { get; private set; } = ESkillTarget.None;
+        GameObject ProjectilePrefab { get; }
+    }
 
-        public virtual void Initialize(Datas.Skill skillData)
+    public class Skill : ISkill
+    {
+        public Datas.ScriptableObjects.Skill SkillData { get; private set; } = null;
+
+        //public ESkillCategory ESkillCategory { get; private set; } = ESkillCategory.None;
+        //public bool SameTeam { get; private set; } = false;
+        //public ESkillTarget ESkillTarget { get; private set; } = ESkillTarget.None;
+        public ESkillTarget ESkillTarget { get { return SkillData != null ? SkillData.ESkillTarget : ESkillTarget.None; } }
+        public float Range { get { return SkillData != null ? SkillData.Range : 0f; } }
+        public bool SameTeam { get { return SkillData != null ? SkillData.SameTeam : false; } }
+        public GameObject ProjectilePrefab { get { return SkillData != null ? SkillData.ProjectilePrefab : null; } }
+
+        // Id∏∏ ≥—±‚¥¬ ∞…∑Á ∫Ø∞Ê øπ¡§. skill µ•¿Ã≈Õ∞° ≈◊¿Ã∫Ì µ•¿Ã≈Õ∑Œ ∫Ø∞Ê Ω√.
+        public virtual void Initialize(Datas.ScriptableObjects.Skill skillData)
         {
             SkillData = skillData;
         }
@@ -28,23 +44,6 @@ namespace Ability
         {
             
         }
-
-        #region Îç∞Ïù¥ÌÑ∞Ìôî ÏòàÏ†ï
-        public void SetESkillCategory(ESkillCategory eSkillCategory)
-        {
-            ESkillCategory = eSkillCategory;
-        }
-        
-        public void SetSameTeam(bool sameTeam)
-        {
-            SameTeam = sameTeam;
-        }
-        
-        public void SetESkillTarget(ESkillTarget eSkillTarget)
-        {
-            ESkillTarget = eSkillTarget;
-        }
-        #endregion
     }
 }
 

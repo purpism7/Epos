@@ -21,7 +21,7 @@ namespace Creature.Action
         {
             public IListener IListener = null;
             public ICaster ICaster { get; private set; } = null;
-            public Skill Skill = null;
+            public Ability.ISkill ISkill = null;
             public List<ICombatant> TargetList = null;
             public bool PlayAnimation = true;
 
@@ -79,7 +79,7 @@ namespace Creature.Action
             _param?.IListener?.InUse();
 
             if (_param?.TargetList != null &&
-                !_param.Skill.SameTeam)
+                !_param.ISkill.SameTeam)
             {
                 foreach (var target in _param.TargetList)
                 {
@@ -89,12 +89,15 @@ namespace Creature.Action
 
                     var iCaster = _param?.ICaster;
                     // Temp
-                    if (_param?.Skill?.ProjectilePrefab != null)
+                    if (_param?.ISkill?.ProjectilePrefab != null)
                     {
-                        var projectileGameObj = GameObject.Instantiate(_param.Skill.ProjectilePrefab);
+                        var projectileGameObj = GameObject.Instantiate(_param.ISkill.ProjectilePrefab);
                         var projectile = projectileGameObj.GetComponent<Projectile>();
                         projectile.startPos = iCaster.Transform.position;
                         projectile.targetPos = target.IActor.Transform.position;
+
+                        projectile?.InitializeAsync(null);
+                        projectile?.ActivateAsync(null);
                     }
 
                     target?.IActor?.IActCtr?.TakeDamage(iCaster as ICombatant, _param.PlayAnimation);

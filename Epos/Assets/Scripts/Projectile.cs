@@ -35,6 +35,8 @@ public class Projectile : Common.Component<Projectile.Param>
     {
         base.InitializeAsync(param);
 
+        rootTm = GetComponent<Transform>();
+
         return UniTask.CompletedTask;
     }
 
@@ -82,27 +84,28 @@ public class Projectile : Common.Component<Projectile.Param>
     // Update is called once per frame
     void Update()
     {
-        if (!transform.gameObject.activeSelf)
+        if (!IsActivate)
             return;
 
         var dir = targetPos - transform.position;
 
-        if (Physics.Raycast(_lastPos, dir.normalized, out RaycastHit hit, dir.magnitude))
-        {
-            Debug.Log("hit");
-            Extensions.SetActive(transform, false);
-            return;
-            // �浹 �������� ����Ʈ ����
-            //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-            //Destroy(gameObject);
-        }
+        //if (Physics.Raycast(_lastPos, dir.normalized, out RaycastHit hit, dir.magnitude))
+        //{
+        //    Debug.Log("hit");
+        //    Extensions.SetActive(transform, false);
+        //    return;
+        //    // �浹 �������� ����Ʈ ����
+        //    //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+        //    //Destroy(gameObject);
+        //}
 
         transform.position = Vector3.MoveTowards(transform.position, targetPos, currSpeed * Time.deltaTime);
 
         var distance = Vector3.Distance(transform.position, targetPos);
         if (distance <= 0.01f)
         {
-            Extensions.SetActive(transform, false);
+            //Extensions.SetActive(transform, false);
+            Deactivate();
         }
 
         _lastPos = transform.position;

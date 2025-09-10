@@ -99,15 +99,15 @@ namespace UI.Panels
         {
             useSkillNameTMP?.SetText(string.Empty);
             
-            if (eventData?.Skill == null ||
+            if (eventData?.ISkill == null ||
                 _param == null)
                 return;
             
             // if (eventData.ETeam != _data.ETeam)
             //     return;
             
-            Debug.Log(eventData.Skill.name);
-            useSkillNameTMP?.SetText(eventData.Skill?.name);
+            //Debug.Log(eventData.ISkill.name);
+            //useSkillNameTMP?.SetText(eventData.ISkill?.name);
         }
     }
 }

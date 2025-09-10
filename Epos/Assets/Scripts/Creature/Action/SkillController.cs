@@ -1,16 +1,16 @@
+using Ability;
+using Common;
+using Datas.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-using Datas.ScriptableObjects;
-using Common;
-
 namespace Creature.Action
 {
     public interface ISkillController : IController<ISkillController, ICaster>
     {
-        Skill GetPossibleSkill(ESkillCategory eSkillCategory);
+        ISkill GetPossibleSkill(ESkillCategory eSkillCategory);
         
         // void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
     }
@@ -22,20 +22,20 @@ namespace Creature.Action
         #endregion
         
         private ICaster _iCaster = null;
-        private Skill[] _skills = null;
-        // private List<Ability.Skill> _skillList = null;
+        private Datas.ScriptableObjects.Skill[] _skillDatas = null;
+        private List<Ability.Skill> _skillList = null;
 
-        public SkillController(Skill[] skills)
+        public SkillController(Datas.ScriptableObjects.Skill[] skillDatas)
         {
-            _skills = skills;
+            _skillDatas = skillDatas;
         }
 
         ISkillController IController<ISkillController, ICaster>.Initialize(ICaster iCaster)
         {
             _iCaster = iCaster;
 
-            // CreateSkillList();
-            
+             CreateSkillList();
+
             return this;
         }
         
@@ -49,88 +49,43 @@ namespace Creature.Action
             
         }
 
-        Skill ISkillController.GetPossibleSkill(ESkillCategory eSkillCategory)
+        private void CreateSkillList()
         {
-            return PossibleSkill(eSkillCategory);
-        }
-        
-        // private void CreateSkillList()
-        // {
-        //     if (_skillList == null)
-        //     {
-        //         _skillList = new();
-        //         _skillList.Clear();
-        //     }
-        //
-        //     switch (_iCaster.Id)
-        //     {
-        //         case 10001:
-        //         {
-        //             var skill = new Ability.Skill();
-        //             skill.Initialize(new Datas.Skill(3, 3f, _iCaster.IStat.Get(Stat.EType.Attack)));
-        //             skill.SetESkillCategory(Type.ESkillCategory.Passive);
-        //             skill.SetSameTeam(true);
-        //             skill.SetESkillTarget(Type.ESkillTarget.NearOne);
-        //             
-        //             _skillList?.Add(skill);
-        //             
-        //             break;
-        //         }
-        //         
-        //         case 10003:
-        //         {
-        //             // 소서리스
-        //             var skill = new Ability.Skill();
-        //             skill.Initialize(new Datas.Skill(2, 0, _iCaster.IStat.Get(Stat.EType.Attack)));
-        //             skill.SetESkillCategory(Type.ESkillCategory.Passive);
-        //             skill.SetSameTeam(true);
-        //             skill.SetESkillTarget(Type.ESkillTarget.All);
-        //             
-        //             _skillList?.Add(skill);
-        //             
-        //             break;
-        //         }
-        //         
-        //         case 10004:
-        //         {
-        //             // 스피어
-        //             var skill = new Ability.Skill();
-        //             skill.Initialize(new Datas.Skill(4, 5f, _iCaster.IStat.Get(Stat.EType.Attack)));
-        //             skill.SetESkillCategory(Type.ESkillCategory.Active);
-        //             skill.SetSameTeam(false);
-        //             skill.SetESkillTarget(Type.ESkillTarget.NearOne);
-        //             
-        //             _skillList?.Add(skill);
-        //             
-        //             break;
-        //         }
-        //         
-        //         case 90001:
-        //         {
-        //             var skill = new Ability.Skill();
-        //             skill.Initialize(new Datas.Skill(1, 4f, _iCaster.IStat.Get(Stat.EType.Attack)));
-        //             skill.SetESkillCategory(Type.ESkillCategory.Active);
-        //             skill.SetSameTeam(false);
-        //             skill.SetESkillTarget(Type.ESkillTarget.NearOne);
-        //             
-        //             _skillList?.Add(skill);
-        //             
-        //             break;
-        //         }
-        //     }
-        // }
+            if(_skillDatas == null || _skillDatas.Length <= 0)
+                return;
 
-        private Skill PossibleSkill(ESkillCategory eSkillCategory)
+            _skillList = new();
+            _skillList.Clear();
+
+            for(int i = 0; i < _skillDatas.Length; ++i)
+            {
+                var skillData = _skillDatas[i];
+                if(skillData == null)
+                    continue;   
+
+                var skill = new Ability.Skill();
+                skill?.Initialize(skillData);
+
+                _skillList?.Add(skill);
+            }
+        }
+
+        ISkill ISkillController.GetPossibleSkill(ESkillCategory eSkillCategory)
         {
-            if (_skills == null)
+            return GetPossibleSkill(eSkillCategory);
+        }
+
+        private Ability.Skill GetPossibleSkill(ESkillCategory eSkillCategory)
+        {
+            if (_skillList == null)
                 return null;
 
-            foreach (var skill in _skills)
+            foreach (var skill in _skillList)
             {
                 if(skill == null)
                     continue;
 
-                if (skill.ESkillCategory != eSkillCategory)
+                if (skill.SkillData.ESkillCategory != eSkillCategory)
                     continue;
                 
                 // if (eSkillCategory == ESkillCategory.Active)

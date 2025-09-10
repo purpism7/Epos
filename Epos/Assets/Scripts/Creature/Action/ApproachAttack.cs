@@ -85,10 +85,10 @@ namespace Creature.Action
                 .Execute();
         }
 
-        private void FinishMoveToTarget(ICombatant attacker, Skill skill, List<ICombatant> targetList)
+        private void FinishMoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
         {
             attacker?.IActor.IActCtr?
-                .CastingSkill(this, attacker, skill, targetList)?
+                .CastingSkill(this, attacker, iSkill, targetList)?
                 .Execute();
         }
 

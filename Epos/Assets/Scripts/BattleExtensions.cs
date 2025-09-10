@@ -8,7 +8,7 @@ using Common;
 
 public static class BattleExtensions
 {
-    public static List<ICombatant> GetTargetList(this ICombatant attacker, List<ICombatant> iCombatantList, Datas.ScriptableObjects.Skill skill)
+    public static List<ICombatant> GetTargetList(this ICombatant attacker, List<ICombatant> iCombatantList, Ability.ISkill iSkill)
     {
         if (attacker == null)
             return null;
@@ -27,7 +27,7 @@ public static class BattleExtensions
             if(!iCombatant.IActor.IsActivate)
                 continue;
 
-            if (skill.SameTeam)
+            if (iSkill.SameTeam)
             {
                 if(attacker.ETeam == iCombatant.ETeam)
                     targetList.Add(iCombatant);
@@ -42,7 +42,7 @@ public static class BattleExtensions
         if (targetList.IsNullOrEmpty())
             return null;
 
-        if (skill.ESkillTarget == ESkillTarget.NearOne)
+        if (iSkill.ESkillTarget == ESkillTarget.NearOne)
         {
             var target = FindClosestICombatant(targetList, attacker);
             targetList.Clear();
@@ -52,7 +52,7 @@ public static class BattleExtensions
         }
         
         // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
-        if (skill.ESkillTarget == ESkillTarget.FarOne)
+        if (iSkill.ESkillTarget == ESkillTarget.FarOne)
         {
             var target = targetList.FirstOrDefault();
             targetList.Clear();

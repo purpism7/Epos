@@ -138,32 +138,6 @@ namespace Creature
             else
                 subDic[eSubType] = value;
 
-
-            //if (_addedStatDic.ContainsKey(eType))
-            //{
-            //    if (_addedStatDic[eType] == null)
-            //    {
-            //        var dic = new Dictionary<ESubType, float>();
-            //        dic.Clear();
-            //        dic.TryAdd(eSubType, value);
-
-
-            //        _addedStatDic[eType]
-            //    }
-
-
-            //    _addedStatDic[eType][eSubType] += value;
-            //}
-            //else
-            //{
-            //    var dic = new Dictionary<ESubType, float>();
-            //    dic.Clear();
-            //    dic.TryAdd(eSubType, value);
-
-            //    _addedStatDic.TryAdd(eType, dic);
-            //}
-               
-
             _iListener?.OnStatChanged(eType, GetCurrent(eType));
         }
 

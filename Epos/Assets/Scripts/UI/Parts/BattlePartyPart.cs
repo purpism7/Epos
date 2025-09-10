@@ -115,20 +115,20 @@ namespace UI.Parts
         
         private void OnSkillUse(SkillUseEventData eventData)
         {
-            if (eventData?.Skill == null ||
-                _param == null)
-                return;
+            //if (eventData?.ISkill == null ||
+            //    _param == null)
+            //    return;
 
-            if (eventData.Skill.ESkillCategory != ESkillCategory.Passive)
-                return;
+            //if (eventData.ISkill.ESkillCategory != ESkillCategory.Passive)
+            //    return;
             
-            if (eventData.ETeam != _param.ETeam)
-                return;
+            //if (eventData.ETeam != _param.ETeam)
+            //    return;
             
-            // skillNameTMP?.SetText(string.Empty);
+            //// skillNameTMP?.SetText(string.Empty);
             
-            Debug.Log(eventData.Skill.name);
-            skillNameTMP?.SetText(eventData.Skill?.name);
+            ////Debug.Log(eventData.ISkill.name);
+            ////skillNameTMP?.SetText(eventData.ISkill?.name);
         }
 
         private void OnTurnBased(TurnBasedEventData eventData)

@@ -1,14 +1,17 @@
-using Common;
-using Creature.Action;
-using Datas.ScriptableObjects;
-using System.Runtime.CompilerServices;
 using UnityEngine;
+
 using VContainer;
+
+using Common;
+using Datas.ScriptableObjects;
+using Creature.Action;
 
 namespace Creature
 {
     public class Combatant : ICombatant
     {
+        [Inject] private IObjectResolver _iResolver = null;
+
         public IActor IActor { get; private set; } = null;
         public ISkillController ISkillCtr { get; private set; } = null;
 
@@ -45,6 +48,8 @@ namespace Creature
         private void InitializeSkillController(Skill[] skills)
         {
             ISkillCtr = new SkillController(skills);
+            _iResolver?.Inject(ISkillCtr);
+
             ISkillCtr?.Initialize(this);
         }
     }
