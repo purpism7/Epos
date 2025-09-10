@@ -24,7 +24,7 @@ public class Projectile : Common.Component<Projectile.Param>
     readonly List<ParticleSystem.Particle> _enter = new();
     private ParticleSystem _particleSystem = null;
 
-    public float startSpeed = 0f, endSpeed = 60f, accelTime = 1.5f;
+    public float startSpeed = 0f, endSpeed = 60f, accelTime = 2f;
     float currSpeed;
     Tween speedTween;
 

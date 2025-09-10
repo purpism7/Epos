@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using Spine;
@@ -10,7 +11,6 @@ using Spine;
 using Datas.ScriptableObjects;
 using GameSystem.Event;
 using Vector3 = UnityEngine.Vector3;
-using UnityEngine;
 
 
 namespace Creature.Action
@@ -68,6 +68,7 @@ namespace Creature.Action
 
         private async UniTask CastingAsync()
         {
+            _param?.ISkill?.Casting();
             _param?.IListener?.BeforeCasting();
           
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -84,7 +85,7 @@ namespace Creature.Action
                 foreach (var target in _param.TargetList)
                 {
                     if (target == null || 
-                        !target.IActor.IsActivate)
+                        !target.IActor.IsAlive)
                         continue;
 
                     var iCaster = _param?.ICaster;
@@ -105,7 +106,8 @@ namespace Creature.Action
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _param?.IListener?.AfterCasting(_param?.ICaster as ICombatant);      
+            _param?.IListener?.AfterCasting(_param?.ICaster as ICombatant);
+            _param?.ISkill?.EndCasting();
         }
 
         protected override void OnCompleted(TrackEntry trackEntry)
@@ -114,19 +116,6 @@ namespace Creature.Action
 
             _endAction?.Invoke(_iActor);
         }
-
-        // private ETeam ETeam
-        // {
-        //     get
-        //     {
-        //         ETeam eTeam = ETeam.None;
-        //         var iCombatant = _param.ICombatant;
-        //         if (iCombatant != null)
-        //             eTeam = iCombatant.ETeam;
-        //
-        //         return eTeam;
-        //     }
-        // }
     }
 }
 

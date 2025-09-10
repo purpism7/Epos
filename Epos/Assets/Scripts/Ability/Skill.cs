@@ -5,6 +5,7 @@ using UnityEngine;
 using Common;
 using Datas.ScriptableObjects;
 using GameSystem.Event;
+using Cysharp.Threading.Tasks;
 
 namespace Ability
 {
@@ -15,10 +16,25 @@ namespace Ability
         bool SameTeam { get; }
 
         GameObject ProjectilePrefab { get; }
+
+        void Casting();
+        void EndCasting();
     }
 
     public class Skill : ISkill
     {
+        public enum EState
+        {
+            None,
+
+            Ready,
+            Casting,
+            Cooltime,
+        }
+
+        private float _currCooltime = 0f;
+        private EState _eState = EState.None;
+
         public Datas.ScriptableObjects.Skill SkillData { get; private set; } = null;
 
         //public ESkillCategory ESkillCategory { get; private set; } = ESkillCategory.None;
@@ -42,7 +58,33 @@ namespace Ability
 
         public virtual void Casting()
         {
-            
+            _eState = EState.Casting;
+        }
+
+        public virtual void EndCasting()
+        {
+            if (SkillData == null || SkillData.Cooltime <= 0f)
+            {
+                _eState = EState.Ready;
+                return;
+            }
+
+            // ÄðÅ¸ÀÓ ½ÃÀÛ.
+            UpdateCooltimeAsync().Forget();
+        }
+
+        private async UniTask UpdateCooltimeAsync()
+        {
+            _eState = EState.Cooltime;
+            _currCooltime = SkillData.Cooltime;
+
+            while (_currCooltime > 0f)
+            {
+                await UniTask.Yield();
+                _currCooltime -= Time.deltaTime;
+            }
+
+            _eState = EState.Ready;
         }
     }
 }
