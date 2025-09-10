@@ -36,14 +36,14 @@ namespace Creature.Action
 
         private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList)
         {
-            var skill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
-            if (skill == null)
+            var iSkill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
+            if (iSkill == null)
             {
                 _endAction?.Invoke(_iActor);
                 return;
             }
 
-            var targetList = attacker.GetTargetList(iCombatantList, skill);
+            var targetList = attacker.GetTargetList(iCombatantList, iSkill);
             if (targetList.IsNullOrEmpty())
             {
                 _endAction?.Invoke(_iActor);
@@ -59,7 +59,14 @@ namespace Creature.Action
                 return;
             }
 
-            var skillRange = skill.Range;
+            var skillData  = iSkill.SkillData;
+            if (skillData == null)
+            {
+                _endAction?.Invoke(_iActor);
+                return; 
+            }
+
+            var skillRange = skillData.Range;
             if (skillRange < 0)
             {
                 _endAction?.Invoke(_iActor);
@@ -71,7 +78,7 @@ namespace Creature.Action
                 MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
                 FinishAction = () =>
                 {
-                    FinishMoveToTarget(attacker, skill, targetList);
+                    FinishMoveToTarget(attacker, iSkill, targetList);
                 },
                 IsJumpMove = false,
             }

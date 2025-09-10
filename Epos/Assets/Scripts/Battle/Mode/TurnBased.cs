@@ -359,7 +359,11 @@ namespace Battle.Mode
                 var passiveSkill = iCombatant.ISkillCtr?.GetPossibleSkill(ESkillCategory.Passive);
                 if(passiveSkill == null)
                     continue;
-                
+
+                var skillData = passiveSkill?.SkillData;
+                if (skillData == null)
+                    continue;
+
                 var targetList = iCombatant.GetTargetList(_priorityICombatantList, passiveSkill);
                 if (targetList.IsNullOrEmpty())
                     continue;
@@ -384,7 +388,7 @@ namespace Battle.Mode
                     var target = targetList.FirstOrDefault();
                     if (target != null)
                     {
-                        if (passiveSkill.SameTeam)
+                        if (skillData.SameTeam)
                         {
                             if(attacker.ETeam == iCombatant.ETeam)
                                 continue;
@@ -423,6 +427,10 @@ namespace Battle.Mode
             if (iSkill == null)
                 return;
 
+            var skillData = iSkill.SkillData;
+            if(skillData == null)
+                return;
+
             if (targetDataList == null ||
                 targetDataList.Count > 1)
                 return;
@@ -431,7 +439,7 @@ namespace Battle.Mode
             if (targetData == null)
                 return;
             
-            var skillRange = iSkill.Range;
+            var skillRange = skillData.Range;
             if (skillRange <= 0)
                 return;
 

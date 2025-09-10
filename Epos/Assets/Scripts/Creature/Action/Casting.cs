@@ -79,8 +79,10 @@ namespace Creature.Action
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _param?.IListener?.InUse();
 
+            var skillData = _param?.ISkill?.SkillData;
+  
             if (_param?.TargetList != null &&
-                !_param.ISkill.SameTeam)
+                !skillData.SameTeam)
             {
                 foreach (var target in _param.TargetList)
                 {
@@ -90,9 +92,9 @@ namespace Creature.Action
 
                     var iCaster = _param?.ICaster;
                     // Temp
-                    if (_param?.ISkill?.ProjectilePrefab != null)
+                    if (skillData?.ProjectilePrefab != null)
                     {
-                        var projectileGameObj = GameObject.Instantiate(_param.ISkill.ProjectilePrefab);
+                        var projectileGameObj = GameObject.Instantiate(skillData.ProjectilePrefab);
                         var projectile = projectileGameObj.GetComponent<Projectile>();
                         projectile.startPos = iCaster.Transform.position;
                         projectile.targetPos = target.IActor.Transform.position;

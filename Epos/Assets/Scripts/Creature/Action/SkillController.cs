@@ -23,7 +23,7 @@ namespace Creature.Action
         
         private ICaster _iCaster = null;
         private Datas.ScriptableObjects.Skill[] _skillDatas = null;
-        private List<Ability.Skill> _skillList = null;
+        private List<Ability.ISkill> _iSkillList = null;
 
         public SkillController(Datas.ScriptableObjects.Skill[] skillDatas)
         {
@@ -54,8 +54,8 @@ namespace Creature.Action
             if(_skillDatas == null || _skillDatas.Length <= 0)
                 return;
 
-            _skillList = new();
-            _skillList.Clear();
+            _iSkillList = new();
+            _iSkillList.Clear();
 
             for(int i = 0; i < _skillDatas.Length; ++i)
             {
@@ -66,7 +66,7 @@ namespace Creature.Action
                 var skill = new Ability.Skill();
                 skill?.Initialize(skillData);
 
-                _skillList?.Add(skill);
+                _iSkillList?.Add(skill);
             }
         }
 
@@ -75,18 +75,20 @@ namespace Creature.Action
             return GetPossibleSkill(eSkillCategory);
         }
 
-        private Ability.Skill GetPossibleSkill(ESkillCategory eSkillCategory)
+        private Ability.ISkill GetPossibleSkill(ESkillCategory eSkillCategory)
         {
-            if (_skillList == null)
+            if (_iSkillList == null)
                 return null;
 
-            foreach (var skill in _skillList)
+            foreach (var skill in _iSkillList)
             {
                 if(skill == null)
                     continue;
 
                 if (skill.SkillData.ESkillCategory != eSkillCategory)
                     continue;
+
+                
                 
                 // if (eSkillCategory == ESkillCategory.Active)
                 // {

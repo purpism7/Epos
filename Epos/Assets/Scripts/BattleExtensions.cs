@@ -15,7 +15,11 @@ public static class BattleExtensions
         
         if (iCombatantList == null)
             return null;
-            
+        
+        var skillData = iSkill?.SkillData;
+        if(skillData == null)
+            return null;
+
         List<ICombatant> targetList = new();
         targetList.Clear();
         
@@ -27,7 +31,7 @@ public static class BattleExtensions
             if(!iCombatant.IActor.IsActivate)
                 continue;
 
-            if (iSkill.SameTeam)
+            if (skillData.SameTeam)
             {
                 if(attacker.ETeam == iCombatant.ETeam)
                     targetList.Add(iCombatant);
@@ -42,7 +46,7 @@ public static class BattleExtensions
         if (targetList.IsNullOrEmpty())
             return null;
 
-        if (iSkill.ESkillTarget == ESkillTarget.NearOne)
+        if (skillData.ESkillTarget == ESkillTarget.NearOne)
         {
             var target = FindClosestICombatant(targetList, attacker);
             targetList.Clear();
@@ -52,7 +56,7 @@ public static class BattleExtensions
         }
         
         // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
-        if (iSkill.ESkillTarget == ESkillTarget.FarOne)
+        if (skillData.ESkillTarget == ESkillTarget.FarOne)
         {
             var target = targetList.FirstOrDefault();
             targetList.Clear();
