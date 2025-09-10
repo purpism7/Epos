@@ -463,7 +463,7 @@ namespace Battle.Mode
                 IsJumpMove = true,
             };
 
-            attacker.IActor.IActCtr?.MoveToTargetPosition(moveParam);
+            attacker.IActor?.IActCtr?.MoveToTargetPosition(moveParam);
         }
 
         private void CastingSkill(ICombatant attacker, Ability.ISkill iSkill, List<TargetData> targetDataList)

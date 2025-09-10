@@ -80,12 +80,16 @@ namespace Creature.Action
             if (_iSkillList == null)
                 return null;
 
-            foreach (var skill in _iSkillList)
+            foreach (var iSkill in _iSkillList)
             {
-                if(skill == null)
+                if(iSkill == null)
                     continue;
 
-                if (skill.SkillData.ESkillCategory != eSkillCategory)
+                var skillData = iSkill.SkillData;
+                if (skillData == null)
+                    continue;
+
+                if (skillData.ESkillCategory != eSkillCategory)
                     continue;
 
                 
