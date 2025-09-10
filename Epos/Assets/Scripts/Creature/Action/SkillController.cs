@@ -106,7 +106,7 @@ namespace Creature.Action
                 //         continue;
                 // }
                 
-                return skill;
+                return iSkill;
             }
 
             return null;
