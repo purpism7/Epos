@@ -92,6 +92,9 @@ namespace Creature.Action
                 if (skillData.ESkillCategory != eSkillCategory)
                     continue;
 
+
+                if (!iSkill.IsReady)
+                    continue;
                 
                 
                 // if (eSkillCategory == ESkillCategory.Active)

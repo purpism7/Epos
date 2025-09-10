@@ -37,10 +37,6 @@ namespace Creature.Action
             if (_param == null)
                 return;
             
-            //if(_data.PlayAnimation)
-                //SetAnimation(_data.AnimationKey, false);
-            //_iActor.SkeletonAnimation.
-
              var iCasterIStat = _param?.ICombatant?.IActor?.IStat;
             if (iCasterIStat != null)
             {
