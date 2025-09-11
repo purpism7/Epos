@@ -254,7 +254,8 @@ MonoBehaviour:
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
-  m_Cameras: []
+  m_Cameras:
+  - {fileID: 7536212685587282326}
   m_RendererIndex: -1
   m_VolumeLayerMask:
     serializedVersion: 2
@@ -1621,6 +1622,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3685c740417f4704db01db91bf00c63a, type: 3}
+--- !u!20 &7536212685587282326 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 2268188844081312291, guid: 3685c740417f4704db01db91bf00c63a, type: 3}
+  m_PrefabInstance: {fileID: 7536212685587282325}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

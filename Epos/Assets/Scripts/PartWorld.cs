@@ -22,7 +22,12 @@ namespace UI
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private UIManager _uiManager = null;
 
-        public virtual void ChainLateUpdate()
+        private void LateUpdate()
+        {
+            ChainLateUpdate();
+        }
+
+        private void ChainLateUpdate()
         {
             if (!rootRectTm)
                 return;
