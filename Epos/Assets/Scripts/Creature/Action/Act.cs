@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using Spine;
 using UnityEngine;
+
+using Spine;
+using VContainer;
 
 namespace Creature.Action
 {
@@ -28,12 +30,20 @@ namespace Creature.Action
 
     public abstract class Act<T> : IAct where T : ActParam
     {
+        [Inject] protected IObjectResolver _iResolver = null;
+
         protected T _param = null;
         protected IActor _iActor = null;
         protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
         protected bool _isActivate = false;
-        
+
+        //[Inject]
+        //protected virtual void InitializeInject(IObjectResolver iResolver)
+        //{
+        //    _iResolver = iResolver;
+        //}
+
         public virtual void Initialize(IActor iActor)
         {
             _iActor = iActor;

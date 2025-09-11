@@ -124,38 +124,39 @@ namespace GameSystem
                     return null;
             }
 
-            var iPoolable = _objectPooler.Get<T>();
-            if (iPoolable != null)
-                return iPoolable;
-
             Common.Component component = null;
-            if (_componentDic != null)
-                _componentDic.TryGetValue(typeof(T), out component);
 
+            component = _objectPooler.Get<T>();
             if (component == null)
-                return null;
+            {
+                if (_componentDic != null)
+                    _componentDic.TryGetValue(typeof(T), out component);
 
-            isInitialize = true;
+                if (component == null)
+                    return null;
 
-            component = Instantiate(component.gameObject)?.GetComponent<T>();
-            _container?.InjectGameObject(component?.gameObject);
+                isInitialize = true;
 
-            if (component != null)
-                _objectPooler?.Add(component);
+                component = Instantiate(component.gameObject)?.GetComponent<T>();
+                _container?.InjectGameObject(component?.gameObject);
+
+                if (component != null)
+                    _objectPooler?.Add(component);
+            }
 
             RectTransform rootRectTm = null;
             if (component is UI.View.BaseView<V> baseView)
             {
                 rootRectTm = viewRootRectTm;
-
-                baseView.CreatePresenter(_container);
                 SetCurrView(baseView);
+
+                if(isInitialize)
+                    baseView.CreatePresenter(_container);
             }
 
             if (component is UI.Popup.BasePopup<V> basePopup)
             {
                 rootRectTm = popupRootRectTm;
-
                 SetCurrPopup(basePopup);
             }
 

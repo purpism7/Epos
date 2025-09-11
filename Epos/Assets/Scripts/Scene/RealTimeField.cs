@@ -20,20 +20,16 @@ namespace Scene
         [SerializeField]
         private PartyLocation partyLocation = null;
 
-        //[Inject]
-        //private IFieldManager _iFieldManager = null;
-
-
-        public override async UniTask InitializeAsync(LifetimeScope parentLifetimeScope)
+        public override async UniTask InitializeAsync()
         {
-            await base.InitializeAsync(parentLifetimeScope);
+            await base.InitializeAsync();
             //await UniTask.Yield();
 
             partyLocation?.Initialize();
 
-            var container = _fieldScope?.Container;
-            var iFieldManaver = container?.Resolve<IFieldManager>();
-            var iBattleManager = container?.Resolve<IBattleManager>();
+            //var container = _fieldScope?.Container;
+            var iFieldManaver = _lifetimeScope?.Container?.Resolve<IFieldManager>();
+            var iBattleManager = _lifetimeScope?.Container?.Resolve<IBattleManager>();
 
             var waypoints = iFieldManaver?.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.Waypoints;
 

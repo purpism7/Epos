@@ -7,11 +7,13 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using Spine;
+using VContainer;
 
 using Datas.ScriptableObjects;
 using GameSystem.Event;
-using Vector3 = UnityEngine.Vector3;
+using Creator;
 
+using Vector3 = UnityEngine.Vector3;
 
 namespace Creature.Action
 {
@@ -20,14 +22,14 @@ namespace Creature.Action
         public class Param : ActParam
         {
             public IListener IListener = null;
-            public ICaster ICaster { get; private set; } = null;
+            public ICombatant ICombatant { get; private set; } = null;
             public Ability.ISkill ISkill = null;
             public List<ICombatant> TargetList = null;
             public bool PlayAnimation = true;
 
-            public Param WithICaster(ICaster iCaster)
+            public Param WithICombatant(ICombatant iCombatant)
             {
-                ICaster = iCaster;
+                ICombatant = iCombatant;
                 return this;
             }
         }
@@ -59,10 +61,11 @@ namespace Creature.Action
             if (target == null)
                 return;
 
-            if(_param?.ICaster is ICombatant iCombatant)
+            var iCombatant = _param?.ICombatant;
+            if (iCombatant != null)
             {
                 var direction = target.IActor.Transform.position - iCombatant.Transform.position;
-                iCombatant?.IActor?.IActCtr?.Flip(-direction.x);
+                _param?.ICombatant?.IActor?.IActCtr?.Flip(-direction.x);
             }
         }
 
@@ -79,6 +82,7 @@ namespace Creature.Action
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _param?.IListener?.InUse();
 
+            var iCombatant = _param?.ICombatant;
             var skillData = _param?.ISkill?.SkillData;
   
             if (_param?.TargetList != null &&
@@ -90,25 +94,15 @@ namespace Creature.Action
                         !target.IActor.IsAlive)
                         continue;
 
-                    var iCaster = _param?.ICaster;
-                    // Temp
-                    if (skillData?.ProjectilePrefab != null)
-                    {
-                        var projectileGameObj = GameObject.Instantiate(skillData.ProjectilePrefab);
-                        var projectile = projectileGameObj.GetComponent<Projectile>();
-                        projectile.startPos = iCaster.Transform.position;
-                        projectile.targetPos = target.IActor.Transform.position;
-
-                        projectile?.InitializeAsync(null);
-                        projectile?.ActivateAsync(null);
-                    }
-
-                    target?.IActor?.IActCtr?.TakeDamage(iCaster as ICombatant, _param.PlayAnimation);
+                    if (skillData.HasProjectile)
+                        CreateProjectile(skillData.ProjectilePrefab, target);
+                    else 
+                        target?.IActor?.IActCtr?.TakeDamage(iCombatant, _param.PlayAnimation);
                 }
             }
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _param?.IListener?.AfterCasting(_param?.ICaster as ICombatant);
+            _param?.IListener?.AfterCasting(iCombatant);
             _param?.ISkill?.EndCasting();
         }
 
@@ -117,6 +111,29 @@ namespace Creature.Action
             base.OnCompleted(trackEntry);
 
             _endAction?.Invoke(_iActor);
+        }
+
+        private void CreateProjectile(GameObject proejctilePrefab, ICombatant targetICombatant)
+        {
+            var iCombatant = _param?.ICombatant;
+            if (iCombatant == null)
+                return;
+
+            if (targetICombatant == null)
+                return;
+
+            var projectileCreator = _iResolver?.Resolve<ProjectileCreator>();
+            if (projectileCreator == null)
+                return;
+
+            var projectileParam = new Battle.Projectile.Param()
+            {
+
+            }
+            .WithStartPosition(iCombatant.Transform.position)
+            .WithEndPosition(targetICombatant.IActor.Transform.position);
+
+            var iProjectile = projectileCreator?.Create(proejctilePrefab, projectileParam);
         }
     }
 }

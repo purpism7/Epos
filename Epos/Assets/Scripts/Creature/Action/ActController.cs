@@ -5,9 +5,10 @@ using Unity.Burst;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 using Datas.ScriptableObjects;
-using VContainer;
+using Creator;
 
 namespace Creature.Action
 {
@@ -15,7 +16,7 @@ namespace Creature.Action
     {
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
-        IActController CastingSkill(Casting.IListener iListener, ICaster iCaster, Ability.ISkill iSkill, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList);
         IActController Die();
         
         void TakeDamage(ICombatant iCombatant, bool playAnimation);
@@ -46,6 +47,8 @@ namespace Creature.Action
 
             _iActDic = new();
             _iActDic.Clear();
+
+            Preload();
 
             return this;
         }
@@ -80,6 +83,11 @@ namespace Creature.Action
         }
         #endregion
             
+        private void Preload()
+        {
+            //GetAct<Casting, Casting.Param>();
+        }
+
         #region IActController
         /// <summary>
         /// 
@@ -114,17 +122,18 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICaster iCaster, Ability.ISkill iSkill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
-            
+
             var castingParam = new Casting.Param
             {
                 IListener = iListener,
                 ISkill = iSkill,
                 TargetList = targetList,
-            }.WithICaster(iCaster);
+            }
+            .WithICombatant(iCombatant);
             
             AddActAsync<Casting, Casting.Param>(castingParam).Forget();
 

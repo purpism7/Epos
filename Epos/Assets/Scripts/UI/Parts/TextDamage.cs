@@ -45,6 +45,13 @@ namespace Parts
             return UniTask.CompletedTask;
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            Return();
+        }
+
         private async UniTask MoveAsync()
         {
             if (!rootRectTm)

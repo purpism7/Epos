@@ -69,8 +69,18 @@ namespace  UI.Parts
             base.Deactivate();
 
             GameSystem.Event.EventHandler.Remove<StatChangedEventData>(OnStatChanged);
+
+            Return();
         }
-        
+
+        private void LateUpdate()
+        {
+            if (!IsActivate)
+                return;
+
+            ChainLateUpdate();
+        }
+
         void IHpProgress.UpdateHpProgress()
         {
             UpdateHpProgress();

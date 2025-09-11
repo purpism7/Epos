@@ -119,7 +119,7 @@ namespace Creature
             using var scope = iResolver?.CreateScope(
                 builder =>
                 {
-                    builder.Register<ActController>(VContainer.Lifetime.Scoped).As<IActController>();
+                    builder.Register<ActController>(VContainer.Lifetime.Singleton).As<IActController>();
                 });
 
             IActCtr = scope?.Resolve<IActController>();

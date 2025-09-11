@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Common;
 using Datas.ScriptableObjects;
 using GameSystem.Event;
-using Cysharp.Threading.Tasks;
-using System.Data.Common;
 
 namespace Ability
 {

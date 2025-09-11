@@ -5,10 +5,15 @@ namespace GameSystem
 {
     public interface IPoolable
     {
+        GameObject PrefabKey { get; }
+
+        Transform Transform { get; }
         bool IsActivate { get; }
+
+        void Return();
     }
 
-    public class ObjectPooler
+    public class ObjectPooler : MonoBehaviour
     {
         private List<IPoolable> _iPoolableList = new();
 
@@ -20,12 +25,16 @@ namespace GameSystem
             _iPoolableList?.Add(iPoolable);
         }
 
-        public void Return()
+        public void Return(IPoolable iPoolable)
         {
-            
+            if (iPoolable == null)
+                return;
+
+            //iPoolable.Transform.SetParent(transform);
+            iPoolable.Transform.SetActive(false);
         }
 
-        public T Get<T>() where T : Component
+        public T Get<T>(GameObject prefab = null) where T : Component
         {
             if (_iPoolableList.IsNullOrEmpty())
                 return null;
@@ -36,11 +45,21 @@ namespace GameSystem
                 if (iPoolable == null)
                     continue;
 
-                if (iPoolable.IsActivate)
+                if (iPoolable.Transform &&
+                    iPoolable.Transform.gameObject.activeSelf)
                     continue;
 
+                if(prefab)
+                {
+                    if (iPoolable.PrefabKey != prefab)
+                        continue;
+                }
+
                 if (iPoolable is T t)
+                {
+                    iPoolable.Transform.SetActive(true);
                     return t;
+                }
             }
 
             return null;

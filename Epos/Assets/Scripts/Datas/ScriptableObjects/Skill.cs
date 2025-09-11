@@ -21,6 +21,8 @@ namespace Datas.ScriptableObjects
         public bool SameTeam = false;
 
         public GameObject ProjectilePrefab = null;
+
+        public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }
 }
 

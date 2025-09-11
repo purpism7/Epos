@@ -40,7 +40,7 @@ namespace Battle.Mode
         private ICombatant _closestICombatant = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
-        private List<IHpProgress> _iHpProgressList = null;
+        //private List<IHpProgress> _iHpProgressList = null;
 
         public override BattleMode<Data> Initialize(Data data)
         {
@@ -85,15 +85,15 @@ namespace Battle.Mode
         public override void ChainLateUpdate()
         {
             _iWaypointCtr?.ChainLateUpdate();
-            LateUpdateHpProgress();
+            //LateUpdateHpProgress();
         }
 
         private void LateUpdateHpProgress()
         {
-            for (int i = 0; i < _iHpProgressList?.Count; ++i)
-            {
-                _iHpProgressList[i]?.ChainLateUpdate();
-            }
+            //for (int i = 0; i < _iHpProgressList?.Count; ++i)
+            //{
+            //    _iHpProgressList[i]?.ChainLateUpdate();
+            //}
         }
         
         private void ActivateBattleMain()
@@ -156,20 +156,21 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            if (_iHpProgressList == null)
-            {
-                _iHpProgressList = new();
-                _iHpProgressList.Clear();
-            }
+            //if (_iHpProgressList == null)
+            //{
+            //    _iHpProgressList = new();
+            //    _iHpProgressList.Clear();
+            //}
 
             var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-            var hpProgress = uiCreator?.SetWorldUI(true)?
+            var hpProgress = uiCreator?
+                .SetWorldUI(true)?
                 .Create();
 
             if (hpProgress == null)
                 return;
 
-            _iHpProgressList?.Add(hpProgress);
+            //_iHpProgressList?.Add(hpProgress);
 
             var targetPos = iCombatant.IActor.Transform.position;
             targetPos.y += iCombatant.IActor.Height;
@@ -351,34 +352,6 @@ namespace Battle.Mode
         #region WeightedActionController.IListener
         void WeightedActionController.IListener.End(IActor iActor)
         {
-            //ICombatant iCombatant = null;
-            //for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            //{
-            //    iCombatant = _data?.AllyICombatantList[i];
-            //    if (iCombatant == null)
-            //        continue;
-
-            //    if (iCombatant.IActor == iActor)
-            //        break;
-
-            //    iCombatant = null;
-            //}
-
-            //if(iCombatant == null)
-            //{
-            //    var enemyICombatantList = _iWaypointCtr?.Waypoint?.EnemyICombatantList;
-            //    for (int i = 0; i < enemyICombatantList?.Count; ++i)
-            //    {
-            //        iCombatant = enemyICombatantList[i];
-            //        if (iCombatant == null)
-            //            continue;
-
-            //        if (iCombatant.IActor == iActor)
-            //            break;
-
-            //        iCombatant = null;
-            //    }
-            //}
             if(_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
                 PrepareForNextActionAsync(iCombatant).Forget();
 

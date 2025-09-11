@@ -15,8 +15,6 @@ namespace Scene
 {
     public abstract class BaseField : SceneInitializer
     {
-        protected LifetimeScope _fieldScope = null;
-
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
@@ -24,19 +22,20 @@ namespace Scene
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Scoped).As<IBattleManager>();
             builder.RegisterEntryPoint<FieldManager>(VContainer.Lifetime.Scoped).As<IFieldManager>();
             builder.RegisterEntryPoint<CombatantCreator>(VContainer.Lifetime.Scoped).AsSelf();
+            builder.RegisterEntryPoint<ProjectileCreator>(VContainer.Lifetime.Scoped).AsSelf();
             builder.Register<WeakTypeMap<IActor>>(VContainer.Lifetime.Scoped).AsSelf();
+            //builder.RegisterComponentInHierarchy<Monster>().AsSelf();
         }
 
-        public override async UniTask InitializeAsync(LifetimeScope parentLifetimeScope)
+        public override async UniTask InitializeAsync()
         {
-            await base.InitializeAsync(parentLifetimeScope);
+            await base.InitializeAsync();
 
-            _fieldScope = parentLifetimeScope.CreateChild(Configure);
-            await UniTask.Yield();
+            //await UniTask.Yield();
 
-            var container = _fieldScope?.Container;
-            await container.Resolve<IBattleManager>().InitializeAsync();
-            await container.Resolve<IFieldManager>().InitializeAsync();
+            //var container = _fieldScope?.Container;
+            await _lifetimeScope.Container.Resolve<IBattleManager>().InitializeAsync();
+            await _lifetimeScope.Container.Resolve<IFieldManager>().InitializeAsync();
 
         }
     }

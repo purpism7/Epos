@@ -14,62 +14,33 @@ using System;
 
 namespace Lifetime
 {
-
     public class GlobalLifetimeScope : LifetimeScope
     {
-        //[SerializeField] private GameObject uiManagerPrefab = null;
-
-        public class GenericResolver// : IInstanceProvider
-        {
-            readonly Type implType;
-            readonly VContainer.Lifetime lifetime;
-
-            public GenericResolver(Type implType, VContainer.Lifetime lifetime)
-            {
-                this.implType = implType;
-                this.lifetime = lifetime;
-            }
-
-            public object CreateInstance(IObjectResolver resolver, Type type)
-            {
-                var genericType = implType.MakeGenericType(type.GetGenericArguments());
-                return Activator.CreateInstance(genericType);
-            }
-        }
-
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
 
             Debug.Log("GlobalLifetimeScope Configure");
 
-            builder.RegisterComponentInHierarchy<UIManager>()
-                .AsSelf();
-
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
-            builder.Register<AddressableManager>(VContainer.Lifetime.Singleton).AsSelf();
-            
-            builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
-            builder.RegisterComponentInHierarchy<InputManager>().As<IInputManager>();
-            builder.RegisterEntryPoint<Entities.CharacterManager>().As<ICharacterManager>();
-            //builder.RegisterComponentInHierarchy<FieldManager>().As<IFieldManager>();
-            builder.RegisterComponentInHierarchy<Party>().As<IParty>();
-            builder.Register<ObjectPooler>(VContainer.Lifetime.Singleton).AsSelf();
 
+            builder.RegisterComponentOnNewGameObject<AddressableManager>(VContainer.Lifetime.Singleton, $"[{typeof(AddressableManager).Name}]")
+               .UnderTransform(transform)
+               .AsSelf();
+
+            builder.RegisterComponentOnNewGameObject<InputManager>(VContainer.Lifetime.Singleton, $"[{typeof(InputManager).Name}]")
+                .UnderTransform(transform)
+                .As<IInputManager>();
+
+            builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
+            builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
+            builder.RegisterComponentInHierarchy<Party>().As<IParty>();
             builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
 
+            builder.RegisterComponentOnNewGameObject<ObjectPooler>(VContainer.Lifetime.Singleton, $"[{typeof(ObjectPooler).Name}]").AsSelf();
             builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
             builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
         }
-
-        //private void RegisterUIManager(IContainerBuilder builder)
-        //{
-        //    var gameObj = GameObject.Instantiate(uiManagerPrefab);
-        //    var uiManager = gameObj.GetComponent<UIManager>();
-
-        //    builder.RegisterComponent(uiManager)
-        //        .AsSelf();
-        //}
 
         protected override void Awake()
         {
@@ -83,19 +54,18 @@ namespace Lifetime
 
         private async UniTask InitalizeAsync()
         {
+            var sceneInitializer = Container?.Resolve<SceneInitializer>();
+            sceneInitializer?.CreateChild(this);
+
+            await UniTask.Yield();
+
             await Container.Resolve<ResourceManager>()
                 .InitializeAsync();
 
             await Container.Resolve<UIManager>()
                .InitializeAsync(Container);
-            
-            await Container.Resolve<ICharacterManager>()
-                .InitializeAsync();
 
-            var sceneInitializer = Container.Resolve<SceneInitializer>();
-            // var lifetimeScope = sceneInitializer.GetComponent<LifetimeScope>();
-            await sceneInitializer
-                .InitializeAsync(this);
+            await sceneInitializer.InitializeAsync();
         }
     }
 }
