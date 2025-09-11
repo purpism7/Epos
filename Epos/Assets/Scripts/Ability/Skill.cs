@@ -45,6 +45,8 @@ namespace Ability
         public virtual void Initialize(Datas.ScriptableObjects.Skill skillData)
         {
             SkillData = skillData;
+
+            _eState = EState.Ready;
         }
 
         public virtual void ChainUpdate()
