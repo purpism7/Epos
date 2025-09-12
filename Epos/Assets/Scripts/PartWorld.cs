@@ -20,14 +20,9 @@ namespace UI
         [SerializeField] protected RectTransform rootRectTm = null;
 
         [Inject] private ICameraManager _iCameraManager = null;
-        [Inject] private UIManager _uiManager = null;
+        [Inject] private UIManager _uiManager = null;        
 
-        private void LateUpdate()
-        {
-            ChainLateUpdate();
-        }
-
-        private void ChainLateUpdate()
+        protected void ChainLateUpdate()
         {
             if (!rootRectTm)
                 return;

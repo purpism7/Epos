@@ -30,7 +30,7 @@ namespace GameSystem
             if (iPoolable == null)
                 return;
 
-            iPoolable.Transform.SetParent(transform);
+            // iPoolable.Transform.SetParent(transform);
             iPoolable.Transform.SetActive(false);
         }
 
@@ -57,7 +57,7 @@ namespace GameSystem
 
                 if (iPoolable is T t)
                 {
-                    iPoolable.Transform.SetActive(true);
+                    iPoolable.Transform.gameObject.SetActive(true);
                     return t;
                 }
             }

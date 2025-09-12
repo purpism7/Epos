@@ -20,6 +20,9 @@ namespace Creator
             if (projectile == null)
             {
                 var projectileGameObj = _iResolver?.Instantiate(projectilePrefab);
+                if (!projectileGameObj)
+                    return null;
+                
                 projectile = projectileGameObj.GetComponent<Battle.Projectile>();
                 if (projectile == null)
                     return null;

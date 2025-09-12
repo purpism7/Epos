@@ -63,7 +63,7 @@ namespace Parts
             var startPos = GetScreenPos(_param.TargetTm.position);
             if (startPos == null) 
                 return;
-            
+
             rootRectTm.anchoredPosition = startPos.Value;
             var endPos = startPos.Value;
             endPos.y += 70f;   

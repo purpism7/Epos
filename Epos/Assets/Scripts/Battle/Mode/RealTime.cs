@@ -40,7 +40,6 @@ namespace Battle.Mode
         private ICombatant _closestICombatant = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
-        //private List<IHpProgress> _iHpProgressList = null;
 
         public override BattleMode<Data> Initialize(Data data)
         {
@@ -85,15 +84,7 @@ namespace Battle.Mode
         public override void ChainLateUpdate()
         {
             _iWaypointCtr?.ChainLateUpdate();
-            //LateUpdateHpProgress();
-        }
-
-        private void LateUpdateHpProgress()
-        {
-            //for (int i = 0; i < _iHpProgressList?.Count; ++i)
-            //{
-            //    _iHpProgressList[i]?.ChainLateUpdate();
-            //}
+            
         }
         
         private void ActivateBattleMain()

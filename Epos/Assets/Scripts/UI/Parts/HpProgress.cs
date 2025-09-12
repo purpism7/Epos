@@ -73,6 +73,11 @@ namespace  UI.Parts
             Return();
         }
 
+        private void LateUpdate()
+        {
+            ChainLateUpdate();
+        }
+
         void IHpProgress.UpdateHpProgress()
         {
             UpdateHpProgress();
