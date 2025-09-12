@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Pierce
   m_EditorClassIdentifier: 
   Id: 4
+  AnimationName: Skill_01
   ESkillCategory: 2
+  Cooltime: 0
   Point: 1
   ESkillTarget: 2
   Range: 8

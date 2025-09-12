@@ -64,7 +64,7 @@ namespace Creature.Action
                     continue;   
 
                 var skill = new Ability.Skill();
-                skill?.Initialize(skillData);
+                skill.Initialize(skillData);
 
                 _iSkillList?.Add(skill);
             }
@@ -91,23 +91,9 @@ namespace Creature.Action
 
                 if (skillData.ESkillCategory != eSkillCategory)
                     continue;
-
-
+                
                 if (!iSkill.IsReady)
                     continue;
-                
-                
-                // if (eSkillCategory == ESkillCategory.Active)
-                // {
-                //     if (_iCaster?.IStat?.Get(Stat.EType.ActivePoint) < 1)
-                //         continue;
-                // }
-                //
-                // if (eSkillCategory == ESkillCategory.Passive)
-                // {
-                //     if (_iCaster?.IStat?.Get(Stat.EType.PassivePoint) < 1)
-                //         continue;
-                // }
                 
                 return iSkill;
             }

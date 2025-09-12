@@ -11,16 +11,17 @@ namespace Datas.ScriptableObjects
     public class Skill : ScriptableObject
     {
         public int Id = 0;
+        public string AnimationName = string.Empty;
         public ESkillCategory ESkillCategory = ESkillCategory.None;
         public float Cooltime = 0;
         public int Point = 0;
-        
         public ESkillTarget ESkillTarget = ESkillTarget.None;
         public float Range  = 0;
 
         public bool SameTeam = false;
 
         public GameObject ProjectilePrefab = null;
+        
 
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }

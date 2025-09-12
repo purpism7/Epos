@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: WheelWind
   m_EditorClassIdentifier: 
   Id: 3
+  AnimationName: Skill_03
   ESkillCategory: 2
+  Cooltime: 10
   Point: 1
   ESkillTarget: 2
   Range: 5

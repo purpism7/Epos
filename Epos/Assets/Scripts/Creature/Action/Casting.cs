@@ -73,18 +73,39 @@ namespace Creature.Action
         {
             _param?.ISkill?.Casting();
             _param?.IListener?.BeforeCasting();
-          
+            
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            SetAnimation(_param?.AnimationKey, false);
+            
+            var skillData = _param?.ISkill?.SkillData;
+            if (skillData == null)
+            {
+                _endAction?.Invoke(_iActor);
+                return;
+            }
+            
+            SetAnimation(skillData.AnimationName, false);
             
             var halfDuration = _duration / 2f;
             
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _param?.IListener?.InUse();
+            DamageToTargetList(skillData);
 
+            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
+            _param?.IListener?.AfterCasting(_param?.ICombatant);
+            _param?.ISkill?.EndCasting();
+        }
+
+        protected override void OnCompleted(TrackEntry trackEntry)
+        {
+            base.OnCompleted(trackEntry);
+
+            _endAction?.Invoke(_iActor);
+        }
+
+        private void DamageToTargetList(Skill skillData)
+        {
             var iCombatant = _param?.ICombatant;
-            var skillData = _param?.ISkill?.SkillData;
-  
             if (_param?.TargetList != null &&
                 !skillData.SameTeam)
             {
@@ -100,17 +121,6 @@ namespace Creature.Action
                         target?.IActor?.IActCtr?.TakeDamage(iCombatant, _param.PlayAnimation);
                 }
             }
-
-            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _param?.IListener?.AfterCasting(iCombatant);
-            _param?.ISkill?.EndCasting();
-        }
-
-        protected override void OnCompleted(TrackEntry trackEntry)
-        {
-            base.OnCompleted(trackEntry);
-
-            _endAction?.Invoke(_iActor);
         }
 
         private void CreateProjectile(GameObject proejctilePrefab, ICombatant targetICombatant)
