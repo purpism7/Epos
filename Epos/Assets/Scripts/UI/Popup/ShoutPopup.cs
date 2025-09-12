@@ -41,6 +41,13 @@ namespace UI.Popup
             Time.timeScale = 0.2f;
         }
 
+        public override void Deactivate()
+        {
+            base.Deactivate();
+            
+            Time.timeScale = 1f;
+        }
+
         private void InitializeShoutSlotList()
         {
             _shoutSlotList?.Clear();
@@ -53,7 +60,7 @@ namespace UI.Popup
                 if (eEmotionType == EEmotionType.None)
                     continue;
 
-                shoutSlotParam?.WithEEmotionType(eEmotionType);
+                shoutSlotParam.WithEEmotionType(eEmotionType);
 
                 var shoutSlot = uiCreator?
                     .SetParam(shoutSlotParam)?

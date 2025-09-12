@@ -203,6 +203,9 @@ namespace Creature.Action
 
         private async UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
         {
+            if (_currIAct is Die)
+                return;
+            
             var act = GetAct<T, V>();
             if (act == null)
                 return;
@@ -272,6 +275,8 @@ namespace Creature.Action
 
         private void Execute<T, V>(V param = null, bool isSet = true) where T : Act<V>, new() where V : ActParam, new()
         {
+            if (_currIAct is Die)
+                return;
             // if (!IsActivate)
             //     return;
             

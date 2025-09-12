@@ -50,7 +50,6 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
-  timeScale: 1
 --- !u!114 &2405952197149644585
 MonoBehaviour:
   m_ObjectHideFlags: 0

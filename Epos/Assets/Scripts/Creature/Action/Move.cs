@@ -73,8 +73,6 @@ namespace Creature.Action
         private Vector3 _prevPos = Vector3.zero;
         private Vector3 _targetPos = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
-
-        private float _timeScale = 1f;
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
@@ -96,9 +94,7 @@ namespace Creature.Action
                 End();
                 return;
             }
-
-            _timeScale = Time.timeScale;
-
+            
             Activate();
             SetAnimation(_param.AnimationKey, true);
 
@@ -168,8 +164,8 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
             //Debug.Log(Time.timeScale);
-            _iActor.SkeletonAnimation.timeScale = Time.timeScale;
-            navMeshAgent.speed = _param.MoveSpeed * Time.timeScale;
+            // _iActor.SkeletonAnimation.timeScale = Time.timeScale;
+            navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
         }
 
         private Vector3 TargetPos

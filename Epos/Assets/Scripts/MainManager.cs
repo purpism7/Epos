@@ -13,7 +13,6 @@ public class MainManager : Singleton<MainManager>
 {
     [SerializeField]
     [Range(1f, 10f)]
-    private float timeScale = 1f;
     
     private List<IGeneric> _iMgrGenericList = null;
     private DayNightCycle _dayNightCycle = null;
@@ -61,9 +60,6 @@ public class MainManager : Singleton<MainManager>
 
     private void Update()
     {
-#if UNITY_EDITOR
-        Time.timeScale = timeScale;
-#endif
         _dayNightCycle?.ChainUpdate();
         
         if (_iMgrGenericList != null)
