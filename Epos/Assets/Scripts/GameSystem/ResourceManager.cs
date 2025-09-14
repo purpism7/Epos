@@ -8,7 +8,7 @@ using VContainer.Unity;
 
 namespace GameSystem
 {
-    public class ResourceManager : MonoBehaviour, IInitializable
+    public class ResourceManager : IInitializable
     {
         [Inject] private AddressableManager _addressableManager = null;
         
