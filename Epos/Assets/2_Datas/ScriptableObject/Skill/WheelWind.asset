@@ -21,3 +21,4 @@ MonoBehaviour:
   Range: 5
   SameTeam: 0
   ProjectilePrefab: {fileID: 0}
+  PlayAnimation: 1

@@ -19,6 +19,8 @@ namespace UI.Popup
             base.Deactivate();
 
             _uiManager?.SetCurrPopup(null);
+
+            Return();
         }
     }
 }

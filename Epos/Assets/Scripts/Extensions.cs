@@ -149,7 +149,8 @@ public static class Extensions
                 .Find(animation => animation.Name.Contains(animationName));
             if (animation == null)
                 return;
-            
+
+            animationState.ClearTrack(0);
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return;

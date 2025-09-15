@@ -55,6 +55,8 @@ namespace Lifetime
 
         private async UniTask InitalizeAsync()
         {
+            Container?.Resolve<ITimeScaleManager>()?.Set(1f);
+
             var sceneInitializer = Container?.Resolve<SceneInitializer>();
             sceneInitializer?.CreateChild(this);
 

@@ -14,6 +14,7 @@ using GameSystem.Event;
 using Creator;
 
 using Vector3 = UnityEngine.Vector3;
+using GameSystem;
 
 namespace Creature.Action
 {
@@ -82,7 +83,10 @@ namespace Creature.Action
                 _endAction?.Invoke(_iActor);
                 return;
             }
-            
+
+            if(skillData.PlayAnimation)
+                await ActivateSpecialSkillAnimPopupAsync();
+
             SetAnimation(skillData.AnimationName, false);
             
             var halfDuration = _duration / 2f;
@@ -144,6 +148,23 @@ namespace Creature.Action
             .WithEndPosition(targetICombatant.IActor.Transform.position);
 
             var iProjectile = projectileCreator?.Create(proejctilePrefab, projectileParam);
+        }
+
+        private async UniTask ActivateSpecialSkillAnimPopupAsync()
+        {
+            var uiCreator = _iResolver.Resolve <UIFactory>()?
+                .Create<UI.Popup.SpecialSkillAnimPopup, UI.Popup.SpecialSkillAnimPopup.Param>(); ;
+            //var rootRectTm = _uiManager?.CurrViewRectTm;
+            //var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
+
+            //var battleStartParam = new UI.Popup.BattleStart.Param()
+            //    .WithCompletedAction(OnCompletedBattleStart);
+
+            var specialSkillAnimPopup = await uiCreator
+               //.SetRoot(rootRectTm)
+               .CreateAsync();
+            specialSkillAnimPopup?.Activate();
+            //_battleStart?.ActivateAsync(battleStartParam);
         }
     }
 }
