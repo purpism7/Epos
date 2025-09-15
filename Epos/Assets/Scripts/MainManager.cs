@@ -11,8 +11,8 @@ using Common;
 
 public class MainManager : Singleton<MainManager>
 {
-    [SerializeField]
-    [Range(1f, 10f)]
+    //[SerializeField]
+    //[Range(1f, 10f)]
     
     private List<IGeneric> _iMgrGenericList = null;
     private DayNightCycle _dayNightCycle = null;

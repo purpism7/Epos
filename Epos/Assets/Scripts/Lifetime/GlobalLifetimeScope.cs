@@ -23,6 +23,7 @@ namespace Lifetime
             Debug.Log("GlobalLifetimeScope Configure");
 
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
+            builder.Register<TimeScaleManager>(VContainer.Lifetime.Singleton).As<ITimeScaleManager>();
 
             builder.RegisterComponentOnNewGameObject<AddressableManager>(VContainer.Lifetime.Singleton, $"[{typeof(AddressableManager).Name}]")
                .UnderTransform(transform)

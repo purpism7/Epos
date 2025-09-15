@@ -9,6 +9,7 @@ using Cysharp.Threading.Tasks;
 
 using UI.Slot;
 using Creator;
+using GameSystem;
 
 namespace UI.Popup
 {
@@ -21,6 +22,9 @@ namespace UI.Popup
 
         [SerializeField] private RectTransform shoutSlotRootRectTm = null;
         [SerializeField] private Button cancelBtn = null;
+
+
+        [Inject] private ITimeScaleManager _iTimeScaleManager = null;
 
         private List<ShoutSlot> _shoutSlotList = new();
 
@@ -38,14 +42,14 @@ namespace UI.Popup
         {
             base.Activate();
 
-            Time.timeScale = 0.2f;
+            _iTimeScaleManager?.Set(0.2f);
         }
 
         public override void Deactivate()
         {
             base.Deactivate();
             
-            Time.timeScale = 1f;
+            _iTimeScaleManager?.Set(1f);
         }
 
         private void InitializeShoutSlotList()
