@@ -1,355 +1,358 @@
 fileFormatVersion: 2
-guid: 43a1dd557801e864ba41784667189931
+guid: 206595df1ea112846920d5b4401801e4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7285971803176974645
-    second: Skill_Ch_E_01_0
+      213: 2485956186314188427
+    second: Skill_Eff_Ch_01_0
   - first:
-      213: 8866767399178992819
-    second: Skill_Ch_E_01_1
+      213: 7229428153738915536
+    second: Skill_Eff_Ch_01_1
   - first:
-      213: 7848867406126978964
-    second: Skill_Ch_E_01_2
+      213: 3167305970039327396
+    second: Skill_Eff_Ch_01_2
   - first:
-      213: -4098163300535686532
-    second: Skill_Ch_E_01_3
+      213: -1542126410146235950
+    second: Skill_Eff_Ch_01_3
   - first:
-      213: 7345242976053641053
-    second: Skill_Ch_E_01_4
+      213: 2450784386253403461
+    second: Skill_Eff_Ch_01_4
   - first:
-      213: 790526939035558600
-    second: Skill_Ch_E_01_5
+      213: 1710484400725010347
+    second: Skill_Eff_Ch_01_5
   - first:
-      213: 7385537491516820703
-    second: Skill_Ch_E_01_6
+      213: -1345088331350152573
+    second: Skill_Eff_Ch_01_6
   - first:
-      213: -4098928946146223026
-    second: Skill_Ch_E_01_7
+      213: 2202330387568251231
+    second: Skill_Eff_Ch_01_7
   - first:
-      213: -8525125305749231019
-    second: Skill_Ch_E_01_8
+      213: 6988970550474439859
+    second: Skill_Eff_Ch_01_8
   - first:
-      213: 2575938034936163976
-    second: Skill_Ch_E_01_9
+      213: -4425711689201181233
+    second: Skill_Eff_Ch_01_9
   - first:
-      213: -5561561987778923426
-    second: Skill_Ch_E_01_10
+      213: -1067541695131898597
+    second: Skill_Eff_Ch_01_10
   - first:
-      213: -4895559788300099949
-    second: Skill_Ch_E_01_11
+      213: -689047295798356416
+    second: Skill_Eff_Ch_01_11
   - first:
-      213: 9052916273475322349
-    second: Skill_Ch_E_01_12
+      213: 2791078557957606024
+    second: Skill_Eff_Ch_01_12
   - first:
-      213: 6366289576463312039
-    second: Skill_Ch_E_01_13
+      213: -297480583899254921
+    second: Skill_Eff_Ch_01_13
   - first:
-      213: 4721890133704330752
-    second: Skill_Ch_E_01_14
+      213: -7556986734531752518
+    second: Skill_Eff_Ch_01_14
   - first:
-      213: -9082150488546819500
-    second: Skill_Ch_E_01_15
+      213: -3365608929565451851
+    second: Skill_Eff_Ch_01_15
   - first:
-      213: 4354814536948319143
-    second: Skill_Ch_E_01_16
+      213: -6157803107159047084
+    second: Skill_Eff_Ch_01_16
   - first:
-      213: -6489415464436792804
-    second: Skill_Ch_E_01_17
+      213: -90975592082177825
+    second: Skill_Eff_Ch_01_17
   - first:
-      213: 6246447481450552646
-    second: Skill_Ch_E_01_18
+      213: 4197194444092055669
+    second: Skill_Eff_Ch_01_18
   - first:
-      213: 2078585271228773777
-    second: Skill_Ch_E_01_19
+      213: -3107847430058448056
+    second: Skill_Eff_Ch_01_19
   - first:
-      213: 8929717765747864638
-    second: Skill_Ch_E_01_20
+      213: -5802122209621952756
+    second: Skill_Eff_Ch_01_20
   - first:
-      213: -5382042686578162720
-    second: Skill_Ch_E_01_21
+      213: 1988578719871671724
+    second: Skill_Eff_Ch_01_21
   - first:
-      213: -8757870230759413210
-    second: Skill_Ch_E_01_22
+      213: -3498557405807807106
+    second: Skill_Eff_Ch_01_22
   - first:
-      213: 8358992716291649241
-    second: Skill_Ch_E_01_23
+      213: 7926982308723339452
+    second: Skill_Eff_Ch_01_23
   - first:
-      213: 6552342553862366403
-    second: Skill_Ch_E_01_24
+      213: 3503059804589826178
+    second: Skill_Eff_Ch_01_24
   - first:
-      213: -2874310539572199275
-    second: Skill_Ch_E_01_25
+      213: -8724740867568138670
+    second: Skill_Eff_Ch_01_25
   - first:
-      213: -7282363578809503307
-    second: Skill_Ch_E_01_26
+      213: -2309671466165781652
+    second: Skill_Eff_Ch_01_26
   - first:
-      213: 6030667546413581294
-    second: Skill_Ch_E_01_27
+      213: 4136531753116212283
+    second: Skill_Eff_Ch_01_27
   - first:
-      213: -5459462085895210922
-    second: Skill_Ch_E_01_28
+      213: 2560825658007146129
+    second: Skill_Eff_Ch_01_28
   - first:
-      213: 5181943692879697546
-    second: Skill_Ch_E_01_29
+      213: -8559413182969022473
+    second: Skill_Eff_Ch_01_29
   - first:
-      213: -7070536901477676496
-    second: Skill_Ch_E_01_30
+      213: 127644990097816743
+    second: Skill_Eff_Ch_01_30
   - first:
-      213: -7154399503824531750
-    second: Skill_Ch_E_01_31
+      213: -7433555495192219120
+    second: Skill_Eff_Ch_01_31
   - first:
-      213: -7288764218355547333
-    second: Skill_Ch_E_01_32
+      213: 5596357362902319150
+    second: Skill_Eff_Ch_01_32
   - first:
-      213: -8922443640706208218
-    second: Skill_Ch_E_01_33
+      213: -2294661494701948134
+    second: Skill_Eff_Ch_01_33
   - first:
-      213: 5920964911776152876
-    second: Skill_Ch_E_01_34
+      213: -8960648586392929544
+    second: Skill_Eff_Ch_01_34
   - first:
-      213: 3460122833651173436
-    second: Skill_Ch_E_01_35
+      213: -5187088663649457313
+    second: Skill_Eff_Ch_01_35
   - first:
-      213: 3749466625534469401
-    second: Skill_Ch_E_01_36
+      213: -5983328936203323354
+    second: Skill_Eff_Ch_01_36
   - first:
-      213: -8650649324391115024
-    second: Skill_Ch_E_01_37
+      213: 6820722031906719029
+    second: Skill_Eff_Ch_01_37
   - first:
-      213: -4522374718754933983
-    second: Skill_Ch_E_01_38
+      213: 1661601437625139776
+    second: Skill_Eff_Ch_01_38
   - first:
-      213: -3514478726273104318
-    second: Skill_Ch_E_01_39
+      213: -4648579025766469705
+    second: Skill_Eff_Ch_01_39
   - first:
-      213: 8387686188265788269
-    second: Skill_Ch_E_01_40
+      213: -3160180613413507449
+    second: Skill_Eff_Ch_01_40
   - first:
-      213: 2799368675862851694
-    second: Skill_Ch_E_01_41
+      213: 1727424360204326742
+    second: Skill_Eff_Ch_01_41
   - first:
-      213: -2818257041571994744
-    second: Skill_Ch_E_01_42
+      213: 6442678904622888444
+    second: Skill_Eff_Ch_01_42
   - first:
-      213: -7820123471807930499
-    second: Skill_Ch_E_01_43
+      213: -4035679604798980453
+    second: Skill_Eff_Ch_01_43
   - first:
-      213: 1637393067419879623
-    second: Skill_Ch_E_01_44
+      213: -1829310364267208711
+    second: Skill_Eff_Ch_01_44
   - first:
-      213: 3173421712709318385
-    second: Skill_Ch_E_01_45
+      213: 567749278377838258
+    second: Skill_Eff_Ch_01_45
   - first:
-      213: -5062526436604917271
-    second: Skill_Ch_E_01_46
+      213: -1028923155059422398
+    second: Skill_Eff_Ch_01_46
   - first:
-      213: -4322178737460198496
-    second: Skill_Ch_E_01_47
+      213: -1178128170515500958
+    second: Skill_Eff_Ch_01_47
   - first:
-      213: 3605156511079543267
-    second: Skill_Ch_E_01_48
+      213: -8174814526131839611
+    second: Skill_Eff_Ch_01_48
   - first:
-      213: -3593589864589713232
-    second: Skill_Ch_E_01_49
+      213: -5297376605653534178
+    second: Skill_Eff_Ch_01_49
   - first:
-      213: 8149196179324551653
-    second: Skill_Ch_E_01_50
+      213: 6145160524769160411
+    second: Skill_Eff_Ch_01_50
   - first:
-      213: -2915316231404826529
-    second: Skill_Ch_E_01_51
+      213: -5200976188358384594
+    second: Skill_Eff_Ch_01_51
   - first:
-      213: 270110170509286933
-    second: Skill_Ch_E_01_52
+      213: -8188698373055626042
+    second: Skill_Eff_Ch_01_52
   - first:
-      213: 5110276181962582701
-    second: Skill_Ch_E_01_53
+      213: -6318281022646594991
+    second: Skill_Eff_Ch_01_53
   - first:
-      213: 1662332618306406573
-    second: Skill_Ch_E_01_54
+      213: 1901928066156405512
+    second: Skill_Eff_Ch_01_54
   - first:
-      213: -3026417093427134483
-    second: Skill_Ch_E_01_55
+      213: -7412307874300310544
+    second: Skill_Eff_Ch_01_55
   - first:
-      213: -4681261924971864969
-    second: Skill_Ch_E_01_56
+      213: -3914964956755837197
+    second: Skill_Eff_Ch_01_56
   - first:
-      213: 1179570183091914662
-    second: Skill_Ch_E_01_57
+      213: 3185265379058921461
+    second: Skill_Eff_Ch_01_57
   - first:
-      213: -46606908295103082
-    second: Skill_Ch_E_01_58
+      213: 3683441517616792296
+    second: Skill_Eff_Ch_01_58
   - first:
-      213: 8144233861335928368
-    second: Skill_Ch_E_01_59
+      213: -8668389782009222664
+    second: Skill_Eff_Ch_01_59
   - first:
-      213: 4330669162681104196
-    second: Skill_Ch_E_01_60
+      213: -5807005081554957301
+    second: Skill_Eff_Ch_01_60
   - first:
-      213: 7595291487224848510
-    second: Skill_Ch_E_01_61
+      213: 3464253920387096569
+    second: Skill_Eff_Ch_01_61
   - first:
-      213: 6984150875367564237
-    second: Skill_Ch_E_01_62
+      213: 6464242790252279760
+    second: Skill_Eff_Ch_01_62
   - first:
-      213: 2901652387485436402
-    second: Skill_Ch_E_01_63
+      213: -4030784695888111037
+    second: Skill_Eff_Ch_01_63
   - first:
-      213: 4549814208095284936
-    second: Skill_Ch_E_01_64
+      213: -938020390639620648
+    second: Skill_Eff_Ch_01_64
   - first:
-      213: 6483079495560191815
-    second: Skill_Ch_E_01_65
+      213: 8729966395382153960
+    second: Skill_Eff_Ch_01_65
   - first:
-      213: -7603876598260616594
-    second: Skill_Ch_E_01_66
+      213: -9077157974204970927
+    second: Skill_Eff_Ch_01_66
   - first:
-      213: -9125784583076267485
-    second: Skill_Ch_E_01_67
+      213: 3083285753965300101
+    second: Skill_Eff_Ch_01_67
   - first:
-      213: 6999491478073807147
-    second: Skill_Ch_E_01_68
+      213: -2516489124885078467
+    second: Skill_Eff_Ch_01_68
   - first:
-      213: -992962899577444597
-    second: Skill_Ch_E_01_69
+      213: -3365405623093332666
+    second: Skill_Eff_Ch_01_69
   - first:
-      213: 1434430461170350416
-    second: Skill_Ch_E_01_70
+      213: -6376641554624627532
+    second: Skill_Eff_Ch_01_70
   - first:
-      213: 7955237762387447559
-    second: Skill_Ch_E_01_71
+      213: 4764085592370282122
+    second: Skill_Eff_Ch_01_71
   - first:
-      213: 6799941910670396907
-    second: Skill_Ch_E_01_72
+      213: -614174314154621048
+    second: Skill_Eff_Ch_01_72
   - first:
-      213: -783927870547626764
-    second: Skill_Ch_E_01_73
+      213: -6701288946546884100
+    second: Skill_Eff_Ch_01_73
   - first:
-      213: -7608522672120742808
-    second: Skill_Ch_E_01_74
+      213: -498291686823429969
+    second: Skill_Eff_Ch_01_74
   - first:
-      213: -7347907121708375135
-    second: Skill_Ch_E_01_75
+      213: 6196676026407557594
+    second: Skill_Eff_Ch_01_75
   - first:
-      213: -7380459853615584296
-    second: Skill_Ch_E_01_76
+      213: -4866236360094906711
+    second: Skill_Eff_Ch_01_76
   - first:
-      213: 6708037656721832926
-    second: Skill_Ch_E_01_77
+      213: -3098475870278923314
+    second: Skill_Eff_Ch_01_77
   - first:
-      213: -101763925124802345
-    second: Skill_Ch_E_01_78
+      213: -56397879774730401
+    second: Skill_Eff_Ch_01_78
   - first:
-      213: -7474274772583224210
-    second: Skill_Ch_E_01_79
+      213: -6405823281548709289
+    second: Skill_Eff_Ch_01_79
   - first:
-      213: 2480945493288055073
-    second: Skill_Ch_E_01_80
+      213: -5417149692119421002
+    second: Skill_Eff_Ch_01_80
   - first:
-      213: -6648069145208514671
-    second: Skill_Ch_E_01_81
+      213: -1544863257709836581
+    second: Skill_Eff_Ch_01_81
   - first:
-      213: -4929555461442371614
-    second: Skill_Ch_E_01_82
+      213: 1292634350682322632
+    second: Skill_Eff_Ch_01_82
   - first:
-      213: 5858478115648623
-    second: Skill_Ch_E_01_83
+      213: 1159897960535405130
+    second: Skill_Eff_Ch_01_83
   - first:
-      213: -5607760960848745837
-    second: Skill_Ch_E_01_84
+      213: -3384064444673007445
+    second: Skill_Eff_Ch_01_84
   - first:
-      213: -4357320393834027721
-    second: Skill_Ch_E_01_85
+      213: -7824213701539441173
+    second: Skill_Eff_Ch_01_85
   - first:
-      213: -7502284508593792365
-    second: Skill_Ch_E_01_86
+      213: 908893312635749410
+    second: Skill_Eff_Ch_01_86
   - first:
-      213: 3740100016150236219
-    second: Skill_Ch_E_01_87
+      213: 6626938664241004054
+    second: Skill_Eff_Ch_01_87
   - first:
-      213: -7297209174890138220
-    second: Skill_Ch_E_01_88
+      213: -7278232014214083809
+    second: Skill_Eff_Ch_01_88
   - first:
-      213: -7984811895898636273
-    second: Skill_Ch_E_01_89
+      213: 2222833687910341541
+    second: Skill_Eff_Ch_01_89
   - first:
-      213: 4303102696632971141
-    second: Skill_Ch_E_01_90
+      213: 4731348367403596555
+    second: Skill_Eff_Ch_01_90
   - first:
-      213: -4150625599290099408
-    second: Skill_Ch_E_01_91
+      213: 5692682724764339683
+    second: Skill_Eff_Ch_01_91
   - first:
-      213: -5526560975854640818
-    second: Skill_Ch_E_01_92
+      213: -1921664379525649515
+    second: Skill_Eff_Ch_01_92
   - first:
-      213: 4605658047574201398
-    second: Skill_Ch_E_01_93
+      213: -6687848261280442187
+    second: Skill_Eff_Ch_01_93
   - first:
-      213: 3539528645506085372
-    second: Skill_Ch_E_01_94
+      213: 29474847465621711
+    second: Skill_Eff_Ch_01_94
   - first:
-      213: -250247331822588865
-    second: Skill_Ch_E_01_95
+      213: 687400529386811804
+    second: Skill_Eff_Ch_01_95
   - first:
-      213: -5702519245052240204
-    second: Skill_Ch_E_01_96
+      213: -7522781607293913816
+    second: Skill_Eff_Ch_01_96
   - first:
-      213: -3587489117580093846
-    second: Skill_Ch_E_01_97
+      213: 3704841214059532116
+    second: Skill_Eff_Ch_01_97
   - first:
-      213: 8483961909529125288
-    second: Skill_Ch_E_01_98
+      213: -8015495845323812694
+    second: Skill_Eff_Ch_01_98
   - first:
-      213: 1979161241429996493
-    second: Skill_Ch_E_01_99
+      213: -4900354167049378923
+    second: Skill_Eff_Ch_01_99
   - first:
-      213: 2672186124937431951
-    second: Skill_Ch_E_01_100
+      213: 5543046355533582057
+    second: Skill_Eff_Ch_01_100
   - first:
-      213: 4318996797964561183
-    second: Skill_Ch_E_01_101
+      213: 3584330480061116381
+    second: Skill_Eff_Ch_01_101
   - first:
-      213: -5466661080067698275
-    second: Skill_Ch_E_01_102
+      213: -1322034061698792218
+    second: Skill_Eff_Ch_01_102
   - first:
-      213: 2381300527670405378
-    second: Skill_Ch_E_01_103
+      213: -5378551288210702203
+    second: Skill_Eff_Ch_01_103
   - first:
-      213: -7234908575961774855
-    second: Skill_Ch_E_01_104
+      213: 8964501997570448304
+    second: Skill_Eff_Ch_01_104
   - first:
-      213: -4961517102272499007
-    second: Skill_Ch_E_01_105
+      213: -3142550247069987973
+    second: Skill_Eff_Ch_01_105
   - first:
-      213: -4556827311834865276
-    second: Skill_Ch_E_01_106
+      213: 5916471888299248620
+    second: Skill_Eff_Ch_01_106
   - first:
-      213: 664596966279349123
-    second: Skill_Ch_E_01_107
+      213: -5786152761742899639
+    second: Skill_Eff_Ch_01_107
   - first:
-      213: 7038850288332094142
-    second: Skill_Ch_E_01_108
+      213: -4056414066755394263
+    second: Skill_Eff_Ch_01_108
   - first:
-      213: -770906558090588684
-    second: Skill_Ch_E_01_109
+      213: 2331952199089819425
+    second: Skill_Eff_Ch_01_109
   - first:
-      213: -6814207377149729622
-    second: Skill_Ch_E_01_110
+      213: 8256343469119295823
+    second: Skill_Eff_Ch_01_110
   - first:
-      213: -8817891787433514890
-    second: Skill_Ch_E_01_111
+      213: 2812155906782894124
+    second: Skill_Eff_Ch_01_111
   - first:
-      213: 159507515063953650
-    second: Skill_Ch_E_01_112
+      213: 3585866784056772237
+    second: Skill_Eff_Ch_01_112
   - first:
-      213: 4682045934490283618
-    second: Skill_Ch_E_01_113
+      213: -6101085495961077127
+    second: Skill_Eff_Ch_01_113
   - first:
-      213: -7885822170286320420
-    second: Skill_Ch_E_01_114
+      213: 1078944750051900046
+    second: Skill_Eff_Ch_01_114
   - first:
-      213: 216741800469797134
-    second: Skill_Ch_E_01_115
+      213: 1599878297562211597
+    second: Skill_Eff_Ch_01_115
+  - first:
+      213: -2782948632435179387
+    second: Skill_Eff_Ch_01_116
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -471,13 +474,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Skill_Ch_E_01_0
+      name: Skill_Eff_Ch_01_0
       rect:
         serializedVersion: 2
         x: 1
-        y: 2423
-        width: 1349
-        height: 1198
+        y: 2617
+        width: 1406
+        height: 938
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,20 +489,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc6cf1c6f3703ea90800000000000000
-      internalID: -7285971803176974645
+      spriteID: b862174faf3ef7220800000000000000
+      internalID: 2485956186314188427
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_1
+      name: Skill_Eff_Ch_01_1
       rect:
         serializedVersion: 2
-        x: 1408
-        y: 1813
-        width: 1033
-        height: 893
+        x: 1407
+        y: 2752
+        width: 1594
+        height: 1157
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,19 +511,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3bcf31ea8f51d0b70800000000000000
-      internalID: 8866767399178992819
+      spriteID: 0dee0d84a96145460800000000000000
+      internalID: 7229428153738915536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_2
+      name: Skill_Eff_Ch_01_2
       rect:
         serializedVersion: 2
-        x: 2449
-        y: 2647
-        width: 90
+        x: 3120
+        y: 2683
+        width: 91
         height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -530,42 +533,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 497175f1257ccec60800000000000000
-      internalID: 7848867406126978964
+      spriteID: 4aa0b27aff784fb20800000000000000
+      internalID: 3167305970039327396
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_3
+      name: Skill_Eff_Ch_01_3
       rect:
         serializedVersion: 2
-        x: 2539
-        y: 2071
-        width: 1404
-        height: 939
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c7a2700f0366027c0800000000000000
-      internalID: -4098163300535686532
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_4
-      rect:
-        serializedVersion: 2
-        x: 1367
-        y: 2401
+        x: 2041
+        y: 2594
         width: 30
-        height: 22
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -574,20 +555,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d5f3c98e19b8fe560800000000000000
-      internalID: 7345242976053641053
+      spriteID: 2d93c745334499ae0800000000000000
+      internalID: -1542126410146235950
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_5
+      name: Skill_Eff_Ch_01_4
       rect:
         serializedVersion: 2
-        x: 92
-        y: 1621
-        width: 1315
-        height: 774
+        x: 2079
+        y: 1848
+        width: 1033
+        height: 894
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,20 +577,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8c2679a001488fa00800000000000000
-      internalID: 790526939035558600
+      spriteID: 54535bb1a6fe20220800000000000000
+      internalID: 2450784386253403461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_6
+      name: Skill_Eff_Ch_01_5
       rect:
         serializedVersion: 2
-        x: 1397
-        y: 2380
-        width: 11
-        height: 7
+        x: 1
+        y: 1770
+        width: 722
+        height: 539
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,18 +599,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fdc8031e733be7660800000000000000
-      internalID: 7385537491516820703
+      spriteID: ba7af0bff7cdcb710800000000000000
+      internalID: 1710484400725010347
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_7
+      name: Skill_Eff_Ch_01_6
       rect:
         serializedVersion: 2
-        x: 71
-        y: 1961
+        x: 745
+        y: 2154
         width: 10
         height: 7
       alignment: 0
@@ -640,20 +621,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e4c536d27ddad17c0800000000000000
-      internalID: -4098928946146223026
+      spriteID: 38ae95a0a49455de0800000000000000
+      internalID: -1345088331350152573
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_8
+      name: Skill_Eff_Ch_01_7
       rect:
         serializedVersion: 2
-        x: 2563
-        y: 1456
-        width: 1157
-        height: 615
+        x: 766
+        y: 1814
+        width: 1312
+        height: 774
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -662,20 +643,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 55aaf15d3bba0b980800000000000000
-      internalID: -8525125305749231019
+      spriteID: f51dd0da1df309e10800000000000000
+      internalID: 2202330387568251231
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_9
+      name: Skill_Eff_Ch_01_8
       rect:
         serializedVersion: 2
-        x: 1
-        y: 1821
-        width: 155
-        height: 101
+        x: 723
+        y: 2044
+        width: 107
+        height: 71
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -684,18 +665,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 88ea9cfaef19fb320800000000000000
-      internalID: 2575938034936163976
+      spriteID: 3bcf1bebfafcdf060800000000000000
+      internalID: 6988970550474439859
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_10
+      name: Skill_Eff_Ch_01_9
       rect:
         serializedVersion: 2
-        x: 77
-        y: 1693
+        x: 751
+        y: 1886
         width: 10
         height: 11
       alignment: 0
@@ -706,40 +687,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e543f1aa6dc51d2b0800000000000000
-      internalID: -5561561987778923426
+      spriteID: fcd9ed6caa6b492c0800000000000000
+      internalID: -4425711689201181233
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_11
+      name: Skill_Eff_Ch_01_10
       rect:
         serializedVersion: 2
-        x: 1410
-        y: 1199
-        width: 1152
-        height: 614
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 39e9fa17f4a7f0cb0800000000000000
-      internalID: -4895559788300099949
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_12
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 1621
+        x: 726
+        y: 1814
         width: 34
         height: 24
       alignment: 0
@@ -750,20 +709,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: de189d5e26b62ad70800000000000000
-      internalID: 9052916273475322349
+      spriteID: b1daebefb745f21f0800000000000000
+      internalID: -1067541695131898597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_13
+      name: Skill_Eff_Ch_01_11
       rect:
         serializedVersion: 2
-        x: 614
-        y: 1032
-        width: 796
-        height: 589
+        x: 1404
+        y: 1200
+        width: 1152
+        height: 614
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -772,20 +731,64 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a42e56c3aa995850800000000000000
-      internalID: 6366289576463312039
+      spriteID: 046de7c92230076f0800000000000000
+      internalID: -689047295798356416
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_14
+      name: Skill_Eff_Ch_01_12
+      rect:
+        serializedVersion: 2
+        x: 2557
+        y: 1234
+        width: 1163
+        height: 614
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88ac5432927ebb620800000000000000
+      internalID: 2791078557957606024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_13
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 1762
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77feb1d2cf22fdbf0800000000000000
+      internalID: -297480583899254921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_14
       rect:
         serializedVersion: 2
         x: 1
-        y: 972
-        width: 613
-        height: 558
+        y: 976
+        width: 610
+        height: 644
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -794,20 +797,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 00e4ed71f06878140800000000000000
-      internalID: 4721890133704330752
+      spriteID: abd45e38a90302790800000000000000
+      internalID: -7556986734531752518
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_15
+      name: Skill_Eff_Ch_01_15
       rect:
         serializedVersion: 2
-        x: 1014
-        y: 610
-        width: 484
-        height: 422
+        x: 611
+        y: 1029
+        width: 793
+        height: 587
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -816,20 +819,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 452c68dff38b5f180800000000000000
-      internalID: -9082150488546819500
+      spriteID: 5b95e54a284fa41d0800000000000000
+      internalID: -3365608929565451851
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_16
+      name: Skill_Eff_Ch_01_16
       rect:
         serializedVersion: 2
-        x: 1498
-        y: 628
-        width: 427
-        height: 425
+        x: 1013
+        y: 606
+        width: 486
+        height: 423
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -838,18 +841,40 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7a30381afb86f6c30800000000000000
-      internalID: 4354814536948319143
+      spriteID: 4540df013b61b8aa0800000000000000
+      internalID: -6157803107159047084
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_17
+      name: Skill_Eff_Ch_01_17
       rect:
         serializedVersion: 2
-        x: 1926
-        y: 674
+        x: 1499
+        y: 611
+        width: 428
+        height: 427
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fd006b65e2accbef0800000000000000
+      internalID: -90975592082177825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_18
+      rect:
+        serializedVersion: 2
+        x: 1927
+        y: 700
         width: 515
         height: 472
       alignment: 0
@@ -860,20 +885,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c12815a7407f0f5a0800000000000000
-      internalID: -6489415464436792804
+      spriteID: 570a955fb1e6f3a30800000000000000
+      internalID: 4197194444092055669
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_18
+      name: Skill_Eff_Ch_01_19
       rect:
         serializedVersion: 2
         x: 2442
-        y: 724
+        y: 726
         width: 590
-        height: 475
+        height: 474
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -882,20 +907,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 64d5ef7a3e6dfa650800000000000000
-      internalID: 6246447481450552646
+      spriteID: 84b614b7a35bed4d0800000000000000
+      internalID: -3107847430058448056
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_19
+      name: Skill_Eff_Ch_01_20
       rect:
         serializedVersion: 2
         x: 3032
-        y: 733
-        width: 537
-        height: 506
+        y: 729
+        width: 536
+        height: 505
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -904,40 +929,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 19533f69a4e98dc10800000000000000
-      internalID: 2078585271228773777
+      spriteID: c0734106798ba7fa0800000000000000
+      internalID: -5802122209621952756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_20
-      rect:
-        serializedVersion: 2
-        x: 3569
-        y: 734
-        width: 524
-        height: 722
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e3475eb0ffabceb70800000000000000
-      internalID: 8929717765747864638
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_21
+      name: Skill_Eff_Ch_01_21
       rect:
         serializedVersion: 2
         x: 1
-        y: 527
+        y: 520
         width: 506
         height: 405
       alignment: 0
@@ -948,20 +951,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0e3058c11b42f45b0800000000000000
-      internalID: -5382042686578162720
+      spriteID: cad1add4fc9d89b10800000000000000
+      internalID: 1988578719871671724
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_22
+      name: Skill_Eff_Ch_01_22
       rect:
         serializedVersion: 2
         x: 507
-        y: 565
-        width: 507
-        height: 406
+        y: 571
+        width: 506
+        height: 405
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -970,18 +973,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62aed922d6bc57680800000000000000
-      internalID: -8757870230759413210
+      spriteID: e7573885390a27fc0800000000000000
+      internalID: -3498557405807807106
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_23
+      name: Skill_Eff_Ch_01_23
       rect:
         serializedVersion: 2
-        x: 1052
-        y: 537
+        x: 1058
+        y: 543
         width: 39
         height: 28
       alignment: 0
@@ -992,20 +995,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9de24ae669b110470800000000000000
-      internalID: 8358992716291649241
+      spriteID: cb0b24c296c420e60800000000000000
+      internalID: 7926982308723339452
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_24
+      name: Skill_Eff_Ch_01_24
       rect:
         serializedVersion: 2
-        x: 1162
-        y: 280
+        x: 1169
+        y: 273
         width: 362
-        height: 330
+        height: 332
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1014,20 +1017,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3c464a146d89eea50800000000000000
-      internalID: 6552342553862366403
+      spriteID: 280a68f055e5d9030800000000000000
+      internalID: 3503059804589826178
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_25
+      name: Skill_Eff_Ch_01_25
       rect:
         serializedVersion: 2
-        x: 1524
-        y: 301
-        width: 473
-        height: 327
+        x: 1531
+        y: 277
+        width: 471
+        height: 334
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1036,20 +1039,42 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 59043a20bc56c18d0800000000000000
-      internalID: -2874310539572199275
+      spriteID: 2568447186e7be680800000000000000
+      internalID: -8724740867568138670
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_26
+      name: Skill_Eff_Ch_01_26
       rect:
         serializedVersion: 2
-        x: 1998
-        y: 330
+        x: 2037
+        y: 322
+        width: 376
+        height: 348
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6b3557e90662ffd0800000000000000
+      internalID: -2309671466165781652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_27
+      rect:
+        serializedVersion: 2
+        x: 2413
+        y: 355
         width: 528
-        height: 344
+        height: 345
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1058,20 +1083,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5b131df98e8dfea90800000000000000
-      internalID: -7282363578809503307
+      spriteID: b3c9d9296b9e76930800000000000000
+      internalID: 4136531753116212283
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_27
+      name: Skill_Eff_Ch_01_28
       rect:
         serializedVersion: 2
-        x: 2526
-        y: 341
-        width: 362
-        height: 360
+        x: 2941
+        y: 371
+        width: 359
+        height: 355
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1080,20 +1105,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ee3457e7e2c31b350800000000000000
-      internalID: 6030667546413581294
+      spriteID: 19ec83d3e51e98320800000000000000
+      internalID: 2560825658007146129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_28
+      name: Skill_Eff_Ch_01_29
       rect:
         serializedVersion: 2
-        x: 2886
+        x: 3300
         y: 366
         width: 412
-        height: 295
+        height: 300
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1102,18 +1127,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 658b08988281c34b0800000000000000
-      internalID: -5459462085895210922
+      spriteID: 7f7f55f4f0bd63980800000000000000
+      internalID: -8559413182969022473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_29
+      name: Skill_Eff_Ch_01_30
       rect:
         serializedVersion: 2
-        x: 3119
-        y: 565
+        x: 3533
+        y: 570
         width: 262
         height: 159
       alignment: 0
@@ -1124,42 +1149,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a869b246556f9e740800000000000000
-      internalID: 5181943692879697546
+      spriteID: 7ac7324317c75c100800000000000000
+      internalID: 127644990097816743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_30
+      name: Skill_Eff_Ch_01_31
       rect:
         serializedVersion: 2
-        x: 3447
-        y: 382
-        width: 381
-        height: 351
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 03ac120462860ed90800000000000000
-      internalID: -7070536901477676496
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_31
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 187
+        x: 7
+        y: 193
         width: 260
-        height: 258
+        height: 256
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1168,20 +1171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: adece419e8776bc90800000000000000
-      internalID: -7154399503824531750
+      spriteID: 0123aea69a4b6d890800000000000000
+      internalID: -7433555495192219120
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_32
+      name: Skill_Eff_Ch_01_32
       rect:
         serializedVersion: 2
-        x: 261
-        y: 221
-        width: 450
-        height: 306
+        x: 267
+        y: 216
+        width: 449
+        height: 304
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1190,19 +1193,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3307599f8b19da90800000000000000
-      internalID: -7288764218355547333
+      spriteID: e204febee514aad40800000000000000
+      internalID: 5596357362902319150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_33
+      name: Skill_Eff_Ch_01_33
       rect:
         serializedVersion: 2
-        x: 711
-        y: 251
-        width: 451
+        x: 717
+        y: 257
+        width: 452
         height: 295
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -1212,20 +1215,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 62e634b28cc1d2480800000000000000
-      internalID: -8922443640706208218
+      spriteID: a1306883789b720e0800000000000000
+      internalID: -2294661494701948134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_34
+      name: Skill_Eff_Ch_01_34
       rect:
         serializedVersion: 2
-        x: 3181
-        y: 151
-        width: 839
-        height: 215
+        x: 2002
+        y: 330
+        width: 80
+        height: 81
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1234,40 +1237,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c2d38f5773e7b2250800000000000000
-      internalID: 5920964911776152876
+      spriteID: 8fa71f2169165a380800000000000000
+      internalID: -8960648586392929544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_35
+      name: Skill_Eff_Ch_01_35
       rect:
         serializedVersion: 2
-        x: 3381
-        y: 366
-        width: 114
-        height: 107
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c380ffa7263d40030800000000000000
-      internalID: 3460122833651173436
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_36
-      rect:
-        serializedVersion: 2
-        x: 2986
-        y: 338
+        x: 2576
+        y: 327
         width: 23
         height: 17
       alignment: 0
@@ -1278,20 +1259,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9152a28c708c80430800000000000000
-      internalID: 3749466625534469401
+      spriteID: f5be7b0c752c308b0800000000000000
+      internalID: -5187088663649457313
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_37
+      name: Skill_Eff_Ch_01_36
       rect:
         serializedVersion: 2
-        x: 2189
-        y: 113
-        width: 440
-        height: 217
+        x: 2723
+        y: 130
+        width: 449
+        height: 225
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1300,18 +1281,62 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0f6d137c548b2f780800000000000000
-      internalID: -8650649324391115024
+      spriteID: 628f8479802f6fca0800000000000000
+      internalID: -5983328936203323354
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_38
+      name: Skill_Eff_Ch_01_37
       rect:
         serializedVersion: 2
-        x: 2939
-        y: 243
+        x: 3172
+        y: 152
+        width: 838
+        height: 214
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5350b7fdc8218ae50800000000000000
+      internalID: 6820722031906719029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_38
+      rect:
+        serializedVersion: 2
+        x: 2137
+        y: 167
+        width: 180
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 042cce734b13f0710800000000000000
+      internalID: 1661601437625139776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_39
+      rect:
+        serializedVersion: 2
+        x: 2529
+        y: 232
         width: 89
         height: 82
       alignment: 0
@@ -1322,18 +1347,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 123b763672c4d31c0800000000000000
-      internalID: -4522374718754933983
+      spriteID: 7bfabda510eec7fb0800000000000000
+      internalID: -4648579025766469705
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_39
+      name: Skill_Eff_Ch_01_40
       rect:
         serializedVersion: 2
-        x: 3036
-        y: 305
+        x: 2626
+        y: 294
         width: 30
         height: 26
       alignment: 0
@@ -1344,128 +1369,84 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 24603dd08301a3fc0800000000000000
-      internalID: -3514478726273104318
+      spriteID: 78e6967b978c424d0800000000000000
+      internalID: -3160180613413507449
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_40
+      name: Skill_Eff_Ch_01_41
       rect:
         serializedVersion: 2
-        x: 3100
+        x: 2690
+        y: 278
+        width: 42
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 657d556ad4b09f710800000000000000
+      internalID: 1727424360204326742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_42
+      rect:
+        serializedVersion: 2
+        x: 1539
+        y: 143
+        width: 231
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf533f7345ef86950800000000000000
+      internalID: 6442678904622888444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_43
+      rect:
+        serializedVersion: 2
+        x: 1786
+        y: 100
+        width: 333
+        height: 186
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b9efaa808c26ef7c0800000000000000
+      internalID: -4035679604798980453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_44
+      rect:
+        serializedVersion: 2
+        x: 2528
         y: 276
-        width: 47
-        height: 54
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d63580bf52c076470800000000000000
-      internalID: 8387686188265788269
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_41
-      rect:
-        serializedVersion: 2
-        x: 3162
-        y: 321
-        width: 19
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e603920aafa59d620800000000000000
-      internalID: 2799368675862851694
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_42
-      rect:
-        serializedVersion: 2
-        x: 3154
-        y: 297
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 883ab57072a83e8d0800000000000000
-      internalID: -2818257041571994744
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_43
-      rect:
-        serializedVersion: 2
-        x: 3163
-        y: 303
-        width: 16
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: d7f913b9227597390800000000000000
-      internalID: -7820123471807930499
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_44
-      rect:
-        serializedVersion: 2
-        x: 1852
-        y: 113
-        width: 337
-        height: 187
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7c8cf3dc15039b610800000000000000
-      internalID: 1637393067419879623
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_45
-      rect:
-        serializedVersion: 2
-        x: 2938
-        y: 287
         width: 9
         height: 7
       alignment: 0
@@ -1476,18 +1457,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1f6fc84fb324a0c20800000000000000
-      internalID: 3173421712709318385
+      spriteID: 9ff99e17aebfc96e0800000000000000
+      internalID: -1829310364267208711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_46
+      name: Skill_Eff_Ch_01_45
       rect:
         serializedVersion: 2
-        x: 3068
-        y: 276
+        x: 2658
+        y: 265
         width: 16
         height: 14
       alignment: 0
@@ -1498,20 +1479,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9e9c320470b4eb9b0800000000000000
-      internalID: -5062526436604917271
+      spriteID: 2b6023be5fc01e700800000000000000
+      internalID: 567749278377838258
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_47
+      name: Skill_Eff_Ch_01_46
       rect:
         serializedVersion: 2
         x: 1
         y: 186
-        width: 17
-        height: 32
+        width: 26
+        height: 77
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1520,20 +1501,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a340f196598404c0800000000000000
-      internalID: -4322178737460198496
+      spriteID: 24b428987d788b1f0800000000000000
+      internalID: -1028923155059422398
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_48
+      name: Skill_Eff_Ch_01_47
       rect:
         serializedVersion: 2
-        x: 642
-        y: 69
-        width: 328
-        height: 152
+        x: 500
+        y: 116
+        width: 183
+        height: 87
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1542,20 +1523,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3e13592feb6180230800000000000000
-      internalID: 3605156511079543267
+      spriteID: 260fa80cba276afe0800000000000000
+      internalID: -1178128170515500958
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_49
+      name: Skill_Eff_Ch_01_48
       rect:
         serializedVersion: 2
-        x: 970
-        y: 75
-        width: 214
-        height: 176
+        x: 684
+        y: 56
+        width: 199
+        height: 149
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1564,20 +1545,64 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0b0afacce01012ec0800000000000000
-      internalID: -3593589864589713232
+      spriteID: 58d553120893d8e80800000000000000
+      internalID: -8174814526131839611
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_50
+      name: Skill_Eff_Ch_01_49
       rect:
         serializedVersion: 2
-        x: 1184
-        y: 153
+        x: 818
+        y: 199
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1a7e8a3b00fb76b0800000000000000
+      internalID: -5297376605653534178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_50
+      rect:
+        serializedVersion: 2
+        x: 883
+        y: 74
+        width: 213
+        height: 175
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdc6e9650fef74550800000000000000
+      internalID: 6145160524769160411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_51
+      rect:
+        serializedVersion: 2
+        x: 1096
+        y: 140
         width: 63
-        height: 116
+        height: 117
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1586,18 +1611,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5e14c91bfb2c71170800000000000000
-      internalID: 8149196179324551653
+      spriteID: e2422af66bb62d7b0800000000000000
+      internalID: -5200976188358384594
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_51
+      name: Skill_Eff_Ch_01_52
       rect:
         serializedVersion: 2
-        x: 1262
-        y: 88
+        x: 1174
+        y: 75
         width: 123
         height: 142
       alignment: 0
@@ -1608,20 +1633,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f505f236557ba87d0800000000000000
-      internalID: -2915316231404826529
+      spriteID: 6c4433d1736eb5e80800000000000000
+      internalID: -8188698373055626042
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_52
+      name: Skill_Eff_Ch_01_53
       rect:
         serializedVersion: 2
-        x: 1385
-        y: 94
+        x: 1297
+        y: 89
         width: 226
-        height: 185
+        height: 184
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1630,20 +1655,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51e1d6bd4cf9fb300800000000000000
-      internalID: 270110170509286933
+      spriteID: 152de06b2e4f058a0800000000000000
+      internalID: -6318281022646594991
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_53
+      name: Skill_Eff_Ch_01_54
       rect:
         serializedVersion: 2
-        x: 1611
-        y: 144
-        width: 238
-        height: 140
+        x: 1524
+        y: 190
+        width: 15
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1652,84 +1677,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: daae402bc195be640800000000000000
-      internalID: 5110276181962582701
+      spriteID: 8032993df71056a10800000000000000
+      internalID: 1901928066156405512
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_54
+      name: Skill_Eff_Ch_01_55
       rect:
         serializedVersion: 2
-        x: 2649
-        y: 193
-        width: 21
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: da8c2bc75bac11710800000000000000
-      internalID: 1662332618306406573
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_55
-      rect:
-        serializedVersion: 2
-        x: 2675
-        y: 205
-        width: 23
-        height: 28
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: deffa1c20b10006d0800000000000000
-      internalID: -3026417093427134483
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_56
-      rect:
-        serializedVersion: 2
-        x: 2675
-        y: 201
-        width: 7
-        height: 6
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 77c9d75e411d80fb0800000000000000
-      internalID: -4681261924971864969
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_57
-      rect:
-        serializedVersion: 2
-        x: 2888
-        y: 131
+        x: 2478
+        y: 120
         width: 129
         height: 102
       alignment: 0
@@ -1740,18 +1699,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6a706d6f4dcae5010800000000000000
-      internalID: 1179570183091914662
+      spriteID: 0fbcf7aa241322990800000000000000
+      internalID: -7412307874300310544
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_58
+      name: Skill_Eff_Ch_01_56
       rect:
         serializedVersion: 2
-        x: 2928
-        y: 188
+        x: 2518
+        y: 177
         width: 41
         height: 53
       alignment: 0
@@ -1762,17 +1721,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 69dbdfa834b6a5ff0800000000000000
-      internalID: -46606908295103082
+      spriteID: 3fe377c3d104ba9c0800000000000000
+      internalID: -3914964956755837197
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_59
+      name: Skill_Eff_Ch_01_57
       rect:
         serializedVersion: 2
-        x: 2
+        x: 181
+        y: 140
+        width: 34
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ff282a6cf5543c20800000000000000
+      internalID: 3185265379058921461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_58
+      rect:
+        serializedVersion: 2
+        x: 215
         y: 35
         width: 285
         height: 151
@@ -1784,20 +1765,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 03ec2a00c81260170800000000000000
-      internalID: 8144233861335928368
+      spriteID: 8e289786b863e1330800000000000000
+      internalID: 3683441517616792296
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_60
+      name: Skill_Eff_Ch_01_59
       rect:
         serializedVersion: 2
-        x: 287
-        y: 107
-        width: 183
-        height: 86
+        x: 2127
+        y: 175
+        width: 16
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1806,20 +1787,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 447785998a0a91c30800000000000000
-      internalID: 4330669162681104196
+      spriteID: 8f9e6bc9b61b3b780800000000000000
+      internalID: -8668389782009222664
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_61
+      name: Skill_Eff_Ch_01_60
       rect:
         serializedVersion: 2
-        x: 470
-        y: 45
-        width: 172
-        height: 156
+        x: 1
+        y: 57
+        width: 110
+        height: 94
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1828,20 +1809,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e70e595bd55e76960800000000000000
-      internalID: 7595291487224848510
+      spriteID: b0c470925af596fa0800000000000000
+      internalID: -5807005081554957301
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_62
+      name: Skill_Eff_Ch_01_61
       rect:
         serializedVersion: 2
-        x: 2630
-        y: 178
-        width: 6
-        height: 7
+        x: 116
+        y: 35
+        width: 52
+        height: 85
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1850,18 +1831,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dc36400b730bce060800000000000000
-      internalID: 6984150875367564237
+      spriteID: 9ff5d601690831030800000000000000
+      internalID: 3464253920387096569
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_63
+      name: Skill_Eff_Ch_01_62
       rect:
         serializedVersion: 2
-        x: 1247
-        y: 92
+        x: 1159
+        y: 79
         width: 30
         height: 52
       alignment: 0
@@ -1872,18 +1853,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f9cbb9097db44820800000000000000
-      internalID: 2901652387485436402
+      spriteID: 0d7fdd6919a95b950800000000000000
+      internalID: 6464242790252279760
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_64
+      name: Skill_Eff_Ch_01_63
       rect:
         serializedVersion: 2
-        x: 1620
-        y: 96
+        x: 1549
+        y: 95
         width: 51
         height: 26
       alignment: 0
@@ -1894,20 +1875,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8ce6b839aef242f30800000000000000
-      internalID: 4549814208095284936
+      spriteID: 34a1283dca6cf08c0800000000000000
+      internalID: -4030784695888111037
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_65
+      name: Skill_Eff_Ch_01_64
       rect:
         serializedVersion: 2
-        x: 2675
-        y: 2
-        width: 164
-        height: 124
+        x: 2465
+        y: 113
+        width: 12
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1916,17 +1897,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 74fdb7fc37688f950800000000000000
-      internalID: 6483079495560191815
+      spriteID: 8dd2adfac6b7bf2f0800000000000000
+      internalID: -938020390639620648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_66
+      name: Skill_Eff_Ch_01_65
       rect:
         serializedVersion: 2
-        x: 2839
+        x: 2692
+        y: 1
+        width: 164
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8e2c9d9ee22172970800000000000000
+      internalID: 8729966395382153960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_66
+      rect:
+        serializedVersion: 2
+        x: 2856
         y: 1
         width: 186
         height: 122
@@ -1938,20 +1941,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6235cc558a997690800000000000000
-      internalID: -7603876598260616594
+      spriteID: 15888615ae4770280800000000000000
+      internalID: -9077157974204970927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_67
+      name: Skill_Eff_Ch_01_67
       rect:
         serializedVersion: 2
-        x: 3065
-        y: 114
+        x: 3083
+        y: 115
         width: 14
-        height: 14
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1960,17 +1963,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 32ab00da543ba5180800000000000000
-      internalID: -9125784583076267485
+      spriteID: 589cf1aae080aca20800000000000000
+      internalID: 3083285753965300101
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_68
+      name: Skill_Eff_Ch_01_68
       rect:
         serializedVersion: 2
-        x: 3180
+        x: 3199
         y: 1
         width: 130
         height: 130
@@ -1982,19 +1985,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b2196f61a60332160800000000000000
-      internalID: 6999491478073807147
+      spriteID: d3e571e4972a31dd0800000000000000
+      internalID: -2516489124885078467
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_69
+      name: Skill_Eff_Ch_01_69
       rect:
         serializedVersion: 2
-        x: 3310
+        x: 3329
         y: 1
-        width: 143
+        width: 142
         height: 135
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2004,20 +2007,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b076b87f0894832f0800000000000000
-      internalID: -992962899577444597
+      spriteID: 6457b6e9a6dab41d0800000000000000
+      internalID: -3365405623093332666
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_70
+      name: Skill_Eff_Ch_01_70
       rect:
         serializedVersion: 2
-        x: 3453
+        x: 3471
         y: 1
-        width: 199
-        height: 137
+        width: 223
+        height: 139
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2026,20 +2029,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 059fe0d87ee18e310800000000000000
-      internalID: 1434430461170350416
+      spriteID: 4bcba9c7a4e9187a0800000000000000
+      internalID: -6376641554624627532
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_71
+      name: Skill_Eff_Ch_01_71
       rect:
         serializedVersion: 2
-        x: 3652
+        x: 3694
         y: 1
-        width: 224
-        height: 140
+        width: 327
+        height: 151
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2048,85 +2051,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 70f80e2a89ea66e60800000000000000
-      internalID: 7955237762387447559
+      spriteID: a8e79c4ea9e6d1240800000000000000
+      internalID: 4764085592370282122
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_72
+      name: Skill_Eff_Ch_01_72
       rect:
         serializedVersion: 2
-        x: 3876
-        y: 22
-        width: 109
-        height: 94
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bedccced32f3e5e50800000000000000
-      internalID: 6799941910670396907
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_73
-      rect:
-        serializedVersion: 2
-        x: 4055
-        y: 105
-        width: 34
-        height: 46
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4f4fa7251cdee15f0800000000000000
-      internalID: -783927870547626764
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_74
-      rect:
-        serializedVersion: 2
-        x: 1354
-        y: 85
-        width: 29
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 86cbcbef0f8196690800000000000000
-      internalID: -7608522672120742808
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_75
-      rect:
-        serializedVersion: 2
-        x: 2138
+        x: 2153
         y: 1
-        width: 537
+        width: 539
         height: 112
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2136,19 +2073,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1a36208576df60a90800000000000000
-      internalID: -7347907121708375135
+      spriteID: 88705ae17b30a77f0800000000000000
+      internalID: -614174314154621048
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_76
+      name: Skill_Eff_Ch_01_73
       rect:
         serializedVersion: 2
-        x: 3025
-        y: 100
-        width: 6
+        x: 3042
+        y: 101
+        width: 7
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2158,40 +2095,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8db2632ddd6539990800000000000000
-      internalID: -7380459853615584296
+      spriteID: cf142d3453d3003a0800000000000000
+      internalID: -6701288946546884100
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_77
+      name: Skill_Eff_Ch_01_74
       rect:
         serializedVersion: 2
-        x: 1440
-        y: 1
-        width: 108
-        height: 90
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: edb39d445bcb71d50800000000000000
-      internalID: 6708037656721832926
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_78
-      rect:
-        serializedVersion: 2
-        x: 1706
-        y: 63
+        x: 1718
+        y: 64
         width: 68
         height: 31
       alignment: 0
@@ -2202,20 +2117,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7d89cffcf36769ef0800000000000000
-      internalID: -101763925124802345
+      spriteID: fa8fb54d956b519f0800000000000000
+      internalID: -498291686823429969
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_79
+      name: Skill_Eff_Ch_01_75
       rect:
         serializedVersion: 2
-        x: 1774
+        x: 1786
         y: 1
         width: 104
-        height: 95
+        height: 94
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2224,19 +2139,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e6c638ad1ba064890800000000000000
-      internalID: -7474274772583224210
+      spriteID: ad9933eb3040ff550800000000000000
+      internalID: 6196676026407557594
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_80
+      name: Skill_Eff_Ch_01_76
       rect:
         serializedVersion: 2
-        x: 1955
-        y: 52
-        width: 40
+        x: 1968
+        y: 53
+        width: 41
         height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2246,20 +2161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1217a8218c61e6220800000000000000
-      internalID: 2480945493288055073
+      spriteID: 9a6047b10d7a77cb0800000000000000
+      internalID: -4866236360094906711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_81
+      name: Skill_Eff_Ch_01_77
       rect:
         serializedVersion: 2
-        x: 1977
-        y: 91
+        x: 1990
+        y: 92
         width: 10
-        height: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2268,18 +2183,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1979c9dd5505db3a0800000000000000
-      internalID: -6648069145208514671
+      spriteID: ecbc7e6cc900005d0800000000000000
+      internalID: -3098475870278923314
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_82
+      name: Skill_Eff_Ch_01_78
       rect:
         serializedVersion: 2
-        x: 2116
-        y: 80
+        x: 2131
+        y: 81
         width: 22
         height: 19
       alignment: 0
@@ -2290,18 +2205,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2eff32cfc63b69bb0800000000000000
-      internalID: -4929555461442371614
+      spriteID: f5721f95d62a73ff0800000000000000
+      internalID: -56397879774730401
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_83
+      name: Skill_Eff_Ch_01_79
       rect:
         serializedVersion: 2
-        x: 294
-        y: 37
+        x: 507
+        y: 46
         width: 57
         height: 32
       alignment: 0
@@ -2312,20 +2227,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f64f10b3140d41000800000000000000
-      internalID: 5858478115648623
+      spriteID: 752bc593aa1f917a0800000000000000
+      internalID: -6405823281548709289
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_84
+      name: Skill_Eff_Ch_01_80
       rect:
         serializedVersion: 2
-        x: 657
+        x: 692
         y: 1
         width: 85
-        height: 52
+        height: 53
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2334,20 +2249,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 39aae470e1b3d22b0800000000000000
-      internalID: -5607760960848745837
+      spriteID: 6bfea1a6e0b62d4b0800000000000000
+      internalID: -5417149692119421002
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_85
+      name: Skill_Eff_Ch_01_81
       rect:
         serializedVersion: 2
-        x: 747
-        y: 25
+        x: 782
+        y: 26
         width: 29
-        height: 29
+        height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2356,17 +2271,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 73525f81030b783c0800000000000000
-      internalID: -4357320393834027721
+      spriteID: bd607a95d0b8f8ae0800000000000000
+      internalID: -1544863257709836581
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_86
+      name: Skill_Eff_Ch_01_82
       rect:
         serializedVersion: 2
-        x: 820
+        x: 901
+        y: 28
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c633e0e71c50f110800000000000000
+      internalID: 1292634350682322632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_83
+      rect:
+        serializedVersion: 2
+        x: 924
         y: 1
         width: 66
         height: 63
@@ -2378,20 +2315,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 39ad95dfcf782e790800000000000000
-      internalID: -7502284508593792365
+      spriteID: a42b969bc09c81010800000000000000
+      internalID: 1159897960535405130
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_87
+      name: Skill_Eff_Ch_01_84
       rect:
         serializedVersion: 2
-        x: 886
-        y: 2
+        x: 990
+        y: 1
         width: 96
-        height: 67
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2400,19 +2337,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b3c4117162187e330800000000000000
-      internalID: 3740100016150236219
+      spriteID: ba06c3e21536901d0800000000000000
+      internalID: -3384064444673007445
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_88
+      name: Skill_Eff_Ch_01_85
       rect:
         serializedVersion: 2
-        x: 1051
+        x: 1155
         y: 44
-        width: 25
+        width: 26
         height: 30
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2422,17 +2359,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 495b3feeaea1bba90800000000000000
-      internalID: -7297209174890138220
+      spriteID: be55ff8c71fca6390800000000000000
+      internalID: -7824213701539441173
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_89
+      name: Skill_Eff_Ch_01_86
       rect:
         serializedVersion: 2
-        x: 1076
+        x: 1181
         y: 1
         width: 176
         height: 74
@@ -2444,20 +2381,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f0006a2d2ef303190800000000000000
-      internalID: -7984811895898636273
+      spriteID: 224c16ef6a90d9c00800000000000000
+      internalID: 908893312635749410
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_90
+      name: Skill_Eff_Ch_01_87
       rect:
         serializedVersion: 2
-        x: 1253
+        x: 1357
         y: 1
-        width: 103
-        height: 78
+        width: 97
+        height: 77
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2466,20 +2403,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 58f65d09a11b7bb30800000000000000
-      internalID: 4303102696632971141
+      spriteID: 61ef266aa9d97fb50800000000000000
+      internalID: 6626938664241004054
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_91
+      name: Skill_Eff_Ch_01_88
       rect:
         serializedVersion: 2
-        x: 1399
-        y: 46
-        width: 41
-        height: 39
+        x: 1454
+        y: 1
+        width: 106
+        height: 88
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2488,18 +2425,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 039bba622040666c0800000000000000
-      internalID: -4150625599290099408
+      spriteID: f1bc4e77b868efa90800000000000000
+      internalID: -7278232014214083809
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_92
+      name: Skill_Eff_Ch_01_89
       rect:
         serializedVersion: 2
-        x: 1577
-        y: 40
+        x: 1589
+        y: 41
         width: 46
         height: 44
       alignment: 0
@@ -2510,18 +2447,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e41e5acc216bd43b0800000000000000
-      internalID: -5526560975854640818
+      spriteID: 5abdaaa467719de10800000000000000
+      internalID: 2222833687910341541
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_93
+      name: Skill_Eff_Ch_01_90
       rect:
         serializedVersion: 2
-        x: 1911
-        y: 49
+        x: 1924
+        y: 50
         width: 11
         height: 9
       alignment: 0
@@ -2532,18 +2469,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 634549aa7959aef30800000000000000
-      internalID: 4605658047574201398
+      spriteID: b0b37bbb54029a140800000000000000
+      internalID: 4731348367403596555
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_94
+      name: Skill_Eff_Ch_01_91
       rect:
         serializedVersion: 2
-        x: 1924
-        y: 48
+        x: 1937
+        y: 49
         width: 24
         height: 11
       alignment: 0
@@ -2554,18 +2491,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf1b5b3cc8eee1130800000000000000
-      internalID: 3539528645506085372
+      spriteID: 3edc49ce6c8700f40800000000000000
+      internalID: 5692682724764339683
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_95
+      name: Skill_Eff_Ch_01_92
       rect:
         serializedVersion: 2
-        x: 1954
-        y: 50
+        x: 1967
+        y: 51
         width: 6
         height: 6
       alignment: 0
@@ -2576,18 +2513,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f3ca9b8a061f68cf0800000000000000
-      internalID: -250247331822588865
+      spriteID: 59b2ad0ad60e455e0800000000000000
+      internalID: -1921664379525649515
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_96
+      name: Skill_Eff_Ch_01_93
       rect:
         serializedVersion: 2
-        x: 3072
-        y: 36
+        x: 3090
+        y: 37
         width: 36
         height: 32
       alignment: 0
@@ -2598,20 +2535,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4be15d9b5f49cd0b0800000000000000
-      internalID: -5702519245052240204
+      spriteID: 5b85aaaa07dff23a0800000000000000
+      internalID: -6687848261280442187
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_97
+      name: Skill_Eff_Ch_01_94
       rect:
         serializedVersion: 2
-        x: 3134
+        x: 3152
         y: 1
         width: 46
-        height: 54
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2620,18 +2557,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a661f07a7ada63ec0800000000000000
-      internalID: -3587489117580093846
+      spriteID: fc84ff4b737b86000800000000000000
+      internalID: 29474847465621711
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_98
+      name: Skill_Eff_Ch_01_95
       rect:
         serializedVersion: 2
-        x: 3139
-        y: 47
+        x: 3157
+        y: 48
         width: 12
         height: 10
       alignment: 0
@@ -2642,40 +2579,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8a1ad6128661db570800000000000000
-      internalID: 8483961909529125288
+      spriteID: c913484b3232a8900800000000000000
+      internalID: 687400529386811804
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_99
+      name: Skill_Eff_Ch_01_96
       rect:
         serializedVersion: 2
-        x: 3990
-        y: 1
-        width: 52
-        height: 84
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: dc3f7acb9a4677b10800000000000000
-      internalID: 1979161241429996493
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_100
-      rect:
-        serializedVersion: 2
-        x: 22
-        y: 21
+        x: 18
+        y: 22
         width: 8
         height: 7
       alignment: 0
@@ -2686,42 +2601,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f8b8f9e6f13851520800000000000000
-      internalID: 2672186124937431951
+      spriteID: 825776e4cf5b99790800000000000000
+      internalID: -7522781607293913816
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_101
+      name: Skill_Eff_Ch_01_97
       rect:
         serializedVersion: 2
-        x: 31
-        y: 2
-        width: 14
-        height: 19
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: f1b2ab864b820fb30800000000000000
-      internalID: 4318996797964561183
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_102
-      rect:
-        serializedVersion: 2
-        x: 45
+        x: 43
         y: 1
-        width: 35
-        height: 29
+        width: 27
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2730,17 +2623,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d919c1716b48224b0800000000000000
-      internalID: -5466661080067698275
+      spriteID: 45fce31847d3a6330800000000000000
+      internalID: 3704841214059532116
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_103
+      name: Skill_Eff_Ch_01_98
       rect:
         serializedVersion: 2
-        x: 95
+        x: 85
         y: 10
         width: 23
         height: 22
@@ -2752,17 +2645,39 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 209ae3796341c0120800000000000000
-      internalID: 2381300527670405378
+      spriteID: aa0dad02ffc33c090800000000000000
+      internalID: -8015495845323812694
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_104
+      name: Skill_Eff_Ch_01_99
       rect:
         serializedVersion: 2
-        x: 129
+        x: 119
+        y: 1
+        width: 129
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 593aa6729d17efbb0800000000000000
+      internalID: -4900354167049378923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_100
+      rect:
+        serializedVersion: 2
+        x: 253
         y: 1
         width: 258
         height: 34
@@ -2774,20 +2689,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f40f5b7bf0789b90800000000000000
-      internalID: -7234908575961774855
+      spriteID: 9ee4a13ca4bdcec40800000000000000
+      internalID: 5543046355533582057
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_105
+      name: Skill_Eff_Ch_01_101
       rect:
         serializedVersion: 2
-        x: 388
-        y: 2
-        width: 129
-        height: 35
+        x: 511
+        y: 1
+        width: 42
+        height: 37
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2796,17 +2711,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1c2b5049b76252bb0800000000000000
-      internalID: -4961517102272499007
+      spriteID: ddfe5adb4991eb130800000000000000
+      internalID: 3584330480061116381
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_106
+      name: Skill_Eff_Ch_01_102
       rect:
         serializedVersion: 2
-        x: 517
+        x: 553
         y: 1
         width: 66
         height: 42
@@ -2818,17 +2733,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 481e847f3b5e2c0c0800000000000000
-      internalID: -4556827311834865276
+      spriteID: 6e40a7b760137ade0800000000000000
+      internalID: -1322034061698792218
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_107
+      name: Skill_Eff_Ch_01_103
       rect:
         serializedVersion: 2
-        x: 583
+        x: 619
         y: 1
         width: 73
         height: 44
@@ -2840,18 +2755,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 38302ed6b6f193900800000000000000
-      internalID: 664596966279349123
+      spriteID: 5804bf3a91c8b55b0800000000000000
+      internalID: -5378551288210702203
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_108
+      name: Skill_Eff_Ch_01_104
       rect:
         serializedVersion: 2
-        x: 789
-        y: 1
+        x: 824
+        y: 2
         width: 31
         height: 32
       alignment: 0
@@ -2862,19 +2777,63 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ebab0373b050fa160800000000000000
-      internalID: 7038850288332094142
+      spriteID: 0bb5771221f486c70800000000000000
+      internalID: 8964501997570448304
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_109
+      name: Skill_Eff_Ch_01_105
       rect:
         serializedVersion: 2
-        x: 983
+        x: 875
+        y: 16
+        width: 21
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b7bc392433b6364d0800000000000000
+      internalID: -3142550247069987973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_106
+      rect:
+        serializedVersion: 2
+        x: 901
+        y: 24
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ceb49a9e5d78b1250800000000000000
+      internalID: 5916471888299248620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_107
+      rect:
+        serializedVersion: 2
+        x: 1086
         y: 1
-        width: 60
+        width: 61
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2884,61 +2843,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4fdcdf1e1903d45f0800000000000000
-      internalID: -770906558090588684
+      spriteID: 9464b2438b473bfa0800000000000000
+      internalID: -5786152761742899639
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_110
+      name: Skill_Eff_Ch_01_108
       rect:
         serializedVersion: 2
         x: 1
-        y: 1
-        width: 15
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: aa4e4236e721f61a0800000000000000
-      internalID: -6814207377149729622
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_111
-      rect:
-        serializedVersion: 2
-        x: 117
-        y: 2
-        width: 12
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 678e036732e80a580800000000000000
-      internalID: -8817891787433514890
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Skill_Ch_E_01_112
-      rect:
-        serializedVersion: 2
-        x: 1548
         y: 1
         width: 11
         height: 10
@@ -2950,19 +2865,63 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2f864666d3fa63200800000000000000
-      internalID: 159507515063953650
+      spriteID: 925a529e5e8b4b7c0800000000000000
+      internalID: -4056414066755394263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_113
+      name: Skill_Eff_Ch_01_109
       rect:
         serializedVersion: 2
-        x: 1878
-        y: 7
-        width: 8
+        x: 27
+        y: 3
+        width: 15
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 12f80fb7b22cc5020800000000000000
+      internalID: 2331952199089819425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_110
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 2
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f41d87424ac649270800000000000000
+      internalID: 8256343469119295823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_111
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 1
+        width: 9
         height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -2972,20 +2931,86 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 26eea5b88f7f9f040800000000000000
-      internalID: 4682045934490283618
+      spriteID: c289fc4d5e8c60720800000000000000
+      internalID: 2812155906782894124
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_114
+      name: Skill_Eff_Ch_01_112
       rect:
         serializedVersion: 2
-        x: 1883
+        x: 855
+        y: 1
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d86839367de83c130800000000000000
+      internalID: 3585866784056772237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_113
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 1
+        width: 11
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97ab3fcf017945ba0800000000000000
+      internalID: -6101085495961077127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_114
+      rect:
+        serializedVersion: 2
+        x: 1890
+        y: 8
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e8abd1f988e29fe00800000000000000
+      internalID: 1078944750051900046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Skill_Eff_Ch_01_115
+      rect:
+        serializedVersion: 2
+        x: 1896
         y: 1
         width: 6
-        height: 6
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2994,20 +3019,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd41f2a548eef8290800000000000000
-      internalID: -7885822170286320420
+      spriteID: d056d0ac5d8e33610800000000000000
+      internalID: 1599878297562211597
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Skill_Ch_E_01_115
+      name: Skill_Eff_Ch_01_116
       rect:
         serializedVersion: 2
-        x: 1995
+        x: 2009
         y: 1
-        width: 16
-        height: 14
+        width: 17
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -3016,8 +3041,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e091bf8e485020300800000000000000
-      internalID: 216741800469797134
+      spriteID: 580ca87a6faf069d0800000000000000
+      internalID: -2782948632435179387
       vertices: []
       indices: 
       edges: []
@@ -3036,122 +3061,123 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Skill_Ch_E_01_0: -7285971803176974645
-      Skill_Ch_E_01_1: 8866767399178992819
-      Skill_Ch_E_01_10: -5561561987778923426
-      Skill_Ch_E_01_100: 2672186124937431951
-      Skill_Ch_E_01_101: 4318996797964561183
-      Skill_Ch_E_01_102: -5466661080067698275
-      Skill_Ch_E_01_103: 2381300527670405378
-      Skill_Ch_E_01_104: -7234908575961774855
-      Skill_Ch_E_01_105: -4961517102272499007
-      Skill_Ch_E_01_106: -4556827311834865276
-      Skill_Ch_E_01_107: 664596966279349123
-      Skill_Ch_E_01_108: 7038850288332094142
-      Skill_Ch_E_01_109: -770906558090588684
-      Skill_Ch_E_01_11: -4895559788300099949
-      Skill_Ch_E_01_110: -6814207377149729622
-      Skill_Ch_E_01_111: -8817891787433514890
-      Skill_Ch_E_01_112: 159507515063953650
-      Skill_Ch_E_01_113: 4682045934490283618
-      Skill_Ch_E_01_114: -7885822170286320420
-      Skill_Ch_E_01_115: 216741800469797134
-      Skill_Ch_E_01_12: 9052916273475322349
-      Skill_Ch_E_01_13: 6366289576463312039
-      Skill_Ch_E_01_14: 4721890133704330752
-      Skill_Ch_E_01_15: -9082150488546819500
-      Skill_Ch_E_01_16: 4354814536948319143
-      Skill_Ch_E_01_17: -6489415464436792804
-      Skill_Ch_E_01_18: 6246447481450552646
-      Skill_Ch_E_01_19: 2078585271228773777
-      Skill_Ch_E_01_2: 7848867406126978964
-      Skill_Ch_E_01_20: 8929717765747864638
-      Skill_Ch_E_01_21: -5382042686578162720
-      Skill_Ch_E_01_22: -8757870230759413210
-      Skill_Ch_E_01_23: 8358992716291649241
-      Skill_Ch_E_01_24: 6552342553862366403
-      Skill_Ch_E_01_25: -2874310539572199275
-      Skill_Ch_E_01_26: -7282363578809503307
-      Skill_Ch_E_01_27: 6030667546413581294
-      Skill_Ch_E_01_28: -5459462085895210922
-      Skill_Ch_E_01_29: 5181943692879697546
-      Skill_Ch_E_01_3: -4098163300535686532
-      Skill_Ch_E_01_30: -7070536901477676496
-      Skill_Ch_E_01_31: -7154399503824531750
-      Skill_Ch_E_01_32: -7288764218355547333
-      Skill_Ch_E_01_33: -8922443640706208218
-      Skill_Ch_E_01_34: 5920964911776152876
-      Skill_Ch_E_01_35: 3460122833651173436
-      Skill_Ch_E_01_36: 3749466625534469401
-      Skill_Ch_E_01_37: -8650649324391115024
-      Skill_Ch_E_01_38: -4522374718754933983
-      Skill_Ch_E_01_39: -3514478726273104318
-      Skill_Ch_E_01_4: 7345242976053641053
-      Skill_Ch_E_01_40: 8387686188265788269
-      Skill_Ch_E_01_41: 2799368675862851694
-      Skill_Ch_E_01_42: -2818257041571994744
-      Skill_Ch_E_01_43: -7820123471807930499
-      Skill_Ch_E_01_44: 1637393067419879623
-      Skill_Ch_E_01_45: 3173421712709318385
-      Skill_Ch_E_01_46: -5062526436604917271
-      Skill_Ch_E_01_47: -4322178737460198496
-      Skill_Ch_E_01_48: 3605156511079543267
-      Skill_Ch_E_01_49: -3593589864589713232
-      Skill_Ch_E_01_5: 790526939035558600
-      Skill_Ch_E_01_50: 8149196179324551653
-      Skill_Ch_E_01_51: -2915316231404826529
-      Skill_Ch_E_01_52: 270110170509286933
-      Skill_Ch_E_01_53: 5110276181962582701
-      Skill_Ch_E_01_54: 1662332618306406573
-      Skill_Ch_E_01_55: -3026417093427134483
-      Skill_Ch_E_01_56: -4681261924971864969
-      Skill_Ch_E_01_57: 1179570183091914662
-      Skill_Ch_E_01_58: -46606908295103082
-      Skill_Ch_E_01_59: 8144233861335928368
-      Skill_Ch_E_01_6: 7385537491516820703
-      Skill_Ch_E_01_60: 4330669162681104196
-      Skill_Ch_E_01_61: 7595291487224848510
-      Skill_Ch_E_01_62: 6984150875367564237
-      Skill_Ch_E_01_63: 2901652387485436402
-      Skill_Ch_E_01_64: 4549814208095284936
-      Skill_Ch_E_01_65: 6483079495560191815
-      Skill_Ch_E_01_66: -7603876598260616594
-      Skill_Ch_E_01_67: -9125784583076267485
-      Skill_Ch_E_01_68: 6999491478073807147
-      Skill_Ch_E_01_69: -992962899577444597
-      Skill_Ch_E_01_7: -4098928946146223026
-      Skill_Ch_E_01_70: 1434430461170350416
-      Skill_Ch_E_01_71: 7955237762387447559
-      Skill_Ch_E_01_72: 6799941910670396907
-      Skill_Ch_E_01_73: -783927870547626764
-      Skill_Ch_E_01_74: -7608522672120742808
-      Skill_Ch_E_01_75: -7347907121708375135
-      Skill_Ch_E_01_76: -7380459853615584296
-      Skill_Ch_E_01_77: 6708037656721832926
-      Skill_Ch_E_01_78: -101763925124802345
-      Skill_Ch_E_01_79: -7474274772583224210
-      Skill_Ch_E_01_8: -8525125305749231019
-      Skill_Ch_E_01_80: 2480945493288055073
-      Skill_Ch_E_01_81: -6648069145208514671
-      Skill_Ch_E_01_82: -4929555461442371614
-      Skill_Ch_E_01_83: 5858478115648623
-      Skill_Ch_E_01_84: -5607760960848745837
-      Skill_Ch_E_01_85: -4357320393834027721
-      Skill_Ch_E_01_86: -7502284508593792365
-      Skill_Ch_E_01_87: 3740100016150236219
-      Skill_Ch_E_01_88: -7297209174890138220
-      Skill_Ch_E_01_89: -7984811895898636273
-      Skill_Ch_E_01_9: 2575938034936163976
-      Skill_Ch_E_01_90: 4303102696632971141
-      Skill_Ch_E_01_91: -4150625599290099408
-      Skill_Ch_E_01_92: -5526560975854640818
-      Skill_Ch_E_01_93: 4605658047574201398
-      Skill_Ch_E_01_94: 3539528645506085372
-      Skill_Ch_E_01_95: -250247331822588865
-      Skill_Ch_E_01_96: -5702519245052240204
-      Skill_Ch_E_01_97: -3587489117580093846
-      Skill_Ch_E_01_98: 8483961909529125288
-      Skill_Ch_E_01_99: 1979161241429996493
+      Skill_Eff_Ch_01_0: 2485956186314188427
+      Skill_Eff_Ch_01_1: 7229428153738915536
+      Skill_Eff_Ch_01_10: -1067541695131898597
+      Skill_Eff_Ch_01_100: 5543046355533582057
+      Skill_Eff_Ch_01_101: 3584330480061116381
+      Skill_Eff_Ch_01_102: -1322034061698792218
+      Skill_Eff_Ch_01_103: -5378551288210702203
+      Skill_Eff_Ch_01_104: 8964501997570448304
+      Skill_Eff_Ch_01_105: -3142550247069987973
+      Skill_Eff_Ch_01_106: 5916471888299248620
+      Skill_Eff_Ch_01_107: -5786152761742899639
+      Skill_Eff_Ch_01_108: -4056414066755394263
+      Skill_Eff_Ch_01_109: 2331952199089819425
+      Skill_Eff_Ch_01_11: -689047295798356416
+      Skill_Eff_Ch_01_110: 8256343469119295823
+      Skill_Eff_Ch_01_111: 2812155906782894124
+      Skill_Eff_Ch_01_112: 3585866784056772237
+      Skill_Eff_Ch_01_113: -6101085495961077127
+      Skill_Eff_Ch_01_114: 1078944750051900046
+      Skill_Eff_Ch_01_115: 1599878297562211597
+      Skill_Eff_Ch_01_116: -2782948632435179387
+      Skill_Eff_Ch_01_12: 2791078557957606024
+      Skill_Eff_Ch_01_13: -297480583899254921
+      Skill_Eff_Ch_01_14: -7556986734531752518
+      Skill_Eff_Ch_01_15: -3365608929565451851
+      Skill_Eff_Ch_01_16: -6157803107159047084
+      Skill_Eff_Ch_01_17: -90975592082177825
+      Skill_Eff_Ch_01_18: 4197194444092055669
+      Skill_Eff_Ch_01_19: -3107847430058448056
+      Skill_Eff_Ch_01_2: 3167305970039327396
+      Skill_Eff_Ch_01_20: -5802122209621952756
+      Skill_Eff_Ch_01_21: 1988578719871671724
+      Skill_Eff_Ch_01_22: -3498557405807807106
+      Skill_Eff_Ch_01_23: 7926982308723339452
+      Skill_Eff_Ch_01_24: 3503059804589826178
+      Skill_Eff_Ch_01_25: -8724740867568138670
+      Skill_Eff_Ch_01_26: -2309671466165781652
+      Skill_Eff_Ch_01_27: 4136531753116212283
+      Skill_Eff_Ch_01_28: 2560825658007146129
+      Skill_Eff_Ch_01_29: -8559413182969022473
+      Skill_Eff_Ch_01_3: -1542126410146235950
+      Skill_Eff_Ch_01_30: 127644990097816743
+      Skill_Eff_Ch_01_31: -7433555495192219120
+      Skill_Eff_Ch_01_32: 5596357362902319150
+      Skill_Eff_Ch_01_33: -2294661494701948134
+      Skill_Eff_Ch_01_34: -8960648586392929544
+      Skill_Eff_Ch_01_35: -5187088663649457313
+      Skill_Eff_Ch_01_36: -5983328936203323354
+      Skill_Eff_Ch_01_37: 6820722031906719029
+      Skill_Eff_Ch_01_38: 1661601437625139776
+      Skill_Eff_Ch_01_39: -4648579025766469705
+      Skill_Eff_Ch_01_4: 2450784386253403461
+      Skill_Eff_Ch_01_40: -3160180613413507449
+      Skill_Eff_Ch_01_41: 1727424360204326742
+      Skill_Eff_Ch_01_42: 6442678904622888444
+      Skill_Eff_Ch_01_43: -4035679604798980453
+      Skill_Eff_Ch_01_44: -1829310364267208711
+      Skill_Eff_Ch_01_45: 567749278377838258
+      Skill_Eff_Ch_01_46: -1028923155059422398
+      Skill_Eff_Ch_01_47: -1178128170515500958
+      Skill_Eff_Ch_01_48: -8174814526131839611
+      Skill_Eff_Ch_01_49: -5297376605653534178
+      Skill_Eff_Ch_01_5: 1710484400725010347
+      Skill_Eff_Ch_01_50: 6145160524769160411
+      Skill_Eff_Ch_01_51: -5200976188358384594
+      Skill_Eff_Ch_01_52: -8188698373055626042
+      Skill_Eff_Ch_01_53: -6318281022646594991
+      Skill_Eff_Ch_01_54: 1901928066156405512
+      Skill_Eff_Ch_01_55: -7412307874300310544
+      Skill_Eff_Ch_01_56: -3914964956755837197
+      Skill_Eff_Ch_01_57: 3185265379058921461
+      Skill_Eff_Ch_01_58: 3683441517616792296
+      Skill_Eff_Ch_01_59: -8668389782009222664
+      Skill_Eff_Ch_01_6: -1345088331350152573
+      Skill_Eff_Ch_01_60: -5807005081554957301
+      Skill_Eff_Ch_01_61: 3464253920387096569
+      Skill_Eff_Ch_01_62: 6464242790252279760
+      Skill_Eff_Ch_01_63: -4030784695888111037
+      Skill_Eff_Ch_01_64: -938020390639620648
+      Skill_Eff_Ch_01_65: 8729966395382153960
+      Skill_Eff_Ch_01_66: -9077157974204970927
+      Skill_Eff_Ch_01_67: 3083285753965300101
+      Skill_Eff_Ch_01_68: -2516489124885078467
+      Skill_Eff_Ch_01_69: -3365405623093332666
+      Skill_Eff_Ch_01_7: 2202330387568251231
+      Skill_Eff_Ch_01_70: -6376641554624627532
+      Skill_Eff_Ch_01_71: 4764085592370282122
+      Skill_Eff_Ch_01_72: -614174314154621048
+      Skill_Eff_Ch_01_73: -6701288946546884100
+      Skill_Eff_Ch_01_74: -498291686823429969
+      Skill_Eff_Ch_01_75: 6196676026407557594
+      Skill_Eff_Ch_01_76: -4866236360094906711
+      Skill_Eff_Ch_01_77: -3098475870278923314
+      Skill_Eff_Ch_01_78: -56397879774730401
+      Skill_Eff_Ch_01_79: -6405823281548709289
+      Skill_Eff_Ch_01_8: 6988970550474439859
+      Skill_Eff_Ch_01_80: -5417149692119421002
+      Skill_Eff_Ch_01_81: -1544863257709836581
+      Skill_Eff_Ch_01_82: 1292634350682322632
+      Skill_Eff_Ch_01_83: 1159897960535405130
+      Skill_Eff_Ch_01_84: -3384064444673007445
+      Skill_Eff_Ch_01_85: -7824213701539441173
+      Skill_Eff_Ch_01_86: 908893312635749410
+      Skill_Eff_Ch_01_87: 6626938664241004054
+      Skill_Eff_Ch_01_88: -7278232014214083809
+      Skill_Eff_Ch_01_89: 2222833687910341541
+      Skill_Eff_Ch_01_9: -4425711689201181233
+      Skill_Eff_Ch_01_90: 4731348367403596555
+      Skill_Eff_Ch_01_91: 5692682724764339683
+      Skill_Eff_Ch_01_92: -1921664379525649515
+      Skill_Eff_Ch_01_93: -6687848261280442187
+      Skill_Eff_Ch_01_94: 29474847465621711
+      Skill_Eff_Ch_01_95: 687400529386811804
+      Skill_Eff_Ch_01_96: -7522781607293913816
+      Skill_Eff_Ch_01_97: 3704841214059532116
+      Skill_Eff_Ch_01_98: -8015495845323812694
+      Skill_Eff_Ch_01_99: -4900354167049378923
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
