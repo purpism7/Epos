@@ -1,14 +1,16 @@
-using Common;
-using Creator;
-using Cysharp.Threading.Tasks;
-using GameSystem;
-using Spine.Unity;
-using System;
-using System.Collections.Generic;
-using UI.Slot;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
+using System;
+
+using Spine.Unity;
+using Cysharp.Threading.Tasks;
 using VContainer;
+
+using GameSystem;
+using Common;
+using Creator;
+using UI.Slot;
 
 namespace UI.Popup
 {
@@ -20,6 +22,7 @@ namespace UI.Popup
         }
 
         [SerializeField] private SkeletonGraphic skeletonGraphic = null;
+        [SerializeField] private SkeletonGraphic effectSkeletonGraphic = null;
 
         [Inject] private ITimeScaleManager _iTimeScaleManager = null;
 
@@ -37,13 +40,15 @@ namespace UI.Popup
 
             _iTimeScaleManager?.Pause();
 
+            float duration = 0;
+            effectSkeletonGraphic?.PlayAnimation("Skill_Effect_Ch_01", false, null, out duration);
             skeletonGraphic?.PlayAnimation("Skill_Ch_E_01", false, 
                 (trackEntry) =>
                 {
                     Deactivate();
 
                     _iTimeScaleManager?.Resume();
-                }, out float duration);
+                }, out duration);
         }
 
         public override void Deactivate()
