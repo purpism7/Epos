@@ -18,11 +18,11 @@ MonoBehaviour:
   skeletonJSON: {fileID: 4900000, guid: b0461f26ccc5db1499d7bebd0e555b2f, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
-    requiresBlendModeMaterials: 1
+    requiresBlendModeMaterials: 0
     applyAdditiveMaterial: 1
     additiveMaterials:
     - pageName: Skill_Eff_Ch_01.png
-      material: {fileID: 2100000, guid: 36de1ebd9d68d2e4cae25eeb4a96a8e0, type: 2}
+      material: {fileID: 2100000, guid: 0585af9dae807764f96be07926308f21, type: 2}
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
