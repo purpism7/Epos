@@ -50,6 +50,14 @@ namespace Common
         NearOne,
         FarOne,
     }
+
+    public enum EImpactType
+    {
+        None,
+
+        Damage,
+        Heal,
+    }
     #endregion
 
     public enum EWeightType

@@ -639,7 +639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2079397547392077000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1194,7 +1194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1520779765601641798
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 7946180968541680286}
   - component: {fileID: 9198603828502850193}
   m_Layer: 5
-  m_Name: TextDamage
+  m_Name: CombatText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1266,7 +1266,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
   rootRectTm: {fileID: 7265674374223708273}
+  damageRootRectTm: {fileID: 1520779765601641798}
   damageTMP: {fileID: 6941750160458423882}
+  healRootRectTm: {fileID: 2079397547392077000}
+  healTMP: {fileID: 3179362777899087088}
 --- !u!1 &7168341589145363496
 GameObject:
   m_ObjectHideFlags: 0

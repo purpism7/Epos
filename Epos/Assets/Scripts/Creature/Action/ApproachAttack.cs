@@ -1,11 +1,11 @@
+using Ability;
+using Common;
+using Cysharp.Threading.Tasks;
+using Datas.ScriptableObjects;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
-using Cysharp.Threading.Tasks;
-
-using Datas.ScriptableObjects;
-using Common;
 
 namespace Creature.Action
 {
@@ -67,34 +67,38 @@ namespace Creature.Action
             }
 
             var skillRange = skillData.Range;
-            if (skillRange < 0)
+            if (skillRange > 0)
             {
-                _endAction?.Invoke(_iActor);
-                return;
-            }
-
-            var moveParam = new Move.Param
-            {
-                MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
-                FinishAction = () =>
+                var moveParam = new Move.Param
                 {
-                    FinishMoveToTarget(attacker, iSkill, targetList);
-                },
-                IsJumpMove = false,
-            }
-            .WithTargetICombatant(target)?
-            .WithForwardDirection(false)?
-            .WithDistance(skillRange)
-            .WithUseNavMesh(false);
+                    MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
+                    FinishAction = () =>
+                    {
+                        CastingSkill(attacker, iSkill, targetList);
+                    },
+                    IsJumpMove = false,
+                }
+                .WithTargetICombatant(target)?
+                .WithForwardDirection(false)?
+                .WithDistance(skillRange)
+                .WithUseNavMesh(false);
 
-            attacker.IActor.IActCtr?
-                .MoveToTarget(moveParam)?
-                .Execute();
+                attacker.IActor.IActCtr?
+                    .MoveToTarget(moveParam)?
+                    .Execute();
+            }
+            else
+                CastingSkill(attacker, iSkill, targetList);
         }
 
-        private void FinishMoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
+        //private void FinishMoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
+        //{
+        //    CastingSkill(attacker, iSkill, targetList);
+        //}
+
+        private void CastingSkill (ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
         {
-            attacker?.IActor.IActCtr?
+            attacker?.IActor?.IActCtr?
                 .CastingSkill(this, attacker, iSkill, targetList)?
                 .Execute();
         }

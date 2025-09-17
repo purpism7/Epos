@@ -13,8 +13,12 @@ MonoBehaviour:
   m_Name: Heal
   m_EditorClassIdentifier: 
   Id: 2
-  ESkillCategory: 1
+  AnimationName: Skill_03
+  ESkillCategory: 2
+  Cooltime: 50
   Point: 1
   ESkillTarget: 1
   Range: 0
   SameTeam: 1
+  ProjectilePrefab: {fileID: 0}
+  PlayAnimation: 0

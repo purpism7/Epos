@@ -90,12 +90,17 @@ namespace Creature.Action
             SetAnimation(skillData.AnimationName, false);
             
             var halfDuration = _duration / 2f;
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
-            _param?.IListener?.InUse();
-            DamageToTargetList(skillData);
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
+            _param?.IListener?.InUse();
+            ImpactToTargetList(skillData);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
+            AfterCasting();
+        }
+
+        private void AfterCasting()
+        {
             _param?.IListener?.AfterCasting(_param?.ICombatant);
             _param?.ISkill?.EndCasting();
         }
@@ -107,22 +112,36 @@ namespace Creature.Action
             _endAction?.Invoke(_iActor);
         }
 
-        private void DamageToTargetList(Skill skillData)
+        private void ImpactToTargetList(Skill skillData)
         {
             var iCombatant = _param?.ICombatant;
-            if (_param?.TargetList != null &&
-                !skillData.SameTeam)
+            if (_param?.TargetList == null)
+                return;
+
+            if (skillData.SameTeam)
             {
                 foreach (var target in _param.TargetList)
                 {
-                    if (target == null || 
+                    if (target == null ||
+                        !target.IActor.IsAlive)
+                        continue;
+
+                    target?.IActor?.IActCtr?.Impact(iCombatant, EImpactType.Heal, _param.PlayAnimation);
+                }
+            }
+            else
+            {
+                // Damaged
+                foreach (var target in _param.TargetList)
+                {
+                    if (target == null ||
                         !target.IActor.IsAlive)
                         continue;
 
                     if (skillData.HasProjectile)
                         CreateProjectile(skillData.ProjectilePrefab, target);
-                    else 
-                        target?.IActor?.IActCtr?.TakeDamage(iCombatant, _param.PlayAnimation);
+                    else
+                        target?.IActor?.IActCtr?.Impact(iCombatant, EImpactType.Damage, _param.PlayAnimation);
                 }
             }
         }
@@ -133,19 +152,33 @@ namespace Creature.Action
             if (iCombatant == null)
                 return;
 
-            if (targetICombatant == null)
+            var targetIActor = targetICombatant?.IActor;
+            if (targetIActor == null)
                 return;
 
             var projectileCreator = _iResolver?.Resolve<ProjectileCreator>();
             if (projectileCreator == null)
                 return;
 
+            var direction = targetIActor.Transform.position - iCombatant.Transform.position;
+            float offsetX = 0;
+            if (direction.x >= 0)
+                offsetX = 2f;
+            else
+                offsetX  = -2f;
+
+            var startPosition = iCombatant.Transform.position;
+            startPosition.x += offsetX;
+
+            var endPosition = targetIActor.Transform.position;
+            endPosition.y += targetIActor.Height * 0.5f;
+
             var projectileParam = new Battle.Projectile.Param()
             {
 
             }
-            .WithStartPosition(iCombatant.Transform.position)
-            .WithEndPosition(targetICombatant.IActor.Transform.position);
+            .WithStartPosition(startPosition)
+            .WithEndPosition(endPosition);
 
             var iProjectile = projectileCreator?.Create(proejctilePrefab, projectileParam);
         }
@@ -153,18 +186,11 @@ namespace Creature.Action
         private async UniTask ActivateSpecialSkillAnimPopupAsync()
         {
             var uiCreator = _iResolver.Resolve <UIFactory>()?
-                .Create<UI.Popup.SpecialSkillAnimPopup, UI.Popup.SpecialSkillAnimPopup.Param>(); ;
-            //var rootRectTm = _uiManager?.CurrViewRectTm;
-            //var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
-
-            //var battleStartParam = new UI.Popup.BattleStart.Param()
-            //    .WithCompletedAction(OnCompletedBattleStart);
+                .Create<UI.Popup.SpecialSkillAnimPopup, UI.Popup.SpecialSkillAnimPopup.Param>();
 
             var specialSkillAnimPopup = await uiCreator
-               //.SetRoot(rootRectTm)
                .CreateAsync();
             specialSkillAnimPopup?.Activate();
-            //_battleStart?.ActivateAsync(battleStartParam);
         }
     }
 }

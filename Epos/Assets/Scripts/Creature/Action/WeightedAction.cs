@@ -20,7 +20,7 @@ namespace Creature.Action
 
     public class WeightedActionParam : ActParam
     {
-
+        
     }
 
     public abstract class WeightedAction<T> : Act<T>, IWeightedActionInitializer, IWeightedAction where T : ActParam

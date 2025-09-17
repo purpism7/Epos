@@ -305,11 +305,10 @@ namespace Battle.Mode
             {
                 case WeightedAction<ApproachAttack.Param>:
                     {
-                        List<ICombatant> iCombatantList = null;
-                        if (eTeam == ETeam.Ally)
-                            iCombatantList = _iWaypointCtr?.Waypoint?.EnemyICombatantList;
-                        else if (eTeam == ETeam.Enemy)
-                            iCombatantList = _data?.AllyICombatantList;
+                        List<ICombatant> iCombatantList = new();
+                        iCombatantList.Clear();
+                        iCombatantList.AddRange(_iWaypointCtr?.Waypoint?.EnemyICombatantList);
+                        iCombatantList.AddRange(_data?.AllyICombatantList);
 
                         var param = new ApproachAttack.Param()
                             .WithAttacker(attacker)

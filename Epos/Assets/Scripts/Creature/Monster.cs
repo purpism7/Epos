@@ -30,8 +30,8 @@ namespace Creature
                 case Idle: return nameof(Idle);
                 case Move: return "Run";
                 case Casting: return "Skill_01";
-                case Damage: return nameof(Damage);
-                case Creature.Action.Die: return nameof(Damage);
+                case Impact: return "Damage";
+                case Creature.Action.Die: return "Damage";
             }
 
             return string.Empty;

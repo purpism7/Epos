@@ -47,7 +47,7 @@ namespace Battle
         //readonly List<ParticleSystem.Particle> _enter = new();
         private ParticleSystem _particleSystem = null;
 
-        private float startSpeed = 0f, endSpeed = 60f, accelTime = 2f;
+        private float startSpeed = 20f, endSpeed = 60f, accelTime = 3f;
         float currSpeed;
         Tween speedTween;
 

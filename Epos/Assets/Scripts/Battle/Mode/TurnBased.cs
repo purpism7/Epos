@@ -440,8 +440,11 @@ namespace Battle.Mode
                 return;
             
             var skillRange = skillData.Range;
-            if (skillRange <= 0)
-                return;
+            if(skillData.ESkillTarget != ESkillTarget.All)
+            {
+                if (skillRange <= 0)
+                    return;
+            }
 
             var target = targetData.Target;
             if (targetData.ChangeTarget != null)

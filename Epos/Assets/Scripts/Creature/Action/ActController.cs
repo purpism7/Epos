@@ -19,7 +19,7 @@ namespace Creature.Action
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList);
         IActController Die();
         
-        void TakeDamage(ICombatant iCombatant, bool playAnimation);
+        void Impact(ICombatant iCombatant, Common.EImpactType eImpactType, bool playAnimation);
         void Execute();
 
         bool InAction { get; }
@@ -147,17 +147,19 @@ namespace Creature.Action
             return this;
         }
 
-        void IActController.TakeDamage(ICombatant iCombatant, bool PlayAnimation)
+        void IActController.Impact(ICombatant iCombatant, Common.EImpactType eImpactType, bool PlayAnimation)
         {
             if (!IsActivate)
                 return;
 
-            var damageParam = new Damage.Param
+            var impactParam = new Impact.Param
             {
                 PlayAnimation = PlayAnimation,
-            }.WithICombatant(iCombatant);
+            }
+            .WithICombatant(iCombatant)
+            .WithEImpactType(eImpactType);
             
-            Execute<Damage, Damage.Param>(damageParam, false);
+            Execute<Impact, Impact.Param>(impactParam, false);
         }
 
         private async UniTask ExecuteAsync()
