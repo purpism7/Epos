@@ -37,7 +37,7 @@ namespace UI.Popup
 
             _iTimeScaleManager?.Pause();
 
-            skeletonGraphic?.PlayAnimation("Skill_01", false, 
+            skeletonGraphic?.PlayAnimation("Skill_Ch_E_01", false, 
                 (trackEntry) =>
                 {
                     Deactivate();
