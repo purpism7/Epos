@@ -855,7 +855,7 @@ GameObject:
   - component: {fileID: 4091338948884468954}
   - component: {fileID: 6933356694671352004}
   m_Layer: 8
-  m_Name: WayPoint_5
+  m_Name: WayPoint_6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3052,7 +3052,7 @@ Transform:
   m_GameObject: {fileID: 2493189576507371252}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 0, z: 0}
+  m_LocalPosition: {x: 22.6, y: 7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4787,7 +4787,7 @@ Transform:
   m_GameObject: {fileID: 3638790066088103037}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -73, y: -46.4, z: 0}
+  m_LocalPosition: {x: -86.1, y: -49.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5199,7 +5199,7 @@ GameObject:
   - component: {fileID: 540093425241844565}
   - component: {fileID: 4371302904645563912}
   m_Layer: 8
-  m_Name: WayPoint
+  m_Name: WayPoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5214,7 +5214,7 @@ Transform:
   m_GameObject: {fileID: 3799821470580032876}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -93, y: -35, z: 0}
+  m_LocalPosition: {x: -86.4, y: -29, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5549,7 +5549,7 @@ GameObject:
   - component: {fileID: 679978150128718830}
   - component: {fileID: 6360720078828496505}
   m_Layer: 8
-  m_Name: WayPoint_3
+  m_Name: WayPoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5595,7 +5595,7 @@ GameObject:
   - component: {fileID: 5698660981549738743}
   - component: {fileID: 3527337873045155927}
   m_Layer: 8
-  m_Name: WayPoint_2
+  m_Name: WayPoint_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10900,7 +10900,7 @@ GameObject:
   - component: {fileID: 4785959396690339699}
   - component: {fileID: 7094378821687983495}
   m_Layer: 8
-  m_Name: WayPoint_4
+  m_Name: WayPoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
