@@ -202,9 +202,9 @@ MonoBehaviour:
   id: 10003
   eClass: 6
   actionSpeed: 9
-  moveSpeed: 5
+  moveSpeed: 10
   attack: 10
-  maxHp: 49.3
+  maxHp: 100
   activePoint: 1
   passivePoint: 1
   attackSight: 10

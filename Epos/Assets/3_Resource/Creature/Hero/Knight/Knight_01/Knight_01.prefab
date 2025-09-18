@@ -48,13 +48,13 @@ MonoBehaviour:
   rootTm: {fileID: 7668903545576191951}
   id: 10001
   eClass: 1
-  actionSpeed: 3
-  moveSpeed: 8.1
+  actionSpeed: 100
+  moveSpeed: 10
   attack: 16
-  maxHp: 89.6
+  maxHp: 100
   activePoint: 1
-  passivePoint: 2
-  attackSight: 10
+  passivePoint: 1
+  attackSight: 1
   skills:
   - {fileID: 11400000, guid: 47c203b60fdfc674aa69e325b190ee3b, type: 2}
   - {fileID: 11400000, guid: e091172c8a06a443ebcdea70e7b13dcd, type: 2}

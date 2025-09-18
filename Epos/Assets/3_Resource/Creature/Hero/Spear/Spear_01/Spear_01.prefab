@@ -201,13 +201,13 @@ MonoBehaviour:
   rootTm: {fileID: 8223724037266528934}
   id: 10004
   eClass: 3
-  actionSpeed: 9
-  moveSpeed: 9.4
+  actionSpeed: 100
+  moveSpeed: 10
   attack: 15
-  maxHp: 68.3
+  maxHp: 100
   activePoint: 1
   passivePoint: 1
-  attackSight: 10
+  attackSight: 1
   skills:
   - {fileID: 11400000, guid: c1710e03a19294f5f92ab68edd8884c2, type: 2}
 --- !u!1 &7660796985955511713
