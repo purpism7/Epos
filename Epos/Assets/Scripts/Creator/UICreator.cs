@@ -93,6 +93,8 @@ namespace Creator
                 rectTm.sizeDelta = Vector2.zero;
                 rectTm.anchoredPosition3D = Vector3.zero;
                 rectTm.transform.localScale = Vector3.one;
+
+                rectTm.SetAsLastSibling();
             }
 
             return component;
