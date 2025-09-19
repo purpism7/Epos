@@ -73,7 +73,7 @@ namespace Creature
         // [SerializeField] [Range(0f, 100f)] [Tooltip("공격 시, 공격 할 적과의 거리 (0 일 경우, 제자리에서 공격).")]
         // private float attackRange = 1f;
 
-        [SerializeField] [UnityEngine.Range(0f, 100f)] private float maxHp = 1f;
+        [SerializeField] [UnityEngine.Range(0f, 500f)] private float maxHp = 1f;
 
         [SerializeField] [UnityEngine.Range(1, 5)] private float activePoint = 1f;
         [SerializeField] [UnityEngine.Range(1, 5)] private float passivePoint = 1f;
