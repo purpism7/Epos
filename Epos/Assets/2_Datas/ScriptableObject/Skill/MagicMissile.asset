@@ -18,6 +18,7 @@ MonoBehaviour:
   Cooltime: 0
   Point: 1
   ESkillTarget: 2
-  Range: 20
+  Range: 15
   SameTeam: 0
   ProjectilePrefab: {fileID: 2440015625647231405, guid: 03fe4e50ca0ec5542965876e0948e5b1, type: 3}
+  PlayAnimation: 0
