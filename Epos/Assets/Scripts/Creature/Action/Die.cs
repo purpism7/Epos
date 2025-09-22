@@ -20,13 +20,13 @@ namespace Creature.Action
             DeactivateAsync().Forget();
         }
 
-
         private async UniTask DeactivateAsync()
         {
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
             _iActor?.Deactivate();
         }
+
         protected override void OnCompleted(TrackEntry trackEntry)
         {
             base.OnCompleted(trackEntry);
