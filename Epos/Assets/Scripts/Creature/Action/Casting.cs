@@ -171,7 +171,7 @@ namespace Creature.Action
             startPosition.x += offsetX;
 
             var targetPoition = targetIActor.Transform.position;
-            var endPosition = targetPoition + direction * 1f;
+            var endPosition = targetPoition + direction * 0.5f;
             endPosition.y += targetIActor.Height * 0.5f;
 
             var projectileParam = new Battle.Projectile.Param()
