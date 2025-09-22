@@ -17,13 +17,13 @@ namespace Creature.Action
     {
         public class Param : ActParam
         {
-            public ICombatant ICombatant { get; private set; } = null;
+            public IStat IStat { get; private set; } = null;
             public EImpactType EImpactType { get; private set; } = EImpactType.None;
             public bool PlayAnimation = true;
 
-            public Param WithICombatant(ICombatant iCombatant)
+            public Param WithIStat(IStat iStat)
             {
-                ICombatant = iCombatant;
+                IStat = iStat;
                 return this;
             }
 
@@ -42,13 +42,13 @@ namespace Creature.Action
         {
             if (_param == null)
                 return;
-            
-            var iCasterIStat = _param?.ICombatant?.IActor?.IStat;
-            if (iCasterIStat != null)
+
+            var iStat = _param?.IStat;
+            if (iStat != null)
             {
                 float value = 0;
                 if(_param.EImpactType == EImpactType.Damage)
-                    value = -iCasterIStat.Get(Stat.EType.Attack);
+                    value = -iStat.Get(Stat.EType.Attack);
                 else
                     value = 10f;
         

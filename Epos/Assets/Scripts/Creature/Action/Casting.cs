@@ -87,7 +87,7 @@ namespace Creature.Action
             if(skillData.PlayAnimation)
                 await ActivateSpecialSkillAnimPopupAsync();
 
-            SetAnimation(skillData.AnimationName, false);
+            PlayAnimation(skillData.AnimationName, false);
             
             var halfDuration = _duration / 2f;
 
@@ -126,7 +126,7 @@ namespace Creature.Action
                         !target.IActor.IsAlive)
                         continue;
 
-                    target?.IActor?.IActCtr?.Impact(iCombatant, EImpactType.Heal, _param.PlayAnimation);
+                    target?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Heal, _param.PlayAnimation);
                 }
             }
             else
@@ -141,7 +141,7 @@ namespace Creature.Action
                     if (skillData.HasProjectile)
                         CreateProjectile(skillData.ProjectilePrefab, target);
                     else
-                        target?.IActor?.IActCtr?.Impact(iCombatant, EImpactType.Damage, _param.PlayAnimation);
+                        target?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Damage, _param.PlayAnimation);
                 }
             }
         }
@@ -170,13 +170,16 @@ namespace Creature.Action
             var startPosition = iCombatant.Transform.position;
             startPosition.x += offsetX;
 
-            var endPosition = targetIActor.Transform.position;
+            var targetPoition = targetIActor.Transform.position;
+            var endPosition = targetPoition + direction * 1f;
             endPosition.y += targetIActor.Height * 0.5f;
 
             var projectileParam = new Battle.Projectile.Param()
             {
 
             }
+            .WithICaster(iCombatant)
+            .WithTargetETeam(targetICombatant.ETeam)
             .WithStartPosition(startPosition)
             .WithEndPosition(endPosition);
 

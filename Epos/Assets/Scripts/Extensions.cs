@@ -103,7 +103,7 @@ public static class Extensions
     //     return list;
     // }
 
-    public static void PlayAnimation(this SkeletonAnimation skeletonAnimation, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
+    public static bool PlayAnimation(this SkeletonAnimation skeletonAnimation, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
     {
         duration = 0;
 
@@ -111,16 +111,17 @@ public static class Extensions
         {
             var animationState = skeletonAnimation?.AnimationState;
             if (animationState == null)
-                return;
+                return false;
 
             var animation = skeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
                 .Find(animation => animation.Name.Contains(animationName));
             if (animation == null)
-                return;
+                return false;
 
+            animationState.ClearTrack(0);
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
-                return;
+                return false;
 
             //skeletonAnimation.Update(Time.timeScale);
 
@@ -128,11 +129,15 @@ public static class Extensions
             trackEntry.Complete += completedAction.Invoke;
 
             duration = trackEntry.Animation.Duration;
+
+            return true;
         }
         catch(Exception)
         {
             
         }
+
+        return false;
     }  
     
     public static void PlayAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)

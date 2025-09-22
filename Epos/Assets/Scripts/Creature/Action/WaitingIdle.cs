@@ -12,7 +12,7 @@ namespace Creature.Action
         }
         public override void Execute()
         {
-            SetAnimation(_param.AnimationKey, true);
+            PlayAnimation(_param.AnimationKey, true);
 
             EndAsync().Forget();
         }

@@ -19,7 +19,7 @@ namespace Creature.Action
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList);
         IActController Die();
         
-        void Impact(ICombatant iCombatant, Common.EImpactType eImpactType, bool playAnimation);
+        void Impact(IStat iStat, Common.EImpactType eImpactType, bool playAnimation);
         void Execute();
 
         bool InAction { get; }
@@ -147,7 +147,7 @@ namespace Creature.Action
             return this;
         }
 
-        void IActController.Impact(ICombatant iCombatant, Common.EImpactType eImpactType, bool PlayAnimation)
+        void IActController.Impact(IStat iStat, Common.EImpactType eImpactType, bool PlayAnimation)
         {
             if (!IsActivate)
                 return;
@@ -156,7 +156,7 @@ namespace Creature.Action
             {
                 PlayAnimation = PlayAnimation,
             }
-            .WithICombatant(iCombatant)
+            .WithIStat(iStat)
             .WithEImpactType(eImpactType);
             
             Execute<Impact, Impact.Param>(impactParam, false);

@@ -1,12 +1,11 @@
+using Common;
+using Creature;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Analytics;
-
 using VContainer;
-
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
-using Creature;
 
 namespace Battle
 {
@@ -21,6 +20,8 @@ namespace Battle
         {
             public ICaster ICaster { get; private set; } = null;
             //public Transform TargetTm { get; private set; } = null;
+
+            public ETeam TargetETeam { get; private set; } = ETeam.None;
 
             public Vector3? StartPosition { get; private set; } = null;
             public Vector3? EndPosition { get; private set; } = null;
@@ -42,7 +43,15 @@ namespace Battle
                 EndPosition = endPosition;
                 return this;
             }
+
+            public Param WithTargetETeam(ETeam eTeam)
+            {
+                TargetETeam = eTeam;
+                return this;
+            }
         }
+
+        [Inject] private WeakTypeMap<IActor> _iActorMap = null;
 
         //readonly List<ParticleSystem.Particle> _enter = new();
         private ParticleSystem _particleSystem = null;
@@ -93,47 +102,34 @@ namespace Battle
             Return();
         }
 
-        //private void LaunchTo()
-        //{
-
-        //}
-
-        //private void OnParticleCollision(GameObject other)
-        //{
-        //    Debug.Log(other);
-        //}
-
-        //private void OnParticleTrigger()
-        //{
-        //    int entered = _particleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _enter);
-        //    Debug.Log(entered);
-        //}
-
-        //private void OnTriggerEnter2D(Collider2D other)
-        //{
-        //    Debug.Log(other);
-        //}
-
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-
 
         private async UniTask UpdateAsync()
         {
             var targetPosition = _param.EndPosition.Value;
+
             while (IsActivate)
             {
                 var dir = targetPosition - transform.position;
 
-                //if (Physics.Raycast(_lastPos, dir.normalized, out RaycastHit hit, dir.magnitude))
-                //{
-                //    Debug.Log("hit");
-                //    Extensions.SetActive(transform, false);
-                //    return;
-                //    // �浹 �������� ����Ʈ ����
-                //    //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-                //    //Destroy(gameObject);
-                //}
+                var raycastHit = Physics2D.Raycast(_lastPos, dir.normalized, dir.magnitude);
+                if (raycastHit.collider != null)
+                {
+                    var iActor = raycastHit.collider.transform.GetComponentInParent<IActor>();
+                    if (iActor != null)
+                    {
+                        if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
+                        {
+                            if (iCombatant.ETeam == _param.TargetETeam &&
+                                iActor.IsAlive)
+                            {
+                                iActor.IActCtr?.Impact(_param?.ICaster?.IStat, EImpactType.Damage, false);
+
+                                Deactivate();
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 transform.position = Vector3.MoveTowards(transform.position, targetPosition, currSpeed * Time.deltaTime);
 
@@ -142,6 +138,7 @@ namespace Battle
                 {
                     //Extensions.SetActive(transform, false);
                     Deactivate();
+                    break;
                 }
 
                 _lastPos = transform.position;

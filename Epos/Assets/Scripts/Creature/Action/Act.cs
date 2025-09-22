@@ -94,9 +94,13 @@ namespace Creature.Action
             
         }
 
-        protected void SetAnimation(string animationName, bool loop)
+        protected bool PlayAnimation(string animationName, bool loop)
         {
-            _iActor?.SkeletonAnimation?.PlayAnimation(animationName, loop, OnCompleted, out _duration);
+            var skeletonAnimation = _iActor?.SkeletonAnimation;
+            if (skeletonAnimation == null)
+                return false;
+
+            return skeletonAnimation.PlayAnimation(animationName, loop, OnCompleted, out _duration);
         }
     }
 }

@@ -1,16 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-using static UnityEngine.UI.Image;
 
 using Cysharp.Threading.Tasks;
 using Spine;
-using Spine.Unity;
-using UnityEditor;
-using Creature.Reaction;
+
+using static UnityEngine.UI.Image;
 
 namespace Creature.Action
 {
@@ -70,9 +67,14 @@ namespace Creature.Action
             }
         }
 
+        private const string StopAnimationName = "Stop";
+
         private Vector3 _prevPos = Vector3.zero;
         private Vector3 _targetPos = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
+
+        private float _totalDistance = 0;
+        private bool _isEnded = false;
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
@@ -94,10 +96,12 @@ namespace Creature.Action
                 End();
                 return;
             }
-            
-            Activate();
-            SetAnimation(_param.AnimationKey, true);
 
+            Activate();
+            PlayAnimation(_param.AnimationKey, true);
+
+            _totalDistance = 0;
+            _isEnded = false;
             _targetPos = TargetPos;
 
             if (_param != null &&
@@ -234,7 +238,10 @@ namespace Creature.Action
 
             if (!_isActivate)
                 return;
-            
+
+            if (_isEnded)
+                return;
+
             var iActorTm = _iActor?.Transform;
             if (!iActorTm)
                 return;
@@ -243,15 +250,12 @@ namespace Creature.Action
                 return;
 
             if (_param?.TargetICombatant != null &&
-                !_param.TargetICombatant.IActor.IsActivate)
+                !_param.TargetICombatant.IActor.IsAlive)
             {
                 End();
                 return;
             }
 
-            //if (_param != null &&
-            //  _param.UseNavMesh)
-            //    UpdateMovementUsingNavMesh();
             if(_param != null &&
               !_param.UseNavMesh)
             {
@@ -259,10 +263,7 @@ namespace Creature.Action
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
             }
             else
-            {
-                //if (Time.timeScale <= 0)
                 SetNavMeshAgentSpeed();
-            }
 
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
@@ -273,28 +274,12 @@ namespace Creature.Action
             _prevPos = iActorTm.position;
 
             var distance = Vector2.Distance(iActorTm.position, _targetPos);
+            _totalDistance += distance;
+            //Debug.Log("_totalDistance  = " + _totalDistance);
+
             if (distance < _param.Distance)
                 End();
         }
-
-        //private void UpdateMovementUsingNavMesh()
-        //{
-        //    //Vector3 targetPos = TargetPos;
-        //    var navMeshAgent = _iActor?.NavMeshAgent;
-        //    if (navMeshAgent == null)
-        //        return;
-
-        //    if (!navMeshAgent.enabled)
-        //        return;
-
-        //    //Debug.Log(navMeshAgent.hasPath);
-        //    //if (!navMeshAgent.pathPending && 
-        //    //    navMeshAgent.remainingDistance <= 0.1f)
-        //    //{
-        //    //    Debug.Log("타겟에 도착함");
-        //    //    End();
-        //    //}
-        //}
 
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {
@@ -304,8 +289,36 @@ namespace Creature.Action
 
         private void End()
         {
+            if (_isEnded)
+                return;
+
+            _isEnded = true;
+
+            //if (_totalDistance > 500f)
+            //{
+            //    if (!PlayAnimation(StopAnimationName, false))
+            //        EndAction();
+            //}
+            //else
+                EndAction();
+        }
+
+        private void EndAction()
+        {
             _param?.FinishAction?.Invoke();
             _endAction?.Invoke(_iActor);
+        }
+
+        protected override void OnCompleted(TrackEntry trackEntry)
+        {
+            base.OnCompleted(trackEntry);
+
+            var animation = trackEntry?.Animation;
+            if(animation != null)
+            {
+                if(animation.Name == StopAnimationName)
+                    EndAction();
+            }
         }
     }
 }

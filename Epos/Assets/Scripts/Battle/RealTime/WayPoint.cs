@@ -15,8 +15,28 @@ namespace Battle
 
 
         private Monster[] _monsters = null;
+        private List<ICombatant> _enemyICombatantList = null;
 
-        public List<ICombatant> EnemyICombatantList { get; private set; } = null;
+        public List<ICombatant> EnemyICombatantList
+        {
+            get
+            {
+                var list = new List<ICombatant>();
+                list.Clear();
+
+                for (int i = 0; i < _enemyICombatantList?.Count; ++i)
+                {
+                    var iActor = _enemyICombatantList[i]?.IActor;
+                    if (iActor == null)
+                        continue;
+
+                    if (iActor.IsAlive)
+                        list?.Add(_enemyICombatantList[i]);
+                }
+
+                return list;
+            }
+        }
         public Vector3 Position => transform.position;
         public int AliveMonsterCount
         {
@@ -43,8 +63,8 @@ namespace Battle
         {
             _monsters = GetComponentsInChildren<Monster>();
 
-            EnemyICombatantList = new();
-            EnemyICombatantList.Clear();
+            _enemyICombatantList = new();
+            _enemyICombatantList.Clear();
 
             var combatantCreator = _iResolver?.Resolve<CombatantCreator>();
 
@@ -53,7 +73,7 @@ namespace Battle
                 _iResolver?.Inject(monster);
                 monster?.Initialize();
 
-                EnemyICombatantList?.Add(combatantCreator?.Create(monster, monster.Skills));
+                _enemyICombatantList?.Add(combatantCreator?.Create(monster, monster.Skills));
             }
         }
     }
