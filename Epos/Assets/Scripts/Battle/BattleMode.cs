@@ -1,11 +1,10 @@
+using Creature;
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
-
 using VContainer;
-
-using Creature;
 
 namespace Battle
 {
@@ -20,7 +19,7 @@ namespace Battle
 
         public interface IListener
         {
-            void End();
+            void End(bool isWin);
         }
 
         protected IListener _iListener = null;
@@ -65,9 +64,9 @@ namespace Battle
         public abstract override void ChainUpdate();
         public abstract override void ChainLateUpdate();
 
-        protected virtual void End()
+        protected virtual void End(bool isWin)
         {
-            _iListener?.End();
+            _iListener?.End(isWin);
         }
     }
 }

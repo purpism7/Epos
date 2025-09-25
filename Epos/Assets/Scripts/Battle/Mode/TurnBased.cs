@@ -195,7 +195,7 @@ namespace Battle.Mode
 
             if (_castingActiveSkillICombatantQueue?.Count <= 0)
             {
-                End();
+                End(false);
                 return;
             }
             

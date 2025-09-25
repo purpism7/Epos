@@ -49,8 +49,8 @@ namespace Battle.Step
             
             if(_param.BattleStart)
                 _param.PartyLocation?.Activate();
-            else
-                _param.PartyLocation?.Deactivate();
+            //else
+            //    _param.PartyLocation?.Deactivate();
 
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
             

@@ -46,11 +46,14 @@ namespace Battle
                 isLast: true);
         }
 
-        protected override void End()
+        protected override void End(bool isWin)
         {
-            base.End();
+            base.End(isWin);
             
-            AddStep<BattleResult>();
+            var battleResultParam = new BattleResult.Param()
+                .WithIsWin(isWin);
+
+            AddStep<BattleResult>(battleResultParam);
            
             if (_param?.EnemyFieldParam != null)
                 AddStep<Step.EnemyParty>(_param?.EnemyFieldParam?.SetBattleState(false));

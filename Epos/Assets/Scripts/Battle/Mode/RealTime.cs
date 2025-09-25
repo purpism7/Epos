@@ -86,7 +86,7 @@ namespace Battle.Mode
             _iWaypointCtr?.ChainLateUpdate();
         }
 
-        private void WinCombat()
+        private void BattleWin()
         {
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
@@ -103,11 +103,13 @@ namespace Battle.Mode
                     allyIActor?.IActCtr?.Victory();
                 }
             }
+
+            End(true);
         }
 
-        private void LoseCombat()
+        private void BattleLose()
         {
-
+            End(false);
         }
 
         private bool IsAllyAlive
@@ -235,7 +237,7 @@ namespace Battle.Mode
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
-                WinCombat();
+                BattleWin();
                 return;
             }
 
@@ -397,7 +399,7 @@ namespace Battle.Mode
                 PrepareForNextActionAsync(iCombatant).Forget();
 
             if(!IsAllyAlive)
-                LoseCombat();
+                BattleLose();
 
             //if (_closestICombatant != null &&
             //    _closestICombatant.IActor != null)

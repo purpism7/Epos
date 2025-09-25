@@ -27,7 +27,7 @@ namespace Battle
             _firstStep = null;
         }
 
-        protected virtual void End()
+        protected virtual void End(bool isWin)
         {
             
         }
@@ -80,9 +80,9 @@ namespace Battle
         }
 
         #region BattleMode.IListener
-        void BattleMode.IListener.End()
+        void BattleMode.IListener.End(bool isWin)
         {
-            End();
+            End(isWin);
         }
         #endregion
     }
