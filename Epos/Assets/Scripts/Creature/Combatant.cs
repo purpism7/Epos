@@ -1,16 +1,19 @@
-using UnityEngine;
-
-using VContainer;
-
 using Common;
-using Datas.ScriptableObjects;
 using Creature.Action;
+using Cysharp.Threading.Tasks;
+using Datas.ScriptableObjects;
+using Spine.Unity;
+using System;
+using UnityEngine;
+using VContainer;
 
 namespace Creature
 {
     public class Combatant : ICombatant
     {
         [Inject] private IObjectResolver _iResolver = null;
+
+        private Color _originColor = Color.white;
 
         public IActor IActor { get; private set; } = null;
         public ISkillController ISkillCtr { get; private set; } = null;
@@ -30,6 +33,10 @@ namespace Creature
         {
             IActor = iActor;
 
+            var skeleton = IActor?.SkeletonAnimation?.Skeleton;
+            if (skeleton != null)
+                _originColor = skeleton.GetColor();
+
             InitializeSkillController(skills);
 
             return this;
@@ -43,6 +50,19 @@ namespace Creature
         void ICombatant.SetPosition(Vector3 position)
         {
             Transform.position = position;
+        }
+
+        async UniTask ICombatant.HitAsync()
+        {
+            var skeleton = IActor?.SkeletonAnimation?.Skeleton;
+            if (skeleton == null)
+                return;
+
+            Color color = new Color(1f, 0.4f, 0.4f, 1f);
+            skeleton?.SetColor(color);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+
+            skeleton?.SetColor(_originColor);
         }
 
         private void InitializeSkillController(Skill[] skills)

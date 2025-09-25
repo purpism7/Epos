@@ -120,28 +120,31 @@ namespace Creature.Action
 
             if (skillData.SameTeam)
             {
-                foreach (var target in _param.TargetList)
+                foreach (var targetICombatant in _param.TargetList)
                 {
-                    if (target == null ||
-                        !target.IActor.IsAlive)
+                    if (targetICombatant == null ||
+                        !targetICombatant.IActor.IsAlive)
                         continue;
 
-                    target?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Heal, _param.PlayAnimation);
+                    targetICombatant?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Heal, _param.PlayAnimation);
                 }
             }
             else
             {
                 // Damaged
-                foreach (var target in _param.TargetList)
+                foreach (var targetICombatant in _param.TargetList)
                 {
-                    if (target == null ||
-                        !target.IActor.IsAlive)
+                    if (targetICombatant == null ||
+                        !targetICombatant.IActor.IsAlive)
                         continue;
 
                     if (skillData.HasProjectile)
-                        CreateProjectile(skillData.ProjectilePrefab, target);
+                        CreateProjectile(skillData.ProjectilePrefab, targetICombatant);
                     else
-                        target?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Damage, _param.PlayAnimation);
+                    {
+                        targetICombatant?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Damage, _param.PlayAnimation);
+                        targetICombatant?.HitAsync();
+                    } 
                 }
             }
         }

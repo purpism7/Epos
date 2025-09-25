@@ -123,6 +123,7 @@ namespace Battle
                                 iActor.IsAlive)
                             {
                                 iActor.IActCtr?.Impact(_param?.ICaster?.IStat, EImpactType.Damage, false);
+                                iCombatant?.HitAsync();
 
                                 Deactivate();
                                 break;

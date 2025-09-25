@@ -287,9 +287,7 @@ namespace Creature.Action
         {
             if (_currIAct is Die)
                 return;
-            // if (!IsActivate)
-            //     return;
-            
+
             var act = GetAct<T, V>();
             if (act == null)
                 return;

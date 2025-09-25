@@ -18,7 +18,6 @@ namespace Creature
 {
     public abstract class Character : Common.Component, Stat.IListener
     {
-
         #region Inspector
 
         [SerializeField] private int id = 0;
@@ -80,9 +79,6 @@ namespace Creature
         [SerializeField] [UnityEngine.Range(1, 5)] private float passivePoint = 1f;
         
         [SerializeField] [UnityEngine.Range(1f, 20f)] private float attackSight = 10f;
-
-        // [SerializeField] private int position = 0;
-
         #endregion
 
         #region Temp Skill
@@ -138,23 +134,8 @@ namespace Creature
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
 
-            // IActCtr = transform.AddOrGetComponent<ActController>();
-            // _iResolver?.Inject(IActCtr);
-            // IActCtr?.Initialize(this);
-
-            // ISkillCtr = transform.AddOrGetComponent<SkillController>();
-            // ISkillCtr?.Initialize(this);
-
             SetOriginStat();
             
-            // Renderer renderer = GetComponentInChildren<Renderer>();
-            // if (renderer != null)
-            // {
-            //     Height = renderer.bounds.size.y;
-            //     Debug.Log(Height);
-            //     //HeadPos = renderer.bounds.max;
-            // }
-
             EnableNavmeshAgent();
 
             if (NavMeshAgent != null)
@@ -269,8 +250,6 @@ namespace Creature
         {
             if (eType == Stat.EType.Hp)
             {
-                //_iHpProgress?.UpdateHpProgress();
-                
                 if(value <= 0)
                     IActCtr?.Die();
             }

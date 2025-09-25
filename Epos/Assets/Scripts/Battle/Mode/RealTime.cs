@@ -178,9 +178,9 @@ namespace Battle.Mode
                 if (!iActor.IsAlive)
                     continue;
 
-                var distance = Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position);
+                var distance = Vector3.Distance(iActor.Transform.position, wayPoint.Position);
                 if (closestICombatant == null || 
-                    Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position) < closest)
+                    Vector3.Distance(iActor.Transform.position, wayPoint.Position) < closest)
                 {
                     closest = distance;
                     closestICombatant = iCombatant;

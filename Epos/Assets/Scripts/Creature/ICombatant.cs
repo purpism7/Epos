@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
+
 using Common;
 using Creature.Action;
 
@@ -16,7 +18,7 @@ namespace Creature
         //int PartyPosition { get; }
 
         void SetETeam(ETeam eTeam);
-        // void SetPartyPosition(int partPosition);
         void SetPosition(Vector3 position);
+        UniTask HitAsync();
     }
 }
