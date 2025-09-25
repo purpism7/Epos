@@ -18,7 +18,8 @@ namespace Creature.Action
         IActController MoveToTarget(Move.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList);
         IActController Die();
-        
+        IActController Victory();
+
         void Impact(IStat iStat, Common.EImpactType eImpactType, bool playAnimation);
         void Execute();
 
@@ -79,7 +80,7 @@ namespace Creature.Action
             base.Deactivate();
             
             _iActQueue?.Clear();
-            Idle();
+            //Idle();
         }
         #endregion
             
@@ -144,6 +145,13 @@ namespace Creature.Action
         {
             Execute<Die, Die.Param>();
             
+            return this;
+        }
+
+        IActController IActController.Victory()
+        {
+            Execute<Victory, Victory.Param>();
+
             return this;
         }
 

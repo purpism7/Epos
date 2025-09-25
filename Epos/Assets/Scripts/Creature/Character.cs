@@ -32,9 +32,10 @@ namespace Creature
         // [Inject] private ResourceManager _resourceManager = null;
         // [Inject] private UIFactory _uiFactory = null;
 
-        private MeshRenderer _meshRenderer = null;
-        private IStatGeneric _iStatGeneric = null;
+        protected IStatGeneric _iStatGeneric = null;
 
+        private MeshRenderer _meshRenderer = null;
+       
         public int Id
         {
             get { return id; }

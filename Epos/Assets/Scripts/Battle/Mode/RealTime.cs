@@ -84,7 +84,48 @@ namespace Battle.Mode
         public override void ChainLateUpdate()
         {
             _iWaypointCtr?.ChainLateUpdate();
-            
+        }
+
+        private void WinCombat()
+        {
+            var waypoint = _iWaypointCtr?.Waypoint;
+            if (waypoint == null)
+            {
+                for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+                {
+                    var allyIActor = _data?.AllyICombatantList[i]?.IActor;
+                    if (allyIActor == null)
+                        continue;
+
+                    if (!allyIActor.IsAlive)
+                        continue;
+
+                    allyIActor?.IActCtr?.Victory();
+                }
+            }
+        }
+
+        private void LoseCombat()
+        {
+
+        }
+
+        private bool IsAllyAlive
+        {
+            get
+            {
+                for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+                {
+                    var allyICombatant = _data?.AllyICombatantList[i];
+                    if (allyICombatant == null)
+                        continue;
+
+                    if (allyICombatant.IActor.IsAlive)
+                        return true ;
+                }
+
+                return false;
+            }
         }
         
         private void ActivateBattleMain()
@@ -130,6 +171,13 @@ namespace Battle.Mode
                 if(iCombatant == null)
                     continue;
 
+                var iActor = iCombatant.IActor;
+                if (iActor == null)
+                    continue;
+
+                if (!iActor.IsAlive)
+                    continue;
+
                 var distance = Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position);
                 if (closestICombatant == null || 
                     Vector3.Distance(iCombatant.IActor.Transform.position, wayPoint.Position) < closest)
@@ -145,14 +193,21 @@ namespace Battle.Mode
             return closestICombatant;
         }
 
+        private void SetClosestICombatant()
+        {
+            if(_closestICombatant != null &&
+               _closestICombatant.IActor != null)
+            {
+                if(!_closestICombatant.IActor.IsAlive)
+                    _closestICombatant = ClosestICombatantToWayPoint();
+            }
+
+            if (_closestICombatant == null)
+                _closestICombatant = ClosestICombatantToWayPoint();
+        }
+
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            //if (_iHpProgressList == null)
-            //{
-            //    _iHpProgressList = new();
-            //    _iHpProgressList.Clear();
-            //}
-
             var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
             var hpProgress = uiCreator?
                 .SetWorldUI(true)?
@@ -160,8 +215,6 @@ namespace Battle.Mode
 
             if (hpProgress == null)
                 return;
-
-            //_iHpProgressList?.Add(hpProgress);
 
             var targetPos = iCombatant.IActor.Transform.position;
             targetPos.y += iCombatant.IActor.Height;
@@ -182,7 +235,7 @@ namespace Battle.Mode
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
-                TransitionToIdle();
+                WinCombat();
                 return;
             }
 
@@ -194,8 +247,7 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            if(_closestICombatant == null)
-                _closestICombatant = ClosestICombatantToWayPoint();
+            SetClosestICombatant();
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -286,10 +338,9 @@ namespace Battle.Mode
             {
                 _weightedActionCTS?.Cancel();
 
-                if (_closestICombatant == null)
-                    _closestICombatant = ClosestICombatantToWayPoint();
+                SetClosestICombatant();
 
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 MoveToWaypoint(waypoint, iCombatant);
             }
@@ -345,6 +396,18 @@ namespace Battle.Mode
             if(_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
                 PrepareForNextActionAsync(iCombatant).Forget();
 
+            if(!IsAllyAlive)
+                LoseCombat();
+
+            //if (_closestICombatant != null &&
+            //    _closestICombatant.IActor != null)
+            //{
+            //    if(!_closestICombatant.IActor.IsAlive)
+            //    {
+            //        _closestICombatant = null;
+            //        _closestICombatant = ClosestICombatantToWayPoint();
+            //    }
+            //}
         }
         #endregion
     }

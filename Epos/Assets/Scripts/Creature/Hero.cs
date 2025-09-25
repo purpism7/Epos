@@ -30,6 +30,12 @@ namespace Creature
             InitializeEmotionController();
         }
 
+        public override void Deactivate()
+        {
+            _iStatGeneric?.Deactivate();
+            IActCtr?.Deactivate();
+        }
+
         public override void ChainUpdate()
         {
             base.ChainUpdate();
