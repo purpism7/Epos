@@ -35,6 +35,7 @@ namespace UI.View
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
         [SerializeField] private Button shoutBtn = null;
+        [SerializeField] private Button aggressiveBtn = null;
 
         private IBattleMainPresenter _iPresenter = null;
 
@@ -59,6 +60,11 @@ namespace UI.View
             shoutBtn?.onClick?.AddListener(() =>
             {
                 _iPresenter.OnClickShout();
+            });
+
+            aggressiveBtn?.onClick?.AddListener(() =>
+            {
+                _iPresenter.OnClickAggressive();
             });
         }
 

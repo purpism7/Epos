@@ -38,12 +38,12 @@ namespace Battle.Step
 
         private async UniTask BeginAsync()
         {
-            // UICreator<BattleForces, BattleForces.Data>.Get?
-                // .Create()?.Deactivate();
-            
-            // UIManager.Instance?.CurrPanel?.Deactivate();
+            if(_param == null)
+            {
+                End();
+                return;
+            }
 
-            //await UniTask.Yield();
             if(_param.IsWin)
                 await ActivateBattleWinAsync();
             else 

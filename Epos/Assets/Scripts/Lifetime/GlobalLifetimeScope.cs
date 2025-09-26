@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using VContainer;
@@ -9,7 +10,6 @@ using Creature;
 using Entities;
 using GameSystem;
 using Scene;
-using System;
 
 
 namespace Lifetime

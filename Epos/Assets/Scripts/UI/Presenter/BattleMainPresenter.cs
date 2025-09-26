@@ -16,6 +16,7 @@ namespace UI.Presenter
     {
         //UniTask InitializeAsync(BattleMainView battleMainView);
         void OnClickShout();
+        void OnClickAggressive();
     }
 
     public class BattleMainPresenter : IBattleMainPresenter
@@ -64,12 +65,21 @@ namespace UI.Presenter
         void IBattleMainPresenter.OnClickShout()
         {
             var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
-            var shoutPopup = uiCreator
+            var popup = uiCreator
                 .SetParam(new ShoutPopup.Param())?
-                // .SetResetSizeDelta(false)
                 .Create();
-            shoutPopup?.Activate();
+            popup?.Activate();
+        }
+
+        void IBattleMainPresenter.OnClickAggressive()
+        {
+            var uiCreator = _uiFactory?.Create<TacticalStancePopup, TacticalStancePopup.Param>();
+            var popup = uiCreator
+                .SetParam(new TacticalStancePopup.Param())?
+                .Create();
+            popup?.Activate();
         }
     }
 }
+
 
