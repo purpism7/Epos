@@ -270,16 +270,25 @@ namespace Battle.Mode
                 return;
 
             float moveSpeed = 7f;
-            if (_closestICombatant.IActor.Id == iCombatant.IActor.Id)
+            if (_closestICombatant != null &&
+                _closestICombatant.IActor.Id == iCombatant.IActor.Id)
                 moveSpeed += 0.01f;
+
+            var targetPos = waypoint.Position;
+            Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * 2f;
+            Vector3 resTargetPos = targetPos + new Vector3(randomOffset.x, randomOffset.y, 0f);
 
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
-                TargetPos = waypoint.Position,
+                TargetPos = targetPos,
+            };
+
+            if(_closestICombatant != null)
+            {
+                moveParam?.WithLeaderTm(_closestICombatant.IActor.Transform)
+                    .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
             }
-            .WithLeaderTm(_closestICombatant.IActor.Transform)
-            .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
 
             iCombatant.IActor.IActCtr?
                 .MoveToTarget(moveParam)?
@@ -342,7 +351,7 @@ namespace Battle.Mode
 
                 SetClosestICombatant();
 
-                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 MoveToWaypoint(waypoint, iCombatant);
             }

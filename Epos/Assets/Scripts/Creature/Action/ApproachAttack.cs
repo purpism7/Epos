@@ -39,25 +39,26 @@ namespace Creature.Action
             var iSkill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (iSkill == null)
             {
-                _endAction?.Invoke(_iActor);
+                End();
                 return;
             }
 
             var targetList = attacker.GetTargetList(iCombatantList, iSkill);
             if (targetList.IsNullOrEmpty())
             {
-                _endAction?.Invoke(_iActor);
+                End();
                 return;
             }
 
-            var randomIndex = UnityEngine.Random.Range(0, targetList.Count);
-            var target = targetList[randomIndex];
-            if (target == null ||
-                !target.IActor.IsActivate)
-            {
-                _endAction?.Invoke(_iActor);
-                return;
-            }
+            var closestTarget = attacker?.FindClosestICombatant(targetList);
+            //var randomIndex = UnityEngine.Random.Range(0, targetList.Count);
+            //var target = targetList[randomIndex];
+            //if (target == null ||
+            //    !target.IActor.IsActivate)
+            //{
+            //    _endAction?.Invoke(_iActor);
+            //    return;
+            //}
 
             var skillData  = iSkill.SkillData;
             if (skillData == null)
@@ -74,11 +75,11 @@ namespace Creature.Action
                     MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
                     FinishAction = () =>
                     {
-                        CastingSkill(attacker, iSkill, targetList);
+                        CastingSkill(attacker, iSkill, closestTarget, targetList);
                     },
                     IsJumpMove = false,
                 }
-                .WithTargetICombatant(target)?
+                .WithTargetICombatant(closestTarget)?
                 .WithForwardDirection(false)?
                 .WithDistance(skillRange)
                 .WithUseNavMesh(false);
@@ -88,7 +89,7 @@ namespace Creature.Action
                     .Execute();
             }
             else
-                CastingSkill(attacker, iSkill, targetList);
+                CastingSkill(attacker, iSkill, closestTarget,targetList);
         }
 
         //private void FinishMoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
@@ -96,10 +97,17 @@ namespace Creature.Action
         //    CastingSkill(attacker, iSkill, targetList);
         //}
 
-        private void CastingSkill (ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
+        private void CastingSkill (ICombatant attacker, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
         {
+            if(target == null ||
+              !target.IActor.IsAlive)
+            {
+                End();
+                return;
+            }    
+
             attacker?.IActor?.IActCtr?
-                .CastingSkill(this, attacker, iSkill, targetList)?
+                .CastingSkill(this, attacker, iSkill, target, targetList)?
                 .Execute();
         }
 

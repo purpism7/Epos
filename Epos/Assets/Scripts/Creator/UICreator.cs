@@ -25,9 +25,7 @@ namespace Creator
 
         public UICreator<T, V> Create<T, V>() where T : Common.Component, new() where V : Common.Param
         {
-
             return _iResolver?.Resolve<UICreator<T, V>>();
-            //return (UICreator<T, V>)_factory(typeof(T), typeof(V));
         }
     }
 

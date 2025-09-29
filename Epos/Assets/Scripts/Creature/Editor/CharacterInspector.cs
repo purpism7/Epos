@@ -1,7 +1,6 @@
-using Creature;
 using UnityEditor;
-using UnityEditor.TerrainTools;
-using UnityEngine;
+
+using Creature;
 
 [CustomEditor(typeof(Monster))]
 public class CharacterInspector : Editor

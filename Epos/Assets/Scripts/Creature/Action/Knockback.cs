@@ -13,7 +13,7 @@ namespace Creature.Action
         {
             public Vector3? AttackerPosition { get; private set; } = null;
             public Transform TargetTransform { get; private set; } = null;
-            // public Vector3? TargetPosition { get; private set; } = null;
+            public float KnockbackDistance { get; private set; } = 1f;
 
             public Param WithAttackerPosition(Vector3 attackerPosition)
             {
@@ -26,31 +26,27 @@ namespace Creature.Action
                 TargetTransform = targetTransform;
                 return this;
             }
-            
-            // public Param WithTargetPosition(Vector3? targetPosition)
-            // {
-            //     TargetPosition = targetPosition;
-            //     return this;
-            // }
+
+            public Param WithKnockbackDistance(float knockbackDistance)
+            {
+                KnockbackDistance = knockbackDistance;
+                return this;
+            }
         }
         
         public override void Execute()
         {
             if (_param == null)
                 return;
-         
-            var direction = (_param.TargetTransform.position - _param.AttackerPosition.Value).normalized;
 
-            // 목적지 계산
-            var targetPosition = _param.TargetTransform.position + direction * 3f;
+            var knockbackDistance = _param.KnockbackDistance;
+            var direction = (_param.TargetTransform.position - _param.AttackerPosition.Value).normalized;
+            var targetPosition = _param.TargetTransform.position + direction * knockbackDistance;
 
             // DoTween으로 이동
-            _param.TargetTransform.DOMove(targetPosition, 1f)
+            _param.TargetTransform.DOMove(targetPosition, knockbackDistance * 0.05f)
                 .SetEase(Ease.OutQuad)
-                .OnComplete(() =>
-                {
-                    // isKnockbacking = false;
-                });
+                .OnComplete(End);
         }
     }
 }

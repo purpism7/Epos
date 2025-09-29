@@ -49,6 +49,9 @@ namespace Common
 
         NearOne,
         FarOne,
+
+        Circle,
+        Sector,
     }
 
     public enum EImpactType

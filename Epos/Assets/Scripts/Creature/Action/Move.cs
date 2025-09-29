@@ -1,12 +1,11 @@
+using Cysharp.Threading.Tasks;
+using Spine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
-
-using Cysharp.Threading.Tasks;
-using Spine;
-
 using static UnityEngine.UI.Image;
 
 namespace Creature.Action
@@ -86,6 +85,8 @@ namespace Creature.Action
 
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_randPos, 5f);
+
+            Handles.color = new Color(0f, 1f, 0f, 0.2f);
         }
 #endif
 
@@ -287,27 +288,17 @@ namespace Creature.Action
             iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
         }
 
-        private void End()
+        protected override void End()
         {
             if (_isEnded)
                 return;
 
             _isEnded = true;
-
-            //if (_totalDistance > 500f)
-            //{
-            //    if (!PlayAnimation(StopAnimationName, false))
-            //        EndAction();
-            //}
-            //else
-                EndAction();
-        }
-
-        private void EndAction()
-        {
             _param?.FinishAction?.Invoke();
-            _endAction?.Invoke(_iActor);
+
+            base.End();
         }
+
 
         protected override void OnCompleted(TrackEntry trackEntry)
         {
@@ -317,7 +308,7 @@ namespace Creature.Action
             if(animation != null)
             {
                 if(animation.Name == StopAnimationName)
-                    EndAction();
+                    _param?.FinishAction?.Invoke();
             }
         }
     }

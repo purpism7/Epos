@@ -38,11 +38,6 @@ namespace Creature.Action
         protected float _duration = 0;
         protected bool _isActivate = false;
 
-        //[Inject]
-        //protected virtual void InitializeInject(IObjectResolver iResolver)
-        //{
-        //    _iResolver = iResolver;
-        //}
 
         public virtual void Initialize(IActor iActor)
         {
@@ -63,6 +58,11 @@ namespace Creature.Action
         public void SetEndActAction(System.Action<IActor> endAction)
         {
             _endAction = endAction;
+        }
+
+        protected virtual void End()
+        {
+            _endAction?.Invoke(_iActor);
         }
         
         #region IAct

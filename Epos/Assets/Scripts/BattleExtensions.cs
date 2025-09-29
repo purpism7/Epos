@@ -1,10 +1,11 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
-using Creature;
 using Common;
+using Creature;
+using static UnityEngine.UI.Image;
 
 public static class BattleExtensions
 {
@@ -12,33 +13,36 @@ public static class BattleExtensions
     {
         if (attacker == null)
             return null;
-        
+
         if (iCombatantList == null)
             return null;
-        
+
         var skillData = iSkill?.SkillData;
-        if(skillData == null)
+        if (skillData == null)
             return null;
 
         List<ICombatant> targetList = new();
         targetList.Clear();
-        
+
         foreach (var iCombatant in iCombatantList)
         {
-            if(iCombatant == null)
+            if (iCombatant == null)
                 continue;
-            
-            if(!iCombatant.IActor.IsActivate)
+
+            if (!iCombatant.IActor.IsActivate)
+                continue;
+
+            if (!iCombatant.IActor.IsAlive)
                 continue;
 
             if (skillData.SameTeam)
             {
-                if(attacker.ETeam == iCombatant.ETeam)
+                if (attacker.ETeam == iCombatant.ETeam)
                     targetList.Add(iCombatant);
             }
             else
             {
-                if(attacker.ETeam != iCombatant.ETeam)
+                if (attacker.ETeam != iCombatant.ETeam)
                     targetList.Add(iCombatant);
             }
         }
@@ -46,47 +50,104 @@ public static class BattleExtensions
         if (targetList.IsNullOrEmpty())
             return null;
 
-        if (skillData.ESkillTarget == ESkillTarget.NearOne)
-        {
-            var target = FindClosestICombatant(targetList, attacker);
-            targetList.Clear();
-            targetList.Add(target);
-            
-            return targetList;
-        }
-        
-        // 스킬 사용 조건에 맞춰 Target 이 지정되어야함
-        if (skillData.ESkillTarget == ESkillTarget.FarOne)
-        {
-            var target = targetList.FirstOrDefault();
-            targetList.Clear();
-            targetList.Add(target);
-        }
+        //switch(skillData.ESkillTarget)
+        //{
+        //    case ESkillTarget.NearOne:
+        //        {
+
+
+        //            break;
+        //        }
+
+        //    case ESkillTarget.FarOne:
+        //        {
+        //            var target = targetList.FirstOrDefault();
+        //            targetList.Clear();
+        //            targetList.Add(target);
+
+        //            break;
+        //        }
+        //}
+
+        //var target = FindClosestICombatant(targetList, attacker);
+        //targetList.Clear();
+        //targetList.Add(target);
 
         return targetList;
     }
-    
-    private static ICombatant FindClosestICombatant(List<ICombatant> iCombatantList, ICombatant refICombatant)
+
+    public static bool IsCircle(this ICombatant attacker, ICombatant iCombatant)
+    {
+        if (attacker == null)
+            return false;
+
+        if (iCombatant == null)
+            return false;
+
+        var distance = Vector2.Distance(attacker.Transform.position, iCombatant.IActor.Transform.position);
+
+        return distance <= 5;
+    }
+
+    public static bool IsSector(this ICombatant attacker, ICombatant iCombatant)
+    {
+        if (attacker == null)
+            return false;
+
+        if (iCombatant == null)
+            return false;
+
+        Vector3 direction = (iCombatant.IActor.Transform.position - attacker.Transform.position).normalized;
+        float dot = Vector3.Dot(attacker.Transform.forward, direction);
+
+        return dot > Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
+    }
+
+    public static ICombatant FindClosestICombatant(this ICombatant iCombatant, List<ICombatant> iCombatantList)
     {
         if (iCombatantList.IsNullOrEmpty())
             return null;
-        
-        ICombatant closestEnemyIComtant = null;
+
+        ICombatant closestIComtant = null;
         float closestDistance = 99999f;
         for (int i = 0; i < iCombatantList.Count; ++i)
         {
             if (iCombatantList[i] == null)
                 continue;
-        
-            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, refICombatant.IActor.Transform.position);
-            if (closestEnemyIComtant == null ||
+
+            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, iCombatant.IActor.Transform.position);
+            if (closestIComtant == null ||
                 closestDistance > distance)
             {
-                closestEnemyIComtant = iCombatantList[i];
+                closestIComtant = iCombatantList[i];
                 closestDistance = distance;
             }
         }
-        
-        return closestEnemyIComtant;
+
+        return closestIComtant;
+    }
+
+    public static ICombatant FindFarthestICombatant(this ICombatant iCombatant, List<ICombatant> iCombatantList)
+    {
+        if (iCombatantList.IsNullOrEmpty())
+            return null;
+
+        ICombatant farthestIComtant = null;
+        float farthestDistance = 0;
+        for (int i = 0; i < iCombatantList.Count; ++i)
+        {
+            if (iCombatantList[i] == null)
+                continue;
+
+            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, iCombatant.IActor.Transform.position);
+            if (farthestIComtant == null ||
+                farthestDistance < distance)
+            {
+                farthestIComtant = iCombatantList[i];
+                farthestDistance = distance;
+            }
+        }
+
+        return farthestIComtant;
     }
 }

@@ -16,11 +16,14 @@ namespace Creature.Action
     {
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
-        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
+
+        IActController Knockback(Knockback.Param param);
         IActController Die();
         IActController Victory();
 
         void Impact(IStat iStat, Common.EImpactType eImpactType, bool playAnimation);
+
         void Execute();
 
         bool InAction { get; }
@@ -123,7 +126,7 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCaster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
@@ -132,12 +135,23 @@ namespace Creature.Action
             {
                 IListener = iListener,
                 ISkill = iSkill,
-                TargetList = targetList,
             }
-            .WithICombatant(iCombatant);
+            .WithAttacker(iCaster)
+            .WithTarget(target)
+            .WithTargetList(targetList);
             
             AddActAsync<Casting, Casting.Param>(castingParam).Forget();
 
+            return this;
+        }
+
+        IActController IActController.Knockback(Knockback.Param param)
+        {
+            if (!IsActivate)
+                return null;
+
+            Execute<Knockback, Knockback.Param>(param);
+            
             return this;
         }
 

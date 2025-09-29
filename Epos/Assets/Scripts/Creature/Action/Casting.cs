@@ -1,20 +1,18 @@
 using Common;
+using Creator;
+using Cysharp.Threading.Tasks;
+using Datas.ScriptableObjects;
+using DG.Tweening;
+using GameSystem;
+using GameSystem.Event;
+using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-using Cysharp.Threading.Tasks;
-using Spine;
 using VContainer;
-
-using Datas.ScriptableObjects;
-using GameSystem.Event;
-using Creator;
-
 using Vector3 = UnityEngine.Vector3;
-using GameSystem;
 
 namespace Creature.Action
 {
@@ -23,16 +21,30 @@ namespace Creature.Action
         public class Param : ActParam
         {
             public IListener IListener = null;
-            public ICombatant ICombatant { get; private set; } = null;
+            public ICombatant Attacker { get; private set; } = null;
             public Ability.ISkill ISkill = null;
-            public List<ICombatant> TargetList = null;
+            public ICombatant Target { get; private set; } = null;
+            public List<ICombatant> TargetList { get; private set; } = null;
+
             public bool PlayAnimation = true;
 
-            public Param WithICombatant(ICombatant iCombatant)
+            public Param WithAttacker(ICombatant attacker)
             {
-                ICombatant = iCombatant;
+                Attacker = attacker;
                 return this;
             }
+
+            public Param WithTarget(ICombatant target)
+            {
+                Target = target;
+                return this;
+            }
+            public Param WithTargetList(List<ICombatant> targetList)
+            {
+                TargetList = targetList;
+                return this;
+            }
+
         }
 
         public interface IListener
@@ -62,11 +74,11 @@ namespace Creature.Action
             if (target == null)
                 return;
 
-            var iCombatant = _param?.ICombatant;
-            if (iCombatant != null)
+            var attacker = _param?.Attacker;
+            if (attacker != null)
             {
-                var direction = target.IActor.Transform.position - iCombatant.Transform.position;
-                _param?.ICombatant?.IActor?.IActCtr?.Flip(-direction.x);
+                var direction = target.IActor.Transform.position - attacker.Transform.position;
+                _param?.Attacker?.IActor?.IActCtr?.Flip(-direction.x);
             }
         }
 
@@ -101,7 +113,7 @@ namespace Creature.Action
 
         private void AfterCasting()
         {
-            _param?.IListener?.AfterCasting(_param?.ICombatant);
+            _param?.IListener?.AfterCasting(_param?.Attacker);
             _param?.ISkill?.EndCasting();
         }
 
@@ -114,45 +126,159 @@ namespace Creature.Action
 
         private void ImpactToTargetList(Skill skillData)
         {
-            var iCombatant = _param?.ICombatant;
-            if (_param?.TargetList == null)
+            var attacker = _param?.Attacker;
+            if (attacker == null)
                 return;
 
             if (skillData.SameTeam)
             {
-                foreach (var targetICombatant in _param.TargetList)
+                foreach (var target in _param?.TargetList)
                 {
-                    if (targetICombatant == null ||
-                        !targetICombatant.IActor.IsAlive)
+                    if (target == null ||
+                        !target.IActor.IsAlive)
                         continue;
 
-                    targetICombatant?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Heal, _param.PlayAnimation);
+                    target?.IActor?.IActCtr?.Impact(attacker?.IStat, EImpactType.Heal, _param.PlayAnimation);
                 }
             }
             else
             {
-                // Damaged
-                foreach (var targetICombatant in _param.TargetList)
-                {
-                    if (targetICombatant == null ||
-                        !targetICombatant.IActor.IsAlive)
-                        continue;
+                // 범위 공격
+                if (skillData.ESkillTarget == ESkillTarget.Circle ||
+                    skillData.ESkillTarget == ESkillTarget.Sector)
+                    ImpactToMultipleTargetList(attacker, skillData);
+                else
+                    ImpactToSingleTarget(attacker, skillData);
+            }
+        }
 
-                    if (skillData.HasProjectile)
-                        CreateProjectile(skillData.ProjectilePrefab, targetICombatant);
-                    else
-                    {
-                        targetICombatant?.IActor?.IActCtr?.Impact(iCombatant?.IStat, EImpactType.Damage, _param.PlayAnimation);
-                        targetICombatant?.HitAsync();
-                    } 
+        private void ImpactToMultipleTargetList(ICombatant attacker, Skill skillData)
+        {
+            if (attacker == null)
+                return;
+
+            var targetList = _param?.TargetList;
+            if (targetList.IsNullOrEmpty())
+                return;
+
+            var closestTarget = attacker?.FindClosestICombatant(targetList);
+
+            foreach (var target in _param?.TargetList)
+            {
+                if (target == null ||
+                    !target.IActor.IsAlive)
+                    continue;
+
+                bool isAttack = false;
+                switch (skillData.ESkillTarget)
+                {
+                    case ESkillTarget.Circle:
+                        {
+                            isAttack = attacker.IsCircle(target);
+                            Utils.DrawCircle(attacker.Transform.position, 360f, Color.black, 1f);
+                            break;
+                        }
+
+                    case ESkillTarget.Sector:
+                        {
+                            isAttack = attacker.IsSector(target);
+                            break;
+                        }
+                }
+
+                if (isAttack)
+                    ImpactToTargetAsync(attacker, target, skillData).Forget();
+            }
+        }
+
+        private void ImpactToSingleTarget(ICombatant attacker, Skill skillData)
+        {
+            if (attacker == null)
+                return;
+
+            var targetList = _param?.TargetList;
+            if (targetList.IsNullOrEmpty())
+                return;
+
+            ICombatant resTarget = null;
+
+            if (targetList.Count <= 1)
+                resTarget = targetList.FirstOrDefault();
+            else
+            {
+                switch(skillData.ESkillTarget)
+                {
+                    case ESkillTarget.NearOne:
+                        {
+                            resTarget =  attacker?.FindClosestICombatant(targetList);
+                            break;
+                        }
+
+                    case ESkillTarget.FarOne:
+                        {
+                            resTarget = attacker?.FindFarthestICombatant(targetList);
+                            break;
+                        }
                 }
             }
+
+            if (resTarget != null)
+            {
+                if (skillData.HasProjectile)
+                    CreateProjectile(skillData.ProjectilePrefab, resTarget);
+                else
+                    ImpactToTargetAsync(attacker, resTarget, skillData).Forget();
+            }
+        }
+
+        private async UniTask ImpactToTargetAsync(ICombatant attacker, ICombatant target, Skill skillData)
+        {
+            if (attacker == null)
+                return;
+
+            if (target == null)
+                return;
+
+            target?.IActor?.IActCtr?.Impact(attacker?.IStat, EImpactType.Damage, _param.PlayAnimation);
+            target?.HitAsync();
+
+            if (skillData.KnockbackDistance > 0)
+            {
+
+                KnockbackAsync(attacker, target, skillData.KnockbackDistance).Forget();
+                //var knockbackParam = new Knockback.Param()
+                //    .WithTargetTransform(target.Transform)
+                //    .WithAttackerPosition(attacker.Transform.position)
+                //    .WithKnockbackDistance(skillData.KnockbackDistance);
+
+                //target?.IActor?.IActCtr?.Knockback(knockbackParam);
+            }
+        }
+
+        private async UniTask KnockbackAsync( ICombatant attacker, ICombatant target, float distance)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+
+            if (attacker == null)
+                return;
+
+            if (target == null ||
+               !target.IActor.IsAlive)
+                return;
+
+            var direction = (target.Transform.position - attacker.Transform.position).normalized;
+            var targetPosition = target.Transform.position + direction * distance;
+
+            // DoTween으로 이동
+            await target.Transform.DOMove(targetPosition, distance * 0.05f)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(End);
         }
 
         private void CreateProjectile(GameObject proejctilePrefab, ICombatant targetICombatant)
         {
-            var iCombatant = _param?.ICombatant;
-            if (iCombatant == null)
+            var attacker = _param?.Attacker;
+            if (attacker == null)
                 return;
 
             var targetIActor = targetICombatant?.IActor;
@@ -163,14 +289,14 @@ namespace Creature.Action
             if (projectileCreator == null)
                 return;
 
-            var direction = targetIActor.Transform.position - iCombatant.Transform.position;
+            var direction = targetIActor.Transform.position - attacker.Transform.position;
             float offsetX = 0;
             if (direction.x >= 0)
                 offsetX = 2f;
             else
                 offsetX  = -2f;
 
-            var startPosition = iCombatant.Transform.position;
+            var startPosition = attacker.Transform.position;
             startPosition.x += offsetX;
 
             var targetPoition = targetIActor.Transform.position;
@@ -181,7 +307,7 @@ namespace Creature.Action
             {
 
             }
-            .WithICaster(iCombatant)
+            .WithICaster(attacker)
             .WithTargetETeam(targetICombatant.ETeam)
             .WithStartPosition(startPosition)
             .WithEndPosition(endPosition);

@@ -488,8 +488,10 @@ namespace Battle.Mode
                 var target = targetData.ChangeTarget != null ? targetData.ChangeTarget : targetData.Target;
                 targetList.Add(target);
             }
-            
-            attacker.IActor.IActCtr?.CastingSkill(this, attacker, iSkill, targetList);
+
+            var closestTarget = attacker?.FindClosestICombatant(targetList);
+
+            attacker.IActor.IActCtr?.CastingSkill(this, attacker, iSkill, closestTarget, targetList);
 
             // if (skill.ESkillCategory == ESkillCategory.Active)
             {

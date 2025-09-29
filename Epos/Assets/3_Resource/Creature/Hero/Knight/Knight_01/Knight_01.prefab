@@ -50,7 +50,7 @@ MonoBehaviour:
   eClass: 1
   actionSpeed: 100
   moveSpeed: 10
-  attack: 16
+  attack: 13.3
   maxHp: 100
   activePoint: 1
   passivePoint: 1
