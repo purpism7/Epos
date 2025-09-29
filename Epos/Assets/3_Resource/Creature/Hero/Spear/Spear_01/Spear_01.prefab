@@ -209,6 +209,7 @@ MonoBehaviour:
   passivePoint: 1
   attackSight: 1
   skills:
+  - {fileID: 11400000, guid: 23dce0dc76ed8478eb971c41f59d8e36, type: 2}
   - {fileID: 11400000, guid: c1710e03a19294f5f92ab68edd8884c2, type: 2}
 --- !u!1 &7660796985955511713
 GameObject:
