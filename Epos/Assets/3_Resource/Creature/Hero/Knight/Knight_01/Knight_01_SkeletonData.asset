@@ -20,7 +20,9 @@ MonoBehaviour:
   blendModeMaterials:
     requiresBlendModeMaterials: 1
     applyAdditiveMaterial: 1
-    additiveMaterials: []
+    additiveMaterials:
+    - pageName: Knight_01_2.png
+      material: {fileID: 2100000, guid: cb59f21ddfde45b44b1ec62934642b59, type: 2}
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []
