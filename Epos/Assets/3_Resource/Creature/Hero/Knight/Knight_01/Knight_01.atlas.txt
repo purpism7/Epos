@@ -423,3 +423,10 @@ offsets:1,1,166,465
 Sword copy 2
 bounds:1383,1523,400,265
 offsets:1,2,402,268
+
+Knight_01_2.png
+size:306,162
+filter:Linear,Linear
+pma:true
+Effect/Eff_Slash_01
+bounds:2,2,302,158
