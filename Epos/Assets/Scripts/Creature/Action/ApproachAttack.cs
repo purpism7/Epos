@@ -1,11 +1,12 @@
-using Ability;
-using Common;
-using Cysharp.Threading.Tasks;
-using Datas.ScriptableObjects;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
+
+using Datas.ScriptableObjects;
+using Ability;
+using Common;
 
 namespace Creature.Action
 {
@@ -50,20 +51,11 @@ namespace Creature.Action
                 return;
             }
 
-            var closestTarget = attacker?.FindClosestICombatant(targetList);
-            //var randomIndex = UnityEngine.Random.Range(0, targetList.Count);
-            //var target = targetList[randomIndex];
-            //if (target == null ||
-            //    !target.IActor.IsActivate)
-            //{
-            //    _endAction?.Invoke(_iActor);
-            //    return;
-            //}
-
+            var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
             var skillData  = iSkill.SkillData;
             if (skillData == null)
             {
-                _endAction?.Invoke(_iActor);
+                End();
                 return; 
             }
 
@@ -124,7 +116,7 @@ namespace Creature.Action
 
         void Casting.IListener.AfterCasting(ICombatant iCombatant)
         {
-            _endAction?.Invoke(_iActor);
+            End();
         }
         #endregion
     }

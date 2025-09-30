@@ -74,6 +74,7 @@ namespace Creature
         // private float attackRange = 1f;
 
         [SerializeField] [UnityEngine.Range(0f, 500f)] private float maxHp = 1f;
+        [SerializeField] [UnityEngine.Range(0f, 100f)] private float maxMp = 1f;
 
         [SerializeField] [UnityEngine.Range(1, 5)] private float activePoint = 1f;
         [SerializeField] [UnityEngine.Range(1, 5)] private float passivePoint = 1f;
@@ -237,6 +238,9 @@ namespace Creature
             // IStat?.SetOrigin(Stat.EType.AttackRange, attackRange);
             IStat?.SetOrigin(Stat.EType.Hp, maxHp);
             IStat?.SetOrigin(Stat.EType.MaxHp, maxHp);
+
+            IStat?.SetOrigin(Stat.EType.Mp, maxMp);
+            IStat?.SetOrigin(Stat.EType.MaxMp, maxMp);
 
             IStat?.SetOrigin(Stat.EType.ActivePoint, activePoint);
             IStat?.SetOrigin(Stat.EType.PassivePoint, passivePoint);

@@ -1,15 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Spine.Unity;
 using VContainer;
 
-using Creator;
 using GameSystem.Event;
-using Parts;
 using Common;
+using Creator;
+using Datas.ScriptableObjects;
+using Parts;
 
 namespace Creature.Action
 {
@@ -19,6 +22,8 @@ namespace Creature.Action
         {
             public IStat IStat { get; private set; } = null;
             public EImpactType EImpactType { get; private set; } = EImpactType.None;
+            public float Multiplier { get; private set; } = 1f;
+
             public bool PlayAnimation = true;
 
             public Param WithIStat(IStat iStat)
@@ -30,6 +35,12 @@ namespace Creature.Action
             public Param WithEImpactType(EImpactType eImpactType)
             {
                 EImpactType = eImpactType;
+                return this;
+            }
+
+            public Param WithMultiplier(float multiplier)
+            {
+                Multiplier = multiplier;
                 return this;
             }
         }
@@ -51,10 +62,11 @@ namespace Creature.Action
                     value = -iStat.Get(Stat.EType.Attack);
                 else
                     value = 10f;
-        
+
+                value *= _param.Multiplier;
                 _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, value);
 
-                EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
+                GameSystem.Event.EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
 
                 ActivateCombatText(value);
             }

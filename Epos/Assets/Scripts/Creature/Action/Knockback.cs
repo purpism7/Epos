@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+using System;
 using UnityEngine;
 
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 
 namespace Creature.Action
@@ -11,19 +10,20 @@ namespace Creature.Action
     {
         public class Param : ActParam
         {
-            public Vector3? AttackerPosition { get; private set; } = null;
-            public Transform TargetTransform { get; private set; } = null;
+            public ICombatant Attacker { get; private set; } = null;
+            public ICombatant Target { get; private set; } = null;
+
             public float KnockbackDistance { get; private set; } = 1f;
 
-            public Param WithAttackerPosition(Vector3 attackerPosition)
+            public Param WithAttacker(ICombatant attacker)
             {
-                AttackerPosition = attackerPosition;
+                Attacker = attacker;
                 return this;
             }
 
-            public Param WithTargetTransform(Transform targetTransform)
+            public Param WithTarget(ICombatant target)
             {
-                TargetTransform = targetTransform;
+                Target = target;
                 return this;
             }
 
@@ -39,14 +39,30 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            var knockbackDistance = _param.KnockbackDistance;
-            var direction = (_param.TargetTransform.position - _param.AttackerPosition.Value).normalized;
-            var targetPosition = _param.TargetTransform.position + direction * knockbackDistance;
+            KnockbackAsync().Forget();
+        }
+
+        private async UniTask KnockbackAsync()
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
+
+            var attacker = _param?.Attacker;
+            if (attacker == null)
+                return;
+
+            var target = _param?.Target;
+            if (target == null ||
+               !target.IActor.IsAlive)
+                return;
+
+            var distance = _param.KnockbackDistance;
+            var direction = (target.Transform.position - attacker.Transform.position).normalized;
+            var targetPosition = target.Transform.position + direction * distance;
 
             // DoTween으로 이동
-            _param.TargetTransform.DOMove(targetPosition, knockbackDistance * 0.05f)
+            await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)
-                .OnComplete(End);
+                .OnComplete(() => { });
         }
     }
 }

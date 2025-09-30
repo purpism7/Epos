@@ -103,8 +103,11 @@ public static class BattleExtensions
         return dot > Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
     }
 
-    public static ICombatant FindClosestICombatant(this ICombatant iCombatant, List<ICombatant> iCombatantList)
+    public static ICombatant FindClosestICombatant(this Transform tm, List<ICombatant> iCombatantList)
     {
+        if (!tm)
+            return null;
+
         if (iCombatantList.IsNullOrEmpty())
             return null;
 
@@ -112,10 +115,14 @@ public static class BattleExtensions
         float closestDistance = 99999f;
         for (int i = 0; i < iCombatantList.Count; ++i)
         {
-            if (iCombatantList[i] == null)
+            var iActor = iCombatantList[i]?.IActor;
+            if (iActor == null)
                 continue;
 
-            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, iCombatant.IActor.Transform.position);
+            if (!iActor.IsAlive)
+                continue;
+
+            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, tm.position);
             if (closestIComtant == null ||
                 closestDistance > distance)
             {

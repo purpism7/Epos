@@ -17,6 +17,7 @@ namespace Datas.ScriptableObjects
         public int Point = 0;
         public ESkillTarget ESkillTarget = ESkillTarget.None;
         public float Range  = 0;
+        public float Multiplier = 1f;
 
         public bool SameTeam = false;
 
