@@ -94,7 +94,7 @@ namespace Creature.Action
             var skillData = _param?.ISkill?.SkillData;
             if (skillData == null)
             {
-                _endAction?.Invoke(_iActor);
+                End();
                 return;
             }
 
@@ -123,7 +123,7 @@ namespace Creature.Action
         {
             base.OnCompleted(trackEntry);
 
-            _endAction?.Invoke(_iActor);
+            End();
         }
 
         private void ImpactToTargetList(Skill skillData)
@@ -152,7 +152,7 @@ namespace Creature.Action
             }
             else
             {
-                // ¹üÀ§ °ø°Ý
+                // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (skillData.ESkillTarget == ESkillTarget.Circle ||
                     skillData.ESkillTarget == ESkillTarget.Sector)
                     ImpactToMultipleTargetList(attacker, skillData);
@@ -283,7 +283,7 @@ namespace Creature.Action
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;
 
-            // DoTweenÀ¸·Î ÀÌµ¿
+            // DoTweenï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => { });

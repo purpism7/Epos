@@ -189,6 +189,8 @@ namespace Creature.Action
                     InAction = true;
 
                     _currIAct?.Deactivate();
+                    
+                    iAct?.SetIsEnd(false);
                     iAct?.Execute();
                     
                     SetCurrIAct(iAct);
@@ -305,6 +307,7 @@ namespace Creature.Action
             param.SetAnimationKey(_iActor?.AnimationKey(act));
             
             act.SetParam(param);
+            act.SetIsEnd(false);
             act.Execute();
 
             if(isSet)
