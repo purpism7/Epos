@@ -13,7 +13,6 @@ namespace Battle
     {
         [Inject] protected IObjectResolver _iResolver = null;
 
-
         private Monster[] _monsters = null;
         private List<ICombatant> _enemyICombatantList = null;
 
@@ -37,7 +36,10 @@ namespace Battle
                 return list;
             }
         }
+
+        public Transform Transform => transform;
         public Vector3 Position => transform.position;
+
         public int AliveMonsterCount
         {
             get

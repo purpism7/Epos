@@ -22,7 +22,7 @@ namespace Creature.Action
         IActController Die();
         IActController Victory();
 
-        void Impact(IStat iStat, Common.EImpactType eImpactType, bool playAnimation);
+        void Impact(Impact.Param impactParam);
 
         void Execute();
 
@@ -150,7 +150,7 @@ namespace Creature.Action
             if (!IsActivate)
                 return null;
 
-            Execute<Knockback, Knockback.Param>(param);
+            Execute<Knockback, Knockback.Param>(param, false);
             
             return this;
         }
@@ -169,25 +169,18 @@ namespace Creature.Action
             return this;
         }
 
-        void IActController.Impact(IStat iStat, Common.EImpactType eImpactType, bool PlayAnimation)
+        void IActController.Impact(Impact.Param impactParam)
         {
             if (!IsActivate)
                 return;
-
-            var impactParam = new Impact.Param
-            {
-                PlayAnimation = PlayAnimation,
-            }
-            .WithIStat(iStat)
-            .WithEImpactType(eImpactType);
             
             Execute<Impact, Impact.Param>(impactParam, false);
         }
 
         private async UniTask ExecuteAsync()
         {
-            if (InAction)
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            //if (InAction)
+            //    await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             if (_iActQueue?.Count > 0)
             {
@@ -196,6 +189,8 @@ namespace Creature.Action
                     InAction = true;
 
                     _currIAct?.Deactivate();
+                    
+                    //iAct?.SetIsEnd(false);
                     iAct?.Execute();
                     
                     SetCurrIAct(iAct);

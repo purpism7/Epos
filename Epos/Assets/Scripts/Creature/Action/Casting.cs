@@ -11,7 +11,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
 using VContainer;
+
 using Vector3 = UnityEngine.Vector3;
 
 namespace Creature.Action
@@ -92,7 +94,7 @@ namespace Creature.Action
             var skillData = _param?.ISkill?.SkillData;
             if (skillData == null)
             {
-                _endAction?.Invoke(_iActor);
+                End();
                 return;
             }
 
@@ -121,7 +123,7 @@ namespace Creature.Action
         {
             base.OnCompleted(trackEntry);
 
-            _endAction?.Invoke(_iActor);
+            End();
         }
 
         private void ImpactToTargetList(Skill skillData)
@@ -138,12 +140,18 @@ namespace Creature.Action
                         !target.IActor.IsAlive)
                         continue;
 
-                    target?.IActor?.IActCtr?.Impact(attacker?.IStat, EImpactType.Heal, _param.PlayAnimation);
+                    var impactParam = new Impact.Param
+                    {
+                        PlayAnimation = _param.PlayAnimation,
+                    }
+                    .WithIStat(attacker.IStat)
+                    .WithEImpactType(EImpactType.Heal);
+
+                    target?.IActor?.IActCtr?.Impact(impactParam);
                 }
             }
             else
             {
-                // 범위 공격
                 if (skillData.ESkillTarget == ESkillTarget.Circle ||
                     skillData.ESkillTarget == ESkillTarget.Sector)
                     ImpactToMultipleTargetList(attacker, skillData);
@@ -161,7 +169,7 @@ namespace Creature.Action
             if (targetList.IsNullOrEmpty())
                 return;
 
-            var closestTarget = attacker?.FindClosestICombatant(targetList);
+            var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
 
             foreach (var target in _param?.TargetList)
             {
@@ -187,7 +195,7 @@ namespace Creature.Action
                 }
 
                 if (isAttack)
-                    ImpactToTargetAsync(attacker, target, skillData).Forget();
+                    ImpactToTarget(attacker, target, skillData);
             }
         }
 
@@ -210,7 +218,7 @@ namespace Creature.Action
                 {
                     case ESkillTarget.NearOne:
                         {
-                            resTarget =  attacker?.FindClosestICombatant(targetList);
+                            resTarget = attacker.Transform.FindClosestICombatant(targetList);
                             break;
                         }
 
@@ -227,11 +235,11 @@ namespace Creature.Action
                 if (skillData.HasProjectile)
                     CreateProjectile(skillData.ProjectilePrefab, resTarget);
                 else
-                    ImpactToTargetAsync(attacker, resTarget, skillData).Forget();
+                    ImpactToTarget(attacker, resTarget, skillData);
             }
         }
 
-        private async UniTask ImpactToTargetAsync(ICombatant attacker, ICombatant target, Skill skillData)
+        private void ImpactToTarget(ICombatant attacker, ICombatant target, Skill skillData)
         {
             if (attacker == null)
                 return;
@@ -239,40 +247,44 @@ namespace Creature.Action
             if (target == null)
                 return;
 
-            target?.IActor?.IActCtr?.Impact(attacker?.IStat, EImpactType.Damage, _param.PlayAnimation);
+            var impactParam = new Impact.Param
+            {
+                PlayAnimation = _param.PlayAnimation,
+            }
+            .WithIStat(attacker.IStat)
+            .WithEImpactType(EImpactType.Damage)
+            .WithMultiplier(skillData.Multiplier);
+
+            target?.IActor?.IActCtr?.Impact(impactParam);
             target?.HitAsync();
 
-            if (skillData.KnockbackDistance > 0)
+            if (skillData != null)
             {
-
-                KnockbackAsync(attacker, target, skillData.KnockbackDistance).Forget();
-                //var knockbackParam = new Knockback.Param()
-                //    .WithTargetTransform(target.Transform)
-                //    .WithAttackerPosition(attacker.Transform.position)
-                //    .WithKnockbackDistance(skillData.KnockbackDistance);
-
-                //target?.IActor?.IActCtr?.Knockback(knockbackParam);
+                if (skillData.KnockbackDistance > 0)
+                    KnockbackAsync(attacker, target, skillData.KnockbackDistance).Forget();
             }
         }
 
-        private async UniTask KnockbackAsync( ICombatant attacker, ICombatant target, float distance)
+        private async UniTask KnockbackAsync(ICombatant attacker, ICombatant target, float knockbackDistance)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
 
+            //var attacker = _param?.Attacker;
             if (attacker == null)
                 return;
 
+            //var target = _param?.Target;
             if (target == null ||
                !target.IActor.IsAlive)
                 return;
 
+            var distance = knockbackDistance;
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;
 
-            // DoTween으로 이동
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)
-                .OnComplete(End);
+                .OnComplete(() => { });
         }
 
         private void CreateProjectile(GameObject proejctilePrefab, ICombatant targetICombatant)

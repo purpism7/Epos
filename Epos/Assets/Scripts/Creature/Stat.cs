@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,6 +40,9 @@ namespace Creature
             
             Hp,
             MaxHp,
+
+            Mp,
+            MaxMp,
             
             AttackSight,
         }
@@ -61,6 +65,8 @@ namespace Creature
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, Dictionary<ESubType, float>> _addedStatDic = new();
 
+        private bool _isActivate = false;
+
         #region IStatGeneric
         void IStatGeneric.Initialize(Character character)
         {
@@ -69,12 +75,12 @@ namespace Creature
         
         void IStatGeneric.Activate()
         {
-            
+            _isActivate = true;
         }
 
         void IStatGeneric.Deactivate()
         {
-            
+            _isActivate = false;
         }
 
         Stat IStatGeneric.Stat
@@ -167,6 +173,27 @@ namespace Creature
             }
 
             return value;
+        }
+
+        private async UniTask UpdateMpAsync()
+        {
+            if (!_isActivate)
+                return;
+
+            var mp = GetCurrent(EType.MaxMp) - GetCurrent(EType.Mp);
+            if (mp <= 0)
+                return;
+
+            while(GetCurrent(EType.MaxMp) - GetCurrent(EType.Mp) > 0)
+            {
+                if (!_isActivate)
+                    return;
+
+
+
+                await UniTask.Yield(PlayerLoopTiming.Update);
+            }
+
         }
     }
 }

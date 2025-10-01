@@ -37,8 +37,7 @@ namespace Creature.Action
         protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
         protected bool _isActivate = false;
-
-
+        
         public virtual void Initialize(IActor iActor)
         {
             _iActor = iActor;
@@ -64,10 +63,10 @@ namespace Creature.Action
         {
             _endAction?.Invoke(_iActor);
         }
-        
+
         #region IAct
         public abstract void Execute();
-
+        
         protected virtual void Activate()
         {
             _isActivate = true;

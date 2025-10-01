@@ -15,10 +15,11 @@ MonoBehaviour:
   Id: 3
   AnimationName: Skill_03
   ESkillCategory: 2
-  Cooltime: 10
+  Cooltime: 30
   Point: 1
   ESkillTarget: 4
   Range: 5
+  Multiplier: 2
   SameTeam: 0
   KnockbackDistance: 5
   ProjectilePrefab: {fileID: 0}

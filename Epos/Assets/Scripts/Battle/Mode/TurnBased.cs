@@ -489,7 +489,7 @@ namespace Battle.Mode
                 targetList.Add(target);
             }
 
-            var closestTarget = attacker?.FindClosestICombatant(targetList);
+            var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
 
             attacker.IActor.IActCtr?.CastingSkill(this, attacker, iSkill, closestTarget, targetList);
 

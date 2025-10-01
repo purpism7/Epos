@@ -1,11 +1,14 @@
-using Common;
-using Creature;
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Analytics;
+
+
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using VContainer;
+
+using Common;
+using Creature;
+using Creature.Action;
 
 namespace Battle
 {
@@ -122,7 +125,14 @@ namespace Battle
                             if (iCombatant.ETeam == _param.TargetETeam &&
                                 iActor.IsAlive)
                             {
-                                iActor.IActCtr?.Impact(_param?.ICaster?.IStat, EImpactType.Damage, false);
+                                var impactParam = new Impact.Param
+                                {
+                                    PlayAnimation = false,
+                                }
+                                .WithIStat(_param?.ICaster?.IStat)
+                                .WithEImpactType(EImpactType.Damage);
+
+                                iActor.IActCtr?.Impact(impactParam);
                                 iCombatant?.HitAsync();
 
                                 Deactivate();
