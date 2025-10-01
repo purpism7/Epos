@@ -286,7 +286,7 @@ namespace Battle.Mode
                 TargetPos = targetPos,
             };
 
-            if(_closestICombatant != null)
+            //if(_closestICombatant != null)
             {
                 moveParam?.WithLeaderTm(_closestICombatant.IActor.Transform)
                     .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
@@ -340,6 +340,13 @@ namespace Battle.Mode
 
         private async UniTask PrepareForNextActionAsync(ICombatant iCombatant)
         {
+            var iActor = iCombatant?.IActor;
+            if (iActor == null)
+                return;
+
+            if (!iActor.IsAlive)
+                return;
+
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
@@ -347,10 +354,13 @@ namespace Battle.Mode
                 return;
             }
 
+            if(iCombatant.IActor.IsAlive)
+
             if (waypoint.AliveMonsterCount <= 0)
             {
-
+                Debug.Log("PrepareForNextActionAsync.IListener.End = " + iCombatant?.IActor.Id);
                 _weightedActionCTS?.Cancel();
+                _weightedActionCTS = null;
 
                 SetClosestICombatant();
 
@@ -407,7 +417,7 @@ namespace Battle.Mode
         #region WeightedActionController.IListener
         void WeightedActionController.IListener.End(IActor iActor)
         {
-            if(_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
+            if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
                 PrepareForNextActionAsync(iCombatant).Forget();
 
             if(!IsAllyAlive)

@@ -10,7 +10,6 @@ namespace Creature.Action
     public interface IAct
     {
         void Execute();
-        void SetIsEnd(bool isEnd);
         void Deactivate();
         
         void ChainUpdate();
@@ -38,7 +37,6 @@ namespace Creature.Action
         protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
         protected bool _isActivate = false;
-        protected bool _isEnd = false;
         
         public virtual void Initialize(IActor iActor)
         {
@@ -63,20 +61,15 @@ namespace Creature.Action
 
         protected virtual void End()
         {
-            if (_isEnd)
-                return;
+            //if (_isEnd)
+            //    return;
             
             _endAction?.Invoke(_iActor);
-            SetIsEnd(true);
+            //SetIsEnd(true);
         }
 
         #region IAct
         public abstract void Execute();
-        
-        public void SetIsEnd(bool isEnd)
-        {
-            _isEnd = isEnd;
-        }
         
         protected virtual void Activate()
         {

@@ -94,7 +94,8 @@ namespace Creature.Action
             if(target == null ||
               !target.IActor.IsAlive)
             {
-                End();
+                Debug.Log("Before CastingSkill = " + attacker.IActor.Id);
+                //End();
                 return;
             }    
 

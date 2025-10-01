@@ -53,6 +53,14 @@ namespace Battle
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
+            var cancellationToken = iRequester?.CancellationTokenSource;
+            if (cancellationToken == null ||
+                cancellationToken.IsCancellationRequested)
+            {
+                EndAction(executer.IActor);
+                return;
+            }
+
             ExecuteAsync(executer, iRequester).Forget();
         }
 
@@ -60,8 +68,10 @@ namespace Battle
         {
             try
             {
-                await UniTask.DelayFrame(30, cancellationToken: iRequester.CancellationTokenSource.Token);
-                if (iRequester.CancellationTokenSource.IsCancellationRequested)
+                var cancellationToken = iRequester?.CancellationTokenSource;
+                await UniTask.DelayFrame(30, cancellationToken: cancellationToken.Token);
+                if (cancellationToken == null ||
+                    cancellationToken.IsCancellationRequested)
                 {
                     EndAction(executer.IActor);
                     return;

@@ -152,7 +152,6 @@ namespace Creature.Action
             }
             else
             {
-                // ���� ����
                 if (skillData.ESkillTarget == ESkillTarget.Circle ||
                     skillData.ESkillTarget == ESkillTarget.Sector)
                     ImpactToMultipleTargetList(attacker, skillData);
@@ -283,7 +282,6 @@ namespace Creature.Action
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;
 
-            // DoTween���� �̵�
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)
                 .OnComplete(() => { });

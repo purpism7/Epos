@@ -179,8 +179,8 @@ namespace Creature.Action
 
         private async UniTask ExecuteAsync()
         {
-            if (InAction)
-                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            //if (InAction)
+            //    await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             if (_iActQueue?.Count > 0)
             {
@@ -190,7 +190,7 @@ namespace Creature.Action
 
                     _currIAct?.Deactivate();
                     
-                    iAct?.SetIsEnd(false);
+                    //iAct?.SetIsEnd(false);
                     iAct?.Execute();
                     
                     SetCurrIAct(iAct);
@@ -307,7 +307,6 @@ namespace Creature.Action
             param.SetAnimationKey(_iActor?.AnimationKey(act));
             
             act.SetParam(param);
-            act.SetIsEnd(false);
             act.Execute();
 
             if(isSet)
