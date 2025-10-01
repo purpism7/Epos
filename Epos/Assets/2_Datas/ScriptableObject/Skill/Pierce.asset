@@ -19,10 +19,10 @@ MonoBehaviour:
   MP: 0
   Point: 1
   ESkillTarget: 2
-  Range: 5
+  Range: 3
   Multiplier: 1
   SameTeam: 0
-  KnockbackDistance: 0
+  KnockbackDistance: 6
   DashAnimationName: 
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0
