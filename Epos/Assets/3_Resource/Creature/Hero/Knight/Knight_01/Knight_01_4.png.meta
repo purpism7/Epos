@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: e2db2d393574dc749b37b7305ce41a74
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -9210778850287965067
+    second: Knight_01_4_0
+  - first:
+      213: 3637660779660769535
+    second: Knight_01_4_1
+  - first:
+      213: -3980820136948344018
+    second: Knight_01_4_2
+  - first:
+      213: 951060804575545060
+    second: Knight_01_4_3
+  - first:
+      213: 6921744470319304022
+    second: Knight_01_4_4
+  - first:
+      213: 3420882823369394900
+    second: Knight_01_4_5
+  - first:
+      213: -3855607951608366128
+    second: Knight_01_4_6
+  - first:
+      213: 2880398952867020463
+    second: Knight_01_4_7
+  - first:
+      213: -6928840688969102201
+    second: Knight_01_4_8
+  - first:
+      213: -5067266193875767518
+    second: Knight_01_4_9
+  - first:
+      213: 5800222722396247671
+    second: Knight_01_4_10
+  - first:
+      213: -7273146551564083647
+    second: Knight_01_4_11
+  - first:
+      213: 8279859534931719606
+    second: Knight_01_4_12
+  - first:
+      213: -5803813777165976563
+    second: Knight_01_4_13
+  - first:
+      213: 1126514921306403941
+    second: Knight_01_4_14
+  - first:
+      213: -6072149774428535185
+    second: Knight_01_4_15
+  - first:
+      213: -4477582123023619775
+    second: Knight_01_4_16
+  - first:
+      213: 4569589487647684091
+    second: Knight_01_4_17
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Knight_01_4_0
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1790
+        width: 255
+        height: 267
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57ca7ebbf6dbc2080800000000000000
+      internalID: -9210778850287965067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_1
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 1790
+        width: 261
+        height: 263
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff8fc09b4319b7230800000000000000
+      internalID: 3637660779660769535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_2
+      rect:
+        serializedVersion: 2
+        x: 517
+        y: 1790
+        width: 139
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2bd87e3d2941c8c0800000000000000
+      internalID: -3980820136948344018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_3
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 1996
+        width: 65
+        height: 65
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e6c58843c8d23d00800000000000000
+      internalID: 951060804575545060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_4
+      rect:
+        serializedVersion: 2
+        x: 656
+        y: 1790
+        width: 107
+        height: 206
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65d086b3ce9fe0060800000000000000
+      internalID: 6921744470319304022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_5
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1704
+        width: 83
+        height: 83
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4da0b21adca697f20800000000000000
+      internalID: 3420882823369394900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_6
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1608
+        width: 96
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0db3633fef02e7ac0800000000000000
+      internalID: -3855607951608366128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_7
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 1497
+        width: 373
+        height: 293
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: faebb0d269b39f720800000000000000
+      internalID: 2880398952867020463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_8
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1307
+        width: 378
+        height: 301
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 78c49bc9a10d7df90800000000000000
+      internalID: -6928840688969102201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_9
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1003
+        width: 416
+        height: 304
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22f60b38e347da9b0800000000000000
+      internalID: -5067266193875767518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_10
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 1198
+        width: 380
+        height: 299
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 776d39ac5d78e7050800000000000000
+      internalID: 5800222722396247671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_11
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 689
+        width: 432
+        height: 314
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14e5aa20fb7901b90800000000000000
+      internalID: -7273146551564083647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_12
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 916
+        width: 371
+        height: 282
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6b57cb1e068f7e270800000000000000
+      internalID: 8279859534931719606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_13
+      rect:
+        serializedVersion: 2
+        x: 466
+        y: 474
+        width: 320
+        height: 442
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d0cf08d9e16b47fa0800000000000000
+      internalID: -5803813777165976563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 352
+        width: 465
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56435a63a5f22af00800000000000000
+      internalID: 1126514921306403941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_15
+      rect:
+        serializedVersion: 2
+        x: 433
+        y: 689
+        width: 29
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f660838a3f36bbba0800000000000000
+      internalID: -6072149774428535185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1
+        width: 476
+        height: 351
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 149a98848ce6cd1c0800000000000000
+      internalID: -4477582123023619775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Knight_01_4_17
+      rect:
+        serializedVersion: 2
+        x: 477
+        y: 1
+        width: 323
+        height: 473
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf57994ad617a6f30800000000000000
+      internalID: 4569589487647684091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Knight_01_4_0: -9210778850287965067
+      Knight_01_4_1: 3637660779660769535
+      Knight_01_4_10: 5800222722396247671
+      Knight_01_4_11: -7273146551564083647
+      Knight_01_4_12: 8279859534931719606
+      Knight_01_4_13: -5803813777165976563
+      Knight_01_4_14: 1126514921306403941
+      Knight_01_4_15: -6072149774428535185
+      Knight_01_4_16: -4477582123023619775
+      Knight_01_4_17: 4569589487647684091
+      Knight_01_4_2: -3980820136948344018
+      Knight_01_4_3: 951060804575545060
+      Knight_01_4_4: 6921744470319304022
+      Knight_01_4_5: 3420882823369394900
+      Knight_01_4_6: -3855607951608366128
+      Knight_01_4_7: 2880398952867020463
+      Knight_01_4_8: -6928840688969102201
+      Knight_01_4_9: -5067266193875767518
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

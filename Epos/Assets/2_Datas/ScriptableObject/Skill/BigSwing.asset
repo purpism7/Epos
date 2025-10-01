@@ -22,7 +22,7 @@ MonoBehaviour:
   Range: 5
   Multiplier: 1.5
   SameTeam: 0
-  KnockbackDistance: 7
+  KnockbackDistance: 6
   DashAnimationName: Skill_02_01
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0

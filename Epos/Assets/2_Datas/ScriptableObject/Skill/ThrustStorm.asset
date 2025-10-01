@@ -16,12 +16,13 @@ MonoBehaviour:
   AnimationName: Skill_02_02
   ESkillCategory: 2
   Cooltime: 15
+  MP: 0
   Point: 1
   ESkillTarget: 5
   Range: 6
   Multiplier: 1
   SameTeam: 0
-  KnockbackDistance: 5
+  KnockbackDistance: 10
   DashAnimationName: Skill_02_01
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0
