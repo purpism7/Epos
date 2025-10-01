@@ -182,14 +182,14 @@ namespace Creature.Action
                 {
                     case ESkillTarget.Circle:
                         {
-                            isAttack = attacker.IsCircle(target);
+                            isAttack = attacker.IsCircle(target, 5f);
                             Utils.DrawCircle(attacker.Transform.position, 360f, Color.black, 1f);
                             break;
                         }
 
                     case ESkillTarget.Sector:
                         {
-                            isAttack = attacker.IsSector(target);
+                            isAttack = attacker.IsSector(target, 4f);
                             break;
                         }
                 }
