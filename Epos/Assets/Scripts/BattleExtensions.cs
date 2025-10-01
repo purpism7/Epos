@@ -76,7 +76,7 @@ public static class BattleExtensions
         return targetList;
     }
 
-    public static bool IsCircle(this ICombatant attacker, ICombatant iCombatant)
+    public static bool IsCircle(this ICombatant attacker, ICombatant iCombatant, float range)
     {
         if (attacker == null)
             return false;
@@ -86,10 +86,10 @@ public static class BattleExtensions
 
         var distance = Vector2.Distance(attacker.Transform.position, iCombatant.IActor.Transform.position);
 
-        return distance <= 5;
+        return distance <= range;
     }
 
-    public static bool IsSector(this ICombatant attacker, ICombatant iCombatant)
+    public static bool IsSector(this ICombatant attacker, ICombatant iCombatant, float range)
     {
         if (attacker == null)
             return false;
@@ -97,8 +97,11 @@ public static class BattleExtensions
         if (iCombatant == null)
             return false;
 
+        if (!attacker.IsCircle(iCombatant, range))
+            return false;
+
         Vector3 direction = (iCombatant.IActor.Transform.position - attacker.Transform.position).normalized;
-        float dot = Vector3.Dot(attacker.Transform.forward, direction);
+        float dot = Vector3.Dot(attacker.Transform.right, direction);
 
         return dot > Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
     }
