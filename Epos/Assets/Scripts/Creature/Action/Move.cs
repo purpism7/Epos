@@ -250,11 +250,16 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
 
-            if (_param?.TargetICombatant != null &&
-                !_param.TargetICombatant.IActor.IsAlive)
+            var target = _param.TargetICombatant;
+            if (target != null)
             {
-                End();
-                return;
+                var targetIActor = target.IActor;
+                if (targetIActor != null &&
+                    !targetIActor.IsAlive)
+                {
+                    End();
+                    return;
+                }
             }
 
             if(_param != null &&

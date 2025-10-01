@@ -166,31 +166,6 @@ namespace Battle.Mode
                 return null;
 
             var closestICombatant = wayPoint.Transform.FindClosestICombatant(_data?.AllyICombatantList);
-
-            //float closest = 9999f;
-            //ICombatant closestICombatant = null;
-            //for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
-            //{
-            //    var iCombatant = _data?.AllyICombatantList[i];
-            //    if(iCombatant == null)
-            //        continue;
-
-            //    var iActor = iCombatant.IActor;
-            //    if (iActor == null)
-            //        continue;
-
-            //    if (!iActor.IsAlive)
-            //        continue;
-
-            //    var distance = Vector3.Distance(iActor.Transform.position, wayPoint.Position);
-            //    if (closestICombatant == null || 
-            //        Vector3.Distance(iActor.Transform.position, wayPoint.Position) < closest)
-            //    {
-            //        closest = distance;
-            //        closestICombatant = iCombatant;
-            //    }
-            //}
-
             if(closestICombatant != null)
                 _iCameraManager?.SetTargetTm(closestICombatant.IActor.Transform);
             
@@ -220,8 +195,8 @@ namespace Battle.Mode
             if (hpProgress == null)
                 return;
 
-            var targetPos = iCombatant.IActor.Transform.position;
-            targetPos.y += iCombatant.IActor.Height;
+            //var targetPos = iCombatant.IActor.Transform.position;
+            //targetPos.y += iCombatant.IActor.Height;
 
             var param = new HpProgress.Param
             {
@@ -268,8 +243,8 @@ namespace Battle.Mode
             if (iCombatant == null)
                 return;
 
-            if (_closestICombatant == null)
-                return;
+            //if (_closestICombatant == null)
+            //    return;
 
             float moveSpeed = 7f;
             if (_closestICombatant != null &&
@@ -284,13 +259,14 @@ namespace Battle.Mode
             {
                 MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPos,
-            };
+            }.WithTargetICombatant(null);
 
-            //if(_closestICombatant != null)
+            if(_closestICombatant != null)
             {
                 moveParam?.WithLeaderTm(_closestICombatant.IActor.Transform)
                     .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
             }
+
 
             iCombatant.IActor?.IActCtr?
                 .MoveToTarget(moveParam)?
@@ -354,17 +330,14 @@ namespace Battle.Mode
                 return;
             }
 
-            if(iCombatant.IActor.IsAlive)
-
             if (waypoint.AliveMonsterCount <= 0)
             {
-                Debug.Log("PrepareForNextActionAsync.IListener.End = " + iCombatant?.IActor.Id);
                 _weightedActionCTS?.Cancel();
                 _weightedActionCTS = null;
 
                 SetClosestICombatant();
 
-                //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+                await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 MoveToWaypoint(waypoint, iCombatant);
             }

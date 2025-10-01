@@ -61,11 +61,7 @@ namespace Creature.Action
 
         protected virtual void End()
         {
-            //if (_isEnd)
-            //    return;
-            
             _endAction?.Invoke(_iActor);
-            //SetIsEnd(true);
         }
 
         #region IAct
