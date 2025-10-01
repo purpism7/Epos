@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 77bd7fdda472b5847a0df715d7d2387f, type: 2}
+  - {fileID: 2100000, guid: 098786966716dc843b8fa01deb894659, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -205,10 +205,12 @@ MonoBehaviour:
   moveSpeed: 10
   attack: 15
   maxHp: 100
+  maxMp: 1
   activePoint: 1
   passivePoint: 1
   attackSight: 1
   skills:
+  - {fileID: 11400000, guid: 3df38b2570bedb242a395b2e0dc8c5a1, type: 2}
   - {fileID: 11400000, guid: 23dce0dc76ed8478eb971c41f59d8e36, type: 2}
   - {fileID: 11400000, guid: c1710e03a19294f5f92ab68edd8884c2, type: 2}
 --- !u!1 &7660796985955511713
