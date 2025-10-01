@@ -22,8 +22,11 @@ namespace Datas.ScriptableObjects
         public bool SameTeam = false;
 
         public float KnockbackDistance = 0;
+        public string DashAnimationName = string.Empty;
+
         public GameObject ProjectilePrefab = null;
         public bool PlayAnimation = false;
+
         
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }

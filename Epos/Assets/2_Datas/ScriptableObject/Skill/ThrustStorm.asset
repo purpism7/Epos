@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: ThrustStorm
   m_EditorClassIdentifier: 
   Id: 7
-  AnimationName: Skill_02
+  AnimationName: Skill_02_02
   ESkillCategory: 2
   Cooltime: 15
   Point: 1
   ESkillTarget: 5
   Range: 6
+  Multiplier: 1
   SameTeam: 0
   KnockbackDistance: 5
+  DashAnimationName: Skill_02_01
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0

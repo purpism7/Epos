@@ -53,13 +53,13 @@ namespace Battle
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            var cancellationToken = iRequester?.CancellationTokenSource;
-            if (cancellationToken == null ||
-                cancellationToken.IsCancellationRequested)
-            {
-                EndAction(executer.IActor);
-                return;
-            }
+            //var cancellationToken = iRequester?.CancellationTokenSource;
+            //if (cancellationToken == null ||
+            //    cancellationToken.IsCancellationRequested)
+            //{
+            //    EndAction(executer.IActor);
+            //    return;
+            //}
 
             ExecuteAsync(executer, iRequester).Forget();
         }

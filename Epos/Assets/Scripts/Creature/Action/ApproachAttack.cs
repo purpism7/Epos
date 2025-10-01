@@ -1,7 +1,8 @@
-using System;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
+using Spine.Unity;
 using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
@@ -62,6 +63,24 @@ namespace Creature.Action
             var skillRange = skillData.Range;
             if (skillRange > 0)
             {
+                // temp thinking...
+                if(!string.IsNullOrEmpty(skillData.DashAnimationName))
+                {
+                    _iActor?.SkeletonAnimation?.PlayAnimation(skillData.DashAnimationName, false,
+                        (trackEntry) =>
+                        {
+                            
+                            Vector2 direction = closestTarget?.IActor?.SkeletonAnimation.Skeleton.ScaleX > 0 ? Vector2.right : Vector2.left;
+                            var targetPosition = (Vector2)closestTarget.Transform.position + direction * skillRange;
+
+                            _iActor.Transform.position = targetPosition;
+
+                            CastingSkill(attacker, iSkill, closestTarget, targetList);
+                        }, out _duration);
+
+                    return;
+                }
+
                 var moveParam = new Move.Param
                 {
                     MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),

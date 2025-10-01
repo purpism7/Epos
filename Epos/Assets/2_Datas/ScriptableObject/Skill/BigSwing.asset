@@ -22,5 +22,6 @@ MonoBehaviour:
   Multiplier: 1.5
   SameTeam: 0
   KnockbackDistance: 7
+  DashAnimationName: Skill_02_01
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0
