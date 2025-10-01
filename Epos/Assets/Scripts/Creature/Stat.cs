@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using GameSystem.Event;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,12 +66,15 @@ namespace Creature
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, Dictionary<ESubType, float>> _addedStatDic = new();
 
+        private bool _isUpdateMp = false;
+
         private bool _isActivate = false;
 
         #region IStatGeneric
         void IStatGeneric.Initialize(Character character)
         {
             _iListener = character;
+            _isUpdateMp = false;
         }
         
         void IStatGeneric.Activate()
@@ -145,6 +149,10 @@ namespace Creature
                 subDic[eSubType] = value;
 
             _iListener?.OnStatChanged(eType, GetCurrent(eType));
+
+            if (eType == EType.Mp &&
+                !_isUpdateMp)
+                UpdateMpAsync().Forget();
         }
 
         private float GetOrigin(EType eType)
@@ -180,20 +188,38 @@ namespace Creature
             if (!_isActivate)
                 return;
 
-            var mp = GetCurrent(EType.MaxMp) - GetCurrent(EType.Mp);
+            if (_isUpdateMp)
+                return;
+
+            var maxMp = GetCurrent(EType.MaxMp);
+            var mp = maxMp - GetCurrent(EType.Mp);
             if (mp <= 0)
                 return;
 
-            while(GetCurrent(EType.MaxMp) - GetCurrent(EType.Mp) > 0)
+            _isUpdateMp = true;
+
+            float regenRate = 1f / 1f;
+
+            while (maxMp - GetCurrent(EType.Mp) > 0)
             {
                 if (!_isActivate)
-                    return;
+                    break;
 
+                maxMp = GetCurrent(EType.MaxMp);
+                mp = Time.deltaTime * regenRate;
 
+                if (mp + GetCurrent(EType.Mp) > maxMp)
+                {
+                    SetAdded(EType.Mp, ESubType.None, 0);
+                    break;
+                }
+
+                SetAdded(EType.Mp, ESubType.None, mp);
 
                 await UniTask.Yield(PlayerLoopTiming.Update);
             }
 
+            _isUpdateMp = false;
         }
     }
 }

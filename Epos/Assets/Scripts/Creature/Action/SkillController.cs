@@ -1,10 +1,11 @@
-using Ability;
-using Common;
-using Datas.ScriptableObjects;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+using Common;
+using Ability;
+using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
@@ -80,6 +81,10 @@ namespace Creature.Action
             if (_iSkillList == null)
                 return null;
 
+            var iStat = _iCaster?.IStat;
+            if (iStat == null)
+                return null;
+
             foreach (var iSkill in _iSkillList)
             {
                 if(iSkill == null)
@@ -91,7 +96,10 @@ namespace Creature.Action
 
                 if (skillData.ESkillCategory != eSkillCategory)
                     continue;
-                
+
+                if (skillData.MP > iStat.Get(Stat.EType.Mp))
+                    continue;
+
                 if (!iSkill.IsReady)
                     continue;
                 

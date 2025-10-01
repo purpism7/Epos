@@ -5333,7 +5333,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 80.2
+  m_Value: 64.4
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -9016,6 +9016,8 @@ MonoBehaviour:
   rootRectTm: {fileID: 0}
   previewHpSlider: {fileID: 5127238683635208252}
   hpSlider: {fileID: 4214893461378894805}
+  previewMpSlider: {fileID: 0}
+  mpSlider: {fileID: 1827011330724088413}
 --- !u!1 &6449490639179744066
 GameObject:
   m_ObjectHideFlags: 0

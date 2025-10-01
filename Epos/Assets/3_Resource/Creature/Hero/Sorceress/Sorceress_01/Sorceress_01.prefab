@@ -205,6 +205,7 @@ MonoBehaviour:
   moveSpeed: 10
   attack: 10
   maxHp: 100
+  maxMp: 100
   activePoint: 1
   passivePoint: 1
   attackSight: 10

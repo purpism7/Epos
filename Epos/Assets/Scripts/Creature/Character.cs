@@ -1,18 +1,17 @@
-using UnityEngine;
-using UnityEngine.AI;
-using System;
-
-using VContainer;
-using Spine;
-using Spine.Unity;
-using Cysharp.Threading.Tasks;
-
 using Common;
 using Creator;
 using Creature.Action;
-using GameSystem;
-using UI.Parts;
+using Cysharp.Threading.Tasks;
 using Datas.ScriptableObjects;
+using GameSystem;
+using GameSystem.Event;
+using Spine;
+using Spine.Unity;
+using System;
+using UI.Parts;
+using UnityEngine;
+using UnityEngine.AI;
+using VContainer;
 
 namespace Creature
 {
@@ -239,7 +238,7 @@ namespace Creature
             IStat?.SetOrigin(Stat.EType.Hp, maxHp);
             IStat?.SetOrigin(Stat.EType.MaxHp, maxHp);
 
-            IStat?.SetOrigin(Stat.EType.Mp, maxMp);
+            IStat?.SetOrigin(Stat.EType.Mp, 0);
             IStat?.SetOrigin(Stat.EType.MaxMp, maxMp);
 
             IStat?.SetOrigin(Stat.EType.ActivePoint, activePoint);
@@ -252,10 +251,21 @@ namespace Creature
         #region Stat.IListener
         void Stat.IListener.OnStatChanged(Stat.EType eType, float value)
         {
-            if (eType == Stat.EType.Hp)
+            switch(eType)
             {
-                if(value <= 0)
-                    IActCtr?.Die();
+                case Stat.EType.Hp:
+                    {
+                        if (value <= 0)
+                            IActCtr?.Die();
+
+                        break;
+                    }
+
+                case Stat.EType.Mp:
+                    {
+                        GameSystem.Event.EventHandler.Notify(new StatChangedEventData(Id, IStat));
+                        break;
+                    }
             }
         }
         #endregion

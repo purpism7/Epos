@@ -33,6 +33,9 @@ namespace  UI.Parts
         [SerializeField] private Slider previewHpSlider = null;
         [SerializeField] private Slider hpSlider = null;
 
+        [SerializeField] private Slider previewMpSlider = null;
+        [SerializeField] private Slider mpSlider = null;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -42,24 +45,10 @@ namespace  UI.Parts
         {
             base.ActivateAsync(param);
 
-            if (param?.ICombatant != null)
-            {
-                var maxHp = param.ICombatant.IActor.IStat.Get(Stat.EType.MaxHp);
+            SetHpProgress();
+            SetMpProgress();
 
-                if (previewHpSlider != null)
-                {
-                    previewHpSlider.maxValue = maxHp;
-                    previewHpSlider.value = maxHp;
-                }
-
-                if (hpSlider != null)
-                {
-                    hpSlider.maxValue = maxHp;
-                    hpSlider.value = maxHp;
-                }
-
-                GameSystem.Event.EventHandler.Add<StatChangedEventData>(OnStatChanged);
-            }
+            GameSystem.Event.EventHandler.Add<StatChangedEventData>(OnStatChanged);
 
             return UniTask.CompletedTask;
         }
@@ -80,26 +69,72 @@ namespace  UI.Parts
 
         void IHpProgress.UpdateHpProgress()
         {
-            UpdateHpProgress();
+            UpdateProgress(Stat.EType.Hp, hpSlider, previewHpSlider);
         }
 
-        private void UpdateHpProgress()
+        private void SetHpProgress()
         {
-            if (_param?.ICombatant == null)
+            var iActor = _param?.ICombatant?.IActor;
+            if (iActor == null)
                 return;
 
-            var hp = _param.ICombatant.IActor.IStat.Get(Stat.EType.Hp);
+            var maxHp = iActor.IStat.Get(Stat.EType.MaxHp);
+
+            if (previewHpSlider != null)
+            {
+                previewHpSlider.maxValue = maxHp;
+                previewHpSlider.value = maxHp;
+            }
 
             if (hpSlider != null)
-                hpSlider.DOValue(hp, 0.1f)
-                    .OnComplete(() =>
-                    {
-                        if (previewHpSlider != null)
-                            previewHpSlider.DOValue(hp, 0.3f);
+            {
+                hpSlider.maxValue = maxHp;
+                hpSlider.value = maxHp;
+            }
+        }
 
-                        if (!_param.ICombatant.IActor.IsAlive)
-                            Deactivate();
-                    });
+        private void SetMpProgress()
+        {
+            var iActor = _param?.ICombatant?.IActor;
+            if (iActor == null)
+                return;
+
+            var maxMp = iActor.IStat.Get(Stat.EType.MaxMp);
+
+            if (previewMpSlider != null)
+            {
+                previewMpSlider.maxValue = maxMp;
+                previewMpSlider.value = maxMp;
+            }
+
+            if (mpSlider != null)
+            {
+                mpSlider.maxValue = maxMp;
+                mpSlider.value = maxMp;
+            }
+        }
+
+        private void UpdateProgress(Stat.EType eType, Slider slider, Slider previewSlider = null)
+        {
+            var iActor = _param?.ICombatant?.IActor;
+            if (iActor == null)
+                return;
+
+            if (slider != null)
+            {
+                var value = iActor.IStat.Get(eType);
+
+                slider.DOValue(value, 0.1f)
+                   .OnComplete(() =>
+                   {
+                       if (previewSlider != null)
+                           previewSlider.DOValue(value, 0.3f);
+
+                       if (eType == Stat.EType.Hp &&
+                           !iActor.IsAlive)
+                           Deactivate();
+                   });
+            }  
         }
 
         private void OnStatChanged(StatChangedEventData eventData)
@@ -111,7 +146,8 @@ namespace  UI.Parts
             if (eventData.CharacterId != _param.ICombatant.IActor.Id)
                 return;
 
-            UpdateHpProgress();
+            UpdateProgress(Stat.EType.Hp, hpSlider, previewHpSlider);
+            UpdateProgress(Stat.EType.Mp, mpSlider);
         }
     }
 }

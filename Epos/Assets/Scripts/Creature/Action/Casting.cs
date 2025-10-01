@@ -48,7 +48,6 @@ namespace Creature.Action
             }
 
         }
-
         public interface IListener
         {
             void BeforeCasting();
@@ -86,11 +85,6 @@ namespace Creature.Action
 
         private async UniTask CastingAsync()
         {
-            _param?.ISkill?.Casting();
-            _param?.IListener?.BeforeCasting();
-            
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
             var skillData = _param?.ISkill?.SkillData;
             if (skillData == null)
             {
@@ -98,7 +92,14 @@ namespace Creature.Action
                 return;
             }
 
-            if(skillData.PlayAnimation)
+            _iActor?.IStat?.Add(Stat.EType.Mp, Stat.ESubType.None, -skillData.MP);
+
+            _param?.IListener?.BeforeCasting();
+            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+
+            _param?.ISkill?.Casting();
+
+            if (skillData.PlayAnimation)
                 await ActivateSpecialSkillAnimPopupAsync();
 
             PlayAnimation(skillData.AnimationName, false);

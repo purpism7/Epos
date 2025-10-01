@@ -14,6 +14,7 @@ namespace Datas.ScriptableObjects
         public string AnimationName = string.Empty;
         public ESkillCategory ESkillCategory = ESkillCategory.None;
         public float Cooltime = 0;
+        public float MP = 0;
         public int Point = 0;
         public ESkillTarget ESkillTarget = ESkillTarget.None;
         public float Range  = 0;
