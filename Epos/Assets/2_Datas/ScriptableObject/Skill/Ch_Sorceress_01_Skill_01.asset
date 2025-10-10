@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e91bf44283980411591b8e7b992a1cc2, type: 3}
-  m_Name: TripleThrust
+  m_Name: Ch_Sorceress_01_Skill_01
   m_EditorClassIdentifier: 
-  Id: 8
-  AnimationName: Skill_03_02
+  Id: 2
+  AnimationName: Skill_01
   ESkillCategory: 2
-  Cooltime: 20
+  Cooltime: 0
   MP: 0
   Point: 1
-  ESkillTarget: 5
-  Range: 6
-  Multiplier: 1.5
+  ESkillTarget: 2
+  Range: 15
+  Multiplier: 1
   SameTeam: 0
-  KnockbackDistance: 20
-  DashAnimationName: Skill_03_01
-  ProjectilePrefab: {fileID: 0}
+  KnockbackDistance: 2
+  DashAnimationName: 
+  ProjectilePrefab: {fileID: 1707519472764412, guid: 8b98db592b326b044845cd9bea7ce26e, type: 3}
   PlayAnimation: 0

@@ -19340,7 +19340,7 @@ GameObject:
   - component: {fileID: 114297119657385916}
   - component: {fileID: 4654820222499235198}
   m_Layer: 0
-  m_Name: Eff_MagicHit_01
+  m_Name: Eff_MagicCasting_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

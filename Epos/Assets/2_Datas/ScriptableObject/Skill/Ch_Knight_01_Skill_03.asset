@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e91bf44283980411591b8e7b992a1cc2, type: 3}
-  m_Name: Pierce
+  m_Name: Ch_Knight_01_Skill_03
   m_EditorClassIdentifier: 
-  Id: 4
-  AnimationName: Skill_01
+  Id: 3
+  AnimationName: Skill_03
   ESkillCategory: 2
-  Cooltime: 0
-  MP: 0
+  Cooltime: 30
+  MP: 20
   Point: 1
-  ESkillTarget: 2
-  Range: 3
-  Multiplier: 1
+  ESkillTarget: 4
+  Range: 5
+  Multiplier: 2
   SameTeam: 0
-  KnockbackDistance: 6
+  KnockbackDistance: 20
   DashAnimationName: 
-  ProjectilePrefab: {fileID: 0}
-  PlayAnimation: 0
+  ProjectilePrefab: {fileID: 7072696786143263527, guid: c8625f0828616b4498c7c0e2e845d8c7, type: 3}
+  PlayAnimation: 1

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e91bf44283980411591b8e7b992a1cc2, type: 3}
-  m_Name: BigSwing
+  m_Name: Ch_Speear_01_Skill_01
   m_EditorClassIdentifier: 
-  Id: 3
-  AnimationName: Skill_02_02
+  Id: 4
+  AnimationName: Skill_01
   ESkillCategory: 2
-  Cooltime: 10
-  MP: 20
+  Cooltime: 0
+  MP: 0
   Point: 1
   ESkillTarget: 2
-  Range: 5
-  Multiplier: 1.5
+  Range: 4
+  Multiplier: 1
   SameTeam: 0
-  KnockbackDistance: 6
-  DashAnimationName: Skill_02_01
+  KnockbackDistance: 8
+  DashAnimationName: 
   ProjectilePrefab: {fileID: 0}
   PlayAnimation: 0

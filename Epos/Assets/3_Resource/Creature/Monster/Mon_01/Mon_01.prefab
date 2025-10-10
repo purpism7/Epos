@@ -52,11 +52,12 @@ MonoBehaviour:
   moveSpeed: 7.4
   attack: 1
   maxHp: 30.7
+  maxMp: 1
   activePoint: 1
   passivePoint: 1
   attackSight: 10
   skills:
-  - {fileID: 11400000, guid: e091172c8a06a443ebcdea70e7b13dcd, type: 2}
+  - {fileID: 11400000, guid: c01f67790707c0d458c3378a30a1ecd0, type: 2}
 --- !u!1 &7525692459730496249
 GameObject:
   m_ObjectHideFlags: 0
