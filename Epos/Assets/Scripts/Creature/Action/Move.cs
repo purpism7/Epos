@@ -1,11 +1,16 @@
-using Cysharp.Threading.Tasks;
-using Spine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Rendering;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+using Cysharp.Threading.Tasks;
+using VContainer;
+
+using Entities;
+using Spine;
+
 using static UnityEngine.UI.Image;
 
 namespace Creature.Action
@@ -124,6 +129,8 @@ namespace Creature.Action
 
             if (_iActor?.Transform)
                 _prevPos = _iActor.Transform.position;
+
+            _iActor?.IEffectCtr?.Activate(GetType().Name, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Eff_run_01");
         }
 
         protected override void Activate()
@@ -274,6 +281,7 @@ namespace Creature.Action
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
+
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
 
@@ -297,6 +305,8 @@ namespace Creature.Action
         {
             if (_isEnded)
                 return;
+
+            _iActor?.IEffectCtr?.Deactivate(GetType().Name);
 
             _isEnded = true;
             _param?.FinishAction?.Invoke();

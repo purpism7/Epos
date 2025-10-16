@@ -20,14 +20,15 @@ namespace Creature
             base.InitializeInject(iResolver);
 
             InitializeActController(this);
+            
         }
 
         public override void Initialize()
         {
             base.Initialize();
 
-            InitializeActController(this);
             InitializeEmotionController();
+            InitializeEffectController(this);
         }
 
         public override void Deactivate()

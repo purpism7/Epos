@@ -34,7 +34,7 @@ namespace GameSystem
             iPoolable.Transform.SetActive(false);
         }
 
-        public T Get<T>(GameObject prefab = null) where T : Component
+        public T Get<T>(GameObject prefab = null, string key = "") where T : Component
         {
             if (_iPoolableList.IsNullOrEmpty())
                 return null;
@@ -52,6 +52,12 @@ namespace GameSystem
                 if(prefab)
                 {
                     if (iPoolable.PrefabKey != prefab)
+                        continue;
+                }
+
+                if(!string.IsNullOrEmpty(key))
+                {
+                    if (iPoolable.PrefabKey.name != key)
                         continue;
                 }
 

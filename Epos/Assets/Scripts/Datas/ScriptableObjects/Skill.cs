@@ -12,6 +12,7 @@ namespace Datas.ScriptableObjects
     {
         public int Id = 0;
         public string AnimationName = string.Empty;
+        public string EffectName = string.Empty;
         public ESkillCategory ESkillCategory = ESkillCategory.None;
         public float Cooltime = 0;
         public float MP = 0;

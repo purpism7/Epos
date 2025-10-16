@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 3
   AnimationName: Skill_01
+  EffectName: Eff_Knight_Skill_01
   ESkillCategory: 2
   Cooltime: 0
   MP: 0

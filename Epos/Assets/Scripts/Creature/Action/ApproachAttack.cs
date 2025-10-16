@@ -60,6 +60,8 @@ namespace Creature.Action
                 return; 
             }
 
+            //var closeset = closestTarget.IActor.Collider.ClosestPoint(attacker.Transform.position);
+
             var skillRange = skillData.Range;
             if (skillRange > 0)
             {

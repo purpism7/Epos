@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   AnimationName: Skill_01
+  EffectName: Eff_MagicCasting_01
   ESkillCategory: 2
   Cooltime: 0
   MP: 0

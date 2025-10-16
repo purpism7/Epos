@@ -1,17 +1,13 @@
-using Common;
-using Creator;
-using Creature.Action;
-using Cysharp.Threading.Tasks;
-using Datas.ScriptableObjects;
-using GameSystem;
-using GameSystem.Event;
-using Spine;
-using Spine.Unity;
-using System;
-using UI.Parts;
 using UnityEngine;
 using UnityEngine.AI;
+
+using Spine.Unity;
 using VContainer;
+
+using Creature.Action;
+using Datas.ScriptableObjects;
+using GameSystem.Event;
+using Common;
 
 namespace Creature
 {
@@ -42,6 +38,7 @@ namespace Creature
         public float Height { get; private set; } = 0;
 
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
+        public Collider2D Collider { get; private set; } = null;
 
         public Transform Transform
         {
@@ -56,6 +53,7 @@ namespace Creature
         }
 
         public Action.IActController IActCtr { get; protected set; } = null;
+        public Action.ICreatureEffectController IEffectCtr { get; protected set; } = null;
         public Skill[] Skills => skills;
 
         #region Temp Stat
@@ -117,9 +115,11 @@ namespace Creature
                 builder =>
                 {
                     builder.Register<ActController>(VContainer.Lifetime.Singleton).As<IActController>();
+                    builder.Register<CreatureEffectController>(VContainer.Lifetime.Scoped).As<ICreatureEffectController>();
                 });
 
             IActCtr = scope?.Resolve<IActController>();
+            IEffectCtr = scope?.Resolve<ICreatureEffectController>();
         }
         
         #region ICharacterGeneric
@@ -130,6 +130,8 @@ namespace Creature
 
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
             _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
+
+            Collider = GetComponentInChildren<Collider2D>();
 
             _iStatGeneric = new Stat();
             _iStatGeneric?.Initialize(this);
@@ -148,6 +150,7 @@ namespace Creature
                 return;
 
             IActCtr?.ChainUpdate();
+            IEffectCtr?.ChainUpdate();
         }
 
         public virtual void ChainLateUpdate()
@@ -172,6 +175,7 @@ namespace Creature
 
             _iStatGeneric?.Activate();
             IActCtr?.Activate();
+            IEffectCtr?.Activate();
             // ISkillCtr?.Activate();
         }
 
@@ -181,6 +185,7 @@ namespace Creature
 
             _iStatGeneric?.Deactivate();
             IActCtr?.Deactivate();
+            IEffectCtr?.Deactivate();
             // ISkillCtr?.Deactivate();      
         }
         #endregion
@@ -188,6 +193,11 @@ namespace Creature
         protected void InitializeActController(IActor iActor)
         {
             IActCtr?.Initialize(iActor);
+        }
+
+        protected void InitializeEffectController(IActor iActor)
+        {
+            IEffectCtr?.Initialize(iActor);
         }
 
         private void EnableNavmeshAgent()

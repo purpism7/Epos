@@ -153,7 +153,7 @@ namespace Battle.Mode
                 if (iCombatant == null)
                     continue;
 
-                iCombatant.IActor?.IActCtr?.ChainUpdate();
+                iCombatant.IActor?.ChainUpdate();
             }
 
             _iWaypointCtr?.ChainUpdate(_closestICombatant);

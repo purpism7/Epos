@@ -1,18 +1,22 @@
-using Common;
-using Creator;
-using Cysharp.Threading.Tasks;
-using Datas.ScriptableObjects;
-using DG.Tweening;
-using GameSystem;
-using GameSystem.Event;
-using Spine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using Spine;
 using VContainer;
+
+
+using Datas.ScriptableObjects;
+using GameSystem;
+using GameSystem.Event;
+using Common;
+using Creator;
+
 
 using Vector3 = UnityEngine.Vector3;
 
@@ -103,7 +107,9 @@ namespace Creature.Action
                 await ActivateSpecialSkillAnimPopupAsync();
 
             PlayAnimation(skillData.AnimationName, false);
-            
+
+            _iActor?.IEffectCtr?.Activate(skillData.AnimationName, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), skillData.EffectName);
+
             var halfDuration = _duration / 2f;
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
@@ -112,6 +118,8 @@ namespace Creature.Action
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             AfterCasting();
+
+            _iActor?.IEffectCtr?.Deactivate(skillData.AnimationName);
         }
 
         private void AfterCasting()

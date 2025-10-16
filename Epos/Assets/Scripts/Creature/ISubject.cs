@@ -19,6 +19,7 @@ namespace Creature
         void Activate();
         void Deactivate();
 
+        void ChainUpdate();
         void ChainLateUpdate();
         
         Transform Transform { get; }

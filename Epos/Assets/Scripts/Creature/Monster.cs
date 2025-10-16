@@ -21,6 +21,8 @@ namespace Creature
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeEffectController(this);
         }
 
         public override string AnimationKey<T>(Act<T> act)

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;

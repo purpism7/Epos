@@ -24,6 +24,7 @@ namespace Lifetime
 
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
             builder.Register<TimeScaleManager>(VContainer.Lifetime.Singleton).As<ITimeScaleManager>();
+            
 
             builder.RegisterComponentOnNewGameObject<AddressableManager>(VContainer.Lifetime.Singleton, $"[{typeof(AddressableManager).Name}]")
                .UnderTransform(transform)
@@ -32,6 +33,10 @@ namespace Lifetime
             builder.RegisterComponentOnNewGameObject<InputManager>(VContainer.Lifetime.Singleton, $"[{typeof(InputManager).Name}]")
                 .UnderTransform(transform)
                 .As<IInputManager>();
+
+            builder.RegisterComponentOnNewGameObject<EffectManager>(VContainer.Lifetime.Singleton, $"[{typeof(EffectManager).Name}]")
+                .UnderTransform(transform)
+                .As<IEffectManager>();
 
             builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
             builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();

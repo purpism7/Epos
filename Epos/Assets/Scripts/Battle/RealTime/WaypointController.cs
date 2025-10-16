@@ -120,14 +120,14 @@ namespace Battle.RealTime
 
             for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
             {
-                var enemyICombatant = Waypoint.EnemyICombatantList[i];
-                if (enemyICombatant == null)
+                var iActor = Waypoint.EnemyICombatantList[i]?.IActor;
+                if (iActor == null)
                     continue;
 
-                if (!enemyICombatant.IActor.IsActivate)
+                if (!iActor.IsActivate)
                     continue;
 
-                enemyICombatant.IActor.IActCtr?.ChainUpdate();
+                iActor?.ChainUpdate();
             }
             
             if (targetICombatant == null)
@@ -151,14 +151,14 @@ namespace Battle.RealTime
             
             for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
             {
-                var enemyICombatant = Waypoint.EnemyICombatantList[i];
-                if (enemyICombatant == null)
+                var iActor = Waypoint.EnemyICombatantList[i]?.IActor;
+                if (iActor == null)
                     continue;
 
-                if (!enemyICombatant.IActor.IsActivate)
+                if (!iActor.IsActivate)
                     continue;
 
-                enemyICombatant.IActor.ChainLateUpdate();
+                iActor.ChainLateUpdate();
             }
         }
 
