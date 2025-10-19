@@ -290,11 +290,8 @@ namespace Creature.Action
             
             NavMeshHit hit;
             if (NavMesh.SamplePosition(targetPosition, out hit, distance, NavMesh.AllAreas))
-            {
-                Debug.Log("이동 가능한 위치입니다: " + hit.position);
                 targetPosition = hit.position;
-                // hit.position은 이동 가능한 위치입니다.
-            }
+            
             // var targetPosition = target.Transform.position + direction * distance;
 
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
