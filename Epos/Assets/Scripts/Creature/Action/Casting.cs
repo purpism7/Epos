@@ -3,21 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.AI;
 
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Spine;
 using VContainer;
 
-
 using Datas.ScriptableObjects;
 using GameSystem;
 using GameSystem.Event;
 using Common;
 using Creator;
-
-
 using Vector3 = UnityEngine.Vector3;
 
 namespace Creature.Action
@@ -290,6 +287,15 @@ namespace Creature.Action
             var distance = knockbackDistance;
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;
+            
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(targetPosition, out hit, distance, NavMesh.AllAreas))
+            {
+                Debug.Log("이동 가능한 위치입니다: " + hit.position);
+                targetPosition = hit.position;
+                // hit.position은 이동 가능한 위치입니다.
+            }
+            // var targetPosition = target.Transform.position + direction * distance;
 
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)

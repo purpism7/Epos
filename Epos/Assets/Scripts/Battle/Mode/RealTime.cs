@@ -267,7 +267,6 @@ namespace Battle.Mode
                     .WithForwardDirection(_closestICombatant.IActor.Id != iCombatant.IActor.Id);
             }
 
-
             iCombatant.IActor?.IActCtr?
                 .MoveToTarget(moveParam)?
                 .Execute();
@@ -326,7 +325,7 @@ namespace Battle.Mode
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
-                iCombatant?.IActor?.IActCtr?.Execute();
+                iCombatant.IActor?.IActCtr?.Execute();
                 return;
             }
 

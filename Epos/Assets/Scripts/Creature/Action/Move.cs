@@ -194,7 +194,16 @@ namespace Creature.Action
                         targetPos = _param.TargetPos.Value;
 
                     if (_param.TargetICombatant != null)
-                        targetPos = _param.TargetICombatant.IActor.Transform.position;
+                    {
+                        targetPos = _param.TargetICombatant.Transform.position;
+                        
+                        var targetCollider = _param.TargetICombatant.IActor?.Collider;
+                        if (targetCollider != null)
+                        {
+                            var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
+                            targetPos = closesetPosition;
+                        }
+                    }
                 }
 
                 return targetPos;
