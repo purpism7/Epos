@@ -31,7 +31,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UI_TacticalStancePopup
+  m_Name: UI_TacticalStancePopup_Old
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: OnOff
@@ -74,7 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: fa7b2cce68825dc4a9718258f9906434, type: 2}
+  m_Motion: {fileID: 7400000, guid: 752d166c1babe654eaa1279da4b372dc, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -151,7 +151,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: b51d0d57cb1b5ab459889fd6395c67c4, type: 2}
+  m_Motion: {fileID: 7400000, guid: 3f8d58839d75ae74e93b1686c7cc4919, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
