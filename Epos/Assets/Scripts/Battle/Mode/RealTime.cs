@@ -157,6 +157,12 @@ namespace Battle.Mode
             }
 
             _iWaypointCtr?.ChainUpdate(_closestICombatant);
+
+            if (_closestICombatant?.IActor != null)
+            {
+                if(!_closestICombatant.IActor.IsAlive)
+                    SetClosestICombatant();
+            }
         }
 
         private ICombatant ClosestICombatantToWayPoint()
