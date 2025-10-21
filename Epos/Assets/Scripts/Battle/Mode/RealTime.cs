@@ -79,6 +79,12 @@ namespace Battle.Mode
         public override void ChainUpdate()
         {
             UpdateWaypoint();
+
+            if (_closestICombatant?.IActor != null)
+            {
+                if (!_closestICombatant.IActor.IsAlive)
+                    SetClosestICombatant();
+            }
         }
 
         public override void ChainLateUpdate()
@@ -157,12 +163,6 @@ namespace Battle.Mode
             }
 
             _iWaypointCtr?.ChainUpdate(_closestICombatant);
-
-            if (_closestICombatant?.IActor != null)
-            {
-                if(!_closestICombatant.IActor.IsAlive)
-                    SetClosestICombatant();
-            }
         }
 
         private ICombatant ClosestICombatantToWayPoint()

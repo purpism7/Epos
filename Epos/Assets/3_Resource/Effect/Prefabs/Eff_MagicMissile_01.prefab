@@ -4786,6 +4786,7 @@ GameObject:
   - component: {fileID: 19905166}
   - component: {fileID: 10842438}
   - component: {fileID: 7473755252262072213}
+  - component: {fileID: 3162210194655783414}
   m_Layer: 0
   m_Name: Eff_MagicMissile_01
   m_TagString: Untagged
@@ -9524,8 +9525,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1882869003
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0
@@ -9647,6 +9648,19 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &3162210194655783414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8032e2541c41bd2458ec47d9ffc36eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 0}
 --- !u!1 &165414
 GameObject:
   m_ObjectHideFlags: 0

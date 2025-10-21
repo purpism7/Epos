@@ -211,7 +211,7 @@ namespace Creature
                 //NavMeshAgent.speed = 3.5f;
                 NavMeshAgent.angularSpeed = 100f;
                 NavMeshAgent.acceleration = 100f;
-                NavMeshAgent.stoppingDistance = 0.5f;
+                NavMeshAgent.stoppingDistance = 0.1f;
                 //NavMeshAgent.radius = 0.5f;
                 //NavMeshAgent.height = 2f;
 
