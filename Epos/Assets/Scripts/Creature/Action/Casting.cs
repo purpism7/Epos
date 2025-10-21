@@ -1,22 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using UnityEngine;
-
+using UnityEngine.AI;
+using UnityEngine.UIElements;
+using UnityEditor;
 
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using Spine;
 using VContainer;
 
-
-using Datas.ScriptableObjects;
 using GameSystem;
 using GameSystem.Event;
+using Datas.ScriptableObjects;
 using Common;
 using Creator;
-
 
 using Vector3 = UnityEngine.Vector3;
 
@@ -59,6 +60,8 @@ namespace Creature.Action
             void AfterCasting(ICombatant iCombatant);
         }
 
+        private bool _isUpdate = false;
+
         public override void Initialize(IActor iActor)
         {
             base.Initialize(iActor);
@@ -69,8 +72,11 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
+            _isUpdate = true;
+
             LookAtTarget();
             CastingAsync().Forget();
+            //UpdateAsync().Forget();
         }
 
         private void LookAtTarget()
@@ -86,6 +92,44 @@ namespace Creature.Action
                 _param?.Attacker?.IActor?.IActCtr?.Flip(-direction.x);
             }
         }
+
+        //private async UniTask UpdateAsync()
+        //{
+        //    var attacker = _param?.Attacker;
+        //    if (attacker == null)
+        //        return;
+
+        //    if (attacker.ETeam != ETeam.Ally)
+        //        return;
+
+        //    if (_param.ISkill.SkillData.ESkillTarget != ESkillTarget.Sector)
+        //        return;
+
+        //    while(_isUpdate)
+        //    {
+        //        //var Color = 
+        //        Handles.color = new UnityEngine.Color(0, 1, 0, 0.3f);
+        //        Vector2 startDirection = Quaternion.Euler(0, 0, 45f / 2f) * attacker.Transform.up;
+        //        Handles.DrawSolidArc(attacker.Transform.position, Vector3.back, startDirection, 45f, 5f);
+
+        //        //Vector3 boundary1 = Quaternion.Euler(0, 0, 45f / 2f) * attacker.Transform.right;
+        //        //Vector3 boundary2 = Quaternion.Euler(0, 0, -45f / 2f) * attacker.Transform.right;
+
+        //        //Gizmos.color = Color.red;
+        //        //Debug.DrawRay(attacker.Transform.position, attacker.Transform.position + boundary1 * 5f, Color.yellow);
+        //        //Debug.DrawRay(attacker.Transform.position, attacker.Transform.position + boundary2 * 5f, Color.yellow);
+
+        //        //float angleThreshold = 30f;
+        //        //Vector3 boundary1 = Quaternion.AngleAxis(angleThreshold, attacker.Transform.up) * attacker.Transform.right;
+        //        //Vector3 boundary2 = Quaternion.AngleAxis(-angleThreshold, attacker.Transform.up) * attacker.Transform.right;
+        //        //Debug.DrawRay(attacker.Transform.position, boundary1 * 10f, Color.yellow);
+        //        //Debug.DrawRay(attacker.Transform.position, boundary2 * 10f, Color.yellow);
+
+        //        await UniTask.Yield();
+        //    }
+
+            
+        //}
 
         private async UniTask CastingAsync()
         {
@@ -120,6 +164,8 @@ namespace Creature.Action
             AfterCasting();
 
             _iActor?.IEffectCtr?.Deactivate(skillData.AnimationName);
+
+            _isUpdate = false;
         }
 
         private void AfterCasting()
@@ -192,13 +238,13 @@ namespace Creature.Action
                     case ESkillTarget.Circle:
                         {
                             isAttack = attacker.IsCircle(target, 5f);
-                            Utils.DrawCircle(attacker.Transform.position, 360f, Color.black, 1f);
+                            Utils.DrawCircle(attacker.Transform.position, 360f, UnityEngine.Color.black, 1f);
                             break;
                         }
 
                     case ESkillTarget.Sector:
                         {
-                            isAttack = attacker.IsSector(target, 4f);
+                            isAttack = attacker.IsSector(target, 5f);
                             break;
                         }
                 }
@@ -290,6 +336,12 @@ namespace Creature.Action
             var distance = knockbackDistance;
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;
+            
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(targetPosition, out hit, distance, NavMesh.AllAreas))
+                targetPosition = hit.position;
+            
+            // var targetPosition = target.Transform.position + direction * distance;
 
             await target.Transform.DOMove(targetPosition, distance * 0.05f)
                 .SetEase(Ease.OutQuad)

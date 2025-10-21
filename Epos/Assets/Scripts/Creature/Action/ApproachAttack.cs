@@ -59,9 +59,7 @@ namespace Creature.Action
                 End();
                 return; 
             }
-
-            //var closeset = closestTarget.IActor.Collider.ClosestPoint(attacker.Transform.position);
-
+            
             var skillRange = skillData.Range;
             if (skillRange > 0)
             {
@@ -71,7 +69,6 @@ namespace Creature.Action
                     _iActor?.SkeletonAnimation?.PlayAnimation(skillData.DashAnimationName, false,
                         (trackEntry) =>
                         {
-                            
                             Vector2 direction = closestTarget?.IActor?.SkeletonAnimation.Skeleton.ScaleX > 0 ? Vector2.right : Vector2.left;
                             var targetPosition = (Vector2)closestTarget.Transform.position + direction * skillRange;
 
@@ -84,18 +81,18 @@ namespace Creature.Action
                 }
 
                 var moveParam = new Move.Param
-                {
-                    MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
-                    FinishAction = () =>
                     {
-                        CastingSkill(attacker, iSkill, closestTarget, targetList);
-                    },
-                    IsJumpMove = false,
-                }
-                .WithTargetICombatant(closestTarget)?
-                .WithForwardDirection(false)?
-                .WithDistance(skillRange)
-                .WithUseNavMesh(false);
+                        MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
+                        FinishAction = () =>
+                        {
+                            CastingSkill(attacker, iSkill, closestTarget, targetList);
+                        },
+                        IsJumpMove = false,
+                    }
+                    .WithTargetICombatant(closestTarget)?
+                    .WithForwardDirection(false)?
+                    .WithDistance(skillRange);
+                // .WithUseNavMesh(true);
 
                 attacker.IActor.IActCtr?
                     .MoveToTarget(moveParam)?

@@ -26,7 +26,7 @@ namespace Creature
         [Inject]
         private void InitializeInject(IObjectResolver iResolver)
         {
-            Debug.Log("InitializeInject = " + iResolver);
+            //Debug.Log("InitializeInject = " + iResolver);
         }
 
         public ICombatant Initialize(IActor iActor, Skill[] skills)

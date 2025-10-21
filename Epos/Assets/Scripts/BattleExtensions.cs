@@ -101,9 +101,14 @@ public static class BattleExtensions
             return false;
 
         Vector3 direction = (iCombatant.IActor.Transform.position - attacker.Transform.position).normalized;
-        float dot = Vector3.Dot(attacker.Transform.right, direction);
+        float dot = Vector3.Dot(attacker.Transform.up, direction);
 
-        return dot > Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
+        return dot >= Mathf.Cos(45f / 2 * Mathf.Deg2Rad);
+      
+
+        //float angleToTarget = Vector2.Angle(attacker.Transform.right, direction);
+
+        //return angleToTarget <= 45f / 2f;
     }
 
     public static ICombatant FindClosestICombatant(this Transform tm, List<ICombatant> iCombatantList)

@@ -12,6 +12,8 @@ using Entities;
 using Spine;
 
 using static UnityEngine.UI.Image;
+using UnityEngine.AI;
+using UnityEditor.Experimental.GraphView;
 
 namespace Creature.Action
 {
@@ -121,7 +123,6 @@ namespace Creature.Action
                     _targetPos = CalcTargetPos;
 
                     SetNavMeshAgentSpeed();
-                    navMeshAgent.SetDestination(_targetPos);
                 }
             }
             else
@@ -185,17 +186,54 @@ namespace Creature.Action
             get
             {
                 Vector3 targetPos = Vector3.zero;
+                Transform targetTm = null;
+
                 if(_param != null)
                 {
                     if (_param.TargetTm)
+                    {
+                        targetTm = _param.TargetTm;
                         targetPos = _param.TargetTm.position;
-
+                    }
+                        
                     if (_param.TargetPos != null)
                         targetPos = _param.TargetPos.Value;
 
                     if (_param.TargetICombatant != null)
-                        targetPos = _param.TargetICombatant.IActor.Transform.position;
+                    {
+                        targetTm = _param.TargetICombatant.Transform;
+                        targetPos = _param.TargetICombatant.Transform.position;
+                        
+                        var targetCollider = _param.TargetICombatant.IActor?.Collider;
+                        if (targetCollider != null)
+                        {
+                            var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
+                            targetPos = closesetPosition;
+                        }
+                    }
                 }
+
+                if(targetTm)
+                {
+                    // 1. 목표의 양 옆 위치를 정의합니다.
+                    // target.right는 2D 공간의 오른쪽 방향 벡터 (Vector2)로 자동 변환됩니다.
+                    Vector2 rightPos = (Vector2)targetTm.position + ((Vector2)targetTm.right);
+                    Vector2 leftPos = (Vector2)targetTm.position - ((Vector2)targetTm.right);
+
+                    // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
+                    float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPos);
+                    float distanceToLeft = Vector2.Distance(_iActor.Transform.position, leftPos);
+
+                    // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
+                    targetPos = (distanceToRight < distanceToLeft) ? rightPos : leftPos;
+                }
+
+
+
+                
+
+                
+                
 
                 return targetPos;
             }
@@ -212,28 +250,28 @@ namespace Creature.Action
 
                 if (_param.ForwardDirection)
                 {
-                    if(_param?.LeaderTm)
-                    {
-                        Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
-                        Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
+                    //if(_param?.LeaderTm)
+                    //{
+                    //    Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
+                    //    Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
 
-                        var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
+                    //    var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
 
-                        bool isLeft = crossPos.z > 0f;
+                    //    bool isLeft = crossPos.z > 0f;
 
-                        Vector3 right = Vector3.right; // 월드 기준 오른쪽
-                        Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
+                    //    Vector3 right = Vector3.right; // 월드 기준 오른쪽
+                    //    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
 
-                        // 반원 내 랜덤 각도 + 거리
-                        float angle = Random.Range(-90f, 90f);
-                        float distance = Random.Range(6f, 10f);
+                    //    // 반원 내 랜덤 각도 + 거리
+                    //    float angle = Random.Range(-90f, 90f);
+                    //    float distance = Random.Range(6f, 10f);
 
-                        // 회전 적용
-                        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                        Vector3 offset = rotation * baseDir * distance;
+                    //    // 회전 적용
+                    //    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                    //    Vector3 offset = rotation * baseDir * distance;
 
-                        return targetPos + offset;
-                    }
+                    //    return targetPos + offset;
+                    //}
                 }
 
                 return targetPos;
@@ -276,7 +314,16 @@ namespace Creature.Action
                 UpdateMovementUsingTransform(iActorTm, _targetPos);
             }
             else
+            {
                 SetNavMeshAgentSpeed();
+
+                _targetPos = CalcTargetPos;
+
+                //if (NavMesh.SamplePosition(_targetPos, out NavMeshHit hit, 10f, NavMesh.AllAreas))
+                //    _targetPos = hit.position;
+
+                _iActor.NavMeshAgent?.SetDestination(_targetPos);
+            }
 
             Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
 
