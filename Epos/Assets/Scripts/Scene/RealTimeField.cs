@@ -20,6 +20,13 @@ namespace Scene
         [SerializeField]
         private PartyLocation partyLocation = null;
 
+        protected override void Configure(IContainerBuilder builder)
+        {
+            base.Configure(builder);
+
+            builder.Register<GameSystem.StrategyManager>(VContainer.Lifetime.Scoped).As<IStrategyManager>();
+        }
+
         public override async UniTask InitializeAsync()
         {
             await base.InitializeAsync();
