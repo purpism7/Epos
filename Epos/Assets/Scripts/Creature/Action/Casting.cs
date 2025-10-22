@@ -333,6 +333,8 @@ namespace Creature.Action
                !target.IActor.IsAlive)
                 return;
 
+            //target.IActor.NavMeshAgent.
+
             var distance = knockbackDistance;
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
             var targetPosition = target.Transform.position + direction * distance;

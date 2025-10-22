@@ -30,10 +30,14 @@ namespace Creature
             switch (act)
             {
                 case Idle: return nameof(Idle);
-                case Move: return "Run";
+
+                case Move:
+                case Trace:
+                    return "Run";
+
                 case Casting: return "Skill_01";
-                case Impact: return "Damage";
-                case Creature.Action.Die: return "Damage";
+                case Impact: return "Damege";
+                case Creature.Action.Die: return "Damege";
             }
 
             return string.Empty;

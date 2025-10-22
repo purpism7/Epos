@@ -3,15 +3,17 @@ using Battle.RealTime;
 using Common;
 using Creator;
 using Creature;
-using Cysharp.Threading.Tasks;
-using Entities;
-using GameSystem;
-using Parts;
-using Scene;
-using System.Collections.Generic;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
 using VContainer;
 using VContainer.Unity;
+
+using Parts;
+using System.Collections.Generic;
+using Scene;
+using Entities;
+using GameSystem;
 
 namespace Scene
 {
@@ -24,7 +26,8 @@ namespace Scene
         {
             base.Configure(builder);
 
-            builder.Register<GameSystem.StrategyManager>(VContainer.Lifetime.Scoped).As<IStrategyManager>();
+            builder.RegisterEntryPoint<GameSystem.StrategyManager>(VContainer.Lifetime.Scoped)
+                .As<IStrategyManager>();
         }
 
         public override async UniTask InitializeAsync()
