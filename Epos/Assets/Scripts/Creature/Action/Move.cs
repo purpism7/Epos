@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,8 +13,6 @@ using Entities;
 using Spine;
 
 using static UnityEngine.UI.Image;
-using UnityEngine.AI;
-using UnityEditor.Experimental.GraphView;
 
 namespace Creature.Action
 {
@@ -25,9 +24,7 @@ namespace Creature.Action
             public Transform TargetTm { get; private set; } = null;
             public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
-            // public Vector3? OffsetPosition { get; private set; } = null;
-            public Transform LeaderTm { get; private set; } = null;
-            public bool ForwardDirection { get; private set; } = false;
+
             public float Distance { get; private set; } = 0.1f;
 
             public System.Action FinishAction = null;
@@ -48,21 +45,9 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithLeaderTm(Transform leaderTm)
-            {
-                LeaderTm = leaderTm;
-                return this;
-            }
-
             public Param WithUseNavMesh(bool useNavMesh)
             {
                 UseNavMesh = useNavMesh;
-                return this;
-            }
-
-            public Param WithForwardDirection(bool forwardDirection)
-            {
-                ForwardDirection = forwardDirection;
                 return this;
             }
 
@@ -76,7 +61,6 @@ namespace Creature.Action
         private const string StopAnimationName = "Stop";
 
         private Vector3 _prevPos = Vector3.zero;
-        private Vector3 _targetPos = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
 
         private float _totalDistance = 0;
@@ -110,7 +94,6 @@ namespace Creature.Action
 
             _totalDistance = 0;
             _isEnded = false;
-            _targetPos = TargetPos;
 
             if (_param != null &&
                 _param.UseNavMesh)
@@ -119,9 +102,6 @@ namespace Creature.Action
                 if (navMeshAgent != null)
                 {
                     EnableNavMeshAgent();
-
-                    _targetPos = CalcTargetPos;
-
                     SetNavMeshAgentSpeed();
                 }
             }
@@ -229,54 +209,48 @@ namespace Creature.Action
                 }
 
 
-
-                
-
-                
-                
-
                 return targetPos;
             }
         }
 
-        private Vector3 CalcTargetPos
-        {
-            get
-            {
-                if (_iActor == null)
-                    return Vector3.zero ;
+        //private Vector3 CalcTargetPos
+        //{
+        //    get
+        //    {
+        //        if (_iActor == null)
+        //            return Vector3.zero ;
 
-                Vector3 targetPos = TargetPos;
+        //        Vector3 targetPos = TargetPos;
 
-                if (_param.ForwardDirection)
-                {
-                    //if(_param?.LeaderTm)
-                    //{
-                    //    Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
-                    //    Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
+        //        if (_param.ForwardDirection)
+        //        {
+        //            //if(_param?.LeaderTm)
+        //            //{
+        //            //Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
+        //            //Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
 
-                    //    var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
+        //            //var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
 
-                    //    bool isLeft = crossPos.z > 0f;
+        //            //bool isLeft = crossPos.z > 0f;
 
-                    //    Vector3 right = Vector3.right; // 월드 기준 오른쪽
-                    //    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
+        //            //    Vector3 right = Vector3.right; // 월드 기준 오른쪽
+        //            //    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
 
-                    //    // 반원 내 랜덤 각도 + 거리
-                    //    float angle = Random.Range(-90f, 90f);
-                    //    float distance = Random.Range(6f, 10f);
+        //            //    // 반원 내 랜덤 각도 + 거리
+        //            //    float angle = Random.Range(-90f, 90f);
+        //            //    float distance = Random.Range(6f, 10f);
 
-                    //    // 회전 적용
-                    //    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                    //    Vector3 offset = rotation * baseDir * distance;
+        //            //    // 회전 적용
+        //            //    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+        //            //    Vector3 offset = rotation * baseDir * distance;
 
-                    //    return targetPos + offset;
-                    //}
-                }
+        //            //    return targetPos + offset;
+        //            //}
+        //        }
 
-                return targetPos;
-            }
-        }
+        //        return targetPos;
+        //    }
+        //}
 
         public override void ChainUpdate()
         {
@@ -307,25 +281,21 @@ namespace Creature.Action
                 }
             }
 
-            if(_param != null &&
+            var targetPosition = TargetPos;
+
+            if (_param != null &&
               !_param.UseNavMesh)
             {
-                _targetPos = TargetPos;
-                UpdateMovementUsingTransform(iActorTm, _targetPos);
+                UpdateMovementUsingTransform(iActorTm, targetPosition);
             }
             else
             {
                 SetNavMeshAgentSpeed();
 
-                _targetPos = CalcTargetPos;
-
-                //if (NavMesh.SamplePosition(_targetPos, out NavMeshHit hit, 10f, NavMesh.AllAreas))
-                //    _targetPos = hit.position;
-
-                _iActor.NavMeshAgent?.SetDestination(_targetPos);
+                _iActor.NavMeshAgent?.SetDestination(targetPosition);
             }
 
-            Debug.DrawLine(iActorTm.position, _targetPos, Color.blue);
+            Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
 
             var direction = _prevPos - iActorTm.position;
 
@@ -334,7 +304,7 @@ namespace Creature.Action
 
             _prevPos = iActorTm.position;
 
-            var distance = Vector2.Distance(iActorTm.position, _targetPos);
+            var distance = Vector2.Distance(iActorTm.position, targetPosition);
             _totalDistance += distance;
             //Debug.Log("_totalDistance  = " + _totalDistance);
 

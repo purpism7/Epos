@@ -57,6 +57,7 @@ namespace Creature
             {
                 case Idle: return nameof(Idle);
                 case Move move:
+                case Trace:
                     {
                         // if (move.IsJumpMove)
                         //     return "F_Jump";
@@ -64,7 +65,7 @@ namespace Creature
                         return "Run";
                     }
                 case Casting: return "Skill_01";
-                case Impact impact: return "Damage";
+                case Impact impact: return "Damege";
             }
 
             return string.Empty;

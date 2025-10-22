@@ -15,6 +15,7 @@ namespace Creature.Action
     {
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
+        IActController TraceTo(Trace.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
 
         IActController Knockback(Knockback.Param param);
@@ -112,15 +113,28 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.MoveToTarget(Move.Param moveParam)
+        IActController IActController.MoveToTarget(Move.Param param)
         {
             if (!IsActivate)
                 return null;
 
-            if (moveParam == null)
+            if (param == null)
                 return null;
 
-            AddActAsync<Move, Move.Param>(moveParam).Forget();
+            AddActAsync<Move, Move.Param>(param).Forget();
+
+            return this;
+        }
+
+        IActController IActController.TraceTo(Trace.Param param)
+        {
+            if (!IsActivate)
+                return null;
+
+            if (param == null)
+                return null;
+
+            AddActAsync<Trace, Trace.Param>(param).Forget();
 
             return this;
         }

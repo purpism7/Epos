@@ -90,7 +90,6 @@ namespace Creature.Action
                         IsJumpMove = false,
                     }
                     .WithTargetICombatant(closestTarget)?
-                    .WithForwardDirection(false)?
                     .WithDistance(skillRange);
                 // .WithUseNavMesh(true);
 
