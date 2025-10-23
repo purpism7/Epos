@@ -32,11 +32,11 @@ namespace Battle.Mode
         }
 
         [Inject] private ICameraManager _iCameraManager = null;
-        [Inject] private IStrategyManager _iStrategyManager = null;
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private WeakTypeMap<IActor> _iActorMap = null;
-        
+        [Inject] private IFormationController _iFormationController = null;
+
         private IWaypointController _iWaypointCtr = null;
         //private ICombatant _closestICombatant = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
@@ -64,8 +64,8 @@ namespace Battle.Mode
         public override void Begin()
         {
             Debug.Log("Begin()");
-            _iStrategyManager?.Initialize(_data?.AllyICombatantList);
-            _iCameraManager?.SetTargetTm(_iStrategyManager?.LeaderICombatant?.Transform);
+            _iFormationController?.Initialize(_data?.AllyICombatantList);
+            _iCameraManager?.SetTargetTm(_iFormationController?.LeaderICombatant?.Transform);
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -81,7 +81,7 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            _iStrategyManager?.ChainUpdate();
+            _iFormationController?.ChainUpdate();
             UpdateWaypoint();
 
             //if (_closestICombatant?.IActor != null)
@@ -166,7 +166,7 @@ namespace Battle.Mode
                 iCombatant.IActor?.ChainUpdate();
             }
 
-            _iWaypointCtr?.ChainUpdate(_iStrategyManager?.LeaderICombatant);
+            _iWaypointCtr?.ChainUpdate(_iFormationController?.LeaderICombatant);
         }
 
         //private ICombatant ClosestICombatantToWayPoint()
@@ -236,18 +236,7 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            //SetClosestICombatant();
-
-            //for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            {
-                //var allyICombatant = _data?.AllyICombatantList[i];
-                //if (allyICombatant == null)
-                //    continue;
-
-                //MoveToWaypoint(waypoint, _iStrategyManager?.LeaderICombatant);
-            }
-
-            _iStrategyManager?.MoveFormation(waypoint.Position);
+            _iFormationController?.MoveFormation(waypoint.Position);
         }
 
         //private void MoveToWaypoint(Waypoint waypoint, ICombatant iCombatant)
@@ -353,8 +342,8 @@ namespace Battle.Mode
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 //MoveToWaypoint(waypoint, iCombatant);
-
-                MoveToWaypoint(waypoint);
+                if(iCombatant == _iFormationController.LeaderICombatant)
+                    MoveToWaypoint(waypoint);
             }
             else
                 _iWeightedActionCtr?.Execute(iCombatant, this);

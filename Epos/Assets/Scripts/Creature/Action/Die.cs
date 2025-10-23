@@ -14,7 +14,7 @@ namespace Creature.Action
 
         public override void Execute()
         {
-            PlayAnimation("Damege", false);
+            PlayAnimation(_param.AnimationKey, false);
 
             // _iActor?.Deactivate();
             DeactivateAsync().Forget();

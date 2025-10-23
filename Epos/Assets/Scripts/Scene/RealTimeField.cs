@@ -26,8 +26,8 @@ namespace Scene
         {
             base.Configure(builder);
 
-            builder.RegisterEntryPoint<GameSystem.StrategyManager>(VContainer.Lifetime.Scoped)
-                .As<IStrategyManager>();
+            builder.RegisterEntryPoint<FormationController>(VContainer.Lifetime.Scoped)
+                .As<IFormationController>();
         }
 
         public override async UniTask InitializeAsync()

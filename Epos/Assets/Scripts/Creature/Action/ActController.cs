@@ -294,8 +294,9 @@ namespace Creature.Action
             if (skeletonAnimation == null)
                 return;
 
+           
             if (Mathf.Abs(x) > 0.01f)
-                skeletonAnimation.Skeleton.ScaleX = x > 0 ? -1f : 1f;
+                skeletonAnimation.Skeleton.ScaleX = Mathf.Sign(x);
         }
 
         void IActController.SetPosition(Vector3 position)

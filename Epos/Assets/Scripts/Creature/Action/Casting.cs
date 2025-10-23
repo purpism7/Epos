@@ -89,7 +89,7 @@ namespace Creature.Action
             if (attacker != null)
             {
                 var direction = target.IActor.Transform.position - attacker.Transform.position;
-                _param?.Attacker?.IActor?.IActCtr?.Flip(-direction.x);
+                _param?.Attacker?.IActor?.IActCtr?.Flip(direction.x);
             }
         }
 
