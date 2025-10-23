@@ -1,15 +1,16 @@
-using Creature;
-using Creature.Action;
-using GameSystem;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Strategy
+using Creature;
+using Creature.Action;
+using GameSystem;
+
+namespace Battle.Formation
 {
-    public interface IStrategy
+    public interface IFormation
     {
-        void Apply(IStrategyDataProvider iStrategyDataProvider);
+        void Apply(IFormationDataProvider iFormationDataProvider);
 
         void ChainUpdate();
 
@@ -19,17 +20,17 @@ namespace Strategy
         ICombatant LeaderICombatant { get; }
 }
 
-    public abstract class BaseStrategy : IStrategy
+    public abstract class BaseFormation : IFormation
     {
         private const float LeaderMoveSpeed = 5f;
 
-        protected IStrategyDataProvider _iStrategyDataProvider = null;
+        protected IFormationDataProvider _iFormationDataProvider = null;
 
         public ICombatant LeaderICombatant { get; protected set; } = null;
 
-        public virtual void Apply(IStrategyDataProvider iStrategyDataProvider)
+        public virtual void Apply(IFormationDataProvider iFormationDataProvider)
         {
-            _iStrategyDataProvider = iStrategyDataProvider;
+            _iFormationDataProvider = iFormationDataProvider;
         }
 
         public virtual void ChainUpdate()

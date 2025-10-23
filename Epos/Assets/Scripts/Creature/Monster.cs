@@ -36,8 +36,10 @@ namespace Creature
                     return "Run";
 
                 case Casting: return "Skill_01";
-                case Impact: return "Damege";
-                case Creature.Action.Die: return "Damege";
+
+                case Impact:
+                case Die:
+                    return "Damege";
             }
 
             return string.Empty;

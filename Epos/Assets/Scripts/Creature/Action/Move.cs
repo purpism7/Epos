@@ -108,8 +108,8 @@ namespace Creature.Action
             else
                 DisableNavMeshAgent();
 
-            if (_iActor?.Transform)
-                _prevPos = _iActor.Transform.position;
+            //if (_iActor?.Transform)
+            //    _prevPos = _iActor.Transform.position;
 
             _iActor?.IEffectCtr?.Activate(GetType().Name, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Eff_run_01");
         }
@@ -149,15 +149,16 @@ namespace Creature.Action
 
         private void SetNavMeshAgentSpeed()
         {
-            if (_param == null ||
-                !_param.UseNavMesh)
+            if (_param == null)
                 return;
 
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent == null)
                 return;
-            //Debug.Log(Time.timeScale);
-            // _iActor.SkeletonAnimation.timeScale = Time.timeScale;
+
+            if (navMeshAgent.speed == _param.MoveSpeed)
+                return;
+
             navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
         }
 
@@ -291,18 +292,17 @@ namespace Creature.Action
             else
             {
                 SetNavMeshAgentSpeed();
-
                 _iActor.NavMeshAgent?.SetDestination(targetPosition);
             }
 
             Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
 
-            var direction = _prevPos - iActorTm.position;
+            var direction = targetPosition - iActorTm.position;
 
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
 
-            _prevPos = iActorTm.position;
+            //_prevPos = iActorTm.position;
 
             var distance = Vector2.Distance(iActorTm.position, targetPosition);
             _totalDistance += distance;
@@ -330,7 +330,6 @@ namespace Creature.Action
 
             base.End();
         }
-
 
         protected override void OnCompleted(TrackEntry trackEntry)
         {

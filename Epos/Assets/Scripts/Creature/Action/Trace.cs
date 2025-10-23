@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 using UnityEngine;
 
 namespace Creature.Action
@@ -11,7 +12,7 @@ namespace Creature.Action
             public ICombatant TargetICombatant { get; private set; } = null;
 
             public float Speed { get; private set; } = 1f;
-            public float Distance { get; private set; } = 0.1f;
+            public float Distance { get; private set; } = 0;
 
             public Param WithTargetTransform(Transform targetTm)
             {
@@ -45,12 +46,24 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            
-
             EnableNavMeshAgent();
             Activate();
 
+            if(_param.Distance > 0)
+            {
+                var distance = Vector2.Distance(_iActor.Transform.position, TargetPosition);
+                if(distance > _param.Distance)
+                    _param?.WithSpeed(_param.Speed + 1f);
+            }
+
             PlayAnimation(_param.AnimationKey, true);
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            DisableNavMeshAgent();
         }
 
         private void EnableNavMeshAgent()
@@ -60,13 +73,32 @@ namespace Creature.Action
             {
                 navMeshAgent.enabled = true;
                 navMeshAgent.isStopped = false;
+                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+            }
+        }
+
+        private void DisableNavMeshAgent()
+        {
+            var navMeshAgent = _iActor?.NavMeshAgent;
+            if (navMeshAgent != null &&
+                navMeshAgent.enabled)
+            {
+                navMeshAgent.isStopped = true;
+                navMeshAgent.enabled = false;
+                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
             }
         }
 
         private void SetNavMeshAgentSpeed()
         {
+            if (_param == null)
+                return;
+
             var navMeshAgent = _iActor?.NavMeshAgent;
             if (navMeshAgent == null)
+                return;
+
+            if (navMeshAgent.speed == _param.Speed)
                 return;
 
             navMeshAgent.speed = _param.Speed; // * Time.timeScale;
@@ -112,20 +144,22 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
 
-            var targetPosition = TargetPosition;
+            Vector3 targetPosition = TargetPosition;
+            var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            if (distance < _param.Distance)
+                return;
 
             SetNavMeshAgentSpeed();
-
             navMeshAgent.SetDestination(targetPosition);
 
-            var direction = _prevPosition - iActorTm.position;
+            var direction = targetPosition - iActorTm.position;
 
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
 
-            _prevPosition = iActorTm.position;
+            //_prevPosition = iActorTm.position;
 
-            var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            distance = Vector2.Distance(iActorTm.position, targetPosition);
             if (distance < _param.Distance)
                 End();
         }
