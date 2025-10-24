@@ -13,6 +13,7 @@ namespace Creature.Action
 
             public float Speed { get; private set; } = 1f;
             public float Distance { get; private set; } = 0;
+            public bool IsLeft { get; private set; } = false;
 
             public Param WithTargetTransform(Transform targetTm)
             {
@@ -37,9 +38,13 @@ namespace Creature.Action
                 Distance = distance;
                 return this;
             }
-        }
 
-        private Vector3 _prevPosition = Vector3.zero;
+            public Param WithIsLeft(bool isLeft)
+            {
+                IsLeft = isLeft;
+                return this;
+            }
+        }
 
         public override void Execute()
         {
@@ -73,7 +78,7 @@ namespace Creature.Action
             {
                 navMeshAgent.enabled = true;
                 navMeshAgent.isStopped = false;
-                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
             }
         }
 
@@ -83,9 +88,10 @@ namespace Creature.Action
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
             {
-                navMeshAgent.isStopped = true;
-                navMeshAgent.enabled = false;
                 navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+                navMeshAgent.isStopped = true;
+                navMeshAgent.velocity = Vector3.zero;
+                navMeshAgent.enabled = false;
             }
         }
 
@@ -109,13 +115,18 @@ namespace Creature.Action
             get
             {
                 Vector3 targetPosition = Vector3.zero;
+                Transform targetTm = null;
 
                 if(_param?.TargetTm)
+                {
                     targetPosition = _param.TargetTm.position;
-
+                    targetTm = _param?.TargetTm;
+                }
+                    
                 if (_param?.TargetICombatant != null)
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
+                    targetTm = _param.TargetICombatant.Transform;
 
                     var targetCollider = _param.TargetICombatant.IActor?.Collider;
                     if (targetCollider != null)
@@ -124,6 +135,11 @@ namespace Creature.Action
                         targetPosition = closesetPosition;
                     }
                 }
+
+                if(_param.IsLeft)
+                    targetPosition += -(targetTm.right * 2f);
+                else
+                    targetPosition += targetTm.right * 2f;
 
                 return targetPosition;
             }
@@ -151,6 +167,8 @@ namespace Creature.Action
 
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);
+
+            Debug.DrawLine(iActorTm.position, targetPosition, Color.yellow);
 
             var direction = targetPosition - iActorTm.position;
 
