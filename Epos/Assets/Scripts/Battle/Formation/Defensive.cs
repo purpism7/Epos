@@ -23,19 +23,20 @@ namespace Battle.Formation
 
 
 
-
+            // temp
             var iCombatant = _iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
 
-            //Vector3 fromLeaderDir = (iCombatant.Transform.position - LeaderICombatant.Transform.position).normalized;
-            //Vector2 toTargetDir = (iCombatant.Transform.position - targetPosition).normalized;
-            //var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
-            //bool isLeft = crossPos.z > 0f;
-
-            //var resTargetPosition = targetPosition + (isLeft ? Vector3.left * 4f : Vector3.right * 4f);
+            Vector3 fromLeaderDir = (iCombatant.Transform.position - LeaderICombatant.Transform.position).normalized;
+            Vector2 toTargetDir = (iCombatant.Transform.position - targetPosition).normalized;
+            var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
+            bool isLeft = crossPos.z > 0f;
+            Debug.Log(isLeft);
+            //var resTargetPosition = targetPosition + (isLeft ? LeaderICombatant.Transform.right * 4f : LeaderICombatant.Transform.right * 4f);
 
             var traceParam = new Trace.Param()
                 .WithTargetTransform(LeaderICombatant?.Transform)
-                .WithDistance(1f)
+                .WithDistance(0.1f)
+                .WithIsLeft(isLeft)
                 .WithSpeed(5f);
 
             iCombatant?.IActor?.IActCtr?

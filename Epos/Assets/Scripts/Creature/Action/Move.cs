@@ -143,6 +143,7 @@ namespace Creature.Action
                 navMeshAgent.enabled)
             {
                 navMeshAgent.isStopped = true;
+                navMeshAgent.velocity = Vector3.zero;
                 navMeshAgent.enabled = false;
             }
         }

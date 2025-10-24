@@ -214,7 +214,7 @@ namespace Creature
                 NavMeshAgent.stoppingDistance = 0.1f;
                 //NavMeshAgent.radius = 0.5f;
                 //NavMeshAgent.height = 2f;
-                NavMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+                NavMeshAgent.obstacleAvoidanceType = ObstacleAvoidanceType.NoObstacleAvoidance;
 
                 NavMeshAgent.transform.localRotation = Quaternion.identity;
                 NavMeshAgent.updateRotation = false;
