@@ -100,8 +100,10 @@ public static class BattleExtensions
         if (!attacker.IsCircle(iCombatant, range))
             return false;
 
+        
+        
         Vector3 direction = (iCombatant.IActor.Transform.position - attacker.Transform.position).normalized;
-        float dot = Vector3.Dot(attacker.Transform.up, direction);
+        float dot = Vector2.Dot(attacker.Transform.up, direction);
 
         return dot >= Mathf.Cos(45f / 2 * Mathf.Deg2Rad);
       

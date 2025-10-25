@@ -224,9 +224,9 @@ namespace Creature.Action
             if (targetList.IsNullOrEmpty())
                 return;
 
-            var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
+            // var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
 
-            foreach (var target in _param?.TargetList)
+            foreach (var target in targetList)
             {
                 if (target == null ||
                     !target.IActor.IsAlive)
@@ -238,7 +238,7 @@ namespace Creature.Action
                     case ESkillTarget.Circle:
                         {
                             isAttack = attacker.IsCircle(target, 5f);
-                            Utils.DrawCircle(attacker.Transform.position, 360f, UnityEngine.Color.black, 1f);
+                            Utils.DrawCircle(attacker.Transform.position, 360f, UnityEngine.Color.black, 10f);
                             break;
                         }
 

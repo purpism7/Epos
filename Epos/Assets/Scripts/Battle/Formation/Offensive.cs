@@ -32,7 +32,7 @@ namespace Battle.Formation
 
             var traceParam = new Trace.Param()
                 .WithTargetTransform(LeaderICombatant?.Transform)
-                .WithDistance(0.1f)
+                .WithDistance(3f)
                 .WithIsLeft(isLeft)
                 .WithSpeed(5f);
 
@@ -44,7 +44,7 @@ namespace Battle.Formation
 
             traceParam = new Trace.Param()
                 .WithTargetTransform(LeaderICombatant?.Transform)
-                .WithDistance(10f)
+                .WithDistance(15f)
                 .WithSpeed(5f);
 
             iCombatant?.IActor?.IActCtr?

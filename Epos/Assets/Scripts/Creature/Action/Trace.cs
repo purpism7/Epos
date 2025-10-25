@@ -62,6 +62,8 @@ namespace Creature.Action
             }
 
             PlayAnimation(_param.AnimationKey, true);
+            
+            _iActor?.IEffectCtr?.Activate("Move", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Eff_run_01");
         }
 
         public override void Deactivate()
@@ -78,7 +80,7 @@ namespace Creature.Action
             {
                 navMeshAgent.enabled = true;
                 navMeshAgent.isStopped = false;
-                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
+                // navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
             }
         }
 
@@ -88,7 +90,7 @@ namespace Creature.Action
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
             {
-                navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
+                // navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
                 navMeshAgent.isStopped = true;
                 navMeshAgent.velocity = Vector3.zero;
                 navMeshAgent.enabled = false;
@@ -104,7 +106,7 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
 
-            if (navMeshAgent.speed == _param.Speed)
+            if (navMeshAgent.speed < _param.Speed)
                 return;
 
             navMeshAgent.speed = _param.Speed; // * Time.timeScale;
@@ -114,10 +116,13 @@ namespace Creature.Action
         {
             get
             {
+                if (_param == null)
+                    return Vector2.zero;
+                
                 Vector3 targetPosition = Vector3.zero;
                 Transform targetTm = null;
 
-                if(_param?.TargetTm)
+                if(_param.TargetTm)
                 {
                     targetPosition = _param.TargetTm.position;
                     targetTm = _param?.TargetTm;
@@ -136,10 +141,10 @@ namespace Creature.Action
                     }
                 }
 
-                if(_param.IsLeft)
-                    targetPosition += -(targetTm.right * 2f);
-                else
-                    targetPosition += targetTm.right * 2f;
+                // if(_param.IsLeft)
+                //     targetPosition += -(targetTm.right * 2f);
+                // else
+                //     targetPosition += targetTm.right * 2f;
 
                 return targetPosition;
             }
@@ -174,12 +179,17 @@ namespace Creature.Action
 
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
-
-            //_prevPosition = iActorTm.position;
-
+            
             distance = Vector2.Distance(iActorTm.position, targetPosition);
             if (distance < _param.Distance)
                 End();
+        }
+
+        protected override void End()
+        {
+            base.End();
+            
+            _iActor?.IEffectCtr?.Deactivate("Move");
         }
     }
 }

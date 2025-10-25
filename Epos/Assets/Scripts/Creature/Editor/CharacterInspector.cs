@@ -14,9 +14,7 @@ public class CharacterInspector : Editor
             return;
 
         var iActor = character as IActor;
-        if (iActor == null)
-            return;
-
+        
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.LabelField($"Is Alive = {iActor.IsAlive}");
         EditorGUILayout.EndVertical();
