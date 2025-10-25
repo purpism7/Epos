@@ -93,43 +93,28 @@ namespace Creature.Action
             }
         }
 
-        //private async UniTask UpdateAsync()
-        //{
-        //    var attacker = _param?.Attacker;
-        //    if (attacker == null)
-        //        return;
-
-        //    if (attacker.ETeam != ETeam.Ally)
-        //        return;
-
-        //    if (_param.ISkill.SkillData.ESkillTarget != ESkillTarget.Sector)
-        //        return;
-
-        //    while(_isUpdate)
-        //    {
-        //        //var Color = 
-        //        Handles.color = new UnityEngine.Color(0, 1, 0, 0.3f);
-        //        Vector2 startDirection = Quaternion.Euler(0, 0, 45f / 2f) * attacker.Transform.up;
-        //        Handles.DrawSolidArc(attacker.Transform.position, Vector3.back, startDirection, 45f, 5f);
-
-        //        //Vector3 boundary1 = Quaternion.Euler(0, 0, 45f / 2f) * attacker.Transform.right;
-        //        //Vector3 boundary2 = Quaternion.Euler(0, 0, -45f / 2f) * attacker.Transform.right;
-
-        //        //Gizmos.color = Color.red;
-        //        //Debug.DrawRay(attacker.Transform.position, attacker.Transform.position + boundary1 * 5f, Color.yellow);
-        //        //Debug.DrawRay(attacker.Transform.position, attacker.Transform.position + boundary2 * 5f, Color.yellow);
-
-        //        //float angleThreshold = 30f;
-        //        //Vector3 boundary1 = Quaternion.AngleAxis(angleThreshold, attacker.Transform.up) * attacker.Transform.right;
-        //        //Vector3 boundary2 = Quaternion.AngleAxis(-angleThreshold, attacker.Transform.up) * attacker.Transform.right;
-        //        //Debug.DrawRay(attacker.Transform.position, boundary1 * 10f, Color.yellow);
-        //        //Debug.DrawRay(attacker.Transform.position, boundary2 * 10f, Color.yellow);
-
-        //        await UniTask.Yield();
-        //    }
-
-            
-        //}
+        // private async UniTask UpdateAsync()
+        // {
+        //     var attacker = _param?.Attacker;
+        //     if (attacker == null)
+        //         return;
+        //
+        //     // if (attacker.ETeam != ETeam.Ally)
+        //     //     return;
+        //
+        //     // if (_param.ISkill.SkillData.ESkillTarget != ESkillTarget.C)
+        //         // return;
+        //
+        //     while(_isUpdate)
+        //     {
+        //         
+        //         Utils.DrawCircle(attacker.Transform.position, 360f, UnityEngine.Color.black, 10f);
+        //         //var Color = 
+        //         await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+        //     }
+        //
+        //     
+        // }
 
         private async UniTask CastingAsync()
         {
@@ -165,7 +150,7 @@ namespace Creature.Action
 
             _iActor?.IEffectCtr?.Deactivate(skillData.AnimationName);
 
-            _isUpdate = false;
+            // _isUpdate = false;
         }
 
         private void AfterCasting()
@@ -223,7 +208,7 @@ namespace Creature.Action
             var targetList = _param?.TargetList;
             if (targetList.IsNullOrEmpty())
                 return;
-
+            
             // var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
 
             foreach (var target in targetList)
@@ -238,7 +223,7 @@ namespace Creature.Action
                     case ESkillTarget.Circle:
                         {
                             isAttack = attacker.IsCircle(target, 5f);
-                            Utils.DrawCircle(attacker.Transform.position, 360f, UnityEngine.Color.black, 10f);
+                            
                             break;
                         }
 

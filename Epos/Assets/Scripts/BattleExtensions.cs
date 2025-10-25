@@ -76,16 +76,24 @@ public static class BattleExtensions
         return targetList;
     }
 
-    public static bool IsCircle(this ICombatant attacker, ICombatant iCombatant, float range)
+    public static bool IsCircle(this ICombatant attacker, ICombatant targetICombatant, float range)
     {
         if (attacker == null)
             return false;
 
-        if (iCombatant == null)
+        var targetIActor = targetICombatant?.IActor;
+        if (targetIActor == null)
             return false;
 
-        var distance = Vector2.Distance(attacker.Transform.position, iCombatant.IActor.Transform.position);
-
+        var targetPosition = targetIActor.Transform.position;
+        var targetCollider = targetIActor.Collider;
+        if (targetCollider != null)
+        {
+            var closesetPosition = targetCollider.ClosestPoint(attacker.Transform.position);
+            targetPosition = closesetPosition;
+        }
+        
+        var distance = Vector2.Distance(attacker.Transform.position, targetPosition);
         return distance <= range;
     }
 

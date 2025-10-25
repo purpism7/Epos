@@ -29,6 +29,9 @@ namespace Creature.Action
 
             public Param WithSpeed(float speed)
             {
+                if (speed <= 0)
+                    speed = 1f;
+                
                 Speed = speed;
                 return this;
             }
@@ -59,6 +62,8 @@ namespace Creature.Action
                 var distance = Vector2.Distance(_iActor.Transform.position, TargetPosition);
                 if(distance > _param.Distance)
                     _param?.WithSpeed(_param.Speed + 1f);
+                // else if(distance < _param.Distance)
+                //     _param?.WithSpeed(_param.Speed - 2f);
             }
 
             PlayAnimation(_param.AnimationKey, true);

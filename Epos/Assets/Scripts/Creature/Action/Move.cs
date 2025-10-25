@@ -157,7 +157,7 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
 
-            if (navMeshAgent.speed == _param.MoveSpeed)
+            if (navMeshAgent.speed < _param.MoveSpeed)
                 return;
 
             navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
