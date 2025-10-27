@@ -37,6 +37,8 @@ namespace UI.View
         [SerializeField] private Button shoutBtn = null;
         [SerializeField] private Button aggressiveBtn = null;
 
+        [SerializeField] private StrategyPanel strategyPanel = null;
+
         private IBattleMainPresenter _iPresenter = null;
 
         public List<ICombatant> AllyICombatantList => _param?.AllyICombatantList;
@@ -59,12 +61,16 @@ namespace UI.View
         {
             shoutBtn?.onClick?.AddListener(() =>
             {
+                
+
                 _iPresenter.OnClickShout();
             });
 
             aggressiveBtn?.onClick?.AddListener(() =>
             {
-                _iPresenter.OnClickAggressive();
+                strategyPanel?.ActivateAsync(null);
+
+                //_iPresenter.OnClickAggressive();
             });
         }
 
