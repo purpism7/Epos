@@ -2821,7 +2821,7 @@ Animator:
   m_GameObject: {fileID: 1951695529599833196}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 25f952a429ec499489755dba5dfb6106, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4707,7 +4707,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7747846030634703691}
-  - component: {fileID: 5395837963928526234}
   m_Layer: 5
   m_Name: Root
   m_TagString: Untagged
@@ -4737,25 +4736,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!111 &5395837963928526234
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3349492836327935098}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Animation: {fileID: 0}
-  m_Animations:
-  - {fileID: 7400000, guid: 642047250a283df449f0d7589ca261cc, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_UpdateMode: 0
-  m_CullingType: 0
 --- !u!1 &3350574999708770454
 GameObject:
   m_ObjectHideFlags: 0
