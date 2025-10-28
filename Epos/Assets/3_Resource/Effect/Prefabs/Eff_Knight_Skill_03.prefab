@@ -41,7 +41,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4054459767691764229}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -976,7 +976,7 @@ ParticleSystem:
     m_BurstCount: 5
     m_Bursts:
     - serializedVersion: 2
-      time: 0
+      time: 1.2
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -1034,7 +1034,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.03
+      time: 1.23
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -1092,7 +1092,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.06
+      time: 1.26
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -1150,7 +1150,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.09
+      time: 1.29
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -1208,7 +1208,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.12
+      time: 1.32
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -5284,7 +5284,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5160872302323909074}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -6219,7 +6219,7 @@ ParticleSystem:
     m_BurstCount: 5
     m_Bursts:
     - serializedVersion: 2
-      time: 0
+      time: 1.2
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -6277,7 +6277,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.03
+      time: 1.23
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -6335,7 +6335,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.06
+      time: 1.26
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -6393,7 +6393,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.09
+      time: 1.29
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -6451,7 +6451,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.12
+      time: 1.32
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -10351,7 +10351,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5206064485060908820}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -11286,7 +11286,7 @@ ParticleSystem:
     m_BurstCount: 5
     m_Bursts:
     - serializedVersion: 2
-      time: 0
+      time: 1.2
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -11344,7 +11344,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.03
+      time: 1.23
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -11402,7 +11402,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.06
+      time: 1.26
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -11460,7 +11460,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.09
+      time: 1.29
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -11518,7 +11518,7 @@ ParticleSystem:
       repeatInterval: 0.01
       probability: 1
     - serializedVersion: 2
-      time: 0.12
+      time: 1.32
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -15531,7 +15531,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6486061017870307799}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -16466,7 +16466,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 0
+      time: 1.2
       countCurve:
         serializedVersion: 2
         minMaxState: 0
@@ -20480,7 +20480,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8385434879582685506}
   serializedVersion: 8
-  lengthInSec: 1
+  lengthInSec: 5
   simulationSpeed: 1
   stopAction: 0
   cullingMode: 0
@@ -21415,7 +21415,7 @@ ParticleSystem:
     m_BurstCount: 1
     m_Bursts:
     - serializedVersion: 2
-      time: 0
+      time: 1.2
       countCurve:
         serializedVersion: 2
         minMaxState: 0

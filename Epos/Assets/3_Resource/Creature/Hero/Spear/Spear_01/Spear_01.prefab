@@ -87,7 +87,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2038680451
   m_SortingLayer: 2
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &1150515514663263
 MonoBehaviour:
@@ -203,7 +203,7 @@ MonoBehaviour:
   id: 10004
   eClass: 3
   actionSpeed: 100
-  moveSpeed: 10
+  moveSpeed: 18
   attack: 15
   maxHp: 100
   maxMp: 100
