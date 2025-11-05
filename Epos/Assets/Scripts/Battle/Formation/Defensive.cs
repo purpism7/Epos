@@ -34,7 +34,7 @@ namespace Battle.Formation
             //var resTargetPosition = targetPosition + (isLeft ? LeaderICombatant.Transform.right * 4f : LeaderICombatant.Transform.right * 4f);
 
             var traceParam = new Trace.Param()
-                .WithTargetTransform(LeaderICombatant?.Transform)
+                .WithTargetICombatant(LeaderICombatant)
                 .WithDistance(3f)
                 .WithIsLeft(isLeft)
                 .WithSpeed(5f);
@@ -46,7 +46,7 @@ namespace Battle.Formation
             iCombatant = _iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
 
             traceParam = new Trace.Param()
-                .WithTargetTransform(LeaderICombatant?.Transform)
+                .WithTargetICombatant(LeaderICombatant)
                 .WithDistance(3f)
                 .WithSpeed(5f);
 

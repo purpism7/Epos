@@ -1,19 +1,19 @@
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 using VContainer;
 
-using Creature.Action;
 using Common;
+using Creature.Action;
 using Creature.Emotion;
+using UnityEditor;
 
 namespace Creature
 {
     public class Hero : Character, IEmotionalActor
     {
         public IEmotionController IEmotionCtr { get; private set; } = null;
-
 
         protected override void InitializeInject(IObjectResolver iResolver)
         {

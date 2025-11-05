@@ -33,7 +33,7 @@ namespace Battle
         {
             AllyICombatantList = allyICombatantList;
 
-            ApplyFormation<Offensive>();
+            ApplyFormation<Defensive>();
         }
 
         void IFormationController.ChainUpdate()

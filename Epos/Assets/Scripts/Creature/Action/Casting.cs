@@ -46,6 +46,7 @@ namespace Creature.Action
                 Target = target;
                 return this;
             }
+
             public Param WithTargetList(List<ICombatant> targetList)
             {
                 TargetList = targetList;
@@ -222,14 +223,13 @@ namespace Creature.Action
                 {
                     case ESkillTarget.Circle:
                         {
-                            isAttack = attacker.IsCircle(target, 5f);
-                            
+                            isAttack = attacker.IsCircle(target, 6f);
                             break;
                         }
 
                     case ESkillTarget.Sector:
                         {
-                            isAttack = attacker.IsSector(target, 5f);
+                            isAttack = attacker.IsSector(target, 6f);
                             break;
                         }
                 }

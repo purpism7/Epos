@@ -26,7 +26,7 @@ namespace UI.View
 
         public override void Deactivate()
         {
-            base.Deactivate();
+            //base.Deactivate();
 
             animator?.SetBool("OnOff", true);
         }

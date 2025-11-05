@@ -1,11 +1,7 @@
-using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using UnityEngine;
 
-using Common;
 using Creature;
-using static UnityEngine.UI.Image;
 
 public static class BattleExtensions
 {
@@ -88,37 +84,33 @@ public static class BattleExtensions
         var targetPosition = targetIActor.Transform.position;
         var targetCollider = targetIActor.Collider;
         if (targetCollider != null)
-        {
-            var closesetPosition = targetCollider.ClosestPoint(attacker.Transform.position);
-            targetPosition = closesetPosition;
-        }
-        
+            targetPosition = targetCollider.ClosestPoint(attacker.Transform.position);
+
         var distance = Vector2.Distance(attacker.Transform.position, targetPosition);
         return distance <= range;
     }
 
-    public static bool IsSector(this ICombatant attacker, ICombatant iCombatant, float range)
+    public static bool IsSector(this ICombatant attacker, ICombatant targetICombatant, float range)
     {
         if (attacker == null)
             return false;
 
-        if (iCombatant == null)
+        if (targetICombatant == null)
             return false;
 
-        if (!attacker.IsCircle(iCombatant, range))
+        if (!attacker.IsCircle(targetICombatant, range))
             return false;
 
-        
-        
-        Vector3 direction = (iCombatant.IActor.Transform.position - attacker.Transform.position).normalized;
-        float dot = Vector2.Dot(attacker.Transform.up, direction);
+        Vector2 direction = (targetICombatant.IActor.Transform.position - attacker.Transform.position).normalized;
+        Vector2 forwardDirection = attacker.Transform.right; // 플레이어의 앞 방향 (2D에서는 주로 right)
+        float angle = Vector2.Angle(forwardDirection, direction);
+        //Debug.Log(angle);
+        return angle <= 60f / 2f;
 
-        return dot >= Mathf.Cos(45f / 2 * Mathf.Deg2Rad);
-      
+        //float dot = Vector2.Dot(attacker.Transform.up, direction);
+        //var alertThreshold = Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
 
-        //float angleToTarget = Vector2.Angle(attacker.Transform.right, direction);
-
-        //return angleToTarget <= 45f / 2f;
+        //return dot >= alertThreshold;
     }
 
     public static ICombatant FindClosestICombatant(this Transform tm, List<ICombatant> iCombatantList)

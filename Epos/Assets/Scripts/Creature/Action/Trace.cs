@@ -125,25 +125,22 @@ namespace Creature.Action
                     return Vector2.zero;
                 
                 Vector3 targetPosition = Vector3.zero;
-                Transform targetTm = null;
+                //Transform targetTm = null;
 
                 if(_param.TargetTm)
                 {
                     targetPosition = _param.TargetTm.position;
-                    targetTm = _param?.TargetTm;
+                    //targetTm = _param?.TargetTm;
                 }
                     
                 if (_param?.TargetICombatant != null)
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
-                    targetTm = _param.TargetICombatant.Transform;
+                    //targetTm = _param.TargetICombatant.Transform;
 
                     var targetCollider = _param.TargetICombatant.IActor?.Collider;
                     if (targetCollider != null)
-                    {
-                        var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
-                        targetPosition = closesetPosition;
-                    }
+                        targetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
                 }
 
                 // if(_param.IsLeft)
@@ -171,9 +168,11 @@ namespace Creature.Action
                 return;
 
             Vector3 targetPosition = TargetPosition;
+
             var distance = Vector2.Distance(iActorTm.position, targetPosition);
             if (distance < _param.Distance)
                 return;
+
 
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);
@@ -184,7 +183,7 @@ namespace Creature.Action
 
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
-            
+
             distance = Vector2.Distance(iActorTm.position, targetPosition);
             if (distance < _param.Distance)
                 End();

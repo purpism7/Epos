@@ -39,9 +39,9 @@ namespace UI.View
         
         [SerializeField] private Button shoutBtn = null;
         [SerializeField] private Button aggressiveBtn = null;
+        [SerializeField] private Button closeStrategyPanelBtn = null;
 
         [SerializeField] private StrategyPanel strategyPanel = null;
-        [SerializeField] private Button strategyCloseBtn = null;
 
         private IBattleMainPresenter _iPresenter = null;
 
@@ -68,7 +68,6 @@ namespace UI.View
             shoutBtn?.onClick?.AddListener(() =>
             {
                 
-
                 _iPresenter.OnClickShout();
             });
 
@@ -80,8 +79,8 @@ namespace UI.View
 
                 //_iPresenter.OnClickAggressive();
             });
-            
-            strategyCloseBtn?.onClick?.AddListener(() =>
+
+            closeStrategyPanelBtn?.onClick?.AddListener(() =>
             {
                 strategyPanel?.Deactivate();
                 _iTimeScaleManager?.Set(1f);
