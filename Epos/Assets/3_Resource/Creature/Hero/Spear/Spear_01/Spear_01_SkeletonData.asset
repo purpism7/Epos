@@ -21,8 +21,14 @@ MonoBehaviour:
     requiresBlendModeMaterials: 1
     applyAdditiveMaterial: 1
     additiveMaterials:
+    - pageName: Spear_01_7.png
+      material: {fileID: 2100000, guid: 80bb2d0592b0abc45bfe0468f86b8647, type: 2}
     - pageName: Spear_01_2.png
       material: {fileID: 2100000, guid: e24adc22d07932942af6bfaea516491e, type: 2}
+    - pageName: Spear_01_8.png
+      material: {fileID: 2100000, guid: 01e81bef44714eb4986461de1daa09b6, type: 2}
+    - pageName: Spear_01_6.png
+      material: {fileID: 2100000, guid: a72ebac2e1df65c4391f64dfc289282e, type: 2}
     multiplyMaterials: []
     screenMaterials: []
   skeletonDataModifiers: []

@@ -203,7 +203,7 @@ MonoBehaviour:
   id: 10003
   eClass: 6
   actionSpeed: 9
-  moveSpeed: 15
+  moveSpeed: 40
   attack: 10
   maxHp: 100
   maxMp: 100

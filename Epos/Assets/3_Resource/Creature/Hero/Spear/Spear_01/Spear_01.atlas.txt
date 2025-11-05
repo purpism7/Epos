@@ -141,6 +141,318 @@ bounds:2,137,136,898
 offsets:2,0,138,898
 
 Spear_01_2.png
+size:378,516
+filter:Linear,Linear
+pma:true
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00000
+bounds:310,140,52,66
+offsets:97,14,250,250
+rotate:90
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00001
+bounds:2,2,65,207
+offsets:98,7,250,250
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00002
+bounds:2,429,85,227
+offsets:90,12,250,250
+rotate:90
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00003
+bounds:2,330,97,218
+offsets:87,27,250,250
+rotate:90
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00004
+bounds:195,6,113,186
+offsets:78,59,250,250
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00005
+bounds:2,211,117,214
+offsets:78,29,250,250
+rotate:90
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00006
+bounds:222,426,1,1
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00008
+bounds:222,426,1,1
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00010
+bounds:222,426,1,1
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00007
+bounds:69,3,124,206
+offsets:75,40,250,250
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00009
+bounds:231,319,129,195
+offsets:77,49,250,250
+Effect/Electricity 002 Shot Ray Up/Electricity 002 Shot Ray Up_00011
+bounds:218,194,123,151
+offsets:85,58,250,250
+rotate:90
+
+Spear_01_3.png
+size:1749,133
+filter:Linear,Linear
+pma:true
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00000
+bounds:1593,2,48,49
+offsets:22,99,250,250
+rotate:90
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00001
+bounds:1593,52,79,88
+offsets:24,78,250,250
+rotate:90
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00002
+bounds:733,11,131,120
+offsets:25,59,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00003
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00005
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00007
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00009
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00011
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00013
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00015
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00017
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00019
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00021
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00023
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00025
+bounds:1559,24,1,1
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00004
+bounds:557,8,174,123
+offsets:26,58,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00006
+bounds:189,5,181,126
+offsets:27,56,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00008
+bounds:2,4,185,127
+offsets:28,56,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00010
+bounds:372,7,183,124
+offsets:28,60,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00012
+bounds:866,12,182,119
+offsets:30,62,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00014
+bounds:1050,15,173,116
+offsets:37,64,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00016
+bounds:1225,18,145,113
+offsets:51,66,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00018
+bounds:1372,29,102,112
+offsets:93,69,250,250
+rotate:90
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00020
+bounds:1486,49,82,105
+offsets:117,74,250,250
+rotate:90
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00022
+bounds:1683,36,64,95
+offsets:137,83,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00024
+bounds:1486,7,40,71
+offsets:158,98,250,250
+rotate:90
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00026
+bounds:1559,27,20,20
+offsets:173,128,250,250
+Effect/Electricity 022 Impact Explosion Right/Electricity 022 Impact Explosion Right_00027
+bounds:1559,27,20,20
+offsets:173,128,250,250
+
+Spear_01_4.png
+size:977,124
+filter:Linear,Linear
+pma:true
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00000
+bounds:811,4,118,85
+offsets:59,0,250,250
+rotate:90
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00001
+bounds:2,2,1,1
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00002
+bounds:2,2,1,1
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00004
+bounds:2,2,1,1
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00003
+bounds:702,2,107,120
+offsets:60,14,250,250
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00005
+bounds:391,5,117,168
+offsets:52,21,250,250
+rotate:90
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00006
+bounds:207,10,112,182
+offsets:68,26,250,250
+rotate:90
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00007
+bounds:2,5,117,203
+offsets:68,37,250,250
+rotate:90
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00008
+bounds:561,5,117,139
+offsets:67,104,250,250
+rotate:90
+Effect/Electricity 028 Shot Impact Explosion Up/Electricity 028 Shot Impact Explosion Up_00009
+bounds:898,3,77,119
+offsets:103,119,250,250
+
+Spear_01_5.png
+size:819,563
+filter:Linear,Linear
+pma:true
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00000
+bounds:684,69,57,57
+offsets:97,95,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00001
+bounds:727,398,69,75
+offsets:91,90,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00002
+bounds:727,475,90,86
+offsets:79,82,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00003
+bounds:690,286,106,112
+offsets:72,72,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00004
+bounds:298,18,119,126
+offsets:61,68,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00005
+bounds:2,12,131,110
+offsets:49,70,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00006
+bounds:573,54,109,146
+offsets:71,54,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00007
+bounds:419,2,152,175
+offsets:36,35,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00008
+bounds:690,128,156,110
+offsets:22,68,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00009
+bounds:183,146,166,198
+offsets:56,14,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00010
+bounds:2,346,215,198
+offsets:14,10,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00011
+bounds:385,375,186,172
+offsets:13,38,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00012
+bounds:202,368,181,193
+offsets:45,15,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00013
+bounds:2,145,199,179
+offsets:18,29,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00014
+bounds:519,202,169,171
+offsets:23,33,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00015
+bounds:351,179,187,166
+offsets:25,34,250,250
+rotate:90
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00016
+bounds:559,394,166,167
+offsets:26,33,250,250
+Effect/Electricity 032 Impact Explosion Radial MIX/Electricity 032 Impact Explosion Radial MIX_00017
+bounds:114,14,182,129
+offsets:25,42,250,250
+
+Spear_01_6.png
+size:533,251
+filter:Linear,Linear
+pma:true
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00000
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00008
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00011
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00012
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00014
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00015
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00016
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00017
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00019
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00021
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00022
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00023
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00024
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00025
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00028
+bounds:2,248,1,1
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00001
+bounds:5,203,48,46
+offsets:0,103,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00002
+bounds:55,198,76,51
+offsets:0,100,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00003
+bounds:296,195,104,54
+offsets:3,99,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00004
+bounds:402,193,125,56
+offsets:6,97,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00005
+bounds:2,140,165,56
+offsets:12,97,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00006
+bounds:169,136,183,57
+offsets:14,97,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00007
+bounds:2,76,192,58
+offsets:17,96,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00009
+bounds:196,69,216,59
+offsets:18,96,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00010
+bounds:196,69,216,59
+offsets:18,96,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00013
+bounds:2,7,222,60
+offsets:17,95,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00018
+bounds:226,2,226,65
+offsets:12,91,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00020
+bounds:460,5,186,71
+offsets:52,88,250,250
+rotate:90
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00026
+bounds:354,130,104,61
+offsets:134,102,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00027
+bounds:354,130,104,61
+offsets:134,102,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00029
+bounds:215,196,79,53
+offsets:160,104,250,250
+Effect/Electricity 033 Ray Right/Electricity 033 Ray Right_00030
+bounds:133,198,80,51
+offsets:161,104,250,250
+
+Spear_01_7.png
 size:1656,168
 filter:Linear,Linear
 pma:true
@@ -183,3 +495,45 @@ offsets:71,65,250,250
 Effect/Energy 024 Impact Explosion Right/Energy 024 Impact Explosion Right_00011
 bounds:1472,4,65,48
 offsets:80,95,250,250
+
+Spear_01_8.png
+size:254,484
+filter:Linear,Linear
+pma:true
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00000
+bounds:171,52,70,46
+offsets:16,100,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00001
+bounds:2,2,140,58
+offsets:27,95,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00002
+bounds:180,100,174,71
+offsets:45,89,250,250
+rotate:90
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00003
+bounds:2,142,175,78
+offsets:52,85,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00004
+bounds:2,310,179,84
+offsets:53,82,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00005
+bounds:2,396,181,86
+offsets:53,81,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00006
+bounds:2,222,176,86
+offsets:58,80,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00007
+bounds:2,62,167,78
+offsets:64,84,250,250
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00008
+bounds:185,370,112,67
+offsets:112,91,250,250
+rotate:90
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00009
+bounds:183,276,92,60
+offsets:117,93,250,250
+rotate:90
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00010
+bounds:180,307,1,1
+Effect/Sparks 022 Shot Ray Impact Explosion Right/Sparks 022 Shot Ray Impact Explosion Right_00011
+bounds:180,307,1,1
