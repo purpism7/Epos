@@ -36,13 +36,17 @@ namespace UI.View
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
-        
-        [SerializeField] private Button shoutBtn = null;
-        [SerializeField] private Button aggressiveBtn = null;
-        [SerializeField] private Button closeStrategyPanelBtn = null;
 
+        [Header("Panel")]
+        [SerializeField] private ShoutPanel shoutPanel = null;
         [SerializeField] private StrategyPanel strategyPanel = null;
 
+        [Header("Button")]
+        [SerializeField] private Button shoutBtn = null;
+        [SerializeField] private Button aggressiveBtn = null;
+        [SerializeField] private Button closeShoutPanelBtn = null;
+        [SerializeField] private Button closeStrategyPanelBtn = null;
+        
         private IBattleMainPresenter _iPresenter = null;
 
         public List<ICombatant> AllyICombatantList => _param?.AllyICombatantList;
@@ -60,31 +64,42 @@ namespace UI.View
 
             InitializeButton();
             
-            strategyPanel?.Deactivate();
+            //strategyPanel?.Deactivate();
+            //shoutPanel?.Deactivate();
         }
 
         private void InitializeButton()
         {
-            shoutBtn?.onClick?.AddListener(() =>
-            {
-                
-                _iPresenter.OnClickShout();
-            });
+            shoutBtn?.onClick?.AddListener(
+                () =>
+                {
+                    shoutPanel?.ActivateAsync(null);
+                    _iTimeScaleManager?.Set(0.2f);
+                    //_iPresenter.OnClickShout();
+                });
 
-            aggressiveBtn?.onClick?.AddListener(() =>
-            {
+            aggressiveBtn?.onClick?.AddListener(
+                () =>
+                {
+                    strategyPanel?.ActivateAsync(null);
+                    _iTimeScaleManager?.Set(0.2f);
 
-                strategyPanel?.ActivateAsync(null);
-                _iTimeScaleManager?.Set(0.2f);
+                    //_iPresenter.OnClickAggressive();
+                });
 
-                //_iPresenter.OnClickAggressive();
-            });
+            closeShoutPanelBtn?.onClick?.AddListener(
+                () =>
+                {
+                    shoutPanel?.Deactivate();
+                    _iTimeScaleManager?.Set(1f);
+                });
 
-            closeStrategyPanelBtn?.onClick?.AddListener(() =>
-            {
-                strategyPanel?.Deactivate();
-                _iTimeScaleManager?.Set(1f);
-            });
+            closeStrategyPanelBtn?.onClick?.AddListener(
+                () =>
+                {
+                    strategyPanel?.Deactivate();
+                    _iTimeScaleManager?.Set(1f);
+                });
         }
 
         [Inject]
