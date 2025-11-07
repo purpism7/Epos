@@ -36,6 +36,7 @@ namespace UI.View
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
+        [SerializeField] private Animator animator = null;
 
         [Header("Panel")]
         [SerializeField] private ShoutPanel shoutPanel = null;
@@ -73,6 +74,8 @@ namespace UI.View
             shoutBtn?.onClick?.AddListener(
                 () =>
                 {
+                    DeactivateAnimBattleMainView();
+
                     shoutPanel?.ActivateAsync(null);
                     _iTimeScaleManager?.Set(0.2f);
                     //_iPresenter.OnClickShout();
@@ -81,10 +84,10 @@ namespace UI.View
             aggressiveBtn?.onClick?.AddListener(
                 () =>
                 {
+                    DeactivateAnimBattleMainView();
+
                     strategyPanel?.ActivateAsync(null);
                     _iTimeScaleManager?.Set(0.2f);
-
-                    //_iPresenter.OnClickAggressive();
                 });
 
             closeShoutPanelBtn?.onClick?.AddListener(
@@ -92,6 +95,8 @@ namespace UI.View
                 {
                     shoutPanel?.Deactivate();
                     _iTimeScaleManager?.Set(1f);
+
+                    ActivateAnimBattleMainView();
                 });
 
             closeStrategyPanelBtn?.onClick?.AddListener(
@@ -99,7 +104,19 @@ namespace UI.View
                 {
                     strategyPanel?.Deactivate();
                     _iTimeScaleManager?.Set(1f);
+
+                    ActivateAnimBattleMainView();
                 });
+        }
+
+        private void ActivateAnimBattleMainView()
+        {
+            animator?.SetBool("OnOff", false);
+        }
+
+        private void DeactivateAnimBattleMainView()
+        {
+            animator?.SetBool("OnOff", true);
         }
 
         [Inject]

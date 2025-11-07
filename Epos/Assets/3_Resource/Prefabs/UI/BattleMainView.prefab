@@ -2457,7 +2457,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a4f3373fb6ebaab4a8f372e94b02c9bf, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -3487,7 +3487,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: e38841e27cda84c40944122ad7adc6bd, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -11567,6 +11567,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 8303889660134961840}
   allyBattlePortraitRootRectTm: {fileID: 7095646962515320324}
+  animator: {fileID: 3363085717312505813}
   shoutPanel: {fileID: 7215560735774815595}
   strategyPanel: {fileID: 5729631261168129984}
   shoutBtn: {fileID: 1317394280193683452}
