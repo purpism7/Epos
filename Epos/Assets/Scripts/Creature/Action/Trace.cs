@@ -1,6 +1,8 @@
-using System.Runtime.InteropServices.WindowsRuntime;
-using TMPro;
+
+using Common;
 using UnityEngine;
+
+using TMPro;
 
 namespace Creature.Action
 {
@@ -13,7 +15,7 @@ namespace Creature.Action
 
             public float Speed { get; private set; } = 1f;
             public float Distance { get; private set; } = 0;
-            public bool IsLeft { get; private set; } = false;
+            public DirectionType DirectionType { get; private set; } = DirectionType.None;
 
             public Param WithTargetTransform(Transform targetTm)
             {
@@ -42,12 +44,15 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithIsLeft(bool isLeft)
+            public Param WithDirectionType(DirectionType directionType)
             {
-                IsLeft = isLeft;
+                DirectionType = directionType;
                 return this;
             }
         }
+
+        private Transform _targetTm = null;
+        private Vector3 _prevTargetPosition = Vector3.zero;
 
         public override void Execute()
         {
@@ -61,9 +66,7 @@ namespace Creature.Action
             {
                 var distance = Vector2.Distance(_iActor.Transform.position, TargetPosition);
                 if(distance > _param.Distance)
-                    _param?.WithSpeed(_param.Speed + 1f);
-                // else if(distance < _param.Distance)
-                //     _param?.WithSpeed(_param.Speed - 2f);
+                    _param.WithSpeed(_param.Speed + 1f);
             }
 
             PlayAnimation(_param.AnimationKey, true);
@@ -85,7 +88,6 @@ namespace Creature.Action
             {
                 navMeshAgent.enabled = true;
                 navMeshAgent.isStopped = false;
-                // navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.NoObstacleAvoidance;
             }
         }
 
@@ -95,7 +97,6 @@ namespace Creature.Action
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
             {
-                // navMeshAgent.obstacleAvoidanceType = UnityEngine.AI.ObstacleAvoidanceType.MedQualityObstacleAvoidance;
                 navMeshAgent.isStopped = true;
                 navMeshAgent.velocity = Vector3.zero;
                 navMeshAgent.enabled = false;
@@ -125,31 +126,56 @@ namespace Creature.Action
                     return Vector2.zero;
                 
                 Vector3 targetPosition = Vector3.zero;
-                //Transform targetTm = null;
 
                 if(_param.TargetTm)
                 {
                     targetPosition = _param.TargetTm.position;
-                    //targetTm = _param?.TargetTm;
+                    _targetTm = _param.TargetTm;
                 }
                     
-                if (_param?.TargetICombatant != null)
+                if (_param.TargetICombatant != null)
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
-                    //targetTm = _param.TargetICombatant.Transform;
+                    _targetTm = _param.TargetICombatant.Transform;
 
                     var targetCollider = _param.TargetICombatant.IActor?.Collider;
                     if (targetCollider != null)
                         targetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
                 }
 
-                // if(_param.IsLeft)
-                //     targetPosition += -(targetTm.right * 2f);
-                // else
-                //     targetPosition += targetTm.right * 2f;
-
+                targetPosition = GetTargetPositionByDirection(targetPosition);
+                
                 return targetPosition;
             }
+        }
+
+        Vector3 GetTargetPositionByDirection(Vector3 targetPosition)
+        {
+            if(_param == null)
+                return targetPosition;
+
+            if (_param.DirectionType == DirectionType.None)
+                return targetPosition;
+            
+            Vector2 targetDirection = targetPosition - _prevTargetPosition;
+        
+            // 정규화된 벡터가 아니면 문제가 발생할 수 있으므로 항상 정규화합니다.
+            if (targetDirection.sqrMagnitude >= 0.0001f)
+                targetDirection = targetDirection.normalized;
+                
+            switch (_param.DirectionType)
+            {
+                case DirectionType.Back:
+                    return targetPosition - new Vector3(targetDirection.y, -targetDirection.x) * _param.Distance;
+                
+                case DirectionType.Right:
+                    return targetPosition + new Vector3(targetDirection.y, -targetDirection.x) * _param.Distance;
+                
+                case DirectionType.Left:
+                    return targetPosition + new Vector3(-targetDirection.y, targetDirection.x) * _param.Distance;
+            }
+
+            return targetPosition;
         }
 
         public override void ChainUpdate()
@@ -173,7 +199,6 @@ namespace Creature.Action
             if (distance < _param.Distance)
                 return;
 
-
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);
 
@@ -184,6 +209,8 @@ namespace Creature.Action
             _iActor?.IActCtr?.Flip(direction.x);
             _iActor?.SortingOrder(iActorTm.position.y);
 
+            _prevTargetPosition = iActorTm.position;
+            
             distance = Vector2.Distance(iActorTm.position, targetPosition);
             if (distance < _param.Distance)
                 End();

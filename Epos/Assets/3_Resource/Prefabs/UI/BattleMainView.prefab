@@ -16960,6 +16960,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TacticalStanceSlot
       objectReference: {fileID: 0}
+    - target: {fileID: 6635015761176410120, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
+      propertyPath: m_text
+      value: Offensive
+      objectReference: {fileID: 0}
     - target: {fileID: 6992221823293504346, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
       propertyPath: m_Controller
       value: 

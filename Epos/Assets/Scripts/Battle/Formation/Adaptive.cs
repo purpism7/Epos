@@ -1,19 +1,19 @@
-using UnityEngine;
-using Creature;
 using System.Collections.Generic;
-
-using Creature.Action;
 using Common;
+using UnityEngine;
+
+using Creature;
 using GameSystem;
+using Creature.Action;
 
 namespace Battle.Formation
 {
-    public class Defensive : BaseFormation
+    public class Adaptive : BaseFormation
     {
         public override void Apply(IFormationDataProvider iFormationDataProvider)
         {
             base.Apply(iFormationDataProvider);
-
+    
             LeaderICombatant = iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
         }
 
@@ -23,12 +23,11 @@ namespace Battle.Formation
             
             var moveSpeed = MainManager.Instance.TraceMoveSpeed;
             
-            // temp
-            var iCombatant = _iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-
+            var iCombatant = _iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            
             var traceParam = new Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
-                .WithDirectionType(DirectionType.Right)
+                .WithDirectionType(DirectionType.Left)
                 .WithDistance(5f)
                 .WithSpeed(moveSpeed);
 
@@ -50,4 +49,3 @@ namespace Battle.Formation
         }
     }
 }
-

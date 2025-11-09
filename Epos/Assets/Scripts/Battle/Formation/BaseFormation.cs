@@ -5,6 +5,7 @@ using UnityEngine;
 using Creature;
 using Creature.Action;
 using GameSystem;
+using UnityEngine.PlayerLoop;
 
 namespace Battle.Formation
 {
@@ -22,7 +23,7 @@ namespace Battle.Formation
 
     public abstract class BaseFormation : IFormation
     {
-        private const float LeaderMoveSpeed = 5f;
+        // private const float MoveSpeed = 5f;
 
         protected IFormationDataProvider _iFormationDataProvider = null;
 
@@ -42,7 +43,7 @@ namespace Battle.Formation
         {
             var moveParam = new Move.Param
             {
-                MoveSpeed = LeaderMoveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
+                MoveSpeed = MainManager.Instance.TraceMoveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 

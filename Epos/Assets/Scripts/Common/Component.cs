@@ -71,7 +71,7 @@ namespace Common
     {
         protected T _param = null;
 
-        public virtual UniTask InitializeAsync(T param)
+        public virtual UniTask InitializeAsync(T param = null)
         {
             base.Initialize();
 

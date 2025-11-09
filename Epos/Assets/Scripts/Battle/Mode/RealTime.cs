@@ -38,7 +38,6 @@ namespace Battle.Mode
         [Inject] private IFormationController _iFormationController = null;
 
         private IWaypointController _iWaypointCtr = null;
-        //private ICombatant _closestICombatant = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
 

@@ -18,7 +18,7 @@ namespace Creature.Action
         IActController TraceTo(Trace.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
 
-        IActController Knockback(Knockback.Param param);
+        // IActController Knockback(Knockback.Param param);
         IActController Die();
         IActController Victory();
 
@@ -158,15 +158,15 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.Knockback(Knockback.Param param)
-        {
-            if (!IsActivate)
-                return null;
-
-            Execute<Knockback, Knockback.Param>(param, false);
-            
-            return this;
-        }
+        // IActController IActController.Knockback(Knockback.Param param)
+        // {
+        //     if (!IsActivate)
+        //         return null;
+        //
+        //     Execute<Knockback, Knockback.Param>(param, false);
+        //     
+        //     return this;
+        // }
 
         IActController IActController.Die()
         {

@@ -13,9 +13,13 @@ public class MainManager : Singleton<MainManager>
 {
     //[SerializeField]
     //[Range(1f, 10f)]
+    [Range(1f, 100f)]
+    [SerializeField] private float traceMoveSpeed = 20f;
     
     private List<IGeneric> _iMgrGenericList = null;
     private DayNightCycle _dayNightCycle = null;
+    
+    public float TraceMoveSpeed => traceMoveSpeed;
     
     protected override void Initialize()
     {
@@ -37,26 +41,26 @@ public class MainManager : Singleton<MainManager>
         _dayNightCycle = FindFirstObjectByType<DayNightCycle>();
     }
     
-    public static T Get<T>() where T : IManager
-    {
-        var iMgrGenericList = Instance._iMgrGenericList;
-        if (iMgrGenericList == null)
-            return default;
-
-        // var findIMgrGeneric = iMgrGenericList.Find(iMgrGeneric => iMgrGeneric is T);
-        // if (findIMgrGeneric == null)
-        // {
-        //     // findIMgrGeneric = 
-        // }
-        
-        foreach (var iMgrGeneric in iMgrGenericList)
-        {
-            if (iMgrGeneric is T)
-                return (T)iMgrGeneric;
-        }
-        
-        return default;
-    }
+    // public static T Get<T>() where T : IManager
+    // {
+    //     var iMgrGenericList = Instance._iMgrGenericList;
+    //     if (iMgrGenericList == null)
+    //         return default;
+    //
+    //     // var findIMgrGeneric = iMgrGenericList.Find(iMgrGeneric => iMgrGeneric is T);
+    //     // if (findIMgrGeneric == null)
+    //     // {
+    //     //     // findIMgrGeneric = 
+    //     // }
+    //     
+    //     foreach (var iMgrGeneric in iMgrGenericList)
+    //     {
+    //         if (iMgrGeneric is T)
+    //             return (T)iMgrGeneric;
+    //     }
+    //     
+    //     return default;
+    // }
 
     private void Update()
     {

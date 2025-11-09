@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using Common;
 using UnityEngine;
 
 using Creature;
@@ -21,20 +22,20 @@ namespace Battle.Formation
         {
             base.MoveFormation(targetPosition);
 
+            // var debugGameObject = new GameObject("DebugGameObject"); 
+            // var debugObject = debugGameObject.AddComponent<DebugObject>();
+            // debugObject.originTm = LeaderICombatant.Transform; 
+            // debugObject.targetPosition = targetPosition; 
+            
+            var moveSpeed = MainManager.Instance.TraceMoveSpeed;
+            
             var iCombatant = _iFormationDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
-
-            Vector3 fromLeaderDir = (iCombatant.Transform.position - LeaderICombatant.Transform.position).normalized;
-            Vector2 toTargetDir = (iCombatant.Transform.position - targetPosition).normalized;
-            var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
-            bool isLeft = crossPos.z > 0f;
-            Debug.Log(isLeft);
-            //var resTargetPosition = targetPosition + (isLeft ? LeaderICombatant.Transform.right * 4f : LeaderICombatant.Transform.right * 4f);
-
+            
             var traceParam = new Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
-                .WithDistance(3f)
-                .WithIsLeft(isLeft)
-                .WithSpeed(5f);
+                .WithDirectionType(DirectionType.Left)
+                .WithDistance(5f)
+                .WithSpeed(moveSpeed);
 
             iCombatant?.IActor?.IActCtr?
                 .TraceTo(traceParam)?
@@ -44,8 +45,9 @@ namespace Battle.Formation
 
             traceParam = new Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
-                .WithDistance(15f)
-                .WithSpeed(5f);
+                .WithDirectionType(DirectionType.Back)
+                .WithDistance(10f)
+                .WithSpeed(moveSpeed);
 
             iCombatant?.IActor?.IActCtr?
                 .TraceTo(traceParam)?

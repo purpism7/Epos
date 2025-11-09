@@ -63,6 +63,9 @@ namespace UI.View
             await base.InitializeAsync(param);
             await _iPresenter.InitializeAsync(this);
 
+            await shoutPanel.InitializeAsync(null);
+            await strategyPanel.InitializeAsync(null);
+            
             InitializeButton();
             
             //strategyPanel?.Deactivate();

@@ -44,15 +44,6 @@ namespace Parts
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            //Debug.Log("OnDrawGizmos");
-
-            //if (!a || !b) return;
-            //Gizmos.color = color;
-            //Gizmos.DrawLine(a.position, b.position);
-
-            //if(_waypoints == null)
-            //    _waypoints = waypointRoot.GetComponentsInChildren<Waypoint>();
-
             for (int i = 0; i < _waypoints?.Length - 1; i++)
             {
                 if (_waypoints[i] != null)

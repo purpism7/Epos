@@ -15,13 +15,15 @@ namespace Common
         Priest,
         Wizard,
     }
-
-    public enum EFormation
+    
+    public enum DirectionType
     {
         None,
-
-        Front,
-        Rear,
+        
+        Forward,
+        Back,
+        Left,
+        Right,
     }
 
     public enum ETeam
