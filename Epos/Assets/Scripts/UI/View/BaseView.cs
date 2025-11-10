@@ -11,7 +11,7 @@ namespace UI.View
 {
     public interface IView
     {
-        void CreatePresenter(IObjectResolver iResolver);
+        void Configure(IObjectResolver iResolver);
     }
 
     public abstract class BaseView<T> : Common.Component<T> where T : Common.Param
@@ -23,7 +23,7 @@ namespace UI.View
             base.Deactivate();
         }
 
-        public abstract void CreatePresenter(IObjectResolver iResolver);
+        public abstract void Configure(IObjectResolver iResolver);
 
         protected V RegisterPresenter<V>(IObjectResolver iResolver)
         {

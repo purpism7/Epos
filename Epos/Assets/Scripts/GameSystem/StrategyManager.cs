@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using VContainer.Unity;
 
 using Creature;
-using Battle.Formation;
 
 namespace GameSystem
 {

@@ -15,6 +15,7 @@ using Creature;
 using UI.Parts;
 using Battle.RealTime;
 using Creature.Action;
+using Battle.Strategy;
 
 namespace Battle.Mode
 {
@@ -35,7 +36,7 @@ namespace Battle.Mode
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private WeakTypeMap<IActor> _iActorMap = null;
-        [Inject] private IFormationController _iFormationController = null;
+        [Inject] private IStrategyController _iStrategyController = null;
 
         private IWaypointController _iWaypointCtr = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
@@ -63,8 +64,8 @@ namespace Battle.Mode
         public override void Begin()
         {
             Debug.Log("Begin()");
-            _iFormationController?.Initialize(_data?.AllyICombatantList);
-            _iCameraManager?.SetTargetTm(_iFormationController?.LeaderICombatant?.Transform);
+            _iStrategyController?.Initialize(_data?.AllyICombatantList);
+            _iCameraManager?.SetTargetTm(_iStrategyController?.LeaderICombatant?.Transform);
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -80,7 +81,7 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            _iFormationController?.ChainUpdate();
+            _iStrategyController?.ChainUpdate();
             UpdateWaypoint();
 
             //if (_closestICombatant?.IActor != null)
@@ -165,7 +166,7 @@ namespace Battle.Mode
                 iCombatant.IActor?.ChainUpdate();
             }
 
-            _iWaypointCtr?.ChainUpdate(_iFormationController?.LeaderICombatant);
+            _iWaypointCtr?.ChainUpdate(_iStrategyController?.LeaderICombatant);
         }
 
         //private ICombatant ClosestICombatantToWayPoint()
@@ -235,7 +236,7 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            _iFormationController?.MoveFormation(waypoint.Position);
+            _iStrategyController?.MoveFormation(waypoint.Position);
         }
 
         //private void MoveToWaypoint(Waypoint waypoint, ICombatant iCombatant)
@@ -341,7 +342,7 @@ namespace Battle.Mode
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
                 //Debug.Log("movetoWaypoint = " + iCombatant.Id);
                 //MoveToWaypoint(waypoint, iCombatant);
-                if(iCombatant == _iFormationController.LeaderICombatant)
+                if(iCombatant == _iStrategyController.LeaderICombatant)
                     MoveToWaypoint(waypoint);
             }
             else

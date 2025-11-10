@@ -32,7 +32,7 @@ namespace UI.View
                 return this;
             }
         }
-        
+
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
@@ -53,9 +53,11 @@ namespace UI.View
         public List<ICombatant> AllyICombatantList => _param?.AllyICombatantList;
         public RectTransform AllyBattlePortraitRootRectTm => allyBattlePortraitRootRectTm;
 
-        public override void CreatePresenter(IObjectResolver iResolver)
+        public override void Configure(IObjectResolver iResolver)
         {
             _iPresenter = RegisterPresenter<BattleMainPresenter>(iResolver);
+
+            iResolver?.Inject(strategyPanel);
         }
 
         public override async UniTask InitializeAsync(Param param)
@@ -64,7 +66,7 @@ namespace UI.View
             await _iPresenter.InitializeAsync(this);
 
             await shoutPanel.InitializeAsync(null);
-            await strategyPanel.InitializeAsync(null);
+            await strategyPanel.InitializeAsync(new StrategyPanel.Param());
             
             InitializeButton();
             

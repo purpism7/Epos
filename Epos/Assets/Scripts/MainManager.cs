@@ -13,13 +13,9 @@ public class MainManager : Singleton<MainManager>
 {
     //[SerializeField]
     //[Range(1f, 10f)]
-    [Range(1f, 100f)]
-    [SerializeField] private float traceMoveSpeed = 20f;
-    
+
     private List<IGeneric> _iMgrGenericList = null;
     private DayNightCycle _dayNightCycle = null;
-    
-    public float TraceMoveSpeed => traceMoveSpeed;
     
     protected override void Initialize()
     {

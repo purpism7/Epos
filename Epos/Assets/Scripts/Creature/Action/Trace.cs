@@ -112,8 +112,8 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
 
-            if (navMeshAgent.speed < _param.Speed)
-                return;
+            //if (navMeshAgent.speed < _param.Speed)
+            //    return;
 
             navMeshAgent.speed = _param.Speed; // * Time.timeScale;
         }
@@ -130,17 +130,17 @@ namespace Creature.Action
                 if(_param.TargetTm)
                 {
                     targetPosition = _param.TargetTm.position;
-                    _targetTm = _param.TargetTm;
+                    //_targetTm = _param.TargetTm;
                 }
                     
                 if (_param.TargetICombatant != null)
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
-                    _targetTm = _param.TargetICombatant.Transform;
+                    //_targetTm = _param.TargetICombatant.Transform;
 
-                    var targetCollider = _param.TargetICombatant.IActor?.Collider;
-                    if (targetCollider != null)
-                        targetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
+                    //var targetCollider = _param.TargetICombatant.IActor?.Collider;
+                    //if (targetCollider != null)
+                    //    targetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
                 }
 
                 targetPosition = GetTargetPositionByDirection(targetPosition);
@@ -166,13 +166,19 @@ namespace Creature.Action
             switch (_param.DirectionType)
             {
                 case DirectionType.Back:
-                    return targetPosition - new Vector3(targetDirection.y, -targetDirection.x) * _param.Distance;
+                    return targetPosition - (Vector3)targetDirection * _param.Distance;
                 
                 case DirectionType.Right:
-                    return targetPosition + new Vector3(targetDirection.y, -targetDirection.x) * _param.Distance;
+                    {
+                        var rightVec = new Vector2(targetDirection.y, -targetDirection.x);
+                        return targetPosition + ((Vector3)rightVec * _param.Distance);
+                    }
                 
                 case DirectionType.Left:
-                    return targetPosition + new Vector3(-targetDirection.y, targetDirection.x) * _param.Distance;
+                    {
+                        var leftVector = new Vector2(-targetDirection.y, targetDirection.x);
+                        return targetPosition + ((Vector3)leftVector * _param.Distance);
+                    }
             }
 
             return targetPosition;
@@ -211,9 +217,9 @@ namespace Creature.Action
 
             _prevTargetPosition = iActorTm.position;
             
-            distance = Vector2.Distance(iActorTm.position, targetPosition);
-            if (distance < _param.Distance)
-                End();
+            //var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            //if (distance < navMeshAgent.stoppingDistance)
+            //    End();
         }
 
         protected override void End()

@@ -1,34 +1,38 @@
-using Battle;
-using Battle.Formation;
-using Cysharp.Threading.Tasks;
-using UI.Slot;
 using UnityEngine;
+using System;
+
 using VContainer;
+using Cysharp.Threading.Tasks;
+
+using UI.Slot;
+using Battle;
+using Battle.Strategy;
 
 namespace UI.View
 {
-    public class StrategyPanel : Common.Component<StrategyPanel.Param>
+    public class StrategyPanel : Common.Component<StrategyPanel.Param>, StrategySlot.IListener
     {
         public class Param : Common.Param
         {
-            // Add parameters here if needed in the future
+
         }
 
         [SerializeField] private Animator animator = null;
 
-        [Inject] private IFormationController _iFormationController = null;
-        
+        [Inject] IStrategyController _iStrategyController = null;
+
         private StrategySlot[] _strategySlots = null;
-        
+        private IStrategySlot _currentIStrategySlot = null;
+
         public override async UniTask InitializeAsync(Param param)
         {
             await base.InitializeAsync(param);
 
             _strategySlots = GetComponentsInChildren<StrategySlot>(true);
 
-            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(typeof(Adaptive)));
-            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(typeof(Offensive)));
-            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(typeof(Defensive)));
+            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), this));
+            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), this));
+            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this));
         }
 
         public override async UniTask ActivateAsync(Param param)
@@ -36,11 +40,11 @@ namespace UI.View
             await base.ActivateAsync(param);
 
             animator?.SetBool("OnOff", false);
-            
-            foreach (var strategySlot in _strategySlots)
-            {
-                await strategySlot.ActivateAsync();
-            }
+
+            //foreach (var strategySlot in _strategySlots)
+            //{
+            //    await strategySlot.ActivateAsync();
+            //}
         }
 
         public override void Deactivate()
@@ -49,6 +53,25 @@ namespace UI.View
 
             animator?.SetBool("OnOff", true);
         }
+
+        #region StrategySlot.IListener
+        void StrategySlot.IListener.OnSelectStrategy(IStrategySlot iStrategySlot)
+        {
+            if (iStrategySlot == null)
+                return;
+
+            if (_iStrategyController == null)
+                return;
+
+            if (_iStrategyController.CurrentIStrategy == iStrategySlot.IStrategy)
+                return;
+
+            _iStrategyController.ApplyStrategy(iStrategySlot.IStrategy);
+
+            _currentIStrategySlot?.Deselect();
+            _currentIStrategySlot = iStrategySlot;
+        }
+        #endregion
     }
 }
 

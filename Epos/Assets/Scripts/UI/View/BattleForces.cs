@@ -38,7 +38,7 @@ namespace UI.Panels
         [Header("Enemy")]
         [SerializeField] private BattlePartyPart enemyBattlePartyPart = null;
 
-        public override void CreatePresenter(IObjectResolver iResolver)
+        public override void Configure(IObjectResolver iResolver)
         {
             
         }

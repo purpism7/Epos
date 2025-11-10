@@ -21,10 +21,10 @@ namespace GameSystem
         [SerializeField] private RectTransform popupRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
 
+        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
 
-        private IObjectResolver _container = null;
         private Dictionary<System.Type, Common.Component> _componentDic = null;
 
         public Camera UICamera => uiCamera;
@@ -44,14 +44,17 @@ namespace GameSystem
         //     //LoadAssetAsync().Forget();
         // }
 
-        public async UniTask InitializeAsync(VContainer.IObjectResolver container)
+        public async UniTask InitializeAsync()
         {
-            _container = container;
-
             _componentDic = new();
             _componentDic.Clear();
 
             await LoadAssetAsync();
+        }
+
+        public void SetIObjectResolver(VContainer.IObjectResolver iResolver)
+        {
+            _iResolver = iResolver;
         }
 
         private async UniTask LoadAssetAsync()
@@ -138,7 +141,7 @@ namespace GameSystem
                 isInitialize = true;
 
                 component = Instantiate(component.gameObject)?.GetComponent<T>();
-                _container?.InjectGameObject(component?.gameObject);
+                _iResolver?.InjectGameObject(component?.gameObject);
 
                 if (component != null)
                     _objectPooler?.Add(component);
@@ -151,7 +154,7 @@ namespace GameSystem
                 SetCurrView(baseView);
 
                 if(isInitialize)
-                    baseView.CreatePresenter(_container);
+                    baseView.Configure(_iResolver);
             }
 
             if (component is UI.Popup.BasePopup<V> basePopup)

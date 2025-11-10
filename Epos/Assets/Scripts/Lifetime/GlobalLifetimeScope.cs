@@ -71,7 +71,7 @@ namespace Lifetime
                 .InitializeAsync();
 
             await Container.Resolve<UIManager>()
-               .InitializeAsync(Container);
+               .InitializeAsync();
 
             await sceneInitializer.InitializeAsync();
         }

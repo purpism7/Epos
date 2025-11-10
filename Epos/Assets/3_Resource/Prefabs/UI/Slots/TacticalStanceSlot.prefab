@@ -1270,7 +1270,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 2194155896833258910}
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7538793487973951089}
-  selectRootRectTm: {fileID: 881376857052587259}
+  animator: {fileID: 6992221823293504346}
   strategyTypeNameTMP: {fileID: 6635015761176410120}
   selectBtn: {fileID: 4709159823183703058}
 --- !u!1 &6899268856691688955
