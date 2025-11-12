@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3755276218565999391}
   - component: {fileID: 4853296596386727692}
   m_Layer: 0
-  m_Name: Eff_Boom_test
+  m_Name: Eff_Boom_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
