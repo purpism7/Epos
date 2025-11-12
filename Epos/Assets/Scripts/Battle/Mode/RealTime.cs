@@ -19,7 +19,7 @@ using Battle.Strategy;
 
 namespace Battle.Mode
 {
-    public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionController.IListener, IWeightedActionRequester
+    public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionController.IListener, IWeightedActionRequester, StrategyController.IListener
     {
         public class Data : BaseData
         {
@@ -41,6 +41,7 @@ namespace Battle.Mode
         private IWaypointController _iWaypointCtr = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
+        private bool _isCombating = false;
 
         public override BattleMode<Data> Initialize(Data data)
         {
@@ -64,8 +65,7 @@ namespace Battle.Mode
         public override void Begin()
         {
             Debug.Log("Begin()");
-            _iStrategyController?.Initialize(_data?.AllyICombatantList);
-            _iCameraManager?.SetTargetTm(_iStrategyController?.LeaderICombatant?.Transform);
+            _iStrategyController?.Initialize(this, _data?.AllyICombatantList);
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
@@ -75,7 +75,6 @@ namespace Battle.Mode
             }
 
             ActivateBattleMain();
-
             CheckWaypointActionAsync().Forget();
         }
 
@@ -277,6 +276,10 @@ namespace Battle.Mode
 
         private void BeginCombat(Waypoint waypoint)
         {
+            if (_isCombating)
+                return;
+
+            _isCombating = true;
             _weightedActionCTS = new();
 
             var enemyICombatantList = waypoint?.EnemyICombatantList;
@@ -300,8 +303,6 @@ namespace Battle.Mode
 
                 _iWeightedActionCtr?.Execute(allyICombatant, this);
             }
-
-            //_closestICombatant = null;
         }
 
         private void TransitionToIdle()
@@ -334,14 +335,14 @@ namespace Battle.Mode
 
             if (waypoint.AliveMonsterCount <= 0)
             {
+                if (_isCombating)
+                    _isCombating = false;
+
                 _weightedActionCTS?.Cancel();
                 _weightedActionCTS = null;
 
-                //SetClosestICombatant();
-
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-                //Debug.Log("movetoWaypoint = " + iCombatant.Id);
-                //MoveToWaypoint(waypoint, iCombatant);
+
                 if(iCombatant == _iStrategyController.LeaderICombatant)
                     MoveToWaypoint(waypoint);
             }
@@ -409,6 +410,14 @@ namespace Battle.Mode
             //        _closestICombatant = ClosestICombatantToWayPoint();
             //    }
             //}
+        }
+        #endregion
+
+        #region StrategyController.IListener
+        void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy)
+        {
+            _iCameraManager?.SetTargetTm(iStrategy?.LeaderICombatant?.Transform);
+            CheckWaypointActionAsync().Forget();
         }
         #endregion
     }

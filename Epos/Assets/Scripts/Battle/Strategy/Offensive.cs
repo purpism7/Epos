@@ -32,7 +32,7 @@ namespace Battle.Strategy
             var traceParam = new Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
                 .WithDirectionType(DirectionType.Right)
-                .WithDistance(5f)
+                .WithDistance(3f)
                 .WithSpeed(_moveSpped);
 
             iCombatant?.IActor?.IActCtr?
@@ -44,7 +44,7 @@ namespace Battle.Strategy
             traceParam = new Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
                 .WithDirectionType(DirectionType.Back)
-                .WithDistance(10f)
+                .WithDistance(7f)
                 .WithSpeed(_moveSpped);
 
             iCombatant?.IActor?.IActCtr?

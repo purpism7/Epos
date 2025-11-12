@@ -118,7 +118,7 @@ namespace Creature.Action
             navMeshAgent.speed = _param.Speed; // * Time.timeScale;
         }
 
-        private Vector2 TargetPosition
+        private Vector3 TargetPosition
         {
             get
             {
@@ -130,13 +130,13 @@ namespace Creature.Action
                 if(_param.TargetTm)
                 {
                     targetPosition = _param.TargetTm.position;
-                    //_targetTm = _param.TargetTm;
+                    _targetTm = _param.TargetTm;
                 }
                     
                 if (_param.TargetICombatant != null)
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
-                    //_targetTm = _param.TargetICombatant.Transform;
+                    _targetTm = _param.TargetICombatant.Transform;
 
                     //var targetCollider = _param.TargetICombatant.IActor?.Collider;
                     //if (targetCollider != null)
@@ -156,28 +156,32 @@ namespace Creature.Action
 
             if (_param.DirectionType == DirectionType.None)
                 return targetPosition;
-            
-            Vector2 targetDirection = targetPosition - _prevTargetPosition;
-        
+
+            Vector3 directionToTarget = _targetTm.position - _prevTargetPosition;
+
             // 정규화된 벡터가 아니면 문제가 발생할 수 있으므로 항상 정규화합니다.
-            if (targetDirection.sqrMagnitude >= 0.0001f)
-                targetDirection = targetDirection.normalized;
-                
+            if (directionToTarget.sqrMagnitude >= 0.0001f)
+                directionToTarget = directionToTarget.normalized;
+
             switch (_param.DirectionType)
             {
                 case DirectionType.Back:
-                    return targetPosition - (Vector3)targetDirection * _param.Distance;
+                    return targetPosition - (Vector3)directionToTarget * _param.Distance;
                 
                 case DirectionType.Right:
                     {
-                        var rightVec = new Vector2(targetDirection.y, -targetDirection.x);
-                        return targetPosition + ((Vector3)rightVec * _param.Distance);
+                        Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
+                        //var rightVec = new Vector3(directionToTarget.z, 0, -directionToTarget.x);
+                        return targetPosition + ((Vector3)rightVector * _param.Distance);
+                        //return targetPosition + (rightVec * _param.Distance);
                     }
                 
                 case DirectionType.Left:
                     {
-                        var leftVector = new Vector2(-targetDirection.y, targetDirection.x);
+                        Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
+                        //var leftVector = new Vector3(-directionToTarget.z, 0, directionToTarget.x);
                         return targetPosition + ((Vector3)leftVector * _param.Distance);
+                        //return targetPosition + (leftVector * _param.Distance);
                     }
             }
 
@@ -200,23 +204,24 @@ namespace Creature.Action
                 return;
 
             Vector3 targetPosition = TargetPosition;
+            Vector3 iActorPosition = iActorTm.position;
 
-            var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            var distance = Vector2.Distance(iActorPosition, targetPosition);
             if (distance < _param.Distance)
                 return;
 
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);
 
-            Debug.DrawLine(iActorTm.position, targetPosition, Color.yellow);
+            Debug.DrawLine(iActorPosition, targetPosition, Color.cyan);
 
-            var direction = targetPosition - iActorTm.position;
+            var direction = targetPosition - iActorPosition;
 
             _iActor?.IActCtr?.Flip(direction.x);
-            _iActor?.SortingOrder(iActorTm.position.y);
+            _iActor?.SortingOrder(iActorPosition.y);
 
-            _prevTargetPosition = iActorTm.position;
-            
+            _prevTargetPosition = _targetTm.position;
+
             //var distance = Vector2.Distance(iActorTm.position, targetPosition);
             //if (distance < navMeshAgent.stoppingDistance)
             //    End();

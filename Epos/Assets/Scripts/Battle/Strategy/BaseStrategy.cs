@@ -23,7 +23,11 @@ namespace Battle.Strategy
     public abstract class BaseStrategy : IStrategy
     {
         protected IStrategyDataProvider _iStrategyDataProvider = null;
-        protected float _moveSpped = 1f;
+        protected float _moveSpped = 5f;
+
+#if UNITY_EDITOR
+        private DebugObject _debugObject = null;
+#endif
 
         public ICombatant LeaderICombatant { get; protected set; } = null;
 
@@ -51,10 +55,16 @@ namespace Battle.Strategy
                 .MoveToTarget(moveParam)?
                 .Execute();
 
-            var debugObjGmeObj = new GameObject();
-            var debugObj = debugObjGmeObj.AddComponent<DebugObject>();
-            debugObj.originTm = LeaderICombatant.Transform;
-            debugObj.targetPosition = targetPosition;
+#if UNITY_EDITOR
+            if(!_debugObject)
+            {
+                var debugGameObj= new GameObject();
+                _debugObject = debugGameObj.AddComponent<DebugObject>();
+            }
+
+            _debugObject.originTm = LeaderICombatant.Transform;
+            _debugObject.targetPosition = targetPosition;
+#endif
         }
     }
 }

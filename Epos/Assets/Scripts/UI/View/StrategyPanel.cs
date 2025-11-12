@@ -33,6 +33,9 @@ namespace UI.View
             await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), this));
             await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), this));
             await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this));
+
+            _currentIStrategySlot = _strategySlots[0];
+            _currentIStrategySlot?.Select();
         }
 
         public override async UniTask ActivateAsync(Param param)

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using VContainer;
+
 using Creature;
 using GameSystem;
 
@@ -8,7 +10,7 @@ namespace Battle.Strategy
 {
     public interface IStrategyController
     {
-        void Initialize(List<ICombatant> allyICombatantList);
+        void Initialize(StrategyController.IListener iListener, List<ICombatant> allyICombatantList);
         void ChainUpdate();
 
         void ApplyStrategy(IStrategy iStrategy);
@@ -26,13 +28,21 @@ namespace Battle.Strategy
 
     public class StrategyController : IStrategyController, IStrategyDataProvider
     {
+        public interface IListener
+        {
+            void OnChangedStrategy(IStrategy iStrategy);
+        }
+
+        private IListener _iListener = null;
+
         public List<ICombatant> AllyICombatantList { get; private set; } = null;
 
         public IStrategy CurrentIStrategy { get; private set; } = null;
 
         #region IStrategyController
-        void IStrategyController.Initialize(List<ICombatant> allyICombatantList)
+        void IStrategyController.Initialize(IListener iListener, List<ICombatant> allyICombatantList)
         {
+            _iListener = iListener;
             AllyICombatantList = allyICombatantList;
 
             ApplyStrategy(new Adaptive());
@@ -66,6 +76,8 @@ namespace Battle.Strategy
         {
             iStrategy?.Apply(this);
             CurrentIStrategy = iStrategy;
+
+            _iListener?.OnChangedStrategy(iStrategy);
         }
     }
 

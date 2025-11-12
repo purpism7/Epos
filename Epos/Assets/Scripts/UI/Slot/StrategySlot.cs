@@ -12,6 +12,7 @@ namespace UI.Slot
     {
         IStrategy IStrategy { get; }
 
+        void Select();
         void Deselect();
     }
 
@@ -57,12 +58,15 @@ namespace UI.Slot
             return UniTask.CompletedTask;
         }
 
+        private void Select()
+        {
+            animator?.SetBool("Select", true);
+        }
+
         private void OnClickSelect()
         {
-
-            animator?.SetBool("Select", true);
-            //Extensions.SetActive(selectRootRectTm, true);
-
+            Select();
+    
             _param?.IListener?.OnSelectStrategy(this);
         }
 
@@ -72,10 +76,14 @@ namespace UI.Slot
             get { return _param?.IStrategy; }
         }
 
+        void IStrategySlot.Select()
+        {
+            Select();
+        }
+
         void IStrategySlot.Deselect()
         {
             animator?.SetBool("Select", false);
-            //Extensions.SetActive(selectRootRectTm, false);
         }
         #endregion
     }

@@ -157,8 +157,8 @@ namespace Creature.Action
             if (navMeshAgent == null)
                 return;
 
-            if (navMeshAgent.speed < _param.MoveSpeed)
-                return;
+            //if (navMeshAgent.speed < _param.MoveSpeed)
+            //    return;
 
             navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
         }
@@ -214,46 +214,6 @@ namespace Creature.Action
                 return targetPos;
             }
         }
-
-        //private Vector3 CalcTargetPos
-        //{
-        //    get
-        //    {
-        //        if (_iActor == null)
-        //            return Vector3.zero ;
-
-        //        Vector3 targetPos = TargetPos;
-
-        //        if (_param.ForwardDirection)
-        //        {
-        //            //if(_param?.LeaderTm)
-        //            //{
-        //            //Vector3 fromLeaderDir = (_iActor.Transform.position - _param.LeaderTm.position).normalized;
-        //            //Vector2 toTargetDir = (_iActor.Transform.position - targetPos).normalized;
-
-        //            //var crossPos = Vector3.Cross(toTargetDir, fromLeaderDir);
-
-        //            //bool isLeft = crossPos.z > 0f;
-
-        //            //    Vector3 right = Vector3.right; // 월드 기준 오른쪽
-        //            //    Vector3 baseDir = isLeft ? right : -right; // 왼쪽 or 오른쪽 방향
-
-        //            //    // 반원 내 랜덤 각도 + 거리
-        //            //    float angle = Random.Range(-90f, 90f);
-        //            //    float distance = Random.Range(6f, 10f);
-
-        //            //    // 회전 적용
-        //            //    Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-        //            //    Vector3 offset = rotation * baseDir * distance;
-
-        //            //    return targetPos + offset;
-        //            //}
-        //        }
-
-        //        return targetPos;
-        //    }
-        //}
-
         public override void ChainUpdate()
         {
             base.ChainUpdate();

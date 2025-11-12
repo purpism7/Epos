@@ -33,7 +33,7 @@ public class DebugObject : MonoBehaviour
         // --- 3. 최종 위치 계산 ---
 
         Vector3 targetPos = targetPosition;
-        Vector3 zOffset = new Vector3(0, 0, targetPos.z); // 2D 평면 유지를 위한 Z축
+        //Vector3 zOffset = new Vector3(0, 0, targetPos.z); // 2D 평면 유지를 위한 Z축
 
         // 1. 뒤쪽 위치 (Back Position)
         // 타겟 위치에서 (가는 방향 * 거리)를 뺍니다.
