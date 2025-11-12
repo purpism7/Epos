@@ -235,3 +235,65 @@ Staff
 bounds:1913,3,183,508
 offsets:0,0,184,508
 rotate:90
+
+Sorceress_01_2.png
+size:182,2546
+filter:Linear,Linear
+pma:true
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00000
+bounds:76,2,45,80
+offsets:101,11,250,250
+rotate:90
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00001
+bounds:76,49,86,93
+offsets:81,9,250,250
+rotate:90
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00002
+bounds:2,192,116,118
+offsets:62,6,250,250
+rotate:90
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00003
+bounds:2,310,144,127
+offsets:51,6,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00004
+bounds:2,439,166,133
+offsets:40,5,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00005
+bounds:2,574,170,144
+offsets:39,5,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00006
+bounds:2,720,171,157
+offsets:38,5,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00007
+bounds:2,879,173,164
+offsets:37,5,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00008
+bounds:2,1045,174,178
+offsets:36,5,250,250
+rotate:90
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00009
+bounds:2,1221,177,191
+offsets:34,4,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00010
+bounds:2,1414,178,199
+offsets:33,4,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00011
+bounds:2,1615,178,218
+offsets:32,4,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00012
+bounds:2,1835,178,228
+offsets:31,4,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00013
+bounds:2,2065,174,237
+offsets:31,3,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00014
+bounds:2,2304,176,240
+offsets:30,3,250,250
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00015
+bounds:2,17,173,72
+offsets:33,3,250,250
+rotate:90
+Effect/Energy 093 Ray Up MIX/Energy 093 Ray Up MIX_00016
+bounds:122,137,171,54
+offsets:35,8,250,250
+rotate:90

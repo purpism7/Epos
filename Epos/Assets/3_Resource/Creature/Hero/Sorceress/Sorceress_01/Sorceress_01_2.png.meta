@@ -1,0 +1,1859 @@
+fileFormatVersion: 2
+guid: 8fee9d410ec954a4a87083641a31153a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 251184999716877224
+    second: Sorceress_01_2_0
+  - first:
+      213: -5873160052620806395
+    second: Sorceress_01_2_1
+  - first:
+      213: 2115836332293601966
+    second: Sorceress_01_2_2
+  - first:
+      213: 7909621308532452792
+    second: Sorceress_01_2_3
+  - first:
+      213: 8945279549773389367
+    second: Sorceress_01_2_4
+  - first:
+      213: -6278540678327089993
+    second: Sorceress_01_2_5
+  - first:
+      213: -901134813323837365
+    second: Sorceress_01_2_6
+  - first:
+      213: 8222276134805285792
+    second: Sorceress_01_2_7
+  - first:
+      213: 6189656798131985571
+    second: Sorceress_01_2_8
+  - first:
+      213: -1747670027597679861
+    second: Sorceress_01_2_9
+  - first:
+      213: -8773132026884223007
+    second: Sorceress_01_2_10
+  - first:
+      213: 6162849212974965314
+    second: Sorceress_01_2_11
+  - first:
+      213: -3082425570426226870
+    second: Sorceress_01_2_12
+  - first:
+      213: -4918510096245568329
+    second: Sorceress_01_2_13
+  - first:
+      213: -2341941018825906329
+    second: Sorceress_01_2_14
+  - first:
+      213: -444344060916779812
+    second: Sorceress_01_2_15
+  - first:
+      213: 4899752135785994267
+    second: Sorceress_01_2_16
+  - first:
+      213: 6731691848626123458
+    second: Sorceress_01_2_17
+  - first:
+      213: -966069730898051005
+    second: Sorceress_01_2_18
+  - first:
+      213: 4286633445924505301
+    second: Sorceress_01_2_19
+  - first:
+      213: -3354336832496738892
+    second: Sorceress_01_2_20
+  - first:
+      213: 7402802941752221169
+    second: Sorceress_01_2_21
+  - first:
+      213: 3449576641167388893
+    second: Sorceress_01_2_22
+  - first:
+      213: 842930734640701934
+    second: Sorceress_01_2_23
+  - first:
+      213: -5640228865499666194
+    second: Sorceress_01_2_24
+  - first:
+      213: -2671700377797187715
+    second: Sorceress_01_2_25
+  - first:
+      213: -1531365433454813814
+    second: Sorceress_01_2_26
+  - first:
+      213: 8182848863219913460
+    second: Sorceress_01_2_27
+  - first:
+      213: 2703247410683863243
+    second: Sorceress_01_2_28
+  - first:
+      213: -7816199903616819205
+    second: Sorceress_01_2_29
+  - first:
+      213: -1372746123203802194
+    second: Sorceress_01_2_30
+  - first:
+      213: 4574190221166515779
+    second: Sorceress_01_2_31
+  - first:
+      213: -7302997592098426094
+    second: Sorceress_01_2_32
+  - first:
+      213: -8392983886653615460
+    second: Sorceress_01_2_33
+  - first:
+      213: 1588929289258167429
+    second: Sorceress_01_2_34
+  - first:
+      213: 109217388397182676
+    second: Sorceress_01_2_35
+  - first:
+      213: -6823586895990374387
+    second: Sorceress_01_2_36
+  - first:
+      213: 2069503534555289519
+    second: Sorceress_01_2_37
+  - first:
+      213: -3763043538689688527
+    second: Sorceress_01_2_38
+  - first:
+      213: -8935120165982638518
+    second: Sorceress_01_2_39
+  - first:
+      213: -7061110485854542547
+    second: Sorceress_01_2_40
+  - first:
+      213: -7598132109039554677
+    second: Sorceress_01_2_41
+  - first:
+      213: -3818810667857271707
+    second: Sorceress_01_2_42
+  - first:
+      213: 6232888698996024917
+    second: Sorceress_01_2_43
+  - first:
+      213: -415223811910500514
+    second: Sorceress_01_2_44
+  - first:
+      213: 8956956301375666449
+    second: Sorceress_01_2_45
+  - first:
+      213: 6237602619905607394
+    second: Sorceress_01_2_46
+  - first:
+      213: -6943272152801093171
+    second: Sorceress_01_2_47
+  - first:
+      213: 788168716639565782
+    second: Sorceress_01_2_48
+  - first:
+      213: -2988330843095638679
+    second: Sorceress_01_2_49
+  - first:
+      213: 7210849429371738476
+    second: Sorceress_01_2_50
+  - first:
+      213: -7387832973013898447
+    second: Sorceress_01_2_51
+  - first:
+      213: -6241582596955378193
+    second: Sorceress_01_2_52
+  - first:
+      213: 3136768377873325804
+    second: Sorceress_01_2_53
+  - first:
+      213: 5847362324748952023
+    second: Sorceress_01_2_54
+  - first:
+      213: -4048187218123747178
+    second: Sorceress_01_2_55
+  - first:
+      213: 170496648177792202
+    second: Sorceress_01_2_56
+  - first:
+      213: -3090756427020531350
+    second: Sorceress_01_2_57
+  - first:
+      213: -6433396473670836711
+    second: Sorceress_01_2_58
+  - first:
+      213: -1564325266815500156
+    second: Sorceress_01_2_59
+  - first:
+      213: -6102977537642606044
+    second: Sorceress_01_2_60
+  - first:
+      213: -4496913601815443691
+    second: Sorceress_01_2_61
+  - first:
+      213: -8933721095626265185
+    second: Sorceress_01_2_62
+  - first:
+      213: -5739413075738680530
+    second: Sorceress_01_2_63
+  - first:
+      213: -3356015356787853931
+    second: Sorceress_01_2_64
+  - first:
+      213: -2748909274095468961
+    second: Sorceress_01_2_65
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Sorceress_01_2_0
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 2519
+        width: 6
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a3f7092d636c7300800000000000000
+      internalID: 251184999716877224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_1
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 2498
+        width: 82
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 507b58aac085e7ea0800000000000000
+      internalID: -5873160052620806395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_2
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2432
+        width: 100
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eaab93d1fe5fc5d10800000000000000
+      internalID: 2115836332293601966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_3
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 2400
+        width: 73
+        height: 98
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bdefe25cae94cd60800000000000000
+      internalID: 7909621308532452792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_4
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 2410
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 73e1fcc3b54042c70800000000000000
+      internalID: 8945279549773389367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_5
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 2383
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7b44978a4842ed8a0800000000000000
+      internalID: -6278540678327089993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_6
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 2380
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b40481569a68e73f0800000000000000
+      internalID: -901134813323837365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_7
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 2359
+        width: 9
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0abad34c4946b1270800000000000000
+      internalID: 8222276134805285792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_8
+      rect:
+        serializedVersion: 2
+        x: 46
+        y: 2355
+        width: 6
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3ac1d3e401416e550800000000000000
+      internalID: 6189656798131985571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_9
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 2355
+        width: 11
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b0371749e570fb7e0800000000000000
+      internalID: -1747670027597679861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2237
+        width: 145
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ef86f157e29f3680800000000000000
+      internalID: -8773132026884223007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 2262
+        width: 6
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2422baff4b6d68550800000000000000
+      internalID: 6162849212974965314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_12
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 2240
+        width: 8
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a47f92c66460935d0800000000000000
+      internalID: -3082425570426226870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_13
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 2237
+        width: 9
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bc4c197021fdbbb0800000000000000
+      internalID: -4918510096245568329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_14
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 2108
+        width: 146
+        height: 129
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76727ff2d01cf7fd0800000000000000
+      internalID: -2341941018825906329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_15
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1973
+        width: 168
+        height: 135
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd4300b4e6f55d9f0800000000000000
+      internalID: -444344060916779812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_16
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1827
+        width: 172
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b185cf48b9a6ff340800000000000000
+      internalID: 4899752135785994267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_17
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1668
+        width: 173
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c2b0cef116cb6d50800000000000000
+      internalID: 6731691848626123458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_18
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1502
+        width: 175
+        height: 166
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 340809db2b4d792f0800000000000000
+      internalID: -966069730898051005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_19
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1326
+        width: 180
+        height: 176
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d683a2586e2d7b30800000000000000
+      internalID: 4286633445924505301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_20
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 1133
+        width: 179
+        height: 193
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4bdd5024c600371d0800000000000000
+      internalID: -3354336832496738892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_21
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 934
+        width: 43
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fd9b55cd0a0cb660800000000000000
+      internalID: 7402802941752221169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_22
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 932
+        width: 80
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd07442bdab5fdf20800000000000000
+      internalID: 3449576641167388893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_23
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 983
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee1a4808901b2bb00800000000000000
+      internalID: 842930734640701934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_24
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 961
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee8ecf3eab1e9b1b0800000000000000
+      internalID: -5640228865499666194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_25
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 940
+        width: 49
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d772f1369a63cead0800000000000000
+      internalID: -2671700377797187715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_26
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 936
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8d1d95704f7fbae0800000000000000
+      internalID: -1531365433454813814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_27
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 713
+        width: 61
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4f29eeebfa15f8170800000000000000
+      internalID: 8182848863219913460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_28
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 763
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bc06ec5923dd38520800000000000000
+      internalID: 2703247410683863243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_29
+      rect:
+        serializedVersion: 2
+        x: 71
+        y: 714
+        width: 43
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bff1a738997478390800000000000000
+      internalID: -7816199903616819205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_30
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 741
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eab84af8ca603fce0800000000000000
+      internalID: -1372746123203802194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_31
+      rect:
+        serializedVersion: 2
+        x: 141
+        y: 720
+        width: 40
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34612b365c9ca7f30800000000000000
+      internalID: 4574190221166515779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_32
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 712
+        width: 30
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 213b077026a86aa90800000000000000
+      internalID: -7302997592098426094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_33
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 716
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c921f6e7f91268b80800000000000000
+      internalID: -8392983886653615460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_34
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 482
+        width: 46
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 58c627325c20d0610800000000000000
+      internalID: 1588929289258167429
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_35
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 523
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4deb5b6d2a4048100800000000000000
+      internalID: 109217388397182676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_36
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 523
+        width: 10
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d00cb7afedfbd41a0800000000000000
+      internalID: -6823586895990374387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_37
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 437
+        width: 31
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fa7559eff7a58bc10800000000000000
+      internalID: 2069503534555289519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_38
+      rect:
+        serializedVersion: 2
+        x: 148
+        y: 512
+        width: 22
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13c721ac6dbf6cbc0800000000000000
+      internalID: -3763043538689688527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_39
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 512
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a4eec21ac83100480800000000000000
+      internalID: -8935120165982638518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_40
+      rect:
+        serializedVersion: 2
+        x: 162
+        y: 497
+        width: 19
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d25aadaac65e10e90800000000000000
+      internalID: -7061110485854542547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_41
+      rect:
+        serializedVersion: 2
+        x: 49
+        y: 484
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f253c7a130e8690800000000000000
+      internalID: -7598132109039554677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_42
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 482
+        width: 20
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56425e53eebd00bc0800000000000000
+      internalID: -3818810667857271707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_43
+      rect:
+        serializedVersion: 2
+        x: 146
+        y: 490
+        width: 16
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 556643c9f3baf7650800000000000000
+      internalID: 6232888698996024917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_44
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 275
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5f7acc9424dc3af0800000000000000
+      internalID: -415223811910500514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_45
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 286
+        width: 11
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1197134dc408d4c70800000000000000
+      internalID: 8956956301375666449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_46
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 287
+        width: 12
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2e60589d88a609650800000000000000
+      internalID: 6237602619905607394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_47
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 272
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dc9dd6993ca84af90800000000000000
+      internalID: -6943272152801093171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_48
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 263
+        width: 15
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d7706a954320fa00800000000000000
+      internalID: 788168716639565782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_49
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 274
+        width: 13
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 96dd0f95ee05786d0800000000000000
+      internalID: -2988330843095638679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_50
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 275
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c69d78ee955121460800000000000000
+      internalID: 7210849429371738476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_51
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 268
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 13ba69fad05297990800000000000000
+      internalID: -7387832973013898447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_52
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 252
+        width: 25
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fede63882b17169a0800000000000000
+      internalID: -6241582596955378193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_53
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 245
+        width: 29
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cee51d9683a088b20800000000000000
+      internalID: 3136768377873325804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_54
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 243
+        width: 15
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d1e9afbd01062150800000000000000
+      internalID: 5847362324748952023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_55
+      rect:
+        serializedVersion: 2
+        x: 57
+        y: 225
+        width: 42
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 690157f5c23f1d7c0800000000000000
+      internalID: -4048187218123747178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_56
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 47
+        width: 14
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ac438065cc9bd5200800000000000000
+      internalID: 170496648177792202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_57
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 34
+        width: 23
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a698f28b76d6b15d0800000000000000
+      internalID: -3090756427020531350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_58
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 27
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91e59972efbf7b6a0800000000000000
+      internalID: -6433396473670836711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_59
+      rect:
+        serializedVersion: 2
+        x: 92
+        y: 32
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4804b4e35766a4ae0800000000000000
+      internalID: -1564325266815500156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_60
+      rect:
+        serializedVersion: 2
+        x: 153
+        y: 33
+        width: 9
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 422df94b34edd4ba0800000000000000
+      internalID: -6102977537642606044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_61
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 23
+        width: 14
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5170b22a7e0c791c0800000000000000
+      internalID: -4496913601815443691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_62
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 20
+        width: 12
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f9d68c41ffb050480800000000000000
+      internalID: -8933721095626265185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_63
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 4
+        width: 28
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e232d5167328950b0800000000000000
+      internalID: -5739413075738680530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_64
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 1
+        width: 13
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 59577ed50d90d61d0800000000000000
+      internalID: -3356015356787853931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Sorceress_01_2_65
+      rect:
+        serializedVersion: 2
+        x: 58
+        y: 2
+        width: 9
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f5e33cd5499e9d9d0800000000000000
+      internalID: -2748909274095468961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Sorceress_01_2_0: 251184999716877224
+      Sorceress_01_2_1: -5873160052620806395
+      Sorceress_01_2_10: -8773132026884223007
+      Sorceress_01_2_11: 6162849212974965314
+      Sorceress_01_2_12: -3082425570426226870
+      Sorceress_01_2_13: -4918510096245568329
+      Sorceress_01_2_14: -2341941018825906329
+      Sorceress_01_2_15: -444344060916779812
+      Sorceress_01_2_16: 4899752135785994267
+      Sorceress_01_2_17: 6731691848626123458
+      Sorceress_01_2_18: -966069730898051005
+      Sorceress_01_2_19: 4286633445924505301
+      Sorceress_01_2_2: 2115836332293601966
+      Sorceress_01_2_20: -3354336832496738892
+      Sorceress_01_2_21: 7402802941752221169
+      Sorceress_01_2_22: 3449576641167388893
+      Sorceress_01_2_23: 842930734640701934
+      Sorceress_01_2_24: -5640228865499666194
+      Sorceress_01_2_25: -2671700377797187715
+      Sorceress_01_2_26: -1531365433454813814
+      Sorceress_01_2_27: 8182848863219913460
+      Sorceress_01_2_28: 2703247410683863243
+      Sorceress_01_2_29: -7816199903616819205
+      Sorceress_01_2_3: 7909621308532452792
+      Sorceress_01_2_30: -1372746123203802194
+      Sorceress_01_2_31: 4574190221166515779
+      Sorceress_01_2_32: -7302997592098426094
+      Sorceress_01_2_33: -8392983886653615460
+      Sorceress_01_2_34: 1588929289258167429
+      Sorceress_01_2_35: 109217388397182676
+      Sorceress_01_2_36: -6823586895990374387
+      Sorceress_01_2_37: 2069503534555289519
+      Sorceress_01_2_38: -3763043538689688527
+      Sorceress_01_2_39: -8935120165982638518
+      Sorceress_01_2_4: 8945279549773389367
+      Sorceress_01_2_40: -7061110485854542547
+      Sorceress_01_2_41: -7598132109039554677
+      Sorceress_01_2_42: -3818810667857271707
+      Sorceress_01_2_43: 6232888698996024917
+      Sorceress_01_2_44: -415223811910500514
+      Sorceress_01_2_45: 8956956301375666449
+      Sorceress_01_2_46: 6237602619905607394
+      Sorceress_01_2_47: -6943272152801093171
+      Sorceress_01_2_48: 788168716639565782
+      Sorceress_01_2_49: -2988330843095638679
+      Sorceress_01_2_5: -6278540678327089993
+      Sorceress_01_2_50: 7210849429371738476
+      Sorceress_01_2_51: -7387832973013898447
+      Sorceress_01_2_52: -6241582596955378193
+      Sorceress_01_2_53: 3136768377873325804
+      Sorceress_01_2_54: 5847362324748952023
+      Sorceress_01_2_55: -4048187218123747178
+      Sorceress_01_2_56: 170496648177792202
+      Sorceress_01_2_57: -3090756427020531350
+      Sorceress_01_2_58: -6433396473670836711
+      Sorceress_01_2_59: -1564325266815500156
+      Sorceress_01_2_6: -901134813323837365
+      Sorceress_01_2_60: -6102977537642606044
+      Sorceress_01_2_61: -4496913601815443691
+      Sorceress_01_2_62: -8933721095626265185
+      Sorceress_01_2_63: -5739413075738680530
+      Sorceress_01_2_64: -3356015356787853931
+      Sorceress_01_2_65: -2748909274095468961
+      Sorceress_01_2_7: 8222276134805285792
+      Sorceress_01_2_8: 6189656798131985571
+      Sorceress_01_2_9: -1747670027597679861
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
