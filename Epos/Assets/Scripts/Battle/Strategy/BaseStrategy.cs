@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+using Common;
 using Creature;
 using Creature.Action;
 using GameSystem;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Battle.Strategy
 {
@@ -23,7 +23,7 @@ namespace Battle.Strategy
     public abstract class BaseStrategy : IStrategy
     {
         protected IStrategyDataProvider _iStrategyDataProvider = null;
-        protected float _moveSpped = 5f;
+        //protected float _moveSpeed = 5f;
 
 #if UNITY_EDITOR
         private DebugObject _debugObject = null;
@@ -43,11 +43,11 @@ namespace Battle.Strategy
 
         public virtual void MoveFormation(Vector3 targetPosition)
         {
-            _moveSpped = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
 
-           var moveParam = new Move.Param
+            var moveParam = new Move.Param
             {
-                MoveSpeed = _moveSpped,
+                MoveSpeed = moveSpeed,
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 
@@ -65,6 +65,24 @@ namespace Battle.Strategy
             _debugObject.originTm = LeaderICombatant.Transform;
             _debugObject.targetPosition = targetPosition;
 #endif
+        }
+
+        protected void TraceTo(ICombatant iCombatant, DirectionType directionType, float distance)
+        {
+            if (iCombatant == null)
+                return;
+
+            var moveSpeed = iCombatant.IStat.Get(Stat.EType.MoveSpeed);
+
+            var traceParam = new Creature.Action.Trace.Param()
+                .WithTargetICombatant(LeaderICombatant)
+                .WithDirectionType(directionType)
+                .WithDistance(distance)
+                .WithSpeed(moveSpeed);
+
+            iCombatant?.IActor?.IActCtr?
+                .TraceTo(traceParam)?
+                .Execute();
         }
     }
 }

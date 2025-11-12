@@ -1,8 +1,8 @@
 
-using System.Collections.Generic;
-using Common;
 using UnityEngine;
+using System.Collections.Generic;
 
+using Common;
 using Creature;
 using GameSystem;
 using Creature.Action;
@@ -22,34 +22,11 @@ namespace Battle.Strategy
         {
             base.MoveFormation(targetPosition);
 
-            // var debugGameObject = new GameObject("DebugGameObject"); 
-            // var debugObject = debugGameObject.AddComponent<DebugObject>();
-            // debugObject.originTm = LeaderICombatant.Transform; 
-            // debugObject.targetPosition = targetPosition; 
-
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
-            
-            var traceParam = new Trace.Param()
-                .WithTargetICombatant(LeaderICombatant)
-                .WithDirectionType(DirectionType.Right)
-                .WithDistance(3f)
-                .WithSpeed(_moveSpped);
-
-            iCombatant?.IActor?.IActCtr?
-                .TraceTo(traceParam)?
-                .Execute();
+            TraceTo(iCombatant, DirectionType.Right, 3f);
 
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-
-            traceParam = new Trace.Param()
-                .WithTargetICombatant(LeaderICombatant)
-                .WithDirectionType(DirectionType.Back)
-                .WithDistance(7f)
-                .WithSpeed(_moveSpped);
-
-            iCombatant?.IActor?.IActCtr?
-                .TraceTo(traceParam)?
-                .Execute();
+            TraceTo(iCombatant, DirectionType.Back, 7f);
         }
     }
 }

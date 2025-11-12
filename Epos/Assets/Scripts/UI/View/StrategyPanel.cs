@@ -35,7 +35,6 @@ namespace UI.View
             await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this));
 
             _currentIStrategySlot = _strategySlots[0];
-            _currentIStrategySlot?.Select();
         }
 
         public override async UniTask ActivateAsync(Param param)
@@ -43,11 +42,7 @@ namespace UI.View
             await base.ActivateAsync(param);
 
             animator?.SetBool("OnOff", false);
-
-            //foreach (var strategySlot in _strategySlots)
-            //{
-            //    await strategySlot.ActivateAsync();
-            //}
+            _currentIStrategySlot?.Select();
         }
 
         public override void Deactivate()

@@ -22,28 +22,10 @@ namespace Battle.Strategy
             base.MoveFormation(targetPosition);
             
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
+            TraceTo(iCombatant, DirectionType.Back, 4f);
             
-            var traceParam = new Trace.Param()
-                .WithTargetICombatant(LeaderICombatant)
-                .WithDirectionType(DirectionType.Back)
-                .WithDistance(4f)
-                .WithSpeed(_moveSpped);
-
-            iCombatant?.IActor?.IActCtr?
-                .TraceTo(traceParam)?
-                .Execute();
-
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-
-            traceParam = new Trace.Param()
-                .WithTargetICombatant(LeaderICombatant)
-                .WithDirectionType(DirectionType.Right)
-                .WithDistance(4f)
-                .WithSpeed(_moveSpped);
-
-            iCombatant?.IActor?.IActCtr?
-                .TraceTo(traceParam)?
-                .Execute();
+            TraceTo(iCombatant, DirectionType.Right, 4f);
         }
     }
 }
