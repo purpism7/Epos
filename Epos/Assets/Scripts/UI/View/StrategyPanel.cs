@@ -7,6 +7,7 @@ using Cysharp.Threading.Tasks;
 using UI.Slot;
 using Battle;
 using Battle.Strategy;
+using TMPro;
 
 namespace UI.View
 {
@@ -19,6 +20,10 @@ namespace UI.View
 
         [SerializeField] private Animator animator = null;
 
+        // TODO: Data
+        [SerializeField] private Datas.ScriptableObjects.Strategy[] strategyDatas = null;
+        [SerializeField] private TextMeshProUGUI strategyPhaseTMP = null;
+
         [Inject] IStrategyController _iStrategyController = null;
 
         private StrategySlot[] _strategySlots = null;
@@ -30,9 +35,9 @@ namespace UI.View
 
             _strategySlots = GetComponentsInChildren<StrategySlot>(true);
 
-            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), this));
-            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), this));
-            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this));
+            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), this).WithStrategyData(strategyDatas[0]));
+            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), this).WithStrategyData(strategyDatas[1]));
+            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this).WithStrategyData(strategyDatas[2]));
 
             _currentIStrategySlot = _strategySlots[0];
         }
@@ -42,14 +47,19 @@ namespace UI.View
             await base.ActivateAsync(param);
 
             animator?.SetBool("OnOff", false);
+
+            await UniTask.Yield();
             _currentIStrategySlot?.Select();
         }
 
         public override void Deactivate()
         {
             //base.Deactivate();
+            strategyPhaseTMP?.SetText(_currentIStrategySlot?.StrategyPhase);
 
             animator?.SetBool("OnOff", true);
+
+            
         }
 
         #region StrategySlot.IListener

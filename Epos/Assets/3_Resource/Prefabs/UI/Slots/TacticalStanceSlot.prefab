@@ -306,8 +306,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 82, y: -78}
-  m_SizeDelta: {x: -196, y: -188}
+  m_AnchoredPosition: {x: 82, y: -75}
+  m_SizeDelta: {x: -196, y: -170}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1423166820579813264
 CanvasRenderer:
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 28
-  m_fontSizeBase: 28
+  m_fontSize: 25
+  m_fontSizeBase: 25
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -382,7 +382,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -1861,8 +1861,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 82, y: -22}
-  m_SizeDelta: {x: -196, y: -172}
+  m_AnchoredPosition: {x: 82, y: -17.5}
+  m_SizeDelta: {x: -196, y: -155}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &17735775031649547
 CanvasRenderer:
@@ -1919,8 +1919,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38
-  m_fontSizeBase: 38
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1937,7 +1937,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 1
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -2024,6 +2024,8 @@ MonoBehaviour:
   rootTm: {fileID: 7538793487973951089}
   animator: {fileID: 6992221823293504346}
   strategyTypeNameTMP: {fileID: 6635015761176410120}
+  strategyEffectDescriptionTMP: {fileID: 4929626824173650111}
+  strategyDesctionTMP: {fileID: 5266528141221039301}
   selectBtn: {fileID: 4709159823183703058}
 --- !u!1 &6899268856691688955
 GameObject:

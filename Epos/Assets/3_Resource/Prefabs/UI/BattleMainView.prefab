@@ -1142,6 +1142,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1909359084795437872}
   animator: {fileID: 4544267957552618767}
+  strategyDatas:
+  - {fileID: 11400000, guid: ad2ede32b060c5649a2ff6e7ddc4eb9a, type: 2}
+  - {fileID: 11400000, guid: eeb94c5e21d73074fa234cea34ff0608, type: 2}
+  - {fileID: 11400000, guid: 6854b0277f4f2184cb42469d0459ac84, type: 2}
+  strategyPhaseTMP: {fileID: 6261114930143395749}
 --- !u!1 &954247798122944079
 GameObject:
   m_ObjectHideFlags: 0
@@ -16956,6 +16961,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5778139620933885032, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f74fd25275e963b42a9f53e026234597, type: 3}
     - target: {fileID: 6509491415251435562, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
       propertyPath: m_Name
       value: TacticalStanceSlot
@@ -17188,6 +17197,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5778139620933885032, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 15b5a38b3811a794ebfcf16f26dcf990, type: 3}
     - target: {fileID: 6509491415251435562, guid: 4f73936ee6ab2fc43ac6d491bbfcc6d0, type: 3}
       propertyPath: m_Name
       value: TacticalStanceSlot
