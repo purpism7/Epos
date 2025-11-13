@@ -171,11 +171,11 @@ namespace GameSystem
                 var hero = _iCharacterManager?.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
                 await UniTask.WaitUntil(() => hero != null);
                 
-                var pos = partyLocation.GetPartyPosition(info.Position - 1);
-                pos.x += offsetX;
+                // var pos = partyLocation.GetPartyPosition(info.Position - 1);
+                // pos.x += offsetX;
                 
-                ICombatant iCombatant = _combatantCreator?.Create(hero, hero.Skills);
-                iCombatant?.SetPosition(pos);
+                ICombatant iCombatant = _combatantCreator?.Create(hero, hero?.Skills);
+                // iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
             }
@@ -196,18 +196,14 @@ namespace GameSystem
                 return;
             
             var battleModeData = new RealTime.Data()
-                .WithWayPoints(waypoints);
+                .WithWayPoints(waypoints) ;
+            
+            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
+            battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
             
             var battleMode = new BattleModeCreator<RealTime, RealTime.Data>()
                 .SetData(battleModeData)
                 .Create(_iResolver);
-            //_iResolver?.Inject(battleMode);
-
-            var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
-            battleModeData.AllyICombatantList?.AddRange(allyICombatantList);
-
-            //var allyICombatantList = await SetAllyICombatantsAsync(allyParty, allyPartyLocation);
-            //battleModeData.EnemyICombatantList?.AddRange(monsters);
 
             var allyFieldParam = new Battle.Step.Party.Param
             {

@@ -49,7 +49,7 @@ namespace Battle.Mode
 
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
-
+            
             return this;
         }
 

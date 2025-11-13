@@ -14,7 +14,7 @@ namespace Battle.Strategy
 
         void ChainUpdate();
 
-        
+        void InitializeFormationPosition();
         void MoveFormation(Vector3 targetPosition);
 
         ICombatant LeaderICombatant { get; }
@@ -37,6 +37,11 @@ namespace Battle.Strategy
         }
 
         public virtual void ChainUpdate()
+        {
+            
+        }
+
+        public virtual void InitializeFormationPosition()
         {
             
         }
@@ -80,9 +85,46 @@ namespace Battle.Strategy
                 .WithDistance(distance)
                 .WithSpeed(moveSpeed);
 
-            iCombatant?.IActor?.IActCtr?
+            iCombatant.IActor?.IActCtr?
                 .TraceTo(traceParam)?
                 .Execute();
+        }
+
+        protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance)
+        {
+            var targetPosition = LeaderICombatant.Transform.position;
+            Vector2 targetDirection = LeaderICombatant.Transform.up; 
+    
+            Vector2 normalizedDirection = targetDirection.normalized;
+
+            var resPosition = Vector3.zero;
+            switch (directionType)
+            {
+                case DirectionType.Back:
+                {
+                    // Back: 타겟 전방 벡터를 반대 방향으로 사용
+                    resPosition = targetPosition - (Vector3)normalizedDirection * distance;
+                    break;
+                }
+                
+                case DirectionType.Right:
+                {
+                    // Right Vector (90도 시계 방향 회전): (y, -x)
+                    Vector2 rightVector = new Vector2(normalizedDirection.y, -normalizedDirection.x);
+                    resPosition = targetPosition + ((Vector3)rightVector * distance);
+                    break;
+                }
+        
+                case DirectionType.Left:
+                {
+                    // Left Vector (90도 반시계 방향 회전): (-y, x)
+                    Vector2 leftVector = new Vector2(-normalizedDirection.y, normalizedDirection.x);
+                    resPosition = targetPosition + ((Vector3)leftVector * distance);
+                    break;
+                }
+            }
+            
+            iCombatant?.SetPosition(resPosition);
         }
     }
 }

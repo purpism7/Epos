@@ -17,6 +17,17 @@ namespace Battle.Strategy
             LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
         }
 
+        public override void InitializeFormationPosition()
+        {
+            base.InitializeFormationPosition();
+            
+            var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
+            SetFormationPosition(iCombatant, DirectionType.Back, 4f);
+            
+            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
+            SetFormationPosition(iCombatant, DirectionType.Left, 4f);
+        }
+
         public override void MoveFormation(Vector3 targetPosition)
         {
             base.MoveFormation(targetPosition);
@@ -25,7 +36,7 @@ namespace Battle.Strategy
             TraceTo(iCombatant, DirectionType.Back, 4f);
             
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            TraceTo(iCombatant, DirectionType.Right, 4f);
+            TraceTo(iCombatant, DirectionType.Left, 4f);
         }
     }
 }

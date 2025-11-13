@@ -60,7 +60,7 @@ namespace Creature.Action
 
         private const string StopAnimationName = "Stop";
 
-        private Vector3 _prevPos = Vector3.zero;
+        // private Vector3 _prevPos = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
 
         private float _totalDistance = 0;

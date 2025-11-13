@@ -44,8 +44,9 @@ namespace Battle.Strategy
         {
             _iListener = iListener;
             AllyICombatantList = allyICombatantList;
-
+            
             ApplyStrategy(new Adaptive());
+            CurrentIStrategy?.InitializeFormationPosition();
         }
 
         void IStrategyController.ChainUpdate()
