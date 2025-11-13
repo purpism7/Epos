@@ -230,7 +230,7 @@ namespace GameSystem
         { 
             var duration = zoomInOutDuration;
            
-            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 25f, duration);
+            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 23f, duration);
 
             if(targetPosition != null)
             {

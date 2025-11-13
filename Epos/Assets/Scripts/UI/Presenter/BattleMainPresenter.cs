@@ -20,7 +20,7 @@ namespace UI.Presenter
         void OnCloseStrategyPanel();
     }
 
-    public class BattleMainPresenter : IBattleMainPresenter, StrategyPanel.IListener
+    public class BattleMainPresenter : IBattleMainPresenter
     {
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private ICameraManager _iCameraManager = null;
@@ -94,6 +94,7 @@ namespace UI.Presenter
         void IBattleMainPresenter.OnCloseStrategyPanel()
         {
             _iTimeScaleManager?.Set(1f);
+
             _iCameraManager.ZoomOut(
               () =>
               {

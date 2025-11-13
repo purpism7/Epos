@@ -20,7 +20,7 @@ namespace UI.View
        RectTransform AllyBattlePortraitRootRectTm { get; }
     }
 
-    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView, StrategyPanel.IListener
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
     {
         public class Param : Common.Param
         {
