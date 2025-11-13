@@ -58,8 +58,6 @@ namespace UI.View
             strategyPhaseTMP?.SetText(_currentIStrategySlot?.StrategyPhase);
 
             animator?.SetBool("OnOff", true);
-
-            
         }
 
         #region StrategySlot.IListener

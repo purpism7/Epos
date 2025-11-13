@@ -6,11 +6,11 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using VContainer;
 
 using Entities;
 
 using Vector3 = UnityEngine.Vector3;
-using VContainer;
 
 namespace GameSystem
 {
@@ -23,7 +23,7 @@ namespace GameSystem
 
         void SetTargetTm(Transform targetTm);
         
-        void ZoomIn(Vector3 targetPos, Action endAction);
+        void ZoomIn(Action endAction, Vector3? targetPosition);
         void ZoomOut(Action endAction);
     }
     
@@ -31,14 +31,12 @@ namespace GameSystem
     {
         [SerializeField] 
         [Range(0.1f, 5f)]
-        private float zoomInOutDuration = 1f;
+        private float zoomInOutDuration = 0.5f;
         
-        [SerializeField] 
-        private Camera mainCamera = null;
-        [SerializeField] 
-        private CinemachineVirtualCamera virtualCamera = null;
+        [SerializeField] private Camera mainCamera = null;
+        [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
 
-        private const float DefaultOrthographicSize = 32f;
+        private const float DefaultOrthographicSize = 20f;
         private const float DefaultZPos = -200f;
             
         #region Drag
@@ -50,16 +48,10 @@ namespace GameSystem
         private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
         #endregion
 
-        //private Creature.Hero _fieldHero = null;
-        private bool _return = true;
         private float _returnTime = 0;
 
         private Vector3? _targetPosition = null;
         private Transform _targetTm = null;
-        // private Creature.Character _character  = null;
-
-        //[Inject] 
-        //private IFieldManager 
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
@@ -229,20 +221,24 @@ namespace GameSystem
 
         
         #region Zoom In / Out
-        void ICameraManager.ZoomIn(Vector3 targetPos, Action endAction)
+        void ICameraManager.ZoomIn(Action endAction, Vector3? targetPosition = null)
         {
-            ZoomInAsync(targetPos, endAction).Forget();
+            ZoomInAsync(endAction, targetPosition).Forget();
         }
 
-        private async UniTask ZoomInAsync(Vector3 targetPos, Action endAction)
+        private async UniTask ZoomInAsync(Action endAction, Vector3? targetPosition = null)
         { 
             var duration = zoomInOutDuration;
-            targetPos.z = DefaultZPos;
-            
-            DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 26f, duration);
-            await DOTween.To(() => mainCamera.transform.position,
-                position => mainCamera.transform.position = position, targetPos, duration).SetEase(Ease.OutCirc);
+           
+            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 25f, duration);
+
+            if(targetPosition != null)
+            {
+                var targetPositionValue = targetPosition.Value;
+                targetPositionValue.z = DefaultZPos;
+
+                DOTween.To(() => mainCamera.transform.position, position => mainCamera.transform.position = position, targetPositionValue, duration).SetEase(Ease.OutCirc);
+            }
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             

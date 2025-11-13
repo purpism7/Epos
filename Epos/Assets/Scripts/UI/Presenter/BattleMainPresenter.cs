@@ -8,20 +8,23 @@ using Creator;
 using UI.Slot;
 using UI.View;
 using UI.Popup;
+using GameSystem;
 
 
 namespace UI.Presenter
 {
     public interface IBattleMainPresenter : IPresenter<BattleMainView>
     {
-        //UniTask InitializeAsync(BattleMainView battleMainView);
         void OnClickShout();
         void OnClickAggressive();
+        void OnCloseStrategyPanel();
     }
 
-    public class BattleMainPresenter : IBattleMainPresenter
+    public class BattleMainPresenter : IBattleMainPresenter, StrategyPanel.IListener
     {
         [Inject] private UIFactory _uiFactory = null;
+        [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
         private IBattleMainView _iBattleMainView = null;
 
@@ -62,6 +65,7 @@ namespace UI.Presenter
             }
         }
 
+        #region IBattleMainPresenter
         void IBattleMainPresenter.OnClickShout()
         {
             var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
@@ -73,12 +77,30 @@ namespace UI.Presenter
 
         void IBattleMainPresenter.OnClickAggressive()
         {
-            var uiCreator = _uiFactory?.Create<TacticalStancePopup, TacticalStancePopup.Param>();
-            var popup = uiCreator
-                .SetParam(new TacticalStancePopup.Param())?
-                .Create();
-            popup?.Activate();
+            _iCameraManager.ZoomIn(
+                () =>
+                {
+                    _iTimeScaleManager?.Set(0.2f);
+                },
+                null);
+
+            //var uiCreator = _uiFactory?.Create<TacticalStancePopup, TacticalStancePopup.Param>();
+            //var popup = uiCreator
+            //    .SetParam(new TacticalStancePopup.Param())?
+            //    .Create();
+            //popup?.Activate();
         }
+
+        void IBattleMainPresenter.OnCloseStrategyPanel()
+        {
+            _iTimeScaleManager?.Set(1f);
+            _iCameraManager.ZoomOut(
+              () =>
+              {
+                 
+              });
+        }
+        #endregion
     }
 }
 

@@ -20,7 +20,7 @@ namespace UI.View
        RectTransform AllyBattlePortraitRootRectTm { get; }
     }
 
-    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView, StrategyPanel.IListener
     {
         public class Param : Common.Param
         {
@@ -69,9 +69,6 @@ namespace UI.View
             await strategyPanel.InitializeAsync(new StrategyPanel.Param());
             
             InitializeButton();
-            
-            //strategyPanel?.Deactivate();
-            //shoutPanel?.Deactivate();
         }
 
         private void InitializeButton()
@@ -92,7 +89,8 @@ namespace UI.View
                     DeactivateAnimBattleMainView();
 
                     strategyPanel?.ActivateAsync(null);
-                    _iTimeScaleManager?.Set(0.2f);
+
+                    _iPresenter.OnClickAggressive();
                 });
 
             closeShoutPanelBtn?.onClick?.AddListener(
@@ -107,9 +105,9 @@ namespace UI.View
             closeStrategyPanelBtn?.onClick?.AddListener(
                 () =>
                 {
-                    strategyPanel?.Deactivate();
-                    _iTimeScaleManager?.Set(1f);
+                    _iPresenter?.OnCloseStrategyPanel();
 
+                    strategyPanel?.Deactivate();
                     ActivateAnimBattleMainView();
                 });
         }
