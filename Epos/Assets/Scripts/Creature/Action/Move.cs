@@ -21,7 +21,7 @@ namespace Creature.Action
         public class Param : ActParam
         {
             public float MoveSpeed = 1f;
-            public Transform TargetTm { get; private set; } = null;
+            // public Transform TargetTm { get; private set; } = null;
             public ICombatant TargetICombatant { get; private set; } = null;
             public Vector3? TargetPos = null;
 
@@ -33,11 +33,11 @@ namespace Creature.Action
             
             public int DirectionAfterArriving = 1;
 
-            public Param WithTargetTm(Transform targetTm)
-            {
-                TargetTm = targetTm;
-                return this;
-            }
+            // public Param WithTargetTm(Transform targetTm)
+            // {
+            //     TargetTm = targetTm;
+            //     return this;
+            // }
 
             public Param WithTargetICombatant(ICombatant targetICombatant)
             {
@@ -60,7 +60,7 @@ namespace Creature.Action
 
         private const string StopAnimationName = "Stop";
 
-        // private Vector3 _prevPos = Vector3.zero;
+        private Vector3 _prevTargetPosition = Vector3.zero;
         private Vector3 _randPos = Vector3.zero;
 
         private float _totalDistance = 0;
@@ -163,34 +163,34 @@ namespace Creature.Action
             navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
         }
 
-        private Vector3 TargetPos
+        private Vector3 TargetPosition
         {
             get
             {
-                Vector3 targetPos = Vector3.zero;
+                Vector3 targetPosition = Vector3.zero;
                 Transform targetTm = null;
 
                 if(_param != null)
                 {
-                    if (_param.TargetTm)
-                    {
-                        targetTm = _param.TargetTm;
-                        targetPos = _param.TargetTm.position;
-                    }
+                    // if (_param.TargetTm)
+                    // {
+                    //     targetTm = _param.TargetTm;
+                    //     targetPos = _param.TargetTm.position;
+                    // }
                         
                     if (_param.TargetPos != null)
-                        targetPos = _param.TargetPos.Value;
+                        targetPosition = _param.TargetPos.Value;
 
                     if (_param.TargetICombatant != null)
                     {
                         targetTm = _param.TargetICombatant.Transform;
-                        targetPos = _param.TargetICombatant.Transform.position;
+                        targetPosition = _param.TargetICombatant.Transform.position;
                         
                         var targetCollider = _param.TargetICombatant.IActor?.Collider;
                         if (targetCollider != null)
                         {
                             var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
-                            targetPos = closesetPosition;
+                            targetPosition = closesetPosition;
                         }
                     }
                 }
@@ -199,21 +199,37 @@ namespace Creature.Action
                 {
                     // 1. 목표의 양 옆 위치를 정의합니다.
                     // target.right는 2D 공간의 오른쪽 방향 벡터 (Vector2)로 자동 변환됩니다.
-                    Vector2 rightPos = (Vector2)targetTm.position + ((Vector2)targetTm.right);
-                    Vector2 leftPos = (Vector2)targetTm.position - ((Vector2)targetTm.right);
+                    Vector2 rightPosition = (Vector2)targetTm.position + ((Vector2)targetTm.right);
+                    Vector2 leftPosition = (Vector2)targetTm.position - ((Vector2)targetTm.right);
+                    
+                    // Vector3 directionToTarget = targetTm.position - _prevTargetPosition;
+                    //
+                    // // 정규화된 벡터가 아니면 문제가 발생할 수 있으므로 항상 정규화합니다.
+                    // if (directionToTarget.sqrMagnitude >= 0.0001f)
+                    //     directionToTarget = directionToTarget.normalized;
+                    // else 
+                    //     directionToTarget = targetTm.up.normalized;
+                    //
+                    // Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
+                    // var rightPosition = targetPosition + ((Vector3)rightVector * _param.Distance);
+                    //
+                    // Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
+                    // var leftPosition = targetPosition + ((Vector3)leftVector * _param.Distance);
+
 
                     // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
-                    float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPos);
-                    float distanceToLeft = Vector2.Distance(_iActor.Transform.position, leftPos);
-
+                    float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPosition);
+                    float distanceToLeft = Vector2.Distance(_iActor.Transform.position, leftPosition);
+                    
                     // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
-                    targetPos = (distanceToRight < distanceToLeft) ? rightPos : leftPos;
+                    targetPosition = (distanceToRight < distanceToLeft) ? rightPosition : leftPosition;
                 }
 
 
-                return targetPos;
+                return targetPosition;
             }
         }
+        
         public override void ChainUpdate()
         {
             base.ChainUpdate();
@@ -243,7 +259,7 @@ namespace Creature.Action
                 }
             }
 
-            var targetPosition = TargetPos;
+            var targetPosition = TargetPosition;
 
             if (_param != null &&
               !_param.UseNavMesh)
@@ -265,9 +281,11 @@ namespace Creature.Action
 
             //_prevPos = iActorTm.position;
 
-            var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            var distance = (targetPosition - iActorTm.position).magnitude;
+            // var distance = Vector2.Distance(iActorTm.position, targetPosition);
             _totalDistance += distance;
             //Debug.Log("_totalDistance  = " + _totalDistance);
+            _prevTargetPosition = targetPosition;
 
             if (distance < _param.Distance)
                 End();

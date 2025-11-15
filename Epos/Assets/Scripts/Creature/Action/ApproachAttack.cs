@@ -91,7 +91,6 @@ namespace Creature.Action
                     }
                     .WithTargetICombatant(closestTarget)?
                     .WithDistance(skillRange);
-                // .WithUseNavMesh(true);
 
                 attacker.IActor.IActCtr?
                     .MoveToTarget(moveParam)?

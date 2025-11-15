@@ -177,9 +177,7 @@ namespace Creature.Action
                 case DirectionType.Left:
                     {
                         Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
-                        //var leftVector = new Vector3(-directionToTarget.z, 0, directionToTarget.x);
                         return targetPosition + ((Vector3)leftVector * _param.Distance);
-                        //return targetPosition + (leftVector * _param.Distance);
                     }
             }
 
