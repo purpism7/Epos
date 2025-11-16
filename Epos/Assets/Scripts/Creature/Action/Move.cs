@@ -169,6 +169,7 @@ namespace Creature.Action
             {
                 Vector3 targetPosition = Vector3.zero;
                 Transform targetTm = null;
+                float distance = _param.Distance;
 
                 if(_param != null)
                 {
@@ -189,6 +190,8 @@ namespace Creature.Action
                         var targetCollider = _param.TargetICombatant.IActor?.Collider;
                         if (targetCollider != null)
                         {
+                            distance += targetCollider.bounds.size.x * 0.5f;
+                            
                             var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
                             targetPosition = closesetPosition;
                         }
@@ -199,24 +202,11 @@ namespace Creature.Action
                 {
                     // 1. 목표의 양 옆 위치를 정의합니다.
                     // target.right는 2D 공간의 오른쪽 방향 벡터 (Vector2)로 자동 변환됩니다.
-                    Vector2 rightPosition = (Vector2)targetTm.position + ((Vector2)targetTm.right);
-                    Vector2 leftPosition = (Vector2)targetTm.position - ((Vector2)targetTm.right);
+                    Vector2 rightPosition = (Vector2)targetTm.position + ((Vector2)targetTm.right * distance);
+                    Vector2 leftPosition = (Vector2)targetTm.position - ((Vector2)targetTm.right * distance);
+                    Debug.DrawLine(targetTm.position, rightPosition, Color.cyan);
+                    Debug.DrawLine(targetTm.position, leftPosition, Color.cyan);
                     
-                    // Vector3 directionToTarget = targetTm.position - _prevTargetPosition;
-                    //
-                    // // 정규화된 벡터가 아니면 문제가 발생할 수 있으므로 항상 정규화합니다.
-                    // if (directionToTarget.sqrMagnitude >= 0.0001f)
-                    //     directionToTarget = directionToTarget.normalized;
-                    // else 
-                    //     directionToTarget = targetTm.up.normalized;
-                    //
-                    // Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
-                    // var rightPosition = targetPosition + ((Vector3)rightVector * _param.Distance);
-                    //
-                    // Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
-                    // var leftPosition = targetPosition + ((Vector3)leftVector * _param.Distance);
-
-
                     // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
                     float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPosition);
                     float distanceToLeft = Vector2.Distance(_iActor.Transform.position, leftPosition);
@@ -224,8 +214,7 @@ namespace Creature.Action
                     // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
                     targetPosition = (distanceToRight < distanceToLeft) ? rightPosition : leftPosition;
                 }
-
-
+                
                 return targetPosition;
             }
         }
@@ -282,7 +271,7 @@ namespace Creature.Action
             //_prevPos = iActorTm.position;
 
             var distance = (targetPosition - iActorTm.position).magnitude;
-            // var distance = Vector2.Distance(iActorTm.position, targetPosition);
+            
             _totalDistance += distance;
             //Debug.Log("_totalDistance  = " + _totalDistance);
             _prevTargetPosition = targetPosition;
