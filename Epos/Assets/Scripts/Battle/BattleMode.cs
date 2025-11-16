@@ -10,7 +10,6 @@ namespace Battle
 {
     public class BattleMode
     {
-        
         public class BaseData
         {
             public List<ICombatant> AllyICombatantList = new();
@@ -26,8 +25,6 @@ namespace Battle
         
         public virtual void Begin()
         {
-            // _iListener = iListener;
-            
             Debug.Log("BattleMode Begin");
         }
 

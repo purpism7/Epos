@@ -140,8 +140,6 @@ namespace Battle
             
             _param?.BattleMode?.Begin();
         }
-
-        
     }
 }
 

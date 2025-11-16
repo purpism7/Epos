@@ -30,13 +30,12 @@ namespace Battle.Strategy
     {
         public interface IListener
         {
-            void OnChangedStrategy(IStrategy iStrategy);
+            void OnChangedStrategy(IStrategy iStrategy, bool isInitalized = false);
         }
 
         private IListener _iListener = null;
 
         public List<ICombatant> AllyICombatantList { get; private set; } = null;
-
         public IStrategy CurrentIStrategy { get; private set; } = null;
 
         #region IStrategyController
@@ -45,7 +44,7 @@ namespace Battle.Strategy
             _iListener = iListener;
             AllyICombatantList = allyICombatantList;
             
-            ApplyStrategy(new Adaptive());
+            ApplyStrategy(new Adaptive(), true);
             CurrentIStrategy?.InitializeFormationPosition();
         }
 
@@ -73,13 +72,12 @@ namespace Battle.Strategy
         }
         #endregion
 
-        private void ApplyStrategy(IStrategy iStrategy)
+        private void ApplyStrategy(IStrategy iStrategy, bool isInitalized = false)
         {
             iStrategy?.Apply(this);
             CurrentIStrategy = iStrategy;
 
-            _iListener?.OnChangedStrategy(iStrategy);
+            _iListener?.OnChangedStrategy(iStrategy, isInitalized);
         }
     }
-
 }

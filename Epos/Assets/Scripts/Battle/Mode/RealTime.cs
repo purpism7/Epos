@@ -41,6 +41,7 @@ namespace Battle.Mode
         private IWaypointController _iWaypointCtr = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
+
         private bool _isCombating = false;
 
         public override BattleMode<Data> Initialize(Data data)
@@ -49,6 +50,8 @@ namespace Battle.Mode
 
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
+            
+            _iStrategyController?.Initialize(this, _data?.AllyICombatantList);
             
             return this;
         }
@@ -62,22 +65,6 @@ namespace Battle.Mode
             _iWaypointCtr = WaypointController.Create(_iResolver, param);
         }
 
-        public override void Begin()
-        {
-            Debug.Log("Begin()");
-            _iStrategyController?.Initialize(this, _data?.AllyICombatantList);
-
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
-            {
-                var ally = _data?.AllyICombatantList[i];
-                ally?.SetETeam(ETeam.Ally);
-                ally?.IActor?.Activate();
-            }
-
-            ActivateBattleMain();
-            CheckWaypointActionAsync().Forget();
-        }
-
         public override void ChainUpdate()
         {
             _iStrategyController?.ChainUpdate();
@@ -88,6 +75,22 @@ namespace Battle.Mode
             //    if (!_closestICombatant.IActor.IsAlive)
             //        SetClosestICombatant();
             //}
+        }
+
+        public override void Begin()
+        {
+            Debug.Log("Begin()");
+            
+            
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var ally = _data?.AllyICombatantList[i];
+                ally?.SetETeam(ETeam.Ally);
+                ally?.IActor?.Activate();
+            }
+
+            ActivateBattleMain();
+            CheckWaypointActionAsync().Forget();
         }
 
         public override void ChainLateUpdate()
@@ -168,32 +171,6 @@ namespace Battle.Mode
             _iWaypointCtr?.ChainUpdate(_iStrategyController?.LeaderICombatant);
         }
 
-        //private ICombatant ClosestICombatantToWayPoint()
-        //{
-        //    var wayPoint = _iWaypointCtr?.Waypoint;
-        //    if (wayPoint == null)
-        //        return null;
-
-        //    var closestICombatant = wayPoint.Transform.FindClosestICombatant(_data?.AllyICombatantList);
-        //    if(closestICombatant != null)
-        //        _iCameraManager?.SetTargetTm(closestICombatant.IActor.Transform);
-            
-        //    return closestICombatant;
-        //}
-
-        //private void SetClosestICombatant()
-        //{
-        //    if(_closestICombatant != null &&
-        //       _closestICombatant.IActor != null)
-        //    {
-        //        if(!_closestICombatant.IActor.IsAlive)
-        //            _closestICombatant = ClosestICombatantToWayPoint();
-        //    }
-
-        //    if (_closestICombatant == null)
-        //        _closestICombatant = ClosestICombatantToWayPoint();
-        //}
-
         private void CreateHpProgress(ICombatant iCombatant)
         {
             var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
@@ -237,42 +214,6 @@ namespace Battle.Mode
         {
             _iStrategyController?.MoveFormation(waypoint.Position);
         }
-
-        //private void MoveToWaypoint(Waypoint waypoint, ICombatant iCombatant)
-        //{
-        //    if (iCombatant == null)
-        //        return;
-
-        //    //if (_closestICombatant == null)
-        //    //    return;
-
-        //    var leaderICombatant = _iStrategyManager?.LeaderICombatant;
-
-        //    float moveSpeed = 7f;
-        //    //if (_closestICombatant != null &&
-        //    //    _closestICombatant.IActor.Id == iCombatant.IActor.Id)
-        //    //    moveSpeed += 0.01f;
-
-        //    var targetPos = waypoint.Position;
-        //    //Vector2 randomOffset = UnityEngine.Random.insideUnitCircle * 2f;
-        //    //Vector3 resTargetPos = targetPos + new Vector3(randomOffset.x, randomOffset.y, 0f);
-
-    //    var moveParam = new Move.Param
-    //    {
-    //        MoveSpeed = moveSpeed,//allyICombatant.IStat.Get(Stat.EType.MoveSpeed),
-    //        TargetPos = targetPos,
-    //    }.WithTargetICombatant(null);
-
-    //        //if(_closestICombatant != null)
-    //        {
-    //            //moveParam?.WithLeaderTm(leaderICombatant.IActor.Transform)
-    //            //    .WithForwardDirection(leaderICombatant.IActor.Id != iCombatant.IActor.Id);
-    //        }
-
-    //iCombatant.IActor?.IActCtr?
-    //            .MoveToTarget(moveParam)?
-    //            .Execute();
-    //}
 
         private void BeginCombat(Waypoint waypoint)
         {
@@ -414,10 +355,12 @@ namespace Battle.Mode
         #endregion
 
         #region StrategyController.IListener
-        void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy)
+        void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy, bool isInitalized)
         {
             _iCameraManager?.SetTargetTm(iStrategy?.LeaderICombatant?.Transform);
-            CheckWaypointActionAsync().Forget();
+            
+            if(!isInitalized)
+                CheckWaypointActionAsync().Forget();
         }
         #endregion
     }
