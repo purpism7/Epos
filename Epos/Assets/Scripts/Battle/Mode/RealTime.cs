@@ -87,6 +87,8 @@ namespace Battle.Mode
                 var ally = _data?.AllyICombatantList[i];
                 ally?.SetETeam(ETeam.Ally);
                 ally?.IActor?.Activate();
+
+                CreateEmotion(ally);
             }
 
             ActivateBattleMain();
@@ -173,24 +175,41 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            var uiCreator = _uiFactory?.Create<HpProgress, HpProgress.Param>();
-            var hpProgress = uiCreator?
+            var uiCreator = _uiFactory?.Create<EnemyHpProgressPart, EnemyHpProgressPart.Param>();
+            var enemyHpProgressPart = uiCreator?
                 .SetWorldUI(true)?
                 .Create();
 
-            if (hpProgress == null)
+            if (enemyHpProgressPart == null)
                 return;
 
-            //var targetPos = iCombatant.IActor.Transform.position;
-            //targetPos.y += iCombatant.IActor.Height;
-
-            var param = new HpProgress.Param
+            var param = new EnemyHpProgressPart.Param
             {
                 TargetTm = iCombatant?.IActor?.Transform,
                 Offset = new Vector2(0, iCombatant.IActor.Height),
-            }.WithCombatant(iCombatant);
+            };
+            param.WithCombatant(iCombatant);
 
-            hpProgress?.ActivateAsync(param);
+            enemyHpProgressPart.ActivateAsync(param);
+        }
+        
+        private void CreateEmotion(ICombatant iCombatant)
+        {
+            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
+            var emotionPart = uiCreator?
+                .SetWorldUI(true)?
+                .Create();
+
+            if (emotionPart == null)
+                return;
+            
+            var param = new EmotionPart.Param
+            {
+                TargetTm = iCombatant?.IActor?.Transform,
+                Offset = new Vector2(0, iCombatant.IActor.Height),
+            };
+
+            emotionPart.ActivateAsync(param);
         }
 
         private async UniTask CheckWaypointActionAsync()

@@ -24,6 +24,7 @@ namespace UI.Slot
             }
         }
 
+        [SerializeField] private Animator animator = null;
         [SerializeField] private Image characterImg = null;
         [SerializeField] private Image classImg = null;
 
@@ -64,9 +65,10 @@ namespace UI.Slot
 
         private void ActivateHpProgress()
         {
-            hpProgress?.ActivateAsync(
-                new HpProgress.Param()
-                    .WithCombatant(_param?.ICombatant));
+            var param = new HpProgress.Param();
+            param.WithCombatant(_param?.ICombatant);
+            
+            hpProgress?.ActivateAsync(param);
 
             _iHpProgress = hpProgress;
         }
@@ -81,9 +83,9 @@ namespace UI.Slot
             if (characterImg == null)
                 return;
 
-            var AtlasLoader = _resourceManager?.AtlasLoader;
+            var atlasLoader = _resourceManager?.AtlasLoader;
             var spriteName = $"p_{_param.ICombatant.IActor.Id}";
-            var sprite = AtlasLoader?.GetCharacterSprite(spriteName);
+            var sprite = atlasLoader?.GetCharacterSprite(spriteName);
 
             characterImg.sprite = sprite;
             characterImg.SetActive(true);

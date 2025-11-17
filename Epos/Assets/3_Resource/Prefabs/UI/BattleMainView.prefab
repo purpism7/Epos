@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 20527615
+    rgba: 4281940479
   m_fontColor: {r: 1, g: 0.2216981, b: 0.2216981, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -4420,7 +4420,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 19408939
+    rgba: 4280821803
   m_fontColor: {r: 0.16862746, g: 0.15686275, b: 0.15686275, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -7061,6 +7061,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7540470642802609335}
   emotionTMP: {fileID: 1214608188828934297}
+  emotionType: 0
 --- !u!1 &4371041592566647206
 GameObject:
   m_ObjectHideFlags: 0
@@ -7488,6 +7489,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 600683369247365748}
   emotionTMP: {fileID: 2039863956468128376}
+  emotionType: 0
 --- !u!1 &4750196608152203081
 GameObject:
   m_ObjectHideFlags: 0
@@ -8222,7 +8224,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 20527615
+    rgba: 4281940479
   m_fontColor: {r: 1, g: 0.2216981, b: 0.2216981, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -10144,7 +10146,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 33554431
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -11939,7 +11941,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 25790857
+    rgba: 4287203721
   m_fontColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -12479,7 +12481,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 25790857
+    rgba: 4287203721
   m_fontColor: {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 0
@@ -13084,6 +13086,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7021518243033280126}
   emotionTMP: {fileID: 5654521096731680895}
+  emotionType: 0
 --- !u!1 &7419736529178185404
 GameObject:
   m_ObjectHideFlags: 0

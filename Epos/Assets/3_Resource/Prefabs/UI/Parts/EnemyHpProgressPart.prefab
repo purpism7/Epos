@@ -488,9 +488,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5364484234199492596}
-  - component: {fileID: 7415924012553628054}
+  - component: {fileID: 8684224352713480394}
   m_Layer: 5
-  m_Name: HpProgress_Mob
+  m_Name: EnemyHpProgressPart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7415924012553628054
+--- !u!114 &8684224352713480394
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -525,7 +525,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2025658086672071585}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d916de1fb38804d48a353ba211803174, type: 3}
+  m_Script: {fileID: 11500000, guid: 682992a89147b480aa21e71b65734725, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 8227834326816732336}

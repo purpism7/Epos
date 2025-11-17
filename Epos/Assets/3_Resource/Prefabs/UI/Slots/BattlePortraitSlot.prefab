@@ -9537,9 +9537,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7747846030634703691}
+  animator: {fileID: 1330430001187244541}
   characterImg: {fileID: 196007275353441702}
   classImg: {fileID: 5381494022502383391}
-  animator: {fileID: 1330430001187244541}
   hpProgress: {fileID: 446908868121580358}
 --- !u!114 &516623566961481627
 MonoBehaviour:

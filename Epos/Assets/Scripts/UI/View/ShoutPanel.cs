@@ -10,6 +10,11 @@ namespace UI.View
             // Add parameters here if needed in the future
         }
 
+        public interface IListener
+        {
+            
+        }
+
         [SerializeField] private Animator animator = null;
 
         public override async UniTask InitializeAsync(Param param)

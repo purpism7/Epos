@@ -12,16 +12,17 @@ namespace UI.Slot
     {
         public class Param : Common.Param
         {
-            public EEmotionType EEmotionType { get; private set; } = EEmotionType.None;
+            public EmotionType EmotionType { get; private set; } = EmotionType.None;
 
-            public Param WithEEmotionType(EEmotionType eEmotionType)
+            public Param WithEmotionType(EmotionType emotionType)
             {
-                EEmotionType = eEmotionType;
+                EmotionType = emotionType;
                 return this;
             }
         }
 
         [SerializeField] private TextMeshProUGUI emotionTMP = null;
+        [SerializeField] private EmotionType emotionType = EmotionType.None;
 
         public override UniTask InitializeAsync(Param param)
         {
@@ -34,7 +35,7 @@ namespace UI.Slot
         {
             base.ActivateAsync(param);
 
-            emotionTMP?.SetText(param?.EEmotionType.ToString());
+            emotionTMP?.SetText(param?.EmotionType.ToString());
 
             return UniTask.CompletedTask;
         }

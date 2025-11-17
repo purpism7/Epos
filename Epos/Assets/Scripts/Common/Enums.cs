@@ -73,18 +73,17 @@ namespace Common
         Mission,
     }
 
-    public enum EEmotionType
+    public enum EmotionType
     {
         None,
 
-        Encourage,
-        CalmDown,
-        Focus,
-        FireUp,
-        Relax,
-        DemandMore,
-        Praise,
-        Berate,
+        Agitation,
+        Anger,
+        Fatigue,
+        Fear,
+        Happy,
+        Shout,
+        Stun,
     }
 }
 

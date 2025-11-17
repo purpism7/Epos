@@ -59,12 +59,12 @@ namespace UI.Popup
             var uiCreator = _uiFactory.Create<ShoutSlot, ShoutSlot.Param>();
             var shoutSlotParam = new ShoutSlot.Param();
 
-            foreach (EEmotionType eEmotionType in Enum.GetValues(typeof(EEmotionType)))
+            foreach (EmotionType emotionType in Enum.GetValues(typeof(EmotionType)))
             {
-                if (eEmotionType == EEmotionType.None)
+                if (emotionType == EmotionType.None)
                     continue;
 
-                shoutSlotParam.WithEEmotionType(eEmotionType);
+                shoutSlotParam.WithEmotionType(emotionType);
 
                 var shoutSlot = uiCreator?
                     .SetParam(shoutSlotParam)?
