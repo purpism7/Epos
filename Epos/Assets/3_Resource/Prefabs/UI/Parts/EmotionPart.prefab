@@ -161,4 +161,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
-  rootRectTm: {fileID: 0}
+  rootRectTm: {fileID: 7265674374223708273}

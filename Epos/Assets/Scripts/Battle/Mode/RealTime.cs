@@ -190,7 +190,7 @@ namespace Battle.Mode
             };
             param.WithCombatant(iCombatant);
 
-            enemyHpProgressPart.ActivateAsync(param);
+            enemyHpProgressPart?.ActivateAsync(param);
         }
         
         private void CreateEmotion(ICombatant iCombatant)
@@ -209,7 +209,7 @@ namespace Battle.Mode
                 Offset = new Vector2(0, iCombatant.IActor.Height),
             };
 
-            emotionPart.ActivateAsync(param);
+            emotionPart?.ActivateAsync(param);
         }
 
         private async UniTask CheckWaypointActionAsync()

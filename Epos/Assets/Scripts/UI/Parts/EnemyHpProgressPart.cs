@@ -13,12 +13,10 @@ namespace UI.Parts
         
         public override UniTask ActivateAsync(Param param)
         {
+            _ICombatant = param?.ICombatant;
+            
             base.ActivateAsync(param);
             
-            _ICombatant = param?.ICombatant;
-
-            // GameSystem.Event.EventHandler.Add<StatChangedEventData>(OnStatChanged);
-
             return UniTask.CompletedTask;
         }
     }

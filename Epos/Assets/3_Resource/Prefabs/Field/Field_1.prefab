@@ -3735,11 +3735,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 9083743111357297749}
   - {fileID: 1061066270778776493}
   - {fileID: 5623448708317064607}
   - {fileID: 2451921771863879905}
   - {fileID: 4091065804229177503}
+  - {fileID: 9171234759682011612}
   m_Father: {fileID: 4938612638763818954}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2512381450824751567
@@ -15524,7 +15524,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7073784840371986948, guid: 400721f6d268eeb47ac6f1e729fac482, type: 3}
   m_PrefabInstance: {fileID: 3266647254722482560}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &3419408006003971235
+--- !u!1001 &3331845832124895530
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -15552,17 +15552,13 @@ PrefabInstance:
       propertyPath: attackSight
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4834208635926815005, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.43
-      objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.5
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.2
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -15598,7 +15594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6168437607864840991, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_Name
-      value: Mon_01
+      value: Mon_01_
       objectReference: {fileID: 0}
     - target: {fileID: 6168437607864840991, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
       propertyPath: m_Layer
@@ -15621,10 +15617,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
---- !u!4 &9083743111357297749 stripped
+--- !u!4 &9171234759682011612 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5871529864483578102, guid: 33041d36a9d5741a7b6b74b90581ff2b, type: 3}
-  m_PrefabInstance: {fileID: 3419408006003971235}
+  m_PrefabInstance: {fileID: 3331845832124895530}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3456953881868719340
 PrefabInstance:

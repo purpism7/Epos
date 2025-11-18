@@ -24,9 +24,9 @@ namespace  UI.Parts
 
         public override UniTask ActivateAsync(Param param)
         {
-            base.ActivateAsync(param);
-
             _ICombatant = param?.ICombatant;
+            
+            base.ActivateAsync(param);
             
             return UniTask.CompletedTask;
         }

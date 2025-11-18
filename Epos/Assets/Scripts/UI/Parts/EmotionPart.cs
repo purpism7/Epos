@@ -8,7 +8,10 @@ namespace UI.Parts
         {
         }
         
-        
+        private void LateUpdate()
+        {
+            ChainLateUpdate();
+        }
     }
 }
 
