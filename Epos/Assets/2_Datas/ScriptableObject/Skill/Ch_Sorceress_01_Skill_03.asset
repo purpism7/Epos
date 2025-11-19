@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   AnimationName: Skill_03
-  EffectName: Eff_Hill_01
+  EffectName: Eff_MeteorBomm_01
   ESkillCategory: 2
   Cooltime: 50
   MP: 0

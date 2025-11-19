@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   AnimationName: Skill_01
-  EffectName: Eff_MagicMissile_01
+  EffectName: Eff_FireBall_01
   ESkillCategory: 2
   Cooltime: 0
   MP: 0
