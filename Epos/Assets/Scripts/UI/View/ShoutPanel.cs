@@ -1,6 +1,9 @@
-using Cysharp.Threading.Tasks;
-using UI.Slot;
 using UnityEngine;
+
+using Cysharp.Threading.Tasks;
+
+using Common;
+using UI.Slot;
 
 namespace UI.View
 {
@@ -8,12 +11,17 @@ namespace UI.View
     {
         public class Param : Common.Param
         {
-            // Add parameters here if needed in the future
+            public IListener Listener { get; private set; } = null;
+
+            public Param(IListener listener)
+            {
+                Listener = listener;
+            }
         }
 
         public interface IListener
         {
-            
+            void OnSelectShout(EmotionType emotionType);
         }
 
         [SerializeField] private Animator animator = null;
@@ -24,7 +32,7 @@ namespace UI.View
         {
             await base.InitializeAsync(param);
 
-            _shoutSlots = GetComponentsInChildren<ShoutSlot>();
+            _shoutSlots = GetComponentsInChildren<ShoutSlot>(true);
             foreach (var shoutSlot in _shoutSlots)
             {
                 shoutSlot?.InitializeAsync(new ShoutSlot.Param().WithListener(this));
@@ -46,10 +54,11 @@ namespace UI.View
         }
         
         #region ShoutSlot.IListener
-
-        void ShoutSlot.IListener.OnClick()
+        void ShoutSlot.IListener.OnClick(EmotionType emotionType)
         {
             Deactivate();   
+            
+            _param?.Listener?.OnSelectShout(emotionType);
         }
         #endregion
     }

@@ -8,8 +8,10 @@ using VContainer;
 
 using UI.Slot;
 using Battle.Step;
+using Common;
 using Creator;
 using Creature;
+using UI.Parts;
 using UI.Presenter;
 
 namespace UI.View
@@ -20,7 +22,7 @@ namespace UI.View
        RectTransform AllyBattlePortraitRootRectTm { get; }
     }
 
-    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView, ShoutPanel.IListener
     {
         public class Param : Common.Param
         {
@@ -34,6 +36,7 @@ namespace UI.View
         }
 
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
+        [Inject] private UIFactory _uiFactory = null;
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
         [SerializeField] private Animator animator = null;
@@ -65,7 +68,7 @@ namespace UI.View
             await base.InitializeAsync(param);
             await _iPresenter.InitializeAsync(this);
 
-            await shoutPanel.InitializeAsync(null);
+            await shoutPanel.InitializeAsync(new ShoutPanel.Param(this));
             await strategyPanel.InitializeAsync(new StrategyPanel.Param());
             
             InitializeButton();
@@ -121,6 +124,28 @@ namespace UI.View
         {
             animator?.SetBool("OnOff", true);
         }
+        
+        #region ShoutPanel.IListener
+
+        void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
+        {
+            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
+            var emotionPart = uiCreator?
+                .SetWorldUI(true)?
+                .Create();
+
+            // if (emotionPart == null)
+            //     return;
+            //
+            // var param = new EmotionPart.Param
+            // {
+            //     TargetTm = iCombatant?.IActor?.Transform,
+            //     Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
+            // };
+            //
+            // emotionPart?.ActivateAsync(param);
+        }
+        #endregion
 
         [Inject]
         private void InjectInitialize()

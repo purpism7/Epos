@@ -21,7 +21,7 @@ namespace UI
 
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private UIManager _uiManager = null;        
-
+        
         protected void ChainLateUpdate()
         {
             if (!rootRectTm)

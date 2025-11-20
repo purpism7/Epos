@@ -2,8 +2,10 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+
 using VContainer;
 
+using Common;
 using Creator;
 using UI.Slot;
 using UI.View;
@@ -18,6 +20,8 @@ namespace UI.Presenter
         void OnClickShout();
         void OnClickAggressive();
         void OnCloseStrategyPanel();
+        
+        void CreateEmotion(EmotionType emotionType);
     }
 
     public class BattleMainPresenter : IBattleMainPresenter
@@ -100,6 +104,11 @@ namespace UI.Presenter
               {
                  
               });
+        }
+
+        void IBattleMainPresenter.CreateEmotion(EmotionType emotionType)
+        {
+            
         }
         #endregion
     }

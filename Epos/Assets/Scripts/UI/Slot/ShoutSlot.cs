@@ -31,7 +31,7 @@ namespace UI.Slot
 
         public interface IListener
         {
-            void OnClick();
+            void OnClick(EmotionType emotionType);
         }
 
         [SerializeField] private TextMeshProUGUI emotionTMP = null;
@@ -59,7 +59,7 @@ namespace UI.Slot
 
         private void OnClick()
         {
-            _param?.Listener?.OnClick();
+            _param?.Listener?.OnClick(emotionType);
         }
     }
 }

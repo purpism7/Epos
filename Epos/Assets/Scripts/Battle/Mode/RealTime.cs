@@ -206,7 +206,7 @@ namespace Battle.Mode
             var param = new EmotionPart.Param
             {
                 TargetTm = iCombatant?.IActor?.Transform,
-                Offset = new Vector2(0, iCombatant.IActor.Height),
+                Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
             };
 
             emotionPart?.ActivateAsync(param);

@@ -40,6 +40,11 @@ namespace  UI.Parts
 
         protected ICombatant _ICombatant = null;
         
+        private void LateUpdate()
+        {
+            ChainLateUpdate();
+        }
+        
         public override void Initialize()
         {
             base.Initialize();
@@ -64,11 +69,6 @@ namespace  UI.Parts
             GameSystem.Event.EventHandler.Remove<StatChangedEventData>(OnStatChanged);
 
             Return();
-        }
-
-        private void LateUpdate()
-        {
-            ChainLateUpdate();
         }
 
         public virtual void UpdateHpProgress()
