@@ -11,31 +11,33 @@ using UI.Slot;
 using UI.View;
 using UI.Popup;
 using GameSystem;
+using UI.Parts;
 
 
 namespace UI.Presenter
 {
     public interface IBattleMainPresenter : IPresenter<BattleMainView>
     {
-        void OnClickShout();
+        // void OnClickShout();
         void OnClickAggressive();
         void OnCloseStrategyPanel();
         
         void CreateEmotion(EmotionType emotionType);
     }
 
-    public class BattleMainPresenter : IBattleMainPresenter
+    public class BattleMainPresenter : IBattleMainPresenter, ShoutPanel.IListener
     {
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
-        private IBattleMainView _iBattleMainView = null;
+        private IBattleMainView _view = null;
 
-        async UniTask IPresenter<BattleMainView>.InitializeAsync(BattleMainView battleMainView)
+        async UniTask IPresenter<BattleMainView>.InitializeAsync(BattleMainView view)
         {
-            _iBattleMainView = battleMainView;
+            _view = view;
 
+            await _view.InitializePanelAsync(this);
             await InitializeAllyBattlePortraitList();
         }
 
@@ -50,16 +52,16 @@ namespace UI.Presenter
 
             var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>();
 
-            for (int i = 0; i < _iBattleMainView?.AllyICombatantList?.Count; ++i)
+            for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
             {
-                var iCombatant = _iBattleMainView?.AllyICombatantList[i];
+                var iCombatant = _view?.AllyICombatantList[i];
                 if (iCombatant == null)
                     continue;
 
                 var battlePortraitSlotParam = new BattlePortraitSlot.Param(iCombatant);
 
                 var battlePortraitSlot = await uiCreator
-                    .SetRoot(_iBattleMainView?.AllyBattlePortraitRootRectTm)
+                    .SetRoot(_view?.AllyBattlePortraitRootRectTm)
                     .SetParam(battlePortraitSlotParam)
                     .CreateAsync();
 
@@ -70,14 +72,14 @@ namespace UI.Presenter
         }
 
         #region IBattleMainPresenter
-        void IBattleMainPresenter.OnClickShout()
-        {
-            var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
-            var popup = uiCreator
-                .SetParam(new ShoutPopup.Param())?
-                .Create();
-            popup?.Activate();
-        }
+        // void IBattleMainPresenter.OnClickShout()
+        // {
+        //     var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
+        //     var popup = uiCreator
+        //         .SetParam(new ShoutPopup.Param())?
+        //         .Create();
+        //     popup?.Activate();
+        // }
 
         void IBattleMainPresenter.OnClickAggressive()
         {
@@ -87,12 +89,6 @@ namespace UI.Presenter
                     _iTimeScaleManager?.Set(0.2f);
                 },
                 null);
-
-            //var uiCreator = _uiFactory?.Create<TacticalStancePopup, TacticalStancePopup.Param>();
-            //var popup = uiCreator
-            //    .SetParam(new TacticalStancePopup.Param())?
-            //    .Create();
-            //popup?.Activate();
         }
 
         void IBattleMainPresenter.OnCloseStrategyPanel()
@@ -109,6 +105,27 @@ namespace UI.Presenter
         void IBattleMainPresenter.CreateEmotion(EmotionType emotionType)
         {
             
+        }
+        #endregion
+        
+        #region ShoutPanel.IListener
+
+        void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
+        {
+           _view?.ActivateEmotionPart(emotionType);
+
+           _iTimeScaleManager?.Set(1f);
+           _view?.ActivateBattleMainView();
+            // if (emotionPart == null)
+            //     return;
+            //
+            // var param = new EmotionPart.Param
+            // {
+            //     TargetTm = iCombatant?.IActor?.Transform,
+            //     Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
+            // };
+            //
+            // emotionPart?.ActivateAsync(param);
         }
         #endregion
     }

@@ -43,6 +43,13 @@ namespace UI.View
         {
             await base.ActivateAsync(param);
 
+           
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+            
             animator?.SetBool("OnOff", false);
         }
 

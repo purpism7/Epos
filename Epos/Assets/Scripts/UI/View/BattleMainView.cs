@@ -20,9 +20,14 @@ namespace UI.View
     {
        List<ICombatant> AllyICombatantList { get; }
        RectTransform AllyBattlePortraitRootRectTm { get; }
+
+       UniTask InitializePanelAsync(ShoutPanel.IListener shoutPanelListener);
+       
+       void ActivateBattleMainView();
+       void ActivateEmotionPart(EmotionType emotionType); 
     }
 
-    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView, ShoutPanel.IListener
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
     {
         public class Param : Common.Param
         {
@@ -68,9 +73,6 @@ namespace UI.View
             await base.InitializeAsync(param);
             await _iPresenter.InitializeAsync(this);
 
-            await shoutPanel.InitializeAsync(new ShoutPanel.Param(this));
-            await strategyPanel.InitializeAsync(new StrategyPanel.Param());
-            
             InitializeButton();
         }
 
@@ -81,9 +83,8 @@ namespace UI.View
                 {
                     DeactivateAnimBattleMainView();
 
-                    shoutPanel?.ActivateAsync(null);
+                    shoutPanel?.Activate();
                     _iTimeScaleManager?.Set(0.2f);
-                    //_iPresenter.OnClickShout();
                 });
 
             aggressiveBtn?.onClick?.AddListener(
@@ -92,7 +93,6 @@ namespace UI.View
                     DeactivateAnimBattleMainView();
 
                     strategyPanel?.ActivateAsync(null);
-
                     _iPresenter.OnClickAggressive();
                 });
 
@@ -114,6 +114,27 @@ namespace UI.View
                     ActivateAnimBattleMainView();
                 });
         }
+        
+        #region IBattleMainView
+        async UniTask IBattleMainView.InitializePanelAsync(ShoutPanel.IListener shoutPanelListener)
+        {
+            await shoutPanel.InitializeAsync(new ShoutPanel.Param(shoutPanelListener));
+            await strategyPanel.InitializeAsync(new StrategyPanel.Param());
+        }
+        
+        void IBattleMainView.ActivateBattleMainView()
+        {
+            ActivateAnimBattleMainView();
+        }
+
+        void IBattleMainView.ActivateEmotionPart(EmotionType emotionType)
+        {
+            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
+            var emotionPart = uiCreator?
+                .SetWorldUI(true)?
+                .Create();
+        }
+        #endregion
 
         private void ActivateAnimBattleMainView()
         {
@@ -124,28 +145,6 @@ namespace UI.View
         {
             animator?.SetBool("OnOff", true);
         }
-        
-        #region ShoutPanel.IListener
-
-        void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
-        {
-            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
-            var emotionPart = uiCreator?
-                .SetWorldUI(true)?
-                .Create();
-
-            // if (emotionPart == null)
-            //     return;
-            //
-            // var param = new EmotionPart.Param
-            // {
-            //     TargetTm = iCombatant?.IActor?.Transform,
-            //     Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
-            // };
-            //
-            // emotionPart?.ActivateAsync(param);
-        }
-        #endregion
 
         [Inject]
         private void InjectInitialize()
