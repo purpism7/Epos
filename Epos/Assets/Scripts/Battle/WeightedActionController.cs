@@ -10,6 +10,7 @@ using Common;
 using Creature;
 using Creature.Action;
 using Creature.Action.Weight;
+using Random = UnityEngine.Random;
 
 namespace Battle
 {
@@ -53,33 +54,30 @@ namespace Battle
 
         void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            //var cancellationToken = iRequester?.CancellationTokenSource;
-            //if (cancellationToken == null ||
-            //    cancellationToken.IsCancellationRequested)
-            //{
-            //    EndAction(executer.IActor);
-            //    return;
-            //}
-
             ExecuteAsync(executer, iRequester).Forget();
         }
 
         private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
         {
+            if(executer.ETeam == ETeam.Enemy)
+                await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
+            
             try
             {
-                var cancellationToken = iRequester?.CancellationTokenSource;
-                await UniTask.DelayFrame(30, cancellationToken: cancellationToken.Token);
-                if (cancellationToken == null ||
-                    cancellationToken.IsCancellationRequested)
+                var cancellationTokenSource = iRequester.CancellationTokenSource;
+                if (cancellationTokenSource != null)
                 {
-                    EndAction(executer.IActor);
-                    return;
+                    await UniTask.DelayFrame(30, cancellationToken: cancellationTokenSource.Token);
+                    if (cancellationTokenSource.IsCancellationRequested)
+                    {
+                        EndAction(executer.IActor);
+                        return;
+                    }
                 }
-
+                
                 var actionWeight = GetHighestPriorityActionWeight();
                 var iWeightedAction = actionWeight?.Create();
-                var param = iRequester?.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
+                var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
 
                 iWeightedAction?.SetParam(param)?
                     .SetEndAction(EndAction)?
@@ -89,21 +87,9 @@ namespace Battle
             catch(OperationCanceledException)
             {
                 EndAction(executer.IActor);
-                // Debug.Log(executer.Id);
-                // Debug.Log(exception);
             }
         }
-
-        //private IWeightedAction CreateAction<T, V>() where T : new() where V : WeightedActionParam
-        //{
-        //    var action = new T() as WeightedAction<V>;
-        //    //action.SetParam(tParam);
-        //    action.SetEndActAction(EndAction);
-        //    action.Initialize();
-
-        //    return action;
-        //}
-
+        
         private void EndAction(IActor iActor)
         {
             if (iActor != null &&

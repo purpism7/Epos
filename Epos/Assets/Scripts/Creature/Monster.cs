@@ -24,7 +24,7 @@ namespace Creature
 
             InitializeEffectController(this);
         }
-
+        
         public override string AnimationKey<T>(Act<T> act)
         {
             switch (act)
