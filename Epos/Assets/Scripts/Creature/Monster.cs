@@ -38,6 +38,8 @@ namespace Creature
                 case Casting: return "Skill_01";
 
                 case Impact:
+                    return "Damege_01";
+
                 case Die:
                     return "Damege";
             }

@@ -3,11 +3,11 @@ using System;
 
 using VContainer;
 using Cysharp.Threading.Tasks;
+using TMPro;
 
 using UI.Slot;
 using Battle;
 using Battle.Strategy;
-using TMPro;
 
 namespace UI.View
 {
