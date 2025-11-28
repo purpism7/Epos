@@ -16997,6 +16997,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 5475068778774160094}
   animator: {fileID: 4681077504590509682}
+  descriptionText: {fileID: 564238539834405910}
+  shoutDescriptions:
+  - You can do it! Cheer up.
+  - Let's take a look calmly.
+  - Do it right!
 --- !u!1001 &456843242911631552
 PrefabInstance:
   m_ObjectHideFlags: 0

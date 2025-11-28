@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   AnimationName: Skill_01
-  EffectName: Eff_FireBall_01
+  EffectName: Eff_MagicCasting_01
   ESkillCategory: 2
   Cooltime: 0
   MP: 0
@@ -25,5 +25,5 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 2
   DashAnimationName: 
-  ProjectilePrefab: {fileID: 149928, guid: 5661cf1bc47655f44bde5c4867a4f17a, type: 3}
+  ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}
   PlayAnimation: 0

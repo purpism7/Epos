@@ -15,6 +15,7 @@ namespace UI.Slot
         {
             public IListener Listener { get; private set; } = null;
             public EmotionType EmotionType { get; private set; } = EmotionType.None;
+            public string Description { get; private set; } = string.Empty;
 
             public Param WithListener(IListener listener)
             {
@@ -27,11 +28,17 @@ namespace UI.Slot
                 EmotionType = emotionType;
                 return this;
             }
+
+            public Param WithDescription(string description)
+            {
+                Description = description;
+                return this;
+            }
         }
 
         public interface IListener
         {
-            void OnClick(EmotionType emotionType);
+            void OnClick(EmotionType emotionType, string description);
         }
 
         [SerializeField] private TextMeshProUGUI emotionTMP = null;
@@ -59,7 +66,7 @@ namespace UI.Slot
 
         private void OnClick()
         {
-            _param?.Listener?.OnClick(emotionType);
+            _param?.Listener?.OnClick(emotionType, _param?.Description);
         }
     }
 }

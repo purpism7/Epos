@@ -9559,6 +9559,7 @@ GameObject:
   - component: {fileID: 19927482}
   - component: {fileID: 10816168}
   - component: {fileID: -1691801766376027430}
+  - component: {fileID: 8843051971204246513}
   m_Layer: 0
   m_Name: Eff_FireBall_01
   m_TagString: Untagged
@@ -14429,3 +14430,16 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &8843051971204246513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8032e2541c41bd2458ec47d9ffc36eae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rootTm: {fileID: 0}

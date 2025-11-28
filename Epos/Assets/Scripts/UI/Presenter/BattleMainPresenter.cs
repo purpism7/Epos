@@ -18,7 +18,6 @@ namespace UI.Presenter
 {
     public interface IBattleMainPresenter : IPresenter<BattleMainView>
     {
-        // void OnClickShout();
         void OnClickAggressive();
         void OnCloseStrategyPanel();
         
@@ -72,15 +71,6 @@ namespace UI.Presenter
         }
 
         #region IBattleMainPresenter
-        // void IBattleMainPresenter.OnClickShout()
-        // {
-        //     var uiCreator = _uiFactory?.Create<ShoutPopup, ShoutPopup.Param>();
-        //     var popup = uiCreator
-        //         .SetParam(new ShoutPopup.Param())?
-        //         .Create();
-        //     popup?.Activate();
-        // }
-
         void IBattleMainPresenter.OnClickAggressive()
         {
             _iCameraManager.ZoomIn(
@@ -119,11 +109,11 @@ namespace UI.Presenter
             // if (emotionPart == null)
             //     return;
             //
-            // var param = new EmotionPart.Param
-            // {
-            //     TargetTm = iCombatant?.IActor?.Transform,
-            //     Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
-            // };
+             //var param = new EmotionPart.Param
+             //{
+             //    TargetTm = iCombatant?.IActor?.Transform,
+             //    Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
+             //};
             //
             // emotionPart?.ActivateAsync(param);
         }

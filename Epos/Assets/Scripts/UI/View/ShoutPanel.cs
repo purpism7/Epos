@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using TMPro;
 
 using Common;
 using UI.Slot;
@@ -25,7 +26,9 @@ namespace UI.View
         }
 
         [SerializeField] private Animator animator = null;
-        
+        [SerializeField] private TextMeshProUGUI descriptionText = null;
+        [SerializeField] private string[] shoutDescriptions = null;
+
         private ShoutSlot[] _shoutSlots = null;
 
         public override async UniTask InitializeAsync(Param param)
@@ -33,9 +36,16 @@ namespace UI.View
             await base.InitializeAsync(param);
 
             _shoutSlots = GetComponentsInChildren<ShoutSlot>(true);
-            foreach (var shoutSlot in _shoutSlots)
+            for(int i = 0; i < _shoutSlots?.Length; ++i)
             {
-                shoutSlot?.InitializeAsync(new ShoutSlot.Param().WithListener(this));
+                var shoutSlot = _shoutSlots[i];
+                var description = (i < shoutDescriptions.Length) ? shoutDescriptions[i] : string.Empty;
+                var emotionType = (EmotionType)(i + 1); // Assuming EmotionType enum starts from 1 for valid types
+                
+                await shoutSlot.InitializeAsync(new ShoutSlot.Param()
+                    .WithListener(this)
+                    .WithEmotionType(emotionType)
+                    .WithDescription(description));
             }
         }
 
@@ -61,8 +71,10 @@ namespace UI.View
         }
         
         #region ShoutSlot.IListener
-        void ShoutSlot.IListener.OnClick(EmotionType emotionType)
+        void ShoutSlot.IListener.OnClick(EmotionType emotionType, string description)
         {
+            descriptionText?.SetText(description);
+
             Deactivate();   
             
             _param?.Listener?.OnSelectShout(emotionType);
