@@ -66,7 +66,8 @@ namespace Creature.Action
                 value *= _param.Multiplier;
                 _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, value);
 
-                GameSystem.Event.EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
+                if(_iActor != null)
+                    GameSystem.Event.EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
 
                 ActivateCombatText(value);
             }

@@ -111,7 +111,7 @@ namespace Creature.Action
             //if (_iActor?.Transform)
             //    _prevPos = _iActor.Transform.position;
 
-            _iActor?.IEffectCtr?.Activate(GetType().Name, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Eff_run_01");
+            _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), GetType().Name);
         }
 
         protected override void Activate()

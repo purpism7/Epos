@@ -117,14 +117,14 @@ public static class Extensions
                 .Find(animation => animation.Name.Contains(animationName));
             if (animation == null)
                 return false;
-
-            animationState.ClearTrack(0);
+            
+            // animationState.ClearTrack(0);
+            // skeletonAnimation.skeleton?.SetToSetupPose();
+            
             var trackEntry = animationState.SetAnimation(0, animationName, loop);
             if (trackEntry == null)
                 return false;
-
-            //skeletonAnimation.Update(Time.timeScale);
-
+            
             trackEntry.Complete -= completedAction.Invoke;
             trackEntry.Complete += completedAction.Invoke;
 
@@ -132,7 +132,7 @@ public static class Extensions
 
             return true;
         }
-        catch(Exception)
+        catch(Exception e)
         {
             
         }
@@ -165,7 +165,7 @@ public static class Extensions
 
             duration = trackEntry.Animation.Duration;
         }
-        catch(Exception)
+        catch(Exception e)
         {
             
         }

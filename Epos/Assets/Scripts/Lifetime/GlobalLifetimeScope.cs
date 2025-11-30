@@ -30,11 +30,11 @@ namespace Lifetime
                .UnderTransform(transform)
                .AsSelf();
 
-            builder.RegisterComponentOnNewGameObject<InputManager>(VContainer.Lifetime.Singleton, $"[{typeof(InputManager).Name}]")
+            builder.RegisterComponentOnNewGameObject<InputManager>(VContainer.Lifetime.Singleton, $"[{nameof(InputManager)}]")
                 .UnderTransform(transform)
                 .As<IInputManager>();
 
-            builder.RegisterComponentOnNewGameObject<EffectManager>(VContainer.Lifetime.Singleton, $"[{typeof(EffectManager).Name}]")
+            builder.RegisterComponentOnNewGameObject<EffectManager>(VContainer.Lifetime.Singleton, $"[{nameof(EffectManager)}]")
                 .UnderTransform(transform)
                 .As<IEffectManager>();
 
@@ -43,7 +43,7 @@ namespace Lifetime
             builder.RegisterComponentInHierarchy<Party>().As<IParty>();
             builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
 
-            builder.RegisterComponentOnNewGameObject<ObjectPooler>(VContainer.Lifetime.Singleton, $"[{typeof(ObjectPooler).Name}]").AsSelf();
+            builder.RegisterComponentOnNewGameObject<ObjectPooler>(VContainer.Lifetime.Singleton, $"[{nameof(ObjectPooler)}]").AsSelf();
             builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
             builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
         }

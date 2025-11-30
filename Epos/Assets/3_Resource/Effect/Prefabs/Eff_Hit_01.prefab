@@ -14539,6 +14539,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 5427514216814323606}
+  particleSystem: {fileID: 798345269271843440}
 --- !u!1 &7007888714347335651
 GameObject:
   m_ObjectHideFlags: 0

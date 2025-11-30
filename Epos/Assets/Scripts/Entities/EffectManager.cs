@@ -1,8 +1,10 @@
 using Cysharp.Threading.Tasks;
-using GameSystem;
 using UnityEngine;
+
 using VContainer;
 using VContainer.Unity;
+
+using GameSystem;
 
 namespace Entities
 {
@@ -19,11 +21,10 @@ namespace Entities
 
         Effect IEffectManager.GetEffect(string key)
         {
-            var resKey = $"Assets/3_Resource/Effect/Prefabs/{key}.prefab";
-
-            Effect effect = _objectPooler?.Get<Effect>(key: resKey);
+            Effect effect = _objectPooler?.Get<Effect>(key: key);
             if (effect == null)
             {
+                var resKey = $"Assets/3_Resource/Effect/Prefabs/{key}.prefab";
                 var prefab = _addressableManager?.LoadAssetByNameAsync<GameObject>(resKey);
                 if(prefab)
                 {
@@ -37,6 +38,8 @@ namespace Entities
 
                     effect = gameObj.GetComponent<Effect>();
                     effect?.Initialize();
+                    
+                    _objectPooler?.Add(effect);
                 }
             }
 

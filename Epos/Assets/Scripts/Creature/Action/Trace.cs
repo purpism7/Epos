@@ -71,7 +71,7 @@ namespace Creature.Action
 
             PlayAnimation(_param.AnimationKey, true);
             
-            _iActor?.IEffectCtr?.Activate("Move", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Eff_run_01");
+            _iActor?.IEffectCtr?.Activate("Eff_run_01",new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
         }
 
         public override void Deactivate()

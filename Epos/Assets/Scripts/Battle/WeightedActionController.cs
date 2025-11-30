@@ -59,9 +59,6 @@ namespace Battle
 
         private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
         {
-            if(executer.ETeam == ETeam.Enemy)
-                await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
-            
             try
             {
                 var cancellationTokenSource = iRequester.CancellationTokenSource;

@@ -307,7 +307,12 @@ namespace Battle.Mode
                     MoveToWaypoint(waypoint);
             }
             else
+            {
+                if(iCombatant.ETeam == ETeam.Enemy)
+                    await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
+                
                 _iWeightedActionCtr?.Execute(iCombatant, this);
+            }
         }
 
         #region RealTime.IProvider

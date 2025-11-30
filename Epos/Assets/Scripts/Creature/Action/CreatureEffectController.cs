@@ -10,7 +10,7 @@ namespace Creature.Action
 {
     public interface ICreatureEffectController : IController<ICreatureEffectController, IActor>
     {
-        void Activate(string effectType, Effect.Param effectParam, string effectName);
+        void Activate(string effectName, Effect.Param effectParam, string effectType = "");
         void Deactivate(string effectType);
     }
 
@@ -90,7 +90,7 @@ namespace Creature.Action
         }
 
         #region
-        void ICreatureEffectController.Activate(string effectType, Effect.Param effectParam, string effectName)
+        void ICreatureEffectController.Activate(string effectName, Effect.Param effectParam, string effectType)
         {
             if (_iEffectDic == null)
                 return;
@@ -98,10 +98,22 @@ namespace Creature.Action
             if (string.IsNullOrEmpty(effectName))
                 return;
 
-            var iEffectRoot = GetIEffectRoot(effectType);
-            if (iEffectRoot == null)
-                return;
+            // Transform rootTm = _iActor?.Transform;
+            
+            if (!string.IsNullOrEmpty(effectType))
+            {
+                var iEffectRoot = GetIEffectRoot(effectType);
+                if (iEffectRoot == null)
+                    return;
 
+                // rootTm = iEffectRoot.Transform;
+                effectParam?.WithRootTm(iEffectRoot.Transform);
+            }
+            else
+            {
+                effectParam?.WithTargetPosition(_iActor?.Transform?.position);
+            }
+            
             IEffect iEffect = null;
             if (!_iEffectDic.TryGetValue(effectType, out iEffect))
             {
@@ -110,12 +122,8 @@ namespace Creature.Action
 
                 iEffect = effect;
             }
-
-            effectParam?.WithRootTm(iEffectRoot?.Transform);
-
-            if (iEffectRoot != null)
-                iEffect?.ActivateAsync(effectParam);
-
+            
+            iEffect?.ActivateAsync(effectParam);
         }
 
         void ICreatureEffectController.Deactivate(string effectType)

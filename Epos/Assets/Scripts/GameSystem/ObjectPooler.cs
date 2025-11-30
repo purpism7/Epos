@@ -57,7 +57,8 @@ namespace GameSystem
 
                 if(!string.IsNullOrEmpty(key))
                 {
-                    if (iPoolable.PrefabKey.name != key)
+                    var replacePrefabKey = iPoolable.PrefabKey.name.Replace("(Clone)", "");
+                    if (replacePrefabKey != key)
                         continue;
                 }
 
