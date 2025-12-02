@@ -86,19 +86,19 @@ public class Effect : Component<Effect.Param>, IEffect
         
         transform.localRotation = Quaternion.identity;
 
-        UpdateDirection();
+        // UpdateDirection();
 
         //Debug.Log(_lifetime);
         if (particleSystem != null)
         {
             particleSystem.Play();
-
-            if (_lifetime > 0)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
-            
-                Deactivate();
-            }
+        //
+        //     if (_lifetime > 0)
+        //     {
+        //         await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
+        //     
+        //         Deactivate();
+        //     }
         }
     }
 
