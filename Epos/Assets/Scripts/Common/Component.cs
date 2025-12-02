@@ -21,7 +21,7 @@ namespace Common
         [SerializeField]
         protected Transform rootTm = null;
 
-        [Inject] protected ObjectPooler _objectPooler = null;
+        [Inject] private ObjectPooler _objectPooler = null;
 
         private bool _isActivate = false;
 
@@ -57,7 +57,7 @@ namespace Common
         }
 
         #region IPoolable
-        GameObject IPoolable.PrefabKey => gameObject;
+        GameObject IPoolable.PrefabGameObj => gameObject;
         Transform IPoolable.Transform => transform;
 
         public void Return()

@@ -254,7 +254,7 @@ namespace Battle.Mode
 
                 CreateHpProgress(enemyICombatant);
 
-                _iWeightedActionCtr?.Execute(enemyICombatant, this);
+                _iWeightedActionCtr?.Execute(enemyICombatant, this, true);
             }
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
@@ -308,9 +308,6 @@ namespace Battle.Mode
             }
             else
             {
-                if(iCombatant.ETeam == ETeam.Enemy)
-                    await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
-                
                 _iWeightedActionCtr?.Execute(iCombatant, this);
             }
         }

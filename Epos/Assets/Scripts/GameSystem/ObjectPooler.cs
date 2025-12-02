@@ -5,7 +5,7 @@ namespace GameSystem
 {
     public interface IPoolable
     {
-        GameObject PrefabKey { get; }
+        GameObject PrefabGameObj { get; }
 
         Transform Transform { get; }
         bool IsActivate { get; }
@@ -51,20 +51,21 @@ namespace GameSystem
 
                 if(prefab)
                 {
-                    if (iPoolable.PrefabKey != prefab)
+                    if (iPoolable.PrefabGameObj != prefab)
                         continue;
                 }
 
                 if(!string.IsNullOrEmpty(key))
                 {
-                    var replacePrefabKey = iPoolable.PrefabKey.name.Replace("(Clone)", "");
+                    var replacePrefabKey = iPoolable.PrefabGameObj.name.Replace("(Clone)", "");
                     if (replacePrefabKey != key)
                         continue;
                 }
 
                 if (iPoolable is T t)
                 {
-                    iPoolable.Transform.gameObject.SetActive(true);
+                    Extensions.SetActive(iPoolable.Transform, true);
+                    // iPoolable.Transform.gameObject.SetActive(true);
                     return t;
                 }
             }

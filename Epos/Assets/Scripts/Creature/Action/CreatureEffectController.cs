@@ -89,7 +89,7 @@ namespace Creature.Action
             return null;
         }
 
-        #region
+        #region ICreatureEffectController
         void ICreatureEffectController.Activate(string effectName, Effect.Param effectParam, string effectType)
         {
             if (_iEffectDic == null)
@@ -99,28 +99,31 @@ namespace Creature.Action
                 return;
 
             // Transform rootTm = _iActor?.Transform;
+            IEffect iEffect = null;
             
             if (!string.IsNullOrEmpty(effectType))
             {
                 var iEffectRoot = GetIEffectRoot(effectType);
                 if (iEffectRoot == null)
                     return;
-
-                // rootTm = iEffectRoot.Transform;
+                
                 effectParam?.WithRootTm(iEffectRoot.Transform);
+                
+                if (!_iEffectDic.TryGetValue(effectType, out iEffect))
+                {
+                    var effect = _iEffectManager?.GetEffect(effectName);
+                    _iEffectDic[effectType] = effect;
+
+                    iEffect = effect;
+                }
+                else
+                {
+                    iEffect.Activate();
+                }
             }
             else
             {
                 effectParam?.WithTargetPosition(_iActor?.Transform?.position);
-            }
-            
-            IEffect iEffect = null;
-            if (!_iEffectDic.TryGetValue(effectType, out iEffect))
-            {
-                var effect = _iEffectManager?.GetEffect(effectName);
-                _iEffectDic[effectType] = effect;
-
-                iEffect = effect;
             }
             
             iEffect?.ActivateAsync(effectParam);

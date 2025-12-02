@@ -12,7 +12,10 @@ using Creature;
 public interface IEffect
 {
     UniTask ActivateAsync(Effect.Param param);
+
+    void Activate();
     void Deactivate();
+    
     void ChainUpdate();
 }
 
@@ -21,8 +24,6 @@ public class Effect : Component<Effect.Param>, IEffect
     public class Param : Common.Param
     {
         public Transform RootTm { get; private set; } = null;
-
-        // public Transform TargetTm { get; private set; } = null;
         public SkeletonAnimation TargetSkeletonAnimation { get; private set; } = null;
         public Vector3? TargetPosition { get; private set; } = Vector3.zero;
 
@@ -99,6 +100,13 @@ public class Effect : Component<Effect.Param>, IEffect
                 Deactivate();
             }
         }
+    }
+
+    public override void Activate()
+    {
+        base.Activate();
+        
+        Extensions.SetActive(transform, true);
     }
 
     public override void Deactivate()

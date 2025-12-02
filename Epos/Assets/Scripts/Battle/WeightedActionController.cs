@@ -24,7 +24,7 @@ namespace Battle
     {
         void Initialize(WeightedActionController.IListener iListener);
 
-        void Execute(ICombatant executer, IWeightedActionRequester iRequester);
+        void Execute(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst = false);
     }
 
     public class WeightedActionController : IWeightedActionController
@@ -52,19 +52,26 @@ namespace Battle
             _iSortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
         }
 
-        void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester)
+        void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
         {
-            ExecuteAsync(executer, iRequester).Forget();
+            ExecuteAsync(executer, iRequester, isFirst).Forget();
         }
 
-        private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester)
+        private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
         {
             try
             {
+                // if(executer.ETeam == ETeam.Enemy)
+                //     await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
+                
                 var cancellationTokenSource = iRequester.CancellationTokenSource;
                 if (cancellationTokenSource != null)
                 {
-                    await UniTask.DelayFrame(30, cancellationToken: cancellationTokenSource.Token);
+                    int frame = 30;
+                    if (executer.ETeam == ETeam.Enemy && isFirst)
+                        frame += UnityEngine.Random.Range(0, 30);
+                    
+                    await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
                     if (cancellationTokenSource.IsCancellationRequested)
                     {
                         EndAction(executer.IActor);
