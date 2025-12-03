@@ -4900,4 +4900,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3579802162219738105}
-  particleSystem: {fileID: 7520042194990777221}
+  particleSystem: {fileID: 0}

@@ -26,6 +26,8 @@ public class Effect : Component<Effect.Param>, IEffect
         public Transform RootTm { get; private set; } = null;
         public SkeletonAnimation TargetSkeletonAnimation { get; private set; } = null;
         public Vector3? TargetPosition { get; private set; } = Vector3.zero;
+
+        public bool IsReturn { get; private set; } = true;
         public bool ReturnParent { get; private set; } = false;
 
         public Param WithRootTm(Transform rootTm)
@@ -51,6 +53,12 @@ public class Effect : Component<Effect.Param>, IEffect
             TargetPosition = targetPosition;
             return this;
         }
+        
+        public Param WithIsReturn(bool isReturn)
+        {
+            IsReturn = isReturn;
+            return this;
+        }
 
         public Param WithReturnParent(bool returnParent)
         {
@@ -68,8 +76,7 @@ public class Effect : Component<Effect.Param>, IEffect
     public override void Initialize()
     {
         base.Initialize();
-
-        // particleSystem = GetComponentInChildren<ParticleSystem>();
+        
         if(particleSystem != null)
         {
             var main = particleSystem.main;
@@ -88,7 +95,7 @@ public class Effect : Component<Effect.Param>, IEffect
                 transform.SetParent(param.RootTm);
         }
 
-        if (param.TargetPosition != null)
+        if (param?.TargetPosition != null)
             transform.localPosition = param.TargetPosition.Value;
 
         transform.localRotation = Quaternion.identity;
@@ -120,7 +127,9 @@ public class Effect : Component<Effect.Param>, IEffect
     {
         base.Deactivate();
         
-        Return(_param.ReturnParent);
+        if(_param != null && 
+           _param.IsReturn)
+            Return(_param.ReturnParent);
     }
 
     private void UpdateDirection()

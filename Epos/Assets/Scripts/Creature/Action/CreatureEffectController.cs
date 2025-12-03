@@ -99,40 +99,33 @@ namespace Creature.Action
                 return;
 
             // Transform rootTm = _iActor?.Transform;
-            //IEffect iEffect = null;
-            var effect = _iEffectManager?.GetEffect(effectName);
-            if (effect == null)
-                return;
-
-            effect?.Activate();
-
+            IEffect effect = null;
+  
             if (!string.IsNullOrEmpty(effectType))
             {
                 var iEffectRoot = GetIEffectRoot(effectType);
                 if (iEffectRoot == null) 
                     return;
                 
-                effectParam?.WithRootTm(iEffectRoot.Transform);
+                effectParam?.WithRootTm(iEffectRoot.Transform)
+                    .WithIsReturn(false);
                 
-                //if (!_iEffectDic.TryGetValue(effectType, out iEffect))
-                //{
-                //    var effect = _iEffectManager?.GetEffect(effectName);
-                //    _iEffectDic[effectType] = effect;
+                if (!_iEffectDic.TryGetValue(effectType, out effect))
+                {
+                     effect = _iEffectManager?.GetEffect(effectName);
+                    _iEffectDic[effectType] = effect;
 
-                //    iEffect = effect;
-                //}
-                //else
-                //{
-                //    iEffect.Activate();
-                //}
+                    // iEffect = effect;
+                }
             }
             else
             {
-                //iEffect = _iEffectManager?.GetEffect(effectName);
+                effect = _iEffectManager?.GetEffect(effectName);
 
                 //effectParam?.WithTargetPosition(_iActor?.Transform?.position);
             }
-
+            
+            effect?.Activate();
             effect?.ActivateAsync(effectParam);
         }
 
