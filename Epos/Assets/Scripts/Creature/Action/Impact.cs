@@ -61,7 +61,11 @@ namespace Creature.Action
                 if(_param.EImpactType == EImpactType.Damage)
                     value = -iStat.Get(Stat.EType.Attack);
                 else
+                {
                     value = 10f;
+
+                    _iActor?.IEffectCtr?.Activate("Eff_Hill_01", new Effect.Param().WithTargetPosition(_iActor.Transform.position));
+                }
 
                 value *= _param.Multiplier;
                 _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, value);

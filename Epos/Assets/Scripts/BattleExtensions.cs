@@ -209,7 +209,7 @@ public static class BattleExtensions
             if (!iActor.IsAlive)
                 continue;
 
-            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, tm.position);
+            var distance = Vector2.Distance(iActor.Transform.position, tm.position);
             if (closestIComtant == null ||
                 closestDistance > distance)
             {

@@ -92,41 +92,48 @@ namespace Creature.Action
         #region ICreatureEffectController
         void ICreatureEffectController.Activate(string effectName, Effect.Param effectParam, string effectType)
         {
-            if (_iEffectDic == null)
-                return;
+            //if (_iEffectDic == null)
+            //    return;
 
             if (string.IsNullOrEmpty(effectName))
                 return;
 
             // Transform rootTm = _iActor?.Transform;
-            IEffect iEffect = null;
-            
+            //IEffect iEffect = null;
+            var effect = _iEffectManager?.GetEffect(effectName);
+            if (effect == null)
+                return;
+
+            effect?.Activate();
+
             if (!string.IsNullOrEmpty(effectType))
             {
                 var iEffectRoot = GetIEffectRoot(effectType);
-                if (iEffectRoot == null)
+                if (iEffectRoot == null) 
                     return;
                 
                 effectParam?.WithRootTm(iEffectRoot.Transform);
                 
-                if (!_iEffectDic.TryGetValue(effectType, out iEffect))
-                {
-                    var effect = _iEffectManager?.GetEffect(effectName);
-                    _iEffectDic[effectType] = effect;
+                //if (!_iEffectDic.TryGetValue(effectType, out iEffect))
+                //{
+                //    var effect = _iEffectManager?.GetEffect(effectName);
+                //    _iEffectDic[effectType] = effect;
 
-                    iEffect = effect;
-                }
-                else
-                {
-                    iEffect.Activate();
-                }
+                //    iEffect = effect;
+                //}
+                //else
+                //{
+                //    iEffect.Activate();
+                //}
             }
             else
             {
+                //iEffect = _iEffectManager?.GetEffect(effectName);
+
                 effectParam?.WithTargetPosition(_iActor?.Transform?.position);
             }
-            
-            iEffect?.ActivateAsync(effectParam);
+
+            effect?.ActivateAsync(effectParam);
         }
 
         void ICreatureEffectController.Deactivate(string effectType)

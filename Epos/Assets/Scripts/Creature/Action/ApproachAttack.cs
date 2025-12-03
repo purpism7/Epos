@@ -38,7 +38,10 @@ namespace Creature.Action
 
         private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList)
         {
-            var iSkill = attacker?.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
+            if (!attacker?.Transform)
+                return;
+
+            var iSkill = attacker.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (iSkill == null)
             {
                 End();

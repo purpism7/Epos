@@ -64,8 +64,8 @@ namespace GameSystem
 
                 if (iPoolable is T t)
                 {
-                    Extensions.SetActive(iPoolable.Transform, true);
-                    // iPoolable.Transform.gameObject.SetActive(true);
+                    //Extensions.SetActive(iPoolable.Transform, true);
+                    iPoolable.Transform.gameObject.SetActive(true);
                     return t;
                 }
             }

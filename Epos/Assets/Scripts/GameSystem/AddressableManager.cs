@@ -20,7 +20,7 @@ namespace GameSystem
 
         public T LoadAssetByNameAsync<T>(string addressableName) where T : Object
         {
-            //Debug.Log(addressableName);
+            Debug.Log(addressableName);
             var handler = Addressables.LoadAssetAsync<T>(addressableName);
             if (!handler.IsValid())
                 return default(T);

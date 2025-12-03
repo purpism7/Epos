@@ -118,7 +118,7 @@ public static class Extensions
             if (animation == null)
                 return false;
             
-            // animationState.ClearTrack(0);
+             animationState.ClearTrack(0);
             // skeletonAnimation.skeleton?.SetToSetupPose();
             
             var trackEntry = animationState.SetAnimation(0, animationName, loop);

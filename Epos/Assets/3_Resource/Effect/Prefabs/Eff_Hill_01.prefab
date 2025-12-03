@@ -5230,6 +5230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1507092154227174301}
+  particleSystem: {fileID: 1294748829661030444}
 --- !u!1 &4922791608201529616
 GameObject:
   m_ObjectHideFlags: 0

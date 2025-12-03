@@ -24,11 +24,11 @@ namespace Entities
             Effect effect = _objectPooler?.Get<Effect>(key: key);
             if (effect == null)
             {
-                var resKey = $"Assets/3_Resource/Effect/Prefabs/{key}.prefab";
-                var prefab = _addressableManager?.LoadAssetByNameAsync<GameObject>(resKey);
-                if(prefab)
+                var effectPath = $"Assets/3_Resource/Effect/Prefabs/{key}.prefab";
+                var prefabGameObj = _addressableManager?.LoadAssetByNameAsync<GameObject>(effectPath);
+                if(prefabGameObj)
                 {
-                    var gameObj = LifetimeScope.Instantiate(prefab, transform);
+                    var gameObj = LifetimeScope.Instantiate(prefabGameObj, transform);
                     if (!gameObj)
                         return null;
 

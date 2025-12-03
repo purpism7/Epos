@@ -18,8 +18,6 @@ using GameSystem.Event;
 using Datas.ScriptableObjects;
 using Common;
 using Creator;
-using Color = UnityEngine.Color;
-using Vector3 = UnityEngine.Vector3;
 
 namespace Creature.Action
 {
@@ -197,6 +195,7 @@ namespace Creature.Action
             if (attacker == null)
                 return;
 
+            // 현재는 heal 만.
             if (skillData.SameTeam)
             {
                 var targetList = _param?.TargetList;
@@ -209,11 +208,11 @@ namespace Creature.Action
                             continue;
 
                         var impactParam = new Impact.Param
-                            {
-                                PlayAnimation = _param.PlayAnimation,
-                            }
-                            .WithIStat(attacker.IStat)
-                            .WithEImpactType(EImpactType.Heal);
+                        {
+                            PlayAnimation = _param.PlayAnimation,
+                        }
+                        .WithIStat(attacker.IStat)
+                        .WithEImpactType(EImpactType.Heal);
 
                         target.IActor?.IActCtr?.Impact(impactParam);
                     }
