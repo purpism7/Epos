@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1507092154227174301}
   - component: {fileID: 5917881697805770639}
   - component: {fileID: 1294748829661030444}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5194,7 +5194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4413633973195512380}
   - component: {fileID: 2447017109133762127}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Eff_Hill_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5242,7 +5242,7 @@ GameObject:
   - component: {fileID: 2825307991564960330}
   - component: {fileID: 8968187163919894754}
   - component: {fileID: 4864525192359384779}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: light_wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10145,7 +10145,7 @@ GameObject:
   - component: {fileID: 1531754863647285860}
   - component: {fileID: 1152725390899971812}
   - component: {fileID: 2514791577212726503}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: floor_energy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15093,7 +15093,7 @@ GameObject:
   - component: {fileID: 4156259057286375750}
   - component: {fileID: 2667469886569471512}
   - component: {fileID: 5224557135448886407}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: particle_up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20095,7 +20095,7 @@ GameObject:
   - component: {fileID: 1919695186107906238}
   - component: {fileID: 5901118616154233121}
   - component: {fileID: 1642130488935573077}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: glow_view
   m_TagString: Untagged
   m_Icon: {fileID: 0}

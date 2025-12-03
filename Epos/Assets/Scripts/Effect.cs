@@ -26,6 +26,7 @@ public class Effect : Component<Effect.Param>, IEffect
         public Transform RootTm { get; private set; } = null;
         public SkeletonAnimation TargetSkeletonAnimation { get; private set; } = null;
         public Vector3? TargetPosition { get; private set; } = Vector3.zero;
+        public bool ReturnParent { get; private set; } = false;
 
         public Param WithRootTm(Transform rootTm)
         {
@@ -50,6 +51,12 @@ public class Effect : Component<Effect.Param>, IEffect
             TargetPosition = targetPosition;
             return this;
         }
+
+        public Param WithReturnParent(bool returnParent)
+        {
+            ReturnParent = returnParent;
+            return this;
+        }
     }
 
     [SerializeField] private new ParticleSystem particleSystem = null;
@@ -67,7 +74,7 @@ public class Effect : Component<Effect.Param>, IEffect
         {
             var main = particleSystem.main;
             _lifetime = main.startDelay.constantMax + main.duration + main.startLifetime.constantMax;
-            Debug.Log(_lifetime);
+            //Debug.Log(_lifetime);
         }  
     }
 
@@ -81,9 +88,9 @@ public class Effect : Component<Effect.Param>, IEffect
                 transform.SetParent(param.RootTm);
         }
 
-        if(param != null)
-            transform.localPosition = param.TargetPosition != null ? param.TargetPosition.Value : Vector3.zero;
-        
+        if (param.TargetPosition != null)
+            transform.localPosition = param.TargetPosition.Value;
+
         transform.localRotation = Quaternion.identity;
 
         // UpdateDirection();
@@ -92,13 +99,13 @@ public class Effect : Component<Effect.Param>, IEffect
         if (particleSystem != null)
         {
             particleSystem.Play();
-        //
-        //     if (_lifetime > 0)
-        //     {
-        //         await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
-        //     
-        //         Deactivate();
-        //     }
+ 
+            if (_lifetime > 0)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
+
+                Deactivate();
+            }
         }
     }
 
@@ -113,7 +120,7 @@ public class Effect : Component<Effect.Param>, IEffect
     {
         base.Deactivate();
         
-        Return();
+        Return(_param.ReturnParent);
     }
 
     private void UpdateDirection()

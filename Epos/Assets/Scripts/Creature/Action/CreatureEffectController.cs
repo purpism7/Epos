@@ -130,7 +130,7 @@ namespace Creature.Action
             {
                 //iEffect = _iEffectManager?.GetEffect(effectName);
 
-                effectParam?.WithTargetPosition(_iActor?.Transform?.position);
+                //effectParam?.WithTargetPosition(_iActor?.Transform?.position);
             }
 
             effect?.ActivateAsync(effectParam);

@@ -22,7 +22,7 @@ MonoBehaviour:
   ESkillTarget: 1
   Range: 0
   Multiplier: 1
-  SameTeam: 1
+  SameTeam: 0
   KnockbackDistance: 0
   DashAnimationName: 
   ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}

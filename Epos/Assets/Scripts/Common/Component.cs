@@ -60,9 +60,9 @@ namespace Common
         GameObject IPoolable.PrefabGameObj => gameObject;
         Transform IPoolable.Transform => transform;
 
-        public void Return()
+        public void Return(bool setParent = false)
         {
-            _objectPooler?.Return(this);
+            _objectPooler?.Return(this, setParent);
         }
         #endregion
     }

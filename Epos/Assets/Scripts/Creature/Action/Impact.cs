@@ -64,7 +64,11 @@ namespace Creature.Action
                 {
                     value = 10f;
 
-                    _iActor?.IEffectCtr?.Activate("Eff_Hill_01", new Effect.Param().WithTargetPosition(_iActor.Transform.position));
+                    var effectParam = new Effect.Param()
+                        .WithRootTm(_iActor.Transform)
+                        .WithReturnParent(true);
+
+                    _iActor?.IEffectCtr?.Activate("Eff_Hill_01", effectParam);
                 }
 
                 value *= _param.Multiplier;

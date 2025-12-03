@@ -10,7 +10,7 @@ namespace GameSystem
         Transform Transform { get; }
         bool IsActivate { get; }
 
-        void Return();
+        void Return(bool setParent);
     }
 
     public class ObjectPooler : MonoBehaviour
@@ -25,12 +25,14 @@ namespace GameSystem
             _iPoolableList?.Add(iPoolable);
         }
 
-        public void Return(IPoolable iPoolable)
+        public void Return(IPoolable iPoolable, bool setParent)
         {
             if (iPoolable == null)
                 return;
 
-            // iPoolable.Transform.SetParent(transform);
+            if(setParent)
+                iPoolable.Transform.SetParent(transform);
+
             iPoolable.Transform.SetActive(false);
         }
 
