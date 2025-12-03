@@ -114,15 +114,11 @@ namespace Creature.Action
                 {
                      effect = _iEffectManager?.GetEffect(effectName);
                     _iEffectDic[effectType] = effect;
-
-                    // iEffect = effect;
                 }
             }
             else
             {
                 effect = _iEffectManager?.GetEffect(effectName);
-
-                //effectParam?.WithTargetPosition(_iActor?.Transform?.position);
             }
             
             effect?.Activate();

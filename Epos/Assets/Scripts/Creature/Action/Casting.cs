@@ -334,7 +334,7 @@ namespace Creature.Action
             targetActor.IActCtr?.Impact(impactParam);
             target.HitAsync();
             
-            targetActor.IEffectCtr?.Activate("Eff_Hit_01", new Effect.Param().WithTargetSkeletonAnimation(targetActor.SkeletonAnimation));
+            targetActor.IEffectCtr?.Activate("Eff_Hit_01", new Effect.Param().WithTargetPosition(targetActor.Transform.position));
 
             if (skillData != null)
             {
