@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -6,16 +5,17 @@ using UnityEngine;
 
 using VContainer;
 using Cysharp.Threading.Tasks;
+using Lifetime;
 
 using Common;
 using GameSystem;
 using Creator;
-using Lifetime;
 using Creature;
 using UI.Parts;
 using Battle.RealTime;
 using Creature.Action;
 using Battle.Strategy;
+using GameSystem.Event;
 
 namespace Battle.Mode
 {
@@ -80,15 +80,13 @@ namespace Battle.Mode
         public override void Begin()
         {
             Debug.Log("Begin()");
-            
+            EventHandler.Add<HeroEmotionEventData>(OnChangedEmotion);
             
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
                 var ally = _data?.AllyICombatantList[i];
                 ally?.SetETeam(ETeam.Ally);
                 ally?.IActor?.Activate();
-
-                CreateEmotion(ally);
             }
 
             ActivateBattleMain();
@@ -98,6 +96,13 @@ namespace Battle.Mode
         public override void ChainLateUpdate()
         {
             _iWaypointCtr?.ChainLateUpdate();
+        }
+
+        protected override void End(bool isWin)
+        {
+            base.End(isWin);
+            
+            EventHandler.Remove<HeroEmotionEventData>(OnChangedEmotion);
         }
 
         private void BattleWin()
@@ -193,7 +198,7 @@ namespace Battle.Mode
             enemyHpProgressPart?.ActivateAsync(param);
         }
         
-        private void CreateEmotion(ICombatant iCombatant)
+        private void CreateEmotion(ICombatant iCombatant, EmotionType emotionType)
         {
             var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
             var emotionPart = uiCreator?
@@ -207,7 +212,7 @@ namespace Battle.Mode
             {
                 TargetTm = iCombatant?.IActor?.Transform,
                 Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
-            };
+            }.WithEmotionType(emotionType);
 
             emotionPart?.ActivateAsync(param);
         }
@@ -382,6 +387,21 @@ namespace Battle.Mode
             
             if(!isInitalized)
                 CheckWaypointActionAsync().Forget();
+        }
+        #endregion
+        
+        #region Event
+
+        private void OnChangedEmotion(HeroEmotionEventData eventData)
+        {
+            if (eventData == null)
+                return;
+
+            var combatant = _data?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == eventData.CharacterId);
+            if (combatant == null)
+                return;
+
+            CreateEmotion(combatant, eventData.EmotionType);
         }
         #endregion
     }

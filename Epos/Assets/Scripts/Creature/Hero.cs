@@ -7,7 +7,7 @@ using VContainer;
 using Common;
 using Creature.Action;
 using Creature.Emotion;
-using UnityEditor;
+using GameSystem.Event;
 
 namespace Creature
 {
@@ -29,6 +29,11 @@ namespace Creature
 
             InitializeEmotionController();
             InitializeEffectController(this);
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
         }
 
         public override void Deactivate()

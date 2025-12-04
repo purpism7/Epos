@@ -45,6 +45,18 @@ namespace GameSystem.Event
             IStat = iStat;
         }
     }
+
+    public class HeroEmotionEventData : EventData
+    {
+        public int CharacterId { get; private set; } = 0;
+        public EmotionType EmotionType { get; private set; } = EmotionType.None;
+
+        public HeroEmotionEventData(int characterId, EmotionType emotionType)
+        {
+            CharacterId = characterId;
+            EmotionType = emotionType;
+        }
+    }
     
     #region Skill
     public class SkillUseEventData : EventData

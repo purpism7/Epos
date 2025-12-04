@@ -15,6 +15,12 @@ namespace UI.Parts
         public class Param : PartParam
         {
             public EmotionType EmotionType { get; private set; } = EmotionType.None;
+
+            public Param WithEmotionType(EmotionType emotionType)
+            {
+                EmotionType = emotionType;
+                return this;
+            }
         }
 
         [Inject] private ResourceManager _resourceManager = null;
@@ -31,7 +37,7 @@ namespace UI.Parts
             await base.ActivateAsync(param);
 
             SetEmotionImg();
-            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+            await UniTask.Delay(TimeSpan.FromSeconds(5f));
             
             Deactivate();
         }

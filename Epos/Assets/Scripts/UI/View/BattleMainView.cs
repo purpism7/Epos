@@ -24,7 +24,6 @@ namespace UI.View
        UniTask InitializePanelAsync(ShoutPanel.IListener shoutPanelListener);
        
        void ActivateBattleMainView();
-       void ActivateEmotionPart(EmotionType emotionType); 
     }
 
     public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
@@ -125,14 +124,6 @@ namespace UI.View
         void IBattleMainView.ActivateBattleMainView()
         {
             ActivateAnimBattleMainView();
-        }
-
-        void IBattleMainView.ActivateEmotionPart(EmotionType emotionType)
-        {
-            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
-            var emotionPart = uiCreator?
-                .SetWorldUI(true)?
-                .Create();
         }
         #endregion
 

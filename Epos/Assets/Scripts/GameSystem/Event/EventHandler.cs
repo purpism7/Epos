@@ -18,16 +18,16 @@ namespace GameSystem.Event
     
     public class EventHandler
     {
-        private readonly static Dictionary<Type, Delegate> _eventHandlers = new();
+        private static readonly Dictionary<Type, Delegate> EventHandlers = new();
 
         public static void Add<T>(Action<T> action) where T : Event.EventData
         {
             // Debug.Log(typeof(T));
             
-            if (_eventHandlers.TryGetValue(typeof(T), out var handler))
-                _eventHandlers[typeof(T)] = (Action<T>)handler + action;
+            if (EventHandlers.TryGetValue(typeof(T), out var handler))
+                EventHandlers[typeof(T)] = (Action<T>)handler + action;
             else
-                _eventHandlers[typeof(T)] = action;
+                EventHandlers[typeof(T)] = action;
             // if (_eventHandlers.ContainsKey(typeof(T)))
             //      _eventHandlers[typeof(T)] = (Action<T>)existing + handler;
             // else
@@ -38,13 +38,13 @@ namespace GameSystem.Event
         {
             // lock (_lockObj)
             {
-                if (_eventHandlers.TryGetValue(typeof(T), out var handler))
+                if (EventHandlers.TryGetValue(typeof(T), out var handler))
                 {
                     var updated = (Action<T>)handler - action;
                     if (updated == null)
-                        _eventHandlers.Remove(typeof(T));
+                        EventHandlers.Remove(typeof(T));
                     else
-                        _eventHandlers[typeof(T)] = updated;
+                        EventHandlers[typeof(T)] = updated;
                 }
             }
         }
@@ -54,7 +54,7 @@ namespace GameSystem.Event
             if (eventData == null) 
                 return;
 
-            if (_eventHandlers.TryGetValue(typeof(T), out var handler))
+            if (EventHandlers.TryGetValue(typeof(T), out var handler))
                 ((Action<T>)handler)?.Invoke(eventData);
         }
     }

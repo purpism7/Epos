@@ -11,6 +11,7 @@ using UI.Slot;
 using UI.View;
 using UI.Popup;
 using GameSystem;
+using GameSystem.Event;
 using UI.Parts;
 
 
@@ -102,20 +103,12 @@ namespace UI.Presenter
 
         void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
         {
-           _view?.ActivateEmotionPart(emotionType);
+           // _view?.ActivateEmotionPart(emotionType);
 
            _iTimeScaleManager?.Set(1f);
            _view?.ActivateBattleMainView();
-            // if (emotionPart == null)
-            //     return;
-            //
-             //var param = new EmotionPart.Param
-             //{
-             //    TargetTm = iCombatant?.IActor?.Transform,
-             //    Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
-             //};
-            //
-            // emotionPart?.ActivateAsync(param);
+            
+           EventHandler.Notify(new HeroEmotionEventData(10003, emotionType));
         }
         #endregion
     }
