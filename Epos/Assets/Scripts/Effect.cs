@@ -79,9 +79,18 @@ public class Effect : Component<Effect.Param>, IEffect
         
         if(particleSystem != null)
         {
-            var main = particleSystem.main;
-            _lifetime = main.startDelay.constantMax + main.duration + main.startLifetime.constantMax;
-            //Debug.Log(_lifetime);
+            var allParticles = particleSystem.GetComponentsInChildren<ParticleSystem>();
+            foreach (var ps in allParticles)
+            {
+                var main = ps.main;
+                float duration = main.startDelay.constantMax + main.duration + main.startLifetime.constantMax;
+                
+                if (duration > _lifetime)
+                {
+                    _lifetime = duration;
+                }
+            }
+            // Debug.Log(_lifetime);
         }  
     }
 
