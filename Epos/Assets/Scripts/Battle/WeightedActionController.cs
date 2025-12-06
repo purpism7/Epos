@@ -57,39 +57,90 @@ namespace Battle
             ExecuteAsync(executer, iRequester, isFirst).Forget();
         }
 
+        // private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
+        // {
+        //     try
+        //     {
+        //         // if(executer.ETeam == ETeam.Enemy)
+        //         //     await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
+                
+        //         var cancellationTokenSource = iRequester.CancellationTokenSource;
+        //         if (cancellationTokenSource != null)
+        //         {
+        //             int frame = 30;
+        //             if (executer.ETeam == ETeam.Enemy && isFirst)
+        //                 frame += UnityEngine.Random.Range(0, 30);
+                    
+        //             await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
+        //             if (cancellationTokenSource.IsCancellationRequested)
+        //             {
+        //                 EndAction(executer.IActor);
+        //                 return;
+        //             }
+        //         }
+                
+        //         var actionWeight = GetHighestPriorityActionWeight();
+        //         var iWeightedAction = actionWeight?.Create();
+        //         var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
+
+        //         iWeightedAction?.SetParam(param)?
+        //             .SetEndAction(EndAction)?
+        //             .SetIActor(executer.IActor)?
+        //             .Execute();
+        //     }
+        //     catch(OperationCanceledException)
+        //     {
+        //         EndAction(executer.IActor);
+        //     }
+        // }
+
         private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
         {
             try
             {
-                // if(executer.ETeam == ETeam.Enemy)
-                //     await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
-                
                 var cancellationTokenSource = iRequester.CancellationTokenSource;
                 if (cancellationTokenSource != null)
                 {
-                    int frame = 30;
+                    float seconds = 0.5f;
+                    // int frame = 30;
                     if (executer.ETeam == ETeam.Enemy && isFirst)
-                        frame += UnityEngine.Random.Range(0, 30);
+                        seconds += UnityEngine.Random.Range(0, 0.5f);
+                        // frame += UnityEngine.Random.Range(0, 30);
                     
-                    await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-                    if (cancellationTokenSource.IsCancellationRequested)
-                    {
-                        EndAction(executer.IActor);
-                        return;
-                    }
+                    // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
+                    // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
+                    await UniTask.Delay(TimeSpan.FromSeconds(seconds), cancellationToken: cancellationTokenSource.Token);
                 }
                 
                 var actionWeight = GetHighestPriorityActionWeight();
+                // 액션이 없으면 null
                 var iWeightedAction = actionWeight?.Create();
-                var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
-
-                iWeightedAction?.SetParam(param)?
-                    .SetEndAction(EndAction)?
-                    .SetIActor(executer.IActor)?
-                    .Execute();
+                
+                // 액션이 유효하다면 실행
+                if (iWeightedAction != null)
+                {
+                    var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
+                    iWeightedAction.SetParam(param)
+                        .SetEndAction(EndAction)
+                        .SetIActor(executer.IActor)
+                        .Execute();
+                }
+                else
+                {
+                    // 중요: 수행할 액션이 없더라도 턴/행동을 종료 처리는 해야 함
+                    // Debug.LogWarning($"[{executer.IActor?.Name}] No valid action weight found. Skipping turn.");
+                    EndAction(executer.IActor);
+                }
             }
-            catch(OperationCanceledException)
+            catch (OperationCanceledException)
             {
+                // 취소 발생 시 종료 처리
+                EndAction(executer.IActor);
+            }
+            catch (Exception e)
+            {
+                // 예상치 못한 에러 발생 시에도 게임이 멈추지 않도록 종료 처리 권장
+                Debug.LogError(e);
                 EndAction(executer.IActor);
             }
         }
