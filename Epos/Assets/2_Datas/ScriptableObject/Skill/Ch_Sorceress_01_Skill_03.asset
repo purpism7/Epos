@@ -17,13 +17,14 @@ MonoBehaviour:
   EffectName: Eff_MeteorBomm_01
   ESkillCategory: 2
   Cooltime: 50
-  MP: 0
+  MP: 20
   Point: 1
-  ESkillTarget: 1
-  Range: 0
+  ESkillTarget: 2
+  Range: 20
   Multiplier: 1
   SameTeam: 0
   KnockbackDistance: 0
   DashAnimationName: 
   ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}
   PlayAnimation: 0
+  StartOffsetPosition: {x: 0, y: 50, z: 0}

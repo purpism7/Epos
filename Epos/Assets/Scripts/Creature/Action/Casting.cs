@@ -18,6 +18,7 @@ using GameSystem.Event;
 using Datas.ScriptableObjects;
 using Common;
 using Creator;
+using Unity.VisualScripting;
 
 namespace Creature.Action
 {
@@ -308,7 +309,7 @@ namespace Creature.Action
             if (resTarget != null)
             {
                 if (skillData.HasProjectile)
-                    CreateProjectile(skillData.ProjectilePrefab, resTarget);
+                    CreateProjectile(skillData, resTarget);
                 else
                     ImpactToTarget(attacker, resTarget, skillData);
             }
@@ -373,7 +374,7 @@ namespace Creature.Action
                 .OnComplete(() => { });
         }
 
-        private void CreateProjectile(GameObject proejctilePrefab, ICombatant targetICombatant)
+        private void CreateProjectile(Skill skillData, ICombatant targetICombatant)
         {
             var attacker = _param?.Attacker;
             if (attacker == null)
@@ -394,7 +395,7 @@ namespace Creature.Action
             else
                 offsetX  = -2f;
 
-            var startPosition = attacker.Transform.position;
+            var startPosition = attacker.Transform.position + skillData.StartOffsetPosition;
             startPosition.x += offsetX;
 
             var targetPoition = targetIActor.Transform.position;
@@ -410,7 +411,7 @@ namespace Creature.Action
             .WithStartPosition(startPosition)
             .WithEndPosition(endPosition);
 
-            var iProjectile = projectileCreator.Create(proejctilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
+            var iProjectile = projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
         }
 
         private async UniTask ActivateSpecialSkillAnimPopupAsync()

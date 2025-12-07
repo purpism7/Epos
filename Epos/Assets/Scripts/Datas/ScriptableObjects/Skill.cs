@@ -28,6 +28,8 @@ namespace Datas.ScriptableObjects
 
         public GameObject ProjectilePrefab = null;
         public bool PlayAnimation = false;
+        
+        public Vector3 StartOffsetPosition = Vector3.zero;
 
         
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
