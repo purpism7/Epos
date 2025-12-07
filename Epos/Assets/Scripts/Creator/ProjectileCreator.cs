@@ -15,12 +15,12 @@ namespace Creator
         [Inject] private IObjectResolver _iResolver = null;
         [Inject] private ObjectPooler _objectPooler = null;
 
-        public Battle.IProjectile Create(GameObject projectilePrefab, Projectile.Param projectileParam)
+        public Battle.IProjectile Create(GameObject projectilePrefab, Projectile.Param projectileParam, Quaternion rotation)
         {
             var projectile = _objectPooler?.Get<Projectile>(projectilePrefab);
             if (projectile == null)
             {
-                var projectileGameObj = _iResolver?.Instantiate(projectilePrefab);
+                var projectileGameObj = _iResolver?.Instantiate(projectilePrefab, projectileParam.StartPosition.Value, rotation);
                 if (!projectileGameObj)
                     return null;
                 

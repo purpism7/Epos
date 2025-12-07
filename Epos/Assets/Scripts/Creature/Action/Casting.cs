@@ -410,7 +410,7 @@ namespace Creature.Action
             .WithStartPosition(startPosition)
             .WithEndPosition(endPosition);
 
-            var iProjectile = projectileCreator?.Create(proejctilePrefab, projectileParam);
+            var iProjectile = projectileCreator.Create(proejctilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
         }
 
         private async UniTask ActivateSpecialSkillAnimPopupAsync()
