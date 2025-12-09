@@ -399,7 +399,7 @@ namespace Creature.Action
             startPosition.x += offsetX;
 
             var targetPoition = targetIActor.Transform.position;
-            var endPosition = targetPoition + direction * 0.5f;
+            var endPosition = targetPoition;
 
             if(skillData.Id != 10)
             {
@@ -408,22 +408,42 @@ namespace Creature.Action
             }
             else
             {
+               
                 //targetPoition.y -= 100f;
             }
 
-            var projectileParam = new Battle.Projectile.Param()
+            if(skillData.Id == 10)
             {
+                for(int i =0; i < 5; ++i)
+                {
+                    Vector2 resEndPosition = new Vector2(endPosition.x, endPosition.y) + UnityEngine.Random.insideUnitCircle * 5f;
+                    float accelTime = UnityEngine.Random.Range(-1f, 1f) + skillData.AccelTime;
 
+                    var projectileParam = new Battle.Projectile.Param()
+                        .WithICaster(attacker)
+                        .WithTargetETeam(targetICombatant.ETeam)
+                        .WithStartPosition(startPosition)
+                        .WithEndPosition(resEndPosition)
+                        .WithAccelTime(accelTime)
+                        .WithDestroyOnHit(skillData.DestroyOnHit)
+                        .WithHitEffectName(skillData.HitEffectName);
+
+                    projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
+                }
             }
-            .WithICaster(attacker)
-            .WithTargetETeam(targetICombatant.ETeam)
-            .WithStartPosition(startPosition)
-            .WithEndPosition(endPosition)
-            .WithAccelTime(skillData.AccelTime)
-            .WithDestroyOnHit(skillData.DestroyOnHit)
-            .WithHitEffectName(skillData.HitEffectName);
+            else
+            {
+                var projectileParam = new Battle.Projectile.Param()
+                   .WithICaster(attacker)
+                   .WithTargetETeam(targetICombatant.ETeam)
+                   .WithStartPosition(startPosition)
+                   .WithEndPosition(endPosition)
+                   .WithAccelTime(skillData.AccelTime)
+                   .WithDestroyOnHit(skillData.DestroyOnHit)
+                   .WithHitEffectName(skillData.HitEffectName);
 
-            var iProjectile = projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
+                projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
+            }
         }
 
         private async UniTask ActivateSpecialSkillAnimPopupAsync()
