@@ -309,7 +309,7 @@ namespace Creature.Action
             if (resTarget != null)
             {
                 if (skillData.HasProjectile)
-                    CreateProjectile(skillData, resTarget);
+                    CreateProjectileAsync(skillData, resTarget);
                 else
                     ImpactToTarget(attacker, resTarget, skillData);
             }
@@ -374,7 +374,7 @@ namespace Creature.Action
                 .OnComplete(() => { });
         }
 
-        private void CreateProjectile(Skill skillData, ICombatant targetICombatant)
+        private async UniTask CreateProjectileAsync(Skill skillData, ICombatant targetICombatant)
         {
             var attacker = _param?.Attacker;
             if (attacker == null)
@@ -406,43 +406,30 @@ namespace Creature.Action
                 endPosition += direction * 0.5f;
                 endPosition.y += targetIActor.Height * 0.5f;
             }
-            else
-            {
-               
-                //targetPoition.y -= 100f;
-            }
 
-            if(skillData.Id == 10)
+            for (int i = 0; i < skillData.BurstCount; ++i)
             {
-                for(int i =0; i < 5; ++i)
-                {
-                    Vector2 resEndPosition = new Vector2(endPosition.x, endPosition.y) + UnityEngine.Random.insideUnitCircle * 5f;
-                    float accelTime = UnityEngine.Random.Range(-1f, 1f) + skillData.AccelTime;
-
-                    var projectileParam = new Battle.Projectile.Param()
-                        .WithICaster(attacker)
-                        .WithTargetETeam(targetICombatant.ETeam)
-                        .WithStartPosition(startPosition)
-                        .WithEndPosition(resEndPosition)
-                        .WithAccelTime(accelTime)
-                        .WithDestroyOnHit(skillData.DestroyOnHit)
-                        .WithHitEffectName(skillData.HitEffectName);
-
-                    projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
-                }
-            }
-            else
-            {
+                Vector2 resStartPosition = startPosition;
+                if (skillData.Id == 10)
+                    resStartPosition = new Vector2(startPosition.x, startPosition.y) + UnityEngine.Random.insideUnitCircle * skillData.spreadRadius;
+                
+                Vector2 resEndPosition = new Vector2(endPosition.x, endPosition.y) + UnityEngine.Random.insideUnitCircle * skillData.spreadRadius;
+                float accelTime = skillData.AccelTime;
+                if (skillData.spreadRadius > 0)
+                    accelTime += UnityEngine.Random.Range(-1f, 1f);
+                
                 var projectileParam = new Battle.Projectile.Param()
-                   .WithICaster(attacker)
-                   .WithTargetETeam(targetICombatant.ETeam)
-                   .WithStartPosition(startPosition)
-                   .WithEndPosition(endPosition)
-                   .WithAccelTime(skillData.AccelTime)
-                   .WithDestroyOnHit(skillData.DestroyOnHit)
-                   .WithHitEffectName(skillData.HitEffectName);
+                    .WithICaster(attacker)
+                    .WithTargetETeam(targetICombatant.ETeam)
+                    .WithStartPosition(resStartPosition)
+                    .WithEndPosition(resEndPosition)
+                    .WithAccelTime(accelTime)
+                    .WithDestroyOnHit(skillData.DestroyOnHit)
+                    .WithHitEffectName(skillData.HitEffectName);
 
                 projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
+                
+                await UniTask.Delay(TimeSpan.FromSeconds(skillData.BurstDelay));
             }
         }
 

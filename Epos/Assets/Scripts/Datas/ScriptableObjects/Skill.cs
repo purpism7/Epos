@@ -27,13 +27,17 @@ namespace Datas.ScriptableObjects
         public float KnockbackDistance = 0;
         public string DashAnimationName = string.Empty;
 
+        // TODO: Projectile Table 
         [Header("Projectile")]
         public GameObject ProjectilePrefab = null;
+        public int BurstCount = 1;
+        public float BurstDelay = 0;
         public bool PlayAnimation = false;
         public Vector3 StartOffsetPosition = Vector3.zero;
         public float AccelTime = 1f;
         public bool DestroyOnHit = true;
         public string HitEffectName = string.Empty;
+        public int spreadRadius = 0;
 
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }
