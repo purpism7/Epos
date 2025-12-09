@@ -400,7 +400,16 @@ namespace Creature.Action
 
             var targetPoition = targetIActor.Transform.position;
             var endPosition = targetPoition + direction * 0.5f;
-            endPosition.y += targetIActor.Height * 0.5f;
+
+            if(skillData.Id != 10)
+            {
+                endPosition += direction * 0.5f;
+                endPosition.y += targetIActor.Height * 0.5f;
+            }
+            else
+            {
+                //targetPoition.y -= 100f;
+            }
 
             var projectileParam = new Battle.Projectile.Param()
             {
@@ -409,7 +418,10 @@ namespace Creature.Action
             .WithICaster(attacker)
             .WithTargetETeam(targetICombatant.ETeam)
             .WithStartPosition(startPosition)
-            .WithEndPosition(endPosition);
+            .WithEndPosition(endPosition)
+            .WithAccelTime(skillData.AccelTime)
+            .WithDestroyOnHit(skillData.DestroyOnHit)
+            .WithHitEffectName(skillData.HitEffectName);
 
             var iProjectile = projectileCreator.Create(skillData.ProjectilePrefab, projectileParam, Quaternion.Euler(0, -90f, 90f));
         }

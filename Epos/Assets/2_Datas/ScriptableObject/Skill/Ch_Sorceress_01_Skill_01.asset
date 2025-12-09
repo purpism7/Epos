@@ -27,3 +27,5 @@ MonoBehaviour:
   DashAnimationName: 
   ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}
   PlayAnimation: 0
+  StartOffsetPosition: {x: 0, y: 0, z: 0}
+  AccelTime: 2

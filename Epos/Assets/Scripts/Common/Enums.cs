@@ -85,6 +85,13 @@ namespace Common
         Shout,
         Stun,
     }
+
+    public enum  ProjectileEaseType
+    {
+        None,
+
+        InCubic,
+    }
 }
 
     

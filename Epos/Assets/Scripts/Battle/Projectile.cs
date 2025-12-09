@@ -8,6 +8,7 @@ using VContainer;
 using Common;
 using Creature;
 using Creature.Action;
+using Entities;
 
 namespace Battle
 {
@@ -27,6 +28,11 @@ namespace Battle
 
             public Vector3? StartPosition { get; private set; } = null;
             public Vector3? EndPosition { get; private set; } = null;
+
+            public float AccelTime { get; private set; } = 1f;
+            public bool DestroyOnHit { get; private set; } = true;
+
+            public string HitEffectName { get; private set; } = string.Empty;
 
             public Param WithICaster(ICaster iCaster)
             {
@@ -51,18 +57,48 @@ namespace Battle
                 TargetETeam = eTeam;
                 return this;
             }
+            
+            public Param WithAccelTime(float accelTime)
+            {
+                AccelTime = accelTime;
+                return this;
+            }
+
+            public Param WithDestroyOnHit(bool destroyOnHit)
+            {
+                DestroyOnHit = destroyOnHit;
+                return this;
+            }
+
+            public Param WithHitEffectName(string hitEffectName)
+            {
+                HitEffectName = hitEffectName;
+                return this;
+            }
         }
 
         [Inject] private WeakTypeMap<IActor> _iActorMap = null;
+        [Inject] private IEffectManager _effectManager = null;
 
         //readonly List<ParticleSystem.Particle> _enter = new();
         private ParticleSystem _particleSystem = null;
 
-        private float startSpeed = 20f, endSpeed = 60f, accelTime = 3f;
+        private float startSpeed = 20f, endSpeed = 60f;
         float currSpeed;
-        Tween speedTween;
 
         private Vector3 _lastPos = Vector3.zero;
+
+        private void OnDrawGizmos()
+        {
+            //Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, 1);
+
+            if(_param != null)
+            {
+                Gizmos.color = Color.red;
+                Gizmos.DrawWireSphere(_param.EndPosition.Value, 1);
+            }
+        }
 
         [Inject]
         private void InitializeInject()
@@ -88,9 +124,8 @@ namespace Battle
             startPosition.y += 2f;
             transform.position = startPosition;
 
-            speedTween = DOVirtual.Float(startSpeed, endSpeed, accelTime,
-                                         v => currSpeed = v)
-                                   .SetEase(Ease.InCubic);
+            DOVirtual.Float(startSpeed, endSpeed, param.AccelTime, v => currSpeed = v)
+                .SetEase(Ease.InCubic);
 
             UpdateAsync().Forget();
 
@@ -100,6 +135,8 @@ namespace Battle
         public override void Deactivate()
         {
             base.Deactivate();
+
+            ActivateHitEffect();
 
             Return();
         }
@@ -111,31 +148,34 @@ namespace Battle
 
             while (IsActivate)
             {
-                var dir = targetPosition - transform.position;
-
-                var raycastHit = Physics2D.Raycast(_lastPos, dir.normalized, dir.magnitude);
-                if (raycastHit.collider != null)
+                if(_param.DestroyOnHit)
                 {
-                    var iActor = raycastHit.collider.transform.GetComponentInParent<IActor>();
-                    if (iActor != null)
+                    var dir = targetPosition - transform.position;
+
+                    var raycastHit = Physics2D.Raycast(_lastPos, dir.normalized, dir.magnitude);
+                    if (raycastHit.collider != null)
                     {
-                        if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
+                        var iActor = raycastHit.collider.transform.GetComponentInParent<IActor>();
+                        if (iActor != null)
                         {
-                            if (iCombatant.ETeam == _param.TargetETeam &&
-                                iActor.IsAlive)
+                            if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
                             {
-                                var impactParam = new Impact.Param
+                                if (iCombatant.ETeam == _param.TargetETeam &&
+                                    iActor.IsAlive)
                                 {
-                                    PlayAnimation = false,
+                                    var impactParam = new Impact.Param
+                                    {
+                                        PlayAnimation = false,
+                                    }
+                                    .WithIStat(_param?.ICaster?.IStat)
+                                    .WithEImpactType(EImpactType.Damage);
+
+                                    iActor.IActCtr?.Impact(impactParam);
+                                    iCombatant?.HitAsync();
+
+                                    Deactivate();
+                                    break;
                                 }
-                                .WithIStat(_param?.ICaster?.IStat)
-                                .WithEImpactType(EImpactType.Damage);
-
-                                iActor.IActCtr?.Impact(impactParam);
-                                iCombatant?.HitAsync();
-
-                                Deactivate();
-                                break;
                             }
                         }
                     }
@@ -146,7 +186,6 @@ namespace Battle
                 var distance = Vector3.Distance(transform.position, targetPosition);
                 if (distance <= 0.01f)
                 {
-                    //Extensions.SetActive(transform, false);
                     Deactivate();
                     break;
                 }
@@ -155,6 +194,18 @@ namespace Battle
 
                 await UniTask.Yield();
             }
+        }
+
+        private void ActivateHitEffect()
+        {
+            var hitEffectName = _param?.HitEffectName;
+            if (string.IsNullOrEmpty(hitEffectName))
+                return;
+
+            _effectManager?.GetEffect(hitEffectName)?
+                .ActivateAsync(new Effect.Param().WithTargetPosition(transform.position));
+
+            //_iActor?.IEffectCtr?.Activate(skillData.EffectName, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), skillData.AnimationName);
         }
         // Update is called once per frame
         //void Update()

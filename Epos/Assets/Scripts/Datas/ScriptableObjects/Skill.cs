@@ -17,6 +17,7 @@ namespace Datas.ScriptableObjects
         public float Cooltime = 0;
         public float MP = 0;
         public int Point = 0;
+
         public ESkillTarget ESkillTarget = ESkillTarget.None;
         public float Range  = 0;
         public float Multiplier = 1f;
@@ -26,12 +27,14 @@ namespace Datas.ScriptableObjects
         public float KnockbackDistance = 0;
         public string DashAnimationName = string.Empty;
 
+        [Header("Projectile")]
         public GameObject ProjectilePrefab = null;
         public bool PlayAnimation = false;
-        
         public Vector3 StartOffsetPosition = Vector3.zero;
+        public float AccelTime = 1f;
+        public bool DestroyOnHit = true;
+        public string HitEffectName = string.Empty;
 
-        
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }
 }

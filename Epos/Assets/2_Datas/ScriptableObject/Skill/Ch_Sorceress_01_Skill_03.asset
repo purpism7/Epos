@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91bf44283980411591b8e7b992a1cc2, type: 3}
   m_Name: Ch_Sorceress_01_Skill_03
   m_EditorClassIdentifier: 
-  Id: 2
+  Id: 10
   AnimationName: Skill_03
-  EffectName: Eff_MeteorBomm_01
+  EffectName: 
   ESkillCategory: 2
   Cooltime: 50
   MP: 20
@@ -27,4 +27,7 @@ MonoBehaviour:
   DashAnimationName: 
   ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}
   PlayAnimation: 0
-  StartOffsetPosition: {x: 0, y: 50, z: 0}
+  StartOffsetPosition: {x: 0, y: 40, z: 0}
+  AccelTime: 0.5
+  DestroyOnHit: 0
+  HitEffectName: Eff_MeteorBomm_01

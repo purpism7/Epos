@@ -67,7 +67,7 @@ public class Effect : Component<Effect.Param>, IEffect
         }
     }
 
-    [SerializeField] private new ParticleSystem particleSystem = null;
+    //[SerializeField] private new ParticleSystem particleSystem = null;
 
     // private ParticleSystem _particleSystem = null;
     private float _direction = 0f;
@@ -77,9 +77,9 @@ public class Effect : Component<Effect.Param>, IEffect
     {
         base.Initialize();
         
-        if(particleSystem != null)
+        //if(particleSystem != null)
         {
-            var allParticles = particleSystem.GetComponentsInChildren<ParticleSystem>();
+            var allParticles = transform.GetComponentsInChildren<ParticleSystem>();
             foreach (var ps in allParticles)
             {
                 var main = ps.main;
@@ -112,17 +112,17 @@ public class Effect : Component<Effect.Param>, IEffect
         // UpdateDirection();
 
         //Debug.Log(_lifetime);
-        if (particleSystem != null)
-        {
-            particleSystem.Play();
+        //if (GetComponent<ParticleSystem>() != null)
+        //{
+        //    GetComponent<ParticleSystem>().Play();
  
-            if (_lifetime > 0)
-            {
-                await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
+        if (_lifetime > 0)
+        {
+            await UniTask.Delay(TimeSpan.FromSeconds(_lifetime));
 
-                Deactivate();
-            }
+            Deactivate();
         }
+        //}
     }
 
     public override void Activate()
