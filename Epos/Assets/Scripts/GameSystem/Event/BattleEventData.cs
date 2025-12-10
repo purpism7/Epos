@@ -62,7 +62,7 @@ namespace GameSystem.Event
     public class SkillUseEventData : EventData
     {
         public Ability.ISkill ISkill { get; private set; } = null;
-        public ETeam ETeam { get; private set; } = ETeam.None;
+        public TeamType TeamType { get; private set; } = TeamType.None;
 
         public SkillUseEventData WithISkill(Ability.ISkill iSkill)
         {
@@ -70,9 +70,9 @@ namespace GameSystem.Event
             return this;
         }
 
-        public SkillUseEventData WithETeam(ETeam eTeam)
+        public SkillUseEventData WithTeamType(TeamType teamType)
         {
-            ETeam = eTeam;
+            TeamType = teamType;
             return this;
         }
     }

@@ -21,7 +21,7 @@ namespace Creature.Action
         public class Param : ActParam
         {
             public IStat IStat { get; private set; } = null;
-            public EImpactType EImpactType { get; private set; } = EImpactType.None;
+            public ImpactType ImpactType { get; private set; } = ImpactType.None;
             public float Multiplier { get; private set; } = 1f;
 
             public bool PlayAnimation = true;
@@ -32,9 +32,9 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithEImpactType(EImpactType eImpactType)
+            public Param WithImpactType(ImpactType impactType)
             {
-                EImpactType = eImpactType;
+                ImpactType = impactType;
                 return this;
             }
 
@@ -58,9 +58,7 @@ namespace Creature.Action
             if (iStat != null)
             {
                 float value = 0;
-                if(_param.EImpactType == EImpactType.Damage)
-                    value = -iStat.Get(Stat.EType.Attack);
-                else
+                if(_param.ImpactType == ImpactType.Heal)
                 {
                     value = 10f;
 
@@ -69,6 +67,10 @@ namespace Creature.Action
                         .WithReturnParent(true);
 
                     _iActor?.IEffectCtr?.Activate("Eff_Hill_01", effectParam);
+                }
+                else
+                {
+                    value = -iStat.Get(Stat.EType.Attack);
                 }
 
                 value *= _param.Multiplier;
@@ -89,7 +91,7 @@ namespace Creature.Action
                 Offset = new Vector2(0, _iActor.Height + 0.5f),
             }
             .WithValue(damage)
-            .WithEImpactType(_param.EImpactType);
+            .WithImpactType(_param.ImpactType);
 
             if(_uiCreator == null)
                 _uiCreator = _uiFactory?.Create<CombatText, CombatText.Param>();

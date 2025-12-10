@@ -81,7 +81,7 @@ namespace UI.Panels
         {
             var battlePartyPartData = new BattlePartyPart.Param()
                 .WithParty(_param?.AllyParty)
-                .WithETeam(ETeam.Ally);
+                .WithTeamType(TeamType.Ally);
 
             allyBattlePartyPart?.ActivateAsync(battlePartyPartData);
         }
@@ -90,7 +90,7 @@ namespace UI.Panels
         {
             var battlePartyPartData = new BattlePartyPart.Param()
                 .WithParty(_param?.EnemyParty)
-                .WithETeam(ETeam.Enemy);
+                .WithTeamType(TeamType.Enemy);
 
             enemyBattlePartyPart?.ActivateAsync(battlePartyPartData);
         }

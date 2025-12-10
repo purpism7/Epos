@@ -89,7 +89,7 @@ namespace Creature.Action
             if (attacker != null)
             {
                 var direction = target.IActor.Transform.position - attacker.Transform.position;
-                _param?.Attacker?.IActor?.IActCtr?.Flip(direction.x);
+                attacker.IActor?.IActCtr?.Flip(direction.x);
             }
         }
 
@@ -213,7 +213,7 @@ namespace Creature.Action
                             PlayAnimation = _param.PlayAnimation,
                         }
                         .WithIStat(attacker.IStat)
-                        .WithEImpactType(EImpactType.Heal);
+                        .WithImpactType(ImpactType.Heal);
 
                         target.IActor?.IActCtr?.Impact(impactParam);
                     }
@@ -309,7 +309,7 @@ namespace Creature.Action
             if (resTarget != null)
             {
                 if (skillData.HasProjectile)
-                    CreateProjectileAsync(skillData, resTarget);
+                    CreateProjectileAsync(skillData, resTarget).Forget();
                 else
                     ImpactToTarget(attacker, resTarget, skillData);
             }
@@ -329,7 +329,7 @@ namespace Creature.Action
                 PlayAnimation = _param.PlayAnimation,
             }
             .WithIStat(attacker.IStat)
-            .WithEImpactType(EImpactType.Damage)
+            .WithImpactType(GetImpactType(target.TeamType))
             .WithMultiplier(skillData.Multiplier);
 
             targetActor.IActCtr?.Impact(impactParam);
@@ -344,6 +344,21 @@ namespace Creature.Action
             }
         }
 
+        private ImpactType GetImpactType(TeamType targetTeamType)
+        {
+            ImpactType impactType = ImpactType.None;
+            if(targetTeamType == TeamType.Ally)
+            {
+                impactType = ImpactType.Damage;
+            }
+            else
+            {
+                impactType = ImpactType.PhysicalDamage;
+            }
+
+            return impactType;
+        }
+
         private async UniTask KnockbackAsync(ICombatant attacker, ICombatant target, float knockbackDistance)
         {
             await UniTask.Delay(TimeSpan.FromSeconds(0.1f));
@@ -356,8 +371,6 @@ namespace Creature.Action
             if (target == null ||
                !target.IActor.IsAlive)
                 return;
-
-            //target.IActor.NavMeshAgent.
 
             var distance = knockbackDistance;
             var direction = (target.Transform.position - attacker.Transform.position).normalized;
@@ -420,7 +433,7 @@ namespace Creature.Action
                 
                 var projectileParam = new Battle.Projectile.Param()
                     .WithICaster(attacker)
-                    .WithTargetETeam(targetICombatant.ETeam)
+                    .WithTargetTeamType(targetICombatant.TeamType)
                     .WithStartPosition(resStartPosition)
                     .WithEndPosition(resEndPosition)
                     .WithAccelTime(accelTime)

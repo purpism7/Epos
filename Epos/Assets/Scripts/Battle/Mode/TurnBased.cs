@@ -86,7 +86,7 @@ namespace Battle.Mode
                         if (iCombatant == null)
                             continue;
                         
-                        iCombatant.SetETeam(ETeam.Ally);
+                        iCombatant.SetTeamType(TeamType.Ally);
                         _priorityICombatantList?.Add(iCombatant);
                         
                         EventHandler.Notify(new StatChangedEventData(iCombatant.IActor.Id, iCombatant.IActor.IStat));
@@ -97,7 +97,7 @@ namespace Battle.Mode
                         if (iCombatant == null)
                             continue;
                         
-                        iCombatant.SetETeam(ETeam.Enemy);
+                        iCombatant.SetTeamType(TeamType.Enemy);
                         iCombatant.IActor.IActCtr?.SetPosition(iCombatant.IActor.Transform.position);
                         _priorityICombatantList?.Add(iCombatant);
                         
@@ -390,7 +390,7 @@ namespace Battle.Mode
                     {
                         if (skillData.SameTeam)
                         {
-                            if(attacker.ETeam == iCombatant.ETeam)
+                            if(attacker.TeamType == iCombatant.TeamType)
                                 continue;
                                 
                             var findTargetData = _targetDataList?.Find(targetData => targetData?.Target.IActor.Id == target.IActor.Id);
@@ -497,7 +497,7 @@ namespace Battle.Mode
             {
                 var eventData = new SkillUseEventData()
                     .WithISkill(iSkill)
-                    .WithETeam(attacker.ETeam);
+                    .WithTeamType(attacker.TeamType);
    
                 GameSystem.Event.EventHandler.Notify(eventData);
             }

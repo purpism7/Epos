@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using TMPro;
@@ -11,7 +12,6 @@ using Common;
 using Entities;
 using EventHandler = GameSystem.Event.EventHandler;
 using Party = Datas.ScriptableObjects.Party;
-using Cysharp.Threading.Tasks;
 
 namespace UI.Parts
 {
@@ -20,7 +20,7 @@ namespace UI.Parts
         public class Param : Common.Param
         {
             public Datas.ScriptableObjects.Party Party { get; private set; } = null;
-            public ETeam ETeam { get; private set; } = ETeam.None;
+            public TeamType TeamType { get; private set; } = TeamType.None;
 
             public Param WithParty(Party party)
             {
@@ -28,9 +28,9 @@ namespace UI.Parts
                 return this;
             }
             
-            public Param WithETeam(ETeam eTeam)
+            public Param WithTeamType(TeamType teamType)
             {
-                ETeam = eTeam;
+                TeamType = teamType;
                 return this;
             }
         }

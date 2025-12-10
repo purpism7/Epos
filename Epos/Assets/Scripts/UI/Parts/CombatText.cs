@@ -18,7 +18,7 @@ namespace Parts
         public class Param : PartWorld<Param>.PartParam
         {
             public float Value { get; private set; } = 0;
-            public EImpactType EImpactType { get; private set; } = EImpactType.None;
+            public ImpactType ImpactType { get; private set; } = ImpactType.None;
 
             public Param WithValue(float value)
             {
@@ -26,26 +26,41 @@ namespace Parts
                 return this;
             }
 
-            public Param WithEImpactType(EImpactType eImpactType)
+            public Param WithImpactType(ImpactType impactType)
             {
-                EImpactType = eImpactType;
+                ImpactType = impactType;
                 return this;
             }
         }
 
-        [Header("Damage")]
-        [SerializeField] private RectTransform damageRootRectTm = null;
-        [SerializeField] private TextMeshProUGUI damageTMP = null;
+        [Serializable]
+        public class TextData
+        {
+            public ImpactType impatType = ImpactType.None;
+            public RectTransform damagedRootRectTr = null;
+            public TextMeshProUGUI damagedTMP = null;
+        }
 
-        [Header("Heal")]
-        [SerializeField] private RectTransform healRootRectTm = null;
-        [SerializeField] private TextMeshProUGUI healTMP = null;
+
+        //[Header("Ally Damaged")]
+        //[SerializeField] private RectTransform allyDamagedRootRectTm = null;
+        //[SerializeField] private TextMeshProUGUI allyDamagedTMP = null;
+
+        //[Header("Enemy Damaged")]
+        //[SerializeField] private RectTransform enemyDamagedRootRectTm = null;
+        //[SerializeField] private TextMeshProUGUI enemyDamagedTMP = null;
+
+        //[Header("Heal")]
+        //[SerializeField] private RectTransform healRootRectTm = null;
+        //[SerializeField] private TextMeshProUGUI healTMP = null;
+
+        [SerializeField] private TextData[] textDatas = null;
 
         public override UniTask InitializeAsync(Param data)
         {
             base.InitializeAsync(data);
 
-            AllDeactivateRootRecTm();
+            AllDeactivateRootRecTr();
 
             return UniTask.CompletedTask;
         }
@@ -54,7 +69,7 @@ namespace Parts
         {
             base.ActivateAsync(param);
 
-            SetText();
+            ActivateText();
 
             MoveAsync().Forget();
 
@@ -65,36 +80,42 @@ namespace Parts
         {
             base.Deactivate();
 
-            AllDeactivateRootRecTm();
+            AllDeactivateRootRecTr();
             Return();
         }
 
-        private void AllDeactivateRootRecTm()
+        private void AllDeactivateRootRecTr()
         {
-            Extensions.SetActive(damageRootRectTm, false);  
-            Extensions.SetActive(healRootRectTm, false);
+            if (textDatas.IsNullOrEmpty())
+                return;
+
+            for(int i = 0; i < textDatas.Length; ++i)
+            {
+                Extensions.SetActive(textDatas[i]?.damagedRootRectTr, false);
+            }
         }
 
-        private void SetText()
+        private void ActivateText()
         {
             if (_param == null)
                 return;
 
-            switch (_param.EImpactType)
+            if(!textDatas.IsNullOrEmpty())
             {
-                case EImpactType.Damage:
-                    {
-                        damageTMP?.SetText($"{Mathf.Abs(_param.Value)}");
-                        Extensions.SetActive(damageRootRectTm, true);
-                    }
-                    break;
+                for (int i = 0; i < textDatas.Length; ++i)
+                {
+                    var textData = textDatas[i];
+                    if (textData == null)
+                        continue;
 
-                case EImpactType.Heal:
+                    if(_param.ImpactType == textData.impatType)
                     {
-                        healTMP?.SetText($"{Mathf.Abs(_param.Value)}");
-                        Extensions.SetActive(healRootRectTm, true);
+                        textData.damagedTMP?.SetText($"{Mathf.Abs(_param.Value)}");
+                        Extensions.SetActive(textData.damagedRootRectTr, true);
+
+                        break;
                     }
-                    break;
+                }
             }
         }
 

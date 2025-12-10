@@ -24,7 +24,7 @@ namespace Battle
             public ICaster ICaster { get; private set; } = null;
             //public Transform TargetTm { get; private set; } = null;
 
-            public ETeam TargetETeam { get; private set; } = ETeam.None;
+            public TeamType TargetTeamType { get; private set; } = TeamType.None;
 
             public Vector3? StartPosition { get; private set; } = null;
             public Vector3? EndPosition { get; private set; } = null;
@@ -52,9 +52,9 @@ namespace Battle
                 return this;
             }
 
-            public Param WithTargetETeam(ETeam eTeam)
+            public Param WithTargetTeamType(TeamType teamType)
             {
-                TargetETeam = eTeam;
+                TargetTeamType = teamType;
                 return this;
             }
             
@@ -160,7 +160,7 @@ namespace Battle
                         {
                             if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
                             {
-                                if (iCombatant.ETeam == _param.TargetETeam &&
+                                if (iCombatant.TeamType == _param.TargetTeamType &&
                                     iActor.IsAlive)
                                 {
                                     var impactParam = new Impact.Param
@@ -168,7 +168,8 @@ namespace Battle
                                         PlayAnimation = false,
                                     }
                                     .WithIStat(_param?.ICaster?.IStat)
-                                    .WithEImpactType(EImpactType.Damage);
+                                    .WithImpactType(ImpactType.Damage)
+                                    ;
 
                                     iActor.IActCtr?.Impact(impactParam);
                                     iCombatant?.HitAsync();

@@ -16,7 +16,7 @@ namespace Battle
 {
     public interface IWeightedActionRequester
     {
-        WeightedActionParam GetWeightedActionParam(ICombatant attacker, ETeam eTeam, IWeightedAction iWeightedAction);
+        WeightedActionParam GetWeightedActionParam(ICombatant attacker, TeamType teamType, IWeightedAction iWeightedAction);
         CancellationTokenSource CancellationTokenSource { get; }
     }
 
@@ -103,7 +103,7 @@ namespace Battle
                 {
                     float seconds = 0.5f;
                     // int frame = 30;
-                    if (executer.ETeam == ETeam.Enemy && isFirst)
+                    if (executer.TeamType == TeamType.Enemy && isFirst)
                         seconds += UnityEngine.Random.Range(0, 0.5f);
                         // frame += UnityEngine.Random.Range(0, 30);
                     
@@ -119,7 +119,7 @@ namespace Battle
                 // 액션이 유효하다면 실행
                 if (iWeightedAction != null)
                 {
-                    var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
+                    var param = iRequester.GetWeightedActionParam(executer, executer.TeamType, iWeightedAction);
                     iWeightedAction.SetParam(param)
                         .SetEndAction(EndAction)
                         .SetIActor(executer.IActor)

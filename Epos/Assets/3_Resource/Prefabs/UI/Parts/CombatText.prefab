@@ -873,7 +873,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4287795199
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 1
   m_colorMode: 3
@@ -1284,7 +1284,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999999999
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9e54a83e51c984044a922fa0d9dacd6f, type: 2}
   m_sharedMaterial: {fileID: 3778295508980112289, guid: 9e54a83e51c984044a922fa0d9dacd6f, type: 2}
@@ -1689,10 +1689,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 7265674374223708273}
   rootRectTm: {fileID: 7265674374223708273}
-  damageRootRectTm: {fileID: 1520779765601641798}
-  damageTMP: {fileID: 6941750160458423882}
-  healRootRectTm: {fileID: 2079397547392077000}
-  healTMP: {fileID: 3179362777899087088}
+  textDatas:
+  - impatType: 3
+    damagedRootRectTr: {fileID: 52825790062090478}
+    damagedTMP: {fileID: 895961706270750297}
+  - impatType: 1
+    damagedRootRectTr: {fileID: 3790086002017767127}
+    damagedTMP: {fileID: 5861671778828400478}
+  - impatType: 2
+    damagedRootRectTr: {fileID: 8891492637387645050}
+    damagedTMP: {fileID: 2809085562984299516}
+  - impatType: 4
+    damagedRootRectTr: {fileID: 2079397547392077000}
+    damagedTMP: {fileID: 3179362777899087088}
 --- !u!1 &6991563841799161044
 GameObject:
   m_ObjectHideFlags: 0
@@ -2030,7 +2039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 999999999
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9e54a83e51c984044a922fa0d9dacd6f, type: 2}
   m_sharedMaterial: {fileID: 3778295508980112289, guid: 9e54a83e51c984044a922fa0d9dacd6f, type: 2}
@@ -2039,7 +2048,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 24508820
+    rgba: 4285921684
   m_fontColor: {r: 0.5803922, g: 0.97647065, b: 0.45882356, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2175,7 +2184,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 33554431
+    rgba: 4285397061
   m_fontColor: {r: 0.2704254, g: 0.9716981, b: 0.42626387, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3

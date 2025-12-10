@@ -85,7 +85,7 @@ namespace Battle.Mode
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
                 var ally = _data?.AllyICombatantList[i];
-                ally?.SetETeam(ETeam.Ally);
+                ally?.SetTeamType(TeamType.Ally);
                 ally?.IActor?.Activate();
             }
 
@@ -254,7 +254,7 @@ namespace Battle.Mode
                 if (enemyICombatant == null)
                     continue;
 
-                enemyICombatant.SetETeam(ETeam.Enemy);
+                enemyICombatant.SetTeamType(TeamType.Enemy);
                 enemyICombatant.IActor.Activate();
 
                 CreateHpProgress(enemyICombatant);
@@ -319,7 +319,7 @@ namespace Battle.Mode
 
         #region RealTime.IProvider
 
-        WeightedActionParam IWeightedActionRequester.GetWeightedActionParam(ICombatant attacker, ETeam eTeam, IWeightedAction iWeightedAction)
+        WeightedActionParam IWeightedActionRequester.GetWeightedActionParam(ICombatant attacker, TeamType teamType, IWeightedAction iWeightedAction)
         {
             switch (iWeightedAction)
             {

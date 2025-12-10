@@ -33,12 +33,12 @@ public static class BattleExtensions
 
             if (skillData.SameTeam)
             {
-                if (attacker.ETeam == iCombatant.ETeam)
+                if (attacker.TeamType == iCombatant.TeamType)
                     targetList.Add(iCombatant);
             }
             else
             {
-                if (attacker.ETeam != iCombatant.ETeam)
+                if (attacker.TeamType != iCombatant.TeamType)
                     targetList.Add(iCombatant);
             }
         }

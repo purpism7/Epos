@@ -13,11 +13,11 @@ namespace Creature
     public interface ICombatant : ICaster
     {
         IActor IActor { get; }
-        
-        ETeam ETeam { get; }
+
+        TeamType TeamType { get; }
         //int PartyPosition { get; }
 
-        void SetETeam(ETeam eTeam);
+        void SetTeamType(TeamType teamType);
         void SetPosition(Vector3 position);
         UniTask HitAsync();
     }

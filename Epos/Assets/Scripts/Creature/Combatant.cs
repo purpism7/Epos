@@ -1,11 +1,13 @@
+using UnityEngine;
+using Cysharp.Threading.Tasks;
+using System;
+
+using Spine.Unity;
+using VContainer;
+using Datas.ScriptableObjects;
+
 using Common;
 using Creature.Action;
-using Cysharp.Threading.Tasks;
-using Datas.ScriptableObjects;
-using Spine.Unity;
-using System;
-using UnityEngine;
-using VContainer;
 
 namespace Creature
 {
@@ -21,7 +23,7 @@ namespace Creature
         public Transform Transform { get { return IActor?.Transform; } }
         public IStat IStat { get { return IActor?.IStat; } }
 
-        public ETeam ETeam { get; private set; } = ETeam.None;
+        public TeamType TeamType { get; private set; } = TeamType.None;
 
         [Inject]
         private void InitializeInject(IObjectResolver iResolver)
@@ -42,9 +44,9 @@ namespace Creature
             return this;
         }
 
-        void ICombatant.SetETeam(ETeam eTeam)
+        void ICombatant.SetTeamType(TeamType teamType)
         {
-            ETeam = eTeam;
+            TeamType = teamType;
         }
 
         void ICombatant.SetPosition(Vector3 position)

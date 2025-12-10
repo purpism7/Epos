@@ -26,7 +26,7 @@ namespace Common
         Right,
     }
 
-    public enum ETeam
+    public enum TeamType
     {
         None,
 
@@ -56,11 +56,15 @@ namespace Common
         Sector,
     }
 
-    public enum EImpactType
+    public enum ImpactType
     {
         None,
 
+        PhysicalDamage,
+        MagicalDamage,
+
         Damage,
+
         Heal,
     }
     #endregion
