@@ -1,7 +1,7 @@
+using UnityEngine;
+using UnityEngine.AI;
 
 using Common;
-using UnityEngine;
-
 using TMPro;
 
 namespace Creature.Action
@@ -71,7 +71,7 @@ namespace Creature.Action
 
             PlayAnimation(_param.AnimationKey, true);
             
-            _iActor?.IEffectCtr?.Activate("Eff_run_01",new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
+            _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
         }
 
         public override void Deactivate()
@@ -144,7 +144,13 @@ namespace Creature.Action
                 }
 
                 targetPosition = GetTargetPositionByDirection(targetPosition);
-                
+
+                //NavMeshHit hit;
+                //// 2. 그 위치 근처(1.0f 반경)에 NavMesh(땅)가 있는지 확인
+                //// SamplePosition은 가장 가까운 유효한 땅 좌표를 hit.position에 담아줍니다.
+                //if (NavMesh.SamplePosition(targetPosition, out hit, 5f, NavMesh.AllAreas))
+                //    targetPosition = hit.position;
+
                 return targetPosition;
             }
         }
@@ -159,25 +165,39 @@ namespace Creature.Action
 
             Vector3 directionToTarget = _targetTm.position - _prevTargetPosition;
 
-            // 정규화된 벡터가 아니면 문제가 발생할 수 있으므로 항상 정규화합니다.
-            if (directionToTarget.sqrMagnitude >= 0.0001f)
-                directionToTarget = directionToTarget.normalized;
+            //if (directionToTarget.sqrMagnitude >= 0.0001f)
+            //    directionToTarget = directionToTarget.normalized;
+
+            if (directionToTarget.sqrMagnitude < 0.0001f)
+            {
+                // 2D 게임이면 Up(Y축)이나 Right(X축)를 기본 방향으로 설정
+                directionToTarget = _targetTm.up; // 혹은 right
+            }
+            else
+            {
+                directionToTarget.Normalize();
+            }
 
             switch (_param.DirectionType)
             {
                 case DirectionType.Back:
-                    return targetPosition - (Vector3)directionToTarget * _param.Distance;
+                    {
+                        targetPosition -= directionToTarget * _param.Distance;
+                        break;
+                    }
                 
                 case DirectionType.Right:
                     {
                         Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
-                        return targetPosition + ((Vector3)rightVector * _param.Distance);
+                        targetPosition += ((Vector3)rightVector * _param.Distance);
+                        break;
                     }
                 
                 case DirectionType.Left:
                     {
                         Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
-                        return targetPosition + ((Vector3)leftVector * _param.Distance);
+                        targetPosition += ((Vector3)leftVector * _param.Distance);
+                        break;
                     }
             }
 
@@ -209,7 +229,7 @@ namespace Creature.Action
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);
 
-            Debug.DrawLine(iActorPosition, targetPosition, Color.cyan);
+            Debug.DrawLine(iActorPosition, targetPosition, Color.magenta);
 
             var direction = targetPosition - iActorPosition;
 

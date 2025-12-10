@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -8,11 +9,10 @@ using UnityEditor;
 
 using Cysharp.Threading.Tasks;
 using VContainer;
-
-using Entities;
 using Spine;
 
-using static UnityEngine.UI.Image;
+using Entities;
+
 
 namespace Creature.Action
 {
@@ -214,7 +214,13 @@ namespace Creature.Action
                     // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
                     targetPosition = (distanceToRight < distanceToLeft) ? rightPosition : leftPosition;
                 }
-                
+
+                NavMeshHit hit;
+                // 2. 그 위치 근처(1.0f 반경)에 NavMesh(땅)가 있는지 확인
+                // SamplePosition은 가장 가까운 유효한 땅 좌표를 hit.position에 담아줍니다.
+                if (NavMesh.SamplePosition(targetPosition, out hit, 5f, NavMesh.AllAreas))
+                    targetPosition = hit.position;
+
                 return targetPosition;
             }
         }
