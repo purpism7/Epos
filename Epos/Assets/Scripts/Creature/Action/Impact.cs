@@ -85,13 +85,18 @@ namespace Creature.Action
 
         private void ActivateCombatText(float damage)
         {
+            float flipX = 1f;
+            if(_iActor?.SkeletonAnimation != null)
+                flipX = _iActor.SkeletonAnimation.skeleton.ScaleX;
+
             var combatTextParam = new CombatText.Param
             {
                 TargetTm = _iActor?.Transform,
                 Offset = new Vector2(0, _iActor.Height + 0.5f),
             }
             .WithValue(damage)
-            .WithImpactType(_param.ImpactType);
+            .WithImpactType(_param.ImpactType)
+            .WithFlipX(flipX);
 
             if(_uiCreator == null)
                 _uiCreator = _uiFactory?.Create<CombatText, CombatText.Param>();

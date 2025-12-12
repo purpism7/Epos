@@ -19,6 +19,7 @@ namespace Parts
         {
             public float Value { get; private set; } = 0;
             public ImpactType ImpactType { get; private set; } = ImpactType.None;
+            public float FlipX { get; private set; } = 0;
 
             public Param WithValue(float value)
             {
@@ -31,6 +32,12 @@ namespace Parts
                 ImpactType = impactType;
                 return this;
             }
+
+            public Param WithFlipX(float flipX)
+            {
+                FlipX = flipX;
+                return this;
+            }
         }
 
         [Serializable]
@@ -41,26 +48,13 @@ namespace Parts
             public TextMeshProUGUI damagedTMP = null;
         }
 
-
-        //[Header("Ally Damaged")]
-        //[SerializeField] private RectTransform allyDamagedRootRectTm = null;
-        //[SerializeField] private TextMeshProUGUI allyDamagedTMP = null;
-
-        //[Header("Enemy Damaged")]
-        //[SerializeField] private RectTransform enemyDamagedRootRectTm = null;
-        //[SerializeField] private TextMeshProUGUI enemyDamagedTMP = null;
-
-        //[Header("Heal")]
-        //[SerializeField] private RectTransform healRootRectTm = null;
-        //[SerializeField] private TextMeshProUGUI healTMP = null;
-
         [SerializeField] private TextData[] textDatas = null;
 
         public override UniTask InitializeAsync(Param data)
         {
             base.InitializeAsync(data);
 
-            AllDeactivateRootRecTr();
+            DeactivateAllRootRectTr();
 
             return UniTask.CompletedTask;
         }
@@ -80,11 +74,11 @@ namespace Parts
         {
             base.Deactivate();
 
-            AllDeactivateRootRecTr();
+            DeactivateAllRootRectTr();
             Return();
         }
 
-        private void AllDeactivateRootRecTr()
+        private void DeactivateAllRootRectTr()
         {
             if (textDatas.IsNullOrEmpty())
                 return;
@@ -100,7 +94,9 @@ namespace Parts
             if (_param == null)
                 return;
 
-            if(!textDatas.IsNullOrEmpty())
+            DeactivateAllRootRectTr();
+
+            if (!textDatas.IsNullOrEmpty())
             {
                 for (int i = 0; i < textDatas.Length; ++i)
                 {
@@ -119,6 +115,45 @@ namespace Parts
             }
         }
 
+        private Vector3 CalculateStartPosition
+        {
+            get
+            {
+                var startPosition = GetScreenPos(_param.TargetTm.position);
+                if (startPosition == null)
+                    return Vector3.zero;
+
+                Vector3 resStartPosition = startPosition.Value;
+                if (_param.ImpactType == ImpactType.PhysicalDamage ||
+                    _param.ImpactType == ImpactType.MagicalDamage)
+                {
+                    if (_param.FlipX >= 1)
+                        resStartPosition.x -= 50f;
+                    else
+                        resStartPosition.x += 50f;
+                }
+
+                return resStartPosition;
+            }
+        }
+
+        private Vector3 CalculateEndPosition(Vector3 startPosition)
+        {
+            var endPosition = startPosition;
+            if (_param.ImpactType == ImpactType.PhysicalDamage ||
+                _param.ImpactType == ImpactType.MagicalDamage)
+            {
+                if (_param.FlipX >= 1)
+                    endPosition.x -= 80f;
+                else
+                    endPosition.x += 80f;
+            }
+          
+            endPosition.y += 70f;
+
+            return endPosition;
+        }
+
         private async UniTask MoveAsync()
         {
             if (!rootRectTm)
@@ -126,17 +161,14 @@ namespace Parts
 
             if (!_param?.TargetTm)
                 return;
-            
-            var startPos = GetScreenPos(_param.TargetTm.position);
-            if (startPos == null) 
-                return;
 
-            rootRectTm.anchoredPosition = startPos.Value;
-            var endPos = startPos.Value;
-            endPos.y += 70f;   
-            
+            var startPosition = CalculateStartPosition;
+            var endPosition = CalculateEndPosition(startPosition);
+
+            rootRectTm.anchoredPosition = startPosition;
+
             // await rootRectTm.DOLocalMove(endPos, 1f).SetUpdate(true).SetEase(Ease.Linear);
-            await rootRectTm.DOLocalMoveY(endPos.y, 0.6f).SetEase(Ease.OutBack);
+            await rootRectTm.DOLocalMove(endPosition, 0.6f).SetEase(Ease.OutBack);
             
             Deactivate();
         }

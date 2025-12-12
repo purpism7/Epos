@@ -168,8 +168,7 @@ namespace Battle
                                         PlayAnimation = false,
                                     }
                                     .WithIStat(_param?.ICaster?.IStat)
-                                    .WithImpactType(ImpactType.Damage)
-                                    ;
+                                    .WithImpactType(ImpactType.MagicalDamage);
 
                                     iActor.IActCtr?.Impact(impactParam);
                                     iCombatant?.HitAsync();
