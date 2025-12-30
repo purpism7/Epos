@@ -5019,7 +5019,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 0.6
       minScalar: 0.2
       maxCurve:
         serializedVersion: 2
@@ -14825,8 +14825,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.25
-      minScalar: 0.15
+      scalar: 0.5
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -24935,8 +24935,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.7
-      minScalar: 0.3
+      scalar: 1
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -45151,8 +45151,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.15
-      minScalar: 0.12
+      scalar: 0.3
+      minScalar: 0.24
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -50147,7 +50147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7500347069288457932}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.1316941, y: 0, z: 0, w: 0.99129045}
+  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -50163,7 +50163,7 @@ Transform:
   - {fileID: 781814979}
   - {fileID: 1405078663}
   m_Father: {fileID: 4654283702912762951}
-  m_LocalEulerAnglesHint: {x: -15.135, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
 --- !u!199 &7459536442549048341
 ParticleSystemRenderer:
   serializedVersion: 6

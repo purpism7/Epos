@@ -14539,7 +14539,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rootTm: {fileID: 5427514216814323606}
-  particleSystem: {fileID: 798345269271843440}
 --- !u!1 &7007888714347335651
 GameObject:
   m_ObjectHideFlags: 0
@@ -14568,7 +14567,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 422816}
