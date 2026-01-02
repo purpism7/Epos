@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 10
   AnimationName: Skill_03
-  EffectName: 
+  EffectName: Eff_MeteorStart_01
   ESkillCategory: 2
   Cooltime: 50
   MP: 20
