@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198273208475371820}
   - component: {fileID: 199924227013595858}
   m_Layer: 0
-  m_Name: Eff_FireBall_022
+  m_Name: Eff_FireBall_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
