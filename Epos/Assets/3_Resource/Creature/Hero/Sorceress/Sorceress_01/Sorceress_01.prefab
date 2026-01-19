@@ -337,7 +337,7 @@ PrefabInstance:
     - target: {fileID: 4807416713000235212, guid: 833ea0a1abd13a041aa90e197457db18, type: 3}
       propertyPath: rootTm
       value: 
-      objectReference: {fileID: 4413633973195512380, guid: 95685725b42fdeb4dbd325b347706140, type: 3}
+      objectReference: {fileID: 8009484918079998716, guid: d2ecfd976c7eb134d95f64d5c9af96d5, type: 3}
     - target: {fileID: 7139574190275003160, guid: 833ea0a1abd13a041aa90e197457db18, type: 3}
       propertyPath: m_Name
       value: EffectRoot

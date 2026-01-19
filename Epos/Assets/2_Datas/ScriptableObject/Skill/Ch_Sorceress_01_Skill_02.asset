@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 2
   AnimationName: Skill_02
-  EffectName: Eff_Hill_01
+  EffectName: Eff_MeteorStart_01
   ESkillCategory: 2
   Cooltime: 50
   MP: 0
@@ -25,5 +25,12 @@ MonoBehaviour:
   SameTeam: 1
   KnockbackDistance: 0
   DashAnimationName: 
-  ProjectilePrefab: {fileID: 1329798524467577714, guid: 95685725b42fdeb4dbd325b347706140, type: 3}
+  ProjectilePrefab: {fileID: 7371405668956421246, guid: d2ecfd976c7eb134d95f64d5c9af96d5, type: 3}
+  BurstCount: 1
+  BurstDelay: 0
   PlayAnimation: 0
+  StartOffsetPosition: {x: 0, y: 0, z: 0}
+  AccelTime: 1
+  DestroyOnHit: 1
+  HitEffectName: 
+  spreadRadius: 0
