@@ -25,7 +25,7 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 2
   DashAnimationName: 
-  ProjectilePrefab: {fileID: 161738, guid: 6becfdc253e8e5e4096a695c99557401, type: 3}
+  ProjectilePrefab: {fileID: 9080869697992586454, guid: ca9e5ee9168534e41ae5a7165f14dc24, type: 3}
   BurstCount: 1
   BurstDelay: 0
   PlayAnimation: 0
