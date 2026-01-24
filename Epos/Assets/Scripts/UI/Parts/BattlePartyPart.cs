@@ -44,6 +44,13 @@ namespace UI.Parts
             base.Initialize();
             
             _battlePortraitSlots = rootTm.GetComponentsInChildren<BattlePortraitSlot>();
+            if (_battlePortraitSlots != null)
+            {
+                foreach (var portraitSlot in _battlePortraitSlots)
+                {
+                    portraitSlot?.Initialize();
+                }
+            }
         }
 
         public override UniTask ActivateAsync(Param param)

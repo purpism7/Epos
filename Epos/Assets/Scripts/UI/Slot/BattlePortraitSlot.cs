@@ -33,11 +33,21 @@ namespace UI.Slot
         [Inject] private GameSystem.ResourceManager _resourceManager = null;
 
         private IHpProgress _iHpProgress = null;
-
-        public override void Initialize()
+        private PortraitEmotionEmoji[] _emotionEmojis = null;
+        
+        public override async UniTask InitializeAsync(Param param = null)
         {
-            base.Initialize();
-
+            await base.InitializeAsync(param);
+            
+            _emotionEmojis = GetComponentsInChildren<PortraitEmotionEmoji>();
+            if(_emotionEmojis != null)
+            {
+                foreach (var emotionEmoji in _emotionEmojis)
+                {
+                    emotionEmoji?.Initialize();
+                }
+            }
+            
             hpProgress?.Initialize();
         }
 

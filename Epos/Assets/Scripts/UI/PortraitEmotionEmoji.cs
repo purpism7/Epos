@@ -1,15 +1,19 @@
-using Cysharp.Threading.Tasks;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
-namespace UI.Slot
+using Common;
+
+namespace UI
 {
-    public class EmotionSlot : BaseSlot<EmotionSlot.Param>
+    public class PortraitEmotionEmoji : BaseSlot<PortraitEmotionEmoji.Param>
     {
         public class Param : Common.Param
         {
             
         }
 
+        [SerializeField] private EmotionType emotionType = EmotionType.None;
+        
         public override async UniTask ActivateAsync(Param param)
         {
             await base.ActivateAsync(param);

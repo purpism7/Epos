@@ -64,7 +64,7 @@ namespace UI.Presenter
                     .SetRoot(_view?.AllyBattlePortraitRootRectTm)
                     .SetParam(battlePortraitSlotParam)
                     .CreateAsync();
-
+                
                 battlePortraitSlot?.ActivateAsync(battlePortraitSlotParam);
 
                 _battlePortraitSlotList?.Add(battlePortraitSlot);
