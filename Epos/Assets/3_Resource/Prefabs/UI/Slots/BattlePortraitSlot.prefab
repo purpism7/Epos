@@ -419,6 +419,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 0}
   emotionType: 0
+  characterImg: {fileID: 0}
+  animation: {fileID: 0}
 --- !u!1 &327635087893499007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1689,8 +1691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0364e593cd454a1984c199953078ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootTm: {fileID: 0}
+  rootTm: {fileID: 3666267643686373622}
   emotionType: 0
+  characterImg: {fileID: 3857550306347721981}
+  animation: {fileID: 8869141230935343592}
 --- !u!1 &1260158327726933205
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1897,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 3515789118347551714}
   emotionType: 1
+  characterImg: {fileID: 560847190960801770}
+  animation: {fileID: 7393720645773770536}
 --- !u!1 &1366985112344828978
 GameObject:
   m_ObjectHideFlags: 0
@@ -2290,6 +2296,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 1221589074628988690}
   emotionType: 0
+  characterImg: {fileID: 4773362978612811493}
+  animation: {fileID: 8666837484172203486}
 --- !u!1 &1668600224659846681
 GameObject:
   m_ObjectHideFlags: 0
@@ -3432,8 +3440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0364e593cd454a1984c199953078ea0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootTm: {fileID: 0}
+  rootTm: {fileID: 424052983736016900}
   emotionType: 5
+  characterImg: {fileID: 487264778140991458}
+  animation: {fileID: 8039986762795076693}
 --- !u!1 &2434267164284600077
 GameObject:
   m_ObjectHideFlags: 0
@@ -3605,6 +3615,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 0}
   emotionType: 0
+  characterImg: {fileID: 0}
+  animation: {fileID: 0}
 --- !u!1 &2567194019653493092
 GameObject:
   m_ObjectHideFlags: 0
@@ -6238,6 +6250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 6216703174099149102}
   emotionType: 0
+  characterImg: {fileID: 6104176161730995739}
+  animation: {fileID: 1197224682160559075}
 --- !u!1 &3939595975449999529
 GameObject:
   m_ObjectHideFlags: 0
@@ -9645,6 +9659,7 @@ MonoBehaviour:
   animator: {fileID: 1330430001187244541}
   characterImg: {fileID: 196007275353441702}
   classImg: {fileID: 5381494022502383391}
+  skillExpressionImg: {fileID: 4977902727557917070}
   hpProgress: {fileID: 446908868121580358}
 --- !u!114 &516623566961481627
 MonoBehaviour:
@@ -10362,6 +10377,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 2549306739221988630}
   emotionType: 0
+  characterImg: {fileID: 7964576442739174882}
+  animation: {fileID: 3853629120941204290}
 --- !u!1 &6999234611690519413
 GameObject:
   m_ObjectHideFlags: 0
@@ -10698,6 +10715,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 4791386376091745864}
   emotionType: 3
+  characterImg: {fileID: 6742303543758141479}
+  animation: {fileID: 6043092910978432239}
 --- !u!1 &7175238915780204772
 GameObject:
   m_ObjectHideFlags: 0
@@ -11723,6 +11742,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 0}
   emotionType: 0
+  characterImg: {fileID: 0}
+  animation: {fileID: 0}
 --- !u!1 &8202419721480106252
 GameObject:
   m_ObjectHideFlags: 0
@@ -11774,6 +11795,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rootTm: {fileID: 664420449845653745}
   emotionType: 4
+  characterImg: {fileID: 8784731556722065086}
+  animation: {fileID: 2975195495256275218}
 --- !u!1 &8284423833295504876
 GameObject:
   m_ObjectHideFlags: 0

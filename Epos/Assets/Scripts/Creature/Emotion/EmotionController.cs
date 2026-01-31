@@ -1,14 +1,19 @@
+using Common;
 using UnityEngine;
 
 namespace Creature.Emotion
 {
     public interface IEmotionController : IController<IEmotionController, IActor>
     {
-
+        EmotionType EmotionType { get; }
+        
+        void UpdateEmotion(EmotionType emotionType);
     }
 
     public class EmotionController : Common.Component, IEmotionController
     {
+        public EmotionType EmotionType { get; private set; } = EmotionType.None;
+
         #region IController
         IEmotionController IController<IEmotionController, IActor>.Initialize(IActor iActor)
         {
@@ -43,6 +48,14 @@ namespace Creature.Emotion
         {
             base.Deactivate();
     
+        }
+        #endregion
+        
+        #region IEmotionController
+
+        void IEmotionController.UpdateEmotion(EmotionType emotionType)
+        {
+            EmotionType = emotionType;
         }
         #endregion
     }

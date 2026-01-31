@@ -24,6 +24,7 @@ namespace UI.View
        UniTask InitializePanelAsync(ShoutPanel.IListener shoutPanelListener);
        
        void ActivateBattleMainView();
+       UniTask<IBattlePortraitSlot> CreateBattlePortraitSlotAsync(BattlePortraitSlot.Param param);
     }
 
     public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
@@ -124,6 +125,22 @@ namespace UI.View
         void IBattleMainView.ActivateBattleMainView()
         {
             ActivateAnimBattleMainView();
+        }
+
+        async UniTask<IBattlePortraitSlot> IBattleMainView.CreateBattlePortraitSlotAsync(BattlePortraitSlot.Param param)
+        {
+            var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>();
+            if (uiCreator == null)
+                return null;
+            
+            var battlePortraitSlot = await uiCreator
+                .SetRoot(allyBattlePortraitRootRectTm)
+                .SetParam(param)
+                .CreateAsync();
+                
+            battlePortraitSlot?.ActivateAsync(param);
+
+            return battlePortraitSlot;
         }
         #endregion
 

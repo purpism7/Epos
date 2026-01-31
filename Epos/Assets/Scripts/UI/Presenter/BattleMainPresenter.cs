@@ -7,6 +7,7 @@ using VContainer;
 
 using Common;
 using Creator;
+using Creature;
 using UI.Slot;
 using UI.View;
 using UI.Popup;
@@ -22,12 +23,12 @@ namespace UI.Presenter
         void OnClickAggressive();
         void OnCloseStrategyPanel();
         
-        void CreateEmotion(EmotionType emotionType);
+        // void CreateEmotion(EmotionType emotionType);
     }
 
     public class BattleMainPresenter : IBattleMainPresenter, ShoutPanel.IListener
     {
-        [Inject] private UIFactory _uiFactory = null;
+        // [Inject] private UIFactory _uiFactory = null;
         [Inject] private ICameraManager _iCameraManager = null;
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
 
@@ -41,7 +42,7 @@ namespace UI.Presenter
             await InitializeAllyBattlePortraitList();
         }
 
-        private List<BattlePortraitSlot> _battlePortraitSlotList = null;
+        private List<IBattlePortraitSlot> _battlePortraitSlotList = null;
 
         private async UniTask InitializeAllyBattlePortraitList()
         {
@@ -49,9 +50,7 @@ namespace UI.Presenter
                 _battlePortraitSlotList = new();
 
             _battlePortraitSlotList?.Clear();
-
-            var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>();
-
+            
             for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
             {
                 var iCombatant = _view?.AllyICombatantList[i];
@@ -59,15 +58,9 @@ namespace UI.Presenter
                     continue;
 
                 var battlePortraitSlotParam = new BattlePortraitSlot.Param(iCombatant);
-
-                var battlePortraitSlot = await uiCreator
-                    .SetRoot(_view?.AllyBattlePortraitRootRectTm)
-                    .SetParam(battlePortraitSlotParam)
-                    .CreateAsync();
-                
-                battlePortraitSlot?.ActivateAsync(battlePortraitSlotParam);
-
-                _battlePortraitSlotList?.Add(battlePortraitSlot);
+                var battlePortraitSlot = await _view.CreateBattlePortraitSlotAsync(battlePortraitSlotParam);
+                if(battlePortraitSlot != null)
+                    _battlePortraitSlotList?.Add(battlePortraitSlot);
             }
         }
 
@@ -92,11 +85,6 @@ namespace UI.Presenter
                  
               });
         }
-
-        void IBattleMainPresenter.CreateEmotion(EmotionType emotionType)
-        {
-            
-        }
         #endregion
         
         #region ShoutPanel.IListener
@@ -107,7 +95,25 @@ namespace UI.Presenter
 
            _iTimeScaleManager?.Set(1f);
            _view?.ActivateBattleMainView();
-            
+
+           for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
+           {
+               var emotionalActor = _view?.AllyICombatantList[i]?.IActor as IEmotionalActor;
+               if(emotionalActor == null)
+                   continue;
+               
+               emotionalActor.IEmotionCtr?.UpdateEmotion(emotionType);
+           }
+           
+           for (int i = 0; i < _battlePortraitSlotList?.Count; ++i)
+           {
+               var slot = _battlePortraitSlotList[i];
+               if(slot == null)
+                   continue;
+               
+               slot.UpdateEmotionAsync(emotionType).Forget();
+           }
+
            EventHandler.Notify(new HeroEmotionEventData(10003, emotionType));
         }
         #endregion

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,10 +9,16 @@ using Creature;
 using GameSystem.Event;
 using Common;
 using UI.Parts;
+using EventHandler = GameSystem.Event.EventHandler;
 
 namespace UI.Slot
 {
-    public class BattlePortraitSlot : BaseSlot<BattlePortraitSlot.Param>
+    public interface IBattlePortraitSlot
+    {
+        UniTask UpdateEmotionAsync(EmotionType emotionType);
+    }
+    
+    public class BattlePortraitSlot : BaseSlot<BattlePortraitSlot.Param>, IBattlePortraitSlot
     {
         public class Param : Common.Param
         {
@@ -27,24 +34,38 @@ namespace UI.Slot
         [SerializeField] private Animator animator = null;
         [SerializeField] private Image characterImg = null;
         [SerializeField] private Image classImg = null;
-
+        [SerializeField] private Image skillExpressionImg = null;
         [SerializeField] private HpProgress hpProgress = null;
 
         [Inject] private GameSystem.ResourceManager _resourceManager = null;
 
         private IHpProgress _iHpProgress = null;
-        private PortraitEmotionEmoji[] _emotionEmojis = null;
+        private IPortraitEmotionEmoji[] _emotionEmojis = null;
         
         public override async UniTask InitializeAsync(Param param = null)
         {
             await base.InitializeAsync(param);
+
+            var skillExpressionSprite = _resourceManager?.AtlasLoader?.GetCharacterSprite($"p_{param?.ICombatant?.IActor.Id}_shout");
+            if(skillExpressionSprite != null)
+                skillExpressionImg.sprite = skillExpressionSprite;
             
-            _emotionEmojis = GetComponentsInChildren<PortraitEmotionEmoji>();
+            _emotionEmojis = GetComponentsInChildren<IPortraitEmotionEmoji>();
             if(_emotionEmojis != null)
             {
                 foreach (var emotionEmoji in _emotionEmojis)
                 {
-                    emotionEmoji?.Initialize();
+                    if(emotionEmoji == null)
+                        continue;
+
+                    var actor = param?.ICombatant?.IActor;
+                    if(actor == null)
+                        continue;
+                    
+                    var portraitEmotionEmojiParam = new PortraitEmotionEmoji.Param(actor.Id)
+                        .WithAtlasLoader(_resourceManager?.AtlasLoader);
+                    
+                    await emotionEmoji.InitializeAsync(portraitEmotionEmojiParam);
                 }
             }
             
@@ -138,6 +159,29 @@ namespace UI.Slot
 
             _iHpProgress?.UpdateHpProgress();
         }
+        
+        #region IBattlePortraitSlot
+
+        async UniTask IBattlePortraitSlot.UpdateEmotionAsync(EmotionType emotionType)
+        {
+            if (_param?.ICombatant?.IActor is IEmotionalActor emotionalActor)
+            {
+                await UniTask.Delay(TimeSpan.FromSeconds(2f));
+                
+                for (int i = 0; i < _emotionEmojis?.Length; ++i)
+                {
+                    var emotionEmoji = _emotionEmojis[i];
+                    if(emotionEmoji == null)
+                        continue;
+
+                    if (emotionEmoji.EmotionType == emotionType)
+                        await emotionEmoji.ActivateAsync(null);
+                }
+            }
+            
+            // Debug.Log(emotionType);
+        }
+        #endregion
     }
 }
 

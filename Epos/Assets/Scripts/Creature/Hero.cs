@@ -20,7 +20,6 @@ namespace Creature
             base.InitializeInject(iResolver);
 
             InitializeActController(this);
-            
         }
 
         public override void Initialize()
