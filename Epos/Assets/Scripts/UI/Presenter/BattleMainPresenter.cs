@@ -101,6 +101,9 @@ namespace UI.Presenter
                var emotionalActor = _view?.AllyICombatantList[i]?.IActor as IEmotionalActor;
                if(emotionalActor == null)
                    continue;
+
+               if (emotionalActor.Id != 10003)
+                   continue;
                
                emotionalActor.IEmotionCtr?.UpdateEmotion(emotionType);
            }

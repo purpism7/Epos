@@ -12,8 +12,15 @@ using Creator;
 
 namespace Creature.Action
 {
+    public interface IActListener
+    {
+        void OnUpdateAct(IAct act);
+    }
+    
     public interface IActController : IController<IActController, IActor>
     {
+        System.Type CurrentAction { get; }
+        
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
         IActController TraceTo(Trace.Param param);
@@ -31,6 +38,8 @@ namespace Creature.Action
 
         void Flip(float x);
         void SetPosition(Vector3 position);
+
+        void SetActListener(IActListener listener);
     }
     
     public class ActController : Controller, IActController
@@ -42,6 +51,7 @@ namespace Creature.Action
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
         private Vector3 _currPosition = Vector3.zero;
+        // private Action<IActListener> _onUpdateAct = null;
 
         public bool InAction { get; private set; } = false;
 
@@ -94,6 +104,15 @@ namespace Creature.Action
         }
 
         #region IActController
+
+        System.Type IActController.CurrentAction
+        {
+            get
+            {
+                return _currIAct?.GetType();
+            }
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -304,6 +323,11 @@ namespace Creature.Action
         {
             _currPosition = position;
             _currPosition.z = 0;
+        }
+
+        void IActController.SetActListener(IActListener listener)
+        {
+            
         }
         #endregion
 

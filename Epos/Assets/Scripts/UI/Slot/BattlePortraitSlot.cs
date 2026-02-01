@@ -166,6 +166,9 @@ namespace UI.Slot
         {
             if (_param?.ICombatant?.IActor is IEmotionalActor emotionalActor)
             {
+                if (emotionalActor.Id != 10003)
+                    return;
+                
                 await UniTask.Delay(TimeSpan.FromSeconds(2f));
                 
                 for (int i = 0; i < _emotionEmojis?.Length; ++i)
