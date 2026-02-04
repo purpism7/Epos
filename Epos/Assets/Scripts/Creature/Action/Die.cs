@@ -16,6 +16,13 @@ namespace Creature.Action
         {
             PlayAnimation(_param.AnimationKey, false);
 
+            // Eff_MonsterDead_01 이펙트 실행
+            var effectParam = new Effect.Param()
+                .WithRootTm(_iActor?.Transform)
+                .WithReturnParent(true);
+
+            _iActor?.IEffectCtr?.Activate("Eff_MonsterDead_01", effectParam);
+
             // _iActor?.Deactivate();
             DeactivateAsync().Forget();
         }

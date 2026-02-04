@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4033606656087096396}
   - component: {fileID: 1168605032962195406}
   - component: {fileID: 7355166637339969284}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4923,7 +4923,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4396698028534590364}
   - component: {fileID: 1443191026883199765}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Eff_MonsterDead_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4971,6 +4971,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Line_Up
       objectReference: {fileID: 0}
+    - target: {fileID: 80584353315291543, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 171695263073093204, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5010,6 +5014,18 @@ PrefabInstance:
     - target: {fileID: 171695263073093204, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 348513312972920971, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 563195154706216494, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
+      propertyPath: m_Layer
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815236342099413105, guid: e1741396effba8c4aa03f9a02dd45ade, type: 3}
+      propertyPath: m_Layer
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
