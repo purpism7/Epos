@@ -18,7 +18,6 @@ using GameSystem.Event;
 using Datas.ScriptableObjects;
 using Common;
 using Creator;
-using Unity.VisualScripting;
 
 namespace Creature.Action
 {
@@ -59,6 +58,10 @@ namespace Creature.Action
             void InUse();
             void AfterCasting(ICombatant iCombatant);
         }
+
+        // 외부에서 스킬 정보 접근을 위한 프로퍼티
+        public Ability.ISkill ISkill => _param?.ISkill;
+        public Skill SkillData => _param?.ISkill?.SkillData;
 
         private bool _isUpdate = false;
 

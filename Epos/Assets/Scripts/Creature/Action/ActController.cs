@@ -20,6 +20,15 @@ namespace Creature.Action
     public interface IActController : IController<IActController, IActor>
     {
         System.Type CurrentAction { get; }
+        IAct GetCurrentAct();
+        bool IsAct<T>() where T : IAct;
+        string GetCurrentActName();
+        
+        // Act 이벤트 등록/해제
+        void OnActStarted<T>(Action<T> onActStarted) where T : IAct;
+        void OnActEnded<T>(Action<T> onActEnded) where T : IAct;
+        void RemoveActStarted<T>(Action<T> onActStarted) where T : IAct;
+        void RemoveActEnded<T>(Action<T> onActEnded) where T : IAct;
         
         IActController MoveToTargetPosition(Move.Param param);
         IActController MoveToTarget(Move.Param param);
@@ -52,6 +61,10 @@ namespace Creature.Action
         private Queue<IAct> _iActQueue = null;
         private Vector3 _currPosition = Vector3.zero;
         // private Action<IActListener> _onUpdateAct = null;
+
+        // Act 이벤트 딕셔너리
+        private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
+        private Dictionary<System.Type, Action<IAct>> _onActEndedDic = null;
 
         public bool InAction { get; private set; } = false;
 
@@ -94,6 +107,8 @@ namespace Creature.Action
             base.Deactivate();
             
             _iActQueue?.Clear();
+            _onActStartedDic?.Clear();
+            _onActEndedDic?.Clear();
             //Idle();
         }
         #endregion
@@ -110,6 +125,97 @@ namespace Creature.Action
             get
             {
                 return _currIAct?.GetType();
+            }
+        }
+
+        IAct IActController.GetCurrentAct()
+        {
+            return _currIAct;
+        }
+
+        bool IActController.IsAct<T>()
+        {
+            return _currIAct is T;
+        }
+
+        string IActController.GetCurrentActName()
+        {
+            return _currIAct?.GetType()?.Name ?? string.Empty;
+        }
+
+        void IActController.OnActStarted<T>(Action<T> onActStarted)
+        {
+            if (onActStarted == null)
+                return;
+
+            if (_onActStartedDic == null)
+            {
+                _onActStartedDic = new();
+                _onActStartedDic.Clear();
+            }
+
+            System.Type type = typeof(T);
+            if (_onActStartedDic.TryGetValue(type, out var existingAction))
+            {
+                _onActStartedDic[type] = existingAction + (act => onActStarted((T)act));
+            }
+            else
+            {
+                _onActStartedDic[type] = act => onActStarted((T)act);
+            }
+        }
+
+        void IActController.OnActEnded<T>(Action<T> onActEnded)
+        {
+            if (onActEnded == null)
+                return;
+
+            if (_onActEndedDic == null)
+            {
+                _onActEndedDic = new();
+                _onActEndedDic.Clear();
+            }
+
+            System.Type type = typeof(T);
+            if (_onActEndedDic.TryGetValue(type, out var existingAction))
+            {
+                _onActEndedDic[type] = existingAction + (act => onActEnded((T)act));
+            }
+            else
+            {
+                _onActEndedDic[type] = act => onActEnded((T)act);
+            }
+        }
+
+        void IActController.RemoveActStarted<T>(Action<T> onActStarted)
+        {
+            if (onActStarted == null || _onActStartedDic == null)
+                return;
+
+            System.Type type = typeof(T);
+            if (_onActStartedDic.TryGetValue(type, out var existingAction))
+            {
+                var updated = existingAction - (act => onActStarted((T)act));
+                if (updated == null)
+                    _onActStartedDic.Remove(type);
+                else
+                    _onActStartedDic[type] = updated;
+            }
+        }
+
+        void IActController.RemoveActEnded<T>(Action<T> onActEnded)
+        {
+            if (onActEnded == null || _onActEndedDic == null)
+                return;
+
+            System.Type type = typeof(T);
+            if (_onActEndedDic.TryGetValue(type, out var existingAction))
+            {
+                var updated = existingAction - (act => onActEnded((T)act));
+                if (updated == null)
+                    _onActEndedDic.Remove(type);
+                else
+                    _onActEndedDic[type] = updated;
             }
         }
         
@@ -217,16 +323,24 @@ namespace Creature.Action
             
             if (_iActQueue?.Count > 0)
             {
-                if (_iActQueue.TryDequeue(out IAct iAct))
+                if (_iActQueue.TryDequeue(out IAct act))
                 {
                     InAction = true;
 
                     _currIAct?.Deactivate();
                     
+                    // 이전 Act 종료 이벤트 발생
+                    if (_currIAct != null)
+                        NotifyActEnded(_currIAct);
+
                     //iAct?.SetIsEnd(false);
-                    iAct?.Execute();
+                    act?.Execute();
                     
-                    SetCurrIAct(iAct);
+                    SetCurrIAct(act);
+                    
+                    // 새 Act 시작 이벤트 발생
+                    if (act != null)
+                        NotifyActStarted(act);
                     
                     return;
                 }
@@ -245,6 +359,10 @@ namespace Creature.Action
 
         private void Idle()
         {
+            // 이전 Act 종료 이벤트 발생
+            if (_currIAct != null)
+                NotifyActEnded(_currIAct);
+            
             _currIAct?.Deactivate();
             
             Execute<Idle, Idle.Param>();
@@ -345,11 +463,19 @@ namespace Creature.Action
 
             param.SetAnimationKey(_iActor?.AnimationKey(act));
             
+            // 이전 Act 종료 이벤트 발생
+            if (isSet && _currIAct != null)
+                NotifyActEnded(_currIAct);
+            
             act.SetParam(param);
             act.Execute();
 
             if(isSet)
+            {
                 SetCurrIAct(act);
+                // 새 Act 시작 이벤트 발생
+                NotifyActStarted(act);
+            }
         }
         
         private void EndAct(IActor iActor)
@@ -362,6 +488,41 @@ namespace Creature.Action
             _currIAct = iAct;
             
             // Debug.Log(name + " = " + iAct?.GetType());
+        }
+
+        private void NotifyActStarted(IAct act)
+        {
+            NotifyActEvent(act, _onActStartedDic);
+        }
+
+        private void NotifyActEnded(IAct act)
+        {
+            NotifyActEvent(act, _onActEndedDic);
+        }
+
+        private void NotifyActEvent(IAct act, Dictionary<System.Type, Action<IAct>> eventDic)
+        {
+            if (act == null)
+                return;
+
+            System.Type actType = act.GetType();
+            
+            // 직접 구독한 이벤트 발생
+            if (eventDic != null && eventDic.Count > 0)
+            {
+                // 정확한 타입으로 이벤트 발생
+                if (eventDic.TryGetValue(actType, out var action))
+                {
+                    action?.Invoke(act);
+                }
+                
+                // 부모 타입으로도 이벤트 발생 (IAct 등)
+                // IAct 타입만 별도로 체크 (성능 최적화)
+                if (actType != typeof(IAct) && eventDic.TryGetValue(typeof(IAct), out var iActAction))
+                {
+                    iActAction?.Invoke(act);
+                }
+            }
         }
     }
 }
