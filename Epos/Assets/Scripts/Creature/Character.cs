@@ -233,10 +233,31 @@ namespace Creature
             var sortingOrder = Mathf.CeilToInt(-order * 100f);
 
             if (_meshRenderer == null)
-                _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
+            {
+                if (SkeletonAnimation == null)
+                {
+                    Debug.LogWarning($"Character.SortingOrder: SkeletonAnimation is null. CharacterId: {Id}");
+                    return;
+                }
+                
+                _meshRenderer = SkeletonAnimation.GetComponent<MeshRenderer>();
+                
+                if (_meshRenderer == null)
+                {
+                    Debug.LogWarning($"Character.SortingOrder: MeshRenderer is null. CharacterId: {Id}");
+                    return;
+                }
+            }
 
-            if (_meshRenderer != null)
-                _meshRenderer.sortingOrder = sortingOrder;
+            // MeshRenderer가 비활성화되어 있으면 활성화
+            if (!_meshRenderer.enabled)
+                _meshRenderer.enabled = true;
+            
+            // MeshRenderer의 gameObject가 비활성화되어 있으면 활성화
+            if (!_meshRenderer.gameObject.activeInHierarchy)
+                _meshRenderer.gameObject.SetActive(true);
+            
+            _meshRenderer.sortingOrder = sortingOrder;
         }
         #endregion
 
