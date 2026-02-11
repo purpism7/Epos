@@ -289,7 +289,8 @@ namespace Creature.Action
         private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
         {
             var speed = _param.MoveSpeed;
-            iActorTm.position = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
+            var newPos = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
+            _iActor?.SetWorldPosition(newPos);
         }
 
         protected override void End()

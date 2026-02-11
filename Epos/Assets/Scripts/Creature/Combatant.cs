@@ -51,7 +51,7 @@ namespace Creature
 
         void ICombatant.SetPosition(Vector3 position)
         {
-            Transform.position = position;
+            IActor?.SetWorldPosition(position);
         }
 
         async UniTask ICombatant.HitAsync()

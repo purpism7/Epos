@@ -94,59 +94,29 @@ public static class BattleExtensions
         return sqrDistance < range * range;
     }
 
+    /// <summary>부채꼴(섹터) 범위 내에 타겟이 있는지 검사. direction을 중심으로 ±(angle/2)도, 거리 range 이내.</summary>
     public static bool IsSector(this ICombatant attacker, ICombatant target, Vector2 direction, float range, float angle)
     {
-        if (attacker == null)
+        if (attacker == null || target == null)
             return false;
 
-        if (target == null)
-            return false;
-
-        // if (!attacker.IsCircle(target, range))
-        //     return false;
-
-        
-        // Vector2 direction = (target.IActor.Transform.position - attacker.Transform.position).normalized;
-        
-        // float dot = Vector2.Dot(attacker.Transform.up, direction);
-        // float halfAngle = angle / 2f;
-        // float requiredCos = Mathf.Cos(halfAngle * Mathf.Deg2Rad);
-        //
-        // 2. 기준 방향의 각도 (라디안)
-        float baseAngleRad = Mathf.Atan2(direction.y, direction.x);
-        float halfAngle = angle * 0.5f;
-        // float degreeRad = angle / 2f * Mathf.Deg2Rad;
-        // float upAngleRad = baseAngleRad + degreeRad;
-        
-        
         Vector2 toTarget = target.Transform.position - attacker.Transform.position;
-        if (toTarget.magnitude > range)
+        float sqrDist = toTarget.sqrMagnitude;
+
+        if (sqrDist > range * range)
             return false;
 
-        // 정규화
+        // 거리 0: 같은 위치 → 부채꼴 내로 간주 (normalized 시 (0,0) 방지)
+        const float kEpsilonSqr = 0.0001f;
+        if (sqrDist < kEpsilonSqr)
+            return true;
+
+        float halfAngle = angle * 0.5f;
         Vector2 dirToTarget = toTarget.normalized;
         Vector2 forwardDir = direction.normalized;
 
-        // SignedAngle은 "도 단위" 반환
         float angleToTarget = Mathf.Abs(Vector2.SignedAngle(forwardDir, dirToTarget));
-        // float halfAngle = angleDeg * 0.5f;
-
         return angleToTarget <= halfAngle;
-        
-//         Vector2 baseDirection = new Vector2(Mathf.Cos(baseAngleRad), Mathf.Sin(baseAngleRad));
-//
-// // 타겟 방향 벡터
-//         Vector2 toTarget = direction.normalized;
-//
-// // 기준 방향과 타겟 방향의 각도 차 (도 단위)
-//         float angleToTarget = Mathf.Abs(Vector2.SignedAngle(baseDirection, toTarget));
-//
-// // FOV 범위 체크
-//         if (angleToTarget > halfAngle)
-//             return false;
-//
-//         return true;
-        // 새로운 각도를 Vector2로 변환
         // Vector2 upDirection = new Vector2(Mathf.Cos(upAngleRad), Mathf.Sin(upAngleRad));
         // Vector3 upEndPos = attacker.Transform.position + (Vector3)upDirection * range;
         // // Debug.DrawLine(attacker.Transform.position, upEndPos, Color.magenta);

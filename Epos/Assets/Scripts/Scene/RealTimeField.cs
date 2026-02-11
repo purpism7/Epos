@@ -13,6 +13,7 @@ using Parts;
 using Entities;
 using GameSystem;
 using Battle.Strategy;
+using UI.Presenter;
 
 namespace Scene
 {
@@ -27,6 +28,8 @@ namespace Scene
 
             builder.RegisterEntryPoint<StrategyController>(VContainer.Lifetime.Scoped)
                 .As<IStrategyController>();
+
+            builder.Register<BattleMainPresenter>(VContainer.Lifetime.Scoped).AsSelf().As<IBattleMainPresenter>();
         }
 
         public override async UniTask InitializeAsync()

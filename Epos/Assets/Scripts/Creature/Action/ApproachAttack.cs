@@ -75,7 +75,7 @@ namespace Creature.Action
                             Vector2 direction = closestTarget?.IActor?.SkeletonAnimation.Skeleton.ScaleX > 0 ? Vector2.right : Vector2.left;
                             var targetPosition = (Vector2)closestTarget.Transform.position + direction * skillRange;
 
-                            _iActor.Transform.position = targetPosition;
+                            _iActor.SetWorldPosition(targetPosition);
 
                             CastingSkill(attacker, iSkill, closestTarget, targetList);
                         }, out _duration);

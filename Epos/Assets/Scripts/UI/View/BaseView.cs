@@ -25,15 +25,10 @@ namespace UI.View
 
         public abstract void Configure(IObjectResolver iResolver);
 
+        /// <summary>씬/필드 스코프에 등록된 Presenter를 resolve. (임시 스코프 생성 없이 호출자 resolver와 동일 수명 유지)</summary>
         protected V RegisterPresenter<V>(IObjectResolver iResolver)
         {
-            using var scope = iResolver?.CreateScope(
-                (builder) =>
-                {
-                    builder.Register<V>(VContainer.Lifetime.Scoped);
-                });
-
-            return scope.Resolve<V>();
+            return iResolver != null ? iResolver.Resolve<V>() : default;
         }
     }
 }

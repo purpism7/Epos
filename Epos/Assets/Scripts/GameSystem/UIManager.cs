@@ -135,8 +135,10 @@ namespace GameSystem
 
                 isInitialize = true;
 
-                component = Instantiate(component.gameObject)?.GetComponent<T>();
-                resolver?.InjectGameObject(component?.gameObject);
+                GameObject newObj = resolver != null
+                    ? resolver.Instantiate(component.gameObject)
+                    : Instantiate(component.gameObject);
+                component = newObj?.GetComponent<T>();
 
                 if (component != null)
                     _objectPooler?.Add(component);

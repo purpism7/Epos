@@ -95,6 +95,13 @@ namespace Battle.Mode
 
         public override void ChainLateUpdate()
         {
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var iActor = _data.AllyICombatantList[i]?.IActor;
+                if (iActor == null || !iActor.IsActivate)
+                    continue;
+                iActor.ChainLateUpdate();
+            }
             _iWaypointCtr?.ChainLateUpdate();
         }
 

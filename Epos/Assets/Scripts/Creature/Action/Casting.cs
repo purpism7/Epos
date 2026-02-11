@@ -246,9 +246,16 @@ namespace Creature.Action
                 return;
             
             Vector2 direction = (closestTarget.Transform.position - attacker.Transform.position).normalized;
-            // resTarget = attacker.Transform.FindClosestICombatant(targetList);
-            // UpdateAsync(closestTarget).Forget();
-            
+            float range = skillData.Range > 0f ? skillData.Range : 10f;
+            const float sectorAngle = 60f;
+            const float sectorRangeMultiplier = 2f;
+            float sectorRange = range * sectorRangeMultiplier;
+
+#if UNITY_EDITOR
+            if (skillData.ESkillTarget == ESkillTarget.Sector)
+                DrawSectorDebug(attacker.Transform.position, direction, sectorRange, sectorAngle, duration: 1.5f);
+#endif
+
             foreach (var target in targetList)
             {
                 if (target == null ||
@@ -259,16 +266,12 @@ namespace Creature.Action
                 switch (skillData.ESkillTarget)
                 {
                     case ESkillTarget.Circle:
-                        {
-                            isAttack = attacker.IsCircle(target, 10f);
-                            break;
-                        }
+                        isAttack = attacker.IsCircle(target, range);
+                        break;
 
                     case ESkillTarget.Sector:
-                        {
-                            isAttack = attacker.IsSector(target, direction, 10f, 60f);
-                            break;
-                        }
+                        isAttack = attacker.IsSector(target, direction, sectorRange, sectorAngle);
+                        break;
                 }
 
                 if (isAttack)
@@ -457,6 +460,40 @@ namespace Creature.Action
                .CreateAsync();
             specialSkillAnimPopup?.Activate();
         }
+
+#if UNITY_EDITOR
+        private static void DrawSectorDebug(Vector3 center, Vector2 direction, float range, float angle, float duration)
+        {
+            Vector2 dir = direction.normalized;
+            float halfAngle = angle * 0.5f;
+            UnityEngine.Color color = new UnityEngine.Color(1f, 0.5f, 0f, 0.9f);
+
+            Vector2 rotMin = RotateDir(dir, -halfAngle);
+            Vector2 rotMax = RotateDir(dir, halfAngle);
+
+            Debug.DrawLine(center, center + (Vector3)(rotMin * range), color, duration);
+            Debug.DrawLine(center, center + (Vector3)(rotMax * range), color, duration);
+
+            const int segments = 24;
+            Vector3 prev = center + (Vector3)(rotMin * range);
+            for (int i = 1; i <= segments; i++)
+            {
+                float t = (float)i / segments;
+                float deg = -halfAngle + angle * t;
+                Vector2 pt = RotateDir(dir, deg) * range;
+                Vector3 next = center + (Vector3)pt;
+                Debug.DrawLine(prev, next, color, duration);
+                prev = next;
+            }
+        }
+
+        private static Vector2 RotateDir(Vector2 v, float degrees)
+        {
+            float rad = degrees * Mathf.Deg2Rad;
+            float c = Mathf.Cos(rad), s = Mathf.Sin(rad);
+            return new Vector2(v.x * c - v.y * s, v.x * s + v.y * c);
+        }
+#endif
     }
 }
 
