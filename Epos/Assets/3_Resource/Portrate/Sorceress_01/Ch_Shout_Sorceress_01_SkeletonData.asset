@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
-  m_Name: Ch_D_01_SkeletonData
+  m_Name: Ch_Shout_Sorceress_01_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: cf3bf7ffce530e84cac2f18772fe0bd3, type: 2}
+  - {fileID: 11400000, guid: 170bbf1da3cba2541b28ef7598a15c94, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: c1005e7caae05fa4f960ce3810b61cc9, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: f61d82ee86836534586d71a82f2a3553, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0

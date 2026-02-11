@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: Ch_D_01_Atlas
+  m_Name: Ch_Shout_Sorceress_01_Atlas
   m_EditorClassIdentifier: 
   textureLoadingMode: 0
   onDemandTextureLoader: {fileID: 0}
-  atlasFile: {fileID: 4900000, guid: 8c24f87399f18a948979c182af48d8be, type: 3}
+  atlasFile: {fileID: 4900000, guid: 4b8b6d1a8e938b445a46dce6d053f791, type: 3}
   materials:
-  - {fileID: 2100000, guid: 2af58ba9746519a428c29bd01c0ca456, type: 2}
+  - {fileID: 2100000, guid: 3e5d892511a224d42bdec5901cc6ae89, type: 2}

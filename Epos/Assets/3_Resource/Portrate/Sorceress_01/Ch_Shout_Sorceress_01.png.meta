@@ -1,130 +1,130 @@
 fileFormatVersion: 2
-guid: 315023fb3526d864588b9817ac17d7a1
+guid: 180220a659e7f524982f399afec72452
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2313363565026776025
-    second: Ch_D_01_0
+      213: 8297945413729128246
+    second: Ch_Shout_Sorceress_01_0
   - first:
-      213: -6937190161170122076
-    second: Ch_D_01_1
+      213: 5848570767326756636
+    second: Ch_Shout_Sorceress_01_1
   - first:
-      213: -3937761620967459968
-    second: Ch_D_01_2
+      213: -2813180189281617341
+    second: Ch_Shout_Sorceress_01_2
   - first:
-      213: 5635432880503729831
-    second: Ch_D_01_3
+      213: 8548518275460133588
+    second: Ch_Shout_Sorceress_01_3
   - first:
-      213: -2567111699831919637
-    second: Ch_D_01_4
+      213: -6688630365943266361
+    second: Ch_Shout_Sorceress_01_4
   - first:
-      213: 4414610883547127583
-    second: Ch_D_01_5
+      213: -8895321170279055362
+    second: Ch_Shout_Sorceress_01_5
   - first:
-      213: -4404758978145589155
-    second: Ch_D_01_6
+      213: 6332163268854725637
+    second: Ch_Shout_Sorceress_01_6
   - first:
-      213: 8815802342434311405
-    second: Ch_D_01_7
+      213: -130495378682262308
+    second: Ch_Shout_Sorceress_01_7
   - first:
-      213: 6345473078485813408
-    second: Ch_D_01_8
+      213: -7321021513740967814
+    second: Ch_Shout_Sorceress_01_8
   - first:
-      213: -239158805993641131
-    second: Ch_D_01_9
+      213: 2934069202604959550
+    second: Ch_Shout_Sorceress_01_9
   - first:
-      213: 8354743346735828719
-    second: Ch_D_01_10
+      213: -2588724797630277696
+    second: Ch_Shout_Sorceress_01_10
   - first:
-      213: 3651643209955695851
-    second: Ch_D_01_11
+      213: 7850549595446135038
+    second: Ch_Shout_Sorceress_01_11
   - first:
-      213: -9124736015124016548
-    second: Ch_D_01_12
+      213: -9108073722718564151
+    second: Ch_Shout_Sorceress_01_12
   - first:
-      213: 8386667273073436623
-    second: Ch_D_01_13
+      213: -2146980294106780601
+    second: Ch_Shout_Sorceress_01_13
   - first:
-      213: 2638614480880551850
-    second: Ch_D_01_14
+      213: 4618654100649125968
+    second: Ch_Shout_Sorceress_01_14
   - first:
-      213: 5130326034484304692
-    second: Ch_D_01_15
+      213: -6805417331417473594
+    second: Ch_Shout_Sorceress_01_15
   - first:
-      213: -6178045548821758631
-    second: Ch_D_01_16
+      213: -4067613073887561108
+    second: Ch_Shout_Sorceress_01_16
   - first:
-      213: 9220550623693596688
-    second: Ch_D_01_17
+      213: 8291304747506911102
+    second: Ch_Shout_Sorceress_01_17
   - first:
-      213: -8462850396860362682
-    second: Ch_D_01_18
+      213: 8197720812345346729
+    second: Ch_Shout_Sorceress_01_18
   - first:
-      213: 6639172337253681981
-    second: Ch_D_01_19
+      213: 5153097167606540881
+    second: Ch_Shout_Sorceress_01_19
   - first:
-      213: 6577202101792731522
-    second: Ch_D_01_20
+      213: -5323114518467521713
+    second: Ch_Shout_Sorceress_01_20
   - first:
-      213: -4964571367029427559
-    second: Ch_D_01_21
+      213: -3373154422803177024
+    second: Ch_Shout_Sorceress_01_21
   - first:
-      213: 5951432214838393486
-    second: Ch_D_01_22
+      213: -3100566600620845018
+    second: Ch_Shout_Sorceress_01_22
   - first:
-      213: -4886560772018193142
-    second: Ch_D_01_23
+      213: -1002380138315513089
+    second: Ch_Shout_Sorceress_01_23
   - first:
-      213: 2297870342840886995
-    second: Ch_D_01_24
+      213: -4495780092363670758
+    second: Ch_Shout_Sorceress_01_24
   - first:
-      213: -7685446345319787335
-    second: Ch_D_01_25
+      213: 6931030414707282134
+    second: Ch_Shout_Sorceress_01_25
   - first:
-      213: 2167505702696467313
-    second: Ch_D_01_26
+      213: 7893056220118337458
+    second: Ch_Shout_Sorceress_01_26
   - first:
-      213: -3527806593836750698
-    second: Ch_D_01_27
+      213: -1540459487031846108
+    second: Ch_Shout_Sorceress_01_27
   - first:
-      213: 7757320136395627181
-    second: Ch_D_01_28
+      213: 3326098223233204829
+    second: Ch_Shout_Sorceress_01_28
   - first:
-      213: 5715677141684415457
-    second: Ch_D_01_29
+      213: 9114992496377021584
+    second: Ch_Shout_Sorceress_01_29
   - first:
-      213: -4807240957758171674
-    second: Ch_D_01_30
+      213: 4227183170157513497
+    second: Ch_Shout_Sorceress_01_30
   - first:
-      213: 3475687498304932870
-    second: Ch_D_01_31
+      213: 1665168497344216083
+    second: Ch_Shout_Sorceress_01_31
   - first:
-      213: 8821160484478324759
-    second: Ch_D_01_32
+      213: -5523818573959015461
+    second: Ch_Shout_Sorceress_01_32
   - first:
-      213: 985238213054275276
-    second: Ch_D_01_33
+      213: -5043928943646661984
+    second: Ch_Shout_Sorceress_01_33
   - first:
-      213: 2264351225728154645
-    second: Ch_D_01_34
+      213: -979460973278375418
+    second: Ch_Shout_Sorceress_01_34
   - first:
-      213: -6666666205392606161
-    second: Ch_D_01_35
+      213: -7654085684068000741
+    second: Ch_Shout_Sorceress_01_35
   - first:
-      213: 7768684168854498077
-    second: Ch_D_01_36
+      213: -2824122950829888695
+    second: Ch_Shout_Sorceress_01_36
   - first:
-      213: -5464380959075754776
-    second: Ch_D_01_37
+      213: 8558570197574103811
+    second: Ch_Shout_Sorceress_01_37
   - first:
-      213: 5163465877724630484
-    second: Ch_D_01_38
+      213: -7994456646741209753
+    second: Ch_Shout_Sorceress_01_38
   - first:
-      213: -4251843312899844118
-    second: Ch_D_01_39
+      213: -593005811840727745
+    second: Ch_Shout_Sorceress_01_39
   - first:
-      213: -4746526297128552163
-    second: Ch_D_01_40
+      213: -7237039468806006082
+    second: Ch_Shout_Sorceress_01_40
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -246,7 +246,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ch_D_01_0
+      name: Ch_Shout_Sorceress_01_0
       rect:
         serializedVersion: 2
         x: 1
@@ -261,14 +261,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72c6f36281845efd0800000000000000
-      internalID: -2313363565026776025
+      spriteID: 63f08eea369382370800000000000000
+      internalID: 8297945413729128246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_1
+      name: Ch_Shout_Sorceress_01_1
       rect:
         serializedVersion: 2
         x: 37
@@ -283,14 +283,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4aabe10ad462abf90800000000000000
-      internalID: -6937190161170122076
+      spriteID: c1fbe36302c4a2150800000000000000
+      internalID: 5848570767326756636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_2
+      name: Ch_Shout_Sorceress_01_2
       rect:
         serializedVersion: 2
         x: 170
@@ -305,14 +305,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 083711c3ba24a59c0800000000000000
-      internalID: -3937761620967459968
+      spriteID: 34af3b0d58395f8d0800000000000000
+      internalID: -2813180189281617341
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_3
+      name: Ch_Shout_Sorceress_01_3
       rect:
         serializedVersion: 2
         x: 327
@@ -327,14 +327,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7ae2bf5d854153e40800000000000000
-      internalID: 5635432880503729831
+      spriteID: 4d27cbc541072a670800000000000000
+      internalID: 8548518275460133588
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_4
+      name: Ch_Shout_Sorceress_01_4
       rect:
         serializedVersion: 2
         x: 423
@@ -349,14 +349,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bebe4c89289cf5cd0800000000000000
-      internalID: -2567111699831919637
+      spriteID: 7c38f0cbe163d23a0800000000000000
+      internalID: -6688630365943266361
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_5
+      name: Ch_Shout_Sorceress_01_5
       rect:
         serializedVersion: 2
         x: 34
@@ -371,14 +371,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f1f566f7539d34d30800000000000000
-      internalID: 4414610883547127583
+      spriteID: eff318a66887d8480800000000000000
+      internalID: -8895321170279055362
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_6
+      name: Ch_Shout_Sorceress_01_6
       rect:
         serializedVersion: 2
         x: 207
@@ -393,14 +393,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d586b6afb072fd2c0800000000000000
-      internalID: -4404758978145589155
+      spriteID: 50cbcdb91fc50e750800000000000000
+      internalID: 6332163268854725637
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_7
+      name: Ch_Shout_Sorceress_01_7
       rect:
         serializedVersion: 2
         x: 300
@@ -415,14 +415,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: dec8ad6b585085a70800000000000000
-      internalID: 8815802342434311405
+      spriteID: cdc40dcf423603ef0800000000000000
+      internalID: -130495378682262308
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_8
+      name: Ch_Shout_Sorceress_01_8
       rect:
         serializedVersion: 2
         x: 349
@@ -437,14 +437,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0a883f62526af0850800000000000000
-      internalID: 6345473078485813408
+      spriteID: a702a70c8b1866a90800000000000000
+      internalID: -7321021513740967814
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_9
+      name: Ch_Shout_Sorceress_01_9
       rect:
         serializedVersion: 2
         x: 421
@@ -459,14 +459,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 55ba7d345565eacf0800000000000000
-      internalID: -239158805993641131
+      spriteID: e37aea7f468e7b820800000000000000
+      internalID: 2934069202604959550
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_10
+      name: Ch_Shout_Sorceress_01_10
       rect:
         serializedVersion: 2
         x: 446
@@ -481,14 +481,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fee4fbbfec202f370800000000000000
-      internalID: 8354743346735828719
+      spriteID: 0c790002380031cd0800000000000000
+      internalID: -2588724797630277696
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_11
+      name: Ch_Shout_Sorceress_01_11
       rect:
         serializedVersion: 2
         x: 32
@@ -503,14 +503,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bec50e7f62e3da230800000000000000
-      internalID: 3651643209955695851
+      spriteID: ef847285341c2fc60800000000000000
+      internalID: 7850549595446135038
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_12
+      name: Ch_Shout_Sorceress_01_12
       rect:
         serializedVersion: 2
         x: 40
@@ -525,14 +525,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c52d15d60fc6e5180800000000000000
-      internalID: -9124736015124016548
+      spriteID: 9c05a41b43f999180800000000000000
+      internalID: -9108073722718564151
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_13
+      name: Ch_Shout_Sorceress_01_13
       rect:
         serializedVersion: 2
         x: 96
@@ -547,14 +547,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fc7afec437d636470800000000000000
-      internalID: 8386667273073436623
+      spriteID: 74c60063cc46432e0800000000000000
+      internalID: -2146980294106780601
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_14
+      name: Ch_Shout_Sorceress_01_14
       rect:
         serializedVersion: 2
         x: 127
@@ -569,14 +569,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: aa74610f3ed3e9420800000000000000
-      internalID: 2638614480880551850
+      spriteID: 058a7911f61c81040800000000000000
+      internalID: 4618654100649125968
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_15
+      name: Ch_Shout_Sorceress_01_15
       rect:
         serializedVersion: 2
         x: 343
@@ -591,14 +591,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 43b1063c854923740800000000000000
-      internalID: 5130326034484304692
+      spriteID: 6cd13946efc4e81a0800000000000000
+      internalID: -6805417331417473594
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_16
+      name: Ch_Shout_Sorceress_01_16
       rect:
         serializedVersion: 2
         x: 355
@@ -613,14 +613,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 95dbb485e4c234aa0800000000000000
-      internalID: -6178045548821758631
+      spriteID: c6a723fd57fec87c0800000000000000
+      internalID: -4067613073887561108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_17
+      name: Ch_Shout_Sorceress_01_17
       rect:
         serializedVersion: 2
         x: 385
@@ -635,14 +635,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 01863ce80f9f5ff70800000000000000
-      internalID: 9220550623693596688
+      spriteID: e77c8a71db1a01370800000000000000
+      internalID: 8291304747506911102
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_18
+      name: Ch_Shout_Sorceress_01_18
       rect:
         serializedVersion: 2
         x: 18
@@ -657,14 +657,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6405dd3f66aed8a80800000000000000
-      internalID: -8462850396860362682
+      spriteID: 9aacbab35a724c170800000000000000
+      internalID: 8197720812345346729
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_19
+      name: Ch_Shout_Sorceress_01_19
       rect:
         serializedVersion: 2
         x: 85
@@ -679,14 +679,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d3b0b9c9014132c50800000000000000
-      internalID: 6639172337253681981
+      spriteID: 15a6248529a738740800000000000000
+      internalID: 5153097167606540881
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_20
+      name: Ch_Shout_Sorceress_01_20
       rect:
         serializedVersion: 2
         x: 112
@@ -701,14 +701,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 281fe4dc67ae64b50800000000000000
-      internalID: 6577202101792731522
+      spriteID: f43d40c6c8f7026b0800000000000000
+      internalID: -5323114518467521713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_21
+      name: Ch_Shout_Sorceress_01_21
       rect:
         serializedVersion: 2
         x: 141
@@ -723,14 +723,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 992b22625ac4a1bb0800000000000000
-      internalID: -4964571367029427559
+      spriteID: 0c167489ce52031d0800000000000000
+      internalID: -3373154422803177024
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_22
+      name: Ch_Shout_Sorceress_01_22
       rect:
         serializedVersion: 2
         x: 177
@@ -745,14 +745,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e8a324e311cb79250800000000000000
-      internalID: 5951432214838393486
+      spriteID: 628dd8faa1398f4d0800000000000000
+      internalID: -3100566600620845018
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_23
+      name: Ch_Shout_Sorceress_01_23
       rect:
         serializedVersion: 2
         x: 440
@@ -767,14 +767,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a0d3f723ed27f2cb0800000000000000
-      internalID: -4886560772018193142
+      spriteID: ff20cc53394d612f0800000000000000
+      internalID: -1002380138315513089
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_24
+      name: Ch_Shout_Sorceress_01_24
       rect:
         serializedVersion: 2
         x: 459
@@ -789,14 +789,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3d6afe4f6eca3ef10800000000000000
-      internalID: 2297870342840886995
+      spriteID: a1bf36e53d7cb91c0800000000000000
+      internalID: -4495780092363670758
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_25
+      name: Ch_Shout_Sorceress_01_25
       rect:
         serializedVersion: 2
         x: 339
@@ -811,14 +811,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9b4d3e6a44fc75590800000000000000
-      internalID: -7685446345319787335
+      spriteID: 6d05e04a077ff2060800000000000000
+      internalID: 6931030414707282134
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_26
+      name: Ch_Shout_Sorceress_01_26
       rect:
         serializedVersion: 2
         x: 408
@@ -833,14 +833,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 17b3bd1e3f6841e10800000000000000
-      internalID: 2167505702696467313
+      spriteID: 2b7475020d4c98d60800000000000000
+      internalID: 7893056220118337458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_27
+      name: Ch_Shout_Sorceress_01_27
       rect:
         serializedVersion: 2
         x: 475
@@ -855,14 +855,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 69864121896ba0fc0800000000000000
-      internalID: -3527806593836750698
+      spriteID: 42b169c12403f9ae0800000000000000
+      internalID: -1540459487031846108
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_28
+      name: Ch_Shout_Sorceress_01_28
       rect:
         serializedVersion: 2
         x: 491
@@ -877,14 +877,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: daa98d2609987ab60800000000000000
-      internalID: 7757320136395627181
+      spriteID: d528fdb26bca82e20800000000000000
+      internalID: 3326098223233204829
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_29
+      name: Ch_Shout_Sorceress_01_29
       rect:
         serializedVersion: 2
         x: 70
@@ -899,14 +899,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1eb6be0d31a225f40800000000000000
-      internalID: 5715677141684415457
+      spriteID: 09447e4d165fe7e70800000000000000
+      internalID: 9114992496377021584
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_30
+      name: Ch_Shout_Sorceress_01_30
       rect:
         serializedVersion: 2
         x: 423
@@ -921,14 +921,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6e59d1b91df394db0800000000000000
-      internalID: -4807240957758171674
+      spriteID: 91b8fb952b8f9aa30800000000000000
+      internalID: 4227183170157513497
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_31
+      name: Ch_Shout_Sorceress_01_31
       rect:
         serializedVersion: 2
         x: 426
@@ -943,14 +943,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 60c4bbe5d5f1c3030800000000000000
-      internalID: 3475687498304932870
+      spriteID: 31c7f570deddb1710800000000000000
+      internalID: 1665168497344216083
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_32
+      name: Ch_Shout_Sorceress_01_32
       rect:
         serializedVersion: 2
         x: 482
@@ -965,14 +965,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7101b0069be0b6a70800000000000000
-      internalID: 8821160484478324759
+      spriteID: bd3d77ff5447753b0800000000000000
+      internalID: -5523818573959015461
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_33
+      name: Ch_Shout_Sorceress_01_33
       rect:
         serializedVersion: 2
         x: 54
@@ -987,14 +987,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cce9d3c4fe44cad00800000000000000
-      internalID: 985238213054275276
+      spriteID: 0a221a1895d500ab0800000000000000
+      internalID: -5043928943646661984
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_34
+      name: Ch_Shout_Sorceress_01_34
       rect:
         serializedVersion: 2
         x: 326
@@ -1009,14 +1009,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51c3f3851779c6f10800000000000000
-      internalID: 2264351225728154645
+      spriteID: 60252682f614862f0800000000000000
+      internalID: -979460973278375418
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_35
+      name: Ch_Shout_Sorceress_01_35
       rect:
         serializedVersion: 2
         x: 429
@@ -1031,14 +1031,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f2ce87f586e3b73a0800000000000000
-      internalID: -6666666205392606161
+      spriteID: b1c59b89f9937c590800000000000000
+      internalID: -7654085684068000741
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_36
+      name: Ch_Shout_Sorceress_01_36
       rect:
         serializedVersion: 2
         x: 485
@@ -1053,14 +1053,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1be5c06719efcb60800000000000000
-      internalID: 7768684168854498077
+      spriteID: 94ba1c99323bec8d0800000000000000
+      internalID: -2824122950829888695
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_37
+      name: Ch_Shout_Sorceress_01_37
       rect:
         serializedVersion: 2
         x: 84
@@ -1075,14 +1075,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8ec91e0287e9a24b0800000000000000
-      internalID: -5464380959075754776
+      spriteID: 30336abdf3626c670800000000000000
+      internalID: 8558570197574103811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_38
+      name: Ch_Shout_Sorceress_01_38
       rect:
         serializedVersion: 2
         x: 314
@@ -1097,14 +1097,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4dd80abcbd058a740800000000000000
-      internalID: 5163465877724630484
+      spriteID: 76dcab6490cfd0190800000000000000
+      internalID: -7994456646741209753
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_39
+      name: Ch_Shout_Sorceress_01_39
       rect:
         serializedVersion: 2
         x: 174
@@ -1119,14 +1119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ae71cfdb80b6ef4c0800000000000000
-      internalID: -4251843312899844118
+      spriteID: f35cd732b5835c7f0800000000000000
+      internalID: -593005811840727745
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ch_D_01_40
+      name: Ch_Shout_Sorceress_01_40
       rect:
         serializedVersion: 2
         x: 224
@@ -1141,8 +1141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d193a9e1b73f02eb0800000000000000
-      internalID: -4746526297128552163
+      spriteID: eba165452fed09b90800000000000000
+      internalID: -7237039468806006082
       vertices: []
       indices: 
       edges: []
@@ -1161,47 +1161,47 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Ch_D_01_0: -2313363565026776025
-      Ch_D_01_1: -6937190161170122076
-      Ch_D_01_10: 8354743346735828719
-      Ch_D_01_11: 3651643209955695851
-      Ch_D_01_12: -9124736015124016548
-      Ch_D_01_13: 8386667273073436623
-      Ch_D_01_14: 2638614480880551850
-      Ch_D_01_15: 5130326034484304692
-      Ch_D_01_16: -6178045548821758631
-      Ch_D_01_17: 9220550623693596688
-      Ch_D_01_18: -8462850396860362682
-      Ch_D_01_19: 6639172337253681981
-      Ch_D_01_2: -3937761620967459968
-      Ch_D_01_20: 6577202101792731522
-      Ch_D_01_21: -4964571367029427559
-      Ch_D_01_22: 5951432214838393486
-      Ch_D_01_23: -4886560772018193142
-      Ch_D_01_24: 2297870342840886995
-      Ch_D_01_25: -7685446345319787335
-      Ch_D_01_26: 2167505702696467313
-      Ch_D_01_27: -3527806593836750698
-      Ch_D_01_28: 7757320136395627181
-      Ch_D_01_29: 5715677141684415457
-      Ch_D_01_3: 5635432880503729831
-      Ch_D_01_30: -4807240957758171674
-      Ch_D_01_31: 3475687498304932870
-      Ch_D_01_32: 8821160484478324759
-      Ch_D_01_33: 985238213054275276
-      Ch_D_01_34: 2264351225728154645
-      Ch_D_01_35: -6666666205392606161
-      Ch_D_01_36: 7768684168854498077
-      Ch_D_01_37: -5464380959075754776
-      Ch_D_01_38: 5163465877724630484
-      Ch_D_01_39: -4251843312899844118
-      Ch_D_01_4: -2567111699831919637
-      Ch_D_01_40: -4746526297128552163
-      Ch_D_01_5: 4414610883547127583
-      Ch_D_01_6: -4404758978145589155
-      Ch_D_01_7: 8815802342434311405
-      Ch_D_01_8: 6345473078485813408
-      Ch_D_01_9: -239158805993641131
+      Ch_Shout_Sorceress_01_0: 8297945413729128246
+      Ch_Shout_Sorceress_01_1: 5848570767326756636
+      Ch_Shout_Sorceress_01_10: -2588724797630277696
+      Ch_Shout_Sorceress_01_11: 7850549595446135038
+      Ch_Shout_Sorceress_01_12: -9108073722718564151
+      Ch_Shout_Sorceress_01_13: -2146980294106780601
+      Ch_Shout_Sorceress_01_14: 4618654100649125968
+      Ch_Shout_Sorceress_01_15: -6805417331417473594
+      Ch_Shout_Sorceress_01_16: -4067613073887561108
+      Ch_Shout_Sorceress_01_17: 8291304747506911102
+      Ch_Shout_Sorceress_01_18: 8197720812345346729
+      Ch_Shout_Sorceress_01_19: 5153097167606540881
+      Ch_Shout_Sorceress_01_2: -2813180189281617341
+      Ch_Shout_Sorceress_01_20: -5323114518467521713
+      Ch_Shout_Sorceress_01_21: -3373154422803177024
+      Ch_Shout_Sorceress_01_22: -3100566600620845018
+      Ch_Shout_Sorceress_01_23: -1002380138315513089
+      Ch_Shout_Sorceress_01_24: -4495780092363670758
+      Ch_Shout_Sorceress_01_25: 6931030414707282134
+      Ch_Shout_Sorceress_01_26: 7893056220118337458
+      Ch_Shout_Sorceress_01_27: -1540459487031846108
+      Ch_Shout_Sorceress_01_28: 3326098223233204829
+      Ch_Shout_Sorceress_01_29: 9114992496377021584
+      Ch_Shout_Sorceress_01_3: 8548518275460133588
+      Ch_Shout_Sorceress_01_30: 4227183170157513497
+      Ch_Shout_Sorceress_01_31: 1665168497344216083
+      Ch_Shout_Sorceress_01_32: -5523818573959015461
+      Ch_Shout_Sorceress_01_33: -5043928943646661984
+      Ch_Shout_Sorceress_01_34: -979460973278375418
+      Ch_Shout_Sorceress_01_35: -7654085684068000741
+      Ch_Shout_Sorceress_01_36: -2824122950829888695
+      Ch_Shout_Sorceress_01_37: 8558570197574103811
+      Ch_Shout_Sorceress_01_38: -7994456646741209753
+      Ch_Shout_Sorceress_01_39: -593005811840727745
+      Ch_Shout_Sorceress_01_4: -6688630365943266361
+      Ch_Shout_Sorceress_01_40: -7237039468806006082
+      Ch_Shout_Sorceress_01_5: -8895321170279055362
+      Ch_Shout_Sorceress_01_6: 6332163268854725637
+      Ch_Shout_Sorceress_01_7: -130495378682262308
+      Ch_Shout_Sorceress_01_8: -7321021513740967814
+      Ch_Shout_Sorceress_01_9: 2934069202604959550
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
