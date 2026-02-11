@@ -27,6 +27,7 @@ namespace Battle.Step
 
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
+        [Inject] private IObjectResolver _iResolver = null;
 
 
         private UI.Popup.BattleWinPopup _battleWinPopup = null;
@@ -53,7 +54,7 @@ namespace Battle.Step
         private async UniTask ActivateBattleWinAsync()
         {
             //var rootRectTm = _uiManager?.CurrViewRectTm;
-            var uiCreator = _uiFactory?.Create<UI.Popup.BattleWinPopup, UI.Popup.BattleWinPopup.Param>();
+            var uiCreator = _uiFactory?.Create<UI.Popup.BattleWinPopup, UI.Popup.BattleWinPopup.Param>(_iResolver);
 
             var battleWinPopupParam = new UI.Popup.BattleWinPopup.Param()
                 .WithCompletedAction(OnCompletedBattleWin);

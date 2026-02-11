@@ -21,7 +21,6 @@ namespace GameSystem
         [SerializeField] private RectTransform popupRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
 
-        [Inject] private IObjectResolver _iResolver = null;
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
 
@@ -50,11 +49,6 @@ namespace GameSystem
             _componentDic.Clear();
 
             await LoadAssetAsync();
-        }
-
-        public void SetIObjectResolver(VContainer.IObjectResolver iResolver)
-        {
-            _iResolver = iResolver;
         }
 
         private async UniTask LoadAssetAsync()
@@ -111,7 +105,8 @@ namespace GameSystem
         //    return component;
         //}
 
-        public Common.Component Get<T, V>(Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
+        /// <param name="resolver">씬/필드 스코프의 IObjectResolver. 뷰·팝업 생성 및 주입에 사용.</param>
+        public Common.Component Get<T, V>(IObjectResolver resolver, Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
         {
             isInitialize = false;
 
@@ -141,7 +136,7 @@ namespace GameSystem
                 isInitialize = true;
 
                 component = Instantiate(component.gameObject)?.GetComponent<T>();
-                _iResolver?.InjectGameObject(component?.gameObject);
+                resolver?.InjectGameObject(component?.gameObject);
 
                 if (component != null)
                     _objectPooler?.Add(component);
@@ -154,7 +149,7 @@ namespace GameSystem
                 SetCurrView(baseView);
 
                 if(isInitialize)
-                    baseView.Configure(_iResolver);
+                    baseView.Configure(resolver);
             }
 
             if (component is UI.Popup.BasePopup<V> basePopup)

@@ -42,6 +42,7 @@ namespace UI.View
 
         [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
         [Inject] private UIFactory _uiFactory = null;
+        [Inject] private IObjectResolver _iResolver = null;
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
         [SerializeField] private Animator animator = null;
@@ -129,7 +130,7 @@ namespace UI.View
 
         async UniTask<IBattlePortraitSlot> IBattleMainView.CreateBattlePortraitSlotAsync(BattlePortraitSlot.Param param)
         {
-            var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>();
+            var uiCreator = _uiFactory?.Create<BattlePortraitSlot, BattlePortraitSlot.Param>(_iResolver);
             if (uiCreator == null)
                 return null;
             

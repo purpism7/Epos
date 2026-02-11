@@ -19,6 +19,7 @@ namespace Battle.Step
     {
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
+        [Inject] private IObjectResolver _iResolver = null;
         
         public class Param : BattleStepParam
         {
@@ -45,7 +46,7 @@ namespace Battle.Step
         private async UniTask ActivateBattleStartAsync()
         {
             var rootRectTm = _uiManager?.CurrViewRectTm;
-            var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>();
+            var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>(_iResolver);
 
             var battleStartParam = new UI.Popup.BattleStart.Param()
                 .WithCompletedAction(OnCompletedBattleStart);

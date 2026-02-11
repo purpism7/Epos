@@ -25,6 +25,7 @@ namespace UI.Popup
 
 
         [Inject] private ITimeScaleManager _iTimeScaleManager = null;
+        [Inject] private IObjectResolver _iResolver = null;
 
         private List<ShoutSlot> _shoutSlotList = new();
 
@@ -56,7 +57,7 @@ namespace UI.Popup
         {
             _shoutSlotList?.Clear();
 
-            var uiCreator = _uiFactory.Create<ShoutSlot, ShoutSlot.Param>();
+            var uiCreator = _uiFactory.Create<ShoutSlot, ShoutSlot.Param>(_iResolver);
             var shoutSlotParam = new ShoutSlot.Param();
 
             foreach (EmotionType emotionType in Enum.GetValues(typeof(EmotionType)))

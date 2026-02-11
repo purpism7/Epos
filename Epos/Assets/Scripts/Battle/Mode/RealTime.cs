@@ -152,7 +152,7 @@ namespace Battle.Mode
         private void ActivateBattleMain()
         {
             var rootRectTm = _uiManager?.CurrViewRectTm;
-            var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>();
+            var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>(_iResolver);
 
             var battleMainViewParam = new UI.View.BattleMainView.Param()
                .WithAllyICombatantList(_data?.AllyICombatantList);
@@ -180,7 +180,7 @@ namespace Battle.Mode
 
         private void CreateHpProgress(ICombatant iCombatant)
         {
-            var uiCreator = _uiFactory?.Create<EnemyHpProgressPart, EnemyHpProgressPart.Param>();
+            var uiCreator = _uiFactory?.Create<EnemyHpProgressPart, EnemyHpProgressPart.Param>(_iResolver);
             var enemyHpProgressPart = uiCreator?
                 .SetWorldUI(true)?
                 .Create();
@@ -200,7 +200,7 @@ namespace Battle.Mode
         
         private void CreateEmotion(ICombatant iCombatant, EmotionType emotionType)
         {
-            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>();
+            var uiCreator = _uiFactory?.Create<EmotionPart, EmotionPart.Param>(_iResolver);
             var emotionPart = uiCreator?
                 .SetWorldUI(true)?
                 .Create();

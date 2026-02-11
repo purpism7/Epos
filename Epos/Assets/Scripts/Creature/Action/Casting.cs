@@ -451,8 +451,7 @@ namespace Creature.Action
 
         private async UniTask ActivateSpecialSkillAnimPopupAsync()
         {
-            var uiCreator = _iResolver.Resolve <UIFactory>()?
-                .Create<UI.Popup.SpecialSkillAnimPopup, UI.Popup.SpecialSkillAnimPopup.Param>();
+            var uiCreator = _iResolver.Resolve<UIFactory>()?.Create<UI.Popup.SpecialSkillAnimPopup, UI.Popup.SpecialSkillAnimPopup.Param>(_iResolver);
 
             var specialSkillAnimPopup = await uiCreator
                .CreateAsync();

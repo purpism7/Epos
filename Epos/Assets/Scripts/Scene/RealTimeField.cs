@@ -36,8 +36,6 @@ namespace Scene
 
             var container = _lifetimeScope?.Container;
 
-            container?.Resolve<UIManager>()?.SetIObjectResolver(container);
-
             var iFieldManaver = container?.Resolve<IFieldManager>();
             var iBattleManager = container?.Resolve<IBattleManager>();
 

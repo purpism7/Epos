@@ -15,23 +15,17 @@ namespace Creator
 {
     public class UIFactory
     {
-        readonly private IObjectResolver _iResolver;
-
-        [Inject]
-        public UIFactory(IObjectResolver iResolver)
+        /// <summary>씬/필드 스코프의 IObjectResolver를 넘겨 UICreator를 해당 스코프에서 생성합니다.</summary>
+        public UICreator<T, V> Create<T, V>(IObjectResolver resolver) where T : Common.Component, new() where V : Common.Param
         {
-            _iResolver = iResolver;
-        }
-
-        public UICreator<T, V> Create<T, V>() where T : Common.Component, new() where V : Common.Param
-        {
-            return _iResolver?.Resolve<UICreator<T, V>>();
+            return resolver?.Resolve<UICreator<T, V>>();
         }
     }
 
     public class UICreator<T, V> where T : Common.Component where V : Common.Param
     {
         [Inject] private UIManager _uiManager = null;
+        [Inject] private IObjectResolver _iResolver = null;
 
         private V _param = null;
         private RectTransform _rootRectTm = null;
@@ -83,7 +77,7 @@ namespace Creator
         private Common.Component<V> GetComponent(out bool isInitialize)
         {
             isInitialize = false;
-            var component = _uiManager?.Get<T, V>(_rootRectTm, out isInitialize, worldUI: _isWorldUI) as Common.Component<V>;
+            var component = _uiManager?.Get<T, V>(_iResolver, _rootRectTm, out isInitialize, worldUI: _isWorldUI) as Common.Component<V>;
 
             var rectTm = component?.GetComponent<RectTransform>();
             if (rectTm)

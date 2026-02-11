@@ -99,7 +99,7 @@ namespace Creature.Action
             .WithFlipX(flipX);
 
             if(_uiCreator == null)
-                _uiCreator = _uiFactory?.Create<CombatText, CombatText.Param>();
+                _uiCreator = _uiFactory?.Create<CombatText, CombatText.Param>(_iResolver);
 
             var combatText = _uiCreator?
                 .SetWorldUI(true)?
