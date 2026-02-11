@@ -11,17 +11,11 @@ namespace Creature
 {
     public class Monster : Character, IActor
     {
-        protected override void InitializeInject(IObjectResolver iResolver)
-        {
-            base.InitializeInject(iResolver);
-
-            InitializeActController(this);
-        }
-
         public override void Initialize()
         {
             base.Initialize();
 
+            InitializeActController(this);
             InitializeEffectController(this);
         }
         

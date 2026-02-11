@@ -10,6 +10,7 @@ using Scene;
 using Common;
 using Creator;
 using Creature;
+using Creature.Action;
 
 namespace Scene
 {
@@ -24,6 +25,10 @@ namespace Scene
             builder.RegisterEntryPoint<CombatantCreator>(VContainer.Lifetime.Scoped).AsSelf();
             builder.RegisterEntryPoint<ProjectileCreator>(VContainer.Lifetime.Scoped).AsSelf();
             builder.Register<WeakTypeMap<IActor>>(VContainer.Lifetime.Scoped).AsSelf();
+
+            // 캐릭터당 1개씩 필요하므로 Transient (주입 시마다 새 인스턴스)
+            builder.Register<ActController>(VContainer.Lifetime.Transient).As<IActController>();
+            builder.Register<CreatureEffectController>(VContainer.Lifetime.Transient).As<ICreatureEffectController>();
             //builder.RegisterComponentInHierarchy<Monster>().AsSelf();
         }
 

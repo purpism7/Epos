@@ -13,19 +13,15 @@ namespace Creature
 {
     public class Hero : Character, IEmotionalActor
     {
+        [Inject] private IObjectResolver _iResolver = null;
+
         public IEmotionController IEmotionCtr { get; private set; } = null;
-
-        protected override void InitializeInject(IObjectResolver iResolver)
-        {
-            base.InitializeInject(iResolver);
-
-            InitializeActController(this);
-        }
 
         public override void Initialize()
         {
             base.Initialize();
 
+            InitializeActController(this);
             InitializeEmotionController();
             InitializeEffectController(this);
         }

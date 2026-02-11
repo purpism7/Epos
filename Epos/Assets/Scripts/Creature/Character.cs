@@ -21,7 +21,8 @@ namespace Creature
 
         #endregion
 
-        [Inject] protected IObjectResolver _iResolver = null;
+        [Inject] private IActController _iActCtr = null;
+        [Inject] private ICreatureEffectController _iEffectCtr = null;
         // [Inject] private IBattleManager _iBattleManager = null;
         // [Inject] private ResourceManager _resourceManager = null;
         // [Inject] private UIFactory _uiFactory = null;
@@ -52,8 +53,8 @@ namespace Creature
             get { return _iStatGeneric?.Stat; }
         }
 
-        public Action.IActController IActCtr { get; protected set; } = null;
-        public Action.ICreatureEffectController IEffectCtr { get; protected set; } = null;
+        public Action.IActController IActCtr => _iActCtr;
+        public Action.ICreatureEffectController IEffectCtr => _iEffectCtr;
         public Skill[] Skills => skills;
 
         #region Temp Stat
@@ -105,23 +106,6 @@ namespace Creature
         }
 #endif
 
-        [Inject]
-        protected virtual void InitializeInject(IObjectResolver iResolver)
-        {
-            Debug.Log("Inject Initialize");
-            _iResolver = iResolver;
-
-            using var scope = iResolver?.CreateScope(
-                builder =>
-                {
-                    builder.Register<ActController>(VContainer.Lifetime.Singleton).As<IActController>();
-                    builder.Register<CreatureEffectController>(VContainer.Lifetime.Scoped).As<ICreatureEffectController>();
-                });
-
-            IActCtr = scope?.Resolve<IActController>();
-            IEffectCtr = scope?.Resolve<ICreatureEffectController>();
-        }
-        
         #region ICharacterGeneric
         public override void Initialize()
         {
