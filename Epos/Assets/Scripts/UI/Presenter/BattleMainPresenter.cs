@@ -20,6 +20,7 @@ namespace UI.Presenter
 {
     public interface IBattleMainPresenter : IPresenter<BattleMainView>
     {
+        void OnClickedShout();
         void OnClickAggressive();
         void OnCloseStrategyPanel();
         
@@ -65,14 +66,38 @@ namespace UI.Presenter
         }
 
         #region IBattleMainPresenter
+
+        public void OnClickedShout()
+        {
+            for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
+            {
+                var actor = _view?.AllyICombatantList[i]?.IActor;
+                if(actor == null)
+                    continue;
+
+                if (actor.Id == 10003)
+                {
+                    _iCameraManager?.SetTargetTm(actor.Transform);
+                    break;
+                }
+            }
+
+            _iCameraManager?.ZoomIn(
+                () =>
+                {
+                    _iTimeScaleManager?.Set(0.2f);
+                }, null);
+
+            // _iTimeScaleManager?.Set(0.2f);
+        }
+        
         void IBattleMainPresenter.OnClickAggressive()
         {
             _iCameraManager.ZoomIn(
                 () =>
                 {
                     _iTimeScaleManager?.Set(0.2f);
-                },
-                null);
+                }, null);
         }
 
         void IBattleMainPresenter.OnCloseStrategyPanel()

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Adaptive
   m_EditorClassIdentifier: 
   Id: 1
-  StrategyTypeName: Adaptive
-  Description: Prioritizing the performance of one's role
-  EffectDescription: Formation Maintenance +5 / Movement Speed +5
+  StrategyTypeName: "\uC720\uC5F0\uD615"
+  Description: "\uC790\uC2E0\uC758 \uC5ED\uD560 \uC218\uD589\uC744 \uC6B0\uC120"
+  EffectDescription: "\uC9C4\uD615 \uC720\uC9C0 +5 / \uC774\uB3D9 \uC18D\uB3C4 +3"
   Phases: Read the flow. Stay balanced!

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Offensive
   m_EditorClassIdentifier: 
   Id: 2
-  StrategyTypeName: Offensive
-  Description: Prioritize Closest Enemy
-  EffectDescription: Tracking +5 / Formation Maintenance -10
+  StrategyTypeName: "\uACF5\uACA9\uD615"
+  Description: "\uC801\uC5D0\uAC8C \uC811\uADFC \uC6B0\uC120"
+  EffectDescription: "\uCD94\uC801 + 5 / \uC9C4\uD615 \uC720\uC9C0 - 10"
   Phases: It hits the fastest and most painfully!

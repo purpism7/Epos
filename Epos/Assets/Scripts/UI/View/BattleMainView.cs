@@ -83,17 +83,18 @@ namespace UI.View
                 () =>
                 {
                     DeactivateAnimBattleMainView();
-
                     shoutPanel?.Activate();
-                    _iTimeScaleManager?.Set(0.2f);
+                    
+                    _iPresenter?.OnClickedShout();
+                    
                 });
 
             aggressiveBtn?.onClick?.AddListener(
                 () =>
                 {
                     DeactivateAnimBattleMainView();
-
                     strategyPanel?.ActivateAsync(null);
+                    
                     _iPresenter.OnClickAggressive();
                 });
 

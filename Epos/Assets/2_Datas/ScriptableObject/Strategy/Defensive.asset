@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Defensive
   m_EditorClassIdentifier: 
   Id: 3
-  StrategyTypeName: Defensive
-  Description: Prioritizing the performance of one's role
-  EffectDescription: Formation Maintenance +20 / Defense +5
+  StrategyTypeName: "\uBC29\uC5B4\uD615"
+  Description: "\uBC00\uC9D1 \uB300\uD615 \uC720\uC9C0"
+  EffectDescription: "\uC9C4\uD615 \uC720\uC9C0 +20 / \uBC29\uC5B4 +5"
   Phases: Survival is victory! Hold on tight!

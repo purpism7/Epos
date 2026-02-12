@@ -180,7 +180,7 @@ namespace GameSystem
             var targetPos = _targetTm.position;
             targetPos.z = -100f;
             
-            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.deltaTime);
+            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime);
         
             // ReturnDistance = Vector3.Distance(currentPos, targetPos);
         }
@@ -218,7 +218,6 @@ namespace GameSystem
         {
             _targetTm = targetTm;
         }
-
         
         #region Zoom In / Out
         void ICameraManager.ZoomIn(Action endAction, Vector3? targetPosition = null)

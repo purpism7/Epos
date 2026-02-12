@@ -60,7 +60,6 @@ namespace Creature.Action
         private IAct _currIAct = null;
         private Queue<IAct> _iActQueue = null;
         private Vector3 _currPosition = Vector3.zero;
-        // private Action<IActListener> _onUpdateAct = null;
 
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
