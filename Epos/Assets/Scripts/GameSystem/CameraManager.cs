@@ -23,8 +23,8 @@ namespace GameSystem
 
         void SetTargetTm(Transform targetTm);
         
-        void ZoomIn(Action endAction, Vector3? targetPosition);
-        void ZoomOut(Action endAction);
+        void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? targetPosition = null);
+        void ClearFocus(Action endAction = null);
     }
     
     public class CameraManager : Manager, ICameraManager
@@ -220,16 +220,16 @@ namespace GameSystem
         }
         
         #region Zoom In / Out
-        void ICameraManager.ZoomIn(Action endAction, Vector3? targetPosition = null)
+        void ICameraManager.FocusOnTarget(Action endAction, float targetSize, Vector3? targetPosition)
         {
-            ZoomInAsync(endAction, targetPosition).Forget();
+            FocusOnTargetAsync(endAction, targetSize, targetPosition).Forget();
         }
 
-        private async UniTask ZoomInAsync(Action endAction, Vector3? targetPosition = null)
+        private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? targetPosition = null)
         { 
             var duration = zoomInOutDuration;
            
-            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, 23f, duration);
+            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration);
 
             if(targetPosition != null)
             {
@@ -244,12 +244,12 @@ namespace GameSystem
             endAction?.Invoke();
         }
 
-        void ICameraManager.ZoomOut(Action endAction)
+        void ICameraManager.ClearFocus(Action endAction)
         {
-            ZoomOutAsync(endAction).Forget();
+            ClearFocusAsync(endAction).Forget();
         }
         
-        private async UniTask ZoomOutAsync(Action endAction)
+        private async UniTask ClearFocusAsync(Action endAction)
         { 
             var duration = zoomInOutDuration;
             

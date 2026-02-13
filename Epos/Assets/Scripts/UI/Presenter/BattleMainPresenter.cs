@@ -2,7 +2,8 @@ using UnityEngine;
 
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-
+using Battle.RealTime;
+using Battle.Strategy;
 using VContainer;
 
 using Common;
@@ -23,15 +24,14 @@ namespace UI.Presenter
         void OnClickedShout();
         void OnClickAggressive();
         void OnCloseStrategyPanel();
-        
-        // void CreateEmotion(EmotionType emotionType);
     }
 
-    public class BattleMainPresenter : IBattleMainPresenter, ShoutPanel.IListener
+    public class BattleMainPresenter : IBattleMainPresenter, 
+        ShoutPanel.IListener
     {
-        // [Inject] private UIFactory _uiFactory = null;
         [Inject] private ICameraManager _iCameraManager = null;
-        [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
+        [Inject] private GameSystem.ITimeScaleManager _timeScaleManager = null;
+        [Inject] private IStrategyController _strategyController = null; 
 
         private IBattleMainView _view = null;
 
@@ -82,33 +82,26 @@ namespace UI.Presenter
                 }
             }
 
-            _iCameraManager?.ZoomIn(
+            _iCameraManager?.FocusOnTarget(
                 () =>
                 {
-                    _iTimeScaleManager?.Set(0.2f);
-                }, null);
-
-            // _iTimeScaleManager?.Set(0.2f);
+                    _timeScaleManager?.Set(0.2f);
+                }, 15f);
         }
         
         void IBattleMainPresenter.OnClickAggressive()
         {
-            _iCameraManager.ZoomIn(
+            _iCameraManager.FocusOnTarget(
                 () =>
                 {
-                    _iTimeScaleManager?.Set(0.2f);
-                }, null);
+                    _timeScaleManager?.Set(0.2f);
+                }, 25f);
         }
 
         void IBattleMainPresenter.OnCloseStrategyPanel()
         {
-            _iTimeScaleManager?.Set(1f);
-
-            _iCameraManager.ZoomOut(
-              () =>
-              {
-                 
-              });
+            _timeScaleManager?.Set(1f);
+            _iCameraManager?.ClearFocus();
         }
         #endregion
         
@@ -116,33 +109,36 @@ namespace UI.Presenter
 
         void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
         {
-           // _view?.ActivateEmotionPart(emotionType);
+           _timeScaleManager?.Set(1f);
+           _iCameraManager?.SetTargetTm(_strategyController?.LeaderICombatant?.Transform);
+           _iCameraManager?.ClearFocus(
+               () =>
+               {
+                   _view?.ActivateBattleMainView();     
+                   
+                   for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
+                   {
+                       var emotionalActor = _view?.AllyICombatantList[i]?.IActor as IEmotionalActor;
+                       if(emotionalActor == null)
+                           continue;
 
-           _iTimeScaleManager?.Set(1f);
-           _view?.ActivateBattleMainView();
-
-           for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
-           {
-               var emotionalActor = _view?.AllyICombatantList[i]?.IActor as IEmotionalActor;
-               if(emotionalActor == null)
-                   continue;
-
-               if (emotionalActor.Id != 10003)
-                   continue;
+                       if (emotionalActor.Id != 10003)
+                           continue;
                
-               emotionalActor.IEmotionCtr?.UpdateEmotion(emotionType);
-           }
+                       emotionalActor.IEmotionCtr?.UpdateEmotion(emotionType);
+                   }
            
-           for (int i = 0; i < _battlePortraitSlotList?.Count; ++i)
-           {
-               var slot = _battlePortraitSlotList[i];
-               if(slot == null)
-                   continue;
+                   for (int i = 0; i < _battlePortraitSlotList?.Count; ++i)
+                   {
+                       var slot = _battlePortraitSlotList[i];
+                       if(slot == null)
+                           continue;
                
-               slot.UpdateEmotionAsync(emotionType).Forget();
-           }
-
-           EventHandler.Notify(new HeroEmotionEventData(10003, emotionType));
+                       slot.UpdateEmotionAsync(emotionType).Forget();
+                   }
+           
+                   EventHandler.Notify(new HeroEmotionEventData(10003, emotionType));
+               });
         }
         #endregion
     }

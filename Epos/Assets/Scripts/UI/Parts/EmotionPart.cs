@@ -37,7 +37,7 @@ namespace UI.Parts
             await base.ActivateAsync(param);
 
             SetEmotionImg();
-            await UniTask.Delay(TimeSpan.FromSeconds(5f));
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
             
             Deactivate();
         }

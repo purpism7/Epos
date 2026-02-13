@@ -32,10 +32,7 @@ namespace Battle.Step
             _uiManager?.CurrView?.Deactivate();
             
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            // MainManager.Get<IFieldManager>()?.Activate();
-            
-            // await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-            
+
             _param?.EndAction?.Invoke();
 
             End();

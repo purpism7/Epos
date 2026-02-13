@@ -36,7 +36,7 @@ namespace Battle.Mode
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private WeakTypeMap<IActor> _iActorMap = null;
-        [Inject] private IStrategyController _iStrategyController = null;
+        [Inject] private IStrategyController _strategyController = null;
 
         private IWaypointController _iWaypointCtr = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
@@ -51,7 +51,7 @@ namespace Battle.Mode
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
             
-            _iStrategyController?.Initialize(this, _data?.AllyICombatantList);
+            _strategyController?.Initialize(this, _data?.AllyICombatantList);
             
             return this;
         }
@@ -67,7 +67,7 @@ namespace Battle.Mode
 
         public override void ChainUpdate()
         {
-            _iStrategyController?.ChainUpdate();
+            _strategyController?.ChainUpdate();
             UpdateWaypoint();
 
             //if (_closestICombatant?.IActor != null)
@@ -182,7 +182,7 @@ namespace Battle.Mode
                 iCombatant.IActor?.ChainUpdate();
             }
 
-            _iWaypointCtr?.ChainUpdate(_iStrategyController?.LeaderICombatant);
+            _iWaypointCtr?.ChainUpdate(_strategyController?.LeaderICombatant);
         }
 
         private void CreateHpProgress(ICombatant iCombatant)
@@ -243,7 +243,7 @@ namespace Battle.Mode
 
         private void MoveToWaypoint(Waypoint waypoint)
         {
-            _iStrategyController?.MoveFormation(waypoint.Position);
+            _strategyController?.MoveFormation(waypoint.Position);
         }
 
         private void BeginCombat(Waypoint waypoint)
@@ -315,7 +315,7 @@ namespace Battle.Mode
 
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
-                if(iCombatant == _iStrategyController.LeaderICombatant)
+                if(iCombatant == _strategyController.LeaderICombatant)
                     MoveToWaypoint(waypoint);
             }
             else

@@ -297,7 +297,7 @@ namespace UI.Slot
                 if (emotionalActor.Id != 10003)
                     return;
                 
-                await UniTask.Delay(TimeSpan.FromSeconds(2f));
+                await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
                 
                 for (int i = 0; i < _emotionEmojis?.Length; ++i)
                 {

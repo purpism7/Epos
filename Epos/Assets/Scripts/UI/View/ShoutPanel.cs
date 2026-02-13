@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
@@ -67,7 +68,40 @@ namespace UI.View
         {
             //base.Deactivate();
 
+            // animator?.SetBool("OnOff", true);
+        }
+
+        private async UniTask PlayEndAnimationAsync(EmotionType emotionType)
+        {
+            if (animator == null)
+                return;
+            
             animator?.SetBool("OnOff", true);
+
+            await UniTask.NextFrame();
+            await UniTask.WaitUntil(() =>
+            {
+                var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.IsName("On"))
+                {
+                    Debug.Log("On");
+
+                    // return true;
+                }
+
+                if (stateInfo.IsName("Off"))
+                {
+                    Debug.Log("Off");
+                    return true;
+                    // return true;
+                }
+                
+                return false;
+            });
+
+            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
+            
+            _param?.Listener?.OnSelectShout(emotionType);
         }
         
         #region ShoutSlot.IListener
@@ -76,8 +110,7 @@ namespace UI.View
             descriptionText?.SetText(description);
 
             Deactivate();   
-            
-            _param?.Listener?.OnSelectShout(emotionType);
+            PlayEndAnimationAsync(emotionType).Forget();
         }
         #endregion
     }
