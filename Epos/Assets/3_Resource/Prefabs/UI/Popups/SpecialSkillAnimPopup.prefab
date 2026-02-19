@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1945112456739898639
 RectTransform:
   m_ObjectHideFlags: 0
@@ -240,8 +240,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 947, y: -565}
-  m_SizeDelta: {x: 781, y: 441}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 780, y: 440}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &781676969348145782
 CanvasRenderer:
@@ -271,7 +271,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 491064b571a739c4da0606a70be393b2, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 6692b1bc981b01343a4cf780b57314b4, type: 2}
   additiveMaterial: {fileID: 0}
   multiplyMaterial: {fileID: 0}
   screenMaterial: {fileID: 0}
@@ -279,12 +279,12 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: 
+  startingAnimation: Skill_Kinght_01
   startingLoop: 0
   timeScale: 1
   freeze: 0
   layoutScaleMode: 0
-  referenceSize: {x: 781, y: 441}
+  referenceSize: {x: 780, y: 440}
   pivotOffset: {x: 0, y: 0}
   referenceScale: 1
   layoutScale: 1
@@ -332,7 +332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4683590109539070658
 RectTransform:
   m_ObjectHideFlags: 0
@@ -468,8 +468,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 947.0021, y: -565}
-  m_SizeDelta: {x: 781, y: 441}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 780, y: 440}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8327445110848034290
 CanvasRenderer:
@@ -499,7 +499,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  skeletonDataAsset: {fileID: 11400000, guid: 053579cae255843459865af524f710eb, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: d7102c47c3e81204884b2e1f9e430dde, type: 2}
   additiveMaterial: {fileID: 0}
   multiplyMaterial: {fileID: 0}
   screenMaterial: {fileID: 0}
@@ -507,12 +507,12 @@ MonoBehaviour:
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: 
+  startingAnimation: Skill_Eff_Ch_02
   startingLoop: 0
   timeScale: 1
   freeze: 0
   layoutScaleMode: 0
-  referenceSize: {x: 781, y: 441}
+  referenceSize: {x: 780, y: 440}
   pivotOffset: {x: 0, y: 0}
   referenceScale: 1
   layoutScale: 1
