@@ -391,11 +391,40 @@ namespace Battle.Mode
         void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy, bool isInitalized)
         {
             _iCameraManager?.SetTargetTr(iStrategy?.LeaderICombatant?.Transform, Vector3.zero);
-            
-            if(!isInitalized)
+
+            if (isInitalized)
+                return;
+
+            if (_isCombating)
+            {
+                var leader = iStrategy?.LeaderICombatant;
+                if (leader?.IActor != null)
+                {
+                    // 전투 중에는 웨이포인트로 이동하지 않고, 현재 리더 위치 기준으로 포메이션만 재정렬 (다음 웨이포인트로 넘어가는 Arrived 방지)
+                    _strategyController?.MoveFormation(leader.Transform.position, ResumeBattleAfterFormation);
+                }
+                else
+                {
+                    CheckWaypointActionAsync().Forget();
+                }
+            }
+            else
+            {
                 CheckWaypointActionAsync().Forget();
+            }
         }
         #endregion
+
+        private void ResumeBattleAfterFormation()
+        {
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var allyICombatant = _data?.AllyICombatantList[i];
+                if (allyICombatant?.IActor?.IsAlive != true)
+                    continue;
+                _iWeightedActionCtr?.Execute(allyICombatant, this);
+            }
+        }
         
         #region Event
 

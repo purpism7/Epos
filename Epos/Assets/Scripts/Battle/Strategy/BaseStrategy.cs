@@ -2,6 +2,7 @@ using Common;
 using Creature;
 using Creature.Action;
 using GameSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Battle.Strategy
         void ChainUpdate();
 
         void InitializeFormationPosition();
-        void MoveFormation(Vector3 targetPosition);
+        void MoveFormation(Vector3 targetPosition, System.Action onFormationComplete = null);
 
         ICombatant LeaderICombatant { get; }
 }
@@ -46,19 +47,31 @@ namespace Battle.Strategy
             
         }
 
-        public virtual void MoveFormation(Vector3 targetPosition)
+        /// <summary>포메이션 이동 완료 시 호출. 스킬/캐스팅 중인 캐릭터는 해당 차수에서 제외(무시)한다.</summary>
+        public virtual void MoveFormation(Vector3 targetPosition, Action onFormationComplete = null)
         {
-            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+            var completion = new FormationCompletion { OnComplete = onFormationComplete };
 
-            var moveParam = new Move.Param
+            if (!IsCasting(LeaderICombatant))
             {
-                MoveSpeed = moveSpeed,
-                TargetPos = targetPosition,
-            }.WithTargetICombatant(null);
+                completion.Pending++;
+                var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+                var moveParam = new Move.Param
+                {
+                    MoveSpeed = moveSpeed,
+                    TargetPos = targetPosition,
+                    FinishAction = () => completion.Decrement(),
+                }.WithTargetICombatant(null);
 
-            LeaderICombatant?.IActor?.IActCtr?
-                .MoveToTarget(moveParam)?
-                .Execute();
+                LeaderICombatant?.IActor?.IActCtr?
+                    .MoveToTarget(moveParam)?
+                    .Execute();
+            }
+
+            MoveFormationFollowers(completion);
+
+            if (completion.Pending == 0)
+                completion.OnComplete?.Invoke();
 
 #if UNITY_EDITOR
             if(!_debugObject)
@@ -70,6 +83,36 @@ namespace Battle.Strategy
             _debugObject.originTm = LeaderICombatant.Transform;
             _debugObject.targetPosition = targetPosition;
 #endif
+        }
+
+        protected static bool IsCasting(ICombatant iCombatant)
+        {
+            return iCombatant?.IActor?.IActCtr?.GetCurrentAct() is Casting;
+        }
+
+        protected class FormationCompletion
+        {
+            public int Pending;
+            public Action OnComplete;
+            public void Decrement() { Pending--; if (Pending == 0) OnComplete?.Invoke(); }
+        }
+
+        protected virtual void MoveFormationFollowers(FormationCompletion completion) { }
+
+        protected void AddFormationFollower(ICombatant iCombatant, DirectionType directionType, float distance, FormationCompletion completion)
+        {
+            if (iCombatant == null || IsCasting(iCombatant))
+                return;
+
+            completion.Pending++;
+            Action<Trace> handler = null;
+            handler = (trace) =>
+            {
+                iCombatant.IActor?.IActCtr?.RemoveActEnded<Trace>(handler);
+                completion.Decrement();
+            };
+            iCombatant.IActor?.IActCtr?.OnActEnded<Trace>(handler);
+            TraceTo(iCombatant, directionType, distance);
         }
 
         protected void TraceTo(ICombatant iCombatant, DirectionType directionType, float distance)

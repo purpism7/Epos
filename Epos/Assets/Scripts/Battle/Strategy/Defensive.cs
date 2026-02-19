@@ -17,16 +17,13 @@ namespace Battle.Strategy
             LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
         }
 
-        public override void MoveFormation(Vector3 targetPosition)
+        protected override void MoveFormationFollowers(FormationCompletion completion)
         {
-            base.MoveFormation(targetPosition);
-
-            // temp
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-            TraceTo(iCombatant, DirectionType.Right, 5f);
+            AddFormationFollower(iCombatant, DirectionType.Right, 5f, completion);
 
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            TraceTo(iCombatant, DirectionType.Back, 5f);
+            AddFormationFollower(iCombatant, DirectionType.Back, 5f, completion);
         }
     }
 }

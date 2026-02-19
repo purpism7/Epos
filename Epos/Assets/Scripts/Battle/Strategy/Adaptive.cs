@@ -28,15 +28,13 @@ namespace Battle.Strategy
             SetFormationPosition(iCombatant, DirectionType.Left, 6f);
         }
 
-        public override void MoveFormation(Vector3 targetPosition)
+        protected override void MoveFormationFollowers(FormationCompletion completion)
         {
-            base.MoveFormation(targetPosition);
-            
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-            TraceTo(iCombatant, DirectionType.Back, 4f);
-            
+            AddFormationFollower(iCombatant, DirectionType.Back, 4f, completion);
+
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            TraceTo(iCombatant, DirectionType.Left, 4f);
+            AddFormationFollower(iCombatant, DirectionType.Left, 4f, completion);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Battle.Strategy
         void ChainUpdate();
 
         void ApplyStrategy(IStrategy iStrategy);
-        void MoveFormation(Vector3 targetPosition);
+        void MoveFormation(Vector3 targetPosition, System.Action onFormationComplete = null);
 
         ICombatant LeaderICombatant { get; }
 
@@ -58,9 +58,9 @@ namespace Battle.Strategy
             ApplyStrategy(iStrategy);
         }
 
-        void IStrategyController.MoveFormation(Vector3 targetPosition)
+        void IStrategyController.MoveFormation(Vector3 targetPosition, System.Action onFormationComplete)
         {
-            CurrentIStrategy?.MoveFormation(targetPosition);
+            CurrentIStrategy?.MoveFormation(targetPosition, onFormationComplete);
         }
 
         ICombatant IStrategyController.LeaderICombatant
