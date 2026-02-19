@@ -1,0 +1,1196 @@
+fileFormatVersion: 2
+guid: fa209f37f1e1c4a48b00316519042941
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8297945413729128246
+    second: Ch_Shout_Sorceress_01_0
+  - first:
+      213: 5848570767326756636
+    second: Ch_Shout_Sorceress_01_1
+  - first:
+      213: -2813180189281617341
+    second: Ch_Shout_Sorceress_01_2
+  - first:
+      213: 8548518275460133588
+    second: Ch_Shout_Sorceress_01_3
+  - first:
+      213: -6688630365943266361
+    second: Ch_Shout_Sorceress_01_4
+  - first:
+      213: -8895321170279055362
+    second: Ch_Shout_Sorceress_01_5
+  - first:
+      213: 6332163268854725637
+    second: Ch_Shout_Sorceress_01_6
+  - first:
+      213: -130495378682262308
+    second: Ch_Shout_Sorceress_01_7
+  - first:
+      213: -7321021513740967814
+    second: Ch_Shout_Sorceress_01_8
+  - first:
+      213: 2934069202604959550
+    second: Ch_Shout_Sorceress_01_9
+  - first:
+      213: -2588724797630277696
+    second: Ch_Shout_Sorceress_01_10
+  - first:
+      213: 7850549595446135038
+    second: Ch_Shout_Sorceress_01_11
+  - first:
+      213: -9108073722718564151
+    second: Ch_Shout_Sorceress_01_12
+  - first:
+      213: -2146980294106780601
+    second: Ch_Shout_Sorceress_01_13
+  - first:
+      213: 4618654100649125968
+    second: Ch_Shout_Sorceress_01_14
+  - first:
+      213: -6805417331417473594
+    second: Ch_Shout_Sorceress_01_15
+  - first:
+      213: -4067613073887561108
+    second: Ch_Shout_Sorceress_01_16
+  - first:
+      213: 8291304747506911102
+    second: Ch_Shout_Sorceress_01_17
+  - first:
+      213: 8197720812345346729
+    second: Ch_Shout_Sorceress_01_18
+  - first:
+      213: 5153097167606540881
+    second: Ch_Shout_Sorceress_01_19
+  - first:
+      213: -5323114518467521713
+    second: Ch_Shout_Sorceress_01_20
+  - first:
+      213: -3373154422803177024
+    second: Ch_Shout_Sorceress_01_21
+  - first:
+      213: -3100566600620845018
+    second: Ch_Shout_Sorceress_01_22
+  - first:
+      213: -1002380138315513089
+    second: Ch_Shout_Sorceress_01_23
+  - first:
+      213: -4495780092363670758
+    second: Ch_Shout_Sorceress_01_24
+  - first:
+      213: 6931030414707282134
+    second: Ch_Shout_Sorceress_01_25
+  - first:
+      213: 7893056220118337458
+    second: Ch_Shout_Sorceress_01_26
+  - first:
+      213: -1540459487031846108
+    second: Ch_Shout_Sorceress_01_27
+  - first:
+      213: 3326098223233204829
+    second: Ch_Shout_Sorceress_01_28
+  - first:
+      213: 9114992496377021584
+    second: Ch_Shout_Sorceress_01_29
+  - first:
+      213: 4227183170157513497
+    second: Ch_Shout_Sorceress_01_30
+  - first:
+      213: 1665168497344216083
+    second: Ch_Shout_Sorceress_01_31
+  - first:
+      213: -5523818573959015461
+    second: Ch_Shout_Sorceress_01_32
+  - first:
+      213: -5043928943646661984
+    second: Ch_Shout_Sorceress_01_33
+  - first:
+      213: -979460973278375418
+    second: Ch_Shout_Sorceress_01_34
+  - first:
+      213: -7654085684068000741
+    second: Ch_Shout_Sorceress_01_35
+  - first:
+      213: -2824122950829888695
+    second: Ch_Shout_Sorceress_01_36
+  - first:
+      213: 8558570197574103811
+    second: Ch_Shout_Sorceress_01_37
+  - first:
+      213: -7994456646741209753
+    second: Ch_Shout_Sorceress_01_38
+  - first:
+      213: -593005811840727745
+    second: Ch_Shout_Sorceress_01_39
+  - first:
+      213: -7237039468806006082
+    second: Ch_Shout_Sorceress_01_40
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 0
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 0
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 135
+        height: 1204
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 63f08eea369382370800000000000000
+      internalID: 8297945413729128246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_1
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 2
+        width: 161
+        height: 681
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1fbe36302c4a2150800000000000000
+      internalID: 5848570767326756636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_2
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 2
+        width: 139
+        height: 653
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 34af3b0d58395f8d0800000000000000
+      internalID: -2813180189281617341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_3
+      rect:
+        serializedVersion: 2
+        x: 328
+        y: 2
+        width: 100
+        height: 624
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d27cbc541072a670800000000000000
+      internalID: 8548518275460133588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_4
+      rect:
+        serializedVersion: 2
+        x: 411
+        y: 2
+        width: 422
+        height: 683
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7c38f0cbe163d23a0800000000000000
+      internalID: -6688630365943266361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_5
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 535
+        width: 157
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eff318a66887d8480800000000000000
+      internalID: -8895321170279055362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_6
+      rect:
+        serializedVersion: 2
+        x: 924
+        y: 486
+        width: 147
+        height: 78
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50cbcdb91fc50e750800000000000000
+      internalID: 6332163268854725637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_7
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 408
+        width: 734
+        height: 199
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cdc40dcf423603ef0800000000000000
+      internalID: -130495378682262308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_8
+      rect:
+        serializedVersion: 2
+        x: 1012
+        y: 554
+        width: 155
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a702a70c8b1866a90800000000000000
+      internalID: -7321021513740967814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_9
+      rect:
+        serializedVersion: 2
+        x: 1286
+        y: 537
+        width: 143
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e37aea7f468e7b820800000000000000
+      internalID: 2934069202604959550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_10
+      rect:
+        serializedVersion: 2
+        x: 1418
+        y: 545
+        width: 113
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c790002380031cd0800000000000000
+      internalID: -2588724797630277696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_11
+      rect:
+        serializedVersion: 2
+        x: 1576
+        y: 470
+        width: 131
+        height: 92
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ef847285341c2fc60800000000000000
+      internalID: 7850549595446135038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_12
+      rect:
+        serializedVersion: 2
+        x: 1790
+        y: 514
+        width: 117
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9c05a41b43f999180800000000000000
+      internalID: -9108073722718564151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_13
+      rect:
+        serializedVersion: 2
+        x: 1915
+        y: 505
+        width: 131
+        height: 210
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74c60063cc46432e0800000000000000
+      internalID: -2146980294106780601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_14
+      rect:
+        serializedVersion: 2
+        x: 782
+        y: 4
+        width: 274
+        height: 532
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 058a7911f61c81040800000000000000
+      internalID: 4618654100649125968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_15
+      rect:
+        serializedVersion: 2
+        x: 997
+        y: 3
+        width: 213
+        height: 425
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cd13946efc4e81a0800000000000000
+      internalID: -6805417331417473594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_16
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 2
+        width: 173
+        height: 429
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c6a723fd57fec87c0800000000000000
+      internalID: -4067613073887561108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_17
+      rect:
+        serializedVersion: 2
+        x: 1339
+        y: 201
+        width: 141
+        height: 241
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e77c8a71db1a01370800000000000000
+      internalID: 8291304747506911102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_18
+      rect:
+        serializedVersion: 2
+        x: 1360
+        y: 2
+        width: 258
+        height: 413
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9aacbab35a724c170800000000000000
+      internalID: 8197720812345346729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_19
+      rect:
+        serializedVersion: 2
+        x: 1443
+        y: 385
+        width: 123
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15a6248529a738740800000000000000
+      internalID: 5153097167606540881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_20
+      rect:
+        serializedVersion: 2
+        x: 1632
+        y: 314
+        width: 94
+        height: 107
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f43d40c6c8f7026b0800000000000000
+      internalID: -5323114518467521713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_21
+      rect:
+        serializedVersion: 2
+        x: 1702
+        y: 386
+        width: 105
+        height: 138
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0c167489ce52031d0800000000000000
+      internalID: -3373154422803177024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_22
+      rect:
+        serializedVersion: 2
+        x: 1746
+        y: 315
+        width: 190
+        height: 117
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 628dd8faa1398f4d0800000000000000
+      internalID: -3100566600620845018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_23
+      rect:
+        serializedVersion: 2
+        x: 1881
+        y: 404
+        width: 166
+        height: 103
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff20cc53394d612f0800000000000000
+      internalID: -1002380138315513089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_24
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 113
+        width: 106
+        height: 122
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a1bf36e53d7cb91c0800000000000000
+      internalID: -4495780092363670758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_25
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 227
+        width: 84
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6d05e04a077ff2060800000000000000
+      internalID: 6931030414707282134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_26
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 1
+        width: 131
+        height: 226
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b7475020d4c98d60800000000000000
+      internalID: 7893056220118337458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_27
+      rect:
+        serializedVersion: 2
+        x: 1547
+        y: 2
+        width: 210
+        height: 320
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42b169c12403f9ae0800000000000000
+      internalID: -1540459487031846108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_28
+      rect:
+        serializedVersion: 2
+        x: 1709
+        y: 164
+        width: 113
+        height: 158
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d528fdb26bca82e20800000000000000
+      internalID: 3326098223233204829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_29
+      rect:
+        serializedVersion: 2
+        x: 1880
+        y: 197
+        width: 166
+        height: 191
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09447e4d165fe7e70800000000000000
+      internalID: 9114992496377021584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_30
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 86
+        width: 26
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 91b8fb952b8f9aa30800000000000000
+      internalID: 4227183170157513497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_31
+      rect:
+        serializedVersion: 2
+        x: 1751
+        y: 2
+        width: 224
+        height: 218
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 31c7f570deddb1710800000000000000
+      internalID: 1665168497344216083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_32
+      rect:
+        serializedVersion: 2
+        x: 1975
+        y: 3
+        width: 64
+        height: 179
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd3d77ff5447753b0800000000000000
+      internalID: -5523818573959015461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_33
+      rect:
+        serializedVersion: 2
+        x: 79
+        y: 1
+        width: 26
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0a221a1895d500ab0800000000000000
+      internalID: -5043928943646661984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_34
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 1
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60252682f614862f0800000000000000
+      internalID: -979460973278375418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_35
+      rect:
+        serializedVersion: 2
+        x: 403
+        y: 1
+        width: 61
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b1c59b89f9937c590800000000000000
+      internalID: -7654085684068000741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_36
+      rect:
+        serializedVersion: 2
+        x: 518
+        y: 1
+        width: 58
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 94ba1c99323bec8d0800000000000000
+      internalID: -2824122950829888695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_37
+      rect:
+        serializedVersion: 2
+        x: 1034
+        y: 1
+        width: 96
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 30336abdf3626c670800000000000000
+      internalID: 8558570197574103811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_38
+      rect:
+        serializedVersion: 2
+        x: 1210
+        y: 1
+        width: 58
+        height: 80
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76dcab6490cfd0190800000000000000
+      internalID: -7994456646741209753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_39
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 1
+        width: 29
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f35cd732b5835c7f0800000000000000
+      internalID: -593005811840727745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ch_Shout_Sorceress_01_40
+      rect:
+        serializedVersion: 2
+        x: 1705
+        y: 1
+        width: 57
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eba165452fed09b90800000000000000
+      internalID: -7237039468806006082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Ch_Shout_Sorceress_01_0: 8297945413729128246
+      Ch_Shout_Sorceress_01_1: 5848570767326756636
+      Ch_Shout_Sorceress_01_10: -2588724797630277696
+      Ch_Shout_Sorceress_01_11: 7850549595446135038
+      Ch_Shout_Sorceress_01_12: -9108073722718564151
+      Ch_Shout_Sorceress_01_13: -2146980294106780601
+      Ch_Shout_Sorceress_01_14: 4618654100649125968
+      Ch_Shout_Sorceress_01_15: -6805417331417473594
+      Ch_Shout_Sorceress_01_16: -4067613073887561108
+      Ch_Shout_Sorceress_01_17: 8291304747506911102
+      Ch_Shout_Sorceress_01_18: 8197720812345346729
+      Ch_Shout_Sorceress_01_19: 5153097167606540881
+      Ch_Shout_Sorceress_01_2: -2813180189281617341
+      Ch_Shout_Sorceress_01_20: -5323114518467521713
+      Ch_Shout_Sorceress_01_21: -3373154422803177024
+      Ch_Shout_Sorceress_01_22: -3100566600620845018
+      Ch_Shout_Sorceress_01_23: -1002380138315513089
+      Ch_Shout_Sorceress_01_24: -4495780092363670758
+      Ch_Shout_Sorceress_01_25: 6931030414707282134
+      Ch_Shout_Sorceress_01_26: 7893056220118337458
+      Ch_Shout_Sorceress_01_27: -1540459487031846108
+      Ch_Shout_Sorceress_01_28: 3326098223233204829
+      Ch_Shout_Sorceress_01_29: 9114992496377021584
+      Ch_Shout_Sorceress_01_3: 8548518275460133588
+      Ch_Shout_Sorceress_01_30: 4227183170157513497
+      Ch_Shout_Sorceress_01_31: 1665168497344216083
+      Ch_Shout_Sorceress_01_32: -5523818573959015461
+      Ch_Shout_Sorceress_01_33: -5043928943646661984
+      Ch_Shout_Sorceress_01_34: -979460973278375418
+      Ch_Shout_Sorceress_01_35: -7654085684068000741
+      Ch_Shout_Sorceress_01_36: -2824122950829888695
+      Ch_Shout_Sorceress_01_37: 8558570197574103811
+      Ch_Shout_Sorceress_01_38: -7994456646741209753
+      Ch_Shout_Sorceress_01_39: -593005811840727745
+      Ch_Shout_Sorceress_01_4: -6688630365943266361
+      Ch_Shout_Sorceress_01_40: -7237039468806006082
+      Ch_Shout_Sorceress_01_5: -8895321170279055362
+      Ch_Shout_Sorceress_01_6: 6332163268854725637
+      Ch_Shout_Sorceress_01_7: -130495378682262308
+      Ch_Shout_Sorceress_01_8: -7321021513740967814
+      Ch_Shout_Sorceress_01_9: 2934069202604959550
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
