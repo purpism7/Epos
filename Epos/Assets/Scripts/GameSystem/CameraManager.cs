@@ -19,9 +19,9 @@ namespace GameSystem
         Camera MainCamera { get; }
         bool IsMove { get; }
 
-        void MoveToTarget(Vector3 targetPosition);
+        //void MoveToTarget(Vector3 targetPosition);
 
-        void SetTargetTm(Transform targetTm);
+        void SetTargetTr(Transform targetTm, Vector3 offsetPosition);
         
         void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? targetPosition = null);
         void ClearFocus(Action endAction = null);
@@ -48,10 +48,11 @@ namespace GameSystem
         private Vector3 _directionForce; // 조작을 멈췄을때 서서히 감속하면서 이동 시키기 위한 변수
         #endregion
 
-        private float _returnTime = 0;
+        //private float _returnTime = 0;
 
-        private Vector3? _targetPosition = null;
+        //private Vector3? _targetPosition = null;
         private Transform _targetTm = null;
+        private Vector3 _targetOffsetPosition = Vector3.zero;
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
@@ -177,7 +178,7 @@ namespace GameSystem
                 return;
         
             var currentPos = mainCamera.transform.position;
-            var targetPos = _targetTm.position;
+            var targetPos = _targetTm.position + _targetOffsetPosition;
             targetPos.z = -100f;
             
             mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime);
@@ -185,38 +186,39 @@ namespace GameSystem
             // ReturnDistance = Vector3.Distance(currentPos, targetPos);
         }
 
-        private bool MoveToTarget()
-        {
-            if (mainCamera == null)
-                return false;
+        //private bool MoveToTarget()
+        //{
+        //    if (mainCamera == null)
+        //        return false;
 
-            if (_targetPosition == null)
-                return false;
+        //    if (_targetPosition == null)
+        //        return false;
             
-            if (IsMove ||
-                _returnTime < 1f)
-                return false;
+        //    if (IsMove ||
+        //        _returnTime < 1f)
+        //        return false;
 
-            // var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
-            // if (!navMeshTm)
-            //     return false;
+        //    // var navMeshTm = _fieldHero?.NavMeshAgent?.transform;
+        //    // if (!navMeshTm)
+        //    //     return false;
 
-            var targetPosition = _targetPosition.Value;
-            targetPosition.z = -100f;
+        //    var targetPosition = _targetPosition.Value;
+        //    targetPosition.z = -100f;
             
-            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime);
+        //    mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, Time.deltaTime);
 
-            return true;
-        }
+        //    return true;
+        //}
 
-        public void MoveToTarget(Vector3 targetPosition)
-        {
-            _targetPosition = targetPosition;
-        }
+        //public void MoveToTarget(Vector3 targetPosition)
+        //{
+        //    _targetPosition = targetPosition;
+        //}
         
-        public void SetTargetTm(Transform targetTm)
+        public void SetTargetTr(Transform targetTm, Vector3 offsetPosition)
         {
             _targetTm = targetTm;
+            _targetOffsetPosition = offsetPosition;
         }
         
         #region Zoom In / Out
@@ -236,7 +238,7 @@ namespace GameSystem
                 var targetPositionValue = targetPosition.Value;
                 targetPositionValue.z = DefaultZPos;
 
-                DOTween.To(() => mainCamera.transform.position, position => mainCamera.transform.position = position, targetPositionValue, duration).SetEase(Ease.OutCirc);
+                _ = DOTween.To(() => mainCamera.transform.position, position => mainCamera.transform.position = position, targetPositionValue, duration).SetEase(Ease.OutCirc);
             }
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);

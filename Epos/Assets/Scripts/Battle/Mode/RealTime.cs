@@ -390,7 +390,7 @@ namespace Battle.Mode
         #region StrategyController.IListener
         void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy, bool isInitalized)
         {
-            _iCameraManager?.SetTargetTm(iStrategy?.LeaderICombatant?.Transform);
+            _iCameraManager?.SetTargetTr(iStrategy?.LeaderICombatant?.Transform, Vector3.zero);
             
             if(!isInitalized)
                 CheckWaypointActionAsync().Forget();

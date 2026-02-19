@@ -77,7 +77,7 @@ namespace UI.Presenter
 
                 if (actor.Id == 10003)
                 {
-                    _iCameraManager?.SetTargetTm(actor.Transform);
+                    _iCameraManager?.SetTargetTr(actor.Transform, new Vector3(-5f, 0, 0));
                     break;
                 }
             }
@@ -110,7 +110,7 @@ namespace UI.Presenter
         void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
         {
            _timeScaleManager?.Set(1f);
-           _iCameraManager?.SetTargetTm(_strategyController?.LeaderICombatant?.Transform);
+           _iCameraManager?.SetTargetTr(_strategyController?.LeaderICombatant?.Transform, Vector3.zero);
            _iCameraManager?.ClearFocus(
                () =>
                {
