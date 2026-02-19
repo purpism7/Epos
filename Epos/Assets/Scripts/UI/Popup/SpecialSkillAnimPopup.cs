@@ -42,7 +42,7 @@ namespace UI.Popup
 
             float duration = 0;
             effectSkeletonGraphic?.PlayAnimation("Skill_Eff_Ch_01", false, null, out duration);
-            skeletonGraphic?.PlayAnimation("Skill_Ch_E_01", false, 
+            skeletonGraphic?.PlayAnimation("Skill_Kinght_01", false, 
                 (trackEntry) =>
                 {
                     Deactivate();
