@@ -29,7 +29,7 @@ namespace UI.Presenter
     public class BattleMainPresenter : IBattleMainPresenter, 
         ShoutPanel.IListener
     {
-        [Inject] private ICameraManager _iCameraManager = null;
+        [Inject] private ICameraManager _cameraManager = null;
         [Inject] private GameSystem.ITimeScaleManager _timeScaleManager = null;
         [Inject] private IStrategyController _strategyController = null; 
 
@@ -69,6 +69,9 @@ namespace UI.Presenter
 
         public void OnClickedShout()
         {
+            if (_cameraManager == null)
+                return;
+            
             for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
             {
                 var actor = _view?.AllyICombatantList[i]?.IActor;
@@ -77,21 +80,21 @@ namespace UI.Presenter
 
                 if (actor.Id == 10003)
                 {
-                    _iCameraManager?.SetTargetTr(actor.Transform, new Vector3(-5f, 0, 0));
+                    _cameraManager.SetTargetTr(actor.Transform, new Vector3(-5f, 0, 0));
                     break;
                 }
             }
 
-            _iCameraManager?.FocusOnTarget(
+            _cameraManager.FocusOnTarget(
                 () =>
                 {
                     _timeScaleManager?.Set(0.2f);
-                }, 15f);
+                }, 15f, new Vector3(0, -0.1f, 0));
         }
         
         void IBattleMainPresenter.OnClickAggressive()
         {
-            _iCameraManager.FocusOnTarget(
+            _cameraManager.FocusOnTarget(
                 () =>
                 {
                     _timeScaleManager?.Set(0.2f);
@@ -100,8 +103,11 @@ namespace UI.Presenter
 
         void IBattleMainPresenter.OnCloseStrategyPanel()
         {
-            _timeScaleManager?.Set(1f);
-            _iCameraManager?.ClearFocus();
+            _cameraManager?.ClearFocus(
+                () =>
+                {
+                    _timeScaleManager?.Set(1f);         
+                });
         }
         #endregion
         
@@ -109,11 +115,11 @@ namespace UI.Presenter
 
         void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
         {
-           _timeScaleManager?.Set(1f);
-           _iCameraManager?.SetTargetTr(_strategyController?.LeaderICombatant?.Transform, Vector3.zero);
-           _iCameraManager?.ClearFocus(
+            _cameraManager?.SetTargetTr(_strategyController?.LeaderICombatant?.Transform, Vector3.zero);
+            _cameraManager?.ClearFocus(
                () =>
                {
+                   _timeScaleManager?.Set(1f);
                    _view?.ActivateBattleMainView();     
                    
                    for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)

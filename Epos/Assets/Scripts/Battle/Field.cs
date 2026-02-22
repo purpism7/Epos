@@ -26,7 +26,7 @@ namespace Battle
             }
         }
 
-        [Inject] private IObjectResolver _iResolver = null;
+        // [Inject] private IObjectResolver _iResolver = null;
         
         public override void Initialize(Param param)
         {

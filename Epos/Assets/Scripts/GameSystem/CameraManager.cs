@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using Cinemachine;
 using UnityEngine;
 
@@ -23,7 +24,7 @@ namespace GameSystem
 
         void SetTargetTr(Transform targetTm, Vector3 offsetPosition);
         
-        void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? targetPosition = null);
+        void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? offsetPosition = null);
         void ClearFocus(Action endAction = null);
     }
     
@@ -140,11 +141,11 @@ namespace GameSystem
             return (currPos - startPos).sqrMagnitude >= 0.01f;
         }
         
-        private void StartMove(Vector3 startPosition) 
-        {
-            _startPosition = startPosition;
-            _directionForce = Vector3.zero;
-        }
+        // private void StartMove(Vector3 startPosition) 
+        // {
+        //     _startPosition = startPosition;
+        //     _directionForce = Vector3.zero;
+        // }
         
         private void ReduceDirectionForce()
         {
@@ -221,27 +222,37 @@ namespace GameSystem
             _targetOffsetPosition = offsetPosition;
         }
         
-        #region Zoom In / Out
+        #region Zoom
         void ICameraManager.FocusOnTarget(Action endAction, float targetSize, Vector3? targetPosition)
         {
             FocusOnTargetAsync(endAction, targetSize, targetPosition).Forget();
         }
 
-        private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? targetPosition = null)
+        private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? offsetPosition = null)
         { 
             var duration = zoomInOutDuration;
            
-            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration);
+            var tasks = new List<UniTask>();
 
-            if(targetPosition != null)
+            // 1. Orthographic Size (줌) 트윈
+            var zoomTask = DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true) // Unscaled 대응
+                .ToUniTask();
+            tasks.Add(zoomTask);
+
+            if(offsetPosition != null)
             {
-                var targetPositionValue = targetPosition.Value;
-                targetPositionValue.z = DefaultZPos;
-
-                _ = DOTween.To(() => mainCamera.transform.position, position => mainCamera.transform.position = position, targetPositionValue, duration).SetEase(Ease.OutCirc);
+                // var moveTask = virtualCamera.transform.DOMove(offsetPosition.Value, duration)
+                //     .SetEase(Ease.OutCirc) // 위치 이동은 약간의 탄성이 있는 게 자연스러움
+                //     .SetUpdate(true)
+                //     .ToUniTask();
+                // tasks.Add(moveTask);
             }
+            
+            await UniTask.WhenAll(tasks);
 
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             endAction?.Invoke();
         }
@@ -254,11 +265,15 @@ namespace GameSystem
         private async UniTask ClearFocusAsync(Action endAction)
         { 
             var duration = zoomInOutDuration;
+
+            // virtualCamera.transform.position = Vector3.zero;
             
             await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration).SetEase(Ease.Linear);
+                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration)
+                .SetEase(Ease.Linear)
+                .SetUpdate(true);
 
-            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
             endAction?.Invoke();
         }

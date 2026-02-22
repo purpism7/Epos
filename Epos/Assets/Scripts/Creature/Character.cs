@@ -161,31 +161,31 @@ namespace Creature
 
         /// <summary>스켈레톤이 이동했을 때(이동/대시 등) 루트를 스켈레톤 위치에 맞춰 그림자 등 형제 오브젝트가 같이 따라가도록 함.</summary>
         /// <remarks>스킬(Casting) 중에는 동기화 생략 → 스켈레톤이 튀어도 루트 유지. 스킬 후 거리 멀면 스켈레톤을 루트로 끌어와 기사가 안 보이는 현상 방지.</remarks>
-        private void SyncRootToSkeleton()
-        {
-            if (SkeletonAnimation == null || SkeletonAnimation.transform == transform)
-                return;
-
-            if (IActCtr?.GetCurrentAct() is Casting)
-            {
-                SkeletonAnimation.transform.position = transform.position;
-                SkeletonAnimation.transform.localPosition = Vector3.zero;
-                return;
-            }
-
-            float sqrDist = (transform.position - SkeletonAnimation.transform.position).sqrMagnitude;
-            const float maxSyncSqrDist = 25f;
-
-            if (sqrDist > maxSyncSqrDist)
-            {
-                SkeletonAnimation.transform.position = transform.position;
-                SkeletonAnimation.transform.localPosition = Vector3.zero;
-                return;
-            }
-
-            transform.position = SkeletonAnimation.transform.position;
-            SkeletonAnimation.transform.localPosition = Vector3.zero;
-        }
+        // private void SyncRootToSkeleton()
+        // {
+        //     if (SkeletonAnimation == null || SkeletonAnimation.transform == transform)
+        //         return;
+        //
+        //     if (IActCtr?.GetCurrentAct() is Casting)
+        //     {
+        //         SkeletonAnimation.transform.position = transform.position;
+        //         SkeletonAnimation.transform.localPosition = Vector3.zero;
+        //         return;
+        //     }
+        //
+        //     float sqrDist = (transform.position - SkeletonAnimation.transform.position).sqrMagnitude;
+        //     const float maxSyncSqrDist = 25f;
+        //
+        //     if (sqrDist > maxSyncSqrDist)
+        //     {
+        //         SkeletonAnimation.transform.position = transform.position;
+        //         SkeletonAnimation.transform.localPosition = Vector3.zero;
+        //         return;
+        //     }
+        //
+        //     transform.position = SkeletonAnimation.transform.position;
+        //     SkeletonAnimation.transform.localPosition = Vector3.zero;
+        // }
 
         public virtual void ChainFixedUpdate()
         {

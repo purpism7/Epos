@@ -36,7 +36,7 @@ namespace Battle
 
         private IListener _iListener = null;
 
-        private SortedSet<ActionWeight> _iSortedActionWeightSet = new(
+        private readonly SortedSet<ActionWeight> _sortedActionWeightSet = new(
             Comparer<ActionWeight>.Create((action, compAction) =>
             {
                 return compAction.Weight.CompareTo(action.Weight);
@@ -46,15 +46,15 @@ namespace Battle
         {
             _iListener = iListener;
 
-            _iSortedActionWeightSet?.Clear();
-            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.ApproachAttack());
-            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.CastSkill());
-            _iSortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
+            _sortedActionWeightSet?.Clear();
+            _sortedActionWeightSet?.Add(new Creature.Action.Weight.ApproachAttack());
+            _sortedActionWeightSet?.Add(new Creature.Action.Weight.CastSkill());
+            _sortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
         }
 
-        void IWeightedActionController.Execute(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
+        void IWeightedActionController.Execute(ICombatant executor, IWeightedActionRequester iRequester, bool isFirst)
         {
-            ExecuteAsync(executer, iRequester, isFirst).Forget();
+            ExecuteAsync(executor, iRequester, isFirst).Forget();
         }
 
         // private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
@@ -94,16 +94,16 @@ namespace Battle
         //     }
         // }
 
-        private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
+        private async UniTask ExecuteAsync(ICombatant executor, IWeightedActionRequester requester, bool isFirst)
         {
             try
             {
-                var cancellationTokenSource = iRequester.CancellationTokenSource;
+                var cancellationTokenSource = requester.CancellationTokenSource;
                 if (cancellationTokenSource != null)
                 {
                     float seconds = 0.5f;
                     // int frame = 30;
-                    if (executer.TeamType == TeamType.Enemy && isFirst)
+                    if (executor.TeamType == TeamType.Enemy && isFirst)
                         seconds += UnityEngine.Random.Range(0, 0.5f);
                         // frame += UnityEngine.Random.Range(0, 30);
                     
@@ -119,29 +119,29 @@ namespace Battle
                 // 액션이 유효하다면 실행
                 if (iWeightedAction != null)
                 {
-                    var param = iRequester.GetWeightedActionParam(executer, executer.TeamType, iWeightedAction);
+                    var param = requester.GetWeightedActionParam(executor, executor.TeamType, iWeightedAction);
                     iWeightedAction.SetParam(param)
                         .SetEndAction(EndAction)
-                        .SetIActor(executer.IActor)
+                        .SetIActor(executor.IActor)
                         .Execute();
                 }
                 else
                 {
                     // 중요: 수행할 액션이 없더라도 턴/행동을 종료 처리는 해야 함
                     // Debug.LogWarning($"[{executer.IActor?.Name}] No valid action weight found. Skipping turn.");
-                    EndAction(executer.IActor);
+                    EndAction(executor.IActor);
                 }
             }
             catch (OperationCanceledException)
             {
                 // 취소 발생 시 종료 처리
-                EndAction(executer.IActor);
+                EndAction(executor.IActor);
             }
             catch (Exception e)
             {
                 // 예상치 못한 에러 발생 시에도 게임이 멈추지 않도록 종료 처리 권장
                 Debug.LogError(e);
-                EndAction(executer.IActor);
+                EndAction(executor.IActor);
             }
         }
         
@@ -156,7 +156,7 @@ namespace Battle
 
         private ActionWeight GetHighestPriorityActionWeight()
         {
-            foreach(var actionWeight in _iSortedActionWeightSet)
+            foreach(var actionWeight in _sortedActionWeightSet)
             {
                 if (actionWeight.CheckCondition())
                     return actionWeight;

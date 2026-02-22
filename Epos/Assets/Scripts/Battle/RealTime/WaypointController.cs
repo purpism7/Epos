@@ -113,7 +113,7 @@ namespace Battle.RealTime
             return this;
         }
         
-        void IWaypointController.ChainUpdate(ICombatant targetICombatant)
+        void IWaypointController.ChainUpdate(ICombatant targetCombatant)
         {
             if (Waypoint == null)
                 return;
@@ -130,10 +130,10 @@ namespace Battle.RealTime
                 iActor?.ChainUpdate();
             }
             
-            if (targetICombatant == null)
+            if (targetCombatant == null)
                 return;
 
-            var distance = Vector3.Distance(targetICombatant.IActor.Transform.position, Waypoint.Position);
+            var distance = Vector3.Distance(targetCombatant.IActor.Transform.position, Waypoint.Position);
             //Debug.Log(targetICombatant.NavMeshAgent.remainingDistance);
             if (distance < 1f)
             {

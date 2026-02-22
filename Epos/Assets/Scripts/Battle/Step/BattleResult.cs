@@ -25,7 +25,7 @@ namespace Battle.Step
             }
         }
 
-        [Inject] private UIManager _uiManager = null;
+        // [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private IObjectResolver _iResolver = null;
 
