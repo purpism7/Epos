@@ -106,32 +106,33 @@ namespace UI.View
 
             }
 
-            skeletonGraphic?.PlayAnimation(animationName, false, null, out float duration);
+            float duration = 0;
+            skeletonGraphic?.PlayAnimation(animationName, false, null, out duration);
 
             await UniTask.NextFrame();
-            await UniTask.WaitUntil(() =>
-            {
-                var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (stateInfo.IsName("On"))
-                {
-                    Debug.Log("On");
+            // await UniTask.WaitUntil(() =>
+            // {
+            //     var stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+            //     if (stateInfo.IsName("On"))
+            //     {
+            //         Debug.Log("On");
 
-                    // return true;
-                }
+            //         // return true;
+            //     }
 
-                if (stateInfo.IsName("Off"))
-                {
-                    Debug.Log("Off");
-                    return true;
-                    // return true;
-                }
+            //     if (stateInfo.IsName("Off"))
+            //     {
+            //         Debug.Log("Off");
+            //         return true;
+            //         // return true;
+            //     }
                 
-                return false;
-            });
+            //     return false;
+            // });
 
-            await UniTask.Delay(TimeSpan.FromSeconds(0.3f));
-            
+            await UniTask.Delay(TimeSpan.FromSeconds(duration));
             _param?.Listener?.OnSelectShout(emotionType);
+            skeletonGraphic?.PlayAnimation("050_Idle_Original2", false, null, out duration);
         }
         
         #region ShoutSlot.IListener
