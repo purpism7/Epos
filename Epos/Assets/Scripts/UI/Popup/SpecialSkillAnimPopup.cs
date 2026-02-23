@@ -26,6 +26,7 @@ namespace UI.Popup
 
         [Inject] private ITimeScaleManager _iTimeScaleManager = null;
 
+        private int _playSequenceId = 0;
 
         public override UniTask InitializeAsync(Param param)
         {
@@ -38,23 +39,38 @@ namespace UI.Popup
         {
             base.Activate();
 
+            _playSequenceId++;
             _iTimeScaleManager?.Pause();
 
-            float duration = 0;
-            effectSkeletonGraphic?.PlayAnimation("Skill_Eff_Ch_01", false, null, out duration);
-            skeletonGraphic?.PlayAnimation("Skill_Kinght_01", false, 
-                (trackEntry) =>
-                {
-                    Deactivate();
-
-                    _iTimeScaleManager?.Resume();
-                }, out duration);
+            PlaySequenceAsync(_playSequenceId).Forget();
         }
 
         public override void Deactivate()
         {
-            base.Deactivate();
+            _playSequenceId++;
+            _iTimeScaleManager?.Resume();
 
+            base.Deactivate();
+        }
+
+        private async UniTaskVoid PlaySequenceAsync(int sequenceId)
+        {
+            float effectDuration = 0f;
+            float mainDuration = 0f;
+
+            effectSkeletonGraphic?.PlayAnimation("Skill_Eff_Ch_01", false, null, out effectDuration);
+            skeletonGraphic?.PlayAnimation("Skill_Kinght_01", false, null, out mainDuration);
+
+            float waitDuration = Mathf.Max(effectDuration, mainDuration);
+            if (waitDuration <= 0f)
+                waitDuration = 0.1f;
+
+            await UniTask.Delay(TimeSpan.FromSeconds(waitDuration), DelayType.UnscaledDeltaTime);
+
+            if (!IsActivate || sequenceId != _playSequenceId)
+                return;
+
+            Deactivate();
         }
     }
 }

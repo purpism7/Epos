@@ -3479,7 +3479,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5299408159544937539
 Transform:
   m_ObjectHideFlags: 0
@@ -4829,7 +4829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8160475193163202232
 Transform:
   m_ObjectHideFlags: 0
@@ -8561,9 +8561,9 @@ RectTransform:
   - {fileID: 7540470642802609335}
   m_Father: {fileID: 8865437978776742849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2850721210539545377
@@ -8990,9 +8990,9 @@ RectTransform:
   - {fileID: 600683369247365748}
   m_Father: {fileID: 8865437978776742849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1000, y: -200}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &8947731399947596981
@@ -14998,9 +14998,9 @@ RectTransform:
   - {fileID: 7021518243033280126}
   m_Father: {fileID: 8865437978776742849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 500, y: -200}
   m_SizeDelta: {x: 500, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &8967142879808746623
@@ -19122,6 +19122,7 @@ MonoBehaviour:
   rootTm: {fileID: 5475068778774160094}
   animator: {fileID: 4681077504590509682}
   descriptionText: {fileID: 564238539834405910}
+  skeletonGraphic: {fileID: 4482316344141218262}
   shoutDescriptions:
   - "\uD560 \uC218 \uC788\uC5B4\uC694! \uD798\uB0B4\uC138\uC694."
   - "\uCC28\uBD84\uD788 \uC0B4\uD3B4\uBD05\uC2DC\uB2E4."

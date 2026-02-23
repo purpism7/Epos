@@ -6,6 +6,7 @@ using TMPro;
 
 using Common;
 using UI.Slot;
+using Spine.Unity;
 
 namespace UI.View
 {
@@ -28,7 +29,9 @@ namespace UI.View
 
         [SerializeField] private Animator animator = null;
         [SerializeField] private TextMeshProUGUI descriptionText = null;
+        [SerializeField] private SkeletonGraphic skeletonGraphic = null;
         [SerializeField] private string[] shoutDescriptions = null;
+        
 
         private ShoutSlot[] _shoutSlots = null;
 
@@ -62,6 +65,7 @@ namespace UI.View
             base.Activate();
             
             animator?.SetBool("OnOff", false);
+            skeletonGraphic?.PlayAnimation("050_Idle_Original2", false, null, out float duration);
         }
 
         public override void Deactivate()
@@ -77,6 +81,32 @@ namespace UI.View
                 return;
             
             animator?.SetBool("OnOff", true);
+
+            // TODO: Temp
+            var animationName = "050_Idle_Original2";
+            switch(emotionType)
+            {
+                case EmotionType.Anger:
+                    {
+                        animationName = "Shout_01_Anger";
+                        break;
+                    }
+
+                case EmotionType.Happy:
+                    {
+                        animationName = "Shout_04_Happy";
+                        break;
+                    }
+
+                case EmotionType.Fatigue:
+                    {
+                        animationName = "Shout_02_Horror";
+                        break;
+                    }
+
+            }
+
+            skeletonGraphic?.PlayAnimation(animationName, false, null, out float duration);
 
             await UniTask.NextFrame();
             await UniTask.WaitUntil(() =>
