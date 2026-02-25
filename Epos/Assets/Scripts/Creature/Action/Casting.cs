@@ -96,53 +96,6 @@ namespace Creature.Action
             }
         }
 
-        // private async UniTask UpdateAsync(ICombatant target)
-        // {
-        //     var attacker = _param?.Attacker;
-        //     if (attacker == null)
-        //         return;
-        //
-        //     // if (attacker.ETeam != ETeam.Ally)
-        //     //     return;
-        //
-        //     // if (_param.ISkill.SkillData.ESkillTarget != ESkillTarget.C)
-        //         // return;
-        //
-        //     while(_isUpdate)
-        //     {
-        //         Vector2 direction = (target.IActor.Transform.position - attacker.Transform.position).normalized;
-        //         // 2. 기준 방향의 각도 (라디안)
-        //         float baseAngleRad = Mathf.Atan2(direction.y, direction.x);
-        //         float degreeRad = 60f / 2f * Mathf.Deg2Rad;
-        //         float upAngleRad = baseAngleRad + degreeRad;
-        //         
-        //         // float rad = angle * Mathf.Deg2Rad;
-        //
-        //         // 2D 환경 (X, Y)에서 벡터를 생성하여 반환합니다.
-        //         // X-Y 평면에서 Z축 방향을 Y축으로 사용합니다.
-        //
-        //         // X 성분: Mathf.Cos(rad) 또는 Mathf.Sin(rad)
-        //         // Y 성분: Mathf.Sin(rad) 또는 Mathf.Cos(rad)
-        //
-        //         // 이 코드는 0도가 오른쪽(Right) (1, 0)을 가리키는 표준적인 2D 회전 방식을 따릅니다.
-        //         // Vector3 rightDir = new Vector2(Mathf.Cos(degreeRad), Mathf.Sin(degreeRad));
-        //
-        //         // 새로운 각도를 Vector2로 변환
-        //         Vector2 upDirection = new Vector2(Mathf.Cos(upAngleRad), Mathf.Sin(upAngleRad));
-        //         Vector3 upEndPos = attacker.Transform.position + (Vector3)upDirection * 10f;
-        //         Debug.DrawLine(attacker.Transform.position, upEndPos, Color.magenta);
-        //
-        //         // --- 5. 아랫방향 45도 계산 ---
-        //         float downAngleRad = baseAngleRad - degreeRad;
-        //         Vector2 downDirection = new Vector2(Mathf.Cos(downAngleRad), Mathf.Sin(downAngleRad));
-        //         Vector3 dowEndPos = attacker.Transform.position + (Vector3)downDirection * 10f;
-        //         Debug.DrawLine(attacker.Transform.position, dowEndPos, Color.magenta);
-        //
-        //         //var Color = 
-        //         await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
-        //     }
-        // }
-
         private async UniTask CastingAsync()
         {
             var skillData = _param?.ISkill?.SkillData;

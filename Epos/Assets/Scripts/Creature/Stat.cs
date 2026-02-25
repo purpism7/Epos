@@ -1,15 +1,16 @@
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using GameSystem.Event;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
-using static UnityEngine.Rendering.DebugUI;
 
 namespace Creature
 {
     public interface IStatGeneric
     {
         void Initialize(Character character);
+        void Dispose();
         void Activate();
         void Deactivate();
 
@@ -65,7 +66,7 @@ namespace Creature
         private IListener _iListener = null;
         private Dictionary<EType, float> _originStatDic = new();
         private Dictionary<EType, Dictionary<ESubType, float>> _addedStatDic = new();
-
+        private CancellationTokenSource _cancellationToken = new CancellationTokenSource();
         private bool _isUpdateMp = false;
 
         private bool _isActivate = false;
@@ -76,14 +77,29 @@ namespace Creature
             _iListener = character;
             _isUpdateMp = false;
         }
+
+        public void Dispose()
+        {
+            if (_cancellationToken != null)
+            {
+                _cancellationToken.Cancel();  // 돌고 있는 UpdateMpAsync 루프를 강제 중단!
+                _cancellationToken.Dispose(); // 토큰 메모리 해제
+                _cancellationToken = null;
+            }
+        }
         
         void IStatGeneric.Activate()
         {
+            if (_cancellationToken == null)
+                _cancellationToken = new CancellationTokenSource();
+
             _isActivate = true;
         }
 
         void IStatGeneric.Deactivate()
         {
+            Dispose();
+
             _isActivate = false;
         }
 
@@ -120,7 +136,6 @@ namespace Creature
             if (_originStatDic == null)
             {
                 _originStatDic = new();
-                _originStatDic.Clear();
             }
 
             if (_originStatDic.ContainsKey(eType))
@@ -134,13 +149,12 @@ namespace Creature
             if (_addedStatDic == null)
             {
                 _addedStatDic = new();
-                _addedStatDic.Clear();
             }
 
             if (!_addedStatDic.TryGetValue(eType, out var subDic) || subDic == null)
             {
                 subDic = new Dictionary<ESubType, float>();
-                _addedStatDic?.TryAdd(eType, subDic);
+                _addedStatDic[eType] = subDic;
             }
 
             if (subDic.ContainsKey(eSubType))
@@ -152,7 +166,10 @@ namespace Creature
 
             if (eType == EType.Mp &&
                 !_isUpdateMp)
-                UpdateMpAsync().Forget();
+            {
+                if (_cancellationToken != null)
+                    UpdateMpAsync(_cancellationToken.Token).Forget();
+            }  
         }
 
         private float GetOrigin(EType eType)
@@ -183,40 +200,50 @@ namespace Creature
             return value;
         }
 
-        private async UniTask UpdateMpAsync()
+        // 💡 호출하는 곳(Start 등)에서 this.GetCancellationTokenOnDestroy() 를 넘겨주세요.
+        private async UniTask UpdateMpAsync(CancellationToken cancellationToken)
         {
-            if (!_isActivate)
-                return;
-
-            if (_isUpdateMp)
+            // 1. 방어 로직 간소화
+            if (!_isActivate || _isUpdateMp)
                 return;
 
             var maxMp = GetCurrent(EType.MaxMp);
-            var mp = maxMp - GetCurrent(EType.Mp);
-            if (mp <= 0)
+            var currentMp = GetCurrent(EType.Mp);
+
+            if (currentMp >= maxMp)
                 return;
 
             _isUpdateMp = true;
 
-            float regenRate = 1f / 1f;
+            // 초당 회복량 (예: 1초에 1씩 회복)
+            float regenRate = 1f;
 
-            while (maxMp - GetCurrent(EType.Mp) > 0)
+            // 2. 객체 파괴 시 에러가 나지 않도록 CancellationToken 체크 추가
+            while (_isActivate && !cancellationToken.IsCancellationRequested)
             {
-                if (!_isActivate)
+                maxMp = GetCurrent(EType.MaxMp);
+                currentMp = GetCurrent(EType.Mp);
+
+                // 루프 도중 최대치에 도달했다면 종료
+                if (currentMp >= maxMp)
                     break;
 
-                maxMp = GetCurrent(EType.MaxMp);
-                mp = Time.deltaTime * regenRate;
+                // 이번 프레임에 더해질 MP 회복량
+                float frameRegenAmount = Time.deltaTime * regenRate;
 
-                if (mp + GetCurrent(EType.Mp) > maxMp)
+                // 3. 💡 버그 수정: 더했을 때 최대치를 초과한다면, 딱 '모자란 만큼'만 더해서 꽉 채워줌
+                if (currentMp + frameRegenAmount >= maxMp)
                 {
-                    SetAdded(EType.Mp, ESubType.None, 0);
+                    float amountToMax = maxMp - currentMp;
+                    SetAdded(EType.Mp, ESubType.None, amountToMax);
                     break;
                 }
 
-                SetAdded(EType.Mp, ESubType.None, mp);
+                // 최대치를 넘지 않는다면 정상적으로 회복량 추가
+                SetAdded(EType.Mp, ESubType.None, frameRegenAmount);
 
-                await UniTask.Yield(PlayerLoopTiming.Update);
+                // 다음 프레임까지 대기 (취소 토큰 전달)
+                await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
             }
 
             _isUpdateMp = false;
