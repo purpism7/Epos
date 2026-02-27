@@ -151,8 +151,8 @@ namespace Battle.Mode
                     MoveSpeed = 8f,
                     TargetPos = originPos,
                 };
-                iCombatant.IActor.IActCtr?.MoveToTargetPosition(moveParam)?
-                    .Execute();
+
+                iCombatant.IActor.IActCtr?.MoveTo(moveParam)?.Execute();
                 
                 await UniTask.WaitWhile(
                     () =>
@@ -323,7 +323,7 @@ namespace Battle.Mode
                     };
 
                     iCombatant.IActor.IActCtr?
-                        .MoveToTargetPosition(moveParam)?
+                        .MoveTo(moveParam)?
                         .Execute();
                     
                     SetSortingOrder(iCombatant, 0);
@@ -466,7 +466,7 @@ namespace Battle.Mode
                 IsJumpMove = true,
             };
 
-            attacker.IActor?.IActCtr?.MoveToTargetPosition(moveParam);
+            attacker.IActor?.IActCtr?.MoveTo(moveParam);
         }
 
         private void CastingSkill(ICombatant attacker, Ability.ISkill iSkill, List<TargetData> targetDataList)

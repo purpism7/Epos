@@ -16,6 +16,7 @@ namespace Creature.Action
             public float Speed { get; private set; } = 1f;
             public float Distance { get; private set; } = 0;
             public DirectionType DirectionType { get; private set; } = DirectionType.None;
+            public bool IsEndOnArrival { get; private set; } = true;
 
             public Param WithTargetTransform(Transform targetTm)
             {
@@ -47,6 +48,12 @@ namespace Creature.Action
             public Param WithDirectionType(DirectionType directionType)
             {
                 DirectionType = directionType;
+                return this;
+            }
+
+            public Param WithEndOnArrival(bool isEndOnArrival)
+            {
+                IsEndOnArrival = isEndOnArrival;
                 return this;
             }
         }
@@ -223,8 +230,13 @@ namespace Creature.Action
             Vector3 iActorPosition = iActorTm.position;
 
             var distance = Vector2.Distance(iActorPosition, targetPosition);
-            if (distance < _param.Distance)
+            if (distance <= _param.Distance + 0.05f)
+            {
+                if (_param.IsEndOnArrival)
+                    End();
+
                 return;
+            }
 
             SetNavMeshAgentSpeed();
             navMeshAgent.SetDestination(targetPosition);

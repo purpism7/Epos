@@ -29,7 +29,8 @@ namespace UI.View
 
         [SerializeField] private Animator animator = null;
         [SerializeField] private TextMeshProUGUI descriptionText = null;
-        [SerializeField] private SkeletonGraphic skeletonGraphic = null;
+        [SerializeField] private SkeletonGraphic[] skeletonGraphics = null;
+        //[SerializeField] private SkeletonGraphic skeletonGraphic = null;
         [SerializeField] private string[] shoutDescriptions = null;
         
 
@@ -65,7 +66,8 @@ namespace UI.View
             base.Activate();
             
             animator?.SetBool("OnOff", false);
-            skeletonGraphic?.PlayAnimation("050_Idle_Original2", false, null, out float duration);
+
+            PlayAnimation("050_Idle_Original2", out var duration);
         }
 
         public override void Deactivate()
@@ -107,7 +109,7 @@ namespace UI.View
             }
 
             float duration = 0;
-            skeletonGraphic?.PlayAnimation(animationName, false, null, out duration);
+            PlayAnimation(animationName, out duration);
 
             await UniTask.NextFrame();
             // await UniTask.WaitUntil(() =>
@@ -132,7 +134,18 @@ namespace UI.View
 
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             _param?.Listener?.OnSelectShout(emotionType);
-            skeletonGraphic?.PlayAnimation("050_Idle_Original2", false, null, out duration);
+
+            PlayAnimation("050_Idle_Original2", out duration);
+        }
+
+        private void PlayAnimation(string animationName, out float duration)
+        {
+            duration = 0;
+
+            foreach (var skeletonGraphic in skeletonGraphics)
+            {
+                skeletonGraphic?.PlayAnimation(animationName, false, null, out duration);
+            }
         }
         
         #region ShoutSlot.IListener

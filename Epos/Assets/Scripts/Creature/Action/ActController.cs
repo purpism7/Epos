@@ -30,18 +30,17 @@ namespace Creature.Action
         void RemoveActStarted<T>(Action<T> onActStarted) where T : IAct;
         void RemoveActEnded<T>(Action<T> onActEnded) where T : IAct;
         
-        IActController MoveToTargetPosition(Move.Param param);
-        IActController MoveToTarget(Move.Param param);
+        IActController MoveTo(Move.Param param);
         IActController TraceTo(Trace.Param param);
         IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
 
-        // IActController Knockback(Knockback.Param param);
         IActController Die();
         IActController Victory();
 
         void Impact(Impact.Param impactParam);
 
         void Execute();
+        void ClearActQueue();
 
         bool InAction { get; }
 
@@ -58,8 +57,9 @@ namespace Creature.Action
         private IActor _iActor = null;
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
-        private Queue<IAct> _iActQueue = null;
+        private Queue<IAct> _actQueue = null;
         private Vector3 _currPosition = Vector3.zero;
+        private bool _isCastingCompleted = false;
 
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
@@ -104,8 +104,8 @@ namespace Creature.Action
         public override void Deactivate()
         {
             base.Deactivate();
-            
-            _iActQueue?.Clear();
+
+            _actQueue?.Clear();
             _onActStartedDic?.Clear();
             _onActEndedDic?.Clear();
             //Idle();
@@ -225,20 +225,7 @@ namespace Creature.Action
         /// <param name="finishAction"></param>
         /// <param name="reverse">Target Pos 에 도착 후, 반대 방향으로 Flip 할지.</param>
         /// <returns></returns>
-        IActController IActController.MoveToTargetPosition(Move.Param moveParam)
-        {
-            if (!IsActivate)
-                return null;
-
-            if (moveParam == null)
-                return null;
-
-            AddActAsync<Move, Move.Param>(moveParam).Forget();
-
-            return this;
-        }
-
-        IActController IActController.MoveToTarget(Move.Param param)
+        IActController IActController.MoveTo(Move.Param param)
         {
             if (!IsActivate)
                 return null;
@@ -319,12 +306,17 @@ namespace Creature.Action
         {
             //if (InAction)
             //    await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+
+            // Casting은 End()로 종료 신호가 올 때까지 다음 Action 전환을 막는다.
+            if (_currIAct is Casting && !_isCastingCompleted)
+                return;
             
-            if (_iActQueue?.Count > 0)
+            if (_actQueue?.Count > 0)
             {
-                if (_iActQueue.TryDequeue(out IAct act))
+                if (_actQueue.TryDequeue(out IAct act))
                 {
                     InAction = true;
+                    _isCastingCompleted = false;
 
                     _currIAct?.Deactivate();
                     
@@ -356,6 +348,11 @@ namespace Creature.Action
             ExecuteAsync().Forget();
         }
 
+        public void ClearActQueue()
+        {
+            _actQueue?.Clear();
+        }
+
         private void Idle()
         {
             // 이전 Act 종료 이벤트 발생
@@ -367,42 +364,40 @@ namespace Creature.Action
             Execute<Idle, Idle.Param>();
             SetCurrIAct(null);
             
+            _isCastingCompleted = false;
             InAction = false;
         }
 
-        private async UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
+        private UniTask AddActAsync<T, V>(V param = null) where T : Act<V>, new() where V : ActParam, new()
         {
             if (_currIAct is Die)
-                return;
+                return UniTask.CompletedTask;
             
             var act = GetAct<T, V>();
             if (act == null)
-                return;
+                return UniTask.CompletedTask;
             
             if (param == null)
                 param = new V();
             
             act.SetParam(param);
+
             var animationKey = _iActor?.AnimationKey(act);
             param.SetAnimationKey(animationKey); 
             
-            if (_iActQueue == null)
-            {
-                _iActQueue = new();
-                _iActQueue.Clear();
-            }
-            
-            _iActQueue?.Enqueue(act);
+            if (_actQueue == null)
+                _actQueue = new();
+
+            _actQueue?.Enqueue(act);
+
+            return UniTask.CompletedTask;
         }
 
         private Act<V> GetAct<T, V>() where T : Act<V>, new() where V : ActParam, new()
         {
             if (_iActDic == null)
-            {
                 _iActDic = new();
-                _iActDic.Clear();
-            }
-            
+
             System.Type type = typeof(T);
             Act<V> act = null;
             
@@ -479,6 +474,9 @@ namespace Creature.Action
         
         private void EndAct(IActor iActor)
         {
+            if (_currIAct is Casting)
+                _isCastingCompleted = true;
+            
             Execute();
         }
 

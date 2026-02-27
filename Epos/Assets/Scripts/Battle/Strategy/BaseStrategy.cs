@@ -1,6 +1,7 @@
 using Common;
 using Creature;
 using Creature.Action;
+using Cysharp.Threading.Tasks;
 using GameSystem;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Battle.Strategy
 
         void InitializeFormationPosition();
         void MoveFormation(Vector3 targetPosition);
+        UniTask RegroupToLeaderAsync();
 
         ICombatant LeaderICombatant { get; }
 }
@@ -48,17 +50,22 @@ namespace Battle.Strategy
 
         public virtual void MoveFormation(Vector3 targetPosition)
         {
-            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+            if (LeaderICombatant == null)
+                return;
 
+            var actorCtr = LeaderICombatant?.IActor?.IActCtr;
+            if (actorCtr == null)
+                return;
+
+            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 
-            LeaderICombatant?.IActor?.IActCtr?
-                .MoveToTarget(moveParam)?
-                .Execute();
+            actorCtr.ClearActQueue();
+            actorCtr.MoveTo(moveParam)?.Execute();
 
 #if UNITY_EDITOR
             if(!_debugObject)
@@ -72,20 +79,28 @@ namespace Battle.Strategy
 #endif
         }
 
-        protected void TraceTo(ICombatant iCombatant, DirectionType directionType, float distance)
+        public virtual UniTask RegroupToLeaderAsync()
         {
-            if (iCombatant == null)
+            return UniTask.CompletedTask;
+        }
+
+        protected void TraceTo(ICombatant combatant, DirectionType directionType, float distance, bool isEndOnArrival)
+        {
+            if (combatant == null)
                 return;
 
-            var moveSpeed = iCombatant.IStat.Get(Stat.EType.MoveSpeed);
+            combatant?.IActor?.IActCtr?.ClearActQueue();
+
+            var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 
             var traceParam = new Creature.Action.Trace.Param()
                 .WithTargetICombatant(LeaderICombatant)
                 .WithDirectionType(directionType)
                 .WithDistance(distance)
-                .WithSpeed(moveSpeed);
+                .WithSpeed(moveSpeed)
+                .WithEndOnArrival(isEndOnArrival);
 
-            iCombatant.IActor?.IActCtr?
+            combatant.IActor?.IActCtr?
                 .TraceTo(traceParam)?
                 .Execute();
         }

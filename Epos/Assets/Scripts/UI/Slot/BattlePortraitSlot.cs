@@ -193,7 +193,7 @@ namespace UI.Slot
                 return;
 
             // 모든 Act가 시작될 때 처리할 로직
-            Debug.Log($"BattlePortrait: {act.GetType().Name} 액션이 시작되었습니다. CharacterId: {_iActor.Id}");
+            //Debug.Log($"BattlePortrait: {act.GetType().Name} 액션이 시작되었습니다. CharacterId: {_iActor.Id}");
             
             // Act 타입별 처리
             switch (act)
@@ -220,7 +220,7 @@ namespace UI.Slot
                 return;
 
             // 모든 Act가 종료될 때 처리할 로직
-            Debug.Log($"BattlePortrait: {act.GetType().Name} 액션이 종료되었습니다. CharacterId: {_iActor.Id}");
+            //Debug.Log($"BattlePortrait: {act.GetType().Name} 액션이 종료되었습니다. CharacterId: {_iActor.Id}");
             
             // Act 타입별 처리
             switch (act)
@@ -264,7 +264,7 @@ namespace UI.Slot
 
             if (skillData != null)
             {
-                Debug.Log($"BattlePortrait: 스킬 사용 시작 - SkillId: {skillData.Id}, SkillName: {skillData.GetType()}, CharacterId: {_iActor?.Id}");
+                //Debug.Log($"BattlePortrait: 스킬 사용 시작 - SkillId: {skillData.Id}, SkillName: {skillData.GetType()}, CharacterId: {_iActor?.Id}");
                 // 예: 스킬 아이콘 표시, 스킬 이름 표시 등
                 //skillExpressionImg?.SetActive(true);
                 animator?.SetBool("SkillUse", true);
@@ -282,7 +282,7 @@ namespace UI.Slot
             var skillData = castingAct.SkillData;
             if (skillData != null)
             {
-                Debug.Log($"BattlePortrait: 스킬 사용 종료 - SkillId: {skillData.Id}, CharacterId: {_iActor?.Id}");
+                //Debug.Log($"BattlePortrait: 스킬 사용 종료 - SkillId: {skillData.Id}, CharacterId: {_iActor?.Id}");
                 // 예: UI 업데이트, 애니메이션 재생 등
                 animator?.SetBool("SkillUse", false);
             }

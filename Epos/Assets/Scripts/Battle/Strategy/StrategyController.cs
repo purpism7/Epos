@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Cysharp.Threading.Tasks;
 
 using VContainer;
 
 using Creature;
+using Datas.ScriptableObjects;
 using GameSystem;
 
 namespace Battle.Strategy
@@ -30,10 +32,13 @@ namespace Battle.Strategy
     {
         public interface IListener
         {
-            void OnChangedStrategy(IStrategy iStrategy, bool isInitalized = false);
+            void OnChangedStrategy();
+            void OnEndRegroupToLeader(IStrategy iStrategy);
         }
 
-        private IListener _iListener = null;
+        [Inject] private ICameraManager _cameraManager = null;
+
+        private IListener _listener = null;
 
         public List<ICombatant> AllyICombatantList { get; private set; } = null;
         public IStrategy CurrentIStrategy { get; private set; } = null;
@@ -41,7 +46,7 @@ namespace Battle.Strategy
         #region IStrategyController
         void IStrategyController.Initialize(IListener iListener, List<ICombatant> allyICombatantList)
         {
-            _iListener = iListener;
+            _listener = iListener;
             AllyICombatantList = allyICombatantList;
             
             ApplyStrategy(new Adaptive(), true);
@@ -53,9 +58,9 @@ namespace Battle.Strategy
             CurrentIStrategy?.ChainUpdate();
         }
 
-        void IStrategyController.ApplyStrategy(IStrategy iStrategy)
+        void IStrategyController.ApplyStrategy(IStrategy strategy)
         {
-            ApplyStrategy(iStrategy);
+            ApplyStrategy(strategy);
         }
 
         void IStrategyController.MoveFormation(Vector3 targetPosition)
@@ -72,12 +77,29 @@ namespace Battle.Strategy
         }
         #endregion
 
-        private void ApplyStrategy(IStrategy iStrategy, bool isInitalized = false)
+        private void ApplyStrategy(IStrategy strategy, bool isInitalized = false)
         {
-            iStrategy?.Apply(this);
-            CurrentIStrategy = iStrategy;
+            strategy?.Apply(this);
+            CurrentIStrategy = strategy;
 
-            _iListener?.OnChangedStrategy(iStrategy, isInitalized);
+            _listener?.OnChangedStrategy();
+
+            RegroupToLeaderAsync(strategy, isInitalized).Forget();
+        }
+
+        private async UniTask RegroupToLeaderAsync(IStrategy strategy, bool isInitalized)
+        {
+            if (strategy == null)
+                return;
+
+            _cameraManager?.SetTargetTr(strategy.LeaderICombatant?.Transform, Vector3.zero);
+
+            if(!isInitalized)
+            {
+                await strategy.RegroupToLeaderAsync();
+
+                _listener?.OnEndRegroupToLeader(strategy);
+            } 
         }
     }
 }

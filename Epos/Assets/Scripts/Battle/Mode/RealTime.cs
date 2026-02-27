@@ -1,24 +1,34 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using VContainer;
-using Cysharp.Threading.Tasks;
-using Lifetime;
 
+using Battle.RealTime;
+using Battle.Strategy;
 using Common;
-using GameSystem;
 using Creator;
 using Creature;
-using UI.Parts;
-using Battle.RealTime;
 using Creature.Action;
-using Battle.Strategy;
+using GameSystem;
 using GameSystem.Event;
+using Lifetime;
+using System.Linq;
+using System.Threading;
+using UI.Parts;
+using UI.Popup;
 
 namespace Battle.Mode
 {
+    public enum BattleState
+    {
+        None,
+
+        Combat,
+        MoveWayPoint,
+        Formation,
+    }
+
     public class RealTime : BattleMode<RealTime.Data>, WaypointController.IListener, WeightedActionController.IListener, IWeightedActionRequester, StrategyController.IListener
     {
         public class Data : BaseData
@@ -42,7 +52,8 @@ namespace Battle.Mode
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
 
-        private bool _isCombating = false;
+        //private bool _isCombating = false;
+        private BattleState _battleState = BattleState.None;
 
         public override BattleMode<Data> Initialize(Data data)
         {
@@ -69,12 +80,6 @@ namespace Battle.Mode
         {
             _strategyController?.ChainUpdate();
             UpdateWaypoint();
-
-            //if (_closestICombatant?.IActor != null)
-            //{
-            //    if (!_closestICombatant.IActor.IsAlive)
-            //        SetClosestICombatant();
-            //}
         }
 
         public override void Begin()
@@ -89,8 +94,8 @@ namespace Battle.Mode
                 ally?.IActor?.Activate();
             }
 
-            ActivateBattleMain();
-            CheckWaypointActionAsync().Forget();
+            CreateBattleMain();
+            ProcessNextBattlePhaseAsync().Forget();
         }
 
         public override void ChainLateUpdate()
@@ -156,7 +161,7 @@ namespace Battle.Mode
             }
         }
         
-        private void ActivateBattleMain()
+        private void CreateBattleMain()
         {
             var rootRectTm = _uiManager?.CurrViewRectTm;
             var uiCreator = _uiFactory?.Create<UI.View.BattleMainView, UI.View.BattleMainView.Param>(_iResolver);
@@ -224,7 +229,7 @@ namespace Battle.Mode
             emotionPart?.ActivateAsync(param);
         }
 
-        private async UniTask CheckWaypointActionAsync()
+        private async UniTask ProcessNextBattlePhaseAsync()
         {
             await UniTask.Yield();
             
@@ -248,32 +253,31 @@ namespace Battle.Mode
 
         private void BeginCombat(Waypoint waypoint)
         {
-            if (_isCombating)
+            if (_battleState == BattleState.Combat)
                 return;
 
-            _isCombating = true;
+            _battleState = BattleState.Combat;
             _weightedActionCTS = new();
 
-            var enemyICombatantList = waypoint?.EnemyICombatantList;
-            for (int i = 0; i < enemyICombatantList?.Count; ++i)
+            var enemyCombatantList = waypoint?.EnemyICombatantList;
+            for (int i = 0; i < enemyCombatantList?.Count; ++i)
             {
-                var enemyICombatant = enemyICombatantList[i];
-                if (enemyICombatant == null)
+                var enemyCombatant = enemyCombatantList[i];
+                if (enemyCombatant == null)
                     continue;
 
-                enemyICombatant.SetTeamType(TeamType.Enemy);
-                enemyICombatant.IActor.Activate();
+                enemyCombatant.SetTeamType(TeamType.Enemy);
+                enemyCombatant.IActor.Activate();
 
-                CreateHpProgress(enemyICombatant);
+                CreateHpProgress(enemyCombatant);
 
-                _iWeightedActionCtr?.Execute(enemyICombatant, this, true);
+                _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
             }
 
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
-                var allyICombatant = _data?.AllyICombatantList[i];
-
-                _iWeightedActionCtr?.Execute(allyICombatant, this);
+                var allyCombatant = _data?.AllyICombatantList[i];
+                _iWeightedActionCtr?.Execute(allyCombatant, this);
             }
         }
 
@@ -289,38 +293,38 @@ namespace Battle.Mode
             }
         }
 
-        private async UniTask PrepareForNextActionAsync(ICombatant iCombatant)
+        private async UniTask PrepareForNextActionAsync(ICombatant combatant)
         {
-            var iActor = iCombatant?.IActor;
-            if (iActor == null)
+            var actor = combatant?.IActor;
+            if (actor == null)
                 return;
 
-            if (!iActor.IsAlive)
+            if (!actor.IsAlive)
                 return;
 
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
-                iCombatant.IActor?.IActCtr?.Execute();
+                actor.IActCtr?.Execute();
                 return;
             }
 
             if (waypoint.AliveMonsterCount <= 0)
             {
-                if (_isCombating)
-                    _isCombating = false;
+                if (_battleState == BattleState.Combat)
+                    _battleState = BattleState.MoveWayPoint;
 
                 _weightedActionCTS?.Cancel();
                 _weightedActionCTS = null;
 
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
 
-                if(iCombatant == _strategyController.LeaderICombatant)
+                if(combatant == _strategyController.LeaderICombatant)
                     MoveToWaypoint(waypoint);
             }
             else
             {
-                _iWeightedActionCtr?.Execute(iCombatant, this);
+                _iWeightedActionCtr?.Execute(combatant, this);
             }
         }
 
@@ -362,41 +366,60 @@ namespace Battle.Mode
         void WaypointController.IListener.Arrived()
         {
             TransitionToIdle();
-            CheckWaypointActionAsync().Forget();
+            ProcessNextBattlePhaseAsync().Forget();
         }
         #endregion
 
         #region WeightedActionController.IListener
-        void WeightedActionController.IListener.End(IActor iActor)
+        void WeightedActionController.IListener.End(IActor actor)
         {
-            if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
-                PrepareForNextActionAsync(iCombatant).Forget();
-
-            if(!IsAllyAlive)
+            if (!IsAllyAlive)
+            {
                 BattleLose();
+                return;
+            }
+                
+            if (_iActorMap.TryGet<ICombatant>(actor, out var combatant))
+            {
+                if(combatant.TeamType == TeamType.Ally)
+                {
+                    if (_battleState == BattleState.Formation)
+                        return;
+                }
 
-            //if (_closestICombatant != null &&
-            //    _closestICombatant.IActor != null)
-            //{
-            //    if(!_closestICombatant.IActor.IsAlive)
-            //    {
-            //        _closestICombatant = null;
-            //        _closestICombatant = ClosestICombatantToWayPoint();
-            //    }
-            //}
+                PrepareForNextActionAsync(combatant).Forget();
+            }
         }
         #endregion
 
         #region StrategyController.IListener
-        void StrategyController.IListener.OnChangedStrategy(IStrategy iStrategy, bool isInitalized)
+        void StrategyController.IListener.OnChangedStrategy()
         {
-            _iCameraManager?.SetTargetTr(iStrategy?.LeaderICombatant?.Transform, Vector3.zero);
-            
-            if(!isInitalized)
-                CheckWaypointActionAsync().Forget();
+            _battleState = BattleState.Formation;
+        }
+
+        void StrategyController.IListener.OnEndRegroupToLeader(IStrategy strategy)
+        {
+            var waypoint = _iWaypointCtr?.Waypoint;
+            if (waypoint == null)
+            {
+                BattleWin();
+                return;
+            }
+
+            if (waypoint.AliveMonsterCount <= 0)
+                _battleState = BattleState.MoveWayPoint;
+            else
+                _battleState = BattleState.Combat;
+
+            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            {
+                var allyCombatant = _data?.AllyICombatantList[i];
+                PrepareForNextActionAsync(allyCombatant).Forget();
+            }
         }
         #endregion
-        
+
         #region Event
 
         private void OnChangedEmotion(HeroEmotionEventData eventData)

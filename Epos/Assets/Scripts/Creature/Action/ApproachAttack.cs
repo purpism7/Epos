@@ -96,7 +96,7 @@ namespace Creature.Action
                     .WithDistance(skillRange);
 
                 attacker.IActor.IActCtr?
-                    .MoveToTarget(moveParam)?
+                    .MoveTo(moveParam)?
                     .Execute();
             }
             else

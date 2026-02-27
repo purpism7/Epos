@@ -113,20 +113,22 @@ public static class Extensions
             if (animationState == null)
                 return false;
 
-            var animation = skeletonAnimation.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
-                .Find(animation => animation.Name.Contains(animationName));
-            if (animation == null)
+            string resolvedAnimationName = ResolveAnimationName(animationState, animationName);
+            if (string.IsNullOrEmpty(resolvedAnimationName))
                 return false;
             
-             animationState.ClearTrack(0);
+            animationState.ClearTrack(0);
             // skeletonAnimation.skeleton?.SetToSetupPose();
             
-            var trackEntry = animationState.SetAnimation(0, animationName, loop);
+            var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
                 return false;
             
-            trackEntry.Complete -= completedAction.Invoke;
-            trackEntry.Complete += completedAction.Invoke;
+            if (completedAction != null)
+            {
+                trackEntry.Complete -= completedAction.Invoke;
+                trackEntry.Complete += completedAction.Invoke;
+            }
 
             duration = trackEntry.Animation.Duration;
 
@@ -134,7 +136,7 @@ public static class Extensions
         }
         catch(Exception e)
         {
-            
+            Debug.LogException(e);
         }
 
         return false;
@@ -150,26 +152,58 @@ public static class Extensions
             if (animationState == null)
                 return;
             
-            var animation = skeletonGraphic.skeletonDataAsset?.GetSkeletonData(true)?.Animations?
-                .Find(animation => animation.Name.Contains(animationName));
-            if (animation == null)
+            string resolvedAnimationName = ResolveAnimationName(animationState, animationName);
+            if (string.IsNullOrEmpty(resolvedAnimationName))
                 return;
 
             animationState.ClearTrack(0);
-            var trackEntry = animationState.SetAnimation(0, animationName, loop);
+            var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
                 return;
 
-            trackEntry.Complete -= completedAction.Invoke;
-            trackEntry.Complete += completedAction.Invoke;
+            if (completedAction != null)
+            {
+                trackEntry.Complete -= completedAction.Invoke;
+                trackEntry.Complete += completedAction.Invoke;
+            }
 
             duration = trackEntry.Animation.Duration;
         }
         catch(Exception e)
         {
-            
+            Debug.LogException(e);
         }
     }  
+
+    private static string ResolveAnimationName(Spine.AnimationState animationState, string animationName)
+    {
+        if (animationState == null || string.IsNullOrEmpty(animationName))
+            return string.Empty;
+
+        var skeletonData = animationState.Data?.SkeletonData;
+        if (skeletonData == null)
+            return string.Empty;
+
+        // Fast path: exact name lookup first.
+        if (skeletonData.FindAnimation(animationName) != null)
+            return animationName;
+
+        var animations = skeletonData.Animations;
+        if (animations == null)
+            return string.Empty;
+
+        for (int i = 0; i < animations.Count; i++)
+        {
+            var animation = animations.Items[i];
+            if (animation == null)
+                continue;
+
+            if (animation.Name.Contains(animationName))
+                return animation.Name;
+        }
+
+        return string.Empty;
+    }
 }
 
 
