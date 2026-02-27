@@ -64,7 +64,7 @@ namespace Battle.Strategy
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 
-            actorCtr.ClearActQueue();
+            // actorCtr.ClearActQueue();
             actorCtr.MoveTo(moveParam)?.Execute();
 
 #if UNITY_EDITOR
@@ -89,7 +89,7 @@ namespace Battle.Strategy
             if (combatant == null)
                 return;
 
-            combatant?.IActor?.IActCtr?.ClearActQueue();
+            // combatant?.IActor?.IActCtr?.ClearActQueue();
 
             var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 

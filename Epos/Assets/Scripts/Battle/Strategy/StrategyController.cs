@@ -33,7 +33,7 @@ namespace Battle.Strategy
         public interface IListener
         {
             void OnChangedStrategy();
-            void OnEndRegroupToLeader(IStrategy iStrategy);
+            void OnEndRegroupToLeader(IStrategy strategy);
         }
 
         [Inject] private ICameraManager _cameraManager = null;
@@ -77,24 +77,24 @@ namespace Battle.Strategy
         }
         #endregion
 
-        private void ApplyStrategy(IStrategy strategy, bool isInitalized = false)
+        private void ApplyStrategy(IStrategy strategy, bool isInitialized = false)
         {
             strategy?.Apply(this);
             CurrentIStrategy = strategy;
 
             _listener?.OnChangedStrategy();
 
-            RegroupToLeaderAsync(strategy, isInitalized).Forget();
+            RegroupToLeaderAsync(strategy, isInitialized).Forget();
         }
 
-        private async UniTask RegroupToLeaderAsync(IStrategy strategy, bool isInitalized)
+        private async UniTask RegroupToLeaderAsync(IStrategy strategy, bool isInitialized)
         {
             if (strategy == null)
                 return;
 
             _cameraManager?.SetTargetTr(strategy.LeaderICombatant?.Transform, Vector3.zero);
 
-            if(!isInitalized)
+            if(!isInitialized)
             {
                 await strategy.RegroupToLeaderAsync();
 

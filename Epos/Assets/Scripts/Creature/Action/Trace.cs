@@ -171,42 +171,51 @@ namespace Creature.Action
                 return targetPosition;
 
             Vector3 directionToTarget = _targetTm.position - _prevTargetPosition;
-
-            //if (directionToTarget.sqrMagnitude >= 0.0001f)
-            //    directionToTarget = directionToTarget.normalized;
-
-            if (directionToTarget.sqrMagnitude < 0.0001f)
+            float sqrMag = directionToTarget.sqrMagnitude;
+            
+            if (sqrMag < 0.0001f)
             {
                 // 2D 게임이면 Up(Y축)이나 Right(X축)를 기본 방향으로 설정
                 directionToTarget = _targetTm.up; // 혹은 right
             }
             else
             {
-                directionToTarget.Normalize();
+                directionToTarget /= Mathf.Sqrt(sqrMag);
             }
 
+            // 2. 방향 타입에 따른 오프셋 계산
+            Vector3 offset = Vector3.zero;
+            
             switch (_param.DirectionType)
             {
                 case DirectionType.Back:
                     {
-                        targetPosition -= directionToTarget * _param.Distance;
+                        // targetPosition -= directionToTarget * _param.Distance;
+                        offset = -directionToTarget * _param.Distance;
                         break;
                     }
                 
                 case DirectionType.Right:
                     {
-                        Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
-                        targetPosition += ((Vector3)rightVector * _param.Distance);
+                        // Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
+                        // targetPosition += ((Vector3)rightVector * _param.Distance);
+                        offset = new Vector3(directionToTarget.y, -directionToTarget.x, 0) * _param.Distance;
                         break;
                     }
                 
                 case DirectionType.Left:
                     {
-                        Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
-                        targetPosition += ((Vector3)leftVector * _param.Distance);
+                        // Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
+                        // targetPosition += ((Vector3)leftVector * _param.Distance);
+                        offset = new Vector3(-directionToTarget.y, directionToTarget.x, 0) * _param.Distance;
                         break;
                     }
             }
+            
+            // 3. 기존의 Z값을 유지하면서 오프셋 적용
+            float originalZ = targetPosition.z;
+            targetPosition += offset;
+            targetPosition.z = originalZ;
 
             return targetPosition;
         }

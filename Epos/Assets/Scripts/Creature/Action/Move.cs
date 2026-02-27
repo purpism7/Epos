@@ -68,18 +68,18 @@ namespace Creature.Action
         
         public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
 
-#if UNITY_EDITOR
-        private void OnDrawGizmos()
-        {
-            // float attackSight = IStat.Get(Stat.EType.AttackSight);
-            // Debug.Log(attackSight);
-
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(_randPos, 5f);
-
-            Handles.color = new Color(0f, 1f, 0f, 0.2f);
-        }
-#endif
+// #if UNITY_EDITOR
+//         private void OnDrawGizmos()
+//         {
+//             // float attackSight = IStat.Get(Stat.EType.AttackSight);
+//             // Debug.Log(attackSight);
+//
+//             Gizmos.color = Color.red;
+//             Gizmos.DrawWireSphere(_randPos, 5f);
+//
+//             Handles.color = new Color(0f, 1f, 0f, 0.2f);
+//         }
+// #endif
 
         public override void Execute()
         {
@@ -204,8 +204,8 @@ namespace Creature.Action
                     // target.right는 2D 공간의 오른쪽 방향 벡터 (Vector2)로 자동 변환됩니다.
                     Vector2 rightPosition = (Vector2)targetTm.position + ((Vector2)targetTm.right * distance);
                     Vector2 leftPosition = (Vector2)targetTm.position - ((Vector2)targetTm.right * distance);
-                    Debug.DrawLine(targetTm.position, rightPosition, Color.cyan);
-                    Debug.DrawLine(targetTm.position, leftPosition, Color.cyan);
+                    // Debug.DrawLine(targetTm.position, rightPosition, Color.cyan);
+                    // Debug.DrawLine(targetTm.position, leftPosition, Color.cyan);
                     
                     // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
                     float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPosition);
@@ -267,7 +267,7 @@ namespace Creature.Action
                 _iActor.NavMeshAgent?.SetDestination(targetPosition);
             }
 
-            Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
+            // Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
 
             var direction = targetPosition - iActorTm.position;
 
