@@ -76,6 +76,18 @@ namespace GameSystem.Event
             return this;
         }
     }
+
+    /// <summary>스킬이 타겟에 명중할 때 발생 (Casting.InUse 시점)</summary>
+    public class SkillImpactEventData : EventData
+    {
+        public Ability.ISkill ISkill { get; private set; } = null;
+
+        public SkillImpactEventData WithISkill(Ability.ISkill iSkill)
+        {
+            ISkill = iSkill;
+            return this;
+        }
+    }
     #endregion 
 }
 
