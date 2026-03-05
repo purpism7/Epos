@@ -17,6 +17,7 @@ using System.Linq;
 using System.Threading;
 using UI.Parts;
 using UI.Popup;
+using UI.View;
 
 namespace Battle.Mode
 {
@@ -51,6 +52,8 @@ namespace Battle.Mode
         private IWaypointController _iWaypointCtr = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
         private CancellationTokenSource _weightedActionCTS = null;
+
+        private IBattleMainView _battleMainView = null;
 
         //private bool _isCombating = false;
         private BattleState _battleState = BattleState.None;
@@ -173,6 +176,7 @@ namespace Battle.Mode
                .SetParam(battleMainViewParam)
                .SetRoot(rootRectTm)
                .Create();
+            _battleMainView = battleMainView;
             battleMainView?.Activate();
         }
 
@@ -393,9 +397,10 @@ namespace Battle.Mode
         #endregion
 
         #region StrategyController.IListener
-        void StrategyController.IListener.OnChangedStrategy()
+        void StrategyController.IListener.OnChangedStrategy(IStrategy strategy)
         {
             _battleState = BattleState.Formation;
+            _battleMainView?.OnChangedStrategy(strategy);
         }
 
         void StrategyController.IListener.OnEndRegroupToLeader(IStrategy strategy)

@@ -13,6 +13,8 @@ using Creator;
 using Creature;
 using UI.Parts;
 using UI.Presenter;
+using TMPro;
+using Battle.Strategy;
 
 namespace UI.View
 {
@@ -24,7 +26,10 @@ namespace UI.View
        UniTask InitializePanelAsync(ShoutPanel.IListener shoutPanelListener);
        
        void ActivateBattleMainView();
+      
        UniTask<IBattlePortraitSlot> CreateBattlePortraitSlotAsync(BattlePortraitSlot.Param param);
+
+        void OnChangedStrategy(Battle.Strategy.IStrategy strategy);
     }
 
     public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
@@ -46,6 +51,7 @@ namespace UI.View
 
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
         [SerializeField] private Animator animator = null;
+        [SerializeField] private TMP_Text strategyText = null;
 
         [Header("Panel")]
         [SerializeField] private ShoutPanel shoutPanel = null;
@@ -127,6 +133,34 @@ namespace UI.View
         void IBattleMainView.ActivateBattleMainView()
         {
             ActivateAnimBattleMainView();
+        }
+
+        void IBattleMainView.OnChangedStrategy(Battle.Strategy.IStrategy strategy)
+        {
+
+            // TODO : Temp
+ 
+            switch(strategy)
+            {
+                case Adaptive adaptive:
+                    {
+                        strategyText?.SetText("유연형");
+                        break;
+                    }
+
+                case Offensive offensive:
+                    {
+                        strategyText?.SetText("공격형");
+                        break;
+                    }
+
+                case Defensive defensive:
+                    {
+                        strategyText?.SetText("방어형");
+                        break;
+                    }
+
+            }
         }
 
         async UniTask<IBattlePortraitSlot> IBattleMainView.CreateBattlePortraitSlotAsync(BattlePortraitSlot.Param param)

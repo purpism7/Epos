@@ -32,7 +32,7 @@ namespace Battle.Strategy
     {
         public interface IListener
         {
-            void OnChangedStrategy();
+            void OnChangedStrategy(IStrategy strategy);
             void OnEndRegroupToLeader(IStrategy strategy);
         }
 
@@ -82,7 +82,7 @@ namespace Battle.Strategy
             strategy?.Apply(this);
             CurrentIStrategy = strategy;
 
-            _listener?.OnChangedStrategy();
+            _listener?.OnChangedStrategy(strategy);
 
             RegroupToLeaderAsync(strategy, isInitialized).Forget();
         }
