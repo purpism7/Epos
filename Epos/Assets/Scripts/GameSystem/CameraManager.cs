@@ -63,8 +63,6 @@ namespace GameSystem
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
 
-        private const int ThirdSkillId = 3; // 3번째 스킬 (Id 3)
-
         private void OnEnable()
         {
             GameSystem.Event.EventHandler.Add<SkillImpactEventData>(OnSkillImpact);
@@ -78,7 +76,7 @@ namespace GameSystem
         private void OnSkillImpact(SkillImpactEventData eventData)
         {
             var skillData = eventData?.ISkill?.SkillData;
-            if (skillData == null || skillData.Id != ThirdSkillId)
+            if (skillData == null || !skillData.ShakeCamera)
                 return;
 
             Shake();

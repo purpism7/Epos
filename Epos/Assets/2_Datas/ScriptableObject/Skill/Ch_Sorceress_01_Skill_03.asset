@@ -25,6 +25,7 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 0
   DashAnimationName: 
+  ShakeCamera: 1
   ProjectilePrefab: {fileID: 9080869697992586454, guid: ca9e5ee9168534e41ae5a7165f14dc24, type: 3}
   BurstCount: 5
   BurstDelay: 0.2
