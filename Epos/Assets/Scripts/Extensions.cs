@@ -28,16 +28,6 @@ public static class Extensions
         if (component == null)
             return;
 
-        SetActiveAsync(component, active).Forget();
-    }
-
-    private static async UniTask SetActiveAsync(this Component component, bool active)
-    {
-        await UniTask.Yield();
-
-        if (component == null)
-            return;
-
         component.gameObject.SetActive(active);
     }
 
