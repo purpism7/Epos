@@ -23,10 +23,10 @@ namespace Battle.Strategy
             base.InitializeFormationPosition();
             
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-            SetFormationPosition(iCombatant, DirectionType.Back, 6f);
+            SetFormationPosition(iCombatant, DirectionType.Back, 5.5f, new Vector2(4f, 0));
             
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            SetFormationPosition(iCombatant, DirectionType.Left, 6f);
+            SetFormationPosition(iCombatant, DirectionType.Left, 6f, new Vector2(0, -5f));
         }
 
         public override void MoveFormation(Vector3 targetPosition)

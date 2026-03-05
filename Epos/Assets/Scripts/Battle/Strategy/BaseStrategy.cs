@@ -105,7 +105,7 @@ namespace Battle.Strategy
                 .Execute();
         }
 
-        protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance)
+        protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)
         {
             var targetPosition = LeaderICombatant.Transform.position;
             Vector2 targetDirection = LeaderICombatant.Transform.up; 
@@ -138,7 +138,10 @@ namespace Battle.Strategy
                     break;
                 }
             }
-            
+
+            resPosition.x += offsetPosition.x;
+            resPosition.y += offsetPosition.y;
+
             iCombatant?.SetPosition(resPosition);
         }
     }
