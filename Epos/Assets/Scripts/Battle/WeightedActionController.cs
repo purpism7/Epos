@@ -56,44 +56,6 @@ namespace Battle
         {
             ExecuteAsync(executor, iRequester, isFirst).Forget();
         }
-
-        // private async UniTask ExecuteAsync(ICombatant executer, IWeightedActionRequester iRequester, bool isFirst)
-        // {
-        //     try
-        //     {
-        //         // if(executer.ETeam == ETeam.Enemy)
-        //         //     await UniTask.Delay(TimeSpan.FromSeconds(UnityEngine.Random.Range(0, 0.5f)));
-                
-        //         var cancellationTokenSource = iRequester.CancellationTokenSource;
-        //         if (cancellationTokenSource != null)
-        //         {
-        //             int frame = 30;
-        //             if (executer.ETeam == ETeam.Enemy && isFirst)
-        //                 frame += UnityEngine.Random.Range(0, 30);
-                    
-        //             await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-        //             if (cancellationTokenSource.IsCancellationRequested)
-        //             {
-        //                 EndAction(executer.IActor);
-        //                 return;
-        //             }
-        //         }
-                
-        //         var actionWeight = GetHighestPriorityActionWeight();
-        //         var iWeightedAction = actionWeight?.Create();
-        //         var param = iRequester.GetWeightedActionParam(executer, executer.ETeam, iWeightedAction);
-
-        //         iWeightedAction?.SetParam(param)?
-        //             .SetEndAction(EndAction)?
-        //             .SetIActor(executer.IActor)?
-        //             .Execute();
-        //     }
-        //     catch(OperationCanceledException)
-        //     {
-        //         EndAction(executer.IActor);
-        //     }
-        // }
-
         private async UniTask ExecuteAsync(ICombatant executor, IWeightedActionRequester requester, bool isFirst)
         {
             try
@@ -105,11 +67,11 @@ namespace Battle
                     // int frame = 30;
                     if (executor.TeamType == TeamType.Enemy && isFirst)
                         seconds += UnityEngine.Random.Range(0, 0.5f);
-                        // frame += UnityEngine.Random.Range(0, 30);
-                    
+                    // frame += UnityEngine.Random.Range(0, 30);
+
                     // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
                     // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-                    await UniTask.Delay(TimeSpan.FromSeconds(seconds), cancellationToken: cancellationTokenSource.Token);
+                    await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
                 }
                 
                 var actionWeight = GetHighestPriorityActionWeight();

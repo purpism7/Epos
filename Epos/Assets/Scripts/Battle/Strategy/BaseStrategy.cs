@@ -64,7 +64,6 @@ namespace Battle.Strategy
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 
-            // actorCtr.ClearActQueue();
             actorCtr.MoveTo(moveParam)?.Execute();
 
 #if UNITY_EDITOR
@@ -88,8 +87,6 @@ namespace Battle.Strategy
         {
             if (combatant == null)
                 return;
-
-            // combatant?.IActor?.IActCtr?.ClearActQueue();
 
             var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 
@@ -115,6 +112,13 @@ namespace Battle.Strategy
             var resPosition = Vector3.zero;
             switch (directionType)
             {
+                case DirectionType.Forward:
+                {
+                    // Forward: 리더 전방 방향으로 배치
+                    resPosition = targetPosition + (Vector3)normalizedDirection * distance;
+                    break;
+                }
+                
                 case DirectionType.Back:
                 {
                     // Back: 타겟 전방 벡터를 반대 방향으로 사용

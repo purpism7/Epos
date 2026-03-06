@@ -117,6 +117,8 @@ namespace Battle.Mode
         {
             base.End(isWin);
             
+            _battleMainView?.Deactivate();
+
             EventHandler.Remove<HeroEmotionEventData>(OnChangedEmotion);
         }
 
@@ -150,14 +152,18 @@ namespace Battle.Mode
         {
             get
             {
-                for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+                var allyList = _data?.AllyICombatantList;
+                if(allyList != null)
                 {
-                    var allyICombatant = _data?.AllyICombatantList[i];
-                    if (allyICombatant == null)
-                        continue;
+                    for (int i = 0; i < allyList.Count; ++i)
+                    {
+                        var allyICombatant = allyList[i];
+                        if (allyICombatant == null)
+                            continue;
 
-                    if (allyICombatant.IActor.IsAlive)
-                        return true ;
+                        if (allyICombatant.IActor.IsAlive)
+                            return true;
+                    }
                 }
 
                 return false;
@@ -182,14 +188,18 @@ namespace Battle.Mode
 
         private void UpdateWaypoint()
         {
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            var allyList = _data?.AllyICombatantList;
+            if(allyList != null)
             {
-                var iCombatant = _data?.AllyICombatantList[i];
-                if (iCombatant == null)
-                    continue;
+                for (int i = 0; i < allyList.Count; ++i)
+                {
+                    var iCombatant = allyList[i];
+                    if (iCombatant == null)
+                        continue;
 
-                iCombatant.IActor?.ChainUpdate();
-            }
+                    iCombatant.IActor?.ChainUpdate();
+                }
+            }            
 
             _iWaypointCtr?.ChainUpdate(_strategyController?.LeaderICombatant);
         }
@@ -278,22 +288,28 @@ namespace Battle.Mode
                 _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
             }
 
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            var allyList = _data?.AllyICombatantList;
+            var allyCount = allyList?.Count ?? 0;
+
+            for (int i = 0; i < allyCount; ++i)
             {
-                var allyCombatant = _data?.AllyICombatantList[i];
+                var allyCombatant = allyList[i];
                 _iWeightedActionCtr?.Execute(allyCombatant, this);
             }
         }
 
         private void TransitionToIdle()
         {
-            for (int i = 0; i < _data?.AllyICombatantList.Count; ++i)
+            var allyList = _data?.AllyICombatantList;
+            var allyCount = allyList?.Count ?? 0;
+
+            for (int i = 0; i < allyCount; ++i)
             {
-                var iCombatant = _data?.AllyICombatantList[i];
-                if (iCombatant == null)
+                var combatant = allyList[i];
+                if (combatant == null)
                     continue;
 
-                iCombatant.IActor?.IActCtr?.Execute();
+                combatant.IActor?.IActCtr?.Execute();
             }
         }
 
@@ -319,6 +335,7 @@ namespace Battle.Mode
                     _battleState = BattleState.MoveWayPoint;
 
                 _weightedActionCTS?.Cancel();
+                _weightedActionCTS?.Dispose();
                 _weightedActionCTS = null;
 
                 await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
@@ -405,6 +422,11 @@ namespace Battle.Mode
 
         void StrategyController.IListener.OnEndRegroupToLeader(IStrategy strategy)
         {
+            OnEndRegroupToLeaderAsync(strategy).Forget();
+        }
+
+        private async UniTask OnEndRegroupToLeaderAsync(IStrategy strategy)
+        {
             var waypoint = _iWaypointCtr?.Waypoint;
             if (waypoint == null)
             {
@@ -417,10 +439,14 @@ namespace Battle.Mode
             else
                 _battleState = BattleState.Combat;
 
-            for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
+            // Trace 종료 후 ActController의 ExecuteAsync가 완료될 시간을 주어, Casting이 누락되는 타이밍 이슈 방지
+            //await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            var allyList = _data?.AllyICombatantList;
+            var allyCount = allyList?.Count ?? 0;
+            for (int i = 0; i < allyCount; ++i)
             {
-                var allyCombatant = _data?.AllyICombatantList[i];
-                PrepareForNextActionAsync(allyCombatant).Forget();
+                var allyCombatant = allyList[i];
+                await PrepareForNextActionAsync(allyCombatant);
             }
         }
         #endregion

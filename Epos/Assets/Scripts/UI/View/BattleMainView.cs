@@ -20,6 +20,8 @@ namespace UI.View
 {
     public interface IBattleMainView : IView
     {
+        void Deactivate();
+
        List<ICombatant> AllyICombatantList { get; }
        RectTransform AllyBattlePortraitRootRectTm { get; }
 
@@ -144,19 +146,19 @@ namespace UI.View
             {
                 case Adaptive adaptive:
                     {
-                        strategyText?.SetText("À¯¿¬Çü");
+                        strategyText?.SetText("ìœ ì—°í˜•");
                         break;
                     }
 
                 case Offensive offensive:
                     {
-                        strategyText?.SetText("°ø°ÝÇü");
+                        strategyText?.SetText("ê³µê²©í˜•");
                         break;
                     }
 
                 case Defensive defensive:
                     {
-                        strategyText?.SetText("¹æ¾îÇü");
+                        strategyText?.SetText("ë°©ì–´í˜•");
                         break;
                     }
 

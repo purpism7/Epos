@@ -49,6 +49,10 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  uiManager: {fileID: 7545808447971396740}
+  cameraManager: {fileID: 0}
+  sceneInitializer: {fileID: 0}
+  party: {fileID: 0}
 --- !u!1001 &8618812757907050629
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,3 +115,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2964611807831639109, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
   m_PrefabInstance: {fileID: 8618812757907050629}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7545808447971396740 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2243975981551164417, guid: afe5b72c86cbd4dff9ad4d42df5a2ea6, type: 3}
+  m_PrefabInstance: {fileID: 8618812757907050629}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b7c12e5c2f914d1ea86fb408f802229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

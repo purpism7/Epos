@@ -7,7 +7,6 @@ using GameSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 namespace Battle.Strategy
 {
@@ -25,10 +24,10 @@ namespace Battle.Strategy
             base.MoveFormation(targetPosition);
 
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
-            TraceTo(iCombatant, DirectionType.Left, 3f, false);
+            TraceTo(iCombatant, DirectionType.Left, 5f, false);
 
             iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            TraceTo(iCombatant, DirectionType.Back, 5f, false);
+            TraceTo(iCombatant, DirectionType.Back, 6f, false);
         }
 
         public override async UniTask RegroupToLeaderAsync()
@@ -49,7 +48,7 @@ namespace Battle.Strategy
             var combatant1 = _iStrategyDataProvider?.AllyICombatantList?.Find(c => c.IActor.Id == 10001);
             if (combatant1?.IActor?.IActCtr != null)
             {
-                TraceTo(combatant1, DirectionType.Left, 3f, true);
+                TraceTo(combatant1, DirectionType.Left, 5f, true);
                 combatant1?.IActor?.IActCtr?.OnActEnded(onTraceEnded);           // 2. 종료 이벤트 구독
                 totalMoveCount++;                                      // 3. 목표 카운트 증가
             }
@@ -59,7 +58,7 @@ namespace Battle.Strategy
             if (combatant2?.IActor?.IActCtr != null)
             {
 
-                TraceTo(combatant2, DirectionType.Back, 5f, true);
+                TraceTo(combatant2, DirectionType.Back, 6f, true);
                 combatant2?.IActor?.IActCtr?.OnActEnded(onTraceEnded);
                 totalMoveCount++;
             }
