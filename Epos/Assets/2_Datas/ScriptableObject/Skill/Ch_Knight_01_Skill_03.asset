@@ -25,5 +25,13 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 20
   DashAnimationName: 
+  ShakeCamera: 1
   ProjectilePrefab: {fileID: 0}
+  BurstCount: 1
+  BurstDelay: 0
   PlayAnimation: 1
+  StartOffsetPosition: {x: 0, y: 0, z: 0}
+  AccelTime: 1
+  DestroyOnHit: 1
+  HitEffectName: 
+  spreadRadius: 0

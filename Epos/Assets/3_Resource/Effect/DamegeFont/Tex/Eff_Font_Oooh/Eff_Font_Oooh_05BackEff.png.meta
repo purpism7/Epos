@@ -1,0 +1,1105 @@
+fileFormatVersion: 2
+guid: 2dfee603a05b7e44ea3aa5150a1ae890
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4970140791720206189
+    second: Eff_Font_Oooh_05BackEff_0
+  - first:
+      213: -8434622750707445743
+    second: Eff_Font_Oooh_05BackEff_1
+  - first:
+      213: -6227878340480939188
+    second: Eff_Font_Oooh_05BackEff_2
+  - first:
+      213: 3560935292779390686
+    second: Eff_Font_Oooh_05BackEff_3
+  - first:
+      213: -1890460335169586777
+    second: Eff_Font_Oooh_05BackEff_4
+  - first:
+      213: 2914992496211616435
+    second: Eff_Font_Oooh_05BackEff_5
+  - first:
+      213: -4285220103745145805
+    second: Eff_Font_Oooh_05BackEff_6
+  - first:
+      213: 4660749854576364734
+    second: Eff_Font_Oooh_05BackEff_7
+  - first:
+      213: 8659928814686706055
+    second: Eff_Font_Oooh_05BackEff_8
+  - first:
+      213: -271664762854041488
+    second: Eff_Font_Oooh_05BackEff_9
+  - first:
+      213: 1683012161528985211
+    second: Eff_Font_Oooh_05BackEff_10
+  - first:
+      213: -8990661262470872317
+    second: Eff_Font_Oooh_05BackEff_11
+  - first:
+      213: -4206075881817836562
+    second: Eff_Font_Oooh_05BackEff_12
+  - first:
+      213: -4894082036857780768
+    second: Eff_Font_Oooh_05BackEff_13
+  - first:
+      213: 5604784439395278543
+    second: Eff_Font_Oooh_05BackEff_14
+  - first:
+      213: 6947220624055202753
+    second: Eff_Font_Oooh_05BackEff_15
+  - first:
+      213: 8706249940798110571
+    second: Eff_Font_Oooh_05BackEff_16
+  - first:
+      213: 6229374569800356699
+    second: Eff_Font_Oooh_05BackEff_17
+  - first:
+      213: -2421247861959935842
+    second: Eff_Font_Oooh_05BackEff_18
+  - first:
+      213: 1306006651317589304
+    second: Eff_Font_Oooh_05BackEff_19
+  - first:
+      213: 5157540242268749982
+    second: Eff_Font_Oooh_05BackEff_20
+  - first:
+      213: 6462965088535207675
+    second: Eff_Font_Oooh_05BackEff_21
+  - first:
+      213: 1778547587016280951
+    second: Eff_Font_Oooh_05BackEff_22
+  - first:
+      213: 3394146925080491770
+    second: Eff_Font_Oooh_05BackEff_23
+  - first:
+      213: 3595876628650245526
+    second: Eff_Font_Oooh_05BackEff_24
+  - first:
+      213: 6745203763673574854
+    second: Eff_Font_Oooh_05BackEff_25
+  - first:
+      213: 3312695260910257633
+    second: Eff_Font_Oooh_05BackEff_26
+  - first:
+      213: -4990537070512590899
+    second: Eff_Font_Oooh_05BackEff_27
+  - first:
+      213: -2029968009339894053
+    second: Eff_Font_Oooh_05BackEff_28
+  - first:
+      213: -6278904583552379172
+    second: Eff_Font_Oooh_05BackEff_29
+  - first:
+      213: -1137074443608742877
+    second: Eff_Font_Oooh_05BackEff_30
+  - first:
+      213: -643423822492912320
+    second: Eff_Font_Oooh_05BackEff_31
+  - first:
+      213: -5059127790861091198
+    second: Eff_Font_Oooh_05BackEff_32
+  - first:
+      213: 6625170153651730072
+    second: Eff_Font_Oooh_05BackEff_33
+  - first:
+      213: 6986514092685401526
+    second: Eff_Font_Oooh_05BackEff_34
+  - first:
+      213: 7218385208311296718
+    second: Eff_Font_Oooh_05BackEff_35
+  - first:
+      213: -5077944834222971781
+    second: Eff_Font_Oooh_05BackEff_36
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_0
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 318
+        width: 41
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d6f592697bc79f440800000000000000
+      internalID: 4970140791720206189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 230
+        width: 62
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11097a9fb4332fa80800000000000000
+      internalID: -8434622750707445743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_2
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 318
+        width: 38
+        height: 62
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4bc84365a12299a0800000000000000
+      internalID: -6227878340480939188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_3
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 324
+        width: 31
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed6644a38cbfa6130800000000000000
+      internalID: 3560935292779390686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_4
+      rect:
+        serializedVersion: 2
+        x: 234
+        y: 306
+        width: 22
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7a9304c575cb3c5e0800000000000000
+      internalID: -1890460335169586777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_5
+      rect:
+        serializedVersion: 2
+        x: 255
+        y: 233
+        width: 45
+        height: 151
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3b26f932b32247820800000000000000
+      internalID: 2914992496211616435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_6
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 338
+        width: 25
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 33478eb0507d784c0800000000000000
+      internalID: -4285220103745145805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_7
+      rect:
+        serializedVersion: 2
+        x: 311
+        y: 333
+        width: 19
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ebc4afc8c4f4ea040800000000000000
+      internalID: 4660749854576364734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_8
+      rect:
+        serializedVersion: 2
+        x: 333
+        y: 322
+        width: 32
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 789129bef5f3e2870800000000000000
+      internalID: 8659928814686706055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_9
+      rect:
+        serializedVersion: 2
+        x: 365
+        y: 338
+        width: 31
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0781818665ada3cf0800000000000000
+      internalID: -271664762854041488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_10
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 341
+        width: 25
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b76f898d4a24b5710800000000000000
+      internalID: 1683012161528985211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_11
+      rect:
+        serializedVersion: 2
+        x: 87
+        y: 314
+        width: 26
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3030f826731ca3380800000000000000
+      internalID: -8990661262470872317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_12
+      rect:
+        serializedVersion: 2
+        x: 150
+        y: 308
+        width: 21
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee3f8ed254401a5c0800000000000000
+      internalID: -4206075881817836562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_13
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 273
+        width: 14
+        height: 46
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e5c873415ab41cb0800000000000000
+      internalID: -4894082036857780768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_14
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 243
+        width: 23
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fcedac090c138cd40800000000000000
+      internalID: 5604784439395278543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_15
+      rect:
+        serializedVersion: 2
+        x: 424
+        y: 257
+        width: 9
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c3f311895c796060800000000000000
+      internalID: 6947220624055202753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_16
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 202
+        width: 19
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6b79078130d2d870800000000000000
+      internalID: 8706249940798110571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_17
+      rect:
+        serializedVersion: 2
+        x: 417
+        y: 218
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b535dc5aa2f237650800000000000000
+      internalID: 6229374569800356699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_18
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 170
+        width: 20
+        height: 31
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9834bad5eff56ed0800000000000000
+      internalID: -2421247861959935842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_19
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 191
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 835151e312edf1210800000000000000
+      internalID: 1306006651317589304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_20
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 177
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e9006374683439740800000000000000
+      internalID: 5157540242268749982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_21
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 197
+        width: 12
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bfe54e9718011b950800000000000000
+      internalID: 6462965088535207675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_22
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 186
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 77bcb347b9baea810800000000000000
+      internalID: 1778547587016280951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_23
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 144
+        width: 12
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: af638e835ae6a1f20800000000000000
+      internalID: 3394146925080491770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_24
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 131
+        width: 35
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 69db3d2fdbe17e130800000000000000
+      internalID: 3595876628650245526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_25
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 149
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6cd246fd517cb9d50800000000000000
+      internalID: 6745203763673574854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_26
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 139
+        width: 49
+        height: 50
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e50da3d9ce09fd20800000000000000
+      internalID: 3312695260910257633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_27
+      rect:
+        serializedVersion: 2
+        x: 355
+        y: 156
+        width: 41
+        height: 37
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dcfada1b9fc0ebab0800000000000000
+      internalID: -4990537070512590899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_28
+      rect:
+        serializedVersion: 2
+        x: 388
+        y: 169
+        width: 36
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bd683e9c9da14d3e0800000000000000
+      internalID: -2029968009339894053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_29
+      rect:
+        serializedVersion: 2
+        x: 83
+        y: 158
+        width: 17
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cd6d9ce5c89dcd8a0800000000000000
+      internalID: -6278904583552379172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_30
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 128
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 324a68961dc4830f0800000000000000
+      internalID: -1137074443608742877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_31
+      rect:
+        serializedVersion: 2
+        x: 126
+        y: 144
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 045394441791217f0800000000000000
+      internalID: -643423822492912320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_32
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 133
+        width: 43
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28efa60241e5ac9b0800000000000000
+      internalID: -5059127790861091198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_33
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 126
+        width: 28
+        height: 51
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8967ee0372551fb50800000000000000
+      internalID: 6625170153651730072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_34
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 131
+        width: 17
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6bd16c81d8515f060800000000000000
+      internalID: 6986514092685401526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_35
+      rect:
+        serializedVersion: 2
+        x: 250
+        y: 131
+        width: 9
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec234513a1bdc2460800000000000000
+      internalID: 7218385208311296718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Eff_Font_Oooh_05BackEff_36
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 140
+        width: 27
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b742c1fc3148789b0800000000000000
+      internalID: -5077944834222971781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Eff_Font_Oooh_05BackEff_0: 4970140791720206189
+      Eff_Font_Oooh_05BackEff_1: -8434622750707445743
+      Eff_Font_Oooh_05BackEff_10: 1683012161528985211
+      Eff_Font_Oooh_05BackEff_11: -8990661262470872317
+      Eff_Font_Oooh_05BackEff_12: -4206075881817836562
+      Eff_Font_Oooh_05BackEff_13: -4894082036857780768
+      Eff_Font_Oooh_05BackEff_14: 5604784439395278543
+      Eff_Font_Oooh_05BackEff_15: 6947220624055202753
+      Eff_Font_Oooh_05BackEff_16: 8706249940798110571
+      Eff_Font_Oooh_05BackEff_17: 6229374569800356699
+      Eff_Font_Oooh_05BackEff_18: -2421247861959935842
+      Eff_Font_Oooh_05BackEff_19: 1306006651317589304
+      Eff_Font_Oooh_05BackEff_2: -6227878340480939188
+      Eff_Font_Oooh_05BackEff_20: 5157540242268749982
+      Eff_Font_Oooh_05BackEff_21: 6462965088535207675
+      Eff_Font_Oooh_05BackEff_22: 1778547587016280951
+      Eff_Font_Oooh_05BackEff_23: 3394146925080491770
+      Eff_Font_Oooh_05BackEff_24: 3595876628650245526
+      Eff_Font_Oooh_05BackEff_25: 6745203763673574854
+      Eff_Font_Oooh_05BackEff_26: 3312695260910257633
+      Eff_Font_Oooh_05BackEff_27: -4990537070512590899
+      Eff_Font_Oooh_05BackEff_28: -2029968009339894053
+      Eff_Font_Oooh_05BackEff_29: -6278904583552379172
+      Eff_Font_Oooh_05BackEff_3: 3560935292779390686
+      Eff_Font_Oooh_05BackEff_30: -1137074443608742877
+      Eff_Font_Oooh_05BackEff_31: -643423822492912320
+      Eff_Font_Oooh_05BackEff_32: -5059127790861091198
+      Eff_Font_Oooh_05BackEff_33: 6625170153651730072
+      Eff_Font_Oooh_05BackEff_34: 6986514092685401526
+      Eff_Font_Oooh_05BackEff_35: 7218385208311296718
+      Eff_Font_Oooh_05BackEff_36: -5077944834222971781
+      Eff_Font_Oooh_05BackEff_4: -1890460335169586777
+      Eff_Font_Oooh_05BackEff_5: 2914992496211616435
+      Eff_Font_Oooh_05BackEff_6: -4285220103745145805
+      Eff_Font_Oooh_05BackEff_7: 4660749854576364734
+      Eff_Font_Oooh_05BackEff_8: 8659928814686706055
+      Eff_Font_Oooh_05BackEff_9: -271664762854041488
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

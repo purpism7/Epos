@@ -64,7 +64,6 @@ namespace Battle.Strategy
                 TargetPos = targetPosition,
             }.WithTargetICombatant(null);
 
-            // actorCtr.ClearActQueue();
             actorCtr.MoveTo(moveParam)?.Execute();
 
 #if UNITY_EDITOR
@@ -89,8 +88,6 @@ namespace Battle.Strategy
             if (combatant == null)
                 return;
 
-            // combatant?.IActor?.IActCtr?.ClearActQueue();
-
             var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 
             var traceParam = new Creature.Action.Trace.Param()
@@ -105,7 +102,7 @@ namespace Battle.Strategy
                 .Execute();
         }
 
-        protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance)
+        protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)
         {
             var targetPosition = LeaderICombatant.Transform.position;
             Vector2 targetDirection = LeaderICombatant.Transform.up; 
@@ -115,6 +112,13 @@ namespace Battle.Strategy
             var resPosition = Vector3.zero;
             switch (directionType)
             {
+                case DirectionType.Forward:
+                {
+                    // Forward: 리더 전방 방향으로 배치
+                    resPosition = targetPosition + (Vector3)normalizedDirection * distance;
+                    break;
+                }
+                
                 case DirectionType.Back:
                 {
                     // Back: 타겟 전방 벡터를 반대 방향으로 사용
@@ -138,7 +142,10 @@ namespace Battle.Strategy
                     break;
                 }
             }
-            
+
+            resPosition.x += offsetPosition.x;
+            resPosition.y += offsetPosition.y;
+
             iCombatant?.SetPosition(resPosition);
         }
     }

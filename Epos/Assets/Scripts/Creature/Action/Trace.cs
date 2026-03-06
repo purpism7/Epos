@@ -60,11 +60,18 @@ namespace Creature.Action
 
         private Transform _targetTm = null;
         private Vector3 _prevTargetPosition = Vector3.zero;
+        // 처음 시작할 때 튈 수 있으니, 기본값은 위쪽(혹은 리더가 바라보는 방향)으로 줍니다.
+        private Vector3 _lastValidDirection = Vector3.zero;
 
         public override void Execute()
         {
             if (_param == null)
                 return;
+
+            if (_param.TargetTm)
+                _prevTargetPosition = _param.TargetTm.position;
+            else if (_param.TargetICombatant != null)
+                _prevTargetPosition = _param.TargetICombatant.Transform.position;
 
             EnableNavMeshAgent();
             Activate();
@@ -172,46 +179,55 @@ namespace Creature.Action
 
             Vector3 directionToTarget = _targetTm.position - _prevTargetPosition;
             float sqrMag = directionToTarget.sqrMagnitude;
-            
-            if (sqrMag < 0.0001f)
+
+            if (sqrMag >= 0.0001f)
             {
-                // 2D 게임이면 Up(Y축)이나 Right(X축)를 기본 방향으로 설정
-                directionToTarget = _targetTm.up; // 혹은 right
+                Vector3 newDir = directionToTarget.normalized;
+                // 전술 변경 후 MoveFormation: 리더가 꺾을 때마다 방향이 매 프레임 바뀌어 캐릭터끼리 뱅뱅 도는 현상 방지
+                if (_lastValidDirection.sqrMagnitude < 0.01f)
+                    _lastValidDirection = newDir;
+                else
+                    _lastValidDirection = Vector3.Slerp(_lastValidDirection, newDir, 0.2f).normalized;
             }
-            else
+            else if (_lastValidDirection == Vector3.zero)
             {
-                directionToTarget /= Mathf.Sqrt(sqrMag);
+                _lastValidDirection = _targetTm.up;
             }
 
-            // 2. 방향 타입에 따른 오프셋 계산
+            // 2. 방향 타입에 따른 오프셋 계산 (스무딩된 _lastValidDirection 사용)
             Vector3 offset = Vector3.zero;
-            
+            Vector3 dir = _lastValidDirection;
+
             switch (_param.DirectionType)
             {
+                case DirectionType.Forward:
+                    {
+                        offset = dir * _param.Distance;
+                        break;
+                    }
+
                 case DirectionType.Back:
                     {
-                        // targetPosition -= directionToTarget * _param.Distance;
-                        offset = -directionToTarget * _param.Distance;
+                        // 수정: directionToTarget 대신 dir 사용!
+                        offset = -dir * _param.Distance;
                         break;
                     }
-                
+
                 case DirectionType.Right:
                     {
-                        // Vector2 rightVector = new Vector2(directionToTarget.y, -directionToTarget.x);
-                        // targetPosition += ((Vector3)rightVector * _param.Distance);
-                        offset = new Vector3(directionToTarget.y, -directionToTarget.x, 0) * _param.Distance;
+                        // 수정: directionToTarget 대신 dir 사용!
+                        offset = new Vector3(dir.y, -dir.x, 0) * _param.Distance;
                         break;
                     }
-                
+
                 case DirectionType.Left:
                     {
-                        // Vector2 leftVector = new Vector2(-directionToTarget.y, directionToTarget.x);
-                        // targetPosition += ((Vector3)leftVector * _param.Distance);
-                        offset = new Vector3(-directionToTarget.y, directionToTarget.x, 0) * _param.Distance;
+                        // 수정: directionToTarget 대신 dir 사용!
+                        offset = new Vector3(-dir.y, dir.x, 0) * _param.Distance;
                         break;
                     }
             }
-            
+
             // 3. 기존의 Z값을 유지하면서 오프셋 적용
             float originalZ = targetPosition.z;
             targetPosition += offset;
@@ -224,44 +240,101 @@ namespace Creature.Action
         {
             base.ChainUpdate();
 
-            if (_param == null)
+            if (_param == null || !_iActor?.Transform || _iActor?.NavMeshAgent == null)
                 return;
 
-            var iActorTm = _iActor?.Transform;
-            if (!iActorTm)
-                return;
+            var navMeshAgent = _iActor.NavMeshAgent;
 
-            var navMeshAgent = _iActor?.NavMeshAgent;
-            if (navMeshAgent == null)
-                return;
-
+            // targetPosition은 '리더의 위치'가 아니라 '이미 오프셋이 적용된 내 최종 목적지'입니다.
             Vector3 targetPosition = TargetPosition;
-            Vector3 iActorPosition = iActorTm.position;
+            Vector3 actorPosition = _iActor.Transform.position;
 
-            var distance = Vector2.Distance(iActorPosition, targetPosition);
-            if (distance <= _param.Distance + 0.05f)
+            // 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
+            if (_targetTm != null)
             {
-                if (_param.IsEndOnArrival)
-                    End();
-
-                return;
+                _prevTargetPosition = _targetTm.position;
             }
 
-            SetNavMeshAgentSpeed();
-            navMeshAgent.SetDestination(targetPosition);
+            var distance = Vector2.Distance(actorPosition, targetPosition);
+            //if (distance <= _param.Distance + 0.05f)
+            //// 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
+            //{
+            //    if (_param.IsEndOnArrival)
+            //    {
+            //        End();
+            //        return;
+            //    }
 
-            Debug.DrawLine(iActorPosition, targetPosition, Color.magenta);
+            //    if (!navMeshAgent.isStopped)
+            //    {
+            //        navMeshAgent.isStopped = true;
+            //        navMeshAgent.velocity = Vector3.zero;
+            //        _iActor?.IEffectCtr?.Deactivate("Move");
+            //    }
+            //}
 
-            var direction = targetPosition - iActorPosition;
+            // 🚨 핵심 수정: _param.Distance가 아니라 0.1f (혹은 navMeshAgent.stoppingDistance)로 도착 판별!
+            if (distance <= 0.1f)
+            {
+                if (_param.IsEndOnArrival)
+                {
+                    End();
+                    return;
+                }
 
-            _iActor?.IActCtr?.Flip(direction.x);
-            _iActor?.SortingOrder(iActorPosition.y);
+                // 계속 따라다니는 상태라면? 브레이크를 확실히 밟아줍니다. (제자리 맴도는 것 방지)
+                if (!navMeshAgent.isStopped)
+                {
+                    navMeshAgent.isStopped = true;
+                    navMeshAgent.velocity = Vector3.zero;
+                    _iActor?.IEffectCtr?.Deactivate("Move");
+                }
+            }
+            else
+            {
+                // 리더가 도망가서 거리가 벌어졌다면 다시 쫓아갑니다!
+                if (navMeshAgent.isStopped)
+                {
+                    navMeshAgent.isStopped = false;
+                    _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
+                }
 
-            _prevTargetPosition = _targetTm.position;
+                SetNavMeshAgentSpeed();
+                // 2. 🚨 뱅뱅 도는 원인 해결 🚨
+                // 매 프레임 목적지를 덮어씌우지 말고, 리더가 의미 있는 거리(0.2f) 이상 
+                // 이동했을 때만 내 목적지를 갱신해 줍니다.
+                //if (Vector2.Distance(navMeshAgent.destination, targetPosition) > 0.2f)
+                {
+                    navMeshAgent.SetDestination(targetPosition);
+                }
 
-            //var distance = Vector2.Distance(iActorTm.position, targetPosition);
-            //if (distance < navMeshAgent.stoppingDistance)
-            //    End();
+                var direction = targetPosition - actorPosition;
+                if (direction.sqrMagnitude > 0.001f) // 너무 미세한 진동 시엔 안 쳐다보게 방어
+                {
+                    _iActor?.IActCtr?.Flip(direction.x);
+                }
+
+                if(_param.IsEndOnArrival)
+                {
+                    if (distance <= _param.Distance + 0.05f)
+                    {
+                        End();
+                        return;
+                    }
+                }
+                
+                // 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
+                //{
+                //    if (_param.IsEndOnArrival)
+                //    {
+                //        End();
+                //        return;
+                //    }
+                //}
+            }
+
+            _iActor?.SortingOrder(actorPosition.y);
+            Debug.DrawLine(actorPosition, targetPosition, Color.magenta);
         }
 
         protected override void End()

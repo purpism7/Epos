@@ -1,4 +1,4 @@
-﻿using Common;
+using Common;
 using Creature;
 using Creature.Action;
 using Cysharp.Threading.Tasks;
@@ -15,7 +15,7 @@ namespace Battle.Strategy
         {
             base.Apply(iStrategyDataProvider);
     
-            LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
         }
 
         public override void InitializeFormationPosition()
@@ -23,10 +23,10 @@ namespace Battle.Strategy
             base.InitializeFormationPosition();
             
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-            SetFormationPosition(iCombatant, DirectionType.Back, 6f);
+            SetFormationPosition(iCombatant, DirectionType.Right, 7f, Vector2.zero);
             
-            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            SetFormationPosition(iCombatant, DirectionType.Left, 6f);
+            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            SetFormationPosition(iCombatant, DirectionType.Forward, 6f, new Vector2(5f, 0));
         }
 
         public override void MoveFormation(Vector3 targetPosition)
@@ -36,8 +36,8 @@ namespace Battle.Strategy
             var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
             TraceTo(iCombatant, DirectionType.Back, 4f, false);
             
-            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            TraceTo(iCombatant, DirectionType.Left, 4f, false);
+            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            TraceTo(iCombatant, DirectionType.Forward, 6f, false);
         }
 
         public override async UniTask RegroupToLeaderAsync()
@@ -65,10 +65,10 @@ namespace Battle.Strategy
             }
 
             // --- 두 번째 유닛 이동 지시 ---
-            var combatant2 = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
+            var combatant2 = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
             if (combatant2?.IActor?.IActCtr != null)
             {
-                TraceTo(combatant2, DirectionType.Left, 4f, true);
+                TraceTo(combatant2, DirectionType.Forward, 6f, true);
                 //combatant2?.IActor?.IActCtr?.TraceTo(traceParam);
                 combatant2?.IActor?.IActCtr?.OnActEnded(onTraceEnded);
                 totalMoveCount++;

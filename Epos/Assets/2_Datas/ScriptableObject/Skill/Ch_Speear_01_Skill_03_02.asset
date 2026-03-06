@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8
   AnimationName: Skill_03_02
+  EffectName: 
   ESkillCategory: 2
   Cooltime: 20
   MP: 0
@@ -24,5 +25,13 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 20
   DashAnimationName: Skill_03_01
+  ShakeCamera: 1
   ProjectilePrefab: {fileID: 0}
+  BurstCount: 1
+  BurstDelay: 0
   PlayAnimation: 0
+  StartOffsetPosition: {x: 0, y: 0, z: 0}
+  AccelTime: 1
+  DestroyOnHit: 1
+  HitEffectName: 
+  spreadRadius: 0

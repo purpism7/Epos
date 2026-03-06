@@ -16,6 +16,30 @@ namespace Lifetime
 {
     public class GlobalLifetimeScope : LifetimeScope
     {
+        [SerializeField] private UIManager uiManager;
+        [SerializeField] private CameraManager cameraManager;
+        [SerializeField] private SceneInitializer sceneInitializer;
+        [SerializeField] private Party party;
+
+        // 씬을 다시 로드해도 껍데기(Scope)가 증식하지 않도록 방어
+        private static GlobalLifetimeScope _instance;
+
+        protected override void Awake()
+        {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(this.gameObject);
+                return;
+            }
+            _instance = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            base.Awake();
+
+            Debug.Log("GlobalLifetimeScope Awake");
+            InitalizeAsync().Forget();
+        }
+
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
@@ -38,24 +62,30 @@ namespace Lifetime
                 .UnderTransform(transform)
                 .As<IEffectManager>();
 
-            builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
-            builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
-            builder.RegisterComponentInHierarchy<Party>().As<IParty>();
-            builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
+            builder.RegisterComponentOnNewGameObject<ObjectPooler>(VContainer.Lifetime.Singleton, $"[{nameof(ObjectPooler)}]")
+                .UnderTransform(transform)
+                .AsSelf();
 
-            builder.RegisterComponentOnNewGameObject<ObjectPooler>(VContainer.Lifetime.Singleton, $"[{nameof(ObjectPooler)}]").AsSelf();
+            // 방법 A: 인스펙터에서 연결한 레퍼런스 등록 (권장: 성능이 좋고 직관적임)
+            if (uiManager != null)
+                builder.RegisterComponent(uiManager).AsSelf();
+
+            if (cameraManager != null) 
+                builder.RegisterComponent(cameraManager).As<ICameraManager>();
+
+            if (sceneInitializer != null) 
+                builder.RegisterComponent(sceneInitializer).AsSelf();
+
+            if (party != null)
+                builder.RegisterComponent(party).As<IParty>();
+
+            //builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
+            //builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
+            //builder.RegisterComponentInHierarchy<Party>().As<IParty>();
+            //builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
+
             builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
             builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
-        }
-
-        protected override void Awake()
-        {
-            base.Awake();
-
-            Debug.Log("GlobalLifetimeScope Awake");
-            DontDestroyOnLoad(this);
-
-            InitalizeAsync().Forget();
         }
 
         private async UniTask InitalizeAsync()

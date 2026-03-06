@@ -10,6 +10,7 @@ using DG.Tweening;
 using VContainer;
 
 using Entities;
+using GameSystem.Event;
 
 using Vector3 = UnityEngine.Vector3;
 
@@ -26,6 +27,8 @@ namespace GameSystem
         
         void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? offsetPosition = null);
         void ClearFocus(Action endAction = null);
+        
+        void Shake(float duration = 0.3f, float strength = 1f);
     }
     
     public class CameraManager : Manager, ICameraManager
@@ -54,10 +57,61 @@ namespace GameSystem
         //private Vector3? _targetPosition = null;
         private Transform _targetTm = null;
         private Vector3 _targetOffsetPosition = Vector3.zero;
+        private Vector3 _shakeOffset = Vector3.zero;
+        private Tween _shakeTween;
         
         public Camera MainCamera { get { return mainCamera; } }
         public bool IsMove { get; private set; }
 
+        private void OnEnable()
+        {
+            GameSystem.Event.EventHandler.Add<SkillImpactEventData>(OnSkillImpact);
+        }
+
+        private void OnDisable()
+        {
+            GameSystem.Event.EventHandler.Remove<SkillImpactEventData>(OnSkillImpact);
+        }
+
+        private void OnSkillImpact(SkillImpactEventData eventData)
+        {
+            var skillData = eventData?.ISkill?.SkillData;
+            if (skillData == null || !skillData.ShakeCamera)
+                return;
+
+            Shake();
+        }
+
+        public void Shake(float duration = 0.3f, float strength = 1f)
+        {
+            if (mainCamera == null)
+                return;
+
+            // 1. 기존에 진행 중인 쉐이크가 있다면 강제로 종료 (중복 실행 충돌 방지)
+            if (_shakeTween != null && _shakeTween.IsActive())
+            {
+                _shakeTween.Kill();
+            }
+
+            // 2. 오프셋 초기화
+            _shakeOffset = Vector3.zero;
+
+            // 3. 쉐이크 실행 및 Tween 참조 저장
+            _shakeTween = DOTween.Shake(
+                    () => _shakeOffset, 
+                    x => _shakeOffset = x, 
+                    duration, 
+                    strength, 
+                    30, 
+                    90f, 
+                    false, 
+                    true, 
+                    ShakeRandomnessMode.Full
+                )
+                .SetUpdate(true)
+                // 4. 안전장치: 쉐이크가 완전히 끝났을 때 오프셋을 0으로 원복
+                .OnKill(() => _shakeOffset = Vector3.zero); 
+        }
 
         private void LateUpdate()
         {
@@ -182,8 +236,8 @@ namespace GameSystem
             var targetPos = _targetTm.position + _targetOffsetPosition;
             targetPos.z = -100f;
             
-            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime);
-        
+            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime) + _shakeOffset;
+    
             // ReturnDistance = Vector3.Distance(currentPos, targetPos);
         }
 

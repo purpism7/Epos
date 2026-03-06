@@ -13079,6 +13079,7 @@ MonoBehaviour:
   rootTm: {fileID: 8303889660134961840}
   allyBattlePortraitRootRectTm: {fileID: 7095646962515320324}
   animator: {fileID: 3363085717312505813}
+  strategyText: {fileID: 3208188263720202866}
   shoutPanel: {fileID: 7215560735774815595}
   strategyPanel: {fileID: 5729631261168129984}
   shoutBtn: {fileID: 1317394280193683452}

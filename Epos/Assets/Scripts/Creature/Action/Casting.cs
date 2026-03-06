@@ -123,6 +123,7 @@ namespace Creature.Action
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             _param?.IListener?.InUse();
+            GameSystem.Event.EventHandler.Notify(new GameSystem.Event.SkillImpactEventData().WithISkill(_param?.ISkill));
             ImpactToTargetList(skillData);
 
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));

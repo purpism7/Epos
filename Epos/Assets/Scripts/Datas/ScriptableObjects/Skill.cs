@@ -27,6 +27,8 @@ namespace Datas.ScriptableObjects
         public float KnockbackDistance = 0;
         public string DashAnimationName = string.Empty;
 
+        public bool ShakeCamera = false;
+
         // TODO: Projectile Table 
         [Header("Projectile")]
         public GameObject ProjectilePrefab = null;

@@ -28,16 +28,6 @@ public static class Extensions
         if (component == null)
             return;
 
-        SetActiveAsync(component, active).Forget();
-    }
-
-    private static async UniTask SetActiveAsync(this Component component, bool active)
-    {
-        await UniTask.Yield();
-
-        if (component == null)
-            return;
-
         component.gameObject.SetActive(active);
     }
 
@@ -116,19 +106,16 @@ public static class Extensions
             string resolvedAnimationName = ResolveAnimationName(animationState, animationName);
             if (string.IsNullOrEmpty(resolvedAnimationName))
                 return false;
-            
-            animationState.ClearTrack(0);
-            // skeletonAnimation.skeleton?.SetToSetupPose();
+
+            animationState.ClearTracks();
+            skeletonAnimation.skeleton?.SetToSetupPose();
             
             var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
                 return false;
             
             if (completedAction != null)
-            {
-                trackEntry.Complete -= completedAction.Invoke;
                 trackEntry.Complete += completedAction.Invoke;
-            }
 
             duration = trackEntry.Animation.Duration;
 
@@ -156,18 +143,19 @@ public static class Extensions
             if (string.IsNullOrEmpty(resolvedAnimationName))
                 return;
 
-            animationState.ClearTrack(0);
+            animationState.ClearTracks();
+            skeletonGraphic.Skeleton?.SetToSetupPose();
+
             var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
                 return;
 
             if (completedAction != null)
-            {
-                trackEntry.Complete -= completedAction.Invoke;
                 trackEntry.Complete += completedAction.Invoke;
-            }
 
             duration = trackEntry.Animation.Duration;
+
+            skeletonGraphic.Update(0);
         }
         catch(Exception e)
         {
