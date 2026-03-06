@@ -15,11 +15,6 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 2ebd946aa93264a6ca52816211c4ef18
   m_SerializeEntries:
-  - m_GUID: 3996fa4ceaf3f0e47aeaf22193b85c31
-    m_Address: Assets/3_Resource/Effect/DamegeFont/DamegeFont_Whoosh_H_01.mat
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a97c105638bdf8b4a8650670310a4cd3
     m_Address: Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat
     m_ReadOnly: 0
