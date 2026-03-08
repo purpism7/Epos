@@ -4,6 +4,7 @@ using Creature.Action;
 using Cysharp.Threading.Tasks;
 using GameSystem;
 using System;
+using System.Threading;
 using UnityEngine;
 
 namespace Battle.Strategy
@@ -22,59 +23,71 @@ namespace Battle.Strategy
             base.MoveFormation(targetPosition);
 
             // temp
-            var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
+            var iCombatant = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
             TraceTo(iCombatant, DirectionType.Right, 5f, false);
 
-            iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
+            iCombatant = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
             TraceTo(iCombatant, DirectionType.Back, 5f, false);
         }
 
-        public override async UniTask RegroupToLeaderAsync()
+        public override async UniTask RegroupToLeaderAsync(CancellationToken cancellationToken)
         {
-            await base.RegroupToLeaderAsync();
-
-            // 1. 몇 명이 이동해야 하고, 몇 명이 도착했는지 체크할 변수
-            int totalMoveCount = 0;
-            int completedCount = 0;
-
-            // 2. 액션이 끝날 때마다 완료 카운트를 올려줄 콜백 함수 생성
-            Action<Creature.Action.Trace> onTraceEnded = (act) =>
+            await base.RegroupToLeaderAsync(cancellationToken);
+            
+            if (cancellationToken.IsCancellationRequested)
+                return;
+            
+            try 
             {
-                completedCount++;
-            };
+                // 1. 몇 명이 이동해야 하고, 몇 명이 도착했는지 체크할 변수
+                int totalMoveCount = 0;
+                int completedCount = 0;
 
-            // --- 첫 번째 유닛 이동 지시 ---
-            var combatant1 = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
-            if (combatant1?.IActor?.IActCtr != null)
-            {
-                TraceTo(combatant1, DirectionType.Right, 5f, true);
-                //combatant1?.IActor?.IActCtr?.TraceTo(traceParam);               // 1. 이동 명령
-                combatant1?.IActor?.IActCtr?.OnActEnded(onTraceEnded);           // 2. 종료 이벤트 구독
-                totalMoveCount++;                                      // 3. 목표 카운트 증가
+                // 2. 액션이 끝날 때마다 완료 카운트를 올려줄 콜백 함수 생성
+                Action<Creature.Action.Trace> onTraceEnded = (act) =>
+                {
+                    completedCount++;
+                };
+
+                // --- 첫 번째 유닛 이동 지시 ---
+                var combatant1 = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
+                if (combatant1?.IActor?.IActCtr != null)
+                {
+                    TraceTo(combatant1, DirectionType.Right, 7f, true);
+                    //combatant1?.IActor?.IActCtr?.TraceTo(traceParam);               // 1. 이동 명령
+                    combatant1?.IActor?.IActCtr?.OnActEnded(onTraceEnded);           // 2. 종료 이벤트 구독
+                    totalMoveCount++;                                      // 3. 목표 카운트 증가
+                }
+
+                // --- 두 번째 유닛 이동 지시 ---
+                var combatant2 = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
+                if (combatant2?.IActor?.IActCtr != null)
+                {
+                    TraceTo(combatant2, DirectionType.Back, 7f, true);
+                    //combatant2?.IActor?.IActCtr?.TraceTo(traceParam);
+                    combatant2?.IActor?.IActCtr?.OnActEnded(onTraceEnded);
+                    totalMoveCount++;
+                }
+
+                // 🌟 3. 목표한 유닛들이 모두 도착할 때까지 매 프레임 대기합니다.
+                if (totalMoveCount > 0)
+                    await UniTask.WaitUntil(() => completedCount >= totalMoveCount, cancellationToken: cancellationToken);
+
+                // 🚨 4. 메모리 누수 방지: 대기가 끝났으면 반드시 이벤트를 해제해 줍니다!
+                if (combatant1 != null)
+                    combatant1?.IActor?.IActCtr?.RemoveActEnded(onTraceEnded);
+
+                if (combatant2 != null)
+                    combatant2.IActor?.IActCtr?.RemoveActEnded(onTraceEnded);
+
+                UnityEngine.Debug.Log("모두 집결 완료!");
             }
-
-            // --- 두 번째 유닛 이동 지시 ---
-            var combatant2 = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
-            if (combatant2?.IActor?.IActCtr != null)
+            catch (OperationCanceledException)
             {
-                TraceTo(combatant2, DirectionType.Back, 5f, true);
-                //combatant2?.IActor?.IActCtr?.TraceTo(traceParam);
-                combatant2?.IActor?.IActCtr?.OnActEnded(onTraceEnded);
-                totalMoveCount++;
+                // 취소 시 깔끔하게 종료
             }
-
-            // 🌟 3. 목표한 유닛들이 모두 도착할 때까지 매 프레임 대기합니다.
-            if (totalMoveCount > 0)
-                await UniTask.WaitUntil(() => completedCount >= totalMoveCount);
-
-            // 🚨 4. 메모리 누수 방지: 대기가 끝났으면 반드시 이벤트를 해제해 줍니다!
-            if (combatant1 != null)
-                combatant1?.IActor?.IActCtr?.RemoveActEnded(onTraceEnded);
-
-            if (combatant2 != null)
-                combatant2.IActor?.IActCtr?.RemoveActEnded(onTraceEnded);
-
-            UnityEngine.Debug.Log("모두 집결 완료!");
+            
+            
 
             //var iCombatant = _iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
             //TraceTo(iCombatant, DirectionType.Right, 3f);

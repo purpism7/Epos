@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using GameSystem;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 namespace Battle.Strategy
@@ -17,14 +18,14 @@ namespace Battle.Strategy
 
         void InitializeFormationPosition();
         void MoveFormation(Vector3 targetPosition);
-        UniTask RegroupToLeaderAsync();
+        UniTask RegroupToLeaderAsync(CancellationToken cancellationToken);
 
         ICombatant LeaderICombatant { get; }
 }
 
     public abstract class BaseStrategy : IStrategy
     {
-        protected IStrategyDataProvider _iStrategyDataProvider = null;
+        protected IStrategyDataProvider _strategyDataProvider = null;
         //protected float _moveSpeed = 5f;
 
 #if UNITY_EDITOR
@@ -33,9 +34,9 @@ namespace Battle.Strategy
 
         public ICombatant LeaderICombatant { get; protected set; } = null;
 
-        public virtual void Apply(IStrategyDataProvider iStrategyDataProvider)
+        public virtual void Apply(IStrategyDataProvider strategyDataProvider)
         { 
-            _iStrategyDataProvider = iStrategyDataProvider;
+            _strategyDataProvider = strategyDataProvider;
         }
 
         public virtual void ChainUpdate()
@@ -62,7 +63,7 @@ namespace Battle.Strategy
             {
                 MoveSpeed = moveSpeed,
                 TargetPos = targetPosition,
-            }.WithTargetICombatant(null);
+            };
 
             actorCtr.MoveTo(moveParam)?.Execute();
 
@@ -78,7 +79,7 @@ namespace Battle.Strategy
 #endif
         }
 
-        public virtual UniTask RegroupToLeaderAsync()
+        public virtual UniTask RegroupToLeaderAsync(CancellationToken cancellationToken)
         {
             return UniTask.CompletedTask;
         }

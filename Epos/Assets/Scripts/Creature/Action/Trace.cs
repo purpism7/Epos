@@ -72,8 +72,7 @@ namespace Creature.Action
                 _prevTargetPosition = _param.TargetTm.position;
             else if (_param.TargetICombatant != null)
                 _prevTargetPosition = _param.TargetICombatant.Transform.position;
-
-            EnableNavMeshAgent();
+            
             Activate();
 
             if(_param.Distance > 0)
@@ -86,6 +85,13 @@ namespace Creature.Action
             PlayAnimation(_param.AnimationKey, true);
             
             _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
+        }
+
+        protected override void Activate()
+        {
+            base.Activate();
+            
+            EnableNavMeshAgent();
         }
 
         public override void Deactivate()
@@ -303,7 +309,7 @@ namespace Creature.Action
                 // 2. 🚨 뱅뱅 도는 원인 해결 🚨
                 // 매 프레임 목적지를 덮어씌우지 말고, 리더가 의미 있는 거리(0.2f) 이상 
                 // 이동했을 때만 내 목적지를 갱신해 줍니다.
-                //if (Vector2.Distance(navMeshAgent.destination, targetPosition) > 0.2f)
+                // if (Vector2.Distance(navMeshAgent.destination, targetPosition) > 0.2f)
                 {
                     navMeshAgent.SetDestination(targetPosition);
                 }
@@ -314,14 +320,14 @@ namespace Creature.Action
                     _iActor?.IActCtr?.Flip(direction.x);
                 }
 
-                if(_param.IsEndOnArrival)
-                {
-                    if (distance <= _param.Distance + 0.05f)
-                    {
-                        End();
-                        return;
-                    }
-                }
+                // if(_param.IsEndOnArrival)
+                // {
+                //     if (distance <= _param.Distance + 0.05f)
+                //     {
+                //         End();
+                //         return;
+                //     }
+                // }
                 
                 // 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
                 //{

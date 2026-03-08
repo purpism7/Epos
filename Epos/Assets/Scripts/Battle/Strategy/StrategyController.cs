@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 
@@ -39,6 +41,7 @@ namespace Battle.Strategy
         [Inject] private ICameraManager _cameraManager = null;
 
         private IListener _listener = null;
+        private CancellationTokenSource _regroupCancelTokenSource = null;
 
         public List<ICombatant> AllyICombatantList { get; private set; } = null;
         public IStrategy CurrentIStrategy { get; private set; } = null;
@@ -84,6 +87,26 @@ namespace Battle.Strategy
 
             _listener?.OnChangedStrategy(strategy);
 
+            // Cancel을 먼저 호출하고, Dispose는 그 후에 합니다.
+            // 이미 Dispose된 경우를 대비해 Try-Catch로 감싸거나 null 체크를 정교하게 합니다.
+            if (_regroupCancelTokenSource != null)
+            {
+                try 
+                {
+                    _regroupCancelTokenSource?.Cancel();
+                }
+                catch (ObjectDisposedException) 
+                {
+                    // 이미 Dispose되었다면 무시합니다.
+                }
+                finally 
+                {
+                
+                    _regroupCancelTokenSource?.Dispose();
+                    _regroupCancelTokenSource = null;
+                }
+            }
+            
             RegroupToLeaderAsync(strategy, isInitialized).Forget();
         }
 
@@ -96,8 +119,11 @@ namespace Battle.Strategy
 
             if(!isInitialized)
             {
-                await strategy.RegroupToLeaderAsync();
-
+                if(_regroupCancelTokenSource == null)
+                    _regroupCancelTokenSource = new CancellationTokenSource();
+                
+                await strategy.RegroupToLeaderAsync(_regroupCancelTokenSource.Token);
+                
                 _listener?.OnEndRegroupToLeader(strategy);
             } 
         }
