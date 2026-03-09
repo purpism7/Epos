@@ -31,7 +31,7 @@ namespace GameSystem
     {
         [Inject] private IObjectResolver _iResolver = null;
         [Inject] private ICharacterManager _iCharacterManager = null;
-        [Inject] private ICameraManager _iCameraManager = null;
+        //[Inject] private ICameraManager _iCameraManager = null;
         [Inject] private IParty _iParty = null;
 
         private Dictionary<System.Type, BattleType> _battleTypeDic = null;

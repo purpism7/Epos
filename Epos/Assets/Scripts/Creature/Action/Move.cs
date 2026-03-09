@@ -60,8 +60,8 @@ namespace Creature.Action
 
         private const string StopAnimationName = "Stop";
 
-        private Vector3 _prevTargetPosition = Vector3.zero;
-        private Vector3 _randPos = Vector3.zero;
+        //private Vector3 _prevTargetPosition = Vector3.zero;
+        //private Vector3 _randPos = Vector3.zero;
 
         private float _totalDistance = 0;
         private bool _isEnded = false;
@@ -98,12 +98,8 @@ namespace Creature.Action
             if (_param != null &&
                 _param.UseNavMesh)
             {
-                var navMeshAgent = _iActor?.NavMeshAgent;
-                if (navMeshAgent != null)
-                {
-                    EnableNavMeshAgent();
-                    SetNavMeshAgentSpeed();
-                }
+                EnableNavMeshAgent();
+                SetNavMeshAgentSpeed();
             }
             else
                 DisableNavMeshAgent();
@@ -242,6 +238,15 @@ namespace Creature.Action
             if (_iActor?.IStat == null)
                 return;
 
+
+            var cancellationTokenSource = _param?.CancellationTokenSource;
+            if (cancellationTokenSource != null &&
+                cancellationTokenSource.IsCancellationRequested)
+            {
+                End();
+                return;
+            }
+           
             var target = _param.TargetICombatant;
             if (target != null)
             {
@@ -280,7 +285,7 @@ namespace Creature.Action
             
             _totalDistance += distance;
             //Debug.Log("_totalDistance  = " + _totalDistance);
-            _prevTargetPosition = targetPosition;
+            //_prevTargetPosition = targetPosition;
 
             if (distance < _param.Distance)
                 End();

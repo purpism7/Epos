@@ -84,16 +84,18 @@ namespace Creature.Action
                 }
 
                 var moveParam = new Move.Param
+                {
+                    CancellationTokenSource = _param.CancellationTokenSource,
+
+                    MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
+                    FinishAction = () =>
                     {
-                        MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
-                        FinishAction = () =>
-                        {
-                            CastingSkill(attacker, iSkill, closestTarget, targetList);
-                        },
-                        IsJumpMove = false,
-                    }
-                    .WithTargetICombatant(closestTarget)?
-                    .WithDistance(skillRange);
+                        CastingSkill(attacker, iSkill, closestTarget, targetList);
+                    },
+                    IsJumpMove = false,
+                }
+                .WithTargetICombatant(closestTarget)?
+                .WithDistance(skillRange);
 
                 attacker.IActor.IActCtr?
                     .MoveTo(moveParam)?

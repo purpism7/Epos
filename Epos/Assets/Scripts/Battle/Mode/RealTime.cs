@@ -43,15 +43,15 @@ namespace Battle.Mode
             }
         }
 
-        [Inject] private ICameraManager _iCameraManager = null;
+        //[Inject] private ICameraManager _iCameraManager = null;
         [Inject] private UIManager _uiManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private WeakTypeMap<IActor> _iActorMap = null;
         [Inject] private IStrategyController _strategyController = null;
 
-        private IWaypointController _iWaypointCtr = null;
+        private IWaypointController _waypointController = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
-        private CancellationTokenSource _weightedActionCTS = null;
+        //private CancellationTokenSource _weightedActionCTS = null;
 
         private IBattleMainView _battleMainView = null;
 
@@ -65,7 +65,7 @@ namespace Battle.Mode
             _iWeightedActionCtr?.Initialize(this);
             InitializeWaypointController();
             
-            _strategyController?.Initialize(this, _data?.AllyICombatantList);
+            _strategyController?.Initialize(this, _waypointController, _data?.AllyICombatantList);
             
             return this;
         }
@@ -76,7 +76,7 @@ namespace Battle.Mode
                 .WithIListener(this)
                 .WithWaypoints(_data?.Waypoints);
 
-            _iWaypointCtr = WaypointController.Create(_iResolver, param);
+            _waypointController = WaypointController.Create(_iResolver, param);
         }
 
         public override void ChainUpdate()
@@ -110,7 +110,8 @@ namespace Battle.Mode
                     continue;
                 iActor.ChainLateUpdate();
             }
-            _iWaypointCtr?.ChainLateUpdate();
+
+            _waypointController?.ChainLateUpdate();
         }
 
         protected override void End(bool isWin)
@@ -124,7 +125,7 @@ namespace Battle.Mode
 
         private void BattleWin()
         {
-            var waypoint = _iWaypointCtr?.Waypoint;
+            var waypoint = _waypointController?.Waypoint;
             if (waypoint == null)
             {
                 for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
@@ -199,9 +200,9 @@ namespace Battle.Mode
 
                     iCombatant.IActor?.ChainUpdate();
                 }
-            }            
+            }
 
-            _iWaypointCtr?.ChainUpdate(_strategyController?.LeaderICombatant);
+            _waypointController?.ChainUpdate(_strategyController?.LeaderICombatant);
         }
 
         private void CreateHpProgress(ICombatant combatant)
@@ -249,18 +250,22 @@ namespace Battle.Mode
             emotionPart?.ActivateAsync(param);
         }
 
+        /// <summary>
+        /// 전투 처음 시작 시 한번, Waypoint 도착 시 호출
+        /// </summary>
+        /// <returns></returns>
         private async UniTask ProcessNextBattlePhaseAsync()
         {
             await UniTask.Yield();
             
-            var waypoint = _iWaypointCtr?.Waypoint;
+            var waypoint = _waypointController?.Waypoint;
             if (waypoint == null)
             {
                 BattleWin();
                 return;
             }
 
-            if (waypoint.AliveMonsterCount <= 0)
+            if (!_waypointController.HasAliveMonsters)
                 MoveToWaypoint(waypoint);
             else
                 BeginCombat(waypoint);
@@ -277,7 +282,7 @@ namespace Battle.Mode
                 return;
 
             _battleState = BattleState.Combat;
-            _weightedActionCTS = new();
+            //_weightedActionCTS = new();
 
             var enemyCombatantList = waypoint?.EnemyICombatantList;
             for (int i = 0; i < enemyCombatantList?.Count; ++i)
@@ -330,21 +335,21 @@ namespace Battle.Mode
             if (!actor.IsAlive)
                 return;
 
-            var waypoint = _iWaypointCtr?.Waypoint;
+            var waypoint = _waypointController?.Waypoint;
             if (waypoint == null)
             {
                 actor.IActCtr?.Execute();
                 return;
             }
 
-            if (waypoint.AliveMonsterCount <= 0)
+            if (!_waypointController.HasAliveMonsters)
             {
                 if (_battleState == BattleState.Combat)
                     _battleState = BattleState.MoveWayPoint;
 
-                _weightedActionCTS?.Cancel();
-                _weightedActionCTS?.Dispose();
-                _weightedActionCTS = null;
+                //_weightedActionCTS?.Cancel();
+                //_weightedActionCTS?.Dispose();
+                //_weightedActionCTS = null;
 
                 
                 // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
@@ -362,7 +367,7 @@ namespace Battle.Mode
 
         WeightedActionParam IWeightedActionRequester.GetWeightedActionParam(ICombatant attacker, TeamType teamType, IWeightedAction iWeightedAction)
         {
-            if (_iWaypointCtr == null)
+            if (_waypointController == null)
                 return null;
 
             if (_data == null)
@@ -374,12 +379,15 @@ namespace Battle.Mode
                     {
                         List<ICombatant> combatants = new();
                         combatants.Clear();
-                        combatants.AddRange(_iWaypointCtr.Waypoint.EnemyICombatantList);
+                        combatants.AddRange(_waypointController.Waypoint.EnemyICombatantList);
                         combatants.AddRange(_data.AllyICombatantList);
 
-                        var param = new ApproachAttack.Param()
-                            .WithAttacker(attacker)
-                            .WithICombatantList(combatants);
+                        var param = new ApproachAttack.Param
+                        {
+                            CancellationTokenSource = LinkedCancellationTokenSource
+                        }
+                        .WithAttacker(attacker)
+                        .WithICombatantList(combatants);
 
                         return param;
                     }
@@ -388,11 +396,12 @@ namespace Battle.Mode
             return null;
         }
 
-        CancellationTokenSource IWeightedActionRequester.CancellationTokenSource
+        //CancellationTokenSource IWeightedActionRequester.CancellationTokenSource
+        private CancellationTokenSource LinkedCancellationTokenSource
         {
             get
             {
-                return _weightedActionCTS;
+                return CancellationTokenSource.CreateLinkedTokenSource(_strategyController.CancellationToken);
             }
         }
         #endregion
@@ -442,7 +451,7 @@ namespace Battle.Mode
 
         private async UniTask OnEndRegroupToLeaderAsync(IStrategy strategy)
         {
-            var waypoint = _iWaypointCtr?.Waypoint;
+            var waypoint = _waypointController?.Waypoint;
             if (waypoint == null)
             {
                 BattleWin();
@@ -451,7 +460,7 @@ namespace Battle.Mode
 
             // await UniTask.Delay(500);
             
-            if (waypoint.AliveMonsterCount <= 0)
+            if (!_waypointController.HasAliveMonsters)
                 _battleState = BattleState.MoveWayPoint;
             else
                 _battleState = BattleState.Combat;

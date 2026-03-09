@@ -55,6 +55,15 @@ namespace Battle
             }
         }
 
+        public bool HasAliveMonsters
+        {
+            get
+            {
+                return AliveMonsterCount > 0;
+            }
+        }
+   
+
         [Inject]
         private void Initialize(IObjectResolver iResolver)
         {

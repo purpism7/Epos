@@ -3,9 +3,11 @@ using Creature;
 using Creature.Action;
 using Cysharp.Threading.Tasks;
 using GameSystem;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using TMPro;
 using UnityEngine;
 
 namespace Battle.Strategy
@@ -18,7 +20,7 @@ namespace Battle.Strategy
 
         void InitializeFormationPosition();
         void MoveFormation(Vector3 targetPosition);
-        UniTask RegroupToLeaderAsync(CancellationToken cancellationToken);
+        UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken);
 
         ICombatant LeaderICombatant { get; }
 }
@@ -26,7 +28,9 @@ namespace Battle.Strategy
     public abstract class BaseStrategy : IStrategy
     {
         protected IStrategyDataProvider _strategyDataProvider = null;
-        //protected float _moveSpeed = 5f;
+        protected List<ICombatant> _combatants = new List<ICombatant>();
+        protected int _totalMoveCount = 0;
+        protected int _completedCount = 0;
 
 #if UNITY_EDITOR
         private DebugObject _debugObject = null;
@@ -37,6 +41,8 @@ namespace Battle.Strategy
         public virtual void Apply(IStrategyDataProvider strategyDataProvider)
         { 
             _strategyDataProvider = strategyDataProvider;
+            _totalMoveCount = 0;
+            _completedCount = 0;
         }
 
         public virtual void ChainUpdate()
@@ -58,14 +64,7 @@ namespace Battle.Strategy
             if (actorCtr == null)
                 return;
 
-            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
-            var moveParam = new Move.Param
-            {
-                MoveSpeed = moveSpeed,
-                TargetPos = targetPosition,
-            };
-
-            actorCtr.MoveTo(moveParam)?.Execute();
+            MoveLeaderToTarget(targetPosition);
 
 #if UNITY_EDITOR
             if(!_debugObject)
@@ -79,9 +78,35 @@ namespace Battle.Strategy
 #endif
         }
 
-        public virtual UniTask RegroupToLeaderAsync(CancellationToken cancellationToken)
+        public virtual async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
         {
-            return UniTask.CompletedTask;
+            if (targetPosition != null)
+            {
+                MoveLeaderToTarget(targetPosition.Value);
+
+                await UniTask.Yield();
+            }
+
+            Debug.Log("RegroupToLeaderAsync");
+        }
+
+        private void MoveLeaderToTarget(Vector3 targetPosition)
+        {
+            if (LeaderICombatant == null)
+                return;
+
+            var actorCtr = LeaderICombatant?.IActor?.IActCtr;
+            if (actorCtr == null)
+                return;
+
+            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+            var moveParam = new Move.Param
+            {
+                MoveSpeed = moveSpeed,
+                TargetPos = targetPosition,
+            };
+
+            actorCtr.MoveTo(moveParam)?.Execute();
         }
 
         protected void TraceTo(ICombatant combatant, DirectionType directionType, float distance, bool isEndOnArrival)
@@ -101,6 +126,33 @@ namespace Battle.Strategy
             combatant.IActor?.IActCtr?
                 .TraceTo(traceParam)?
                 .Execute();
+        }
+
+        protected bool TryStartTraceMove(int characterId, DirectionType directionType, float distance, bool isEndOnArrival)
+        {
+            var combatant = _strategyDataProvider?.AllyICombatantList?.Find(c => c.IActor.Id == characterId);
+            if (combatant?.IActor?.IActCtr != null)
+            {
+                TraceTo(combatant, directionType, distance, isEndOnArrival);
+                combatant.IActor?.IActCtr?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+
+                _totalMoveCount++;
+
+                return true;
+            }
+
+            return false;
+        }
+
+        protected void EndTraceMove(int characterId)
+        {
+            var combatant = _strategyDataProvider?.AllyICombatantList?.Find(c => c.IActor.Id == characterId);
+            combatant?.IActor?.IActCtr?.RemoveActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+        }
+
+        private void OnTraceActionEnded(Creature.Action.Trace act)
+        {
+            _completedCount++;
         }
 
         protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)

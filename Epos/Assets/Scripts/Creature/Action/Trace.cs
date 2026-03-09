@@ -262,23 +262,6 @@ namespace Creature.Action
             }
 
             var distance = Vector2.Distance(actorPosition, targetPosition);
-            //if (distance <= _param.Distance + 0.05f)
-            //// 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
-            //{
-            //    if (_param.IsEndOnArrival)
-            //    {
-            //        End();
-            //        return;
-            //    }
-
-            //    if (!navMeshAgent.isStopped)
-            //    {
-            //        navMeshAgent.isStopped = true;
-            //        navMeshAgent.velocity = Vector3.zero;
-            //        _iActor?.IEffectCtr?.Deactivate("Move");
-            //    }
-            //}
-
             // 🚨 핵심 수정: _param.Distance가 아니라 0.1f (혹은 navMeshAgent.stoppingDistance)로 도착 판별!
             if (distance <= 0.1f)
             {
@@ -319,28 +302,9 @@ namespace Creature.Action
                 {
                     _iActor?.IActCtr?.Flip(direction.x);
                 }
-
-                // if(_param.IsEndOnArrival)
-                // {
-                //     if (distance <= _param.Distance + 0.05f)
-                //     {
-                //         End();
-                //         return;
-                //     }
-                // }
-                
-                // 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
-                //{
-                //    if (_param.IsEndOnArrival)
-                //    {
-                //        End();
-                //        return;
-                //    }
-                //}
             }
 
             _iActor?.SortingOrder(actorPosition.y);
-            Debug.DrawLine(actorPosition, targetPosition, Color.magenta);
         }
 
         protected override void End()

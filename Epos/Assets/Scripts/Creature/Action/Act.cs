@@ -4,6 +4,7 @@ using UnityEngine;
 
 using Spine;
 using VContainer;
+using System.Threading;
 
 namespace Creature.Action
 {
@@ -18,7 +19,9 @@ namespace Creature.Action
 
     public class ActParam
     {
-        public string AnimationKey { get; private set; } = string.Empty;
+        public string AnimationKey { get; set; } = string.Empty;
+
+        public CancellationTokenSource CancellationTokenSource { get; set; } = null;
 
         public ActParam SetAnimationKey(string key)
         {

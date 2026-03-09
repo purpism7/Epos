@@ -10,14 +10,13 @@ using Common;
 using Creature;
 using Creature.Action;
 using Creature.Action.Weight;
-using Random = UnityEngine.Random;
 
 namespace Battle
 {
     public interface IWeightedActionRequester
     {
         WeightedActionParam GetWeightedActionParam(ICombatant attacker, TeamType teamType, IWeightedAction iWeightedAction);
-        CancellationTokenSource CancellationTokenSource { get; }
+        //CancellationTokenSource CancellationTokenSource { get; }
     }
 
     public interface IWeightedActionController
@@ -60,29 +59,44 @@ namespace Battle
         {
             try
             {
-                var cancellationTokenSource = requester.CancellationTokenSource;
-                if (cancellationTokenSource != null)
-                {
-                    float seconds = 0.5f;
-                    // int frame = 30;
-                    if (executor.TeamType == TeamType.Enemy && isFirst)
-                        seconds += UnityEngine.Random.Range(0, 0.5f);
-                    // frame += UnityEngine.Random.Range(0, 30);
+                //var cancellationTokenSource = requester.CancellationTokenSource;
+                //if (cancellationTokenSource != null)
+                //{
+                //    float seconds = 0.5f;
+                //    // int frame = 30;
+                //    if (executor.TeamType == TeamType.Enemy && isFirst)
+                //        seconds += UnityEngine.Random.Range(0, 0.5f);
+                //    // frame += UnityEngine.Random.Range(0, 30);
 
-                    // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
-                    // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-                    await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
-                }
+                //    // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
+                //    // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
+                //    await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
+                //}
                 
                 var actionWeight = GetHighestPriorityActionWeight();
-                // 액션이 없으면 null
-                var iWeightedAction = actionWeight?.Create();
+                var weightedAction = actionWeight?.Create();
                 
                 // 액션이 유효하다면 실행
-                if (iWeightedAction != null)
+                if (weightedAction != null)
                 {
-                    var param = requester.GetWeightedActionParam(executor, executor.TeamType, iWeightedAction);
-                    iWeightedAction.SetParam(param)
+                    var param = requester.GetWeightedActionParam(executor, executor.TeamType, weightedAction);
+
+                    var cancellationTokenSource = param.CancellationTokenSource;
+                    if (cancellationTokenSource != null)
+                    {
+                        float seconds = 0.5f;
+                        // int frame = 30;
+                        if (executor.TeamType == TeamType.Enemy && isFirst)
+                            seconds += UnityEngine.Random.Range(0, 0.5f);
+                        // frame += UnityEngine.Random.Range(0, 30);
+
+                        // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
+                        // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
+                        await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
+                    }
+
+
+                    weightedAction.SetParam(param)
                         .SetEndAction(EndAction)
                         .SetIActor(executor.IActor)
                         .Execute();

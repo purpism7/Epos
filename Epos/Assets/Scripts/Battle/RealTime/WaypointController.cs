@@ -7,8 +7,6 @@ using VContainer.Unity;
 
 using Creature;
 
-using Component = Common.Component;
-
 namespace Battle.RealTime
 {
     public interface IWaypointController
@@ -17,6 +15,7 @@ namespace Battle.RealTime
         void ChainLateUpdate();
         
         Waypoint Waypoint { get; } 
+        bool HasAliveMonsters { get; }
     }
     
     public class WaypointController : MonoBehaviour, IWaypointController
@@ -59,12 +58,22 @@ namespace Battle.RealTime
             void Arrived();
         }
 
-        [Inject] private IObjectResolver _iResolver = null;
+        //[Inject] private IObjectResolver _iResolver = null;
 
         private Param _param = null;
         private Queue<Waypoint> _waypointQueue = null;
 
         public Waypoint Waypoint { get; private set; } = null;
+        public bool HasAliveMonsters
+        {
+            get
+            {
+                if (Waypoint == null)
+                    return false;
+
+                return Waypoint.AliveMonsterCount > 0;
+            }
+        }
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

@@ -9,12 +9,13 @@ using VContainer;
 using Creature;
 using Datas.ScriptableObjects;
 using GameSystem;
+using Battle.RealTime;
 
 namespace Battle.Strategy
 {
     public interface IStrategyController
     {
-        void Initialize(StrategyController.IListener iListener, List<ICombatant> allyICombatantList);
+        void Initialize(StrategyController.IListener iListener, IWaypointController waypointController, List<ICombatant> allyICombatantList);
         void ChainUpdate();
 
         void ApplyStrategy(IStrategy iStrategy);
@@ -23,6 +24,7 @@ namespace Battle.Strategy
         ICombatant LeaderICombatant { get; }
 
         IStrategy CurrentIStrategy { get; }
+        CancellationToken CancellationToken { get; }
     }
 
     public interface IStrategyDataProvider
@@ -41,15 +43,27 @@ namespace Battle.Strategy
         [Inject] private ICameraManager _cameraManager = null;
 
         private IListener _listener = null;
-        private CancellationTokenSource _regroupCancelTokenSource = null;
+        private IWaypointController _waypointController = null;
+        private CancellationTokenSource _cancellationTokenSource = null;
 
         public List<ICombatant> AllyICombatantList { get; private set; } = null;
         public IStrategy CurrentIStrategy { get; private set; } = null;
+        public CancellationToken CancellationToken
+        {
+            get
+            {
+                if (_cancellationTokenSource == null)
+                    _cancellationTokenSource = new();
+
+                return _cancellationTokenSource.Token;
+            }
+        }
 
         #region IStrategyController
-        void IStrategyController.Initialize(IListener iListener, List<ICombatant> allyICombatantList)
+        void IStrategyController.Initialize(IListener iListener, IWaypointController waypointController, List<ICombatant> allyICombatantList)
         {
             _listener = iListener;
+            _waypointController = waypointController;
             AllyICombatantList = allyICombatantList;
             
             ApplyStrategy(new Adaptive(), true);
@@ -89,11 +103,11 @@ namespace Battle.Strategy
 
             // Cancel을 먼저 호출하고, Dispose는 그 후에 합니다.
             // 이미 Dispose된 경우를 대비해 Try-Catch로 감싸거나 null 체크를 정교하게 합니다.
-            if (_regroupCancelTokenSource != null)
+            if (_cancellationTokenSource != null)
             {
                 try 
                 {
-                    _regroupCancelTokenSource?.Cancel();
+                    _cancellationTokenSource?.Cancel();
                 }
                 catch (ObjectDisposedException) 
                 {
@@ -101,9 +115,9 @@ namespace Battle.Strategy
                 }
                 finally 
                 {
-                
-                    _regroupCancelTokenSource?.Dispose();
-                    _regroupCancelTokenSource = null;
+
+                    _cancellationTokenSource?.Dispose();
+                    _cancellationTokenSource = null;
                 }
             }
             
@@ -119,10 +133,15 @@ namespace Battle.Strategy
 
             if(!isInitialized)
             {
-                if(_regroupCancelTokenSource == null)
-                    _regroupCancelTokenSource = new CancellationTokenSource();
-                
-                await strategy.RegroupToLeaderAsync(_regroupCancelTokenSource.Token);
+                Vector3? targetPosition = null;
+                var waypoint = _waypointController?.Waypoint;
+                if (waypoint != null)
+                {
+                    if (!waypoint.HasAliveMonsters)
+                        targetPosition = waypoint.Position;
+                }
+
+                await strategy.RegroupToLeaderAsync(targetPosition, CancellationToken);
                 
                 _listener?.OnEndRegroupToLeader(strategy);
             } 

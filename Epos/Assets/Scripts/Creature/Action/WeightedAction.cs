@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using System.Threading;
 using Common;
 
 namespace Creature.Action
@@ -20,7 +20,7 @@ namespace Creature.Action
 
     public class WeightedActionParam : ActParam
     {
-        
+        public CancellationTokenSource CancellationTokenSource = null;
     }
 
     public abstract class WeightedAction<T> : Act<T>, IWeightedActionInitializer, IWeightedAction where T : ActParam
