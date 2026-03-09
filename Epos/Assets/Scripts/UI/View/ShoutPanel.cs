@@ -72,9 +72,18 @@ namespace UI.View
 
         public override void Deactivate()
         {
-            //base.Deactivate();
+            base.Deactivate();
 
-            // animator?.SetBool("OnOff", true);
+             //animator?.SetBool("OnOff", true);
+        }
+
+        private async UniTask DeactivateAsync()
+        {
+            animator?.SetBool("OnOff", true);
+
+            await UniTask.Delay(TimeSpan.FromSeconds(3f));
+
+            Deactivate();
         }
 
         private async UniTask PlayEndAnimationAsync(EmotionType emotionType)
@@ -135,7 +144,7 @@ namespace UI.View
             await UniTask.Delay(TimeSpan.FromSeconds(duration));
             _param?.Listener?.OnSelectShout(emotionType);
 
-            PlayAnimation("050_Idle_Original2", out duration);
+            //PlayAnimation("050_Idle_Original2", out duration);
         }
 
         private void PlayAnimation(string animationName, out float duration)
@@ -149,12 +158,25 @@ namespace UI.View
         }
         
         #region ShoutSlot.IListener
-        void ShoutSlot.IListener.OnClick(EmotionType emotionType, string description)
+        void ShoutSlot.IListener.OnSelect(EmotionType emotionType)
+        {
+            int index = 1;
+            if (emotionType == EmotionType.Shout)
+                index = 2;
+            if (emotionType == EmotionType.Fatigue)
+                index = 3;
+
+            animator?.SetInteger("Select", index);
+            //Deactivate();   
+            //PlayEndAnimationAsync(emotionType).Forget();
+        }
+
+        void ShoutSlot.IListener.OnConfirm(EmotionType emotionType, string description)
         {
             descriptionText?.SetText(description);
 
-            Deactivate();   
-            PlayEndAnimationAsync(emotionType).Forget();
+            _param?.Listener?.OnSelectShout(emotionType);
+            DeactivateAsync().Forget();
         }
         #endregion
     }

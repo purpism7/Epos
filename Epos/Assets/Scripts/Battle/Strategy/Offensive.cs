@@ -24,8 +24,8 @@ namespace Battle.Strategy
         {
             base.MoveFormation(targetPosition);
 
-            TryStartTraceMove(10001, DirectionType.Left, 7f, false);
-            TryStartTraceMove(10003, DirectionType.Back, 7f, false);
+            TryStartTraceMove(10001, DirectionType.Left, 6f, false);
+            TryStartTraceMove(10003, DirectionType.Back, 6f, false);
         }
 
         public override async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
@@ -37,10 +37,10 @@ namespace Battle.Strategy
 
             try
             {
-                if (!TryStartTraceMove(10001, DirectionType.Left, 7f, true))
+                if (!TryStartTraceMove(10001, DirectionType.Left, 6f, true))
                     return;
 
-                if (!TryStartTraceMove(10003, DirectionType.Back, 7f, true))
+                if (!TryStartTraceMove(10003, DirectionType.Back, 6f, true))
                     return;
 
                 await UniTask.WaitUntil(() => _completedCount >= _totalMoveCount, cancellationToken: cancellationToken);

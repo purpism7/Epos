@@ -38,12 +38,14 @@ namespace UI.Slot
 
         public interface IListener
         {
-            void OnClick(EmotionType emotionType, string description);
+            void OnSelect(EmotionType emotionType);
+            void OnConfirm(EmotionType emotionType, string description);
         }
 
         [SerializeField] private TextMeshProUGUI emotionTMP = null;
         [SerializeField] private EmotionType emotionType = EmotionType.None;
         [SerializeField] private Button btn = null;
+        [SerializeField] private Button confirmBtn = null;
 
         public override UniTask InitializeAsync(Param param)
         {
@@ -51,7 +53,11 @@ namespace UI.Slot
 
             btn?.onClick.RemoveAllListeners();
             btn?.onClick?.AddListener(OnClick);
-            
+
+            confirmBtn?.onClick?.RemoveAllListeners();
+            confirmBtn?.onClick?.AddListener(OnConfirm);
+
+
             return UniTask.CompletedTask;
         }
 
@@ -66,7 +72,12 @@ namespace UI.Slot
 
         private void OnClick()
         {
-            _param?.Listener?.OnClick(emotionType, _param?.Description);
+            _param?.Listener?.OnSelect(emotionType);
+        }
+
+        private void OnConfirm()
+        {
+            _param?.Listener?.OnConfirm(emotionType, _param?.Description);
         }
     }
 }
