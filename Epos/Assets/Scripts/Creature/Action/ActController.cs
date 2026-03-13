@@ -270,16 +270,6 @@ namespace Creature.Action
             return this;
         }
 
-        // IActController IActController.Knockback(Knockback.Param param)
-        // {
-        //     if (!IsActivate)
-        //         return null;
-        //
-        //     Execute<Knockback, Knockback.Param>(param, false);
-        //     
-        //     return this;
-        // }
-
         IActController IActController.Die()
         {
             Execute<Die, Die.Param>();
@@ -304,10 +294,6 @@ namespace Creature.Action
 
         private async UniTask ExecuteAsync()
         {
-            //if (InAction)
-            //    await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
-            // Casting은 End()로 종료 신호가 올 때까지 다음 Action 전환을 막는다.
             if (_currIAct is Casting && !_isCastingCompleted)
                 return;
             

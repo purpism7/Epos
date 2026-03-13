@@ -25,10 +25,10 @@ public static class BattleExtensions
             if (iCombatant == null)
                 continue;
 
-            if (!iCombatant.IActor.IsActivate)
+            if (!iCombatant.Actor.IsActivate)
                 continue;
 
-            if (!iCombatant.IActor.IsAlive)
+            if (!iCombatant.Actor.IsAlive)
                 continue;
 
             if (skillData.SameTeam)
@@ -46,29 +46,6 @@ public static class BattleExtensions
         if (targetList.IsNullOrEmpty())
             return null;
 
-        //switch(skillData.ESkillTarget)
-        //{
-        //    case ESkillTarget.NearOne:
-        //        {
-
-
-        //            break;
-        //        }
-
-        //    case ESkillTarget.FarOne:
-        //        {
-        //            var target = targetList.FirstOrDefault();
-        //            targetList.Clear();
-        //            targetList.Add(target);
-
-        //            break;
-        //        }
-        //}
-
-        //var target = FindClosestICombatant(targetList, attacker);
-        //targetList.Clear();
-        //targetList.Add(target);
-
         return targetList;
     }
 
@@ -77,7 +54,7 @@ public static class BattleExtensions
         if (attacker == null)
             return false;
 
-        var targetIActor = target?.IActor;
+        var targetIActor = target?.Actor;
         if (targetIActor == null)
             return false;
 
@@ -90,7 +67,6 @@ public static class BattleExtensions
         var distance = difference.magnitude;
         float sqrDistance = Vector3.SqrMagnitude(targetPosition - attacker.Transform.position);
 
-        // var distance = Vector2.Distance(attacker.Transform.position, targetPosition);
         return sqrDistance < range * range;
     }
 
@@ -117,62 +93,21 @@ public static class BattleExtensions
 
         float angleToTarget = Mathf.Abs(Vector2.SignedAngle(forwardDir, dirToTarget));
         return angleToTarget <= halfAngle;
-        // Vector2 upDirection = new Vector2(Mathf.Cos(upAngleRad), Mathf.Sin(upAngleRad));
-        // Vector3 upEndPos = attacker.Transform.position + (Vector3)upDirection * range;
-        // // Debug.DrawLine(attacker.Transform.position, upEndPos, Color.magenta);
-        //
-        // float angleToTarget = Mathf.Abs(Vector2.SignedAngle(upDirection, direction));
-        // if (angleToTarget > degreeRad)
-        //     return false;
-        //
-        // // --- 5. 아랫방향 45도 계산 ---
-        // float downAngleRad = baseAngleRad - degreeRad;
-        // Vector2 downDirection = new Vector2(Mathf.Cos(downAngleRad), Mathf.Sin(downAngleRad));
-        // Vector3 dowEndPos = attacker.Transform.position + (Vector3)downDirection * range;
-        // // Debug.DrawLine(attacker.Transform.position, dowEndPos, Color.magenta);
-        //
-        // angleToTarget = Mathf.Abs(Vector2.SignedAngle(downDirection, direction));
-        // if (angleToTarget > degreeRad)
-        //     return false;
-        // // Vector3 direction = target.Transform.position- attacker.Transform.position.normalized;
-        //
-        // return true;
-        // return baseAngleRad * Mathf.Rad2Deg < angle * 0.5f;
-    
-
-    
-        // if (dot >= requiredCos)
-        // {
-        //     return true; // 범위 내에 있음
-        // }
-        
-        // return false;
-        
-        //
-        // Vector2 forwardDirection = attacker.Transform.right; // �÷��̾��� �� ���� (2D������ �ַ� right)
-        // float angle = Vector2.Angle(forwardDirection, direction);
-        // //Debug.Log(angle);
-        // return angle <= 60f / 2f;
-
-        //float dot = Vector2.Dot(attacker.Transform.up, direction);
-        //var alertThreshold = Mathf.Cos(90f * 0.5f * Mathf.Deg2Rad);
-
-        //return dot >= alertThreshold;
     }
 
-    public static ICombatant FindClosestICombatant(this Transform tm, List<ICombatant> iCombatantList)
+    public static ICombatant FindClosestICombatant(this Transform tm, List<ICombatant> combatantList)
     {
         if (!tm)
             return null;
 
-        if (iCombatantList.IsNullOrEmpty())
+        if (combatantList.IsNullOrEmpty())
             return null;
 
         ICombatant closestIComtant = null;
         float closestDistance = 99999f;
-        for (int i = 0; i < iCombatantList.Count; ++i)
+        for (int i = 0; i < combatantList.Count; ++i)
         {
-            var iActor = iCombatantList[i]?.IActor;
+            var iActor = combatantList[i]?.Actor;
             if (iActor == null)
                 continue;
 
@@ -183,7 +118,7 @@ public static class BattleExtensions
             if (closestIComtant == null ||
                 closestDistance > distance)
             {
-                closestIComtant = iCombatantList[i];
+                closestIComtant = combatantList[i];
                 closestDistance = distance;
             }
         }
@@ -191,23 +126,23 @@ public static class BattleExtensions
         return closestIComtant;
     }
 
-    public static ICombatant FindFarthestICombatant(this ICombatant iCombatant, List<ICombatant> iCombatantList)
+    public static ICombatant FindFarthestICombatant(this ICombatant iCombatant, List<ICombatant> combatantList)
     {
-        if (iCombatantList.IsNullOrEmpty())
+        if (combatantList.IsNullOrEmpty())
             return null;
 
         ICombatant farthestIComtant = null;
         float farthestDistance = 0;
-        for (int i = 0; i < iCombatantList.Count; ++i)
+        for (int i = 0; i < combatantList.Count; ++i)
         {
-            if (iCombatantList[i] == null)
+            if (combatantList[i] == null)
                 continue;
 
-            var distance = Vector2.Distance(iCombatantList[i].IActor.Transform.position, iCombatant.IActor.Transform.position);
+            var distance = Vector2.Distance(combatantList[i].Actor.Transform.position, iCombatant.Actor.Transform.position);
             if (farthestIComtant == null ||
                 farthestDistance < distance)
             {
-                farthestIComtant = iCombatantList[i];
+                farthestIComtant = combatantList[i];
                 farthestDistance = distance;
             }
         }

@@ -52,7 +52,7 @@ namespace Creature.Action
 
             var target = _param?.Target;
             if (target == null ||
-               !target.IActor.IsAlive)
+               !target.Actor.IsAlive)
                 return;
 
             var distance = _param.KnockbackDistance;

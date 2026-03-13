@@ -18,12 +18,12 @@ namespace Creature.Action
 
             // Eff_MonsterDead_01 이펙트 실행
             var effectParam = new Effect.Param()
-                .WithRootTm(_iActor?.Transform)
+                .WithRootTm(_actor?.Transform)
                 .WithReturnParent(true);
 
-            _iActor?.IEffectCtr?.Activate("Eff_MonsterDead_01", effectParam);
+            _actor?.EffectController?.Activate("Eff_MonsterDead_01", effectParam);
 
-            // _iActor?.Deactivate();
+            // _actor?.Deactivate();
             DeactivateAsync().Forget();
         }
 
@@ -31,14 +31,14 @@ namespace Creature.Action
         {
             await UniTask.Delay(TimeSpan.FromSeconds(1f));
 
-            _iActor?.Deactivate();
+            _actor?.Deactivate();
         }
 
         protected override void OnCompleted(TrackEntry trackEntry)
         {
             base.OnCompleted(trackEntry);
             
-            _iActor?.Deactivate();
+            _actor?.Deactivate();
         }
     }
 }

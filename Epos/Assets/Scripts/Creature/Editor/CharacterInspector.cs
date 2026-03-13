@@ -23,7 +23,7 @@ public class CharacterInspector : Editor
         if (Application.isPlaying)
         {
             // 현재 Act
-            var currentActName = character.IActCtr?.GetCurrentActName() ?? "—";
+            var currentActName = character.ActController?.GetCurrentActName() ?? "—";
             EditorGUILayout.LabelField("Current Act", currentActName);
 
             // 현재 애니메이션

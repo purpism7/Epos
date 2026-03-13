@@ -71,10 +71,14 @@ namespace UI.Presenter
         {
             if (_cameraManager == null)
                 return;
-            
-            for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
+
+            var allyCombatants = _view?.AllyICombatantList;
+            if (allyCombatants == null)
+                return;
+
+            for (int i = 0; i < allyCombatants.Count; ++i)
             {
-                var actor = _view?.AllyICombatantList[i]?.IActor;
+                var actor = allyCombatants[i]?.Actor;
                 if(actor == null)
                     continue;
 
@@ -97,7 +101,7 @@ namespace UI.Presenter
             _cameraManager.FocusOnTarget(
                 () =>
                 {
-                    _timeScaleManager?.Set(0.2f);
+                    //_timeScaleManager?.Set(0.2f);
                 }, 25f);
         }
 
@@ -115,16 +119,20 @@ namespace UI.Presenter
 
         void ShoutPanel.IListener.OnSelectShout(EmotionType emotionType)
         {
-            _cameraManager?.SetTargetTr(_strategyController?.LeaderICombatant?.Transform, Vector3.zero);
+            _cameraManager?.SetTargetTr(_strategyController?.LeaderCombatant?.Transform, Vector3.zero);
             _cameraManager?.ClearFocus(
                () =>
                {
                    _timeScaleManager?.Set(1f);
-                   _view?.ActivateBattleMainView();     
-                   
-                   for (int i = 0; i < _view?.AllyICombatantList?.Count; ++i)
+                   _view?.ActivateBattleMainView();
+
+                   var allyCombatants = _view?.AllyICombatantList;
+                   if (allyCombatants == null)
+                       return;
+
+                   for (int i = 0; i < allyCombatants.Count; ++i)
                    {
-                       var emotionalActor = _view?.AllyICombatantList[i]?.IActor as IEmotionalActor;
+                       var emotionalActor = _view?.AllyICombatantList[i]?.Actor as IEmotionalActor;
                        if(emotionalActor == null)
                            continue;
 

@@ -17,11 +17,11 @@ namespace Creature
 
         private Color _originColor = Color.white;
 
-        public IActor IActor { get; private set; } = null;
+        public IActor Actor { get; private set; } = null;
         public ISkillController ISkillCtr { get; private set; } = null;
 
-        public Transform Transform { get { return IActor?.Transform; } }
-        public IStat IStat { get { return IActor?.IStat; } }
+        public Transform Transform { get { return Actor?.Transform; } }
+        public IStat IStat { get { return Actor?.IStat; } }
 
         public TeamType TeamType { get; private set; } = TeamType.None;
 
@@ -33,9 +33,9 @@ namespace Creature
 
         public ICombatant Initialize(IActor iActor, Skill[] skills)
         {
-            IActor = iActor;
+            Actor = iActor;
 
-            var skeleton = IActor?.SkeletonAnimation?.Skeleton;
+            var skeleton = Actor?.SkeletonAnimation?.Skeleton;
             if (skeleton != null)
                 _originColor = skeleton.GetColor();
 
@@ -51,12 +51,12 @@ namespace Creature
 
         void ICombatant.SetPosition(Vector3 position)
         {
-            IActor?.SetWorldPosition(position);
+            Actor?.SetWorldPosition(position);
         }
 
         async UniTask ICombatant.HitAsync()
         {
-            var skeleton = IActor?.SkeletonAnimation?.Skeleton;
+            var skeleton = Actor?.SkeletonAnimation?.Skeleton;
             if (skeleton == null)
                 return;
 

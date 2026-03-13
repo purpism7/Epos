@@ -34,7 +34,7 @@ namespace Creature
         public override void Deactivate()
         {
             _iStatGeneric?.Deactivate();
-            IActCtr?.Deactivate();
+            ActController?.Deactivate();
         }
 
         public override void ChainUpdate()

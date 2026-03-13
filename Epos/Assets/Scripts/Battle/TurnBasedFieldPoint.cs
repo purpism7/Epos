@@ -154,7 +154,7 @@ namespace Battle
                 },
             };
 
-            monster.IActCtr?.MoveTo(moveParam)
+            monster.ActController?.MoveTo(moveParam)
                 .Execute();
         }
     }

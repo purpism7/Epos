@@ -25,7 +25,7 @@ namespace Battle
 
                 for (int i = 0; i < _enemyICombatantList?.Count; ++i)
                 {
-                    var iActor = _enemyICombatantList[i]?.IActor;
+                    var iActor = _enemyICombatantList[i]?.Actor;
                     if (iActor == null)
                         continue;
 

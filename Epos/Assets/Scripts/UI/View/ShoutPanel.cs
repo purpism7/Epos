@@ -66,8 +66,9 @@ namespace UI.View
             base.Activate();
             
             animator?.SetBool("OnOff", false);
+            animator?.SetInteger("Select", 0);
 
-            PlayAnimation("050_Idle_Original2", out var duration);
+            //PlayAnimation("050_Idle_Original2", out var duration);
         }
 
         public override void Deactivate()

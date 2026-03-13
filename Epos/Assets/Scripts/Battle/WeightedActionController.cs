@@ -59,20 +59,6 @@ namespace Battle
         {
             try
             {
-                //var cancellationTokenSource = requester.CancellationTokenSource;
-                //if (cancellationTokenSource != null)
-                //{
-                //    float seconds = 0.5f;
-                //    // int frame = 30;
-                //    if (executor.TeamType == TeamType.Enemy && isFirst)
-                //        seconds += UnityEngine.Random.Range(0, 0.5f);
-                //    // frame += UnityEngine.Random.Range(0, 30);
-
-                //    // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
-                //    // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-                //    await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
-                //}
-                
                 var actionWeight = GetHighestPriorityActionWeight();
                 var weightedAction = actionWeight?.Create();
                 
@@ -95,29 +81,28 @@ namespace Battle
                         await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
                     }
 
-
                     weightedAction.SetParam(param)
                         .SetEndAction(EndAction)
-                        .SetIActor(executor.IActor)
+                        .SetIActor(executor.Actor)
                         .Execute();
                 }
                 else
                 {
                     // 중요: 수행할 액션이 없더라도 턴/행동을 종료 처리는 해야 함
                     // Debug.LogWarning($"[{executer.IActor?.Name}] No valid action weight found. Skipping turn.");
-                    EndAction(executor.IActor);
+                    EndAction(executor.Actor);
                 }
             }
             catch (OperationCanceledException)
             {
                 // 취소 발생 시 종료 처리
-                EndAction(executor.IActor);
+                EndAction(executor.Actor);
             }
             catch (Exception e)
             {
                 // 예상치 못한 에러 발생 시에도 게임이 멈추지 않도록 종료 처리 권장
                 Debug.LogError(e);
-                EndAction(executor.IActor);
+                EndAction(executor.Actor);
             }
         }
         

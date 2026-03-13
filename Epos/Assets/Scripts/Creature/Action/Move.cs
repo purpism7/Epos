@@ -104,10 +104,10 @@ namespace Creature.Action
             else
                 DisableNavMeshAgent();
 
-            //if (_iActor?.Transform)
-            //    _prevPos = _iActor.Transform.position;
+            //if (_actor?.Transform)
+            //    _prevPos = _actor.Transform.position;
 
-            _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), GetType().Name);
+            _actor?.EffectController?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), GetType().Name);
         }
 
         protected override void Activate()
@@ -124,7 +124,7 @@ namespace Creature.Action
 
         private void EnableNavMeshAgent()
         {
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
@@ -134,7 +134,7 @@ namespace Creature.Action
 
         private void DisableNavMeshAgent()
         {
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
             {
@@ -149,7 +149,7 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent == null)
                 return;
 
@@ -183,12 +183,12 @@ namespace Creature.Action
                         targetTm = _param.TargetICombatant.Transform;
                         targetPosition = _param.TargetICombatant.Transform.position;
                         
-                        var targetCollider = _param.TargetICombatant.IActor?.Collider;
+                        var targetCollider = _param.TargetICombatant.Actor?.Collider;
                         if (targetCollider != null)
                         {
                             distance += targetCollider.bounds.size.x * 0.5f;
                             
-                            var closesetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
+                            var closesetPosition = targetCollider.ClosestPoint(_actor.Transform.position);
                             targetPosition = closesetPosition;
                         }
                     }
@@ -204,8 +204,8 @@ namespace Creature.Action
                     // Debug.DrawLine(targetTm.position, leftPosition, Color.cyan);
                     
                     // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
-                    float distanceToRight = Vector2.Distance(_iActor.Transform.position, rightPosition);
-                    float distanceToLeft = Vector2.Distance(_iActor.Transform.position, leftPosition);
+                    float distanceToRight = Vector2.Distance(_actor.Transform.position, rightPosition);
+                    float distanceToLeft = Vector2.Distance(_actor.Transform.position, leftPosition);
                     
                     // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
                     targetPosition = (distanceToRight < distanceToLeft) ? rightPosition : leftPosition;
@@ -231,13 +231,12 @@ namespace Creature.Action
             if (_isEnded)
                 return;
 
-            var iActorTm = _iActor?.Transform;
+            var iActorTm = _actor?.Transform;
             if (!iActorTm)
                 return;
 
-            if (_iActor?.IStat == null)
+            if (_actor?.IStat == null)
                 return;
-
 
             var cancellationTokenSource = _param?.CancellationTokenSource;
             if (cancellationTokenSource != null &&
@@ -250,7 +249,7 @@ namespace Creature.Action
             var target = _param.TargetICombatant;
             if (target != null)
             {
-                var targetIActor = target.IActor;
+                var targetIActor = target.Actor;
                 if (targetIActor != null &&
                     !targetIActor.IsAlive)
                 {
@@ -269,15 +268,15 @@ namespace Creature.Action
             else
             {
                 SetNavMeshAgentSpeed();
-                _iActor.NavMeshAgent?.SetDestination(targetPosition);
+                _actor.NavMeshAgent?.SetDestination(targetPosition);
             }
 
             // Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
 
             var direction = targetPosition - iActorTm.position;
 
-            _iActor?.IActCtr?.Flip(direction.x);
-            _iActor?.SortingOrder(iActorTm.position.y);
+            _actor?.ActController?.Flip(direction.x);
+            _actor?.SortingOrder(iActorTm.position.y);
 
             //_prevPos = iActorTm.position;
 
@@ -295,7 +294,7 @@ namespace Creature.Action
         {
             var speed = _param.MoveSpeed;
             var newPos = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
-            _iActor?.SetWorldPosition(newPos);
+            _actor?.SetWorldPosition(newPos);
         }
 
         protected override void End()
@@ -303,7 +302,7 @@ namespace Creature.Action
             if (_isEnded)
                 return;
 
-            _iActor?.IEffectCtr?.Deactivate(GetType().Name);
+            _actor?.EffectController?.Deactivate(GetType().Name);
 
             _isEnded = true;
             _param?.FinishAction?.Invoke();

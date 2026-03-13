@@ -21,7 +21,7 @@ namespace Battle.Strategy
         void ApplyStrategy(IStrategy iStrategy);
         void MoveFormation(Vector3 targetPosition);
 
-        ICombatant LeaderICombatant { get; }
+        ICombatant LeaderCombatant { get; }
 
         IStrategy CurrentIStrategy { get; }
         CancellationToken CancellationToken { get; }
@@ -29,7 +29,7 @@ namespace Battle.Strategy
 
     public interface IStrategyDataProvider
     {
-        List<ICombatant> AllyICombatantList { get; }
+        List<ICombatant> Allycombatants { get; }
     }
 
     public class StrategyController : IStrategyController, IStrategyDataProvider
@@ -46,7 +46,7 @@ namespace Battle.Strategy
         private IWaypointController _waypointController = null;
         private CancellationTokenSource _cancellationTokenSource = null;
 
-        public List<ICombatant> AllyICombatantList { get; private set; } = null;
+        public List<ICombatant> Allycombatants { get; private set; } = null;
         public IStrategy CurrentIStrategy { get; private set; } = null;
         public CancellationToken CancellationToken
         {
@@ -64,7 +64,7 @@ namespace Battle.Strategy
         {
             _listener = iListener;
             _waypointController = waypointController;
-            AllyICombatantList = allyICombatantList;
+            Allycombatants = allyICombatantList;
             
             ApplyStrategy(new Adaptive(), true);
             CurrentIStrategy?.InitializeFormationPosition();
@@ -85,53 +85,63 @@ namespace Battle.Strategy
             CurrentIStrategy?.MoveFormation(targetPosition);
         }
 
-        ICombatant IStrategyController.LeaderICombatant
+        ICombatant IStrategyController.LeaderCombatant
         {
             get
             {
-                return CurrentIStrategy?.LeaderICombatant;
+                return CurrentIStrategy?.LeaderCombatant;
             }
         }
         #endregion
 
         private void ApplyStrategy(IStrategy strategy, bool isInitialized = false)
         {
+            if (_cancellationTokenSource != null)
+            {
+                try
+                {
+                    _cancellationTokenSource.Cancel();
+                }
+                catch (ObjectDisposedException)
+                {
+                    // 이미 Dispose된 경우 무시
+                }
+                finally
+                {
+                    _cancellationTokenSource.Dispose();
+                    _cancellationTokenSource = null;
+                }
+            }
+
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            // 3. 이전 전략의 Trace 콜백 제거
+            CurrentIStrategy?.CleanupTraceCallbacks();
+            if (Allycombatants != null)
+            {
+                for (int i = 0; i < Allycombatants.Count; i++)
+                {
+                    Allycombatants[i]?.Actor?.ActController?.ClearActQueue();
+                }
+            }
+
+            // 5. 새 전략 적용
             strategy?.Apply(this);
             CurrentIStrategy = strategy;
 
             _listener?.OnChangedStrategy(strategy);
 
-            // Cancel을 먼저 호출하고, Dispose는 그 후에 합니다.
-            // 이미 Dispose된 경우를 대비해 Try-Catch로 감싸거나 null 체크를 정교하게 합니다.
-            if (_cancellationTokenSource != null)
-            {
-                try 
-                {
-                    _cancellationTokenSource?.Cancel();
-                }
-                catch (ObjectDisposedException) 
-                {
-                    // 이미 Dispose되었다면 무시합니다.
-                }
-                finally 
-                {
-
-                    _cancellationTokenSource?.Dispose();
-                    _cancellationTokenSource = null;
-                }
-            }
-            
-            RegroupToLeaderAsync(strategy, isInitialized).Forget();
+            RegroupToLeaderAsync(strategy, isInitialized, _cancellationTokenSource.Token).Forget();
         }
 
-        private async UniTask RegroupToLeaderAsync(IStrategy strategy, bool isInitialized)
+        private async UniTask RegroupToLeaderAsync(IStrategy strategy, bool isInitialized, CancellationToken cancellationToken)
         {
             if (strategy == null)
                 return;
 
-            _cameraManager?.SetTargetTr(strategy.LeaderICombatant?.Transform, Vector3.zero);
+            _cameraManager?.SetTargetTr(strategy.LeaderCombatant?.Transform, Vector3.zero);
 
-            if(!isInitialized)
+            if (!isInitialized)
             {
                 Vector3? targetPosition = null;
                 var waypoint = _waypointController?.Waypoint;
@@ -141,10 +151,14 @@ namespace Battle.Strategy
                         targetPosition = waypoint.Position;
                 }
 
-                await strategy.RegroupToLeaderAsync(targetPosition, CancellationToken);
-                
-                _listener?.OnEndRegroupToLeader(strategy);
-            } 
+                await strategy.RegroupToLeaderAsync(targetPosition, cancellationToken);
+
+                // 취소된 경우 OnEndRegroupToLeader 호출하지 않음
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    _listener?.OnEndRegroupToLeader(strategy);
+                }
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
@@ -16,7 +16,13 @@ namespace Battle.Strategy
         {
             base.Apply(iStrategyDataProvider);
 
-            LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            LeaderCombatant = iStrategyDataProvider?.Allycombatants?.Find(combatant => combatant.Actor.Id == 10001);
+        }
+
+        public override void CleanupTraceCallbacks()
+        {
+            EndTraceMove(10004);
+            EndTraceMove(10003);
         }
 
         public override void MoveFormation(Vector3 targetPosition)
@@ -29,10 +35,10 @@ namespace Battle.Strategy
 
         public override async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
         {
-            await base.RegroupToLeaderAsync(targetPosition, cancellationToken);
-            
             if (cancellationToken.IsCancellationRequested)
                 return;
+
+            await base.RegroupToLeaderAsync(targetPosition, cancellationToken);
 
             try
             {
@@ -50,8 +56,7 @@ namespace Battle.Strategy
             }
             finally
             {
-                EndTraceMove(10004);
-                EndTraceMove(10003);
+                CleanupTraceCallbacks();
 
                 UnityEngine.Debug.Log("모두 집결 완료!");
             }

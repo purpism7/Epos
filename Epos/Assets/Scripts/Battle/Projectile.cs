@@ -155,13 +155,13 @@ namespace Battle
                     var raycastHit = Physics2D.Raycast(_lastPos, dir.normalized, dir.magnitude);
                     if (raycastHit.collider != null)
                     {
-                        var iActor = raycastHit.collider.transform.GetComponentInParent<IActor>();
-                        if (iActor != null)
+                        var actor = raycastHit.collider.transform.GetComponentInParent<IActor>();
+                        if (actor != null)
                         {
-                            if (_iActorMap.TryGet<ICombatant>(iActor, out var iCombatant))
+                            if (_iActorMap.TryGet<ICombatant>(actor, out var combatant))
                             {
-                                if (iCombatant.TeamType == _param.TargetTeamType &&
-                                    iActor.IsAlive)
+                                if (combatant.TeamType == _param.TargetTeamType &&
+                                    actor.IsAlive)
                                 {
                                     var impactParam = new Impact.Param
                                     {
@@ -170,8 +170,8 @@ namespace Battle
                                     .WithIStat(_param?.ICaster?.IStat)
                                     .WithImpactType(ImpactType.MagicalDamage);
 
-                                    iActor.IActCtr?.Impact(impactParam);
-                                    iCombatant?.HitAsync();
+                                    actor.ActController?.Impact(impactParam);
+                                    combatant?.HitAsync();
 
                                     Deactivate();
                                     break;
@@ -207,36 +207,6 @@ namespace Battle
 
             //_iActor?.IEffectCtr?.Activate(skillData.EffectName, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), skillData.AnimationName);
         }
-        // Update is called once per frame
-        //void Update()
-        //{
-        //    if (!IsActivate)
-        //        return;
-
-        //    var dir = targetPos - transform.position;
-
-        //    //if (Physics.Raycast(_lastPos, dir.normalized, out RaycastHit hit, dir.magnitude))
-        //    //{
-        //    //    Debug.Log("hit");
-        //    //    Extensions.SetActive(transform, false);
-        //    //    return;
-        //    //    // �浹 �������� ����Ʈ ����
-        //    //    //Instantiate(hitEffectPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-        //    //    //Destroy(gameObject);
-        //    //}
-
-        //    transform.position = Vector3.MoveTowards(transform.position, targetPos, currSpeed * Time.deltaTime);
-
-        //    var distance = Vector3.Distance(transform.position, targetPos);
-        //    if (distance <= 0.01f)
-        //    {
-        //        //Extensions.SetActive(transform, false);
-        //        Deactivate();
-        //    }
-
-        //    _lastPos = transform.position;
-
-        //}
     }
 }
 

@@ -38,7 +38,7 @@ namespace  UI.Parts
         [SerializeField] protected Slider previewMpSlider = null;
         [SerializeField] protected Slider mpSlider = null;
 
-        protected ICombatant _ICombatant = null;
+        protected ICombatant _combatant = null;
         
         private void LateUpdate()
         {
@@ -78,11 +78,11 @@ namespace  UI.Parts
         
         protected void SetHpProgress()
         {
-            var iActor = _ICombatant?.IActor;
-            if (iActor == null)
+            var actor = _combatant?.Actor;
+            if (actor == null)
                 return;
 
-            var maxHp = iActor.IStat.Get(Stat.EType.MaxHp);
+            var maxHp = actor.IStat.Get(Stat.EType.MaxHp);
 
             if (previewHpSlider != null)
             {
@@ -99,11 +99,11 @@ namespace  UI.Parts
 
         protected void SetMpProgress()
         {
-            var iActor = _ICombatant?.IActor;
-            if (iActor == null)
+            var actor = _combatant?.Actor;
+            if (actor == null)
                 return;
 
-            var maxMp = iActor.IStat.Get(Stat.EType.MaxMp);
+            var maxMp = actor.IStat.Get(Stat.EType.MaxMp);
 
             if (previewMpSlider != null)
             {
@@ -120,13 +120,13 @@ namespace  UI.Parts
         
         private void UpdateProgress(Stat.EType eType, Slider slider, Slider previewSlider = null)
         {
-            var iActor = _ICombatant?.IActor;
-            if (iActor == null)
+            var actor = _combatant?.Actor;
+            if (actor == null)
                 return;
 
             if (slider != null)
             {
-                var value = iActor.IStat.Get(eType);
+                var value = actor.IStat.Get(eType);
 
                 slider.DOValue(value, 0.1f)
                     .OnComplete(() =>
@@ -135,7 +135,7 @@ namespace  UI.Parts
                             previewSlider.DOValue(value, 0.3f);
 
                         if (eType == Stat.EType.Hp &&
-                            !iActor.IsAlive)
+                            !actor.IsAlive)
                             Deactivate();
                     });
             }  
@@ -147,7 +147,7 @@ namespace  UI.Parts
                 _param == null)
                 return;
 
-            if (eventData.CharacterId != _ICombatant.IActor.Id)
+            if (eventData.CharacterId != _combatant.Actor.Id)
                 return;
 
             UpdateProgress(Stat.EType.Hp, hpSlider, previewHpSlider);

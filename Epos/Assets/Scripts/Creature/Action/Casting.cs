@@ -90,8 +90,8 @@ namespace Creature.Action
             var attacker = _param?.Attacker;
             if (attacker != null)
             {
-                var direction = target.IActor.Transform.position - attacker.Transform.position;
-                attacker.IActor?.IActCtr?.Flip(direction.x);
+                var direction = target.Actor.Transform.position - attacker.Transform.position;
+                attacker.Actor?.ActController?.Flip(direction.x);
             }
         }
 
@@ -104,7 +104,7 @@ namespace Creature.Action
                 return;
             }
 
-            _iActor?.IStat?.Add(Stat.EType.Mp, Stat.ESubType.None, -skillData.MP);
+            _actor?.IStat?.Add(Stat.EType.Mp, Stat.ESubType.None, -skillData.MP);
 
             _param?.IListener?.BeforeCasting();
             await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -116,7 +116,7 @@ namespace Creature.Action
 
             PlayAnimation(skillData.AnimationName, false);
 
-            _iActor?.IEffectCtr?.Activate(skillData.EffectName,new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), skillData.AnimationName);
+            _actor?.EffectController?.Activate(skillData.EffectName,new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), skillData.AnimationName);
 
             var halfDuration = _duration / 2f;
 
@@ -128,7 +128,7 @@ namespace Creature.Action
             await UniTask.Delay(TimeSpan.FromSeconds(halfDuration));
             AfterCasting();
 
-            _iActor?.IEffectCtr?.Deactivate(skillData.AnimationName);
+            _actor?.EffectController?.Deactivate(skillData.AnimationName);
 
             _isUpdate = false;
         }
@@ -161,7 +161,7 @@ namespace Creature.Action
                     foreach (var target in targetList)
                     {
                         if (target == null ||
-                            !target.IActor.IsAlive)
+                            !target.Actor.IsAlive)
                             continue;
 
                         var impactParam = new Impact.Param
@@ -171,7 +171,7 @@ namespace Creature.Action
                         .WithIStat(attacker.IStat)
                         .WithImpactType(ImpactType.Heal);
 
-                        target.IActor?.IActCtr?.Impact(impactParam);
+                        target.Actor?.ActController?.Impact(impactParam);
                     }
                 }
             }
@@ -212,7 +212,7 @@ namespace Creature.Action
             foreach (var target in targetList)
             {
                 if (target == null ||
-                    !target.IActor.IsAlive)
+                    !target.Actor.IsAlive)
                     continue;
 
                 bool isAttack = false;
@@ -279,7 +279,7 @@ namespace Creature.Action
             if (attacker == null)
                 return;
 
-            var targetActor = target?.IActor;
+            var targetActor = target?.Actor;
             if (targetActor == null)
                 return;
 
@@ -291,10 +291,10 @@ namespace Creature.Action
             .WithImpactType(GetImpactType(target.TeamType))
             .WithMultiplier(skillData.Multiplier);
 
-            targetActor.IActCtr?.Impact(impactParam);
+            targetActor.ActController?.Impact(impactParam);
             target.HitAsync();
             
-            targetActor.IEffectCtr?.Activate("Eff_Hit_01", new Effect.Param().WithTargetPosition(targetActor.Transform.position));
+            targetActor.EffectController?.Activate("Eff_Hit_01", new Effect.Param().WithTargetPosition(targetActor.Transform.position));
 
             if (skillData != null)
             {
@@ -328,7 +328,7 @@ namespace Creature.Action
 
             //var target = _param?.Target;
             if (target == null ||
-               !target.IActor.IsAlive)
+               !target.Actor.IsAlive)
                 return;
 
             var distance = knockbackDistance;
@@ -352,7 +352,7 @@ namespace Creature.Action
             if (attacker == null)
                 return;
 
-            var targetIActor = targetICombatant?.IActor;
+            var targetIActor = targetICombatant?.Actor;
             if (targetIActor == null)
                 return;
 

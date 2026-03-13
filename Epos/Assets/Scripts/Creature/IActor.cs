@@ -15,8 +15,8 @@ namespace Creature
         Collider2D Collider { get; }
 
         IStat IStat { get; }
-        IActController IActCtr { get; }
-        ICreatureEffectController IEffectCtr { get; }
+        IActController ActController { get; }
+        ICreatureEffectController EffectController { get; }
 
         string AnimationKey<T>(Act<T> act) where T : ActParam;
 

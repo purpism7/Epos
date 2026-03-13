@@ -76,6 +76,8 @@ namespace Battle.RealTime
         }
 
 #if UNITY_EDITOR
+        public int RemainingWaypointCount => _waypointQueue?.Count ?? 0;
+
         private void OnDrawGizmos()
         {
             var wayPoints = _param?.Waypoints;
@@ -127,23 +129,26 @@ namespace Battle.RealTime
             if (Waypoint == null)
                 return;
 
-            for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
+            var enemyCombatants = Waypoint.EnemyICombatantList;
+            if(enemyCombatants != null)
             {
-                var iActor = Waypoint.EnemyICombatantList[i]?.IActor;
-                if (iActor == null)
-                    continue;
+                for (int i = 0; i < enemyCombatants.Count; ++i)
+                {
+                    var actor = enemyCombatants[i]?.Actor;
+                    if (actor == null)
+                        continue;
 
-                if (!iActor.IsActivate)
-                    continue;
+                    if (!actor.IsActivate)
+                        continue;
 
-                iActor?.ChainUpdate();
+                    actor?.ChainUpdate();
+                }
             }
             
             if (targetCombatant == null)
                 return;
 
-            var distance = Vector3.Distance(targetCombatant.IActor.Transform.position, Waypoint.Position);
-            //Debug.Log(targetICombatant.NavMeshAgent.remainingDistance);
+            var distance = Vector3.Distance(targetCombatant.Actor.Transform.position, Waypoint.Position);
             if (distance < 1f)
             {
                 Debug.Log("Arrived");
@@ -157,18 +162,23 @@ namespace Battle.RealTime
         {
             if (Waypoint == null)
                 return;
-            
-            for(int i = 0; i < Waypoint.EnemyICombatantList?.Count; ++i)
+
+            var enemyCombatants = Waypoint.EnemyICombatantList;
+            if (enemyCombatants != null)
             {
-                var iActor = Waypoint.EnemyICombatantList[i]?.IActor;
-                if (iActor == null)
-                    continue;
+                for (int i = 0; i < enemyCombatants.Count; ++i)
+                {
+                    var actor = enemyCombatants[i]?.Actor;
+                    if (actor == null)
+                        continue;
 
-                if (!iActor.IsActivate)
-                    continue;
+                    if (!actor.IsActivate)
+                        continue;
 
-                iActor.ChainLateUpdate();
+                    actor.ChainLateUpdate();
+                }
             }
+                
         }
 
         private void SetWaypoint()

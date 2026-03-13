@@ -43,30 +43,28 @@ namespace UI.Slot
 
         private IHpProgress _iHpProgress = null;
         private IPortraitEmotionEmoji[] _emotionEmojis = null;
-        private IActor _iActor = null;
-        private Creature.Action.IActController _iActController = null;
+        private IActor _actor = null;
         
         public override async UniTask InitializeAsync(Param param = null)
         {
             await base.InitializeAsync(param);
 
             // IActor 캐싱 (깊은 체인 접근 방지)
-            _iActor = param?.ICombatant?.IActor;
-            _iActController = _iActor?.IActCtr;
+            _actor = param?.ICombatant?.Actor;
 
-            var skillExpressionSprite = _resourceManager?.AtlasLoader?.GetCharacterSprite($"p_{_iActor?.Id}_Shout");
+            var skillExpressionSprite = _resourceManager?.AtlasLoader?.GetCharacterSprite($"p_{_actor?.Id}_Shout");
             if(skillExpressionSprite != null)
                 skillExpressionImg.sprite = skillExpressionSprite;
             
             _emotionEmojis = GetComponentsInChildren<IPortraitEmotionEmoji>();
-            if(_emotionEmojis != null && _iActor != null)
+            if(_emotionEmojis != null && _actor != null)
             {
                 foreach (var emotionEmoji in _emotionEmojis)
                 {
                     if(emotionEmoji == null)
                         continue;
                     
-                    var portraitEmotionEmojiParam = new PortraitEmotionEmoji.Param(_iActor.Id)
+                    var portraitEmotionEmojiParam = new PortraitEmotionEmoji.Param(_actor.Id)
                         .WithAtlasLoader(_resourceManager?.AtlasLoader);
                     
                     await emotionEmoji.InitializeAsync(portraitEmotionEmojiParam);
@@ -117,11 +115,11 @@ namespace UI.Slot
         {
             characterImg?.SetActive(false);
             
-            if (_iActor == null || characterImg == null)
+            if (_actor == null || characterImg == null)
                 return;
 
             var atlasLoader = _resourceManager?.AtlasLoader;
-            var spriteName = $"p_{_iActor.Id}";
+            var spriteName = $"p_{_actor.Id}";
             var sprite = atlasLoader?.GetCharacterSprite(spriteName);
 
             characterImg.sprite = sprite;
@@ -151,10 +149,10 @@ namespace UI.Slot
 
         private void OnStatChanged(StatChangedEventData eventData)
         {
-            if (eventData == null || _iActor == null)
+            if (eventData == null || _actor == null)
                 return;
 
-            if (eventData.CharacterId != _iActor.Id)
+            if (eventData.CharacterId != _actor.Id)
                 return;
 
             _iHpProgress?.UpdateHpProgress();
@@ -163,33 +161,34 @@ namespace UI.Slot
         private void RegisterActControllerEvents()
         {
             // InitializeAsync에서 이미 캐싱된 IActController 사용
-            if (_iActController == null)
+            var actController = _actor?.ActController;
+            if (actController == null)
             {
-                Debug.LogWarning($"BattlePortraitSlot: IActController is null. CharacterId: {_iActor?.Id}");
+                Debug.LogWarning($"BattlePortraitSlot: IActController is null. CharacterId: {_actor?.Id}");
                 return;
             }
 
             // 모든 Act 변경 이벤트 등록 (IAct로 구독하면 모든 Act 타입에 대해 이벤트를 받음)
-            _iActController.OnActStarted<IAct>(OnActStarted);
-            _iActController.OnActEnded<IAct>(OnActEnded);
+            actController.OnActStarted<IAct>(OnActStarted);
+            actController.OnActEnded<IAct>(OnActEnded);
         }
 
         private void UnregisterActControllerEvents()
         {
-            if (_iActController == null)
+            var actController = _actor?.ActController;
+            if (actController == null)
                 return;
 
             // 등록한 이벤트 해제
-            _iActController.RemoveActStarted<IAct>(OnActStarted);
-            _iActController.RemoveActEnded<IAct>(OnActEnded);
+            actController.RemoveActStarted<IAct>(OnActStarted);
+            actController.RemoveActEnded<IAct>(OnActEnded);
             
-            _iActController = null;
-            _iActor = null;
+            _actor = null;
         }
 
         private void OnActStarted(IAct act)
         {
-            if (act == null || _iActor == null)
+            if (act == null || _actor == null)
                 return;
 
             // 모든 Act가 시작될 때 처리할 로직
@@ -216,7 +215,7 @@ namespace UI.Slot
 
         private void OnActEnded(IAct act)
         {
-            if (act == null || _iActor == null)
+            if (act == null || _actor == null)
                 return;
 
             // 모든 Act가 종료될 때 처리할 로직
@@ -292,7 +291,7 @@ namespace UI.Slot
 
         async UniTask IBattlePortraitSlot.UpdateEmotionAsync(EmotionType emotionType)
         {
-            if (_iActor is IEmotionalActor emotionalActor)
+            if (_actor is IEmotionalActor emotionalActor)
             {
                 if (emotionalActor.Id != 10003)
                     return;
@@ -309,8 +308,6 @@ namespace UI.Slot
                         await emotionEmoji.ActivateAsync(null);
                 }
             }
-            
-            // Debug.Log(emotionType);
         }
         #endregion
     }

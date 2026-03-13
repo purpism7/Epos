@@ -77,14 +77,14 @@ namespace Creature.Action
 
             if(_param.Distance > 0)
             {
-                var distance = Vector2.Distance(_iActor.Transform.position, TargetPosition);
+                var distance = Vector2.Distance(_actor.Transform.position, TargetPosition);
                 if(distance > _param.Distance)
                     _param.WithSpeed(_param.Speed + 1f);
             }
 
             PlayAnimation(_param.AnimationKey, true);
             
-            _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
+            _actor?.EffectController?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), "Move");
         }
 
         protected override void Activate()
@@ -103,7 +103,7 @@ namespace Creature.Action
 
         private void EnableNavMeshAgent()
         {
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
@@ -113,7 +113,7 @@ namespace Creature.Action
 
         private void DisableNavMeshAgent()
         {
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent != null &&
                 navMeshAgent.enabled)
             {
@@ -128,7 +128,7 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            var navMeshAgent = _iActor?.NavMeshAgent;
+            var navMeshAgent = _actor?.NavMeshAgent;
             if (navMeshAgent == null)
                 return;
 
@@ -157,19 +157,9 @@ namespace Creature.Action
                 {
                     targetPosition = _param.TargetICombatant.Transform.position;
                     _targetTm = _param.TargetICombatant.Transform;
-
-                    //var targetCollider = _param.TargetICombatant.IActor?.Collider;
-                    //if (targetCollider != null)
-                    //    targetPosition = targetCollider.ClosestPoint(_iActor.Transform.position);
                 }
 
                 targetPosition = GetTargetPositionByDirection(targetPosition);
-
-                //NavMeshHit hit;
-                //// 2. 그 위치 근처(1.0f 반경)에 NavMesh(땅)가 있는지 확인
-                //// SamplePosition은 가장 가까운 유효한 땅 좌표를 hit.position에 담아줍니다.
-                //if (NavMesh.SamplePosition(targetPosition, out hit, 5f, NavMesh.AllAreas))
-                //    targetPosition = hit.position;
 
                 return targetPosition;
             }
@@ -246,14 +236,17 @@ namespace Creature.Action
         {
             base.ChainUpdate();
 
-            if (_param == null || !_iActor?.Transform || _iActor?.NavMeshAgent == null)
+            if (!_isActivate)
                 return;
 
-            var navMeshAgent = _iActor.NavMeshAgent;
+            if (_param == null || !_actor?.Transform || _actor?.NavMeshAgent == null)
+                return;
+
+            var navMeshAgent = _actor.NavMeshAgent;
 
             // targetPosition은 '리더의 위치'가 아니라 '이미 오프셋이 적용된 내 최종 목적지'입니다.
             Vector3 targetPosition = TargetPosition;
-            Vector3 actorPosition = _iActor.Transform.position;
+            Vector3 actorPosition = _actor.Transform.position;
 
             // 리더의 동선(과거 위치) 갱신은 내가 멈춰있든 말든 매 프레임 무조건 해줍니다! (방향 꼬임 방지)
             if (_targetTm != null)
@@ -262,7 +255,6 @@ namespace Creature.Action
             }
 
             var distance = Vector2.Distance(actorPosition, targetPosition);
-            // 🚨 핵심 수정: _param.Distance가 아니라 0.1f (혹은 navMeshAgent.stoppingDistance)로 도착 판별!
             if (distance <= 0.1f)
             {
                 if (_param.IsEndOnArrival)
@@ -276,7 +268,7 @@ namespace Creature.Action
                 {
                     navMeshAgent.isStopped = true;
                     navMeshAgent.velocity = Vector3.zero;
-                    _iActor?.IEffectCtr?.Deactivate("Move");
+                    _actor?.EffectController?.Deactivate("Move");
                 }
             }
             else
@@ -285,33 +277,27 @@ namespace Creature.Action
                 if (navMeshAgent.isStopped)
                 {
                     navMeshAgent.isStopped = false;
-                    _iActor?.IEffectCtr?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), "Move");
+                    _actor?.EffectController?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), "Move");
                 }
 
                 SetNavMeshAgentSpeed();
-                // 2. 🚨 뱅뱅 도는 원인 해결 🚨
-                // 매 프레임 목적지를 덮어씌우지 말고, 리더가 의미 있는 거리(0.2f) 이상 
-                // 이동했을 때만 내 목적지를 갱신해 줍니다.
-                // if (Vector2.Distance(navMeshAgent.destination, targetPosition) > 0.2f)
-                {
-                    navMeshAgent.SetDestination(targetPosition);
-                }
+                navMeshAgent.SetDestination(targetPosition);
 
                 var direction = targetPosition - actorPosition;
                 if (direction.sqrMagnitude > 0.001f) // 너무 미세한 진동 시엔 안 쳐다보게 방어
                 {
-                    _iActor?.IActCtr?.Flip(direction.x);
+                    _actor?.ActController?.Flip(direction.x);
                 }
             }
 
-            _iActor?.SortingOrder(actorPosition.y);
+            _actor?.SortingOrder(actorPosition.y);
         }
 
         protected override void End()
         {
             base.End();
             
-            _iActor?.IEffectCtr?.Deactivate("Move");
+            _actor?.EffectController?.Deactivate("Move");
         }
     }
 }

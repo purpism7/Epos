@@ -89,22 +89,22 @@ namespace Battle.Mode
                         iCombatant.SetTeamType(TeamType.Ally);
                         _priorityICombatantList?.Add(iCombatant);
                         
-                        EventHandler.Notify(new StatChangedEventData(iCombatant.IActor.Id, iCombatant.IActor.IStat));
+                        EventHandler.Notify(new StatChangedEventData(iCombatant.Actor.Id, iCombatant.Actor.IStat));
                     }
                     
-                    foreach (var iCombatant in _data?.EnemyICombatantList)
+                    foreach (var combatant in _data?.EnemyICombatantList)
                     {
-                        if (iCombatant == null)
+                        if (combatant == null)
                             continue;
+
+                        combatant.SetTeamType(TeamType.Enemy);
+                        combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
+                        _priorityICombatantList?.Add(combatant);
                         
-                        iCombatant.SetTeamType(TeamType.Enemy);
-                        iCombatant.IActor.IActCtr?.SetPosition(iCombatant.IActor.Transform.position);
-                        _priorityICombatantList?.Add(iCombatant);
-                        
-                        EventHandler.Notify(new StatChangedEventData(iCombatant.IActor.Id, iCombatant.IActor.IStat));
+                        EventHandler.Notify(new StatChangedEventData(combatant.Actor.Id, combatant.Actor.IStat));
                     }
                     
-                    _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor.IActor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
+                    _priorityICombatantList = _priorityICombatantList?.OrderByDescending(iActor => iActor.Actor?.IStat?.Get(Stat.EType.ActionSpeed)).ToList();
      
                     break;
                 }
@@ -133,17 +133,17 @@ namespace Battle.Mode
             
             for (int i = 0; i < sortAllyICombatantList?.Count; ++i)
             {
-                var iCombatant = sortAllyICombatantList[i];
-                if(iCombatant == null)
+                var combatant = sortAllyICombatantList[i];
+                if(combatant == null)
                     continue;
 
-                var hero = iCombatant as Hero;
+                var hero = combatant as Hero;
                 if(hero == null)
                     continue;
      
                 hero.Activate();
                 
-                var originPos = iCombatant.IActor.Transform.position;
+                var originPos = combatant.Actor.Transform.position;
                 originPos.x += 100f;
 
                 var moveParam = new Move.Param
@@ -152,17 +152,17 @@ namespace Battle.Mode
                     TargetPos = originPos,
                 };
 
-                iCombatant.IActor.IActCtr?.MoveTo(moveParam)?.Execute();
+                combatant.Actor.ActController?.MoveTo(moveParam)?.Execute();
                 
                 await UniTask.WaitWhile(
                     () =>
                     {
                         hero.ChainUpdate();
-                        return iCombatant.IActor.IActCtr.InAction;
+                        return combatant.Actor.ActController.InAction;
                     });
-                
+
                 // 현재 위치 저장.
-                iCombatant.IActor.IActCtr?.SetPosition(iCombatant.IActor.Transform.position);
+                combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
             }
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
@@ -293,7 +293,7 @@ namespace Battle.Mode
                 if (_iActCtr == null ||
                     !_iActCtr.InAction)
                 {
-                    _iActCtr = _sequenceActList[_sequenceIndex]?.IActor.IActCtr;
+                    _iActCtr = _sequenceActList[_sequenceIndex]?.Actor.ActController;
                     _iActCtr?.Execute();
 
                     ++_sequenceIndex;
@@ -311,33 +311,33 @@ namespace Battle.Mode
             
             if (_sequenceActList != null)
             {
-                foreach (var iCombatant in _sequenceActList)
+                foreach (var combatant in _sequenceActList)
                 {
-                    if(iCombatant == null)
+                    if(combatant == null)
                         continue;
 
                     var moveParam = new Move.Param
                     {
-                        MoveSpeed = iCombatant.IActor.IStat.Get(Stat.EType.MoveSpeed),
+                        MoveSpeed = combatant.Actor.IStat.Get(Stat.EType.MoveSpeed),
                         IsJumpMove = true,
                     };
 
-                    iCombatant.IActor.IActCtr?
+                    combatant.Actor.ActController?
                         .MoveTo(moveParam)?
                         .Execute();
                     
-                    SetSortingOrder(iCombatant, 0);
+                    SetSortingOrder(combatant, 0);
                 }
 
-                while (_sequenceActList?.Find(iCombatant => iCombatant.IActor.IActCtr.InAction) != null)
+                while (_sequenceActList?.Find(combatant => combatant.Actor.ActController.InAction) != null)
                 {
-                    foreach (var iCombatant in _sequenceActList)
+                    foreach (var combatant in _sequenceActList)
                     {
-                        if(iCombatant?.IActor.IActCtr == null)
+                        if(combatant?.Actor.ActController == null)
                             continue;
                         
-                        if (iCombatant.IActor.IActCtr.InAction)
-                            iCombatant.IActor.IActCtr.ChainUpdate();
+                        if (combatant.Actor.ActController.InAction)
+                            combatant.Actor.ActController.ChainUpdate();
                     }
                     
                     await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
@@ -393,7 +393,7 @@ namespace Battle.Mode
                             if(attacker.TeamType == iCombatant.TeamType)
                                 continue;
                                 
-                            var findTargetData = _targetDataList?.Find(targetData => targetData?.Target.IActor.Id == target.IActor.Id);
+                            var findTargetData = _targetDataList?.Find(targetData => targetData?.Target.Actor.Id == target.Actor.Id);
                             if (findTargetData != null)
                             {
                                 // _targetList.RemoveAt(findIndex);
@@ -450,8 +450,8 @@ namespace Battle.Mode
             if (targetData.ChangeTarget != null)
                 skillRange += 2f;
             
-            var targetPos = target.IActor.Transform.position;
-            var direction = targetPos.x - attacker.IActor.Transform.position.x;
+            var targetPos = target.Actor.Transform.position;
+            var direction = targetPos.x - attacker.Actor.Transform.position.x;
             
             targetPos.x = direction <= 0 ? targetPos.x + skillRange : targetPos.x - skillRange;
             targetPos.y -= 1f;
@@ -461,12 +461,12 @@ namespace Battle.Mode
 
             var moveParam = new Move.Param
             {
-                MoveSpeed = attacker.IActor.IStat.Get(Stat.EType.MoveSpeed),
+                MoveSpeed = attacker.Actor.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPos,
                 IsJumpMove = true,
             };
 
-            attacker.IActor?.IActCtr?.MoveTo(moveParam);
+            attacker.Actor?.ActController?.MoveTo(moveParam);
         }
 
         private void CastingSkill(ICombatant attacker, Ability.ISkill iSkill, List<TargetData> targetDataList)
@@ -491,7 +491,7 @@ namespace Battle.Mode
 
             var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
 
-            attacker.IActor.IActCtr?.CastingSkill(this, attacker, iSkill, closestTarget, targetList);
+            attacker.Actor.ActController?.CastingSkill(this, attacker, iSkill, closestTarget, targetList);
 
             // if (skill.ESkillCategory == ESkillCategory.Active)
             {
@@ -505,7 +505,7 @@ namespace Battle.Mode
         
         private void SetSortingOrder(ICombatant iCombatant, int sortingOrder)
         {
-            var meshRenderer = iCombatant?.IActor.SkeletonAnimation?.GetComponent<MeshRenderer>();
+            var meshRenderer = iCombatant?.Actor.SkeletonAnimation?.GetComponent<MeshRenderer>();
             if (meshRenderer == null)
                 return;
             

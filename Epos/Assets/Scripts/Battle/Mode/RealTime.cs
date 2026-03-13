@@ -94,7 +94,7 @@ namespace Battle.Mode
             {
                 var ally = _data?.AllyICombatantList[i];
                 ally?.SetTeamType(TeamType.Ally);
-                ally?.IActor?.Activate();
+                ally?.Actor?.Activate();
             }
 
             CreateBattleMain();
@@ -105,7 +105,7 @@ namespace Battle.Mode
         {
             for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
             {
-                var iActor = _data.AllyICombatantList[i]?.IActor;
+                var iActor = _data.AllyICombatantList[i]?.Actor;
                 if (iActor == null || !iActor.IsActivate)
                     continue;
                 iActor.ChainLateUpdate();
@@ -130,14 +130,14 @@ namespace Battle.Mode
             {
                 for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
                 {
-                    var allyIActor = _data?.AllyICombatantList[i]?.IActor;
+                    var allyIActor = _data?.AllyICombatantList[i]?.Actor;
                     if (allyIActor == null)
                         continue;
 
                     if (!allyIActor.IsAlive)
                         continue;
 
-                    allyIActor?.IActCtr?.Victory();
+                    allyIActor?.ActController?.Victory();
                 }
             }
 
@@ -162,7 +162,7 @@ namespace Battle.Mode
                         if (allyICombatant == null)
                             continue;
 
-                        if (allyICombatant.IActor.IsAlive)
+                        if (allyICombatant.Actor.IsAlive)
                             return true;
                     }
                 }
@@ -198,11 +198,11 @@ namespace Battle.Mode
                     if (iCombatant == null)
                         continue;
 
-                    iCombatant.IActor?.ChainUpdate();
+                    iCombatant.Actor?.ChainUpdate();
                 }
             }
 
-            _waypointController?.ChainUpdate(_strategyController?.LeaderICombatant);
+            _waypointController?.ChainUpdate(_strategyController?.LeaderCombatant);
         }
 
         private void CreateHpProgress(ICombatant combatant)
@@ -220,8 +220,8 @@ namespace Battle.Mode
 
             var param = new EnemyHpProgressPart.Param
             {
-                TargetTm = combatant.IActor.Transform,
-                Offset = new Vector2(0, combatant.IActor.Height),
+                TargetTm = combatant.Actor.Transform,
+                Offset = new Vector2(0, combatant.Actor.Height),
             };
             param.WithCombatant(combatant);
 
@@ -243,8 +243,8 @@ namespace Battle.Mode
             
             var param = new EmotionPart.Param
             {
-                TargetTm = iCombatant.IActor.Transform,
-                Offset = new Vector2(3f, iCombatant.IActor.Height - 1f),
+                TargetTm = iCombatant.Actor.Transform,
+                Offset = new Vector2(3f, iCombatant.Actor.Height - 1f),
             }.WithEmotionType(emotionType);
 
             emotionPart?.ActivateAsync(param);
@@ -292,7 +292,7 @@ namespace Battle.Mode
                     continue;
 
                 enemyCombatant.SetTeamType(TeamType.Enemy);
-                enemyCombatant.IActor.Activate();
+                enemyCombatant.Actor.Activate();
 
                 CreateHpProgress(enemyCombatant);
 
@@ -310,25 +310,9 @@ namespace Battle.Mode
             }
         }
 
-        // private void TransitionToIdle()
-        // {
-        //     var allyList = _data?.AllyICombatantList;
-        //     if (allyList != null)
-        //     {
-        //         for (int i = 0; i < allyList.Count; ++i)
-        //         {
-        //             var combatant = allyList[i];
-        //             if (combatant == null)
-        //                 continue;
-        //
-        //             combatant.IActor?.IActCtr?.Execute();
-        //         }
-        //     }
-        // }
-
         private async UniTask PrepareForNextActionAsync(ICombatant combatant)
         {
-            var actor = combatant?.IActor;
+            var actor = combatant?.Actor;
             if (actor == null)
                 return;
 
@@ -338,7 +322,7 @@ namespace Battle.Mode
             var waypoint = _waypointController?.Waypoint;
             if (waypoint == null)
             {
-                actor.IActCtr?.Execute();
+                actor.ActController?.Execute();
                 return;
             }
 
@@ -347,14 +331,7 @@ namespace Battle.Mode
                 if (_battleState == BattleState.Combat)
                     _battleState = BattleState.MoveWayPoint;
 
-                //_weightedActionCTS?.Cancel();
-                //_weightedActionCTS?.Dispose();
-                //_weightedActionCTS = null;
-
-                
-                // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-
-                if(combatant == _strategyController.LeaderICombatant)
+                if(combatant == _strategyController.LeaderCombatant)
                     MoveToWaypoint(waypoint);
             }
             else
@@ -487,7 +464,7 @@ namespace Battle.Mode
             if (eventData == null)
                 return;
 
-            var combatant = _data?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == eventData.CharacterId);
+            var combatant = _data?.AllyICombatantList?.Find(combatant => combatant.Actor.Id == eventData.CharacterId);
             if (combatant == null)
                 return;
 

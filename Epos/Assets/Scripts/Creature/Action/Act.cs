@@ -36,19 +36,19 @@ namespace Creature.Action
         [Inject] protected IObjectResolver _iResolver = null;
 
         protected T _param = null;
-        protected IActor _iActor = null;
+        protected IActor _actor = null;
         protected System.Action<IActor> _endAction = null;
         protected float _duration = 0;
         protected bool _isActivate = false;
         
         public virtual void Initialize(IActor iActor)
         {
-            _iActor = iActor;
+            _actor = iActor;
         }
         
         protected Act<T> SetIActor(IActor iActor)
         {
-            _iActor = iActor;
+            _actor = iActor;
             return this;
         }
         
@@ -64,7 +64,7 @@ namespace Creature.Action
 
         protected virtual void End()
         {
-            _endAction?.Invoke(_iActor);
+            _endAction?.Invoke(_actor);
         }
 
         #region IAct
@@ -98,7 +98,7 @@ namespace Creature.Action
 
         protected bool PlayAnimation(string animationName, bool loop)
         {
-            var skeletonAnimation = _iActor?.SkeletonAnimation;
+            var skeletonAnimation = _actor?.SkeletonAnimation;
             if (skeletonAnimation == null)
                 return false;
 

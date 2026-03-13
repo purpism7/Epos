@@ -22,7 +22,12 @@ namespace Battle.Strategy
         void MoveFormation(Vector3 targetPosition);
         UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken);
 
-        ICombatant LeaderICombatant { get; }
+        /// <summary>
+        /// 전략 변경 시 이전 전략이 등록한 Trace 콜백을 제거합니다.
+        /// </summary>
+        void CleanupTraceCallbacks();
+
+        ICombatant LeaderCombatant { get; }
 }
 
     public abstract class BaseStrategy : IStrategy
@@ -36,7 +41,7 @@ namespace Battle.Strategy
         private DebugObject _debugObject = null;
 #endif
 
-        public ICombatant LeaderICombatant { get; protected set; } = null;
+        public ICombatant LeaderCombatant { get; protected set; } = null;
 
         public virtual void Apply(IStrategyDataProvider strategyDataProvider)
         { 
@@ -55,58 +60,56 @@ namespace Battle.Strategy
             
         }
 
+        public virtual void CleanupTraceCallbacks()
+        {
+
+        }
+
         public virtual void MoveFormation(Vector3 targetPosition)
         {
-            if (LeaderICombatant == null)
-                return;
-
-            var actorCtr = LeaderICombatant?.IActor?.IActCtr;
-            if (actorCtr == null)
+            if (LeaderCombatant == null)
                 return;
 
             MoveLeaderToTarget(targetPosition);
 
-#if UNITY_EDITOR
-            if(!_debugObject)
-            {
-                var debugGameObj= new GameObject();
-                _debugObject = debugGameObj.AddComponent<DebugObject>();
-            }
+//#if UNITY_EDITOR
+//            if(!_debugObject)
+//            {
+//                var debugGameObj= new GameObject();
+//                _debugObject = debugGameObj.AddComponent<DebugObject>();
+//            }
 
-            _debugObject.originTm = LeaderICombatant.Transform;
-            _debugObject.targetPosition = targetPosition;
-#endif
+//            _debugObject.originTm = LeaderICombatant.Transform;
+//            _debugObject.targetPosition = targetPosition;
+//#endif
         }
 
-        public virtual async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
+        public virtual UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
         {
             if (targetPosition != null)
-            {
                 MoveLeaderToTarget(targetPosition.Value);
 
-                await UniTask.Yield();
-            }
-
             Debug.Log("RegroupToLeaderAsync");
+            return UniTask.CompletedTask;
         }
 
         private void MoveLeaderToTarget(Vector3 targetPosition)
         {
-            if (LeaderICombatant == null)
+            if (LeaderCombatant == null)
                 return;
 
-            var actorCtr = LeaderICombatant?.IActor?.IActCtr;
-            if (actorCtr == null)
+            var actController = LeaderCombatant?.Actor?.ActController;
+            if (actController == null)
                 return;
 
-            var moveSpeed = LeaderICombatant.IStat.Get(Stat.EType.MoveSpeed);
+            var moveSpeed = LeaderCombatant.IStat.Get(Stat.EType.MoveSpeed);
             var moveParam = new Move.Param
             {
                 MoveSpeed = moveSpeed,
                 TargetPos = targetPosition,
             };
 
-            actorCtr.MoveTo(moveParam)?.Execute();
+            actController.MoveTo(moveParam)?.Execute();
         }
 
         protected void TraceTo(ICombatant combatant, DirectionType directionType, float distance, bool isEndOnArrival)
@@ -117,24 +120,24 @@ namespace Battle.Strategy
             var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 
             var traceParam = new Creature.Action.Trace.Param()
-                .WithTargetICombatant(LeaderICombatant)
+                .WithTargetICombatant(LeaderCombatant)
                 .WithDirectionType(directionType)
                 .WithDistance(distance)
                 .WithSpeed(moveSpeed)
                 .WithEndOnArrival(isEndOnArrival);
 
-            combatant.IActor?.IActCtr?
+            combatant.Actor?.ActController?
                 .TraceTo(traceParam)?
                 .Execute();
         }
 
         protected bool TryStartTraceMove(int characterId, DirectionType directionType, float distance, bool isEndOnArrival)
         {
-            var combatant = _strategyDataProvider?.AllyICombatantList?.Find(c => c.IActor.Id == characterId);
-            if (combatant?.IActor?.IActCtr != null)
+            var combatant = _strategyDataProvider?.Allycombatants?.Find(c => c.Actor.Id == characterId);
+            if (combatant?.Actor?.ActController != null)
             {
                 TraceTo(combatant, directionType, distance, isEndOnArrival);
-                combatant.IActor?.IActCtr?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+                combatant.Actor?.ActController?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
 
                 _totalMoveCount++;
 
@@ -146,8 +149,8 @@ namespace Battle.Strategy
 
         protected void EndTraceMove(int characterId)
         {
-            var combatant = _strategyDataProvider?.AllyICombatantList?.Find(c => c.IActor.Id == characterId);
-            combatant?.IActor?.IActCtr?.RemoveActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+            var combatant = _strategyDataProvider?.Allycombatants?.Find(c => c.Actor.Id == characterId);
+            combatant?.Actor?.ActController?.RemoveActEnded<Creature.Action.Trace>(OnTraceActionEnded);
         }
 
         private void OnTraceActionEnded(Creature.Action.Trace act)
@@ -157,8 +160,8 @@ namespace Battle.Strategy
 
         protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)
         {
-            var targetPosition = LeaderICombatant.Transform.position;
-            Vector2 targetDirection = LeaderICombatant.Transform.up; 
+            var targetPosition = LeaderCombatant.Transform.position;
+            Vector2 targetDirection = LeaderCombatant.Transform.up; 
     
             Vector2 normalizedDirection = targetDirection.normalized;
 

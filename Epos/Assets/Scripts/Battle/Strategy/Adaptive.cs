@@ -12,22 +12,28 @@ namespace Battle.Strategy
 {
     public class Adaptive : BaseStrategy
     {
-        public override void Apply(IStrategyDataProvider iStrategyDataProvider)
+        public override void Apply(IStrategyDataProvider strategyDataProvider)
         {
-            base.Apply(iStrategyDataProvider);
-    
-            LeaderICombatant = iStrategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10003);
+            base.Apply(strategyDataProvider);
+
+            LeaderCombatant = strategyDataProvider?.Allycombatants?.Find(combatant => combatant.Actor.Id == 10003);
         }
 
         public override void InitializeFormationPosition()
         {
             base.InitializeFormationPosition();
             
-            var iCombatant = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10004);
+            var iCombatant = _strategyDataProvider?.Allycombatants?.Find(combatant => combatant.Actor.Id == 10004);
             SetFormationPosition(iCombatant, DirectionType.Right, 7f, Vector2.zero);
             
-            iCombatant = _strategyDataProvider?.AllyICombatantList?.Find(combatant => combatant.IActor.Id == 10001);
+            iCombatant = _strategyDataProvider?.Allycombatants?.Find(combatant => combatant.Actor.Id == 10001);
             SetFormationPosition(iCombatant, DirectionType.Forward, 6f, new Vector2(5f, 0));
+        }
+
+        public override void CleanupTraceCallbacks()
+        {
+            EndTraceMove(10004);
+            EndTraceMove(10001);
         }
 
         public override void MoveFormation(Vector3 targetPosition)
@@ -40,10 +46,10 @@ namespace Battle.Strategy
 
         public override async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
         {
-            await base.RegroupToLeaderAsync(targetPosition, cancellationToken);
-
             if (cancellationToken.IsCancellationRequested)
                 return;
+
+            await base.RegroupToLeaderAsync(targetPosition, cancellationToken);
 
             try
             {

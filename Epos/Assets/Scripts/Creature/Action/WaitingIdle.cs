@@ -21,7 +21,7 @@ namespace Creature.Action
         {
             await UniTask.Delay(TimeSpan.FromSeconds(3f));
 
-            _endAction?.Invoke(_iActor);
+            _endAction?.Invoke(_actor);
         }
     }
 }

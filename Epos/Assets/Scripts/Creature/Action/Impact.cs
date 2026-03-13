@@ -63,10 +63,10 @@ namespace Creature.Action
                     value = 10f;
 
                     var effectParam = new Effect.Param()
-                        .WithRootTm(_iActor.Transform)
+                        .WithRootTm(_actor.Transform)
                         .WithReturnParent(true);
 
-                    _iActor?.IEffectCtr?.Activate("Eff_Hill_01", effectParam);
+                    _actor?.EffectController?.Activate("Eff_Hill_01", effectParam);
                 }
                 else
                 {
@@ -74,10 +74,10 @@ namespace Creature.Action
                 }
 
                 value *= _param.Multiplier;
-                _iActor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, value);
+                _actor?.IStat?.Add(Stat.EType.Hp, Stat.ESubType.Hp, value);
 
-                if(_iActor != null)
-                    GameSystem.Event.EventHandler.Notify(new StatChangedEventData(_iActor.Id, _iActor.IStat));
+                if(_actor != null)
+                    GameSystem.Event.EventHandler.Notify(new StatChangedEventData(_actor.Id, _actor.IStat));
 
                 ActivateCombatText(value);
             }
@@ -86,13 +86,13 @@ namespace Creature.Action
         private void ActivateCombatText(float damage)
         {
             float flipX = 1f;
-            if(_iActor?.SkeletonAnimation != null)
-                flipX = _iActor.SkeletonAnimation.skeleton.ScaleX;
+            if(_actor?.SkeletonAnimation != null)
+                flipX = _actor.SkeletonAnimation.skeleton.ScaleX;
 
             var combatTextParam = new CombatText.Param
             {
-                TargetTm = _iActor?.Transform,
-                Offset = new Vector2(0, _iActor.Height + 0.5f),
+                TargetTm = _actor?.Transform,
+                Offset = new Vector2(0, _actor.Height + 0.5f),
             }
             .WithValue(damage)
             .WithImpactType(_param.ImpactType)
