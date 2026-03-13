@@ -11,9 +11,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: Ch_01_Atlas
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: spine-unity::Spine.Unity.SpineAtlasAsset
   textureLoadingMode: 0
   onDemandTextureLoader: {fileID: 0}
   atlasFile: {fileID: 4900000, guid: 3aa6830d5c050d04db720d2ad8ca4410, type: 3}
   materials:
-  - {fileID: 2100000, guid: aa69093eec7ce7e4187ba9b45c2be3bc, type: 2}
+  - {fileID: 2100000, guid: a2140607d1986d949ad7653ac46ed07b, type: 2}
+  - {fileID: 2100000, guid: e5a4132099f3dce4e93162a460c9cb33, type: 2}
