@@ -63,7 +63,6 @@ namespace Creature.Action
         private bool _isCastingCompleted = false;
         private CancellationTokenSource _actCTS = null;
             
-
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
         private Dictionary<System.Type, Action<IAct>> _onActEndedDic = null;
@@ -324,6 +323,16 @@ namespace Creature.Action
             Execute<Impact, Impact.Param>(impactParam, false);
         }
 
+        private void CancelAct()
+        {
+            if(_actCTS != null)
+            {
+                _actCTS.Cancel();
+                _actCTS.Dispose();
+                _actCTS = null;
+            }
+        }
+
         private async UniTask ExecuteAsync()
         {
             if (_currIAct is Casting && !_isCastingCompleted)
@@ -341,6 +350,9 @@ namespace Creature.Action
                     // 이전 Act 종료 이벤트 발생
                     if (_currIAct != null)
                         NotifyActEnded(_currIAct);
+
+                    CancelAct();
+                    _actCTS = new();
 
                     //iAct?.SetIsEnd(false);
                     act?.Execute();
