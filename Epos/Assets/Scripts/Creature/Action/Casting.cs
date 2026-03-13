@@ -62,8 +62,6 @@ namespace Creature.Action
         public Ability.ISkill ISkill => _param?.ISkill;
         public Skill SkillData => _param?.ISkill?.SkillData;
 
-        private bool _isUpdate = false;
-
         public override void Initialize(IActor iActor)
         {
             base.Initialize(iActor);
@@ -74,11 +72,8 @@ namespace Creature.Action
             if (_param == null)
                 return;
 
-            _isUpdate = true;
-
             LookAtTarget();
             CastingAsync().Forget();
-            //UpdateAsync().Forget();
         }
 
         private void LookAtTarget()
@@ -129,8 +124,6 @@ namespace Creature.Action
             AfterCasting();
 
             _actor?.EffectController?.Deactivate(skillData.AnimationName);
-
-            _isUpdate = false;
         }
 
         private void AfterCasting()

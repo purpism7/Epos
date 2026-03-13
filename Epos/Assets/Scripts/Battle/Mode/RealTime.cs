@@ -51,7 +51,7 @@ namespace Battle.Mode
 
         private IWaypointController _waypointController = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
-        //private CancellationTokenSource _weightedActionCTS = null;
+        private CancellationTokenSource _weightedActionCTS = null;
 
         private IBattleMainView _battleMainView = null;
 
@@ -130,14 +130,14 @@ namespace Battle.Mode
             {
                 for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
                 {
-                    var allyIActor = _data?.AllyICombatantList[i]?.Actor;
-                    if (allyIActor == null)
+                    var actor = _data?.AllyICombatantList[i]?.Actor;
+                    if (actor == null)
                         continue;
 
-                    if (!allyIActor.IsAlive)
+                    if (!actor.IsAlive)
                         continue;
 
-                    allyIActor?.ActController?.Victory();
+                    actor?.ActController?.Victory();
                 }
             }
 
@@ -153,12 +153,12 @@ namespace Battle.Mode
         {
             get
             {
-                var allyList = _data?.AllyICombatantList;
-                if(allyList != null)
+                var allies = _data?.AllyICombatantList;
+                if(allies != null)
                 {
-                    for (int i = 0; i < allyList.Count; ++i)
+                    for (int i = 0; i < allies.Count; ++i)
                     {
-                        var allyICombatant = allyList[i];
+                        var allyICombatant = allies[i];
                         if (allyICombatant == null)
                             continue;
 
@@ -299,12 +299,12 @@ namespace Battle.Mode
                 _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
             }
 
-            var allyList = _data?.AllyICombatantList;
-            if (allyList != null)
+            var allies = _data?.AllyICombatantList;
+            if (allies != null)
             {
-                for (int i = 0; i < allyList.Count; ++i)
+                for (int i = 0; i < allies.Count; ++i)
                 {
-                    var allyCombatant = allyList[i];
+                    var allyCombatant = allies[i];
                     _iWeightedActionCtr?.Execute(allyCombatant, this);
                 }
             }
@@ -443,14 +443,17 @@ namespace Battle.Mode
                 _battleState = BattleState.Combat;
 
             // Trace 종료 후 ActController의 ExecuteAsync가 완료될 시간을 주어, Casting이 누락되는 타이밍 이슈 방지
-            var allyList = _data?.AllyICombatantList;
-            if (allyList != null)
+            var allies = _data?.AllyICombatantList;
+            if (allies != null)
             {
-                // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-                
-                for (int i = 0; i < allyList.Count; ++i)
+                for (int i = 0; i < allies.Count; ++i)
                 {
-                    var allyCombatant = allyList[i];
+                    var allyCombatant = allies[i];
+                    if (allyCombatant == null)
+                        continue;
+
+                    //allyCombatant.Actor?.ActController?.ClearActQueue();
+
                     await PrepareForNextActionAsync(allyCombatant);
                 }
             }

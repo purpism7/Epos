@@ -86,6 +86,9 @@ namespace Battle.Strategy
 
         public virtual UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
         {
+            _totalMoveCount = 0;
+            _completedCount = 0;
+
             if (targetPosition != null)
                 MoveLeaderToTarget(targetPosition.Value);
 
@@ -131,15 +134,18 @@ namespace Battle.Strategy
                 .Execute();
         }
 
-        protected bool TryStartTraceMove(int characterId, DirectionType directionType, float distance, bool isEndOnArrival)
+        protected bool TryStartTraceTo(int characterId, DirectionType directionType, float distance, bool isEndOnArrival)
         {
             var combatant = _strategyDataProvider?.Allycombatants?.Find(c => c.Actor.Id == characterId);
             if (combatant?.Actor?.ActController != null)
             {
                 TraceTo(combatant, directionType, distance, isEndOnArrival);
-                combatant.Actor?.ActController?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
 
-                _totalMoveCount++;
+                if(isEndOnArrival)
+                {
+                    combatant.Actor?.ActController?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+                    _totalMoveCount++;
+                }
 
                 return true;
             }
@@ -155,7 +161,7 @@ namespace Battle.Strategy
 
         private void OnTraceActionEnded(Creature.Action.Trace act)
         {
-            _completedCount++;
+            ++_completedCount;
         }
 
         protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)

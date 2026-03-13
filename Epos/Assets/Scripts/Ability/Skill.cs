@@ -41,6 +41,10 @@ namespace Ability
         public bool IsReady { get { return _eState == EState.Ready; } }
         public float CooldownLeft { get { return _currCooltime; } }
 
+#if UNITY_EDITOR
+        public EState State { get { return _eState; } }
+#endif
+
 
         public virtual void Initialize(Datas.ScriptableObjects.Skill skillData)
         {
