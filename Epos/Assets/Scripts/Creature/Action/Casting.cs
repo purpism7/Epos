@@ -102,7 +102,7 @@ namespace Creature.Action
             _actor?.IStat?.Add(Stat.EType.Mp, Stat.ESubType.None, -skillData.MP);
 
             _param?.IListener?.BeforeCasting();
-            await UniTask.Yield(PlayerLoopTiming.PostLateUpdate);
+            await UniTask.Yield();
 
             _param?.ISkill?.Casting();
 
@@ -223,8 +223,6 @@ namespace Creature.Action
                 if (isAttack)
                     ImpactToTarget(attacker, target, skillData);
             }
-
-            // _isUpdate = false;
         }
 
         private void ImpactToSingleTarget(ICombatant attacker, Skill skillData)

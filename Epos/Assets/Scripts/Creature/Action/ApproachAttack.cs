@@ -110,17 +110,18 @@ namespace Creature.Action
         //    CastingSkill(attacker, iSkill, targetList);
         //}
 
-        private void CastingSkill (ICombatant attacker, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
+        private void CastingSkill (ICombatant attacker, Ability.ISkill skill, ICombatant target, List<ICombatant> targets)
         {
-            if(target == null ||
-              !target.Actor.IsAlive)
+            var actor = attacker?.Actor;
+            if (actor == null || 
+                !actor.IsAlive)
             {
                 End();
-                return;
-            }    
+                return; 
+            }
 
-            attacker?.Actor?.ActController?
-                .CastingSkill(this, attacker, iSkill, target, targetList)?
+            actor.ActController?
+                .CastingSkill(this, attacker, skill, target, targets)?
                 .Execute();
         }
 

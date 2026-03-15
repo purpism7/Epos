@@ -46,9 +46,7 @@ namespace Creature.Action
         bool InAction { get; }
 
         void Flip(float x);
-        void SetPosition(Vector3 position);
-
-        void SetActListener(IActListener listener);
+        // void SetPosition(Vector3 position);
     }
     
     public class ActController : Controller, IActController
@@ -59,9 +57,8 @@ namespace Creature.Action
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         private Queue<IAct> _actQueue = null;
-        private Vector3 _currPosition = Vector3.zero;
+        // private Vector3 _currPosition = Vector3.zero;
         private bool _isCastingCompleted = false;
-        private CancellationTokenSource _actCTS = null;
             
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
@@ -323,16 +320,6 @@ namespace Creature.Action
             Execute<Impact, Impact.Param>(impactParam, false);
         }
 
-        private void CancelAct()
-        {
-            if(_actCTS != null)
-            {
-                _actCTS.Cancel();
-                _actCTS.Dispose();
-                _actCTS = null;
-            }
-        }
-
         private async UniTask ExecuteAsync()
         {
             if (_currIAct is Casting && !_isCastingCompleted)
@@ -350,13 +337,8 @@ namespace Creature.Action
                     // 이전 Act 종료 이벤트 발생
                     if (_currIAct != null)
                         NotifyActEnded(_currIAct);
-
-                    CancelAct();
-                    _actCTS = new();
-
-                    //iAct?.SetIsEnd(false);
-                    act?.Execute();
                     
+                    act?.Execute();
                     SetCurrIAct(act);
                     
                     // 새 Act 시작 이벤트 발생
@@ -461,16 +443,11 @@ namespace Creature.Action
                 skeletonAnimation.Skeleton.ScaleX = Mathf.Sign(x);
         }
 
-        void IActController.SetPosition(Vector3 position)
-        {
-            _currPosition = position;
-            _currPosition.z = 0;
-        }
-
-        void IActController.SetActListener(IActListener listener)
-        {
-            
-        }
+        // void IActController.SetPosition(Vector3 position)
+        // {
+        //     _currPosition = position;
+        //     _currPosition.z = 0;
+        // }
         #endregion
 
         private void Execute<T, V>(V param = null, bool isSet = true) where T : Act<V>, new() where V : ActParam, new()

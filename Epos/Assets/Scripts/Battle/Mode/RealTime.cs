@@ -247,7 +247,7 @@ namespace Battle.Mode
                 Offset = new Vector2(3f, iCombatant.Actor.Height - 1f),
             }.WithEmotionType(emotionType);
 
-            emotionPart?.ActivateAsync(param);
+            emotionPart.ActivateAsync(param);
         }
 
         /// <summary>
@@ -284,27 +284,32 @@ namespace Battle.Mode
             _battleState = BattleState.Combat;
             //_weightedActionCTS = new();
 
-            var enemyCombatantList = waypoint?.EnemyICombatantList;
-            for (int i = 0; i < enemyCombatantList?.Count; ++i)
+            var enemyCombatants = waypoint?.EnemyICombatantList;
+            if (enemyCombatants != null)
             {
-                var enemyCombatant = enemyCombatantList[i];
-                if (enemyCombatant == null)
-                    continue;
+                for (int i = 0; i < enemyCombatants.Count; ++i)
+                {
+                    var enemyCombatant = enemyCombatants[i];
+                    if (enemyCombatant == null)
+                        continue;
 
-                enemyCombatant.SetTeamType(TeamType.Enemy);
-                enemyCombatant.Actor.Activate();
+                    enemyCombatant.SetTeamType(TeamType.Enemy);
+                    enemyCombatant.Actor.Activate();
 
-                CreateHpProgress(enemyCombatant);
+                    CreateHpProgress(enemyCombatant);
 
-                _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
+                    _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
+                }
             }
-
+            
             var allies = _data?.AllyICombatantList;
             if (allies != null)
             {
                 for (int i = 0; i < allies.Count; ++i)
                 {
                     var allyCombatant = allies[i];
+                    
+                    allyCombatant?.Actor?.ActController?.ClearActQueue();
                     _iWeightedActionCtr?.Execute(allyCombatant, this);
                 }
             }
@@ -449,10 +454,12 @@ namespace Battle.Mode
                 for (int i = 0; i < allies.Count; ++i)
                 {
                     var allyCombatant = allies[i];
-                    if (allyCombatant == null)
+                    var actController = allyCombatant?.Actor?.ActController;
+                    if (actController == null)
                         continue;
 
-                    //allyCombatant.Actor?.ActController?.ClearActQueue();
+                    actController.ClearActQueue();
+                    actController.Execute();
 
                     await PrepareForNextActionAsync(allyCombatant);
                 }
