@@ -144,7 +144,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 000_Idle
   loop: 1
   timeScale: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 000_Idle
   loop: 1
   timeScale: 3
@@ -450,7 +450,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 000_Idle
   loop: 1
   timeScale: 2
@@ -766,7 +766,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 000_Idle
   loop: 1
   timeScale: 1
@@ -900,7 +900,7 @@ MonoBehaviour:
   physicsRotationInheritanceFactor: 1
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
   _animationName: 000_Idle
   loop: 1
   timeScale: 1

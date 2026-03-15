@@ -514,7 +514,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &686696158
 RectTransform:
   m_ObjectHideFlags: 0
@@ -747,7 +747,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 903488814972430226, guid: 79dbf7d93cecaf845a79e240d99eb1fc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1542338379149307307, guid: 79dbf7d93cecaf845a79e240d99eb1fc, type: 3}
       propertyPath: m_SortingOrder
@@ -995,7 +995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7653144128743226594, guid: 79dbf7d93cecaf845a79e240d99eb1fc, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8174711421287617445, guid: 79dbf7d93cecaf845a79e240d99eb1fc, type: 3}
       propertyPath: m_Mesh
@@ -1027,7 +1027,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1910871263
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1109,7 +1109,7 @@ MonoBehaviour:
       calculateTangents: 0
       immutableTriangles: 0
   updateTiming: 1
-  unscaledTime: 0
+  unscaledTime: 1
 --- !u!222 &1910871265
 CanvasRenderer:
   m_ObjectHideFlags: 0
