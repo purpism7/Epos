@@ -336,12 +336,25 @@ namespace Battle.Mode
                 if (_battleState == BattleState.Combat)
                     _battleState = BattleState.MoveWayPoint;
 
-                if(combatant == _strategyController.LeaderCombatant)
+                if (combatant == _strategyController.LeaderCombatant)
+                {
+                    // 리더는 목적지로 이동
                     MoveToWaypoint(waypoint);
+                }
+                else
+                {
+                    // [개선 포인트] 팔로워들은 현재 전략(Strategy)에 설정된 Trace 로직을 다시 실행
+                    // 이렇게 하면 리더가 움직일 때 팔로워들이 멍하니 서 있지 않고 즉시 따라붙습니다.
+                    _strategyController.CurrentIStrategy?.MoveFormation(waypoint.Position);
+                }
             }
             else
             {
-                _iWeightedActionCtr?.Execute(combatant, this);
+                // 'Formation' 상태가 아닐 때만 AI(WeightedAction) 실행
+                // if (_battleState != BattleState.Formation)
+                {
+                    _iWeightedActionCtr?.Execute(combatant, this);
+                }
             }
         }
 
@@ -451,18 +464,35 @@ namespace Battle.Mode
             var allies = _data?.AllyICombatantList;
             if (allies != null)
             {
-                for (int i = 0; i < allies.Count; ++i)
+                // 2. 모든 아군의 기존 액션을 정리
+                foreach (var allyCombatant in allies)
                 {
-                    var allyCombatant = allies[i];
                     var actController = allyCombatant?.Actor?.ActController;
-                    if (actController == null)
-                        continue;
-
-                    actController.ClearActQueue();
-                    actController.Execute();
-
-                    await PrepareForNextActionAsync(allyCombatant);
+                    if (actController != null)
+                    {
+                        actController.ClearActQueue();
+                        actController.Execute(); // Idle 상태로 초기화
+                    }
                 }
+                
+                var tasks = allies.Select(ally => {
+                    Debug.Log($"[Strategy] {ally.Actor.Id} AI 재가동 시작");
+                    return PrepareForNextActionAsync(ally);
+                });
+                
+                await UniTask.WhenAll(tasks);
+                
+                // for (int i = 0; i < allies.Count; ++i)
+                // {
+                //     var allyCombatant = allies[i];
+                //     var actController = allyCombatant?.Actor?.ActController;
+                //     if (actController == null)
+                //         continue;
+                //
+                //     actController.ClearActQueue();
+                //     actController.Execute();
+                //     PrepareForNextActionAsync(allyCombatant).Forget();
+                // }
             }
         }
         #endregion

@@ -143,8 +143,8 @@ namespace Battle.Strategy
 
                 if(isEndOnArrival)
                 {
-                    combatant.Actor?.ActController?.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
-                    _totalMoveCount++;
+                    combatant.Actor.ActController.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+                    ++_totalMoveCount;
                 }
 
                 return true;

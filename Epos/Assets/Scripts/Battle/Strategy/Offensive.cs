@@ -49,7 +49,9 @@ namespace Battle.Strategy
                 if (!TryStartTraceTo(10003, DirectionType.Back, 6f, true))
                     return;
 
-                await UniTask.WaitUntil(() => _completedCount >= _totalMoveCount, cancellationToken: cancellationToken);
+                if (_totalMoveCount > 0)
+                    await UniTask.WaitUntil(() => _completedCount >= _totalMoveCount, cancellationToken: cancellationToken)
+                        .Timeout(TimeSpan.FromSeconds(3f));
             }
             catch (OperationCanceledException)
             {
