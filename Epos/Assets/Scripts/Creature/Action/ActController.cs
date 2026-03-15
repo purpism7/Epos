@@ -33,7 +33,7 @@ namespace Creature.Action
         
         IActController MoveTo(Move.Param param);
         IActController TraceTo(Trace.Param param);
-        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener listener, ICombatant caster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
 
         IActController Die();
         IActController Victory();
@@ -136,7 +136,7 @@ namespace Creature.Action
             return _currIAct;
         }
 
-        bool IActController.IsAct<T>()
+        public bool IsAct<T>() where T : IAct
         {
             return _currIAct is T;
         }
@@ -279,17 +279,17 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCaster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener listener, ICombatant caster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
 
             var castingParam = new Casting.Param
             {
-                IListener = iListener,
+                IListener = listener,
                 ISkill = iSkill,
             }
-            .WithAttacker(iCaster)
+            .WithAttacker(caster)
             .WithTarget(target)
             .WithTargetList(targetList);
             
@@ -322,7 +322,7 @@ namespace Creature.Action
 
         private async UniTask ExecuteAsync()
         {
-            if (_currIAct is Casting && !_isCastingCompleted)
+            if (IsAct<Casting>() && !_isCastingCompleted)
                 return;
             
             if (_actQueue?.Count > 0)
