@@ -42,6 +42,7 @@ namespace Creature.Action
 
         void Execute();
         void ClearActQueue();
+        void SetBusy(bool value);
 
         bool InAction { get; }
 
@@ -59,7 +60,8 @@ namespace Creature.Action
         private Queue<IAct> _actQueue = null;
         // private Vector3 _currPosition = Vector3.zero;
         private bool _isCastingCompleted = false;
-            
+        private bool _isBusy = false;
+
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
         private Dictionary<System.Type, Action<IAct>> _onActEndedDic = null;
@@ -112,6 +114,8 @@ namespace Creature.Action
             _onActEndedDic?.Clear();
             _onActStartedWrapperMap?.Clear();
             _onActEndedWrapperMap?.Clear();
+
+            _isBusy = false;
             //Idle();
         }
         #endregion
@@ -324,6 +328,9 @@ namespace Creature.Action
         {
             if (IsAct<Casting>() && !_isCastingCompleted)
                 return;
+
+            if (_isBusy)
+                return;
             
             if (_actQueue?.Count > 0)
             {
@@ -365,6 +372,11 @@ namespace Creature.Action
             _actQueue?.Clear();
         }
 
+        void IActController.SetBusy(bool isBusy)
+        {
+            _isBusy = isBusy;
+        }
+
         private void Idle()
         {
             // 이전 Act 종료 이벤트 발생
@@ -377,6 +389,7 @@ namespace Creature.Action
             SetCurrIAct(null);
             
             _isCastingCompleted = false;
+            _isBusy = false;
             InAction = false;
         }
 

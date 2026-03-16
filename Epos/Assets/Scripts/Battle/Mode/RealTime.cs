@@ -51,7 +51,7 @@ namespace Battle.Mode
 
         private IWaypointController _waypointController = null;
         private IWeightedActionController _iWeightedActionCtr = new WeightedActionController();
-        private CancellationTokenSource _weightedActionCTS = null;
+        //private CancellationTokenSource _weightedActionCTS = null;
 
         private IBattleMainView _battleMainView = null;
 

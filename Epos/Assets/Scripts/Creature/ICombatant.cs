@@ -13,6 +13,7 @@ namespace Creature
     public interface ICombatant : ICaster
     {
         IActor Actor { get; }
+        IActController ActController { get; }
 
         TeamType TeamType { get; }
         //int PartyPosition { get; }
