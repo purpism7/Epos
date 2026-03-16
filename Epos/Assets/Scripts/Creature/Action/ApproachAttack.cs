@@ -24,7 +24,7 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithICombatantList(List<ICombatant> combatants)
+            public Param WithCombatants(List<ICombatant> combatants)
             {
                 Combatants = combatants;
                 return this;

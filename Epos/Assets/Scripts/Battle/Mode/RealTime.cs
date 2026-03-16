@@ -225,7 +225,7 @@ namespace Battle.Mode
             };
             param.WithCombatant(combatant);
 
-            enemyHpProgressPart.ActivateAsync(param);
+            enemyHpProgressPart.ActivateAsync(param).Forget();
         }
         
         private void CreateEmotion(ICombatant iCombatant, EmotionType emotionType)
@@ -247,7 +247,7 @@ namespace Battle.Mode
                 Offset = new Vector2(3f, iCombatant.Actor.Height - 1f),
             }.WithEmotionType(emotionType);
 
-            emotionPart.ActivateAsync(param);
+            emotionPart.ActivateAsync(param).Forget();
         }
 
         /// <summary>
@@ -382,7 +382,7 @@ namespace Battle.Mode
                             CancellationTokenSource = LinkedCancellationTokenSource
                         }
                         .WithAttacker(attacker)
-                        .WithICombatantList(combatants);
+                        .WithCombatants(combatants);
 
                         return param;
                     }
