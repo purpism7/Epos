@@ -55,6 +55,7 @@ namespace Battle
         {
             ExecuteAsync(executor, iRequester, isFirst).Forget();
         }
+
         private async UniTask ExecuteAsync(ICombatant executor, IWeightedActionRequester requester, bool isFirst)
         {
             try
@@ -70,15 +71,11 @@ namespace Battle
                     var cancellationTokenSource = param.CancellationTokenSource;
                     if (cancellationTokenSource != null)
                     {
-                        float seconds = 0.5f;
-                        // int frame = 30;
+                        float seconds = 0;
                         if (executor.TeamType == TeamType.Enemy && isFirst)
-                            seconds += UnityEngine.Random.Range(0, 0.5f);
-                        // frame += UnityEngine.Random.Range(0, 30);
-
-                        // 취소 시 OperationCanceledException 발생 -> catch 블록으로 이동
-                        // await UniTask.DelayFrame(frame, cancellationToken: cancellationTokenSource.Token);
-                        await UniTask.Delay(Mathf.RoundToInt(seconds * 1000), cancellationToken: cancellationTokenSource.Token);
+                            seconds += UnityEngine.Random.Range(0, 1f);
+  
+                        await UniTask.Delay(Mathf.RoundToInt(seconds * 1000f), cancellationToken: cancellationTokenSource.Token);
                     }
 
                     weightedAction.SetParam(param)
@@ -106,13 +103,13 @@ namespace Battle
             }
         }
         
-        private void EndAction(IActor iActor)
+        private void EndAction(IActor actor)
         {
-            if (iActor != null &&
-               !iActor.IsActivate)
+            if (actor != null &&
+               !actor.IsActivate)
                 return;
 
-            _iListener?.End(iActor);
+            _iListener?.End(actor);
         }
 
         private ActionWeight GetHighestPriorityActionWeight()

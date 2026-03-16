@@ -98,7 +98,7 @@ namespace Battle.Mode
                             continue;
 
                         combatant.SetTeamType(TeamType.Enemy);
-                        combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
+                        // combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
                         _priorityICombatantList?.Add(combatant);
                         
                         EventHandler.Notify(new StatChangedEventData(combatant.Actor.Id, combatant.Actor.IStat));
@@ -162,7 +162,7 @@ namespace Battle.Mode
                     });
 
                 // 현재 위치 저장.
-                combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
+                // combatant.Actor.ActController?.SetPosition(combatant.Actor.Transform.position);
             }
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);

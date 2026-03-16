@@ -62,6 +62,11 @@ namespace Creature
         public Action.ICreatureEffectController EffectController => _effectController;
         public Skill[] Skills => skills;
 
+#if UNITY_EDITOR
+        /// <summary>전투 시작 시 CombatantCreator가 설정. 인스펙터에서 스킬 상태 확인용.</summary>
+        public ICombatant Combatant { get; set; } = null;
+#endif
+
         #region Temp Stat
 
         [Header("Temp Stat")] [SerializeField] [UnityEngine.Range(1f, 100f)] [Tooltip("전투 시, 공격 순서 (높을 수록 우선 순위로).")]

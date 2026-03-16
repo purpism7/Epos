@@ -121,7 +121,12 @@ namespace Battle.Strategy
             {
                 for (int i = 0; i < Allycombatants.Count; i++)
                 {
-                    Allycombatants[i]?.Actor?.ActController?.ClearActQueue();
+                    var actController = Allycombatants[i]?.Actor?.ActController;
+                    if (actController == null)
+                        continue;
+
+                    actController.ClearActQueue();
+                    actController.Execute();
                 }
             }
 

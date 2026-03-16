@@ -40,8 +40,8 @@ namespace Battle.Strategy
         {
             base.MoveFormation(targetPosition);
 
-            TryStartTraceMove(10004, DirectionType.Back, 6f, false);
-            TryStartTraceMove(10001, DirectionType.Forward, 6f, false);
+            TryStartTraceTo(10004, DirectionType.Back, 6f, false);
+            TryStartTraceTo(10001, DirectionType.Forward, 6f, false);
         }
 
         public override async UniTask RegroupToLeaderAsync(Vector3? targetPosition, CancellationToken cancellationToken)
@@ -53,22 +53,30 @@ namespace Battle.Strategy
 
             try
             {
-                if (!TryStartTraceMove(10004, DirectionType.Back, 6f, true))
+                if (!TryStartTraceTo(10004, DirectionType.Back, 6f, true))
                     return;
 
-                if (!TryStartTraceMove(10001, DirectionType.Forward, 6f, true))
+                if (!TryStartTraceTo(10001, DirectionType.Forward, 6f, true))
                     return;
 
-                await UniTask.WaitUntil(() => _completedCount >= _totalMoveCount, cancellationToken: cancellationToken);
+                if (_totalMoveCount > 0)
+                    await UniTask.WaitUntil(() => _completedCount >= _totalMoveCount, cancellationToken: cancellationToken)
+                        .Timeout(TimeSpan.FromSeconds(5f));
             }
             catch (OperationCanceledException)
             {
                 // 취소 시 깔끔하게 종료
             }
+            catch (TimeoutException)
+            {
+                // ✨ 여기에 타임아웃 예외 처리를 추가합니다!
+                UnityEngine.Debug.LogWarning("5초 타임아웃 발생: 유닛들이 시간 내에 모두 모이지 못했습니다.");
+
+                // 필요하다면 타임아웃 시 강제로 유닛을 리더 옆으로 순간이동시키는 등의 후처리를 할 수 있습니다.
+            }
             finally
             {
-                EndTraceMove(10004);
-                EndTraceMove(10001);
+                CleanupTraceCallbacks();
 
                 UnityEngine.Debug.Log("모두 집결 완료!");
             }

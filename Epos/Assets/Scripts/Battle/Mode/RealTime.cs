@@ -130,14 +130,14 @@ namespace Battle.Mode
             {
                 for (int i = 0; i < _data?.AllyICombatantList?.Count; ++i)
                 {
-                    var allyIActor = _data?.AllyICombatantList[i]?.Actor;
-                    if (allyIActor == null)
+                    var actor = _data?.AllyICombatantList[i]?.Actor;
+                    if (actor == null)
                         continue;
 
-                    if (!allyIActor.IsAlive)
+                    if (!actor.IsAlive)
                         continue;
 
-                    allyIActor?.ActController?.Victory();
+                    actor?.ActController?.Victory();
                 }
             }
 
@@ -153,12 +153,12 @@ namespace Battle.Mode
         {
             get
             {
-                var allyList = _data?.AllyICombatantList;
-                if(allyList != null)
+                var allies = _data?.AllyICombatantList;
+                if(allies != null)
                 {
-                    for (int i = 0; i < allyList.Count; ++i)
+                    for (int i = 0; i < allies.Count; ++i)
                     {
-                        var allyICombatant = allyList[i];
+                        var allyICombatant = allies[i];
                         if (allyICombatant == null)
                             continue;
 
@@ -247,7 +247,7 @@ namespace Battle.Mode
                 Offset = new Vector2(3f, iCombatant.Actor.Height - 1f),
             }.WithEmotionType(emotionType);
 
-            emotionPart?.ActivateAsync(param);
+            emotionPart.ActivateAsync(param);
         }
 
         /// <summary>
@@ -284,27 +284,32 @@ namespace Battle.Mode
             _battleState = BattleState.Combat;
             //_weightedActionCTS = new();
 
-            var enemyCombatantList = waypoint?.EnemyICombatantList;
-            for (int i = 0; i < enemyCombatantList?.Count; ++i)
+            var enemyCombatants = waypoint?.EnemyICombatantList;
+            if (enemyCombatants != null)
             {
-                var enemyCombatant = enemyCombatantList[i];
-                if (enemyCombatant == null)
-                    continue;
-
-                enemyCombatant.SetTeamType(TeamType.Enemy);
-                enemyCombatant.Actor.Activate();
-
-                CreateHpProgress(enemyCombatant);
-
-                _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
-            }
-
-            var allyList = _data?.AllyICombatantList;
-            if (allyList != null)
-            {
-                for (int i = 0; i < allyList.Count; ++i)
+                for (int i = 0; i < enemyCombatants.Count; ++i)
                 {
-                    var allyCombatant = allyList[i];
+                    var enemyCombatant = enemyCombatants[i];
+                    if (enemyCombatant == null)
+                        continue;
+
+                    enemyCombatant.SetTeamType(TeamType.Enemy);
+                    enemyCombatant.Actor.Activate();
+
+                    CreateHpProgress(enemyCombatant);
+
+                    _iWeightedActionCtr?.Execute(enemyCombatant, this, true);
+                }
+            }
+            
+            var allies = _data?.AllyICombatantList;
+            if (allies != null)
+            {
+                for (int i = 0; i < allies.Count; ++i)
+                {
+                    var allyCombatant = allies[i];
+                    
+                    allyCombatant?.Actor?.ActController?.ClearActQueue();
                     _iWeightedActionCtr?.Execute(allyCombatant, this);
                 }
             }
@@ -331,12 +336,25 @@ namespace Battle.Mode
                 if (_battleState == BattleState.Combat)
                     _battleState = BattleState.MoveWayPoint;
 
-                if(combatant == _strategyController.LeaderCombatant)
+                if (combatant == _strategyController.LeaderCombatant)
+                {
+                    // 리더는 목적지로 이동
                     MoveToWaypoint(waypoint);
+                }
+                else
+                {
+                    // [개선 포인트] 팔로워들은 현재 전략(Strategy)에 설정된 Trace 로직을 다시 실행
+                    // 이렇게 하면 리더가 움직일 때 팔로워들이 멍하니 서 있지 않고 즉시 따라붙습니다.
+                    _strategyController.CurrentIStrategy?.MoveFormation(waypoint.Position);
+                }
             }
             else
             {
-                _iWeightedActionCtr?.Execute(combatant, this);
+                // 'Formation' 상태가 아닐 때만 AI(WeightedAction) 실행
+                // if (_battleState != BattleState.Formation)
+                {
+                    _iWeightedActionCtr?.Execute(combatant, this);
+                }
             }
         }
 
@@ -443,16 +461,38 @@ namespace Battle.Mode
                 _battleState = BattleState.Combat;
 
             // Trace 종료 후 ActController의 ExecuteAsync가 완료될 시간을 주어, Casting이 누락되는 타이밍 이슈 방지
-            var allyList = _data?.AllyICombatantList;
-            if (allyList != null)
+            var allies = _data?.AllyICombatantList;
+            if (allies != null)
             {
-                // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
-                
-                for (int i = 0; i < allyList.Count; ++i)
+                // 2. 모든 아군의 기존 액션을 정리
+                foreach (var allyCombatant in allies)
                 {
-                    var allyCombatant = allyList[i];
-                    await PrepareForNextActionAsync(allyCombatant);
+                    var actController = allyCombatant?.Actor?.ActController;
+                    if (actController != null)
+                    {
+                        actController.ClearActQueue();
+                        actController.Execute(); // Idle 상태로 초기화
+                    }
                 }
+                
+                var tasks = allies.Select(ally => {
+                    Debug.Log($"[Strategy] {ally.Actor.Id} AI 재가동 시작");
+                    return PrepareForNextActionAsync(ally);
+                });
+                
+                await UniTask.WhenAll(tasks);
+                
+                // for (int i = 0; i < allies.Count; ++i)
+                // {
+                //     var allyCombatant = allies[i];
+                //     var actController = allyCombatant?.Actor?.ActController;
+                //     if (actController == null)
+                //         continue;
+                //
+                //     actController.ClearActQueue();
+                //     actController.Execute();
+                //     PrepareForNextActionAsync(allyCombatant).Forget();
+                // }
             }
         }
         #endregion

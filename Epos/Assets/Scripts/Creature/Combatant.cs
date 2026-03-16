@@ -18,6 +18,7 @@ namespace Creature
         private Color _originColor = Color.white;
 
         public IActor Actor { get; private set; } = null;
+        public IActController ActController => Actor?.ActController;
         public ISkillController ISkillCtr { get; private set; } = null;
 
         public Transform Transform { get { return Actor?.Transform; } }

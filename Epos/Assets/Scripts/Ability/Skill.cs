@@ -34,13 +34,16 @@ namespace Ability
 
         private float _currCooltime = 0f;
         private EState _eState = EState.None;
-        private CancellationTokenSource _cts = null;
+        private CancellationTokenSource _cancellationTokenSource = null;
 
         public Datas.ScriptableObjects.Skill SkillData { get; private set; } = null;
 
-        public bool IsReady { get { return _eState == EState.Ready; } }
-        public float CooldownLeft { get { return _currCooltime; } }
+        public bool IsReady => _eState == EState.Ready;
+        public float CooldownLeft => _currCooltime;
 
+#if UNITY_EDITOR
+        public EState State => _eState;
+#endif
 
         public virtual void Initialize(Datas.ScriptableObjects.Skill skillData)
         {
@@ -70,14 +73,14 @@ namespace Ability
                 return;
             }
 
-            _cts?.Cancel();
-            _cts?.Dispose();
-            _cts = new CancellationTokenSource();
+            _cancellationTokenSource?.Cancel();
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = new CancellationTokenSource();
 
-            UpdateCooltimeAsync(_cts.Token).Forget();
+            UpdateCooltimeAsync(_cancellationTokenSource.Token).Forget();
         }
 
-        private async UniTask UpdateCooltimeAsync(CancellationToken token)
+        private async UniTask UpdateCooltimeAsync(CancellationToken cancellationToken)
         {
             _eState = EState.Cooldown;
             _currCooltime = SkillData.Cooltime;
@@ -86,16 +89,20 @@ namespace Ability
             {
                 while (_currCooltime > 0f)
                 {
-                    await UniTask.Yield(PlayerLoopTiming.Update, token);
+                    await UniTask.Yield(PlayerLoopTiming.Update, cancellationToken);
 
                     _currCooltime -= Time.deltaTime;
                 }
 
-                _eState = EState.Ready;
+                // _eState = EState.Ready;
             }
             catch (OperationCanceledException)
             {
 
+            }
+            finally
+            {
+                _eState = EState.Ready;
             }
         }
     }

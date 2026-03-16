@@ -36,10 +36,20 @@ namespace Creature.Action
             MoveToAttackAsync(_param?.Attacker, _param?.ICombatantList).Forget();
         }
 
+        protected override void End()
+        {
+            base.End();
+        }
+
         private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList)
         {
+            var actController = attacker?.ActController;
+
             if (!attacker?.Transform)
+            {
+                End();
                 return;
+            }
 
             var iSkill = attacker.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
             if (iSkill == null)
@@ -60,15 +70,17 @@ namespace Creature.Action
             if (skillData == null)
             {
                 End();
-                return; 
+                return;
             }
-            
+
             var skillRange = skillData.Range;
             if (skillRange > 0)
             {
                 // temp thinking...
                 if(!string.IsNullOrEmpty(skillData.DashAnimationName))
                 {
+                    actController?.SetBusy(true);
+
                     _actor?.SkeletonAnimation?.PlayAnimation(skillData.DashAnimationName, false,
                         (trackEntry) =>
                         {
@@ -76,6 +88,8 @@ namespace Creature.Action
                             var targetPosition = (Vector2)closestTarget.Transform.position + direction * skillRange;
 
                             _actor.SetWorldPosition(targetPosition);
+
+                            actController?.SetBusy(false);
 
                             CastingSkill(attacker, iSkill, closestTarget, targetList);
                         }, out _duration);
@@ -110,17 +124,18 @@ namespace Creature.Action
         //    CastingSkill(attacker, iSkill, targetList);
         //}
 
-        private void CastingSkill (ICombatant attacker, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
+        private void CastingSkill (ICombatant attacker, Ability.ISkill skill, ICombatant target, List<ICombatant> targets)
         {
-            if(target == null ||
-              !target.Actor.IsAlive)
+            var actor = attacker?.Actor;
+            if (actor == null ||
+                !actor.IsAlive)
             {
                 End();
                 return;
-            }    
+            }
 
-            attacker?.Actor?.ActController?
-                .CastingSkill(this, attacker, iSkill, target, targetList)?
+            actor.ActController?
+                .CastingSkill(this, attacker, skill, target, targets)?
                 .Execute();
         }
 
@@ -135,7 +150,7 @@ namespace Creature.Action
             
         }
 
-        void Casting.IListener.AfterCasting(ICombatant iCombatant)
+        void Casting.IListener.AfterCasting(ICombatant combatant)
         {
             End();
         }

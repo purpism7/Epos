@@ -9,6 +9,7 @@ using VContainer;
 
 using Datas.ScriptableObjects;
 using Creator;
+using System.Threading;
 
 namespace Creature.Action
 {
@@ -32,7 +33,7 @@ namespace Creature.Action
         
         IActController MoveTo(Move.Param param);
         IActController TraceTo(Trace.Param param);
-        IActController CastingSkill(Casting.IListener iListener, ICombatant iCombatant, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
+        IActController CastingSkill(Casting.IListener listener, ICombatant caster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList);
 
         IActController Die();
         IActController Victory();
@@ -41,36 +42,39 @@ namespace Creature.Action
 
         void Execute();
         void ClearActQueue();
+        void SetBusy(bool value);
 
         bool InAction { get; }
 
         void Flip(float x);
-        void SetPosition(Vector3 position);
-
-        void SetActListener(IActListener listener);
+        // void SetPosition(Vector3 position);
     }
     
     public class ActController : Controller, IActController
     {
         [Inject] private IObjectResolver _iResolver = null;
 
-        private IActor _iActor = null;
+        private IActor _actor = null;
         private Dictionary<System.Type, IAct> _iActDic = null;
         private IAct _currIAct = null;
         private Queue<IAct> _actQueue = null;
-        private Vector3 _currPosition = Vector3.zero;
+        // private Vector3 _currPosition = Vector3.zero;
         private bool _isCastingCompleted = false;
+        private bool _isBusy = false;
 
         // Act 이벤트 딕셔너리
         private Dictionary<System.Type, Action<IAct>> _onActStartedDic = null;
         private Dictionary<System.Type, Action<IAct>> _onActEndedDic = null;
+        // 제거 시 동일 참조로 제거하기 위한 래퍼 매핑 (델리게이트 - 연산은 참조 동등성 사용)
+        private Dictionary<System.Type, Dictionary<Delegate, List<Action<IAct>>>> _onActStartedWrapperMap = null;
+        private Dictionary<System.Type, Dictionary<Delegate, List<Action<IAct>>>> _onActEndedWrapperMap = null;
 
         public bool InAction { get; private set; } = false;
 
         #region IController
-        IActController IController<IActController, IActor>.Initialize(IActor iActor)
+        IActController IController<IActController, IActor>.Initialize(IActor actor)
         {
-            _iActor = iActor;
+            _actor = actor;
 
             _iActDic = new();
             _iActDic.Clear();
@@ -108,6 +112,10 @@ namespace Creature.Action
             _actQueue?.Clear();
             _onActStartedDic?.Clear();
             _onActEndedDic?.Clear();
+            _onActStartedWrapperMap?.Clear();
+            _onActEndedWrapperMap?.Clear();
+
+            _isBusy = false;
             //Idle();
         }
         #endregion
@@ -132,7 +140,7 @@ namespace Creature.Action
             return _currIAct;
         }
 
-        bool IActController.IsAct<T>()
+        public bool IsAct<T>() where T : IAct
         {
             return _currIAct is T;
         }
@@ -150,18 +158,22 @@ namespace Creature.Action
             if (_onActStartedDic == null)
             {
                 _onActStartedDic = new();
-                _onActStartedDic.Clear();
+                _onActStartedWrapperMap = new();
             }
 
             System.Type type = typeof(T);
+            Action<IAct> wrapper = act => onActStarted((T)act);
+
+            if (_onActStartedWrapperMap.TryGetValue(type, out var wrapperDic) == false)
+                _onActStartedWrapperMap[type] = wrapperDic = new();
+            if (wrapperDic.TryGetValue(onActStarted, out var list) == false)
+                wrapperDic[onActStarted] = list = new List<Action<IAct>>();
+            list.Add(wrapper);
+
             if (_onActStartedDic.TryGetValue(type, out var existingAction))
-            {
-                _onActStartedDic[type] = existingAction + (act => onActStarted((T)act));
-            }
+                _onActStartedDic[type] = existingAction + wrapper;
             else
-            {
-                _onActStartedDic[type] = act => onActStarted((T)act);
-            }
+                _onActStartedDic[type] = wrapper;
         }
 
         void IActController.OnActEnded<T>(Action<T> onActEnded)
@@ -172,49 +184,69 @@ namespace Creature.Action
             if (_onActEndedDic == null)
             {
                 _onActEndedDic = new();
-                _onActEndedDic.Clear();
+                _onActEndedWrapperMap = new();
             }
 
             System.Type type = typeof(T);
+            Action<IAct> wrapper = act => onActEnded((T)act);
+
+            if (_onActEndedWrapperMap.TryGetValue(type, out var wrapperDic) == false)
+                _onActEndedWrapperMap[type] = wrapperDic = new();
+            if (wrapperDic.TryGetValue(onActEnded, out var list) == false)
+                wrapperDic[onActEnded] = list = new List<Action<IAct>>();
+            list.Add(wrapper);
+
             if (_onActEndedDic.TryGetValue(type, out var existingAction))
-            {
-                _onActEndedDic[type] = existingAction + (act => onActEnded((T)act));
-            }
+                _onActEndedDic[type] = existingAction + wrapper;
             else
-            {
-                _onActEndedDic[type] = act => onActEnded((T)act);
-            }
+                _onActEndedDic[type] = wrapper;
         }
 
         void IActController.RemoveActStarted<T>(Action<T> onActStarted)
         {
-            if (onActStarted == null || _onActStartedDic == null)
+            if (onActStarted == null || _onActStartedDic == null || _onActStartedWrapperMap == null)
                 return;
 
             System.Type type = typeof(T);
-            if (_onActStartedDic.TryGetValue(type, out var existingAction))
+            if (_onActStartedWrapperMap.TryGetValue(type, out var wrapperDic) && wrapperDic.TryGetValue(onActStarted, out var list) && list.Count > 0)
             {
-                var updated = existingAction - (act => onActStarted((T)act));
-                if (updated == null)
-                    _onActStartedDic.Remove(type);
-                else
-                    _onActStartedDic[type] = updated;
+                var wrapper = list[list.Count - 1];
+                list.RemoveAt(list.Count - 1);
+                if (list.Count == 0)
+                    wrapperDic.Remove(onActStarted);
+
+                if (_onActStartedDic.TryGetValue(type, out var existingAction))
+                {
+                    var updated = existingAction - wrapper;
+                    if (updated == null)
+                        _onActStartedDic.Remove(type);
+                    else
+                        _onActStartedDic[type] = updated;
+                }
             }
         }
 
         void IActController.RemoveActEnded<T>(Action<T> onActEnded)
         {
-            if (onActEnded == null || _onActEndedDic == null)
+            if (onActEnded == null || _onActEndedDic == null || _onActEndedWrapperMap == null)
                 return;
 
             System.Type type = typeof(T);
-            if (_onActEndedDic.TryGetValue(type, out var existingAction))
+            if (_onActEndedWrapperMap.TryGetValue(type, out var wrapperDic) && wrapperDic.TryGetValue(onActEnded, out var list) && list.Count > 0)
             {
-                var updated = existingAction - (act => onActEnded((T)act));
-                if (updated == null)
-                    _onActEndedDic.Remove(type);
-                else
-                    _onActEndedDic[type] = updated;
+                var wrapper = list[list.Count - 1];
+                list.RemoveAt(list.Count - 1);
+                if (list.Count == 0)
+                    wrapperDic.Remove(onActEnded);
+
+                if (_onActEndedDic.TryGetValue(type, out var existingAction))
+                {
+                    var updated = existingAction - wrapper;
+                    if (updated == null)
+                        _onActEndedDic.Remove(type);
+                    else
+                        _onActEndedDic[type] = updated;
+                }
             }
         }
         
@@ -251,17 +283,17 @@ namespace Creature.Action
             return this;
         }
 
-        IActController IActController.CastingSkill(Casting.IListener iListener, ICombatant iCaster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
+        IActController IActController.CastingSkill(Casting.IListener listener, ICombatant caster, Ability.ISkill iSkill, ICombatant target, List<ICombatant> targetList)
         {
             if (!IsActivate)
                 return null;
 
             var castingParam = new Casting.Param
             {
-                IListener = iListener,
+                IListener = listener,
                 ISkill = iSkill,
             }
-            .WithAttacker(iCaster)
+            .WithAttacker(caster)
             .WithTarget(target)
             .WithTargetList(targetList);
             
@@ -294,7 +326,10 @@ namespace Creature.Action
 
         private async UniTask ExecuteAsync()
         {
-            if (_currIAct is Casting && !_isCastingCompleted)
+            if (IsAct<Casting>() && !_isCastingCompleted)
+                return;
+
+            if (_isBusy)
                 return;
             
             if (_actQueue?.Count > 0)
@@ -309,10 +344,8 @@ namespace Creature.Action
                     // 이전 Act 종료 이벤트 발생
                     if (_currIAct != null)
                         NotifyActEnded(_currIAct);
-
-                    //iAct?.SetIsEnd(false);
-                    act?.Execute();
                     
+                    act?.Execute();
                     SetCurrIAct(act);
                     
                     // 새 Act 시작 이벤트 발생
@@ -339,6 +372,11 @@ namespace Creature.Action
             _actQueue?.Clear();
         }
 
+        void IActController.SetBusy(bool isBusy)
+        {
+            _isBusy = isBusy;
+        }
+
         private void Idle()
         {
             // 이전 Act 종료 이벤트 발생
@@ -351,6 +389,7 @@ namespace Creature.Action
             SetCurrIAct(null);
             
             _isCastingCompleted = false;
+            _isBusy = false;
             InAction = false;
         }
 
@@ -368,7 +407,7 @@ namespace Creature.Action
             
             act.SetParam(param);
 
-            var animationKey = _iActor?.AnimationKey(act);
+            var animationKey = _actor?.AnimationKey(act);
             param.SetAnimationKey(animationKey); 
             
             if (_actQueue == null)
@@ -394,7 +433,7 @@ namespace Creature.Action
                 act = new T();
                 _iResolver?.Inject(act);
 
-                act.Initialize(_iActor);
+                act.Initialize(_actor);
                 act.SetEndActAction(EndAct);
                 
                 _iActDic?.TryAdd(type, act);
@@ -408,7 +447,7 @@ namespace Creature.Action
             if (!IsActivate)
                 return;
 
-            var skeletonAnimation = _iActor?.SkeletonAnimation;
+            var skeletonAnimation = _actor?.SkeletonAnimation;
             if (skeletonAnimation == null)
                 return;
 
@@ -417,16 +456,11 @@ namespace Creature.Action
                 skeletonAnimation.Skeleton.ScaleX = Mathf.Sign(x);
         }
 
-        void IActController.SetPosition(Vector3 position)
-        {
-            _currPosition = position;
-            _currPosition.z = 0;
-        }
-
-        void IActController.SetActListener(IActListener listener)
-        {
-            
-        }
+        // void IActController.SetPosition(Vector3 position)
+        // {
+        //     _currPosition = position;
+        //     _currPosition.z = 0;
+        // }
         #endregion
 
         private void Execute<T, V>(V param = null, bool isSet = true) where T : Act<V>, new() where V : ActParam, new()
@@ -441,7 +475,7 @@ namespace Creature.Action
             if (param == null)
                 param = new V();
 
-            param.SetAnimationKey(_iActor?.AnimationKey(act));
+            param.SetAnimationKey(_actor?.AnimationKey(act));
             
             // 이전 Act 종료 이벤트 발생
             if (isSet && _currIAct != null)

@@ -9,11 +9,18 @@ using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
+    public struct SkillStateInfo
+    {
+        public string Name;
+        public Ability.Skill.EState State;
+        public float CooldownLeft;
+        public float CooldownTotal;
+    }
+
     public interface ISkillController : IController<ISkillController, ICaster>
     {
         ISkill GetPossibleSkill(ESkillCategory eSkillCategory);
-        
-        // void Casting(List<ICombatant> targetList, Type.ESkillCategory eSkillCategory);
+        IReadOnlyList<SkillStateInfo> GetSkillStates();
     }
     
     public class SkillController : Controller, ISkillController
@@ -76,13 +83,38 @@ namespace Creature.Action
             return GetPossibleSkill(eSkillCategory);
         }
 
+        IReadOnlyList<SkillStateInfo> ISkillController.GetSkillStates()
+        {
+            var list = new List<SkillStateInfo>();
+            if (_iSkillList == null)
+                return list;
+
+            foreach (var iSkill in _iSkillList)
+            {
+                if (iSkill == null)
+                    continue;
+
+                var skillData = iSkill.SkillData;
+                var skill = iSkill as Ability.Skill;
+                list.Add(new SkillStateInfo
+                {
+                    Name = skillData != null ? skillData.name : "—",
+                    State = skill != null ? skill.State : Ability.Skill.EState.None,
+                    CooldownLeft = iSkill.CooldownLeft,
+                    CooldownTotal = skillData != null ? skillData.Cooltime : 0f
+                });
+            }
+
+            return list;
+        }
+
         private Ability.ISkill GetPossibleSkill(ESkillCategory eSkillCategory)
         {
             if (_iSkillList == null)
                 return null;
 
-            var iStat = _iCaster?.IStat;
-            if (iStat == null)
+            var stat = _iCaster?.IStat;
+            if (stat == null)
                 return null;
 
             foreach (var iSkill in _iSkillList)
@@ -97,7 +129,7 @@ namespace Creature.Action
                 if (skillData.ESkillCategory != eSkillCategory)
                     continue;
 
-                if (skillData.MP > iStat.Get(Stat.EType.Mp))
+                if (skillData.MP > stat.Get(Stat.EType.Mp))
                     continue;
 
                 if (!iSkill.IsReady)

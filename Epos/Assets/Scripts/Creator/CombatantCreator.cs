@@ -13,13 +13,18 @@ namespace Creator
         [Inject] private IObjectResolver _iResolver = null;
         [Inject] private WeakTypeMap<IActor> _map = null;
 
-        public ICombatant Create(IActor iActor, Skill[] skills)
+        public ICombatant Create(IActor actor, Skill[] skills)
         {
             var combatant = new Combatant();
             _iResolver?.Inject(combatant);
-            _map?.Set<ICombatant>(iActor, combatant);
+            _map?.Set<ICombatant>(actor, combatant);
 
-            return combatant?.Initialize(iActor, skills);
+#if UNITY_EDITOR
+            if (actor is Character character)
+                character.Combatant = combatant;
+#endif
+
+            return combatant?.Initialize(actor, skills);
         }
     }
 }
