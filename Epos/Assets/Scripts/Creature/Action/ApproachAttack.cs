@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System;
 using UnityEngine;
-
-using Spine.Unity;
+using System;
 using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
+using Spine.Unity;
+
 using Ability;
 using Common;
 
@@ -16,7 +16,7 @@ namespace Creature.Action
         public class Param : WeightedActionParam
         {
             public ICombatant Attacker { get; private set; } = null;
-            public List<ICombatant> ICombatantList { get; private set; } = null;
+            public List<ICombatant> Combatants { get; private set; } = null;
 
             public Param WithAttacker(ICombatant attacker)
             {
@@ -24,16 +24,16 @@ namespace Creature.Action
                 return this;
             }
 
-            public Param WithICombatantList(List<ICombatant> iCombatantList)
+            public Param WithICombatantList(List<ICombatant> combatants)
             {
-                ICombatantList = iCombatantList;
+                Combatants = combatants;
                 return this;
             }
         }
 
         public override void Execute()
         {
-            MoveToAttackAsync(_param?.Attacker, _param?.ICombatantList).Forget();
+            MoveToAttack(_param?.Attacker, _param?.Combatants);
         }
 
         protected override void End()
@@ -41,7 +41,7 @@ namespace Creature.Action
             base.End();
         }
 
-        private async UniTask MoveToAttackAsync(ICombatant attacker, List<ICombatant> iCombatantList)
+        private void MoveToAttack(ICombatant attacker, List<ICombatant> iCombatantList)
         {
             var actController = attacker?.ActController;
 
@@ -51,14 +51,14 @@ namespace Creature.Action
                 return;
             }
 
-            var iSkill = attacker.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
-            if (iSkill == null)
+            var skill = attacker.ISkillCtr?.GetPossibleSkill(ESkillCategory.Active);
+            if (skill == null)
             {
                 End();
                 return;
             }
 
-            var targetList = attacker.GetTargetList(iCombatantList, iSkill);
+            var targetList = attacker.GetTargetList(iCombatantList, skill);
             if (targetList.IsNullOrEmpty())
             {
                 End();
@@ -66,7 +66,7 @@ namespace Creature.Action
             }
 
             var closestTarget = attacker.Transform.FindClosestICombatant(targetList);
-            var skillData  = iSkill.SkillData;
+            var skillData  = skill.SkillData;
             if (skillData == null)
             {
                 End();
@@ -76,53 +76,70 @@ namespace Creature.Action
             var skillRange = skillData.Range;
             if (skillRange > 0)
             {
-                // temp thinking...
-                if(!string.IsNullOrEmpty(skillData.DashAnimationName))
-                {
-                    actController?.SetBusy(true);
-
-                    _actor?.SkeletonAnimation?.PlayAnimation(skillData.DashAnimationName, false,
-                        (trackEntry) =>
-                        {
-                            Vector2 direction = closestTarget?.Actor?.SkeletonAnimation.Skeleton.ScaleX > 0 ? Vector2.right : Vector2.left;
-                            var targetPosition = (Vector2)closestTarget.Transform.position + direction * skillRange;
-
-                            _actor.SetWorldPosition(targetPosition);
-
-                            actController?.SetBusy(false);
-
-                            CastingSkill(attacker, iSkill, closestTarget, targetList);
-                        }, out _duration);
-
+                if (TryDashAndCastSkill(attacker, skill, closestTarget, targetList))
                     return;
-                }
 
-                var moveParam = new Move.Param
-                {
-                    CancellationTokenSource = _param.CancellationTokenSource,
-
-                    MoveSpeed = attacker.Actor.IStat.Get(Stat.EType.MoveSpeed),
-                    FinishAction = () =>
-                    {
-                        CastingSkill(attacker, iSkill, closestTarget, targetList);
-                    },
-                    IsJumpMove = false,
-                }
-                .WithTargetICombatant(closestTarget)?
-                .WithDistance(skillRange);
-
-                attacker.Actor.ActController?
-                    .MoveTo(moveParam)?
-                    .Execute();
+                MoveTo(attacker, skill, skillRange, closestTarget, targetList);
             }
             else
-                CastingSkill(attacker, iSkill, closestTarget,targetList);
+                CastingSkill(attacker, skill, closestTarget,targetList);
         }
 
-        //private void FinishMoveToTarget(ICombatant attacker, Ability.ISkill iSkill, List<ICombatant> targetList)
-        //{
-        //    CastingSkill(attacker, iSkill, targetList);
-        //}
+        private bool TryDashAndCastSkill(ICombatant attacker, 
+            Ability.ISkill skill,
+            ICombatant target, 
+            List<ICombatant> targets)
+        {
+            var skillData = skill.SkillData;
+            if (skillData == null)
+                return false;
+
+            if (string.IsNullOrEmpty(skillData.DashAnimationName))
+                return false;
+
+            attacker.ActController.SetBusy(true);
+
+            _actor?.SkeletonAnimation?.PlayAnimation(skillData.DashAnimationName, false,
+                (trackEntry) =>
+                {
+                    Vector2 direction = target?.Actor?.SkeletonAnimation.Skeleton.ScaleX > 0 ? Vector2.right : Vector2.left;
+                    var targetPosition = (Vector2)target.Transform.position + direction * skillData.Range;
+
+                    _actor.SetWorldPosition(targetPosition);
+
+                    attacker.ActController.SetBusy(false);
+
+                    CastingSkill(attacker, skill, target, targets);
+                }, out _duration);
+
+            return true;
+        }
+
+        private void MoveTo(ICombatant attacker,
+            Ability.ISkill skill,
+            float skillRange,
+            ICombatant target,
+            List<ICombatant> targets)
+        {
+            var moveParam = new Move.Param
+            {
+                CancellationTokenSource = _param.CancellationTokenSource,
+
+                MoveSpeed = attacker.Actor.IStat.Get(Stat.EType.MoveSpeed),
+                FinishAction = () =>
+                {
+                    CastingSkill(attacker, skill, target, targets);
+                },
+                IsJumpMove = false,
+            }
+               .WithTargetICombatant(target)?
+               .WithDistance(skillRange);
+
+            attacker.Actor.ActController?
+                .MoveTo(moveParam)?
+                .Execute();
+        }
+
 
         private void CastingSkill (ICombatant attacker, Ability.ISkill skill, ICombatant target, List<ICombatant> targets)
         {
