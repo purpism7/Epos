@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1359544285421557845}
   - component: {fileID: 5950486933038387848}
   m_Layer: 0
-  m_Name: Eff_Font_Boom_R
+  m_Name: Eff_Font_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,11 +27,11 @@ Transform:
   m_GameObject: {fileID: 4367739510033828286}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.99, y: 0.71, z: 0.7}
+  m_LocalPosition: {x: 1.995, y: 0.71, z: 0.7}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7232135114115229320}
+  m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &1359544285421557845
 ParticleSystem:
@@ -48,7 +48,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -4915,7 +4915,7 @@ GameObject:
   - component: {fileID: 2590432862651878675}
   - component: {fileID: 5080708824087124541}
   m_Layer: 0
-  m_Name: Eff_Font_Boom_H
+  m_Name: Eff_Font_H
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4930,11 +4930,11 @@ Transform:
   m_GameObject: {fileID: 4377027805799060418}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.82, y: 0.31, z: 0.28}
+  m_LocalPosition: {x: 0.91, y: 0.31, z: 0.28}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7232135114115229320}
+  m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2590432862651878675
 ParticleSystem:
@@ -4951,7 +4951,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9818,7 +9818,7 @@ GameObject:
   - component: {fileID: 4835843942576707559}
   - component: {fileID: 4247742467270622821}
   m_Layer: 0
-  m_Name: Eff_Font_Boom_T
+  m_Name: Eff_Font_T
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9833,11 +9833,11 @@ Transform:
   m_GameObject: {fileID: 5802428788904749558}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.47, y: 1.6, z: 1.47}
+  m_LocalPosition: {x: 5.235, y: 1.6, z: 1.47}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7232135114115229320}
+  m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &4835843942576707559
 ParticleSystem:
@@ -9854,7 +9854,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -14739,12 +14739,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 7082793651787200823}
-  - {fileID: 471935801702190744}
-  - {fileID: 9087602221283363089}
-  - {fileID: 6486152527059649668}
-  - {fileID: 124015231238985387}
+  m_Children: []
   m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &680089052797342701
@@ -14762,7 +14757,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -19629,7 +19624,7 @@ GameObject:
   - component: {fileID: 2669955006521076666}
   - component: {fileID: 5587726545463039867}
   m_Layer: 0
-  m_Name: Eff_Font_Boom_S
+  m_Name: Eff_Font_S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19644,11 +19639,11 @@ Transform:
   m_GameObject: {fileID: 7514475193310558973}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.58, y: 1.28, z: 1.26}
+  m_LocalPosition: {x: 4.29, y: 1.28, z: 1.26}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7232135114115229320}
+  m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &2669955006521076666
 ParticleSystem:
@@ -19665,7 +19660,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -24550,6 +24545,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7232135114115229320}
+  - {fileID: 7082793651787200823}
+  - {fileID: 471935801702190744}
+  - {fileID: 9087602221283363089}
+  - {fileID: 6486152527059649668}
+  - {fileID: 124015231238985387}
   m_Father: {fileID: 8047395811500497290}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1 &8340889831853763611
@@ -24564,7 +24564,7 @@ GameObject:
   - component: {fileID: 4322820760471920606}
   - component: {fileID: 2384532646997957223}
   m_Layer: 0
-  m_Name: Eff_Font_Boom_U
+  m_Name: Eff_Font_U
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24579,11 +24579,11 @@ Transform:
   m_GameObject: {fileID: 8340889831853763611}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.64, y: 0.95, z: 0.93}
+  m_LocalPosition: {x: 3.32, y: 0.95, z: 0.93}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7232135114115229320}
+  m_Father: {fileID: 5190479470273208657}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &4322820760471920606
 ParticleSystem:
@@ -24600,7 +24600,7 @@ ParticleSystem:
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
