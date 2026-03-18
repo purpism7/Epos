@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 4
   AnimationName: Skill_01
-  EffectName: 
+  EffectName: Eff_Spear_Skill_01
   ESkillCategory: 2
   Cooltime: 0
   MP: 0
@@ -26,7 +26,7 @@ MonoBehaviour:
   KnockbackDistance: 8
   DashAnimationName: 
   ShakeCamera: 0
-  ProjectilePrefab: {fileID: 9088992646044149167, guid: f5e7ee637d4729448a981669581c935e, type: 3}
+  ProjectilePrefab: {fileID: 0}
   BurstCount: 1
   BurstDelay: 0
   PlayAnimation: 0
