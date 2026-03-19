@@ -222,10 +222,10 @@ TextureImporter:
       name: Knight_01_6_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 28
-        width: 156
-        height: 98
+        x: 262
+        y: 383
+        width: 253
+        height: 125
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: Knight_01_6_1
       rect:
         serializedVersion: 2
-        x: 140
-        y: 85
-        width: 45
-        height: 49
+        x: 519
+        y: 455
+        width: 28
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,10 +266,10 @@ TextureImporter:
       name: Knight_01_6_2
       rect:
         serializedVersion: 2
-        x: 304
-        y: 74
-        width: 36
-        height: 35
+        x: 597
+        y: 376
+        width: 229
+        height: 94
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,10 +288,10 @@ TextureImporter:
       name: Knight_01_6_3
       rect:
         serializedVersion: 2
-        x: 396
-        y: 1
-        width: 241
-        height: 128
+        x: 680
+        y: 462
+        width: 51
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,10 +310,10 @@ TextureImporter:
       name: Knight_01_6_4
       rect:
         serializedVersion: 2
-        x: 701
-        y: 72
-        width: 31
-        height: 31
+        x: 818
+        y: 449
+        width: 60
+        height: 38
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -332,10 +332,10 @@ TextureImporter:
       name: Knight_01_6_5
       rect:
         serializedVersion: 2
-        x: 787
-        y: 1
-        width: 222
-        height: 96
+        x: 903
+        y: 427
+        width: 34
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,10 +354,10 @@ TextureImporter:
       name: Knight_01_6_6
       rect:
         serializedVersion: 2
-        x: 911
-        y: 89
-        width: 59
-        height: 50
+        x: 579
+        y: 435
+        width: 18
+        height: 23
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,10 +376,10 @@ TextureImporter:
       name: Knight_01_6_7
       rect:
         serializedVersion: 2
-        x: 1046
-        y: 73
-        width: 60
-        height: 43
+        x: 50
+        y: 366
+        width: 34
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,10 +398,10 @@ TextureImporter:
       name: Knight_01_6_8
       rect:
         serializedVersion: 2
-        x: 1131
-        y: 54
-        width: 36
-        height: 37
+        x: 183
+        y: 366
+        width: 31
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -420,10 +420,10 @@ TextureImporter:
       name: Knight_01_6_9
       rect:
         serializedVersion: 2
-        x: 1167
-        y: 1
-        width: 193
-        height: 136
+        x: 310
+        y: 347
+        width: 37
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -442,10 +442,10 @@ TextureImporter:
       name: Knight_01_6_10
       rect:
         serializedVersion: 2
-        x: 1398
-        y: 25
-        width: 144
-        height: 75
+        x: 437
+        y: 234
+        width: 75
+        height: 144
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -464,10 +464,10 @@ TextureImporter:
       name: Knight_01_6_11
       rect:
         serializedVersion: 2
-        x: 1542
-        y: 1
-        width: 238
-        height: 138
+        x: 578
+        y: 313
+        width: 71
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,10 +486,10 @@ TextureImporter:
       name: Knight_01_6_12
       rect:
         serializedVersion: 2
-        x: 1852
-        y: 26
-        width: 63
-        height: 71
+        x: 724
+        y: 328
+        width: 55
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,10 +508,10 @@ TextureImporter:
       name: Knight_01_6_13
       rect:
         serializedVersion: 2
-        x: 1915
-        y: 1
-        width: 136
-        height: 91
+        x: 26
+        y: 306
+        width: 35
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -530,10 +530,10 @@ TextureImporter:
       name: Knight_01_6_14
       rect:
         serializedVersion: 2
-        x: 2027
-        y: 4
-        width: 86
-        height: 136
+        x: 160
+        y: 308
+        width: 31
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -552,10 +552,10 @@ TextureImporter:
       name: Knight_01_6_15
       rect:
         serializedVersion: 2
-        x: 2109
-        y: 68
-        width: 114
-        height: 54
+        x: 285
+        y: 262
+        width: 43
+        height: 60
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -574,10 +574,10 @@ TextureImporter:
       name: Knight_01_6_16
       rect:
         serializedVersion: 2
-        x: 2240
-        y: 35
-        width: 45
-        height: 55
+        x: 692
+        y: 197
+        width: 54
+        height: 114
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,10 +596,10 @@ TextureImporter:
       name: Knight_01_6_17
       rect:
         serializedVersion: 2
-        x: 2285
-        y: 1
-        width: 265
-        height: 134
+        x: 864
+        y: 293
+        width: 57
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,10 +618,10 @@ TextureImporter:
       name: Knight_01_6_18
       rect:
         serializedVersion: 2
-        x: 2627
-        y: 1
-        width: 229
-        height: 94
+        x: 63
+        y: 175
+        width: 65
+        height: 127
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -640,10 +640,10 @@ TextureImporter:
       name: Knight_01_6_19
       rect:
         serializedVersion: 2
-        x: 2710
-        y: 87
-        width: 51
-        height: 49
+        x: 134
+        y: 3
+        width: 128
+        height: 241
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -662,10 +662,10 @@ TextureImporter:
       name: Knight_01_6_20
       rect:
         serializedVersion: 2
-        x: 2848
-        y: 74
-        width: 60
-        height: 38
+        x: 198
+        y: 244
+        width: 43
+        height: 57
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -684,10 +684,10 @@ TextureImporter:
       name: Knight_01_6_21
       rect:
         serializedVersion: 2
-        x: 2967
-        y: 1
-        width: 253
-        height: 125
+        x: 813
+        y: 3
+        width: 134
+        height: 265
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -706,10 +706,10 @@ TextureImporter:
       name: Knight_01_6_22
       rect:
         serializedVersion: 2
-        x: 3224
-        y: 73
-        width: 28
-        height: 29
+        x: 1
+        y: 142
+        width: 49
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -728,10 +728,10 @@ TextureImporter:
       name: Knight_01_6_23
       rect:
         serializedVersion: 2
-        x: 164
-        y: 62
-        width: 15
-        height: 16
+        x: 57
+        y: 166
+        width: 16
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -750,10 +750,10 @@ TextureImporter:
       name: Knight_01_6_24
       rect:
         serializedVersion: 2
-        x: 173
-        y: 7
-        width: 127
-        height: 65
+        x: 262
+        y: 127
+        width: 50
+        height: 59
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -772,10 +772,10 @@ TextureImporter:
       name: Knight_01_6_25
       rect:
         serializedVersion: 2
-        x: 364
-        y: 51
-        width: 32
-        height: 34
+        x: 304
+        y: 3
+        width: 96
+        height: 222
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -794,10 +794,10 @@ TextureImporter:
       name: Knight_01_6_26
       rect:
         serializedVersion: 2
-        x: 637
-        y: 22
-        width: 57
-        height: 43
+        x: 400
+        y: 3
+        width: 136
+        height: 193
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -816,10 +816,10 @@ TextureImporter:
       name: Knight_01_6_27
       rect:
         serializedVersion: 2
-        x: 759
-        y: 49
-        width: 28
-        height: 31
+        x: 536
+        y: 3
+        width: 138
+        height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -838,10 +838,10 @@ TextureImporter:
       name: Knight_01_6_28
       rect:
         serializedVersion: 2
-        x: 2575
-        y: 27
-        width: 52
-        height: 57
+        x: 674
+        y: 115
+        width: 136
+        height: 86
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -860,10 +860,10 @@ TextureImporter:
       name: Knight_01_6_29
       rect:
         serializedVersion: 2
-        x: 2933
-        y: 52
-        width: 34
-        height: 36
+        x: 9
+        y: 3
+        width: 98
+        height: 156
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -882,10 +882,10 @@ TextureImporter:
       name: Knight_01_6_30
       rect:
         serializedVersion: 2
-        x: 3284
-        y: 53
-        width: 18
-        height: 23
+        x: 97
+        y: 101
+        width: 37
+        height: 45
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -904,10 +904,10 @@ TextureImporter:
       name: Knight_01_6_31
       rect:
         serializedVersion: 2
-        x: 99
-        y: 1
-        width: 45
-        height: 37
+        x: 722
+        y: 3
+        width: 91
+        height: 136
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
