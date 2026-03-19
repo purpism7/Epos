@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 7
   AnimationName: Skill_02_02
+  EffectName: Eff_Spear_Skill_02
   ESkillCategory: 2
   Cooltime: 15
   MP: 0
@@ -24,5 +25,13 @@ MonoBehaviour:
   SameTeam: 0
   KnockbackDistance: 2
   DashAnimationName: Skill_02_01
+  ShakeCamera: 0
   ProjectilePrefab: {fileID: 0}
+  BurstCount: 1
+  BurstDelay: 0
   PlayAnimation: 0
+  StartOffsetPosition: {x: 0, y: 0, z: 0}
+  AccelTime: 1
+  DestroyOnHit: 1
+  HitEffectName: 
+  spreadRadius: 0

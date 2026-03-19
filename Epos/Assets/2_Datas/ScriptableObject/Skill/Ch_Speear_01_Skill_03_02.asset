@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 8
   AnimationName: Skill_03_02
-  EffectName: 
+  EffectName: Eff_Spear_Skill_03
   ESkillCategory: 2
   Cooltime: 20
   MP: 0
