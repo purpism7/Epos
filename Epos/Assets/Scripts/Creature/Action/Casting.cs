@@ -111,7 +111,7 @@ namespace Creature.Action
 
             PlayAnimation(skillData.AnimationName, false);
 
-            _actor?.EffectController?.Activate(skillData.EffectName,new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), skillData.AnimationName);
+            _actor?.EffectController?.Activate(skillData.EffectName, new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), skillData.AnimationName);
 
             var halfDuration = _duration / 2f;
 

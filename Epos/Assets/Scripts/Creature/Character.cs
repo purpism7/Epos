@@ -43,14 +43,6 @@ namespace Creature
             get { return SkeletonAnimation?.transform; }
         }
 
-        /// <summary>루트를 옮기고 스켈레톤은 로컬 0으로 맞춰, 그림자 등 형제 오브젝트가 같이 움직이게 함.</summary>
-        public void SetWorldPosition(Vector3 position)
-        {
-            transform.position = position;
-            if (SkeletonAnimation != null)
-                SkeletonAnimation.transform.localPosition = Vector3.zero;
-        }
-
         public NavMeshAgent NavMeshAgent { get; private set; } = null;
 
         public IStat IStat
@@ -190,14 +182,14 @@ namespace Creature
         }
         #endregion
 
-        protected void InitializeActController(IActor iActor)
+        protected void InitializeActController(IActor actor)
         {
-            _actController?.Initialize(iActor);
+            _actController?.Initialize(actor);
         }
 
-        protected void InitializeEffectController(IActor iActor)
+        protected void InitializeEffectController(IActor actor)
         {
-            _effectController?.Initialize(iActor);
+            _effectController?.Initialize(actor);
         }
 
         private void EnableNavmeshAgent()
@@ -225,6 +217,14 @@ namespace Creature
                 //NavMeshAgent.isStopped = false;
                 //NavMeshAgent.ResetPath();
             }
+        }
+
+        /// <summary>루트를 옮기고 스켈레톤은 로컬 0으로 맞춰, 그림자 등 형제 오브젝트가 같이 움직이게 함.</summary>
+        public void SetWorldPosition(Vector3 position)
+        {
+            transform.position = position;
+            if (SkeletonAnimation != null)
+                SkeletonAnimation.transform.localPosition = Vector3.zero;
         }
 
         #region IActor

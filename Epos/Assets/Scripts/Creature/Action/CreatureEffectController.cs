@@ -16,23 +16,23 @@ namespace Creature.Action
 
     public class CreatureEffectController : Controller, ICreatureEffectController
     {
-        [Inject] private IEffectManager _iEffectManager = null;
+        [Inject] private IEffectManager _effectManager = null;
 
-        private IActor _iActor = null;
-        private IEffectRoot[] _iEffectRoots = null;
+        private IActor _actor = null;
+        private IEffectRoot[] _effectRoots = null;
 
-        private Dictionary<string, IEffect> _iEffectDic = null;
+        private Dictionary<string, IEffect> _effects = null;
 
         #region IController
-        ICreatureEffectController IController<ICreatureEffectController, IActor>.Initialize(IActor iActor)
+        ICreatureEffectController IController<ICreatureEffectController, IActor>.Initialize(IActor actor)
         {
-            _iActor = iActor;
+            _actor = actor;
 
-            _iEffectDic = new();
-            _iEffectDic.Clear();
+            _effects = new();
+            _effects.Clear();
 
-            if(iActor.Transform)
-                _iEffectRoots = iActor.Transform.GetComponentsInChildren<EffectRoot>();
+            if(actor.Transform)
+                _effectRoots = actor.Transform.GetComponentsInChildren<EffectRoot>();
 
             return this;
         }
@@ -42,9 +42,9 @@ namespace Creature.Action
             if (!IsActivate)
                 return;
 
-            if(_iEffectDic != null)
+            if(_effects != null)
             {
-                foreach (var iEffect in _iEffectDic.Values)
+                foreach (var iEffect in _effects.Values)
                 {
                     iEffect?.ChainUpdate();
                 }
@@ -68,22 +68,22 @@ namespace Creature.Action
         }
         #endregion
 
-        private IEffectRoot GetIEffectRoot(string effectType)
+        private IEffectRoot GetEffectRoot(string effectType)
         {
-            if (_iEffectRoots.IsNullOrEmpty())
+            if (_effectRoots.IsNullOrEmpty())
                 return null;
 
-            for(int i = 0; i < _iEffectRoots.Length; ++i)
+            for(int i = 0; i < _effectRoots.Length; ++i)
             {
-                var iEffectRoot = _iEffectRoots[i];
-                if (iEffectRoot == null)
+                var effectRoot = _effectRoots[i];
+                if (effectRoot == null)
                     continue;
 
-                if (string.IsNullOrEmpty(iEffectRoot.EffectType))
+                if (string.IsNullOrEmpty(effectRoot.EffectType))
                     continue;
 
-                if (iEffectRoot.EffectType == effectType)
-                    return iEffectRoot;
+                if (effectRoot.EffectType == effectType)
+                    return effectRoot;
             }
 
             return null;
@@ -103,22 +103,22 @@ namespace Creature.Action
   
             if (!string.IsNullOrEmpty(effectType))
             {
-                var iEffectRoot = GetIEffectRoot(effectType);
-                if (iEffectRoot == null) 
+                var effectRoot = GetEffectRoot(effectType);
+                if (effectRoot == null) 
                     return;
                 
-                effectParam?.WithRootTm(iEffectRoot.Transform)
+                effectParam?.WithRootTm(effectRoot.Transform)
                     .WithIsReturn(false);
                 
-                if (!_iEffectDic.TryGetValue(effectType, out effect))
+                if (!_effects.TryGetValue(effectType, out effect))
                 {
-                     effect = _iEffectManager?.GetEffect(effectName);
-                    _iEffectDic[effectType] = effect;
+                     effect = _effectManager?.GetEffect(effectName);
+                    _effects[effectType] = effect;
                 }
             }
             else
             {
-                effect = _iEffectManager?.GetEffect(effectName);
+                effect = _effectManager?.GetEffect(effectName);
             }
             
             effect?.Activate();
@@ -127,8 +127,8 @@ namespace Creature.Action
 
         void ICreatureEffectController.Deactivate(string effectType)
         {
-            if(_iEffectDic != null &&
-               _iEffectDic.TryGetValue(effectType, out var iEffect))
+            if(_effects != null &&
+               _effects.TryGetValue(effectType, out var iEffect))
                 iEffect?.Deactivate();
         }
         #endregion

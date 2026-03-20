@@ -5,7 +5,6 @@ using UnityEngine;
 
 using Common;
 using Ability;
-using Datas.ScriptableObjects;
 
 namespace Creature.Action
 {
@@ -99,7 +98,9 @@ namespace Creature.Action
                 list.Add(new SkillStateInfo
                 {
                     Name = skillData != null ? skillData.name : "—",
+#if UNITY_EDITOR
                     State = skill != null ? skill.State : Ability.Skill.EState.None,
+#endif
                     CooldownLeft = iSkill.CooldownLeft,
                     CooldownTotal = skillData != null ? skillData.Cooltime : 0f
                 });
