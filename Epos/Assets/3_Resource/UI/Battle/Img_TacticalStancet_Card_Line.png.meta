@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1482bc00402039849b651ef39bf08635
+guid: 1e079a1b2a69de945b9c36b7ce039ce7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 626844360411097397
-    second: Img_TacticalStancet_Card_Aggressive_0
+      213: 6017480857216219819
+    second: Img_TacticalStancet_Card_Line_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,12 +126,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Img_TacticalStancet_Card_Aggressive_0
+      name: Img_TacticalStancet_Card_Line_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 13
         y: 14
-        width: 286
+        width: 273
         height: 373
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 539a2c7ef9ff2b800800000000000000
-      internalID: 626844360411097397
+      spriteID: baaf51925f2628350800000000000000
+      internalID: 6017480857216219819
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Img_TacticalStancet_Card_Aggressive_0: 626844360411097397
+      Img_TacticalStancet_Card_Line_0: 6017480857216219819
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
