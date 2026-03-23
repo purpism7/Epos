@@ -308,7 +308,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3532277032203058062, guid: 833ea0a1abd13a041aa90e197457db18, type: 3}
       propertyPath: effectType
-      value: Skill_03_02
+      value: Skill_03
       objectReference: {fileID: 0}
     - target: {fileID: 3701749198875808756, guid: 833ea0a1abd13a041aa90e197457db18, type: 3}
       propertyPath: rootTm
