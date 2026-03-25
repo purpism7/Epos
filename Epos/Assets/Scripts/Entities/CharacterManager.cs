@@ -24,7 +24,7 @@ namespace Entities
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private IObjectResolver _iResolver = null;
 
-        private Dictionary<int, Creature.Character> _cachedDic = null;
+        private Dictionary<int, Creature.Character> _cachedCharacters = null;
 
         async UniTask IGeneric.InitializeAsync()
         {
@@ -33,14 +33,11 @@ namespace Entities
 
         T ICharacterManager.Create<T>(int id, Transform rootTm)
         {
-            if (_cachedDic == null)
-            {
-                _cachedDic = new();
-                _cachedDic.Clear();
-            }
+            if (_cachedCharacters == null)
+                _cachedCharacters = new();
             
             Creature.Character character = null;
-            if (!_cachedDic.TryGetValue(id, out character))
+            if (!_cachedCharacters.TryGetValue(id, out character))
             {
                 GameObject loadGameObj = _addressableManager.LoadAssetByNameAsync<GameObject>(id.ToString());
                 var gameObj = LifetimeScope.Instantiate(loadGameObj, rootTm);
@@ -51,14 +48,7 @@ namespace Entities
                 _iResolver?.InjectGameObject(gameObj);
                 
                 character = gameObj.GetComponent<T>();
-                // var t = gameObj.GetComponent<T>();
-                // Debug.Log(t);
-                
                 gameObj.SetActive(false);
-                // character = new CharacterCreator<T>()
-                //     .SetId(id)
-                //     .SetRoot(rootTm)
-                //     .Create;
             }
 
             var t = character as T;

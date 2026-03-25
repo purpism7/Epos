@@ -21,7 +21,6 @@ namespace Lifetime
         [SerializeField] private SceneInitializer sceneInitializer;
         [SerializeField] private Party party;
 
-        // 씬을 다시 로드해도 껍데기(Scope)가 증식하지 않도록 방어
         private static GlobalLifetimeScope _instance;
 
         protected override void Awake()
@@ -36,15 +35,12 @@ namespace Lifetime
 
             base.Awake();
 
-            Debug.Log("GlobalLifetimeScope Awake");
-            InitalizeAsync().Forget();
+            InitializeAsync().Forget();
         }
 
         protected override void Configure(IContainerBuilder builder)
         {
             base.Configure(builder);
-
-            Debug.Log("GlobalLifetimeScope Configure");
 
             builder.Register<ResourceManager>(VContainer.Lifetime.Singleton).AsSelf();
             builder.Register<TimeScaleManager>(VContainer.Lifetime.Singleton).As<ITimeScaleManager>();
@@ -66,7 +62,6 @@ namespace Lifetime
                 .UnderTransform(transform)
                 .AsSelf();
 
-            // 방법 A: 인스펙터에서 연결한 레퍼런스 등록 (권장: 성능이 좋고 직관적임)
             if (uiManager != null)
                 builder.RegisterComponent(uiManager).AsSelf();
 
@@ -79,16 +74,11 @@ namespace Lifetime
             if (party != null)
                 builder.RegisterComponent(party).As<IParty>();
 
-            //builder.RegisterComponentInHierarchy<UIManager>().AsSelf();
-            //builder.RegisterComponentInHierarchy<CameraManager>().As<ICameraManager>();
-            //builder.RegisterComponentInHierarchy<Party>().As<IParty>();
-            //builder.RegisterComponentInHierarchy<SceneInitializer>().AsSelf();
-
             builder.Register(typeof(UICreator<,>), VContainer.Lifetime.Transient).AsSelf();
             builder.Register<UIFactory>(VContainer.Lifetime.Singleton);
         }
 
-        private async UniTask InitalizeAsync()
+        private async UniTask InitializeAsync()
         {
             Container?.Resolve<ITimeScaleManager>()?.Set(1f);
 

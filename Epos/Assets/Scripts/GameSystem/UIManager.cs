@@ -34,15 +34,6 @@ namespace GameSystem
 
         public bool IsEndLoad { get; private set; } = false;
 
-
-        // protected override void Initialize()
-        // {
-        //     DontDestroyOnLoad(this);
-
-
-        //     //LoadAssetAsync().Forget();
-        // }
-
         public async UniTask InitializeAsync()
         {
             _componentDic = new();
@@ -72,38 +63,6 @@ namespace GameSystem
 
             IsEndLoad = true;
         }
-
-        //public Common.Component Get<T>(Transform rootTm = null, bool worldUI = false) where T : Common.Component
-        //{
-        //    var iPoolable = _objectPooler.Get<T>();
-        //    if (iPoolable != null)
-        //        return iPoolable;
-
-        //    Common.Component component = null;
-        //    if (_componentDic != null)
-        //        _componentDic.TryGetValue(typeof(T), out component);
-
-        //    if (component == null)
-        //        return null;
-
-        //    component = Instantiate(component.gameObject)?.GetComponent<T>();
-        //    _container?.InjectGameObject(component?.gameObject);
-
-        //    if (component != null)
-        //        _objectPooler?.Add(component);
-
-        //    if (!rootTm)
-        //    {
-        //        if (worldUI)
-        //            rootTm = worldUIRootRectTm;
-        //        else
-        //            rootTm = rootRectTm;
-        //    }
-
-        //    component?.transform.SetParent(rootTm);
-
-        //    return component;
-        //}
 
         /// <param name="resolver">씬/필드 스코프의 IObjectResolver. 뷰·팝업 생성 및 주입에 사용.</param>
         public Common.Component Get<T, V>(IObjectResolver resolver, Transform rootTm, out bool isInitialize, V data = null, bool worldUI = false) where T : Common.Component where V : Common.Param
@@ -172,59 +131,6 @@ namespace GameSystem
 
             return component;
         }
-
-        //public T GetPanel<T, V>(V param = null) where T : Common.Component where V : Common.Param
-        //{
-        //    bool initialize = false;
-        //    var component = Get<T, V>(param, rootRectTm, out initialize);
-
-        //    var panel = component as Panel<V>;
-        //    if(initialize)
-        //        panel?.InitializeAsync(param);
-
-        //    component?.transform.SetAsLastSibling();
-        //    panel?.Activate(param);
-
-        //    // CurrPanel = panel;
-
-        //    return panel as T;
-        //}
-
-        //public T GetPopup<T, V>(V data = null) where T : Common.Component where V : Common.Param
-        //{
-        //    bool initialize = false;
-        //    var component = Get<T, V>(data, rootRectTm, out initialize);
-
-        //    var panel = component as Panel<V>;
-        //    if(initialize)
-        //        panel?.Initialize(data);
-
-        //    component?.transform.SetAsLastSibling();
-        //    panel?.Activate(data);
-
-        //    // CurrPanel = panel;
-
-        //    return panel as T;
-        //}
-
-        // public T GetPart<T, V>(V data = null, bool worldUI = false, Transform rootTm = null) where T : UI.Component where V : UI.Component.Data
-        // {
-        //     if (!rootTm)
-        //         rootTm = worldUI ? worldUIRootRectTm : rootRectTm;
-        //     
-        //     bool initialize = false;
-        //     var component = Get<T, V>(data, rootTm, out initialize);
-        //     
-        //     var part = component as Part<V>;
-        //     if(initialize)
-        //         part?.Initialize(data);
-        //     
-        //     component?.transform.SetAsLastSibling();
-        //     
-        //     part?.Activate(data);
-        //
-        //     return part as T;
-        // }
 
         private void SetCurrView(Common.Component component)
         {

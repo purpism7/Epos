@@ -456,11 +456,6 @@ namespace Creature.Action
                 skeletonAnimation.Skeleton.ScaleX = Mathf.Sign(x);
         }
 
-        // void IActController.SetPosition(Vector3 position)
-        // {
-        //     _currPosition = position;
-        //     _currPosition.z = 0;
-        // }
         #endregion
 
         private void Execute<T, V>(V param = null, bool isSet = true) where T : Act<V>, new() where V : ActParam, new()
