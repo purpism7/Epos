@@ -2155,7 +2155,7 @@ GameObject:
   - component: {fileID: 6152099420787546111}
   - component: {fileID: 8835905026543018703}
   m_Layer: 0
-  m_Name: Btn
+  m_Name: Btn_TacticalStanceSlot02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6694,7 +6694,7 @@ GameObject:
   - component: {fileID: 7184412631418812488}
   - component: {fileID: 2730109628404292747}
   m_Layer: 0
-  m_Name: Btn
+  m_Name: Btn_TacticalStanceSlot03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17982,7 +17982,7 @@ GameObject:
   - component: {fileID: 5369336556237870876}
   - component: {fileID: 5123382113543824205}
   m_Layer: 5
-  m_Name: Button_Check_Encourage
+  m_Name: Button_Check_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31811,7 +31811,7 @@ GameObject:
   - component: {fileID: 7847227217908574106}
   - component: {fileID: 1499588591244204149}
   m_Layer: 0
-  m_Name: Btn
+  m_Name: Btn_TacticalStanceSlot01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34525,7 +34525,7 @@ GameObject:
   - component: {fileID: 2151544894266647202}
   - component: {fileID: 5838084341530510780}
   m_Layer: 5
-  m_Name: Button_Check_Encourage
+  m_Name: Button_Check_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40509,7 +40509,7 @@ GameObject:
   - component: {fileID: 5640688420443432889}
   - component: {fileID: 4325909592299511535}
   m_Layer: 5
-  m_Name: Button_Check_Encourage
+  m_Name: Button_Check_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
