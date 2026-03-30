@@ -15,9 +15,19 @@ namespace UI.View
     {
         public class Param : Common.Param
         {
-            
+            public IListener Listener { get; private set; } = null;
+
+            public Param(IListener listener)
+            {
+                Listener = listener;
+            }
         }
 
+        public interface IListener
+        {
+            UniTask OnConfirmStrategyAsync();
+        }
+        
         [SerializeField] private Animator animator = null;
 
         // TODO: Data
@@ -71,7 +81,7 @@ namespace UI.View
 
         public override void Deactivate()
         {
-            //base.Deactivate();
+            base.Deactivate();
             // strategyPhaseTMP?.SetText(_currentIStrategySlot?.StrategyPhase);
         
             // animator?.SetBool("OnOff", true);
@@ -103,6 +113,7 @@ namespace UI.View
             animator?.SetBool("Out", true);
             //
             // Deactivate();
+            _param?.Listener?.OnConfirmStrategyAsync();
         }
         #endregion
     }

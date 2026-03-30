@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,7 +35,8 @@ namespace UI.View
         void OnChangedStrategy(Battle.Strategy.IStrategy strategy);
     }
 
-    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView
+    public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView,
+        StrategyPanel.IListener
     {
         public class Param : Common.Param
         {
@@ -92,7 +94,6 @@ namespace UI.View
                 {
                     DeactivateAnimBattleMainView();
                     shoutPanel?.Activate();
-                    
                     _iPresenter?.OnClickedShout();
                     
                 });
@@ -101,9 +102,7 @@ namespace UI.View
                 () =>
                 {
                     DeactivateAnimBattleMainView();
-                    
-                    strategyPanel?.ActivateAsync(null);
-                    
+                    strategyPanel?.ActivateAsync(new StrategyPanel.Param(this));
                     _iPresenter.OnClickAggressive();
                 });
 
@@ -112,25 +111,24 @@ namespace UI.View
                 {
                     shoutPanel?.Deactivate();
                     _timeScaleManager?.Set(1f);
-
                     ActivateAnimBattleMainView();
                 });
 
-            closeStrategyPanelBtn?.onClick?.AddListener(
-                () =>
-                {
-                    _iPresenter?.OnCloseStrategyPanel();
-
-                    strategyPanel?.Deactivate();
-                    ActivateAnimBattleMainView();
-                });
+            // closeStrategyPanelBtn?.onClick?.AddListener(
+            //     () =>
+            //     {
+            // _iPresenter?.OnCloseStrategyPanel();
+            //
+            // strategyPanel?.Deactivate();
+            // ActivateAnimBattleMainView();
+            //     });
         }
         
         #region IBattleMainView
         async UniTask IBattleMainView.InitializePanelAsync(ShoutPanel.IListener shoutPanelListener)
         {
             await shoutPanel.InitializeAsync(new ShoutPanel.Param(shoutPanelListener));
-            await strategyPanel.InitializeAsync(new StrategyPanel.Param());
+            await strategyPanel.InitializeAsync(new StrategyPanel.Param(this));
         }
         
         void IBattleMainView.ActivateBattleMainView()
@@ -198,6 +196,19 @@ namespace UI.View
         {
             Debug.Log("InjectInitialize");
         }
+        
+        #region Strategy Panel
+        async UniTask StrategyPanel.IListener.OnConfirmStrategyAsync()
+        {
+            _iPresenter?.OnCloseStrategyPanel();
+            
+            // TODO: TEMP
+            await UniTask.Delay(TimeSpan.FromSeconds(2f));
+            
+            strategyPanel?.Deactivate();
+            ActivateAnimBattleMainView();
+        }
+        #endregion
     }
 }
 
