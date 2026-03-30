@@ -47,7 +47,7 @@ namespace UI.View
             }
         }
 
-        [Inject] private GameSystem.ITimeScaleManager _iTimeScaleManager = null;
+        [Inject] private GameSystem.ITimeScaleManager _timeScaleManager = null;
         [Inject] private UIFactory _uiFactory = null;
         [Inject] private IObjectResolver _iResolver = null;
 
@@ -101,6 +101,7 @@ namespace UI.View
                 () =>
                 {
                     DeactivateAnimBattleMainView();
+                    
                     strategyPanel?.ActivateAsync(null);
                     
                     _iPresenter.OnClickAggressive();
@@ -110,7 +111,7 @@ namespace UI.View
                 () =>
                 {
                     shoutPanel?.Deactivate();
-                    _iTimeScaleManager?.Set(1f);
+                    _timeScaleManager?.Set(1f);
 
                     ActivateAnimBattleMainView();
                 });

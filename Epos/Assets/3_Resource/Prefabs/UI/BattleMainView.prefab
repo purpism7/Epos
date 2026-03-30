@@ -553,7 +553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8904799908669351096
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1889,7 +1889,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7229254489445141282
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3551,7 +3551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8253072657155265277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12738,6 +12738,7 @@ MonoBehaviour:
   strategyEffectDescriptionTMP: {fileID: 541942524721806649}
   strategyDesctionTMP: {fileID: 3853027150205431680}
   selectBtn: {fileID: 4762685974915123069}
+  confirmBtn: {fileID: 5360781593513927818}
 --- !u!225 &371704461984428700
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -17709,6 +17710,7 @@ MonoBehaviour:
   strategyEffectDescriptionTMP: {fileID: 1633650171507491699}
   strategyDesctionTMP: {fileID: 2805761743707055439}
   selectBtn: {fileID: 1355025895690774166}
+  confirmBtn: {fileID: 6034042105649988806}
 --- !u!225 &2804430964268927467
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -18015,7 +18017,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4141212878717703756}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -18089,7 +18091,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4141212878717703756}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -29449,7 +29451,7 @@ MonoBehaviour:
   animator: {fileID: 3363085717312505813}
   strategyText: {fileID: 3208188263720202866}
   shoutPanel: {fileID: 8163781460816357226}
-  strategyPanel: {fileID: 5729631261168129984}
+  strategyPanel: {fileID: 9046380473970569950}
   shoutBtn: {fileID: 1317394280193683452}
   aggressiveBtn: {fileID: 6506903536191385650}
   closeShoutPanelBtn: {fileID: 4883399889591777563}
@@ -39697,6 +39699,7 @@ MonoBehaviour:
   strategyEffectDescriptionTMP: {fileID: 6051683049427443558}
   strategyDesctionTMP: {fileID: 8525082486961914383}
   selectBtn: {fileID: 6113082637187778942}
+  confirmBtn: {fileID: 7263188154261972179}
 --- !u!225 &7051980111825997137
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -40542,7 +40545,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9167229851393567632}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
@@ -40616,7 +40619,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9167229851393567632}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -41220,6 +41223,10 @@ PrefabInstance:
       value: 0.7264151
       objectReference: {fileID: 0}
     - target: {fileID: -7871556540511652807, guid: d4f3333ad5c14c84682ad6d30900c817, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: d4f3333ad5c14c84682ad6d30900c817, type: 3}
       propertyPath: m_SortingOrder
       value: -1
       objectReference: {fileID: 0}
@@ -41813,6 +41820,10 @@ PrefabInstance:
       value: 0.8490566
       objectReference: {fileID: 0}
     - target: {fileID: -7871556540511652807, guid: 054e77cdc6d82284aa2f274028ecaa00, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 054e77cdc6d82284aa2f274028ecaa00, type: 3}
       propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
@@ -41915,6 +41926,10 @@ PrefabInstance:
       value: 0.9529412
       objectReference: {fileID: 0}
     - target: {fileID: -7871556540511652807, guid: 898d9195253e61245b172910abcbd4b6, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 898d9195253e61245b172910abcbd4b6, type: 3}
       propertyPath: m_SortingOrder
       value: -1
       objectReference: {fileID: 0}
@@ -42007,6 +42022,10 @@ PrefabInstance:
     - target: {fileID: -7871556540511652807, guid: 7d62d9c87ccf1844696b7f0131805416, type: 3}
       propertyPath: m_Color.r
       value: 0.4716981
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 7d62d9c87ccf1844696b7f0131805416, type: 3}
+      propertyPath: m_SortingLayer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7871556540511652807, guid: 7d62d9c87ccf1844696b7f0131805416, type: 3}
       propertyPath: m_SortingOrder

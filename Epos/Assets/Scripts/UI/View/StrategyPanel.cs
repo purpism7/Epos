@@ -15,7 +15,7 @@ namespace UI.View
     {
         public class Param : Common.Param
         {
-
+            
         }
 
         [SerializeField] private Animator animator = null;
@@ -24,7 +24,7 @@ namespace UI.View
         [SerializeField] private Datas.ScriptableObjects.Strategy[] strategyDatas = null;
         [SerializeField] private TextMeshProUGUI strategyPhaseTMP = null;
 
-        [Inject] IStrategyController _iStrategyController = null;
+        [Inject] IStrategyController _strategyController = null;
 
         private StrategySlot[] _strategySlots = null;
         private IStrategySlot _currentIStrategySlot = null;
@@ -35,9 +35,9 @@ namespace UI.View
 
             _strategySlots = GetComponentsInChildren<StrategySlot>(true);
 
-            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), this).WithStrategyData(strategyDatas[0]));
-            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), this).WithStrategyData(strategyDatas[1]));
-            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), this).WithStrategyData(strategyDatas[2]));
+            await _strategySlots[0].InitializeAsync(new StrategySlot.Param(new Adaptive(), 1, this).WithStrategyData(strategyDatas[0]));
+            await _strategySlots[1].InitializeAsync(new StrategySlot.Param(new Offensive(), 2, this).WithStrategyData(strategyDatas[1]));
+            await _strategySlots[2].InitializeAsync(new StrategySlot.Param(new Defensive(), 3, this).WithStrategyData(strategyDatas[2]));
 
             _currentIStrategySlot = _strategySlots[0];
         }
@@ -46,36 +46,63 @@ namespace UI.View
         {
             await base.ActivateAsync(param);
 
-            animator?.SetBool("OnOff", false);
+            int index = 0;
+            switch (_strategyController.CurrentIStrategy)
+            {
+                case Adaptive:
+                    index = 1;
+                    break;
+                
+                case Offensive:
+                    index = 2;
+                    break;
+                
+                case Defensive:
+                    index = 3;
+                    break;
+            }
+            
+            animator?.SetBool("Out", false);
+            animator?.SetInteger("Select", index);
 
             await UniTask.Yield();
-            _currentIStrategySlot?.Select();
+            // _currentIStrategySlot?.Select();
         }
 
         public override void Deactivate()
         {
             //base.Deactivate();
-            strategyPhaseTMP?.SetText(_currentIStrategySlot?.StrategyPhase);
-
-            animator?.SetBool("OnOff", true);
+            // strategyPhaseTMP?.SetText(_currentIStrategySlot?.StrategyPhase);
+        
+            // animator?.SetBool("OnOff", true);
         }
 
         #region StrategySlot.IListener
-        void StrategySlot.IListener.OnSelectStrategy(IStrategySlot iStrategySlot)
+        void StrategySlot.IListener.OnSelectStrategy(IStrategySlot strategySlot)
         {
-            if (iStrategySlot == null)
+            if (strategySlot == null)
                 return;
 
-            if (_iStrategyController == null)
+            if (_strategyController == null)
                 return;
 
-            if (_iStrategyController.CurrentIStrategy == iStrategySlot.IStrategy)
+            if (_strategyController.CurrentIStrategy == strategySlot.IStrategy)
                 return;
-
-            _iStrategyController.ApplyStrategy(iStrategySlot.IStrategy);
+            
+            animator?.SetInteger("Select", strategySlot.Index);
+            
+            _strategyController.ApplyStrategy(strategySlot.IStrategy);
 
             _currentIStrategySlot?.Deselect();
-            _currentIStrategySlot = iStrategySlot;
+            _currentIStrategySlot = strategySlot;
+        }
+
+        void StrategySlot.IListener.OnConfirmStrategy()
+        {
+            // animator?.SetInteger("Select", strategySlot.Index);
+            animator?.SetBool("Out", true);
+            //
+            // Deactivate();
         }
         #endregion
     }
