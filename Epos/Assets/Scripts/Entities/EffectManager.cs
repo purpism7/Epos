@@ -10,7 +10,7 @@ namespace Entities
 {
     public interface IEffectManager
     {
-        Effect GetEffect(string key);
+        UniTask<Effect> GetEffectAsync(string key);
     }
 
     public class EffectManager : MonoBehaviour, IEffectManager
@@ -19,13 +19,13 @@ namespace Entities
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
 
-        Effect IEffectManager.GetEffect(string key)
+        async UniTask<Effect> IEffectManager.GetEffectAsync(string key)
         {
             Effect effect = _objectPooler?.Get<Effect>(key: key);
             if (effect == null)
             {
                 var effectPath = $"Assets/3_Resource/Effect/Prefabs/{key}.prefab";
-                var prefabGameObj = _addressableManager?.LoadAssetByNameAsync<GameObject>(effectPath);
+                var prefabGameObj = await _addressableManager.LoadAssetByNameAsync<GameObject>(effectPath);
                 if(prefabGameObj)
                 {
                     var gameObj = LifetimeScope.Instantiate(prefabGameObj, transform);

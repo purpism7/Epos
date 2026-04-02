@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: 2ebd946aa93264a6ca52816211c4ef18
   m_currentHash:
     serializedVersion: 2
-    Hash: 948f5789c1f3615131e9fe981c06bc4b
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -63,6 +63,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 73b3f2a8da7b548a5ba4f227d49ca31b, type: 2}
   - {fileID: 11400000, guid: 3248d2f227a0e4d8b8efd8447db28727, type: 2}
   - {fileID: 11400000, guid: a54af3151049044d89a137ea017416e1, type: 2}
+  - {fileID: 11400000, guid: 41ad3b282ec3a4f92a74cc3ea154981f, type: 2}
   - {fileID: 11400000, guid: 0fdc55f2d7fab4198aa45dc051978db7, type: 2}
   - {fileID: 11400000, guid: ee6a59a918ed449cab9721dbc1bea7bf, type: 2}
   - {fileID: 11400000, guid: 78e4cdc3a283745608aa9b436c271758, type: 2}
@@ -111,6 +112,7 @@ MonoBehaviour:
     - Atlas
     - UI
     - Effect
+    - Item
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 553ceee3839714f5aa57ef90dd51f279, type: 2}

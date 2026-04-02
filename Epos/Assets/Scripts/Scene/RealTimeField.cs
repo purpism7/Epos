@@ -29,23 +29,27 @@ namespace Scene
             builder.RegisterEntryPoint<StrategyController>(VContainer.Lifetime.Scoped)
                 .As<IStrategyController>();
 
+            builder.Register<ItemManager>(VContainer.Lifetime.Scoped).AsSelf();
             builder.Register<BattleMainPresenter>(VContainer.Lifetime.Scoped).AsSelf().As<IBattleMainPresenter>();
         }
 
         public override async UniTask InitializeAsync()
         {
             await base.InitializeAsync();
-            //await UniTask.Yield();
-
+            
             var container = _lifetimeScope?.Container;
+            
+            var itemManager = container.Resolve<ItemManager>();
+            var fieldManager = container?.Resolve<IFieldManager>();
+            var battleManager = container?.Resolve<IBattleManager>();
 
-            var iFieldManaver = container?.Resolve<IFieldManager>();
-            var iBattleManager = container?.Resolve<IBattleManager>();
-
+            if(itemManager != null)
+                await itemManager.InitializeAsync();
+            
             partyLocation?.Initialize();
 
-            var waypoints = iFieldManaver?.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.Waypoints;
-            iBattleManager?.BeginRealTime(partyLocation, waypoints);
+            var waypoints = fieldManager?.IField?.GetFieldPoint<IRealTimeFieldPoint>()?.Waypoints;
+            battleManager?.BeginRealTime(partyLocation, waypoints);
             
             //MainManager.Get<IBattleManager>()?.BeginRealTime(partyLocation, wayPoints);
         }

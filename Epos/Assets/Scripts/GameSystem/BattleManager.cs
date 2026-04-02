@@ -168,8 +168,8 @@ namespace GameSystem
                 if(info == null)
                     continue;
                 
-                var hero = _iCharacterManager?.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
-                await UniTask.WaitUntil(() => hero != null);
+                var hero = await _iCharacterManager.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
+                // await UniTask.WaitUntil(() => hero != null);
                 
                 // var pos = partyLocation.GetPartyPosition(info.Position - 1);
                 // pos.x += offsetX;
@@ -233,8 +233,9 @@ namespace GameSystem
                 if(info == null)
                     continue;
 
-                var monster = _iCharacterManager?.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
-                await UniTask.WaitUntil(() => monster != null);
+                var monster = await _iCharacterManager.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
+                // var monster = _iCharacterManager?.Create<Monster>(info.CharacterId, partyLocation.CharacterRootTm);
+                // await UniTask.WaitUntil(() => monster != null);
                 monster.Initialize();
                 monster.Activate();
                 

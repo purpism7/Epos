@@ -16,7 +16,7 @@ namespace Entities
 {
     public interface ICharacterManager : IManager
     {
-        T Create<T>(int id, Transform rootTm) where T : Creature.Character;
+        UniTask<T> Create<T>(int id, Transform rootTm) where T : Creature.Character;
     }
 
     public class CharacterManager : ICharacterManager
@@ -31,33 +31,43 @@ namespace Entities
             await UniTask.CompletedTask;
         }
 
-        T ICharacterManager.Create<T>(int id, Transform rootTm)
+        async UniTask<T> ICharacterManager.Create<T>(int id, Transform rootTm)
         {
             if (_cachedCharacters == null)
                 _cachedCharacters = new();
-            
+
             Creature.Character character = null;
             if (!_cachedCharacters.TryGetValue(id, out character))
             {
-                GameObject loadGameObj = _addressableManager.LoadAssetByNameAsync<GameObject>(id.ToString());
+                // await으로 교체
+                GameObject loadGameObj = await _addressableManager.LoadAssetByNameAsync<GameObject>(id.ToString());
+
+                if (!loadGameObj)
+                    return null;
+
                 var gameObj = LifetimeScope.Instantiate(loadGameObj, rootTm);
 
                 if (!gameObj)
                     return null;
-                
+
                 _iResolver?.InjectGameObject(gameObj);
-                
+
                 character = gameObj.GetComponent<T>();
                 gameObj.SetActive(false);
+
+                // 캐시에 추가 (기존 주석 해제)
+                _cachedCharacters[id] = character;
             }
 
-            var t = character as T;
-            // var t = gameObj.GetComponent<T>();
             if (character == null)
                 return null;
-            
+
+            var t = character as T;
+            if (t == null)
+                return null;
+
             character.SetActive(true);
-            t?.Initialize();
+            t.Initialize();
 
             return t;
         }

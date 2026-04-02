@@ -136,7 +136,7 @@ namespace Battle
         {
             base.Deactivate();
 
-            ActivateHitEffect();
+            ActivateHitEffectAsync().Forget();
 
             Return();
         }
@@ -196,16 +196,15 @@ namespace Battle
             }
         }
 
-        private void ActivateHitEffect()
+        private async UniTask ActivateHitEffectAsync()
         {
             var hitEffectName = _param?.HitEffectName;
             if (string.IsNullOrEmpty(hitEffectName))
                 return;
 
-            _effectManager?.GetEffect(hitEffectName)?
-                .ActivateAsync(new Effect.Param().WithTargetPosition(transform.position));
-
-            //_iActor?.IEffectCtr?.Activate(skillData.EffectName, new Effect.Param().WithTargetSkeletonAnimation(_iActor?.SkeletonAnimation), skillData.AnimationName);
+            var effect = await _effectManager.GetEffectAsync(hitEffectName);
+            if(effect != null)
+                await effect.ActivateAsync(new Effect.Param().WithTargetPosition(transform.position));
         }
     }
 }

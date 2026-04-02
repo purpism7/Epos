@@ -5,6 +5,7 @@ using VContainer;
 
 using Entities;
 using Common;
+using Cysharp.Threading.Tasks;
 
 namespace Creature.Action
 {
@@ -95,6 +96,11 @@ namespace Creature.Action
             //if (_iEffectDic == null)
             //    return;
 
+            ActivateAsync(effectName, effectParam, effectType).Forget();
+        }
+
+        private async UniTask ActivateAsync(string effectName, Effect.Param effectParam, string effectType = "")
+        {
             if (string.IsNullOrEmpty(effectName))
                 return;
 
@@ -112,13 +118,13 @@ namespace Creature.Action
                 
                 if (!_effects.TryGetValue(effectType, out effect))
                 {
-                     effect = _effectManager?.GetEffect(effectName);
+                    effect = await _effectManager.GetEffectAsync(effectName);
                     _effects[effectType] = effect;
                 }
             }
             else
             {
-                effect = _effectManager?.GetEffect(effectName);
+                effect = await _effectManager.GetEffectAsync(effectName);
             }
             
             effect?.Activate();
