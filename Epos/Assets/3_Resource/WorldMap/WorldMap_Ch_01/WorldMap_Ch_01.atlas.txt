@@ -1,0 +1,31 @@
+WorldMap_Ch_01.png
+size:2048,1024
+filter:Linear,Linear
+pma:true
+Layer 1
+bounds:1334,522,408,437
+offsets:1,1,410,439
+Layer 2
+bounds:2,447,512,512
+offsets:1,1,514,514
+Layer 3
+bounds:412,2,396,443
+offsets:1,1,398,445
+Layer 4
+bounds:2,5,408,440
+offsets:1,1,410,442
+Layer 5
+bounds:1220,74,396,442
+offsets:1,1,398,444
+Layer 6
+bounds:516,518,407,441
+offsets:1,1,409,443
+Layer 7
+bounds:810,80,408,436
+offsets:1,1,410,438
+Layer 8
+bounds:1618,78,396,442
+offsets:1,1,398,444
+Layer 9
+bounds:925,518,407,441
+offsets:1,1,409,443
