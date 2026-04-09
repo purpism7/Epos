@@ -1,3 +1,4 @@
+using GameSystem;
 using UnityEngine;
 
 namespace Common
@@ -7,23 +8,14 @@ namespace Common
         
     }
     
-    public class Element : MonoBehaviour //, IPoolable
+    public class Element : MonoBehaviour, IPoolable
     {
-        public GameObject GameObject => gameObject;
+        public Transform Transform => transform;
+        public GameObject PrefabGameObj => gameObject;
 
         // string IPoolable.Key => GetType().Name;
         //
-        // bool IPoolable.IsActive
-        // {
-        //     get
-        //     {
-        //         if (!gameObject)
-        //             return false;
-        //         
-        //         return gameObject.activeSelf;
-        //     }
-        // }
-        
+
         public virtual void Initialize()
         {
             
@@ -37,6 +29,22 @@ namespace Common
         public virtual void Deactivate()
         {
             gameObject.SetActive(false);
+        }
+
+        public bool IsActivate
+        {
+            get
+            {
+                if (!gameObject)
+                    return false;
+                
+                return gameObject.activeSelf;
+            }
+        }
+
+        void IPoolable.Return(bool setParent)
+        {
+            
         }
     }
 }

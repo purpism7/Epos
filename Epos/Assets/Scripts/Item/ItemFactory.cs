@@ -1,11 +1,13 @@
 using UnityEngine;
 
 using Common;
+using VContainer;
 
 namespace Item
 {
     public class ItemFactory : Factory
     {
+        [Inject] private IItemManager _itemManager = null;
         // protected readonly UIManager _uiManager = null;
         
         public ItemFactory()
@@ -17,12 +19,11 @@ namespace Item
         {
             initialize = false;
             
-            RectTransform rootRectTr = null;
-            if (rootTr != null)
-                rootRectTr = rootTr.GetComponent<RectTransform>();
+            // RectTransform rootRectTr = null;
+            // if (rootTr != null)
+            //     rootRectTr = rootTr.GetComponent<RectTransform>();
 
-            return null;
-            // return _uiManager?.Create<TElement>(rootRectTr, out initialize);
+            return _itemManager?.Get<TElement>(rootTr, out initialize);
         }
         
         public TElement Create<TElement>(RectTransform rootRectTr)  where TElement : Element

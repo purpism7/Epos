@@ -13,6 +13,7 @@ using Parts;
 using Entities;
 using GameSystem;
 using Battle.Strategy;
+using Item;
 using UI.Presenter;
 
 namespace Scene
@@ -29,7 +30,9 @@ namespace Scene
             builder.RegisterEntryPoint<StrategyController>(VContainer.Lifetime.Scoped)
                 .As<IStrategyController>();
 
-            builder.Register<ItemManager>(VContainer.Lifetime.Scoped).AsSelf();
+            builder.Register<ItemManager>(VContainer.Lifetime.Scoped).AsSelf().As<IItemManager>();
+            builder.Register<ItemFactory>(VContainer.Lifetime.Scoped).AsSelf();
+            
             builder.Register<BattleMainPresenter>(VContainer.Lifetime.Scoped).AsSelf().As<IBattleMainPresenter>();
         }
 

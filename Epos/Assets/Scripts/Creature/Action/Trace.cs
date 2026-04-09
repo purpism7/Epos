@@ -290,7 +290,7 @@ namespace Creature.Action
                 }
             }
 
-            _actor?.SortingOrder(actorPosition.y);
+            _actor?.SetSortingOrder(actorPosition.y);
         }
 
         protected override void End()

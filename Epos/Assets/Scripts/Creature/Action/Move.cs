@@ -276,7 +276,7 @@ namespace Creature.Action
             var direction = targetPosition - iActorTm.position;
 
             _actor?.ActController?.Flip(direction.x);
-            _actor?.SortingOrder(iActorTm.position.y);
+            _actor?.SetSortingOrder(iActorTm.position.y);
 
             //_prevPos = iActorTm.position;
 

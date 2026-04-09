@@ -34,6 +34,7 @@ namespace Creature
         }
 
         public float Height { get; private set; } = 0;
+        public int SortingOrder => _meshRenderer?.sortingOrder ?? 0;
 
         public SkeletonAnimation SkeletonAnimation { get; private set; } = null;
         public Collider2D Collider { get; private set; } = null;
@@ -228,7 +229,7 @@ namespace Creature
         }
 
         #region IActor
-        public void SortingOrder(float order)
+        public void SetSortingOrder(float order)
         {
             var sortingOrder = Mathf.CeilToInt(-order * 100f);
 

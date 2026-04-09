@@ -20,7 +20,7 @@ namespace Creature
 
         string AnimationKey<T>(Act<T> act) where T : ActParam;
 
-        void SortingOrder(float order);
+        void SetSortingOrder(float order);
 
         /// <summary>월드 위치 설정. 루트와 스켈레톤을 함께 옮겨 그림자 등 형제 오브젝트가 같이 움직이도록 함.</summary>
         void SetWorldPosition(Vector3 position);

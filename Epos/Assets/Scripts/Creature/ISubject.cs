@@ -14,6 +14,7 @@ namespace Creature
         int Id { get; }
         float Height { get; }
         bool IsAlive { get; }
+        int SortingOrder { get; }
         
         bool IsActivate { get; }
         void Activate();
