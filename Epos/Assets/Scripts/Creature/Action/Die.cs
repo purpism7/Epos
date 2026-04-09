@@ -115,7 +115,7 @@ namespace Creature.Action
             // 시작과 끝의 중간 지점에서 옆으로 살짝 밀어주면 예쁜 곡선이 됩니다.
             Vector3 midPos = (startPos + endPos) / 2f;
             midPos.x += UnityEngine.Random.Range(-250f, 250f); // 좌우로 무작위 휘어짐
-            midPos.y += 150f; // 위로 살짝 들려야 포물선 느낌이 남
+            // midPos.y += 150f; // 위로 살짝 들려야 포물선 느낌이 남
 
             // 4. DOTween 연출
             rectTr.DOKill();
@@ -130,7 +130,7 @@ namespace Creature.Action
                 .SetEase(Ease.InQuad)); // 뒤로 갈수록 빨라지는 자석 효과
 
             // [연출 C] 회전 및 사라지기
-            seq.Join(rectTr.DORotate(new Vector3(0, 0, 360f), 1.0f, RotateMode.FastBeyond360));
+            seq.Join(rectTr.DORotate(new Vector3(0, 0, 180f), 1.0f, RotateMode.FastBeyond360));
             seq.Join(rectTr.DOScale(0.5f, 1.0f));
 
             seq.OnUpdate(() => {
