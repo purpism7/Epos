@@ -27,8 +27,6 @@ namespace GameSystem
         
         void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? offsetPosition = null);
         void ClearFocus(Action endAction = null);
-        
-        void Shake(float duration = 0.3f, float strength = 1f);
     }
     
     public class CameraManager : Manager, ICameraManager
@@ -41,7 +39,7 @@ namespace GameSystem
         [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
 
         private const float DefaultOrthographicSize = 20f;
-        private const float DefaultZPos = -200f;
+        // private const float DefaultZPos = -200f;
             
         #region Drag
         private const float DirectionForceReduceRate = 0.935f; // 감속비율

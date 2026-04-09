@@ -29,7 +29,7 @@ namespace Item
         public TElement Create<TElement>(RectTransform rootRectTr)  where TElement : Element
         {
             var element = OnCreate<TElement>(rootRectTr, out var initialize);
-            element?.Activate();
+            // element?.Activate();
             
             return element;
         }
@@ -43,7 +43,7 @@ namespace Item
                 //     slot.Initialize(param);
             }
             
-            element?.Activate();
+            // element?.Activate();
             
             return element;
         }

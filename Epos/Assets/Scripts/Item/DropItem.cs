@@ -1,6 +1,8 @@
 using UnityEngine;
 
 using Common;
+using GameSystem;
+using VContainer;
 
 namespace Item
 {
@@ -17,8 +19,10 @@ namespace Item
                 Position = position;
             }
         }
-
+        
         [SerializeField] private SpriteRenderer spriteRenderer = null;
+        
+        [Inject] private UIManager _uiManager = null;
         
         private Param _param = null;
         
@@ -30,6 +34,13 @@ namespace Item
 
             SetSortingOrder();
             SetDropPosition();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            
         }
 
         private void SetSortingOrder()

@@ -16,6 +16,7 @@ namespace Common
     
     public class ItemManager : IItemManager
     {
+        [Inject] private IObjectResolver _objectResolver = null;
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
         
@@ -57,6 +58,8 @@ namespace Common
 
                     if (element != null)
                     {
+                        _objectResolver?.Inject(element);
+                        
                         element.Initialize();
                         _objectPooler?.Add(element);
 

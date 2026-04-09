@@ -20,6 +20,7 @@ namespace GameSystem
         [SerializeField] private RectTransform viewRootRectTm = null;
         [SerializeField] private RectTransform popupRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
+        [SerializeField] private RectTransform collectRootRectTr = null;
 
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
@@ -28,6 +29,7 @@ namespace GameSystem
 
         public Camera UICamera => uiCamera;
         public RectTransform WorldUIRootRectTm => worldUIRootRectTm;
+        public RectTransform CollectRootRectTr => collectRootRectTr;
         public Common.Component CurrView { get; private set; } = null;
         public Common.Component CurrPopup { get; private set; } = null;
         public RectTransform CurrViewRectTm { get; private set; } = null;
@@ -97,6 +99,7 @@ namespace GameSystem
                 GameObject newObj = resolver != null
                     ? resolver.Instantiate(component.gameObject)
                     : Instantiate(component.gameObject);
+                
                 component = newObj?.GetComponent<T>();
 
                 if (component != null)
@@ -141,6 +144,14 @@ namespace GameSystem
         public void SetCurrPopup(Common.Component component)
         {
             CurrPopup = component;
+        }
+
+        public Vector3 ScreenToWorldPoint(Vector3 screenPoint)
+        {
+            if (UICamera == null)
+                return screenPoint;
+
+            return UICamera.ScreenToWorldPoint(screenPoint);
         }
     }
 }
