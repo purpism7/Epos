@@ -1,0 +1,8 @@
+Field_Coin_01.png
+size:895,775
+filter:Linear,Linear
+pma:true
+Layer 5 copy
+bounds:2,2,771,771
+Layer 8 copy
+bounds:775,2,118,771
