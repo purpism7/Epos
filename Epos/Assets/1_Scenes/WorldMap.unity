@@ -131,7 +131,6 @@ GameObject:
   - component: {fileID: 36269766}
   - component: {fileID: 36269763}
   - component: {fileID: 36269765}
-  - component: {fileID: 36269769}
   - component: {fileID: 36269770}
   m_Layer: 0
   m_Name: WorldMap
@@ -287,21 +286,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 753619604}
   virtualCamera: {fileID: 285218947}
---- !u!114 &36269769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36269762}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1a9a46c2b7549178c63b07aa017e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoomInOutDuration: 0.5
-  mainCamera: {fileID: 753619604}
-  virtualCamera: {fileID: 285218947}
 --- !u!95 &36269770
 Animator:
   serializedVersion: 7
@@ -310,7 +294,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36269762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 35b83612043d856419a15a3b7f85b3d1, type: 2}
   m_CullingMode: 0

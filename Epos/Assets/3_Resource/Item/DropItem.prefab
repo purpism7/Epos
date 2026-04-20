@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1009059804092083393}
   - component: {fileID: 7096973795134467921}
   - component: {fileID: 4468542263227887142}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: twinkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5007,7 +5007,7 @@ GameObject:
   - component: {fileID: 1178571448462027838}
   - component: {fileID: 3814457515407180576}
   - component: {fileID: 5312993609685127260}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: light_long
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10097,7 +10097,7 @@ GameObject:
   - component: {fileID: 9215447058774047586}
   - component: {fileID: 2344672499998180726}
   - component: {fileID: 3802171101594994089}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Spine_Field_Coin_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10114,8 +10114,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 8935506053576799768}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10151,8 +10151,7 @@ MeshRenderer:
   m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 457024887b1f5e6469500b3e2919bcc8, type: 2}
+  m_Materials: []
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10171,8 +10170,8 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: -1882869003
-  m_SortingLayer: 4
+  m_SortingLayerID: 1005590661
+  m_SortingLayer: 3
   m_SortingOrder: 3
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
@@ -10216,8 +10215,8 @@ MonoBehaviour:
   physicsMovementRelativeTo: {fileID: 0}
   updateTiming: 1
   unscaledTime: 1
-  _animationName: Idle
-  loop: 1
+  _animationName: Start
+  loop: 0
   timeScale: 1
 --- !u!1 &3155176730064895381
 GameObject:
@@ -10229,7 +10228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5598490295875770471}
   - component: {fileID: 5259077184102371282}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: DropItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10278,7 +10277,7 @@ GameObject:
   - component: {fileID: 6198904935480053846}
   - component: {fileID: 3003943010939746547}
   - component: {fileID: 6704363602776519227}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: impact_glow_G
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15184,7 +15183,7 @@ GameObject:
   - component: {fileID: 6167125354664016886}
   - component: {fileID: 2922541285453031330}
   - component: {fileID: 9050673681486292364}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: impact_glow_B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20090,7 +20089,7 @@ GameObject:
   - component: {fileID: 4389076818967027257}
   - component: {fileID: 2932287404142972582}
   - component: {fileID: 6505274366511833718}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: impact_glow_R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24995,7 +24994,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8489674884157902330}
   - component: {fileID: 1460318336420638345}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25085,7 +25084,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8935506053576799768}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25120,7 +25119,7 @@ GameObject:
   - component: {fileID: 6434405618886643191}
   - component: {fileID: 784701120277666896}
   - component: {fileID: 7782455110303319666}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Flow_twinkle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30058,7 +30057,7 @@ GameObject:
   - component: {fileID: 8814813403140925135}
   - component: {fileID: 3274159327665073421}
   - component: {fileID: 8149350222584199531}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: HCFX_Conffeti 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
