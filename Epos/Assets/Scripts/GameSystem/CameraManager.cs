@@ -11,7 +11,7 @@ using VContainer;
 
 using Entities;
 using GameSystem.Event;
-
+using UnityEngine.Rendering.Universal;
 using Vector3 = UnityEngine.Vector3;
 
 namespace GameSystem
@@ -22,7 +22,8 @@ namespace GameSystem
         bool IsMove { get; }
 
         //void MoveToTarget(Vector3 targetPosition);
-
+        UniTask InitializeAsync(Camera mainCamera, CinemachineVirtualCamera virtualCamera);
+        
         void SetTargetTr(Transform targetTm, Vector3 offsetPosition);
         
         void FocusOnTarget(Action endAction, float targetSize = 20f, Vector3? offsetPosition = null);
@@ -32,15 +33,17 @@ namespace GameSystem
     public class CameraManager : Manager, ICameraManager
     {
         [SerializeField] 
-        [Range(0.1f, 5f)]
-        private float zoomInOutDuration = 0.5f;
+        // [Range(0.1f, 5f)]
+        private float _zoomInOutDuration = 0.5f;
         
-        [SerializeField] private Camera mainCamera = null;
-        [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
+        // [SerializeField] private Camera mainCamera = null;
+        // [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
 
         private const float DefaultOrthographicSize = 20f;
         // private const float DefaultZPos = -200f;
             
+        private CinemachineVirtualCamera _virtualCamera = null;
+        
         #region Drag
         private const float DirectionForceReduceRate = 0.935f; // 감속비율
         private const float DirectionForceMin = 0.001f; // 설정치 이하일 경우 움직임을 멈춤
@@ -57,8 +60,8 @@ namespace GameSystem
         private Vector3 _targetOffsetPosition = Vector3.zero;
         private Vector3 _shakeOffset = Vector3.zero;
         private Tween _shakeTween;
-        
-        public Camera MainCamera { get { return mainCamera; } }
+
+        public Camera MainCamera { get; private set; } = null;
         public bool IsMove { get; private set; }
 
         private void OnEnable()
@@ -69,6 +72,14 @@ namespace GameSystem
         private void OnDisable()
         {
             GameSystem.Event.EventHandler.Remove<SkillImpactEventData>(OnSkillImpact);
+        }
+
+        public UniTask InitializeAsync(Camera mainCamera, CinemachineVirtualCamera virtualCamera)
+        {
+            MainCamera = mainCamera;
+            _virtualCamera = virtualCamera;
+
+            return UniTask.CompletedTask;
         }
 
         private void OnSkillImpact(SkillImpactEventData eventData)
@@ -82,7 +93,7 @@ namespace GameSystem
 
         public void Shake(float duration = 0.3f, float strength = 1f)
         {
-            if (mainCamera == null)
+            if (MainCamera == null)
                 return;
 
             // 1. 기존에 진행 중인 쉐이크가 있다면 강제로 종료 (중복 실행 충돌 방지)
@@ -113,10 +124,10 @@ namespace GameSystem
 
         private void LateUpdate()
         {
-            if (mainCamera == null)
+            if (MainCamera == null)
                 return;
 
-            if (virtualCamera == null)
+            if (_virtualCamera == null)
                 return;
             
             FieldChainLateUpdate();
@@ -230,11 +241,11 @@ namespace GameSystem
             if (!_targetTm)
                 return;
         
-            var currentPos = mainCamera.transform.position;
+            var currentPos = MainCamera.transform.position;
             var targetPos = _targetTm.position + _targetOffsetPosition;
             targetPos.z = -100f;
             
-            mainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime) + _shakeOffset;
+            MainCamera.transform.position = Vector3.Lerp(currentPos, targetPos, Time.unscaledDeltaTime) + _shakeOffset;
     
             // ReturnDistance = Vector3.Distance(currentPos, targetPos);
         }
@@ -282,12 +293,12 @@ namespace GameSystem
 
         private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? offsetPosition = null)
         { 
-            var duration = zoomInOutDuration;
+            var duration = _zoomInOutDuration;
            
             var tasks = new List<UniTask>();
 
             // 1. Orthographic Size (줌) 트윈
-            var zoomTask = DOTween.To(() => virtualCamera.m_Lens.OrthographicSize, size => virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration)
+            var zoomTask = DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize, size => _virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration)
                 .SetEase(Ease.Linear)
                 .SetUpdate(true) // Unscaled 대응
                 .ToUniTask();
@@ -316,12 +327,12 @@ namespace GameSystem
         
         private async UniTask ClearFocusAsync(Action endAction)
         { 
-            var duration = zoomInOutDuration;
+            var duration = _zoomInOutDuration;
 
             // virtualCamera.transform.position = Vector3.zero;
             
-            await DOTween.To(() => virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration)
+            await DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize,
+                orthographicSize => _virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration)
                 .SetEase(Ease.Linear)
                 .SetUpdate(true);
 

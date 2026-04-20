@@ -9,7 +9,7 @@ using Battle.Strategy;
 using Common;
 using Creator;
 using Creature;
-using Creature.Action;
+using Creature.Actions;
 using GameSystem;
 using GameSystem.Event;
 using Lifetime;

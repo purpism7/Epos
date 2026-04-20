@@ -4,7 +4,7 @@ using UnityEngine;
 
 using VContainer;
 
-using Creature.Action;
+using Creature.Actions;
 using Common;
 
 namespace Creature

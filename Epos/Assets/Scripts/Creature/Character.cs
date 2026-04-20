@@ -8,6 +8,7 @@ using Creature.Action;
 using Datas.ScriptableObjects;
 using GameSystem.Event;
 using Common;
+using Creature.Actions;
 
 namespace Creature
 {
@@ -21,12 +22,13 @@ namespace Creature
 
         #endregion
 
-        [Inject] private IActController _actController = null;
+        [Inject] private IObjectResolver _resolver = null;
         [Inject] private ICreatureEffectController _effectController = null;
 
         protected IStatGeneric _iStatGeneric = null;
 
         private MeshRenderer _meshRenderer = null;
+        private IActController _actController = null;
        
         public int Id
         {
@@ -51,7 +53,7 @@ namespace Creature
             get { return _iStatGeneric?.Stat; }
         }
 
-        public Action.IActController ActController => _actController;
+        public IActController ActController => _actController;
         public Action.ICreatureEffectController EffectController => _effectController;
         public Skill[] Skills => skills;
 
@@ -90,7 +92,7 @@ namespace Creature
 
 
         public bool IsAlive { get { return IStat != null ? IStat.Get(Stat.EType.Hp) > 0 : false; } }
-        public abstract string AnimationKey<T>(Act<T> act) where T : ActParam;
+        public abstract string AnimationKey<TAct>(Act<TAct> act) where TAct : ActParam;
 
 #if UNITY_EDITOR
         private void OnDrawGizmosSelected()
@@ -109,7 +111,7 @@ namespace Creature
         {
             // EventHandler = null;
             base.Initialize();
-
+            Debug.Log("Character = " + Id);
             SkeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
             _meshRenderer = SkeletonAnimation?.GetComponent<MeshRenderer>();
 
@@ -124,6 +126,8 @@ namespace Creature
 
             if (NavMeshAgent != null)
                 Height = NavMeshAgent.height;
+            
+            Debug.Log(SkeletonAnimation?.GetComponent<Renderer>().material.shader.name);
         }
 
         public virtual void ChainUpdate()
@@ -185,7 +189,10 @@ namespace Creature
 
         protected void InitializeActController(IActor actor)
         {
-            _actController?.Initialize(actor);
+            _actController = transform.AddOrGetComponent<ActController>();
+            _resolver?.Inject(_actController);
+            
+            _actController.Initialize(actor);
         }
 
         protected void InitializeEffectController(IActor actor)

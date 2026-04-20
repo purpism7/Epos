@@ -1,14 +1,16 @@
-using Common;
-using Creature;
-using Creature.Action;
-using Cysharp.Threading.Tasks;
-using GameSystem;
-using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+
+using Cysharp.Threading.Tasks;
+
+using Common;
+using Creature;
+using Creature.Actions;
+using GameSystem;
+using System;
 using TMPro;
-using UnityEngine;
 
 namespace Battle.Strategy
 {
@@ -122,7 +124,7 @@ namespace Battle.Strategy
 
             var moveSpeed = combatant.IStat.Get(Stat.EType.MoveSpeed);
 
-            var traceParam = new Creature.Action.Trace.Param()
+            var traceParam = new Creature.Actions.Trace.Param()
                 .WithTargetICombatant(LeaderCombatant)
                 .WithDirectionType(directionType)
                 .WithDistance(distance)
@@ -143,7 +145,7 @@ namespace Battle.Strategy
 
                 if(isEndOnArrival)
                 {
-                    combatant.Actor.ActController.OnActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+                    combatant.Actor.ActController.OnActEnded<Creature.Actions.Trace>(OnTraceActionEnded);
                     ++_totalMoveCount;
                 }
 
@@ -156,16 +158,19 @@ namespace Battle.Strategy
         protected void EndTraceMove(int characterId)
         {
             var combatant = _strategyDataProvider?.Allycombatants?.Find(c => c.Actor.Id == characterId);
-            combatant?.Actor?.ActController?.RemoveActEnded<Creature.Action.Trace>(OnTraceActionEnded);
+            combatant?.Actor?.ActController?.RemoveActEnded<Creature.Actions.Trace>(OnTraceActionEnded);
         }
 
-        private void OnTraceActionEnded(Creature.Action.Trace act)
+        private void OnTraceActionEnded(Creature.Actions.Trace act)
         {
             ++_completedCount;
         }
 
         protected void SetFormationPosition(ICombatant iCombatant, DirectionType directionType, float distance, Vector2 offsetPosition)
         {
+            if (LeaderCombatant == null)
+                return;
+            
             var targetPosition = LeaderCombatant.Transform.position;
             Vector2 targetDirection = LeaderCombatant.Transform.up; 
     

@@ -9,6 +9,7 @@ using VContainer;
 
 using UI;
 using UI.Panels;
+using UnityEngine.Rendering.Universal;
 
 namespace GameSystem
 {
@@ -42,6 +43,15 @@ namespace GameSystem
             _componentDic.Clear();
 
             await LoadAssetAsync();
+        }
+        
+        public void StackUICamera(Camera mainCamera)
+        {
+            if (mainCamera == null)
+                return;
+            
+            var cameraData = mainCamera.GetUniversalAdditionalCameraData();
+            cameraData?.cameraStack.Add(uiCamera);
         }
 
         private async UniTask LoadAssetAsync()

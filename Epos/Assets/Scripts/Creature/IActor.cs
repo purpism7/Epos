@@ -5,6 +5,7 @@ using UnityEngine;
 using Spine.Unity;
 
 using Creature.Action;
+using Creature.Actions;
 using Creature.Emotion;
 
 namespace Creature
@@ -18,7 +19,7 @@ namespace Creature
         IActController ActController { get; }
         ICreatureEffectController EffectController { get; }
 
-        string AnimationKey<T>(Act<T> act) where T : ActParam;
+        string AnimationKey<TAct>(Act<TAct> act) where TAct : ActParam;
 
         void SetSortingOrder(float order);
 

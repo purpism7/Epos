@@ -2,6 +2,7 @@ using UnityEngine;
 
 using Common;
 using GameSystem;
+using Spine.Unity;
 using VContainer;
 
 namespace Item
@@ -20,17 +21,29 @@ namespace Item
             }
         }
         
-        [SerializeField] private SpriteRenderer spriteRenderer = null;
+        // [SerializeField] private SpriteRenderer spriteRenderer = null;
+        [SerializeField] private SkeletonAnimation skeletonAnimation = null;
         
         [Inject] private UIManager _uiManager = null;
         
         private Param _param = null;
-        
+        private MeshRenderer _meshRenderer = null;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            
+            if(skeletonAnimation != null)
+                _meshRenderer = skeletonAnimation.GetComponent<MeshRenderer>();
+        }
+
         public void Activate(Param param)
         {
             base.Activate();
 
             _param = param;
+
+            skeletonAnimation?.PlayAnimation("Idle", true, null, out _);
 
             SetSortingOrder();
             SetDropPosition();
@@ -48,10 +61,10 @@ namespace Item
             if (_param == null)
                 return;
 
-            if (spriteRenderer == null)
+            if (_meshRenderer == null)
                 return;
 
-            spriteRenderer.sortingOrder = _param.SortingOrder;
+            _meshRenderer.sortingOrder = _param.SortingOrder;
         }
 
         private void SetDropPosition()

@@ -15,11 +15,6 @@ MonoBehaviour:
   m_GroupName: Monster
   m_GUID: da821cfa3e2ad4578936654d82d9e803
   m_SerializeEntries:
-  - m_GUID: 33041d36a9d5741a7b6b74b90581ff2b
-    m_Address: 90001
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 400721f6d268eeb47ac6f1e729fac482
     m_Address: 90002
     m_ReadOnly: 0

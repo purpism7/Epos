@@ -1,0 +1,325 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+using Cysharp.Threading.Tasks;
+using VContainer;
+using Spine;
+
+using Entities;
+
+
+namespace Creature.Actions
+{
+    public class Move : Act<Move.Param>
+    {
+        public class Param : ActParam
+        {
+            public float MoveSpeed = 1f;
+            // public Transform TargetTm { get; private set; } = null;
+            public ICombatant TargetICombatant { get; private set; } = null;
+            public Vector3? TargetPos = null;
+
+            public float Distance { get; private set; } = 0.1f;
+
+            public System.Action FinishAction = null;
+            public bool IsJumpMove = false;
+            public bool UseNavMesh { get; private set; } = true;
+            
+            public int DirectionAfterArriving = 1;
+
+            // public Param WithTargetTm(Transform targetTm)
+            // {
+            //     TargetTm = targetTm;
+            //     return this;
+            // }
+
+            public Param WithTargetICombatant(ICombatant targetICombatant)
+            {
+                TargetICombatant = targetICombatant;
+                return this;
+            }
+
+            public Param WithUseNavMesh(bool useNavMesh)
+            {
+                UseNavMesh = useNavMesh;
+                return this;
+            }
+
+            public Param WithDistance(float distance)
+            {
+                Distance = distance;
+                return this;
+            }
+        }
+
+        private const string StopAnimationName = "Stop";
+
+        //private Vector3 _prevTargetPosition = Vector3.zero;
+        //private Vector3 _randPos = Vector3.zero;
+
+        private float _totalDistance = 0;
+        private bool _isEnded = false;
+        
+        public bool IsJumpMove { get { return _param != null ? _param.IsJumpMove : false; } }
+
+// #if UNITY_EDITOR
+//         private void OnDrawGizmos()
+//         {
+//             // float attackSight = IStat.Get(Stat.EType.AttackSight);
+//             // Debug.Log(attackSight);
+//
+//             Gizmos.color = Color.red;
+//             Gizmos.DrawWireSphere(_randPos, 5f);
+//
+//             Handles.color = new Color(0f, 1f, 0f, 0.2f);
+//         }
+// #endif
+
+        public override void Execute()
+        {
+            if (_param == null)
+            {
+                End();
+                return;
+            }
+
+            Activate();
+            PlayAnimation(_param.AnimationKey, true);
+
+            _totalDistance = 0;
+            _isEnded = false;
+
+            if (_param != null &&
+                _param.UseNavMesh)
+            {
+                EnableNavMeshAgent();
+                SetNavMeshAgentSpeed();
+            }
+            else
+                DisableNavMeshAgent();
+
+            //if (_actor?.Transform)
+            //    _prevPos = _actor.Transform.position;
+
+            _actor?.EffectController?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), GetType().Name);
+        }
+
+        protected override void Activate()
+        {
+            base.Activate();
+        }
+
+        public override void Deactivate()
+        {
+            base.Deactivate();
+
+            DisableNavMeshAgent();
+        }
+
+        private void EnableNavMeshAgent()
+        {
+            var navMeshAgent = _actor?.NavMeshAgent;
+            if (navMeshAgent != null)
+            {
+                navMeshAgent.enabled = true;
+                navMeshAgent.isStopped = false;
+            }
+        }
+
+        private void DisableNavMeshAgent()
+        {
+            var navMeshAgent = _actor?.NavMeshAgent;
+            if (navMeshAgent != null &&
+                navMeshAgent.enabled)
+            {
+                navMeshAgent.isStopped = true;
+                navMeshAgent.velocity = Vector3.zero;
+                navMeshAgent.enabled = false;
+            }
+        }
+
+        private void SetNavMeshAgentSpeed()
+        {
+            if (_param == null)
+                return;
+
+            var navMeshAgent = _actor?.NavMeshAgent;
+            if (navMeshAgent == null)
+                return;
+
+            //if (navMeshAgent.speed < _param.MoveSpeed)
+            //    return;
+
+            navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
+        }
+
+        private Vector3 TargetPosition
+        {
+            get
+            {
+                Vector3 targetPosition = Vector3.zero;
+                Transform targetTm = null;
+                float distance = _param.Distance;
+
+                if(_param != null)
+                {
+                    // if (_param.TargetTm)
+                    // {
+                    //     targetTm = _param.TargetTm;
+                    //     targetPos = _param.TargetTm.position;
+                    // }
+                        
+                    if (_param.TargetPos != null)
+                        targetPosition = _param.TargetPos.Value;
+
+                    if (_param.TargetICombatant != null)
+                    {
+                        targetTm = _param.TargetICombatant.Transform;
+                        targetPosition = _param.TargetICombatant.Transform.position;
+                        
+                        var targetCollider = _param.TargetICombatant.Actor?.Collider;
+                        if (targetCollider != null)
+                        {
+                            distance += targetCollider.bounds.size.x * 0.5f;
+                            
+                            var closesetPosition = targetCollider.ClosestPoint(_actor.Transform.position);
+                            targetPosition = closesetPosition;
+                        }
+                    }
+                }
+
+                if(targetTm)
+                {
+                    // 1. 목표의 양 옆 위치를 정의합니다.
+                    // target.right는 2D 공간의 오른쪽 방향 벡터 (Vector2)로 자동 변환됩니다.
+                    Vector2 rightPosition = (Vector2)targetTm.position + ((Vector2)targetTm.right * distance);
+                    Vector2 leftPosition = (Vector2)targetTm.position - ((Vector2)targetTm.right * distance);
+                    // Debug.DrawLine(targetTm.position, rightPosition, Color.cyan);
+                    // Debug.DrawLine(targetTm.position, leftPosition, Color.cyan);
+                    
+                    // 2. 공격자와 양 옆 위치까지의 거리를 계산합니다.
+                    float distanceToRight = Vector2.Distance(_actor.Transform.position, rightPosition);
+                    float distanceToLeft = Vector2.Distance(_actor.Transform.position, leftPosition);
+                    
+                    // 3. 거리를 비교하여 더 가까운 지점을 선택합니다.
+                    targetPosition = (distanceToRight < distanceToLeft) ? rightPosition : leftPosition;
+                }
+
+                NavMeshHit hit;
+                // 2. 그 위치 근처(1.0f 반경)에 NavMesh(땅)가 있는지 확인
+                // SamplePosition은 가장 가까운 유효한 땅 좌표를 hit.position에 담아줍니다.
+                if (NavMesh.SamplePosition(targetPosition, out hit, 5f, NavMesh.AllAreas))
+                    targetPosition = hit.position;
+
+                return targetPosition;
+            }
+        }
+        
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+
+            if (!_isActivate)
+                return;
+
+            if (_isEnded)
+                return;
+
+            var iActorTm = _actor?.Transform;
+            if (!iActorTm)
+                return;
+
+            if (_actor?.IStat == null)
+                return;
+
+            var cancellationTokenSource = _param?.CancellationTokenSource;
+            if (cancellationTokenSource != null &&
+                cancellationTokenSource.IsCancellationRequested)
+            {
+                End();
+                return;
+            }
+           
+            var target = _param.TargetICombatant;
+            if (target != null)
+            {
+                var targetIActor = target.Actor;
+                if (targetIActor != null &&
+                    !targetIActor.IsAlive)
+                {
+                    End();
+                    return;
+                }
+            }
+
+            var targetPosition = TargetPosition;
+
+            if (_param != null &&
+              !_param.UseNavMesh)
+            {
+                UpdateMovementUsingTransform(iActorTm, targetPosition);
+            }
+            else
+            {
+                SetNavMeshAgentSpeed();
+                _actor.NavMeshAgent?.SetDestination(targetPosition);
+            }
+
+            // Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);
+
+            var direction = targetPosition - iActorTm.position;
+
+            _actor?.ActController?.Flip(direction.x);
+            _actor?.SetSortingOrder(iActorTm.position.y);
+
+            //_prevPos = iActorTm.position;
+
+            var distance = (targetPosition - iActorTm.position).magnitude;
+            
+            _totalDistance += distance;
+            //Debug.Log("_totalDistance  = " + _totalDistance);
+            //_prevTargetPosition = targetPosition;
+
+            if (distance < _param.Distance)
+                End();
+        }
+
+        private void UpdateMovementUsingTransform(Transform iActorTm, Vector3 targetPos)
+        {
+            var speed = _param.MoveSpeed;
+            var newPos = Vector2.MoveTowards(iActorTm.position, targetPos, speed * Time.deltaTime);
+            _actor?.SetWorldPosition(newPos);
+        }
+
+        protected override void End()
+        {
+            if (_isEnded)
+                return;
+
+            _actor?.EffectController?.Deactivate(GetType().Name);
+
+            _isEnded = true;
+            _param?.FinishAction?.Invoke();
+
+            base.End();
+        }
+
+        protected override void OnCompleted(TrackEntry trackEntry)
+        {
+            base.OnCompleted(trackEntry);
+
+            var animation = trackEntry?.Animation;
+            if(animation != null)
+            {
+                if(animation.Name == StopAnimationName)
+                    _param?.FinishAction?.Invoke();
+            }
+        }
+    }
+}

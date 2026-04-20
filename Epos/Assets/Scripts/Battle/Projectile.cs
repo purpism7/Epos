@@ -7,7 +7,7 @@ using VContainer;
 
 using Common;
 using Creature;
-using Creature.Action;
+using Creature.Actions;
 using Entities;
 
 namespace Battle

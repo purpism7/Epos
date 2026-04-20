@@ -1,10 +1,12 @@
-using Creature;
 using Spine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
+
 using VContainer;
+
+using Creature;
+using System.Data;
 
 namespace Battle
 {

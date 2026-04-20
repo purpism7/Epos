@@ -1,0 +1,24 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Creature.Actions
+{
+    public class Idle : Act<Idle.Param>
+    {
+        public class Param : ActParam
+        {
+            
+        }
+        
+        public override void Execute()
+        {
+            if (_param == null)
+                return;
+            
+            Activate();
+            PlayAnimation(_param.AnimationKey, true);
+        }
+    }
+}
+

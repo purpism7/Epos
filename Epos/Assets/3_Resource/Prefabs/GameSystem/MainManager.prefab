@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1300418730362321927}
   - component: {fileID: -5919151402538035327}
-  - component: {fileID: 2405952197149644585}
-  - component: {fileID: 5071690148882738100}
   m_Layer: 0
   m_Name: MainManager
   m_TagString: Untagged
@@ -50,32 +48,3 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
---- !u!114 &2405952197149644585
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498938429517928654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d1a9a46c2b7549178c63b07aa017e13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  zoomInOutDuration: 1
-  mainCamera: {fileID: 0}
-  virtualCamera: {fileID: 0}
---- !u!114 &5071690148882738100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498938429517928654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c452151768346493fbac4f4c726428dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parties:
-  - {fileID: 11400000, guid: 083b0e799e5f64ebdaf4bbfa26f580d4, type: 2}

@@ -36,9 +36,9 @@ namespace Scene
             builder.Register<BattleMainPresenter>(VContainer.Lifetime.Scoped).AsSelf().As<IBattleMainPresenter>();
         }
 
-        public override async UniTask InitializeAsync()
+        protected override async UniTask OnInitializeAsync()
         {
-            await base.InitializeAsync();
+            await base.OnInitializeAsync();
             
             var container = _lifetimeScope?.Container;
             

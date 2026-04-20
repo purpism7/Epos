@@ -9,7 +9,7 @@ using Cysharp.Threading.Tasks;
 
 using Datas.ScriptableObjects;
 using Creature;
-using Creature.Action;
+using Creature.Actions;
 using Common;
 using GameSystem.Event;
 using EventHandler = GameSystem.Event.EventHandler;

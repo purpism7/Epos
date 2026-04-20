@@ -8,8 +8,8 @@ using Cysharp.Threading.Tasks;
 
 using Common;
 using Creature;
-using Creature.Action;
-using Creature.Action.Weight;
+using Creature.Actions;
+using Creature.Actions.Weight;
 
 namespace Battle
 {
@@ -46,9 +46,9 @@ namespace Battle
             _iListener = iListener;
 
             _sortedActionWeightSet?.Clear();
-            _sortedActionWeightSet?.Add(new Creature.Action.Weight.ApproachAttack());
-            _sortedActionWeightSet?.Add(new Creature.Action.Weight.CastSkill());
-            _sortedActionWeightSet?.Add(new Creature.Action.Weight.WaitingIdle());
+            _sortedActionWeightSet?.Add(new Creature.Actions.Weight.ApproachAttack());
+            _sortedActionWeightSet?.Add(new Creature.Actions.Weight.CastSkill());
+            _sortedActionWeightSet?.Add(new Creature.Actions.Weight.WaitingIdle());
         }
 
         void IWeightedActionController.Execute(ICombatant executor, IWeightedActionRequester iRequester, bool isFirst)

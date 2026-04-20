@@ -144,7 +144,7 @@ namespace Battle
             float randomY = UnityEngine.Random.Range(-value, value);
             
             var targetPos = new Vector3(pointTm.position.x + randomX, pointTm.position.y + randomY, 0);
-            var moveParam = new Creature.Action.Move.Param
+            var moveParam = new Creature.Actions.Move.Param
             {
                 MoveSpeed = monster.IStat.Get(Stat.EType.MoveSpeed),
                 TargetPos = targetPos,

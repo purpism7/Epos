@@ -66,7 +66,19 @@ MonoBehaviour:
       - rid: 1547116804246077444
       - rid: 1547116804246077445
     m_RuntimeSettings:
-      m_List: []
+      m_List:
+      - rid: 1700833994860920833
+      - rid: 1700833994860920834
+      - rid: 1700833994860920835
+      - rid: 1700833994860920837
+      - rid: 1700833994860920838
+      - rid: 1700833994860920840
+      - rid: 1700833994860920841
+      - rid: 1700833994860920844
+      - rid: 1700833994860920848
+      - rid: 1700833994860920851
+      - rid: 1547116804246077443
+      - rid: 1547116804246077445
   m_AssetVersion: 9
   m_ObsoleteDefaultVolumeProfile: {fileID: 0}
   m_RenderingLayerNames:
@@ -402,7 +414,7 @@ MonoBehaviour:
       data:
         m_Version: 0
         m_ExportShaderVariants: 1
-        m_ShaderVariantLogLevel: 0
+        m_ShaderVariantLogLevel: 2
         m_StripRuntimeDebugShaders: 1
     - rid: 1700833994860920852
       type: {class: STP/RuntimeResources, ns: UnityEngine.Rendering, asm: Unity.RenderPipelines.Core.Runtime}

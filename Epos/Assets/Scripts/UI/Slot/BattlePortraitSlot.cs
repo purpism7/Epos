@@ -6,11 +6,12 @@ using VContainer;
 using Cysharp.Threading.Tasks;
 
 using Creature;
-using Creature.Action;
+using Creature.Actions;
 using GameSystem.Event;
 using Datas.ScriptableObjects;
 using Common;
 using UI.Parts;
+
 using EventHandler = GameSystem.Event.EventHandler;
 
 namespace UI.Slot

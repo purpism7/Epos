@@ -20,6 +20,7 @@ namespace Scene
         {
             base.Configure(builder);
 
+            Debug.Log("BaseField Configure");
             builder.RegisterEntryPoint<BattleManager>(VContainer.Lifetime.Scoped).As<IBattleManager>();
             builder.RegisterEntryPoint<FieldManager>(VContainer.Lifetime.Scoped).As<IFieldManager>();
             builder.RegisterEntryPoint<CombatantCreator>(VContainer.Lifetime.Scoped).AsSelf();
@@ -27,15 +28,15 @@ namespace Scene
             builder.Register<WeakTypeMap<IActor>>(VContainer.Lifetime.Scoped).AsSelf();
 
             // 캐릭터당 1개씩 필요하므로 Transient (주입 시마다 새 인스턴스)
-            builder.Register<ActController>(VContainer.Lifetime.Transient).As<IActController>();
+            // builder.Register<ActController>(VContainer.Lifetime.Transient).As<IActController>();
             builder.Register<CreatureEffectController>(VContainer.Lifetime.Transient).As<ICreatureEffectController>();
             //builder.RegisterComponentInHierarchy<Monster>().AsSelf();
         }
 
-        public override async UniTask InitializeAsync()
+        protected override async UniTask OnInitializeAsync()
         {
-            await base.InitializeAsync();
-
+            await base.OnInitializeAsync();
+            Debug.Log("BaseField.OnInitializeAsync");
             //await UniTask.Yield();
 
             //var container = _fieldScope?.Container;

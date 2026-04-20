@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using VContainer;
 
 using Common;
-using Creature.Action;
+using Creature.Actions;
 using Creature.Emotion;
 using GameSystem.Event;
 
@@ -51,7 +51,7 @@ namespace Creature
         }
 
         #region Act
-        public override string AnimationKey<T>(Act<T> act)
+        public override string AnimationKey<TAct>(Act<TAct> act)
         {
             switch (act)
             {

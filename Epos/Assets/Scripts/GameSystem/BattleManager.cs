@@ -169,10 +169,6 @@ namespace GameSystem
                     continue;
                 
                 var hero = await _iCharacterManager.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
-                // await UniTask.WaitUntil(() => hero != null);
-                
-                // var pos = partyLocation.GetPartyPosition(info.Position - 1);
-                // pos.x += offsetX;
                 
                 ICombatant iCombatant = _combatantCreator?.Create(hero, hero?.Skills);
                 // iCombatant?.SetPosition(pos);
