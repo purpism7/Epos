@@ -45,6 +45,8 @@ namespace Battle.Step
 
         private async UniTask ActivateBattleStartAsync()
         {
+            await WaitForSceneTransitionAsync();
+
             var rootRectTm = _uiManager?.CurrViewRectTm;
             var uiCreator = _uiFactory?.Create<UI.Popup.BattleStart, UI.Popup.BattleStart.Param>(_iResolver);
 
@@ -57,6 +59,20 @@ namespace Battle.Step
             _battleStart?.ActivateAsync(battleStartParam);
         }
 
+        private async UniTask WaitForSceneTransitionAsync()
+        {
+            if (!LoadSceneManager.Validate())
+                return;
+
+            var loadSceneManager = LoadSceneManager.Instance;
+            if (loadSceneManager == null || !loadSceneManager.IsLoading)
+                return;
+
+            await UniTask.WaitUntil(() => !loadSceneManager.IsLoading);
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            await UniTask.Yield();
+        }
+
         private void OnCompletedBattleStart(TrackEntry trackEntry)
         {
             _battleStart?.Deactivate();
@@ -65,4 +81,3 @@ namespace Battle.Step
         }
     }
 }
-

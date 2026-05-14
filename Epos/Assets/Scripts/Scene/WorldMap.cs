@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using GameSystem;
+using DG.Tweening;
 using Spine.Unity;
 using VContainer;
 
@@ -16,30 +17,529 @@ namespace Scene
         [SerializeField] private Animator animator = null;
         [SerializeField] private SkeletonAnimation mapSkeletonAnimation = null;
         [SerializeField] private SkeletonAnimation cloudSkeletonAnimation = null;
+        [SerializeField] private string mapIdleAnimationName = "Idle_Map";
+        [SerializeField] private string cloudCoverAnimationName = "Idle_Cloud";
+        [SerializeField] private string cloudRevealAnimationName = "Reveal_Cloud";
+        [SerializeField] private string cloudIdleAnimationName = "Idle_Cloud";
+        [SerializeField] private bool hideCloudAfterReveal = false;
+        [SerializeField] private float cloudCoverHoldDuration = 0.35f;
+        [SerializeField] private Vector3 fallbackCloudRevealMoveOffset = new Vector3(18f, 0f, 0f);
+        [SerializeField] private float fallbackCloudRevealDuration = 1.2f;
+        [SerializeField] private Ease fallbackCloudRevealEase = Ease.InOutSine;
+        [Header("Map Select")]
+        [SerializeField] private GameObject mapSelectEffectObject = null;
+        [SerializeField] private SkeletonAnimation selectArrowSkeletonAnimation = null;
+        [SerializeField] private SkeletonAnimation characterSkeletonAnimation = null;
+        [SerializeField] private string mapSelectEffectObjectName = "Eff_WorldMap_Select";
+        [SerializeField] private string selectArrowObjectName = "Spine(UI_Select_Arrow_01)";
+        [SerializeField] private string characterObjectName = "Spine(WorldMap_Ch_01)";
+        [SerializeField] private string selectArrowStartAnimationName = "Start";
+        [SerializeField] private string selectArrowIdleAnimationName = "Idle_01";
+        [SerializeField] private string characterStartAnimationName = "Start";
+        [SerializeField] private string characterIdleAnimationName = "Idle";
+        [SerializeField] private float mapSelectEffectTouchRadius = 1.6f;
+        [SerializeField] private Vector3 fallbackMapSelectEffectOffset = new Vector3(0.1f, 3.45f, 0f);
+        [SerializeField] private Vector3 fallbackSelectArrowOffset = new Vector3(0.2f, 3.1f, 0f);
+        [SerializeField] private Vector3 selectArrowAdditionalOffset = new Vector3(0f, 0.35f, 0f);
+        [SerializeField] private Vector3 fallbackCharacterOffset = new Vector3(0.2f, 3.35f, 0f);
+        [SerializeField] private float characterSceneTransitionDelay = 3f;
+        [SerializeField] private string fieldSceneName = "RealTimeField";
 
-        [Inject] private UIManager _uiManager = null;
+        [Inject] private ICameraManager _iCameraManager = null;
+
+        private readonly List<Area> _mapSelectAreas = new();
+        private Area _selectedArea = null;
+        private Vector3 _mapSelectEffectOffset = Vector3.zero;
+        private Vector3 _selectArrowOffset = Vector3.zero;
+        private Vector3 _characterOffset = Vector3.zero;
+        private Vector3 _cloudCoverLocalPosition = Vector3.zero;
+        private Tween _cloudRevealTween = null;
+        private bool _canSelectMap = false;
+        private bool _isTransitioningToField = false;
+
+        private void OnEnable()
+        {
+            ApplyInitialPresentationState();
+        }
         
         protected override async UniTask OnInitializeAsync()
         {
             await base.OnInitializeAsync();
 
-            if (_uiManager != null)
-                await _uiManager.FadeInOutAsync(() => UniTask.CompletedTask, OnCompleteFade);
+            CacheMapSelectReferences();
+            PrepareMapSelectState();
+            PrepareRevealState();
+
+            if (cloudCoverHoldDuration > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(cloudCoverHoldDuration));
+            else
+                await UniTask.Yield();
+
+            OnCompleteFade();
+        }
+
+        private void ApplyInitialPresentationState()
+        {
+            if (!selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation = FindChildComponent<SkeletonAnimation>(selectArrowObjectName);
+
+            if (!characterSkeletonAnimation)
+                characterSkeletonAnimation = FindChildComponent<SkeletonAnimation>(characterObjectName);
+
+            if (selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation.gameObject.SetActive(false);
+
+            if (characterSkeletonAnimation)
+                characterSkeletonAnimation.gameObject.SetActive(false);
+
+            if (cloudSkeletonAnimation)
+                cloudSkeletonAnimation.gameObject.SetActive(true);
+        }
+
+        private void Update()
+        {
+            if (!_canSelectMap)
+                return;
+
+            if (!Input.GetMouseButtonUp(0))
+                return;
+
+            var area = GetClickedMapSelectArea();
+            if (!area)
+                return;
+
+            if (_selectedArea != area)
+            {
+                SelectMapArea(area);
+                return;
+            }
+
+            PlayCharacterOnSelectedArea(area);
+        }
+
+        private void PrepareRevealState()
+        {
+            mapSkeletonAnimation?.PlayAnimation(mapIdleAnimationName, true, null, out _);
+
+            if (!cloudSkeletonAnimation)
+                return;
+
+            cloudSkeletonAnimation.gameObject.SetActive(true);
+            cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
+            cloudSkeletonAnimation.PlayAnimation(cloudCoverAnimationName, true, null, out _);
         }
 
         private void OnCompleteFade()
         {
-            cloudSkeletonAnimation?.PlayAnimation("Start_Cloud", false,
+            if (!cloudSkeletonAnimation)
+            {
+                EnableMapSelection();
+                return;
+            }
+
+            bool playedReveal = cloudSkeletonAnimation.PlayAnimation(cloudRevealAnimationName, false,
+                (trackEntry) => OnCompleteCloudReveal(), out _);
+
+            if (playedReveal)
+                return;
+
+            Debug.LogWarning($"Cloud reveal animation '{cloudRevealAnimationName}' was not found. Cloud idle loop will continue.");
+            if (hideCloudAfterReveal)
+                PlayFallbackCloudReveal();
+            else
+                OnCompleteCloudReveal();
+        }
+
+        private void OnCompleteCloudReveal()
+        {
+            if (!cloudSkeletonAnimation)
+            {
+                EnableMapSelection();
+                return;
+            }
+
+            if (hideCloudAfterReveal)
+            {
+                cloudSkeletonAnimation.gameObject.SetActive(false);
+            }
+            else
+            {
+                cloudSkeletonAnimation.gameObject.SetActive(true);
+                cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
+                cloudSkeletonAnimation.PlayAnimation(cloudIdleAnimationName, true, null, out _);
+            }
+
+            EnableMapSelection();
+        }
+
+        private void PlayFallbackCloudReveal()
+        {
+            if (!cloudSkeletonAnimation)
+            {
+                EnableMapSelection();
+                return;
+            }
+
+            _cloudRevealTween?.Kill();
+
+            var cloudTransform = cloudSkeletonAnimation.transform;
+            cloudTransform.localPosition = _cloudCoverLocalPosition;
+            _cloudRevealTween = cloudTransform
+                .DOLocalMove(_cloudCoverLocalPosition + fallbackCloudRevealMoveOffset, fallbackCloudRevealDuration)
+                .SetEase(fallbackCloudRevealEase)
+                .OnComplete(OnCompleteCloudReveal);
+        }
+
+        private void CacheMapSelectReferences()
+        {
+            _mapSelectAreas.Clear();
+            _mapSelectAreas.AddRange(GetComponentsInChildren<Area>(true));
+
+            if (!mapSelectEffectObject)
+                mapSelectEffectObject = FindChildGameObject(mapSelectEffectObjectName);
+
+            if (!selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation = FindChildComponent<SkeletonAnimation>(selectArrowObjectName);
+
+            if (!characterSkeletonAnimation)
+                characterSkeletonAnimation = FindChildComponent<SkeletonAnimation>(characterObjectName);
+
+            if (cloudSkeletonAnimation)
+                _cloudCoverLocalPosition = cloudSkeletonAnimation.transform.localPosition;
+
+            var anchorArea = GetMapSelectArea(1);
+            if (!anchorArea && _mapSelectAreas.Count > 0)
+                anchorArea = _mapSelectAreas[0];
+
+            _mapSelectEffectOffset = fallbackMapSelectEffectOffset;
+            if (anchorArea && mapSelectEffectObject)
+                _mapSelectEffectOffset = mapSelectEffectObject.transform.position - anchorArea.transform.position;
+
+            _selectArrowOffset = fallbackSelectArrowOffset;
+            if (anchorArea && selectArrowSkeletonAnimation)
+                _selectArrowOffset = selectArrowSkeletonAnimation.transform.position - anchorArea.transform.position;
+
+            _characterOffset = fallbackCharacterOffset;
+            if (anchorArea && characterSkeletonAnimation)
+                _characterOffset = characterSkeletonAnimation.transform.position - anchorArea.transform.position;
+        }
+
+        private void PrepareMapSelectState()
+        {
+            _selectedArea = null;
+            _canSelectMap = false;
+
+            SetMapSelectAreasActive(false);
+
+            if (mapSelectEffectObject)
+                mapSelectEffectObject.SetActive(true);
+
+            if (selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation.gameObject.SetActive(false);
+
+            if (characterSkeletonAnimation)
+                characterSkeletonAnimation.gameObject.SetActive(false);
+        }
+
+        private void EnableMapSelection()
+        {
+            _canSelectMap = true;
+        }
+
+        private void SetMapSelectAreasActive(bool active)
+        {
+            for (int i = 0; i < _mapSelectAreas.Count; i++)
+            {
+                var area = _mapSelectAreas[i];
+                if (!area)
+                    continue;
+
+                area.gameObject.SetActive(active);
+
+                var spriteRenderers = area.GetComponentsInChildren<SpriteRenderer>(true);
+                for (int j = 0; j < spriteRenderers.Length; j++)
+                {
+                    var spriteRenderer = spriteRenderers[j];
+                    if (spriteRenderer)
+                        spriteRenderer.enabled = active;
+                }
+            }
+        }
+
+        private Area GetClickedMapSelectArea()
+        {
+            var camera = _iCameraManager?.MainCamera;
+            if (camera == null)
+                camera = Camera.main;
+
+            if (camera == null)
+                return null;
+
+            var worldPosition = camera.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f;
+
+            if (!IsWorldPositionInsideMapSelectEffect(worldPosition))
+                return null;
+
+            return GetNearestMapSelectArea(mapSelectEffectObject.transform.position, float.MaxValue);
+        }
+
+        private bool IsWorldPositionInsideMapSelectEffect(Vector3 worldPosition)
+        {
+            if (!mapSelectEffectObject || !mapSelectEffectObject.activeInHierarchy)
+                return false;
+
+            var colliders = mapSelectEffectObject.GetComponentsInChildren<Collider2D>(true);
+            bool hasCollider = false;
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var collider = colliders[i];
+                if (!collider || !collider.enabled || !collider.gameObject.activeInHierarchy)
+                    continue;
+
+                hasCollider = true;
+                if (IsWorldPositionInsideCollider(worldPosition, collider))
+                    return true;
+            }
+
+            if (hasCollider)
+                return false;
+
+            var effectSqrDistance = (mapSelectEffectObject.transform.position - worldPosition).sqrMagnitude;
+            return effectSqrDistance <= mapSelectEffectTouchRadius * mapSelectEffectTouchRadius;
+        }
+
+        private Area GetNearestMapSelectArea(Vector3 worldPosition, float maxSqrDistance)
+        {
+            Area nearestArea = null;
+            var nearestSqrDistance = maxSqrDistance;
+
+            for (int i = 0; i < _mapSelectAreas.Count; i++)
+            {
+                var area = _mapSelectAreas[i];
+                if (!area)
+                    continue;
+
+                var sqrDistance = (GetMapSelectTouchCenter(area) - worldPosition).sqrMagnitude;
+                if (sqrDistance > nearestSqrDistance)
+                    continue;
+
+                nearestSqrDistance = sqrDistance;
+                nearestArea = area;
+            }
+
+            return nearestArea;
+        }
+
+        private Vector3 GetMapSelectTouchCenter(Area area)
+        {
+            if (!area)
+                return Vector3.zero;
+
+            return area.transform.position + _mapSelectEffectOffset;
+        }
+
+        private void SelectMapArea(Area area)
+        {
+            _selectedArea = area;
+
+            if (characterSkeletonAnimation)
+                characterSkeletonAnimation.gameObject.SetActive(false);
+
+            if (mapSelectEffectObject)
+            {
+                mapSelectEffectObject.transform.position = area.transform.position + _mapSelectEffectOffset;
+                mapSelectEffectObject.SetActive(true);
+            }
+
+            if (!selectArrowSkeletonAnimation)
+                return;
+
+            selectArrowSkeletonAnimation.transform.position = area.transform.position + _selectArrowOffset + selectArrowAdditionalOffset;
+            selectArrowSkeletonAnimation.gameObject.SetActive(true);
+            selectArrowSkeletonAnimation.PlayAnimation(selectArrowStartAnimationName, false,
                 (trackEntry) =>
                 {
-                    cloudSkeletonAnimation?.PlayAnimation("Idle_Cloud", true, null, out _);
+                    selectArrowSkeletonAnimation?.PlayAnimation(selectArrowIdleAnimationName, true, null, out _);
                 }, out _);
-            
-            mapSkeletonAnimation?.PlayAnimation("Start_Map", false,
-                (trackEnty) =>
+        }
+
+        private void PlayCharacterOnSelectedArea(Area area)
+        {
+            if (!characterSkeletonAnimation || _isTransitioningToField)
+                return;
+
+            _isTransitioningToField = true;
+            _canSelectMap = false;
+
+            if (selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation.gameObject.SetActive(false);
+
+            StopMapSelectEffect();
+
+            characterSkeletonAnimation.transform.position = area.transform.position + _characterOffset;
+            characterSkeletonAnimation.gameObject.SetActive(true);
+            characterSkeletonAnimation.PlayAnimation(characterStartAnimationName, false,
+                (trackEntry) =>
                 {
-                    mapSkeletonAnimation?.PlayAnimation("Idle_Map", true, null, out _);
+                    characterSkeletonAnimation?.PlayAnimation(characterIdleAnimationName, true, null, out _);
                 }, out _);
+
+            TransitionToFieldSceneAsync().Forget();
+        }
+
+        private async UniTask TransitionToFieldSceneAsync()
+        {
+            try
+            {
+                var delaySeconds = Mathf.Max(0f, characterSceneTransitionDelay);
+                await UniTask.Delay(TimeSpan.FromSeconds(delaySeconds),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+            }
+            catch (OperationCanceledException)
+            {
+                return;
+            }
+
+            if (string.IsNullOrEmpty(fieldSceneName))
+                return;
+
+            StopMapSelectEffect();
+            await LoadSceneManager.Instance.LoadSceneAsync(fieldSceneName);
+        }
+
+        private void StopMapSelectEffect()
+        {
+            if (!mapSelectEffectObject)
+                return;
+
+            var particleSystems = mapSelectEffectObject.GetComponentsInChildren<ParticleSystem>(true);
+            for (int i = 0; i < particleSystems.Length; i++)
+            {
+                var particleSystem = particleSystems[i];
+                if (particleSystem)
+                    particleSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+
+            mapSelectEffectObject.SetActive(false);
+        }
+
+        private Area GetMapSelectArea(int index)
+        {
+            for (int i = 0; i < _mapSelectAreas.Count; i++)
+            {
+                var area = _mapSelectAreas[i];
+                if (area && area.Index == index)
+                    return area;
+            }
+
+            return null;
+        }
+
+        private bool IsWorldPositionInsideArea(Vector3 worldPosition, Area area)
+        {
+            if (!area)
+                return false;
+
+            var colliders = area.GetComponentsInChildren<Collider2D>(true);
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                var collider = colliders[i];
+                if (!collider)
+                    continue;
+
+                if (IsWorldPositionInsideCollider(worldPosition, collider))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool IsWorldPositionInsideCollider(Vector3 worldPosition, Collider2D collider)
+        {
+            if (collider is CircleCollider2D circleCollider)
+                return IsWorldPositionInsideCircleCollider(worldPosition, circleCollider);
+
+            if (collider is CapsuleCollider2D capsuleCollider)
+                return IsWorldPositionInsideCapsuleCollider(worldPosition, capsuleCollider);
+
+            if (collider is BoxCollider2D boxCollider)
+                return IsWorldPositionInsideBoxCollider(worldPosition, boxCollider);
+
+            return collider.OverlapPoint(worldPosition);
+        }
+
+        private bool IsWorldPositionInsideCircleCollider(Vector3 worldPosition, CircleCollider2D collider)
+        {
+            var center = collider.transform.TransformPoint(collider.offset);
+            var scale = collider.transform.lossyScale;
+            var radius = collider.radius * Mathf.Max(Mathf.Abs(scale.x), Mathf.Abs(scale.y));
+            return (worldPosition - center).sqrMagnitude <= radius * radius;
+        }
+
+        private bool IsWorldPositionInsideCapsuleCollider(Vector3 worldPosition, CapsuleCollider2D collider)
+        {
+            var localPosition = collider.transform.InverseTransformPoint(worldPosition) - (Vector3)collider.offset;
+            var halfSize = collider.size * 0.5f;
+            float radius = collider.direction == CapsuleDirection2D.Vertical ? halfSize.x : halfSize.y;
+
+            if (collider.direction == CapsuleDirection2D.Vertical)
+            {
+                var halfBodyHeight = Mathf.Max(0f, halfSize.y - radius);
+                if (Mathf.Abs(localPosition.y) <= halfBodyHeight && Mathf.Abs(localPosition.x) <= radius)
+                    return true;
+
+                var capCenterY = localPosition.y > 0f ? halfBodyHeight : -halfBodyHeight;
+                var capCenter = new Vector2(0f, capCenterY);
+                return ((Vector2)localPosition - capCenter).sqrMagnitude <= radius * radius;
+            }
+
+            var halfBodyWidth = Mathf.Max(0f, halfSize.x - radius);
+            if (Mathf.Abs(localPosition.x) <= halfBodyWidth && Mathf.Abs(localPosition.y) <= radius)
+                return true;
+
+            var capCenterX = localPosition.x > 0f ? halfBodyWidth : -halfBodyWidth;
+            var horizontalCapCenter = new Vector2(capCenterX, 0f);
+            return ((Vector2)localPosition - horizontalCapCenter).sqrMagnitude <= radius * radius;
+        }
+
+        private bool IsWorldPositionInsideBoxCollider(Vector3 worldPosition, BoxCollider2D collider)
+        {
+            var localPosition = collider.transform.InverseTransformPoint(worldPosition) - (Vector3)collider.offset;
+            var halfSize = collider.size * 0.5f;
+            return Mathf.Abs(localPosition.x) <= halfSize.x && Mathf.Abs(localPosition.y) <= halfSize.y;
+        }
+
+        private T FindChildComponent<T>(string childName) where T : Component
+        {
+            if (string.IsNullOrEmpty(childName))
+                return null;
+
+            var transforms = GetComponentsInChildren<Transform>(true);
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                var child = transforms[i];
+                if (child && child.name == childName)
+                    return child.GetComponent<T>();
+            }
+
+            return null;
+        }
+
+        private GameObject FindChildGameObject(string childName)
+        {
+            if (string.IsNullOrEmpty(childName))
+                return null;
+
+            var transforms = GetComponentsInChildren<Transform>(true);
+            for (int i = 0; i < transforms.Length; i++)
+            {
+                var child = transforms[i];
+                if (child && child.name == childName)
+                    return child.gameObject;
+            }
+
+            return null;
         }
     }
 }

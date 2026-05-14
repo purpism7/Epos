@@ -289,6 +289,12 @@ MonoBehaviour:
   animator: {fileID: 36269770}
   mapSkeletonAnimation: {fileID: 987714823}
   cloudSkeletonAnimation: {fileID: 2033061607}
+  mapIdleAnimationName: Idle_Map
+  cloudCoverAnimationName: Idle_Cloud
+  cloudRevealAnimationName: Reveal_Cloud
+  cloudFallbackIntroAnimationName: Start_Cloud
+  cloudIdleAnimationName: Idle_Cloud
+  hideCloudAfterReveal: 0
 --- !u!95 &36269770
 Animator:
   serializedVersion: 7

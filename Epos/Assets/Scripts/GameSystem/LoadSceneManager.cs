@@ -16,6 +16,8 @@ namespace GameSystem
         private Fade _fade = null;
         
         private bool _isLoad = false;
+
+        public bool IsLoading => _isLoad;
         
         protected override void Initialize()
         {
@@ -84,10 +86,18 @@ namespace GameSystem
             _fade?.In(
                 () =>
                 {
-                    SceneManager.UnloadSceneAsync("Load");
-
-                    Reset();
+                    CompleteLoadSceneTransitionAsync().Forget();
                 });
+        }
+
+        private async UniTask CompleteLoadSceneTransitionAsync()
+        {
+            var unloadOperation = SceneManager.UnloadSceneAsync("Load");
+            if (unloadOperation != null)
+                await UniTask.WaitUntil(() => unloadOperation.isDone);
+
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            Reset();
         }
 
         private void Reset()
@@ -98,4 +108,3 @@ namespace GameSystem
         }
     }
 }
-
