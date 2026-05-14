@@ -137,7 +137,7 @@ namespace Battle.Mode
                 if(combatant == null)
                     continue;
 
-                var hero = combatant as Hero;
+                var hero = combatant.Actor as Hero;
                 if(hero == null)
                     continue;
      
@@ -530,4 +530,3 @@ namespace Battle.Mode
         #endregion
     }
 }
-

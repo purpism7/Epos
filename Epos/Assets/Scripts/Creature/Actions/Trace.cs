@@ -107,6 +107,12 @@ namespace Creature.Actions
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
+                if (!CanUseNavMeshAgent())
+                {
+                    navMeshAgent.enabled = false;
+                    return;
+                }
+
                 navMeshAgent.isStopped = false;
             }
         }
@@ -136,6 +142,25 @@ namespace Creature.Actions
             //    return;
 
             navMeshAgent.speed = _param.Speed; // * Time.timeScale;
+        }
+
+        private bool CanUseNavMeshAgent()
+        {
+            var navMeshAgent = _actor?.NavMeshAgent;
+            if (navMeshAgent == null || !navMeshAgent.enabled)
+                return false;
+
+            if (navMeshAgent.isOnNavMesh)
+                return true;
+
+            if (_actor?.Transform != null &&
+                NavMesh.SamplePosition(_actor.Transform.position, out var hit, 2f, NavMesh.AllAreas))
+            {
+                navMeshAgent.Warp(hit.position);
+                return navMeshAgent.isOnNavMesh;
+            }
+
+            return false;
         }
 
         private Vector3 TargetPosition
@@ -239,7 +264,7 @@ namespace Creature.Actions
             if (!_isActivate)
                 return;
 
-            if (_param == null || !_actor?.Transform || _actor?.NavMeshAgent == null)
+            if (_param == null || _actor == null || !_actor.Transform)
                 return;
 
             var navMeshAgent = _actor.NavMeshAgent;
@@ -280,8 +305,16 @@ namespace Creature.Actions
                     _actor?.EffectController?.Activate("Eff_run_01", new Effect.Param().WithTargetSkeletonAnimation(_actor?.SkeletonAnimation), "Move");
                 }
 
-                SetNavMeshAgentSpeed();
-                navMeshAgent.SetDestination(targetPosition);
+                if (CanUseNavMeshAgent())
+                {
+                    navMeshAgent = _actor.NavMeshAgent;
+                    SetNavMeshAgentSpeed();
+                    navMeshAgent.SetDestination(targetPosition);
+                }
+                else
+                {
+                    UpdateMovementUsingTransform(actorPosition, targetPosition);
+                }
 
                 var direction = targetPosition - actorPosition;
                 if (direction.sqrMagnitude > 0.001f) // 너무 미세한 진동 시엔 안 쳐다보게 방어
@@ -291,6 +324,12 @@ namespace Creature.Actions
             }
 
             _actor?.SetSortingOrder(actorPosition.y);
+        }
+
+        private void UpdateMovementUsingTransform(Vector3 actorPosition, Vector3 targetPosition)
+        {
+            var newPos = Vector2.MoveTowards(actorPosition, targetPosition, _param.Speed * Time.deltaTime);
+            _actor?.SetWorldPosition(newPos);
         }
 
         protected override void End()

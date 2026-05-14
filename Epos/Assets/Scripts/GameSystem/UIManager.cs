@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using VContainer.Unity;
 using VContainer;
 
 using UI;
 using UI.Panels;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UI;
 
 namespace GameSystem
 {
@@ -22,6 +24,7 @@ namespace GameSystem
         [SerializeField] private RectTransform popupRootRectTm = null;
         [SerializeField] private RectTransform worldUIRootRectTm = null;
         [SerializeField] private RectTransform collectRootRectTr = null;
+        [SerializeField] private Image dimmedImage = null;
 
         [Inject] private AddressableManager _addressableManager = null;
         [Inject] private ObjectPooler _objectPooler = null;
@@ -155,13 +158,28 @@ namespace GameSystem
         {
             CurrPopup = component;
         }
-
-        public Vector3 ScreenToWorldPoint(Vector3 screenPoint)
+        
+        public async UniTask FadeInOutAsync(Func<UniTask> taskFunc, Action onComplete)
         {
-            if (UICamera == null)
-                return screenPoint;
+            if (dimmedImage == null)
+                return;
 
-            return UICamera.ScreenToWorldPoint(screenPoint);
+            float duration = 3f;
+            
+            await dimmedImage.DOFade(0, 0);
+            // await UniTask.Yield();
+            
+            dimmedImage.gameObject.SetActive(true);
+            
+            await dimmedImage.DOFade(1f, duration);
+            
+            if(taskFunc != null)
+                await taskFunc.Invoke();
+            
+            await dimmedImage.DOFade(0, duration);
+            dimmedImage.gameObject.SetActive(false);
+            
+            onComplete?.Invoke();
         }
     }
 }

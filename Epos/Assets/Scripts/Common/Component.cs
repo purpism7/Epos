@@ -48,7 +48,7 @@ namespace Common
 
             _isActivate = true;
         }
-        
+
         public virtual void Deactivate()
         {
             Extensions.SetActive(rootTm, false);

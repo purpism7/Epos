@@ -169,9 +169,16 @@ namespace GameSystem
                     continue;
                 
                 var hero = await _iCharacterManager.Create<Hero>(info.CharacterId, partyLocation.CharacterRootTm);
+                if (hero == null)
+                    continue;
+
+                hero.Activate();
+
+                var pos = partyLocation.GetPartyPosition(info.Position - 1);
+                pos.x += offsetX;
+                hero.SetWorldPosition(pos);
                 
                 ICombatant iCombatant = _combatantCreator?.Create(hero, hero?.Skills);
-                // iCombatant?.SetPosition(pos);
                 
                 iCombatantList.Add(iCombatant);
             }
@@ -255,4 +262,3 @@ namespace GameSystem
         #endregion
     }
 }
-

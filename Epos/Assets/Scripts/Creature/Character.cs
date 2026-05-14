@@ -29,6 +29,7 @@ namespace Creature
 
         private MeshRenderer _meshRenderer = null;
         private IActController _actController = null;
+        private float _nextDiagnosticsTime = 0f;
        
         public int Id
         {
@@ -144,8 +145,29 @@ namespace Creature
             if (!IsActivate)
                 return;
 
-            // SyncRootToSkeleton();
+            SyncRootToSkeleton();
             EnsureVisible();
+        }
+
+        private void SyncRootToSkeleton()
+        {
+            if (SkeletonAnimation == null)
+                return;
+
+            var skeletonTm = SkeletonAnimation.transform;
+            if (skeletonTm == transform)
+                return;
+
+            var skeletonPosition = skeletonTm.position;
+            var sqrDistance = (transform.position - skeletonPosition).sqrMagnitude;
+            if (sqrDistance < 0.000001f)
+                return;
+
+            if (sqrDistance > 4f)
+                LogDiagnostics($"SyncRootToSkeleton distance={Mathf.Sqrt(sqrDistance):0.###}, root={transform.position}, skeleton={skeletonPosition}");
+
+            transform.position = skeletonPosition;
+            skeletonTm.localPosition = Vector3.zero;
         }
 
         /// <summary>스킬 전후 껐다 켜는 동작 등으로 숨겨졌을 수 있으므로, 매 프레임 캐릭터가 보이도록 보장.</summary>
@@ -156,6 +178,27 @@ namespace Creature
 
             if (rootTm != null && !rootTm.gameObject.activeSelf)
                 rootTm.gameObject.SetActive(true);
+
+            if (SkeletonAnimation != null && !SkeletonAnimation.gameObject.activeSelf)
+            {
+                LogDiagnostics("SkeletonAnimation gameObject was inactive. Re-enabling.");
+                SkeletonAnimation.gameObject.SetActive(true);
+            }
+
+            if (_meshRenderer != null && !_meshRenderer.enabled)
+            {
+                LogDiagnostics("MeshRenderer was disabled. Re-enabling.");
+                _meshRenderer.enabled = true;
+            }
+        }
+
+        private void LogDiagnostics(string message)
+        {
+            if (Time.unscaledTime < _nextDiagnosticsTime)
+                return;
+
+            _nextDiagnosticsTime = Time.unscaledTime + 1f;
+            GameSystem.BuildDiagnostics.Log($"Character {Id}: {message}");
         }
 
         public virtual void ChainFixedUpdate()

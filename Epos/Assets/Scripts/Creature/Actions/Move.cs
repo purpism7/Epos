@@ -128,6 +128,12 @@ namespace Creature.Actions
             if (navMeshAgent != null)
             {
                 navMeshAgent.enabled = true;
+                if (!CanUseNavMeshAgent())
+                {
+                    navMeshAgent.enabled = false;
+                    return;
+                }
+
                 navMeshAgent.isStopped = false;
             }
         }
@@ -157,6 +163,25 @@ namespace Creature.Actions
             //    return;
 
             navMeshAgent.speed = _param.MoveSpeed; // * Time.timeScale;
+        }
+
+        private bool CanUseNavMeshAgent()
+        {
+            var navMeshAgent = _actor?.NavMeshAgent;
+            if (navMeshAgent == null || !navMeshAgent.enabled)
+                return false;
+
+            if (navMeshAgent.isOnNavMesh)
+                return true;
+
+            if (_actor?.Transform != null &&
+                NavMesh.SamplePosition(_actor.Transform.position, out var hit, 2f, NavMesh.AllAreas))
+            {
+                navMeshAgent.Warp(hit.position);
+                return navMeshAgent.isOnNavMesh;
+            }
+
+            return false;
         }
 
         private Vector3 TargetPosition
@@ -267,8 +292,15 @@ namespace Creature.Actions
             }
             else
             {
-                SetNavMeshAgentSpeed();
-                _actor.NavMeshAgent?.SetDestination(targetPosition);
+                if (CanUseNavMeshAgent())
+                {
+                    SetNavMeshAgentSpeed();
+                    _actor.NavMeshAgent?.SetDestination(targetPosition);
+                }
+                else
+                {
+                    UpdateMovementUsingTransform(iActorTm, targetPosition);
+                }
             }
 
             // Debug.DrawLine(iActorTm.position, targetPosition, Color.blue);

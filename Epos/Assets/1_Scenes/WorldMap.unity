@@ -286,6 +286,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 753619604}
   virtualCamera: {fileID: 285218947}
+  animator: {fileID: 36269770}
+  mapSkeletonAnimation: {fileID: 987714823}
+  cloudSkeletonAnimation: {fileID: 2033061607}
 --- !u!95 &36269770
 Animator:
   serializedVersion: 7

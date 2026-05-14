@@ -39,8 +39,9 @@ namespace Entities
             Creature.Character character = null;
             if (!_cachedCharacters.TryGetValue(id, out character))
             {
+                var addressableName = id.ToString();
                 // await으로 교체
-                GameObject loadGameObj = await _addressableManager.LoadAssetByNameAsync<GameObject>(id.ToString());
+                GameObject loadGameObj = await _addressableManager.LoadAssetByNameAsync<GameObject>(addressableName);
 
                 if (!loadGameObj)
                     return null;
@@ -49,6 +50,10 @@ namespace Entities
 
                 if (!gameObj)
                     return null;
+
+                // Instantiate된 인스턴스가 어떤 addressable에서 왔는지 등록 →
+                // 캐릭터가 더 이상 필요 없을 때 _addressableManager.ReleaseInstance(gameObj)로 정리 가능.
+                _addressableManager?.TrackInstance(gameObj, addressableName);
 
                 _iResolver?.InjectGameObject(gameObj);
 

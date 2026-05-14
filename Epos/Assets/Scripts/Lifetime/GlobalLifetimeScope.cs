@@ -71,8 +71,8 @@ namespace Lifetime
 
             // var cameraManager = Container?.Resolve<CameraManager>();
             // if (cameraManager != null) 
-                builder.RegisterComponentInHierarchy<CameraManager>()
-                    .As<ICameraManager>();
+            builder.RegisterComponentInHierarchy<CameraManager>()
+                .As<ICameraManager>();
 
             // if (sceneInitializer != null) 
             //     builder.RegisterComponent(sceneInitializer).AsSelf();

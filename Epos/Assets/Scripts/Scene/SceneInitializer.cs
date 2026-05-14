@@ -46,6 +46,7 @@ namespace Scene
             }
             
             _lifetimeScope = _lifetimeScope?.CreateChild(Configure);
+            _lifetimeScope?.Container?.Inject(this);
             
             // await UniTask.
             // await UniTask.Yield();
@@ -82,4 +83,3 @@ namespace Scene
         }
     }
 }
-
