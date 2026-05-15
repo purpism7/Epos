@@ -57,6 +57,16 @@ namespace GameSystem.Event
             EmotionType = emotionType;
         }
     }
+
+    public class GoldCollectedEventData : EventData
+    {
+        public int Amount { get; private set; } = 0;
+
+        public GoldCollectedEventData(int amount)
+        {
+            Amount = amount;
+        }
+    }
     
     #region Skill
     public class SkillUseEventData : EventData
@@ -90,4 +100,3 @@ namespace GameSystem.Event
     }
     #endregion 
 }
-

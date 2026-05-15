@@ -12,8 +12,11 @@ using Creator;
 using GameSystem;
 using Item;
 using UI;
+using UI.View;
 using RotateMode = DG.Tweening.RotateMode;
 using Sequence = DG.Tweening.Sequence;
+using GameSystem.Event;
+using EventHandler = GameSystem.Event.EventHandler;
 
 namespace Creature.Actions
 {
@@ -65,6 +68,9 @@ namespace Creature.Actions
         {
             if (_actor == null)
                 return;
+
+            if (!(_actor is Monster))
+                return;
             
             var dropItem = _itemFactory?.Create<DropItem>(null);
             if (dropItem == null)
@@ -79,38 +85,47 @@ namespace Creature.Actions
             dropItem.Deactivate();
             _objectPooler?.Return(dropItem, true);
 
-            var uiCreator = _uiFactory?.Create<CollectItem, CollectItem.Param>(_iResolver).SetRoot(_uiManager.CollectRootRectTr);
+            var collectRootRectTr = _uiManager?.CollectRootRectTr;
+            if (collectRootRectTr == null)
+                return;
+
+            var uiCreator = _uiFactory?.Create<CollectItem, CollectItem.Param>(_iResolver)?.SetRoot(collectRootRectTr);
             var collectItem = uiCreator?.Create();
             if (collectItem != null)
             {
-                Collect(collectItem.GetComponent<RectTransform>(), position);
+                var goldCollectTargetRectTm = (_uiManager?.CurrView as IBattleMainView)?.GoldCollectTargetRectTm;
+                Collect(collectItem.GetComponent<RectTransform>(), position, goldCollectTargetRectTm);
             }
         }
         
-        private void Collect(RectTransform rectTr, Vector3 worldStartPos)
+        private void Collect(RectTransform rectTr, Vector3 worldStartPos, RectTransform targetRectTr)
         {
             if (!rectTr)
                 return;
+
+            var collectRootRectTr = _uiManager?.CollectRootRectTr;
+            if (collectRootRectTr == null)
+                return;
     
             // 1. 초기화 및 위치 고정
-            rectTr.SetParent(_uiManager.CollectRootRectTr);
+            rectTr.SetParent(collectRootRectTr);
             rectTr.sizeDelta = new Vector2(80f, 80f); // 아이템 크기
             rectTr.localScale = Vector3.zero; // 처음엔 안보이다가 팝업되게
 
             // 월드(몬스터) -> UI 로컬 좌표 변환
             Vector2 screenPos = Camera.main.WorldToScreenPoint(worldStartPos);
             RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                _uiManager.CollectRootRectTr, 
-                screenPos, 
-                _uiManager.UICamera, 
+                collectRootRectTr,
+                screenPos,
+                _uiManager.UICamera,
                 out Vector2 localPoint
             );
     
             Vector3 startPos = new Vector3(localPoint.x, localPoint.y, 0);
             rectTr.localPosition = startPos;
 
-            // 2. 목적지 설정 (화면 상단 중앙)
-            Vector3 endPos = new Vector3(0, 550f, 0); 
+            // 2. 목적지 설정 (우상단 골드 UI)
+            Vector3 endPos = GetCollectEndPosition(targetRectTr);
 
             // 3. 포물선의 정점(Mid Point) 계산
             // 시작과 끝의 중간 지점에서 옆으로 살짝 밀어주면 예쁜 곡선이 됩니다.
@@ -141,7 +156,34 @@ namespace Creature.Actions
                 rectTr.localPosition = p;
             });
 
-            seq.OnComplete(() => rectTr.gameObject.SetActive(false));
+            seq.OnComplete(() =>
+            {
+                EventHandler.Notify(new GoldCollectedEventData(1));
+                rectTr.gameObject.SetActive(false);
+            });
+        }
+
+        private Vector3 GetCollectEndPosition(RectTransform targetRectTr)
+        {
+            var collectRootRectTr = _uiManager?.CollectRootRectTr;
+            if (collectRootRectTr == null)
+                return new Vector3(0, 550f, 0);
+
+            if (targetRectTr == null)
+            {
+                var rect = collectRootRectTr.rect;
+                return new Vector3(rect.width * 0.5f - 50f, rect.height * 0.5f - 50f, 0);
+            }
+
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(_uiManager.UICamera, targetRectTr.position);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                collectRootRectTr,
+                screenPos,
+                _uiManager.UICamera,
+                out Vector2 localPoint
+            );
+
+            return new Vector3(localPoint.x, localPoint.y, 0);
         }
         
     }

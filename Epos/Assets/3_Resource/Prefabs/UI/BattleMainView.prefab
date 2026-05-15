@@ -26849,7 +26849,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 9
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 26f86657d8dd942409b376f01230c842, type: 2}
   m_sharedMaterial: {fileID: 7465949496298990459, guid: 26f86657d8dd942409b376f01230c842, type: 2}
@@ -32080,6 +32080,8 @@ MonoBehaviour:
   allyBattlePortraitRootRectTm: {fileID: 7095646962515320324}
   animator: {fileID: 3363085717312505813}
   strategyText: {fileID: 3208188263720202866}
+  goldCollectTargetRectTm: {fileID: 7701599431126766395}
+  goldNumText: {fileID: 5288499011998154058}
   shoutPanel: {fileID: 8163781460816357226}
   strategyPanel: {fileID: 9046380473970569950}
   shoutBtn: {fileID: 1317394280193683452}

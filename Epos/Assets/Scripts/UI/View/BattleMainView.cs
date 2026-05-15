@@ -16,6 +16,8 @@ using UI.Parts;
 using UI.Presenter;
 using TMPro;
 using Battle.Strategy;
+using GameSystem.Event;
+using EventHandler = GameSystem.Event.EventHandler;
 
 namespace UI.View
 {
@@ -25,6 +27,7 @@ namespace UI.View
 
        List<ICombatant> AllyICombatantList { get; }
        RectTransform AllyBattlePortraitRootRectTm { get; }
+       RectTransform GoldCollectTargetRectTm { get; }
 
        UniTask InitializePanelAsync(ShoutPanel.IListener shoutPanelListener);
        
@@ -56,6 +59,8 @@ namespace UI.View
         [SerializeField] private RectTransform allyBattlePortraitRootRectTm = null;
         [SerializeField] private Animator animator = null;
         [SerializeField] private TMP_Text strategyText = null;
+        [SerializeField] private RectTransform goldCollectTargetRectTm = null;
+        [SerializeField] private TMP_Text goldNumText = null;
 
         [Header("Panel")]
         [SerializeField] private ShoutPanel shoutPanel = null;
@@ -68,9 +73,12 @@ namespace UI.View
         [SerializeField] private Button closeStrategyPanelBtn = null;
         
         private IBattleMainPresenter _iPresenter = null;
+        private int _goldCount = 0;
+        private bool _isListeningGoldCollected = false;
 
         public List<ICombatant> AllyICombatantList => _param?.AllyICombatantList;
         public RectTransform AllyBattlePortraitRootRectTm => allyBattlePortraitRootRectTm;
+        public RectTransform GoldCollectTargetRectTm => goldCollectTargetRectTm;
 
         public override void Configure(IObjectResolver iResolver)
         {
@@ -85,6 +93,21 @@ namespace UI.View
             await _iPresenter.InitializeAsync(this);
 
             InitializeButton();
+        }
+
+        public override void Activate()
+        {
+            base.Activate();
+
+            ResetGold();
+            AddGoldCollectedEvent();
+        }
+
+        public override void Deactivate()
+        {
+            RemoveGoldCollectedEvent();
+
+            base.Deactivate();
         }
 
         private void InitializeButton()
@@ -122,6 +145,44 @@ namespace UI.View
             // strategyPanel?.Deactivate();
             // ActivateAnimBattleMainView();
             //     });
+        }
+
+        private void ResetGold()
+        {
+            _goldCount = 0;
+            UpdateGoldText();
+        }
+
+        private void AddGoldCollectedEvent()
+        {
+            if (_isListeningGoldCollected)
+                return;
+
+            EventHandler.Add<GoldCollectedEventData>(OnGoldCollected);
+            _isListeningGoldCollected = true;
+        }
+
+        private void RemoveGoldCollectedEvent()
+        {
+            if (!_isListeningGoldCollected)
+                return;
+
+            EventHandler.Remove<GoldCollectedEventData>(OnGoldCollected);
+            _isListeningGoldCollected = false;
+        }
+
+        private void OnGoldCollected(GoldCollectedEventData eventData)
+        {
+            if (eventData == null || eventData.Amount <= 0)
+                return;
+
+            _goldCount += eventData.Amount;
+            UpdateGoldText();
+        }
+
+        private void UpdateGoldText()
+        {
+            goldNumText?.SetText(_goldCount.ToString());
         }
         
         #region IBattleMainView
@@ -211,4 +272,3 @@ namespace UI.View
         #endregion
     }
 }
-
