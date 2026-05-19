@@ -32143,6 +32143,7 @@ MonoBehaviour:
   strategyText: {fileID: 3208188263720202866}
   goldCollectTargetRectTm: {fileID: 7701599431126766395}
   goldNumText: {fileID: 5288499011998154058}
+  goldAnimator: {fileID: 7826426665597933298}
   shoutPanel: {fileID: 8163781460816357226}
   strategyPanel: {fileID: 9046380473970569950}
   shoutBtn: {fileID: 1317394280193683452}

@@ -41,6 +41,8 @@ namespace UI.View
     public class BattleMainView : BaseView<BattleMainView.Param>, IBattleMainView,
         StrategyPanel.IListener
     {
+        private static readonly int GoldGetHash = Animator.StringToHash("Get");
+
         public class Param : Common.Param
         {
             public List<ICombatant> AllyICombatantList { get; private set; } = null;
@@ -61,6 +63,7 @@ namespace UI.View
         [SerializeField] private TMP_Text strategyText = null;
         [SerializeField] private RectTransform goldCollectTargetRectTm = null;
         [SerializeField] private TMP_Text goldNumText = null;
+        [SerializeField] private Animator goldAnimator = null;
 
         [Header("Panel")]
         [SerializeField] private ShoutPanel shoutPanel = null;
@@ -178,11 +181,21 @@ namespace UI.View
 
             _goldCount += eventData.Amount;
             UpdateGoldText();
+            PlayGoldGetAnimation();
         }
 
         private void UpdateGoldText()
         {
             goldNumText?.SetText(_goldCount.ToString());
+        }
+
+        private void PlayGoldGetAnimation()
+        {
+            if (goldAnimator == null)
+                return;
+
+            goldAnimator.ResetTrigger(GoldGetHash);
+            goldAnimator.SetTrigger(GoldGetHash);
         }
         
         #region IBattleMainView
