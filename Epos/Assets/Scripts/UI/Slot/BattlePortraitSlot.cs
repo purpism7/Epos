@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ using VContainer;
 using Cysharp.Threading.Tasks;
 
 using Creature;
+using Creature.Action;
 using Creature.Actions;
 using GameSystem.Event;
 using Datas.ScriptableObjects;
@@ -38,6 +40,10 @@ namespace UI.Slot
         [SerializeField] private Image characterImg = null;
         [SerializeField] private Image classImg = null;
         [SerializeField] private Image skillExpressionImg = null;
+        [SerializeField] private Image skill02IconImg = null;
+        [SerializeField] private Image skill03IconImg = null;
+        [SerializeField] private Slider skill02CooldownSlider = null;
+        [SerializeField] private Slider skill03CooldownSlider = null;
         [SerializeField] private HpProgress hpProgress = null;
 
         [Inject] private GameSystem.ResourceManager _resourceManager = null;
@@ -53,9 +59,7 @@ namespace UI.Slot
             // IActor 캐싱 (깊은 체인 접근 방지)
             _actor = param?.ICombatant?.Actor;
 
-            var skillExpressionSprite = _resourceManager?.AtlasLoader?.GetCharacterSprite($"p_{_actor?.Id}_Shout");
-            if(skillExpressionSprite != null)
-                skillExpressionImg.sprite = skillExpressionSprite;
+            SetSkillExpressionImage();
             
             _emotionEmojis = GetComponentsInChildren<IPortraitEmotionEmoji>();
             if(_emotionEmojis != null && _actor != null)
@@ -79,6 +83,7 @@ namespace UI.Slot
         {
             base.ActivateAsync(param);
 
+            _actor = param?.ICombatant?.Actor;
 
             EventHandler.Add<StatChangedEventData>(OnStatChanged);
 
@@ -87,6 +92,9 @@ namespace UI.Slot
 
             SetCombatantImage();
             SetClassImage();
+            SetSkillExpressionImage();
+            SetSkillImages();
+            UpdateSkillCooldowns();
             ActivateHpProgress();
 
             return UniTask.CompletedTask;
@@ -100,6 +108,14 @@ namespace UI.Slot
 
             // ActController 이벤트 해제
             UnregisterActControllerEvents();
+        }
+
+        private void Update()
+        {
+            if (!IsActivate)
+                return;
+
+            UpdateSkillCooldowns();
         }
 
         private void ActivateHpProgress()
@@ -127,6 +143,13 @@ namespace UI.Slot
             characterImg.SetActive(true);
         }
 
+        private void SetSkillExpressionImage()
+        {
+            var skillExpressionSprite = _resourceManager?.AtlasLoader?.GetCharacterSprite($"p_{_actor?.Id}_Shout");
+            if(skillExpressionSprite != null)
+                skillExpressionImg.sprite = skillExpressionSprite;
+        }
+
         private void SetClassImage()
         {
             classImg?.SetActive(false);
@@ -145,6 +168,84 @@ namespace UI.Slot
             classImg.sprite = sprite;
             
             classImg?.SetActive(true);
+        }
+
+        private void SetSkillImages()
+        {
+            SetSkillIcon(skill02IconImg, 2);
+            SetSkillIcon(skill03IconImg, 3);
+        }
+
+        private void SetSkillIcon(Image skillIconImg, int skillNumber)
+        {
+            skillIconImg?.SetActive(false);
+
+            if (_actor == null || skillIconImg == null)
+                return;
+
+            var spriteName = $"Battle_Skill_{_actor.Id}_{skillNumber:00}";
+            var sprite = _resourceManager?.AtlasLoader?.GetCharacterSprite(spriteName) ??
+                         _resourceManager?.AtlasLoader?.GetCharacterSprite($"{spriteName}_0");
+            if (sprite == null)
+                return;
+
+            skillIconImg.sprite = sprite;
+            skillIconImg.SetActive(true);
+        }
+
+        private void UpdateSkillCooldowns()
+        {
+            var skillStates = _param?.ICombatant?.ISkillCtr?.GetSkillStates();
+            SetSkillCooldown(skill02CooldownSlider, skillStates, 2);
+            SetSkillCooldown(skill03CooldownSlider, skillStates, 3);
+        }
+
+        private void SetSkillCooldown(Slider cooldownSlider, IReadOnlyList<SkillStateInfo> skillStates, int skillNumber)
+        {
+            if (cooldownSlider == null)
+                return;
+
+            var cooldownRatio = GetSkillCooldownRatio(skillStates, skillNumber);
+            cooldownSlider.SetValueWithoutNotify(cooldownRatio);
+
+            var cooldownImg = cooldownSlider.fillRect != null
+                ? cooldownSlider.fillRect.GetComponent<Image>()
+                : null;
+            if (cooldownImg == null)
+                return;
+
+            cooldownImg.fillAmount = cooldownRatio;
+            cooldownImg.gameObject.SetActive(cooldownRatio > 0f);
+        }
+
+        private float GetSkillCooldownRatio(IReadOnlyList<SkillStateInfo> skillStates, int skillNumber)
+        {
+            var skillState = GetSkillState(skillStates, skillNumber);
+            if (skillState == null || skillState.Value.CooldownTotal <= 0f)
+                return 0f;
+
+            return Mathf.Clamp01(skillState.Value.CooldownLeft / skillState.Value.CooldownTotal);
+        }
+
+        private SkillStateInfo? GetSkillState(IReadOnlyList<SkillStateInfo> skillStates, int skillNumber)
+        {
+            if (skillStates == null)
+                return null;
+
+            var skillKey = $"Skill_{skillNumber:00}";
+            for (int i = 0; i < skillStates.Count; ++i)
+            {
+                var skillState = skillStates[i];
+                if (!string.IsNullOrEmpty(skillState.AnimationName) &&
+                    skillState.AnimationName.StartsWith(skillKey, StringComparison.Ordinal))
+                    return skillState;
+
+                if (!string.IsNullOrEmpty(skillState.Name) &&
+                    skillState.Name.IndexOf(skillKey, StringComparison.Ordinal) >= 0)
+                    return skillState;
+            }
+
+            return null;
         }
         
 
@@ -313,4 +414,3 @@ namespace UI.Slot
         #endregion
     }
 }
-

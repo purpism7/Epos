@@ -15,6 +15,7 @@ namespace Datas.ScriptableObjects
         public string EffectName = string.Empty;
         public ESkillCategory ESkillCategory = ESkillCategory.None;
         public float Cooltime = 0;
+        public float InitialCooltime = 0;
         public float MP = 0;
         public int Point = 0;
 
@@ -44,4 +45,3 @@ namespace Datas.ScriptableObjects
         public bool HasProjectile { get { return ProjectilePrefab != null; } }
     }
 }
-

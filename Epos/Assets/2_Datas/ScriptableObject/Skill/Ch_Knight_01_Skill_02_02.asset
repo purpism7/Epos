@@ -16,6 +16,7 @@ MonoBehaviour:
   AnimationName: Skill_02_02
   ESkillCategory: 2
   Cooltime: 10
+  InitialCooltime: 10
   MP: 20
   Point: 1
   ESkillTarget: 2

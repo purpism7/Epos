@@ -11,6 +11,7 @@ namespace Creature.Action
     public struct SkillStateInfo
     {
         public string Name;
+        public string AnimationName;
         public Ability.Skill.EState State;
         public float CooldownLeft;
         public float CooldownTotal;
@@ -31,6 +32,7 @@ namespace Creature.Action
         private ICaster _iCaster = null;
         private Datas.ScriptableObjects.Skill[] _skillDatas = null;
         private List<Ability.ISkill> _iSkillList = null;
+        private readonly List<SkillStateInfo> _skillStateInfos = new();
 
         public SkillController(Datas.ScriptableObjects.Skill[] skillDatas)
         {
@@ -84,9 +86,9 @@ namespace Creature.Action
 
         IReadOnlyList<SkillStateInfo> ISkillController.GetSkillStates()
         {
-            var list = new List<SkillStateInfo>();
+            _skillStateInfos.Clear();
             if (_iSkillList == null)
-                return list;
+                return _skillStateInfos;
 
             foreach (var iSkill in _iSkillList)
             {
@@ -95,18 +97,19 @@ namespace Creature.Action
 
                 var skillData = iSkill.SkillData;
                 var skill = iSkill as Ability.Skill;
-                list.Add(new SkillStateInfo
+                _skillStateInfos.Add(new SkillStateInfo
                 {
                     Name = skillData != null ? skillData.name : "—",
+                    AnimationName = skillData != null ? skillData.AnimationName : string.Empty,
 #if UNITY_EDITOR
                     State = skill != null ? skill.State : Ability.Skill.EState.None,
 #endif
                     CooldownLeft = iSkill.CooldownLeft,
-                    CooldownTotal = skillData != null ? skillData.Cooltime : 0f
+                    CooldownTotal = iSkill.CooldownTotal
                 });
             }
 
-            return list;
+            return _skillStateInfos;
         }
 
         private Ability.ISkill GetPossibleSkill(ESkillCategory eSkillCategory)
@@ -143,4 +146,3 @@ namespace Creature.Action
         }
     }
 }
-

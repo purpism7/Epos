@@ -17,6 +17,7 @@ MonoBehaviour:
   EffectName: Eff_Knight_Skill_03
   ESkillCategory: 2
   Cooltime: 30
+  InitialCooltime: 30
   MP: 20
   Point: 1
   ESkillTarget: 4

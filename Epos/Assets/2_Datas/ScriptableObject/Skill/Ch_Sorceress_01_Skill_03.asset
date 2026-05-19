@@ -17,6 +17,7 @@ MonoBehaviour:
   EffectName: Eff_MeteorStart_01
   ESkillCategory: 2
   Cooltime: 50
+  InitialCooltime: 50
   MP: 20
   Point: 1
   ESkillTarget: 2

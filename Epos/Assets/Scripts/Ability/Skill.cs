@@ -16,6 +16,7 @@ namespace Ability
 
         bool IsReady { get; }
         float CooldownLeft { get; }
+        float CooldownTotal { get; }
 
         void Casting();
         void EndCasting();
@@ -33,6 +34,7 @@ namespace Ability
         }
 
         private float _currCooltime = 0f;
+        private float _cooltime = 0f;
         private EState _eState = EState.None;
         private CancellationTokenSource _cancellationTokenSource = null;
 
@@ -40,6 +42,7 @@ namespace Ability
 
         public bool IsReady => _eState == EState.Ready;
         public float CooldownLeft => _currCooltime;
+        public float CooldownTotal => _cooltime;
 
 #if UNITY_EDITOR
         public EState State => _eState;
@@ -50,6 +53,9 @@ namespace Ability
             SkillData = skillData;
 
             _eState = EState.Ready;
+
+            if (SkillData != null && SkillData.InitialCooltime > 0f)
+                StartCooltime(SkillData.InitialCooltime);
         }
 
         public virtual void ChainUpdate()
@@ -73,17 +79,23 @@ namespace Ability
                 return;
             }
 
+            StartCooltime(SkillData.Cooltime);
+        }
+
+        private void StartCooltime(float cooltime)
+        {
             _cancellationTokenSource?.Cancel();
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            UpdateCooltimeAsync(_cancellationTokenSource.Token).Forget();
+            UpdateCooltimeAsync(cooltime, _cancellationTokenSource.Token).Forget();
         }
 
-        private async UniTask UpdateCooltimeAsync(CancellationToken cancellationToken)
+        private async UniTask UpdateCooltimeAsync(float cooltime, CancellationToken cancellationToken)
         {
             _eState = EState.Cooldown;
-            _currCooltime = SkillData.Cooltime;
+            _currCooltime = cooltime;
+            _cooltime = cooltime;
 
             try
             {
@@ -102,9 +114,12 @@ namespace Ability
             }
             finally
             {
-                _eState = EState.Ready;
+                if (!cancellationToken.IsCancellationRequested)
+                {
+                    _currCooltime = 0f;
+                    _eState = EState.Ready;
+                }
             }
         }
     }
 }
-

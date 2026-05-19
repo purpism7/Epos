@@ -10278,6 +10278,10 @@ MonoBehaviour:
   characterImg: {fileID: 196007275353441702}
   classImg: {fileID: 5381494022502383391}
   skillExpressionImg: {fileID: 4977902727557917070}
+  skill02IconImg: {fileID: 6774987048618424955}
+  skill03IconImg: {fileID: 6760742374169195934}
+  skill02CooldownSlider: {fileID: 7797015264576418314}
+  skill03CooldownSlider: {fileID: 982026176501056091}
   hpProgress: {fileID: 446908868121580358}
 --- !u!114 &516623566961481627
 MonoBehaviour:

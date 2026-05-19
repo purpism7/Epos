@@ -17,6 +17,7 @@ MonoBehaviour:
   EffectName: Eff_Spear_Skill_03
   ESkillCategory: 2
   Cooltime: 20
+  InitialCooltime: 20
   MP: 0
   Point: 1
   ESkillTarget: 5
