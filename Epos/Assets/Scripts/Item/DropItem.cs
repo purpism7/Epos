@@ -9,6 +9,8 @@ namespace Item
 {
     public class DropItem : Element
     {
+        private const string StartAnimationName = "Start";
+
         public class Param : ElementParam
         {
             public int SortingOrder { get; private set; } = 0;
@@ -29,6 +31,8 @@ namespace Item
         private Param _param = null;
         private MeshRenderer _meshRenderer = null;
 
+        public float StartAnimationDuration { get; private set; } = 0f;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -43,7 +47,7 @@ namespace Item
 
             _param = param;
 
-            skeletonAnimation?.PlayAnimation("Idle", true, null, out _);
+            PlayStartAnimation();
 
             SetSortingOrder();
             SetDropPosition();
@@ -54,6 +58,16 @@ namespace Item
             base.Deactivate();
 
             
+        }
+
+        private void PlayStartAnimation()
+        {
+            StartAnimationDuration = 0f;
+            if (skeletonAnimation == null)
+                return;
+
+            skeletonAnimation.PlayAnimation(StartAnimationName, false, null, out var duration);
+            StartAnimationDuration = duration;
         }
 
         private void SetSortingOrder()
@@ -76,4 +90,3 @@ namespace Item
         }
     }
 } 
-

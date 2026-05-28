@@ -81,7 +81,7 @@ namespace Creature.Actions
             var dropItemParam = new DropItem.Param(_actor.SortingOrder, position);
             dropItem.Activate(dropItemParam);
             
-            await UniTask.Delay(TimeSpan.FromSeconds(1f));
+            await UniTask.Delay(TimeSpan.FromSeconds(dropItem.StartAnimationDuration + 1f));
             dropItem.Deactivate();
             _objectPooler?.Return(dropItem, true);
 
@@ -94,6 +94,7 @@ namespace Creature.Actions
             if (collectItem != null)
             {
                 var goldCollectTargetRectTm = (_uiManager?.CurrView as IBattleMainView)?.GoldCollectTargetRectTm;
+                collectItem.PlayIdleAnimation();
                 Collect(collectItem.GetComponent<RectTransform>(), position, goldCollectTargetRectTm);
             }
         }

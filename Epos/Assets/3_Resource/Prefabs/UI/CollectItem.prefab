@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UI.CollectItem
   rootTm: {fileID: 2388172363045641973}
+  skeletonGraphic: {fileID: 9033253325238360109}
 --- !u!1 &3457826571824368698
 GameObject:
   m_ObjectHideFlags: 0
