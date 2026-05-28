@@ -12,19 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: Battle_End_Win_02_SkeletonData
   m_EditorClassIdentifier: spine-unity::Spine.Unity.SkeletonDataAsset
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 8c0356ff8ae5b12469c936141b0033f8, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: add63c4d417a9ef4faee9ea6192f505f, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
-    requiresBlendModeMaterials: 0
-    applyAdditiveMaterial: 0
+    requiresBlendModeMaterials: 1
+    applyAdditiveMaterial: 1
     additiveMaterials: []
-    multiplyMaterials: []
+    multiplyMaterials:
+    - pageName: Battle_End_Win_02.png
+      material: {fileID: 2100000, guid: bc3218c2cade1cb4691be34fb66adfa5, type: 2}
     screenMaterials: []
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []
   duration: []
-  defaultMix: 0
+  defaultMix: 0.2
   controller: {fileID: 0}

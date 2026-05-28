@@ -202,9 +202,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 2
-        y: 1175
-        width: 364
-        height: 840
+        y: 14
+        width: 353
+        height: 2032
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -223,10 +223,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_1
       rect:
         serializedVersion: 2
-        x: 367
-        y: 1842
-        width: 187
-        height: 180
+        x: 357
+        y: 1187
+        width: 364
+        height: 840
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -245,10 +245,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_2
       rect:
         serializedVersion: 2
-        x: 556
-        y: 1959
-        width: 168
-        height: 80
+        x: 722
+        y: 1795
+        width: 381
+        height: 244
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -267,10 +267,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_3
       rect:
         serializedVersion: 2
-        x: 726
-        y: 1935
-        width: 57
-        height: 87
+        x: 722
+        y: 1187
+        width: 271
+        height: 607
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -289,10 +289,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_4
       rect:
         serializedVersion: 2
-        x: 785
-        y: 1992
-        width: 54
-        height: 54
+        x: 995
+        y: 1757
+        width: 40
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -311,10 +311,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_5
       rect:
         serializedVersion: 2
-        x: 840
-        y: 1991
-        width: 33
-        height: 52
+        x: 994
+        y: 1575
+        width: 187
+        height: 180
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -333,10 +333,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_6
       rect:
         serializedVersion: 2
-        x: 1451
-        y: 2
-        width: 353
-        height: 2032
+        x: 1183
+        y: 1575
+        width: 57
+        height: 87
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -355,10 +355,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_7
       rect:
         serializedVersion: 2
-        x: 556
-        y: 1842
-        width: 145
-        height: 115
+        x: 995
+        y: 1186
+        width: 344
+        height: 387
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -377,10 +377,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_8
       rect:
         serializedVersion: 2
-        x: 785
-        y: 1935
-        width: 57
-        height: 55
+        x: 1341
+        y: 1418
+        width: 132
+        height: 89
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -399,10 +399,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_9
       rect:
         serializedVersion: 2
-        x: 1105
-        y: 1555
-        width: 344
-        height: 387
+        x: 1341
+        y: 1065
+        width: 268
+        height: 353
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -421,10 +421,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_10
       rect:
         serializedVersion: 2
-        x: 702
-        y: 1841
-        width: 132
-        height: 89
+        x: 1574
+        y: 1311
+        width: 35
+        height: 67
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -443,10 +443,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_11
       rect:
         serializedVersion: 2
-        x: 836
-        y: 1556
-        width: 268
-        height: 353
+        x: 1603
+        y: 1206
+        width: 6
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -465,10 +465,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_12
       rect:
         serializedVersion: 2
-        x: 1069
-        y: 1802
-        width: 35
-        height: 67
+        x: 1610
+        y: 1065
+        width: 70
+        height: 170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -487,10 +487,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_13
       rect:
         serializedVersion: 2
-        x: 368
-        y: 1175
-        width: 381
-        height: 665
+        x: 356
+        y: 15
+        width: 716
+        height: 1170
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -509,10 +509,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_14
       rect:
         serializedVersion: 2
-        x: 750
-        y: 1728
-        width: 31
-        height: 68
+        x: 1074
+        y: 986
+        width: 54
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -531,10 +531,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_15
       rect:
         serializedVersion: 2
-        x: 751
-        y: 1556
-        width: 70
-        height: 170
+        x: 1308
+        y: 682
+        width: 500
+        height: 382
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -553,10 +553,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_16
       rect:
         serializedVersion: 2
-        x: 1098
-        y: 1697
-        width: 6
-        height: 24
+        x: 1074
+        y: 904
+        width: 168
+        height: 80
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -575,10 +575,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_17
       rect:
         serializedVersion: 2
-        x: 1
-        y: 3
-        width: 716
-        height: 1170
+        x: 1243
+        y: 903
+        width: 31
+        height: 68
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -597,10 +597,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_18
       rect:
         serializedVersion: 2
-        x: 751
-        y: 1173
-        width: 500
-        height: 382
+        x: 1274
+        y: 903
+        width: 33
+        height: 52
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -619,10 +619,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_19
       rect:
         serializedVersion: 2
-        x: 719
-        y: 1137
-        width: 40
-        height: 34
+        x: 1074
+        y: 15
+        width: 232
+        height: 877
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -641,10 +641,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_20
       rect:
         serializedVersion: 2
-        x: 718
-        y: 891
-        width: 381
-        height: 244
+        x: 1188
+        y: 889
+        width: 56
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -663,10 +663,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_21
       rect:
         serializedVersion: 2
-        x: 719
-        y: 3
-        width: 232
-        height: 877
+        x: 1308
+        y: 15
+        width: 381
+        height: 665
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -685,10 +685,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_22
       rect:
         serializedVersion: 2
-        x: 833
-        y: 877
-        width: 56
-        height: 13
+        x: 1691
+        y: 14
+        width: 192
+        height: 640
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -707,10 +707,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_23
       rect:
         serializedVersion: 2
-        x: 952
-        y: 3
-        width: 271
-        height: 607
+        x: 1884
+        y: 132
+        width: 57
+        height: 55
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -729,10 +729,10 @@ TextureImporter:
       name: Ch_Sorceress_01_Result_24
       rect:
         serializedVersion: 2
-        x: 1253
-        y: 2
-        width: 192
-        height: 640
+        x: 1884
+        y: 15
+        width: 145
+        height: 115
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

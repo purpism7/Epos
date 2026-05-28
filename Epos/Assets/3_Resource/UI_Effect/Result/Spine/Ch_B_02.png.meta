@@ -222,10 +222,10 @@ TextureImporter:
       name: Ch_B_02_0
       rect:
         serializedVersion: 2
-        x: 2
-        y: 2007
-        width: 575
-        height: 28
+        x: 1
+        y: 2006
+        width: 44
+        height: 41
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,10 +244,10 @@ TextureImporter:
       name: Ch_B_02_1
       rect:
         serializedVersion: 2
-        x: 578
-        y: 1995
-        width: 47
-        height: 49
+        x: 2
+        y: 1767
+        width: 387
+        height: 238
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -266,10 +266,10 @@ TextureImporter:
       name: Ch_B_02_2
       rect:
         serializedVersion: 2
-        x: 625
-        y: 1996
-        width: 72
-        height: 29
+        x: 390
+        y: 1923
+        width: 88
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -288,10 +288,10 @@ TextureImporter:
       name: Ch_B_02_3
       rect:
         serializedVersion: 2
-        x: 698
-        y: 1995
-        width: 44
-        height: 41
+        x: 390
+        y: 1826
+        width: 307
+        height: 97
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -310,8 +310,8 @@ TextureImporter:
       name: Ch_B_02_4
       rect:
         serializedVersion: 2
-        x: 742
-        y: 1995
+        x: 478
+        y: 1923
         width: 46
         height: 33
       alignment: 0
@@ -332,10 +332,10 @@ TextureImporter:
       name: Ch_B_02_5
       rect:
         serializedVersion: 2
-        x: 788
-        y: 2018
-        width: 26
-        height: 28
+        x: 383
+        y: 1887
+        width: 7
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,10 +354,10 @@ TextureImporter:
       name: Ch_B_02_6
       rect:
         serializedVersion: 2
-        x: 788
-        y: 1996
-        width: 44
-        height: 22
+        x: 698
+        y: 1826
+        width: 72
+        height: 69
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -376,10 +376,10 @@ TextureImporter:
       name: Ch_B_02_7
       rect:
         serializedVersion: 2
-        x: 815
-        y: 2018
-        width: 19
-        height: 25
+        x: 770
+        y: 1826
+        width: 60
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,10 +398,10 @@ TextureImporter:
       name: Ch_B_02_8
       rect:
         serializedVersion: 2
-        x: 967
-        y: 1934
-        width: 124
-        height: 107
+        x: 391
+        y: 1797
+        width: 575
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -420,10 +420,10 @@ TextureImporter:
       name: Ch_B_02_9
       rect:
         serializedVersion: 2
-        x: 2
+        x: 391
         y: 1767
-        width: 387
-        height: 238
+        width: 575
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -442,10 +442,10 @@ TextureImporter:
       name: Ch_B_02_10
       rect:
         serializedVersion: 2
-        x: 391
-        y: 1966
-        width: 575
-        height: 28
+        x: 967
+        y: 1767
+        width: 72
+        height: 29
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -464,10 +464,10 @@ TextureImporter:
       name: Ch_B_02_11
       rect:
         serializedVersion: 2
-        x: 383
-        y: 1887
-        width: 7
-        height: 8
+        x: 1
+        y: 2
+        width: 1043
+        height: 1764
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -486,10 +486,10 @@ TextureImporter:
       name: Ch_B_02_12
       rect:
         serializedVersion: 2
-        x: 391
-        y: 1766
-        width: 195
-        height: 199
+        x: 1044
+        y: 1740
+        width: 44
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -508,10 +508,10 @@ TextureImporter:
       name: Ch_B_02_13
       rect:
         serializedVersion: 2
-        x: 586
-        y: 1863
-        width: 112
-        height: 102
+        x: 1044
+        y: 1632
+        width: 124
+        height: 107
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -530,10 +530,10 @@ TextureImporter:
       name: Ch_B_02_14
       rect:
         serializedVersion: 2
-        x: 699
-        y: 1863
-        width: 72
-        height: 69
+        x: 1168
+        y: 1632
+        width: 26
+        height: 28
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -552,10 +552,10 @@ TextureImporter:
       name: Ch_B_02_15
       rect:
         serializedVersion: 2
-        x: 771
-        y: 1863
-        width: 88
-        height: 54
+        x: 1202
+        y: 1507
+        width: 195
+        height: 199
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -574,10 +574,10 @@ TextureImporter:
       name: Ch_B_02_16
       rect:
         serializedVersion: 2
-        x: 859
-        y: 1863
-        width: 48
-        height: 82
+        x: 1044
+        y: 861
+        width: 157
+        height: 770
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -596,10 +596,10 @@ TextureImporter:
       name: Ch_B_02_17
       rect:
         serializedVersion: 2
-        x: 908
-        y: 1829
-        width: 163
-        height: 105
+        x: 1201
+        y: 1280
+        width: 169
+        height: 227
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -618,10 +618,10 @@ TextureImporter:
       name: Ch_B_02_18
       rect:
         serializedVersion: 2
-        x: 1
-        y: 2
-        width: 1043
-        height: 1764
+        x: 1201
+        y: 860
+        width: 194
+        height: 420
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -640,10 +640,10 @@ TextureImporter:
       name: Ch_B_02_19
       rect:
         serializedVersion: 2
-        x: 586
-        y: 1766
-        width: 307
-        height: 97
+        x: 1371
+        y: 1280
+        width: 19
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -662,10 +662,10 @@ TextureImporter:
       name: Ch_B_02_20
       rect:
         serializedVersion: 2
-        x: 893
-        y: 1766
-        width: 60
-        height: 63
+        x: 1395
+        y: 1108
+        width: 48
+        height: 82
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -684,10 +684,10 @@ TextureImporter:
       name: Ch_B_02_21
       rect:
         serializedVersion: 2
-        x: 1044
-        y: 860
-        width: 666
-        height: 384
+        x: 1395
+        y: 973
+        width: 49
+        height: 135
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -706,10 +706,10 @@ TextureImporter:
       name: Ch_B_02_22
       rect:
         serializedVersion: 2
-        x: 1710
-        y: 783
-        width: 217
-        height: 338
+        x: 1045
+        y: 2
+        width: 319
+        height: 857
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -728,10 +728,10 @@ TextureImporter:
       name: Ch_B_02_23
       rect:
         serializedVersion: 2
-        x: 1045
-        y: 2
-        width: 319
-        height: 857
+        x: 1366
+        y: 746
+        width: 163
+        height: 105
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -750,10 +750,10 @@ TextureImporter:
       name: Ch_B_02_24
       rect:
         serializedVersion: 2
-        x: 1365
-        y: 2
-        width: 157
-        height: 770
+        x: 1395
+        y: 851
+        width: 91
+        height: 122
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -772,10 +772,10 @@ TextureImporter:
       name: Ch_B_02_25
       rect:
         serializedVersion: 2
-        x: 1522
-        y: 362
-        width: 194
-        height: 420
+        x: 1365
+        y: 386
+        width: 287
+        height: 360
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -794,10 +794,10 @@ TextureImporter:
       name: Ch_B_02_26
       rect:
         serializedVersion: 2
-        x: 1716
-        y: 589
-        width: 146
-        height: 166
+        x: 1530
+        y: 746
+        width: 112
+        height: 102
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -816,10 +816,10 @@ TextureImporter:
       name: Ch_B_02_27
       rect:
         serializedVersion: 2
-        x: 1862
-        y: 590
-        width: 137
-        height: 115
+        x: 1653
+        y: 386
+        width: 217
+        height: 338
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -838,10 +838,10 @@ TextureImporter:
       name: Ch_B_02_28
       rect:
         serializedVersion: 2
-        x: 1522
-        y: 2
-        width: 287
-        height: 360
+        x: 1870
+        y: 667
+        width: 47
+        height: 49
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -860,10 +860,10 @@ TextureImporter:
       name: Ch_B_02_29
       rect:
         serializedVersion: 2
-        x: 1716
-        y: 362
-        width: 169
-        height: 227
+        x: 1870
+        y: 552
+        width: 137
+        height: 115
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -882,10 +882,10 @@ TextureImporter:
       name: Ch_B_02_30
       rect:
         serializedVersion: 2
-        x: 1810
-        y: 123
-        width: 49
-        height: 135
+        x: 1365
+        y: 1
+        width: 666
+        height: 384
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -904,10 +904,10 @@ TextureImporter:
       name: Ch_B_02_31
       rect:
         serializedVersion: 2
-        x: 1810
-        y: 1
-        width: 91
-        height: 122
+        x: 1870
+        y: 385
+        width: 146
+        height: 166
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

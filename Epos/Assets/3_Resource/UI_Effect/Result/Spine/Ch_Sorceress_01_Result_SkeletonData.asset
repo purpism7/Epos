@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b3b4b945939a54ea0b23d3396115fb, type: 3}
   m_Name: Ch_Sorceress_01_Result_SkeletonData
   m_EditorClassIdentifier: spine-unity::Spine.Unity.SkeletonDataAsset
-  atlasAssets: []
+  atlasAssets:
+  - {fileID: 11400000, guid: 91cf0307c547d094a840355105d1c925, type: 2}
   scale: 0.01
   skeletonJSON: {fileID: 4900000, guid: 30dd2269ed36a5947bd2d68207d75ead, type: 3}
   isUpgradingBlendModeMaterials: 0
   blendModeMaterials:
     requiresBlendModeMaterials: 0
-    applyAdditiveMaterial: 0
+    applyAdditiveMaterial: 1
     additiveMaterials: []
     multiplyMaterials: []
     screenMaterials: []
@@ -26,5 +27,5 @@ MonoBehaviour:
   fromAnimation: []
   toAnimation: []
   duration: []
-  defaultMix: 0
+  defaultMix: 0.2
   controller: {fileID: 0}
