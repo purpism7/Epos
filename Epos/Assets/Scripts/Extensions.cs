@@ -129,7 +129,7 @@ public static class Extensions
         return false;
     }  
     
-    public static void PlayAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
+    public static bool PlayAnimation(this SkeletonGraphic skeletonGraphic, string animationName, bool loop, System.Action<TrackEntry> completedAction, out float duration)
     {
         duration = 0;
 
@@ -137,18 +137,18 @@ public static class Extensions
         {
             var animationState = skeletonGraphic?.AnimationState;
             if (animationState == null)
-                return;
+                return false;
             
             string resolvedAnimationName = ResolveAnimationName(animationState, animationName);
             if (string.IsNullOrEmpty(resolvedAnimationName))
-                return;
+                return false;
 
             animationState.ClearTracks();
             skeletonGraphic.Skeleton?.SetToSetupPose();
 
             var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
-                return;
+                return false;
 
             if (completedAction != null)
                 trackEntry.Complete += completedAction.Invoke;
@@ -156,11 +156,15 @@ public static class Extensions
             duration = trackEntry.Animation.Duration;
 
             skeletonGraphic.Update(0);
+
+            return true;
         }
         catch(Exception e)
         {
             Debug.LogException(e);
         }
+
+        return false;
     }  
 
     private static string ResolveAnimationName(Spine.AnimationState animationState, string animationName)
@@ -193,5 +197,4 @@ public static class Extensions
         return string.Empty;
     }
 }
-
 
