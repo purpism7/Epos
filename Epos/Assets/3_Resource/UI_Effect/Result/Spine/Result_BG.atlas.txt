@@ -1,8 +1,6 @@
 Result_BG.png
-size:4096,4096
+size:4096,2048
 filter:Linear,Linear
 pma:true
 BackGround_01
-bounds:2,1444,2560,1440
-Result_01
 bounds:2,2,2560,1440
