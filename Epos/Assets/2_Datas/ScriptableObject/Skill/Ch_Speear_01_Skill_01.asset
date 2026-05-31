@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 4
   AnimationName: Skill_01
-  EffectName: Eff_Spear_Skill_01
+  EffectName: 
   ESkillCategory: 2
   Cooltime: 0
+  InitialCooltime: 0
   MP: 0
   Point: 1
   ESkillTarget: 2
