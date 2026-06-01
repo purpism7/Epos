@@ -21,7 +21,7 @@ MonoBehaviour:
   MP: 20
   Point: 1
   ESkillTarget: 4
-  Range: 5
+  Range: 2.5
   Multiplier: 2
   SameTeam: 0
   KnockbackDistance: 20
