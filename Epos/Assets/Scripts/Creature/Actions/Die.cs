@@ -94,7 +94,7 @@ namespace Creature.Actions
             if (collectItem != null)
             {
                 var goldCollectTargetRectTm = (_uiManager?.CurrView as IBattleMainView)?.GoldCollectTargetRectTm;
-                collectItem.PlayIdleAnimation();
+                collectItem.PlayMoveAnimation();
                 Collect(collectItem.GetComponent<RectTransform>(), position, goldCollectTargetRectTm);
             }
         }

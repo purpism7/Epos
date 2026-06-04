@@ -13,16 +13,16 @@ namespace UI
             
         }
         
-        private const string IdleAnimationName = "Idle";
+        private const string MoveAnimationName = "Move";
         
         [SerializeField] private SkeletonGraphic skeletonGraphic = null;
 
-        public void PlayIdleAnimation()
+        public void PlayMoveAnimation()
         {
             if (skeletonGraphic == null)
                 return;
 
-            skeletonGraphic.PlayAnimation(IdleAnimationName, true, null, out _);
+            skeletonGraphic.PlayAnimation(MoveAnimationName, true, null, out _);
         }
     }
 }
