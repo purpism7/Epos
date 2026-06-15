@@ -44,7 +44,10 @@ namespace GameSystem
 
         private void LoadFade(AsyncOperationHandle<SceneInstance> handle)
         {
-            foreach (var rootGameObj in handle.Result.Scene.GetRootGameObjects())
+            var loadScene = handle.Result.Scene;
+            ConfigureLoadScene(loadScene);
+
+            foreach (var rootGameObj in loadScene.GetRootGameObjects())
             {
                 if(!rootGameObj)
                     continue;
@@ -56,6 +59,25 @@ namespace GameSystem
                 FadeOutAsync(fade).Forget();
 
                 break;
+            }
+        }
+
+        private static void ConfigureLoadScene(UnityEngine.SceneManagement.Scene loadScene)
+        {
+            foreach (var rootGameObject in loadScene.GetRootGameObjects())
+            {
+                if (!rootGameObject)
+                    continue;
+
+                foreach (var camera in rootGameObject.GetComponentsInChildren<Camera>(true))
+                    camera.enabled = false;
+
+                foreach (var canvas in rootGameObject.GetComponentsInChildren<Canvas>(true))
+                {
+                    canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+                    canvas.worldCamera = null;
+                    canvas.sortingOrder = Mathf.Max(canvas.sortingOrder, 100);
+                }
             }
         }
 
@@ -74,8 +96,20 @@ namespace GameSystem
 
         private void UnLoadScene(AsyncOperationHandle<SceneInstance> handle)
         {
-            SceneManager.UnloadSceneAsync(_sceneName);
+            CompleteDestinationLoadAsync(handle).Forget();
+        }
 
+        private async UniTaskVoid CompleteDestinationLoadAsync(AsyncOperationHandle<SceneInstance> handle)
+        {
+            var destinationScene = handle.Result.Scene;
+            if (destinationScene.IsValid())
+                SceneManager.SetActiveScene(destinationScene);
+
+            var unloadOperation = SceneManager.UnloadSceneAsync(_sceneName);
+            if (unloadOperation != null)
+                await UniTask.WaitUntil(() => unloadOperation.isDone);
+
+            await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             FadeInAsync().Forget();
         }
         

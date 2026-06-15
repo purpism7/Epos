@@ -20,6 +20,7 @@ namespace Scene
         [SerializeField] private string mapIdleAnimationName = "Idle_Map";
         [SerializeField] private string cloudCoverAnimationName = "Idle_Cloud";
         [SerializeField] private string cloudRevealAnimationName = "Reveal_Cloud";
+        [SerializeField] private string cloudFallbackIntroAnimationName = "Start_Cloud";
         [SerializeField] private string cloudIdleAnimationName = "Idle_Cloud";
         [SerializeField] private bool hideCloudAfterReveal = false;
         [SerializeField] private float cloudCoverHoldDuration = 0.35f;
@@ -93,7 +94,11 @@ namespace Scene
                 characterSkeletonAnimation.gameObject.SetActive(false);
 
             if (cloudSkeletonAnimation)
+            {
                 cloudSkeletonAnimation.gameObject.SetActive(true);
+                _cloudCoverLocalPosition = cloudSkeletonAnimation.transform.localPosition;
+                ApplyCloudCoverPose();
+            }
         }
 
         private void Update()
@@ -124,9 +129,28 @@ namespace Scene
             if (!cloudSkeletonAnimation)
                 return;
 
+            ApplyCloudCoverPose();
+        }
+
+        private void ApplyCloudCoverPose()
+        {
+            if (!cloudSkeletonAnimation)
+                return;
+
             cloudSkeletonAnimation.gameObject.SetActive(true);
             cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
-            cloudSkeletonAnimation.PlayAnimation(cloudCoverAnimationName, true, null, out _);
+
+            if (!cloudSkeletonAnimation.PlayAnimation(cloudFallbackIntroAnimationName, false, null, out float duration))
+            {
+                cloudSkeletonAnimation.PlayAnimation(cloudCoverAnimationName, true, null, out _);
+                return;
+            }
+
+            var trackEntry = cloudSkeletonAnimation.AnimationState?.GetCurrent(0);
+            if (trackEntry != null)
+                trackEntry.TrackTime = duration;
+
+            cloudSkeletonAnimation.Update(0f);
         }
 
         private void OnCompleteFade()
