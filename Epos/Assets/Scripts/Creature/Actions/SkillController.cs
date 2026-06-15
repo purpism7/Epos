@@ -121,6 +121,7 @@ namespace Creature.Action
             if (stat == null)
                 return null;
 
+            var currentMp = stat.Get(Stat.EType.Mp);
             foreach (var iSkill in _iSkillList)
             {
                 if(iSkill == null)
@@ -133,12 +134,32 @@ namespace Creature.Action
                 if (skillData.ESkillCategory != eSkillCategory)
                     continue;
 
-                if (skillData.MP > stat.Get(Stat.EType.Mp))
-                    continue;
-
                 if (!iSkill.IsReady)
                     continue;
-                
+
+                if (skillData.MP <= currentMp)
+                    return iSkill;
+
+                return GetReadyBasicAttack(eSkillCategory);
+            }
+
+            return null;
+        }
+
+        private Ability.ISkill GetReadyBasicAttack(ESkillCategory eSkillCategory)
+        {
+            foreach (var iSkill in _iSkillList)
+            {
+                if (iSkill == null || !iSkill.IsReady)
+                    continue;
+
+                var skillData = iSkill.SkillData;
+                if (skillData == null ||
+                    skillData.ESkillCategory != eSkillCategory ||
+                    skillData.Cooltime > 0f ||
+                    skillData.MP > 0f)
+                    continue;
+
                 return iSkill;
             }
 

@@ -18,7 +18,7 @@ MonoBehaviour:
   ESkillCategory: 2
   Cooltime: 50
   InitialCooltime: 50
-  MP: 20
+  MP: 25
   Point: 1
   ESkillTarget: 2
   Range: 20

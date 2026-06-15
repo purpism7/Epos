@@ -18,10 +18,10 @@ MonoBehaviour:
   ESkillCategory: 2
   Cooltime: 30
   InitialCooltime: 30
-  MP: 20
+  MP: 22
   Point: 1
   ESkillTarget: 4
-  Range: 2.5
+  Range: 1.5
   Multiplier: 2
   SameTeam: 0
   KnockbackDistance: 20
