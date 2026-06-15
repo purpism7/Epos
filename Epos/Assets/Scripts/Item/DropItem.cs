@@ -10,6 +10,8 @@ namespace Item
     public class DropItem : Element
     {
         private const string StartAnimationName = "Start";
+        private const string IdleAnimationName = "Idle";
+        private const float IdleHoldDuration = 2f;
 
         public class Param : ElementParam
         {
@@ -32,6 +34,7 @@ namespace Item
         private MeshRenderer _meshRenderer = null;
 
         public float StartAnimationDuration { get; private set; } = 0f;
+        public float IdleAnimationHoldDuration => IdleHoldDuration;
 
         public override void Initialize()
         {
@@ -68,6 +71,11 @@ namespace Item
 
             skeletonAnimation.PlayAnimation(StartAnimationName, false, null, out var duration);
             StartAnimationDuration = duration;
+        }
+
+        public void PlayIdleAnimation()
+        {
+            skeletonAnimation?.PlayAnimation(IdleAnimationName, true, null, out _);
         }
 
         private void SetSortingOrder()

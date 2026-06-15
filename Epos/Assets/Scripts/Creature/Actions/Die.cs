@@ -80,8 +80,11 @@ namespace Creature.Actions
             
             var dropItemParam = new DropItem.Param(_actor.SortingOrder, position);
             dropItem.Activate(dropItemParam);
-            
-            await UniTask.Delay(TimeSpan.FromSeconds(dropItem.StartAnimationDuration + 1f));
+
+            await UniTask.Delay(TimeSpan.FromSeconds(dropItem.StartAnimationDuration));
+            dropItem.PlayIdleAnimation();
+            await UniTask.Delay(TimeSpan.FromSeconds(dropItem.IdleAnimationHoldDuration));
+
             dropItem.Deactivate();
             _objectPooler?.Return(dropItem, true);
 
