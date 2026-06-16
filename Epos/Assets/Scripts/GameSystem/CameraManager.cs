@@ -39,7 +39,8 @@ namespace GameSystem
         // [SerializeField] private Camera mainCamera = null;
         // [SerializeField] private CinemachineVirtualCamera virtualCamera = null;
 
-        private const float DefaultOrthographicSize = 20f;
+        private float _defaultOrthographicSize = 20f;
+        private Vector3 _defaultCameraPosition = Vector3.zero;
         // private const float DefaultZPos = -200f;
             
         private CinemachineVirtualCamera _virtualCamera = null;
@@ -60,6 +61,9 @@ namespace GameSystem
         private Vector3 _targetOffsetPosition = Vector3.zero;
         private Vector3 _shakeOffset = Vector3.zero;
         private Tween _shakeTween;
+        private Tween _focusZoomTween;
+        private Tween _focusMoveTween;
+        private bool _hasManualFocusPosition = false;
 
         public Camera MainCamera { get; private set; } = null;
         public bool IsMove { get; private set; }
@@ -78,6 +82,16 @@ namespace GameSystem
         {
             MainCamera = mainCamera;
             _virtualCamera = virtualCamera;
+            _focusZoomTween?.Kill();
+            _focusMoveTween?.Kill();
+
+            if (_virtualCamera != null)
+                _defaultOrthographicSize = _virtualCamera.m_Lens.OrthographicSize;
+
+            if (MainCamera != null)
+                _defaultCameraPosition = MainCamera.transform.position;
+
+            _hasManualFocusPosition = false;
 
             return UniTask.CompletedTask;
         }
@@ -291,26 +305,33 @@ namespace GameSystem
             FocusOnTargetAsync(endAction, targetSize, targetPosition).Forget();
         }
 
-        private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? offsetPosition = null)
+        private async UniTask FocusOnTargetAsync(Action endAction, float targetSize, Vector3? targetPosition = null)
         { 
             var duration = _zoomInOutDuration;
            
             var tasks = new List<UniTask>();
 
             // 1. Orthographic Size (줌) 트윈
-            var zoomTask = DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize, size => _virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration)
+            _focusZoomTween?.Kill();
+            _focusZoomTween = DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize, size => _virtualCamera.m_Lens.OrthographicSize = size, targetSize, duration)
                 .SetEase(Ease.Linear)
-                .SetUpdate(true) // Unscaled 대응
-                .ToUniTask();
-            tasks.Add(zoomTask);
+                .SetUpdate(true); // Unscaled 대응
+            tasks.Add(_focusZoomTween.ToUniTask());
 
-            if(offsetPosition != null)
+            if (targetPosition != null && MainCamera != null)
             {
-                // var moveTask = virtualCamera.transform.DOMove(offsetPosition.Value, duration)
-                //     .SetEase(Ease.OutCirc) // 위치 이동은 약간의 탄성이 있는 게 자연스러움
-                //     .SetUpdate(true)
-                //     .ToUniTask();
-                // tasks.Add(moveTask);
+                _targetTm = null;
+                _focusMoveTween?.Kill();
+                _hasManualFocusPosition = true;
+
+                var cameraPosition = MainCamera.transform.position;
+                var focusPosition = targetPosition.Value;
+                focusPosition.z = cameraPosition.z;
+
+                _focusMoveTween = MainCamera.transform.DOMove(focusPosition, duration)
+                    .SetEase(Ease.OutCubic)
+                    .SetUpdate(true);
+                tasks.Add(_focusMoveTween.ToUniTask());
             }
             
             await UniTask.WhenAll(tasks);
@@ -330,11 +351,32 @@ namespace GameSystem
             var duration = _zoomInOutDuration;
 
             // virtualCamera.transform.position = Vector3.zero;
-            
-            await DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize,
-                orthographicSize => _virtualCamera.m_Lens.OrthographicSize = orthographicSize, DefaultOrthographicSize, duration)
+
+            _focusZoomTween?.Kill();
+            _focusZoomTween = DOTween.To(() => _virtualCamera.m_Lens.OrthographicSize,
+                orthographicSize => _virtualCamera.m_Lens.OrthographicSize = orthographicSize, _defaultOrthographicSize, duration)
                 .SetEase(Ease.Linear)
                 .SetUpdate(true);
+
+            var tasks = new List<UniTask>
+            {
+                _focusZoomTween.ToUniTask()
+            };
+
+            if (_hasManualFocusPosition && MainCamera != null)
+            {
+                _focusMoveTween?.Kill();
+                var returnPosition = _defaultCameraPosition;
+                returnPosition.z = MainCamera.transform.position.z;
+                _focusMoveTween = MainCamera.transform.DOMove(returnPosition, duration)
+                    .SetEase(Ease.OutCubic)
+                    .SetUpdate(true);
+                tasks.Add(_focusMoveTween.ToUniTask());
+            }
+
+            await UniTask.WhenAll(tasks);
+
+            _hasManualFocusPosition = false;
 
             // await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
             
@@ -343,4 +385,3 @@ namespace GameSystem
         #endregion
     }
 }
-

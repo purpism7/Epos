@@ -18,6 +18,8 @@ namespace GameSystem
         private bool _isLoad = false;
 
         public bool IsLoading => _isLoad;
+        public bool IsDestinationSceneReady { get; private set; } = false;
+        public bool IsSceneRevealStarted { get; private set; } = false;
         
         protected override void Initialize()
         {
@@ -34,6 +36,8 @@ namespace GameSystem
                 return;
             
             _isLoad = true;
+            IsDestinationSceneReady = false;
+            IsSceneRevealStarted = false;
             _loadSceneName = loadSceneName;
             _sceneName = SceneManager.GetActiveScene().name;
             
@@ -103,13 +107,17 @@ namespace GameSystem
         {
             var destinationScene = handle.Result.Scene;
             if (destinationScene.IsValid())
+            {
                 SceneManager.SetActiveScene(destinationScene);
+                IsDestinationSceneReady = true;
+            }
 
             var unloadOperation = SceneManager.UnloadSceneAsync(_sceneName);
             if (unloadOperation != null)
                 await UniTask.WaitUntil(() => unloadOperation.isDone);
 
             await UniTask.Yield(PlayerLoopTiming.LastPostLateUpdate);
+            IsSceneRevealStarted = true;
             FadeInAsync().Forget();
         }
         
@@ -137,6 +145,8 @@ namespace GameSystem
         private void Reset()
         {
             _isLoad = false;
+            IsDestinationSceneReady = false;
+            IsSceneRevealStarted = false;
             _sceneName = string.Empty;
             _loadSceneName = string.Empty;
         }

@@ -5,7 +5,7 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 using GameSystem;
-using DG.Tweening;
+using Spine;
 using Spine.Unity;
 using VContainer;
 
@@ -19,14 +19,10 @@ namespace Scene
         [SerializeField] private SkeletonAnimation cloudSkeletonAnimation = null;
         [SerializeField] private string mapIdleAnimationName = "Idle_Map";
         [SerializeField] private string cloudCoverAnimationName = "Idle_Cloud";
-        [SerializeField] private string cloudRevealAnimationName = "Reveal_Cloud";
         [SerializeField] private string cloudFallbackIntroAnimationName = "Start_Cloud";
         [SerializeField] private string cloudIdleAnimationName = "Idle_Cloud";
-        [SerializeField] private bool hideCloudAfterReveal = false;
-        [SerializeField] private float cloudCoverHoldDuration = 0.35f;
-        [SerializeField] private Vector3 fallbackCloudRevealMoveOffset = new Vector3(18f, 0f, 0f);
-        [SerializeField] private float fallbackCloudRevealDuration = 1.2f;
-        [SerializeField] private Ease fallbackCloudRevealEase = Ease.InOutSine;
+        [SerializeField] private float cloudIntroStartDelay = 0f;
+        [SerializeField] private float cloudIntroToIdleMixDuration = 0.12f;
         [Header("Map Select")]
         [SerializeField] private GameObject mapSelectEffectObject = null;
         [SerializeField] private SkeletonAnimation selectArrowSkeletonAnimation = null;
@@ -45,6 +41,9 @@ namespace Scene
         [SerializeField] private Vector3 fallbackCharacterOffset = new Vector3(0.2f, 3.35f, 0f);
         [SerializeField] private float characterSceneTransitionDelay = 3f;
         [SerializeField] private string fieldSceneName = "RealTimeField";
+        [Header("Camera Focus")]
+        [SerializeField] private int firstAreaFocusIndex = 1;
+        [SerializeField] private float firstAreaFocusOrthographicSize = 3.2f;
 
         [Inject] private ICameraManager _iCameraManager = null;
 
@@ -54,7 +53,6 @@ namespace Scene
         private Vector3 _selectArrowOffset = Vector3.zero;
         private Vector3 _characterOffset = Vector3.zero;
         private Vector3 _cloudCoverLocalPosition = Vector3.zero;
-        private Tween _cloudRevealTween = null;
         private bool _canSelectMap = false;
         private bool _isTransitioningToField = false;
 
@@ -69,14 +67,15 @@ namespace Scene
 
             CacheMapSelectReferences();
             PrepareMapSelectState();
-            PrepareRevealState();
+            PrepareCloudIntroState();
 
-            if (cloudCoverHoldDuration > 0f)
-                await UniTask.Delay(TimeSpan.FromSeconds(cloudCoverHoldDuration));
-            else
-                await UniTask.Yield();
+            await WaitForCloudIntroStartAsync();
 
-            OnCompleteFade();
+            if (cloudIntroStartDelay > 0f)
+                await UniTask.Delay(TimeSpan.FromSeconds(cloudIntroStartDelay),
+                    cancellationToken: this.GetCancellationTokenOnDestroy());
+
+            PlayCloudIntro();
         }
 
         private void ApplyInitialPresentationState()
@@ -97,7 +96,7 @@ namespace Scene
             {
                 cloudSkeletonAnimation.gameObject.SetActive(true);
                 _cloudCoverLocalPosition = cloudSkeletonAnimation.transform.localPosition;
-                ApplyCloudCoverPose();
+                ApplyCloudStartPose();
             }
         }
 
@@ -111,28 +110,37 @@ namespace Scene
 
             var area = GetClickedMapSelectArea();
             if (!area)
+            {
+                DeselectMapArea();
                 return;
+            }
+
+            if (!_selectedArea)
+            {
+                SelectMapArea(area);
+                return;
+            }
 
             if (_selectedArea != area)
             {
-                SelectMapArea(area);
+                DeselectMapArea();
                 return;
             }
 
             PlayCharacterOnSelectedArea(area);
         }
 
-        private void PrepareRevealState()
+        private void PrepareCloudIntroState()
         {
             mapSkeletonAnimation?.PlayAnimation(mapIdleAnimationName, true, null, out _);
 
             if (!cloudSkeletonAnimation)
                 return;
 
-            ApplyCloudCoverPose();
+            ApplyCloudStartPose();
         }
 
-        private void ApplyCloudCoverPose()
+        private void ApplyCloudStartPose()
         {
             if (!cloudSkeletonAnimation)
                 return;
@@ -140,7 +148,7 @@ namespace Scene
             cloudSkeletonAnimation.gameObject.SetActive(true);
             cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
 
-            if (!cloudSkeletonAnimation.PlayAnimation(cloudFallbackIntroAnimationName, false, null, out float duration))
+            if (!cloudSkeletonAnimation.PlayAnimation(cloudFallbackIntroAnimationName, false, null, out _))
             {
                 cloudSkeletonAnimation.PlayAnimation(cloudCoverAnimationName, true, null, out _);
                 return;
@@ -148,33 +156,28 @@ namespace Scene
 
             var trackEntry = cloudSkeletonAnimation.AnimationState?.GetCurrent(0);
             if (trackEntry != null)
-                trackEntry.TrackTime = duration;
+            {
+                trackEntry.TrackTime = 0f;
+                trackEntry.TimeScale = 0f;
+            }
 
             cloudSkeletonAnimation.Update(0f);
         }
 
-        private void OnCompleteFade()
+        private async UniTask WaitForCloudIntroStartAsync()
         {
-            if (!cloudSkeletonAnimation)
-            {
-                EnableMapSelection();
-                return;
-            }
-
-            bool playedReveal = cloudSkeletonAnimation.PlayAnimation(cloudRevealAnimationName, false,
-                (trackEntry) => OnCompleteCloudReveal(), out _);
-
-            if (playedReveal)
+            if (!LoadSceneManager.Validate())
                 return;
 
-            Debug.LogWarning($"Cloud reveal animation '{cloudRevealAnimationName}' was not found. Cloud idle loop will continue.");
-            if (hideCloudAfterReveal)
-                PlayFallbackCloudReveal();
-            else
-                OnCompleteCloudReveal();
+            var loadSceneManager = LoadSceneManager.Instance;
+            await UniTask.WaitUntil(
+                () => loadSceneManager.IsDestinationSceneReady ||
+                      loadSceneManager.IsSceneRevealStarted ||
+                      !loadSceneManager.IsLoading,
+                cancellationToken: this.GetCancellationTokenOnDestroy());
         }
 
-        private void OnCompleteCloudReveal()
+        private void PlayCloudIntro()
         {
             if (!cloudSkeletonAnimation)
             {
@@ -182,36 +185,91 @@ namespace Scene
                 return;
             }
 
-            if (hideCloudAfterReveal)
+            cloudSkeletonAnimation.gameObject.SetActive(true);
+            cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
+
+            if (PlayCloudIntroToIdle())
+                return;
+
+            Debug.LogWarning($"Cloud intro animation '{cloudFallbackIntroAnimationName}' was not found. Cloud idle loop will continue.");
+            PlayCloudIdleLoop();
+        }
+
+        private bool PlayCloudIntroToIdle()
+        {
+            var animationState = cloudSkeletonAnimation?.AnimationState;
+            if (animationState == null)
+                return false;
+
+            var introAnimation = ResolveCloudAnimation(cloudFallbackIntroAnimationName);
+            if (introAnimation == null)
+                return false;
+
+            animationState.ClearTracks();
+            var introEntry = animationState.SetAnimation(0, introAnimation, false);
+            if (introEntry == null)
+                return false;
+
+            var idleAnimation = ResolveCloudAnimation(cloudIdleAnimationName);
+            if (idleAnimation != null)
             {
-                cloudSkeletonAnimation.gameObject.SetActive(false);
+                var idleEntry = animationState.AddAnimation(0, idleAnimation, true, 0f);
+                idleEntry?.SetMixDuration(Mathf.Max(0f, cloudIntroToIdleMixDuration), 0f);
             }
             else
             {
-                cloudSkeletonAnimation.gameObject.SetActive(true);
-                cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
-                cloudSkeletonAnimation.PlayAnimation(cloudIdleAnimationName, true, null, out _);
+                introEntry.Complete += _ => PlayCloudIdleLoop();
             }
+
+            introEntry.Complete += _ => EnableMapSelection();
+            return true;
+        }
+
+        private void PlayCloudIdleLoop()
+        {
+            if (!cloudSkeletonAnimation)
+            {
+                EnableMapSelection();
+                return;
+            }
+
+            cloudSkeletonAnimation.gameObject.SetActive(true);
+            cloudSkeletonAnimation.transform.localPosition = _cloudCoverLocalPosition;
+            var animationState = cloudSkeletonAnimation.AnimationState;
+            var idleAnimation = ResolveCloudAnimation(cloudIdleAnimationName);
+            if (animationState != null && idleAnimation != null)
+                animationState.SetAnimation(0, idleAnimation, true);
+            else
+                cloudSkeletonAnimation.PlayAnimation(cloudIdleAnimationName, true, null, out _);
 
             EnableMapSelection();
         }
 
-        private void PlayFallbackCloudReveal()
+        private Spine.Animation ResolveCloudAnimation(string animationName)
         {
-            if (!cloudSkeletonAnimation)
+            if (cloudSkeletonAnimation?.AnimationState?.Data?.SkeletonData == null ||
+                string.IsNullOrEmpty(animationName))
             {
-                EnableMapSelection();
-                return;
+                return null;
             }
 
-            _cloudRevealTween?.Kill();
+            var skeletonData = cloudSkeletonAnimation.AnimationState.Data.SkeletonData;
+            var animation = skeletonData.FindAnimation(animationName);
+            if (animation != null)
+                return animation;
 
-            var cloudTransform = cloudSkeletonAnimation.transform;
-            cloudTransform.localPosition = _cloudCoverLocalPosition;
-            _cloudRevealTween = cloudTransform
-                .DOLocalMove(_cloudCoverLocalPosition + fallbackCloudRevealMoveOffset, fallbackCloudRevealDuration)
-                .SetEase(fallbackCloudRevealEase)
-                .OnComplete(OnCompleteCloudReveal);
+            var animations = skeletonData.Animations;
+            if (animations == null)
+                return null;
+
+            for (int i = 0; i < animations.Count; i++)
+            {
+                animation = animations.Items[i];
+                if (animation != null && animation.Name.Contains(animationName))
+                    return animation;
+            }
+
+            return null;
         }
 
         private void CacheMapSelectReferences()
@@ -302,10 +360,14 @@ namespace Scene
             var worldPosition = camera.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.z = 0f;
 
+            var clickedArea = GetMapSelectAreaAtWorldPosition(worldPosition);
+            if (clickedArea)
+                return clickedArea;
+
             if (!IsWorldPositionInsideMapSelectEffect(worldPosition))
                 return null;
 
-            return GetNearestMapSelectArea(mapSelectEffectObject.transform.position, float.MaxValue);
+            return _selectedArea ? _selectedArea : GetNearestMapSelectArea(worldPosition, float.MaxValue);
         }
 
         private bool IsWorldPositionInsideMapSelectEffect(Vector3 worldPosition)
@@ -355,6 +417,21 @@ namespace Scene
             return nearestArea;
         }
 
+        private Area GetMapSelectAreaAtWorldPosition(Vector3 worldPosition)
+        {
+            for (int i = 0; i < _mapSelectAreas.Count; i++)
+            {
+                var area = _mapSelectAreas[i];
+                if (!area)
+                    continue;
+
+                if (IsWorldPositionInsideArea(worldPosition, area))
+                    return area;
+            }
+
+            return null;
+        }
+
         private Vector3 GetMapSelectTouchCenter(Area area)
         {
             if (!area)
@@ -366,6 +443,7 @@ namespace Scene
         private void SelectMapArea(Area area)
         {
             _selectedArea = area;
+            FocusCameraOnAreaIfNeeded(area);
 
             if (characterSkeletonAnimation)
                 characterSkeletonAnimation.gameObject.SetActive(false);
@@ -386,6 +464,35 @@ namespace Scene
                 {
                     selectArrowSkeletonAnimation?.PlayAnimation(selectArrowIdleAnimationName, true, null, out _);
                 }, out _);
+        }
+
+        private void FocusCameraOnAreaIfNeeded(Area area)
+        {
+            if (!area || area.Index != firstAreaFocusIndex)
+                return;
+
+            _iCameraManager?.SetTargetTr(null, Vector3.zero);
+            _iCameraManager?.FocusOnTarget(null, firstAreaFocusOrthographicSize, GetMapSelectTouchCenter(area));
+        }
+
+        private void DeselectMapArea()
+        {
+            if (!_selectedArea)
+                return;
+
+            var deselectedArea = _selectedArea;
+            _selectedArea = null;
+            _canSelectMap = false;
+
+            if (selectArrowSkeletonAnimation)
+                selectArrowSkeletonAnimation.gameObject.SetActive(false);
+
+            StopMapSelectEffect();
+
+            if (_iCameraManager != null)
+                _iCameraManager.ClearFocus(() => ReactivateMapSelectArea(deselectedArea));
+            else
+                ReactivateMapSelectArea(deselectedArea);
         }
 
         private void PlayCharacterOnSelectedArea(Area area)
@@ -446,6 +553,38 @@ namespace Scene
             }
 
             mapSelectEffectObject.SetActive(false);
+        }
+
+        private void ReactivateMapSelectArea(Area area)
+        {
+            if (_isTransitioningToField)
+                return;
+
+            _canSelectMap = true;
+
+            if (!area || !mapSelectEffectObject)
+                return;
+
+            mapSelectEffectObject.transform.position = GetMapSelectTouchCenter(area);
+            mapSelectEffectObject.SetActive(true);
+            PlayMapSelectEffectParticles();
+        }
+
+        private void PlayMapSelectEffectParticles()
+        {
+            if (!mapSelectEffectObject)
+                return;
+
+            var particleSystems = mapSelectEffectObject.GetComponentsInChildren<ParticleSystem>(true);
+            for (int i = 0; i < particleSystems.Length; i++)
+            {
+                var particleSystem = particleSystems[i];
+                if (!particleSystem)
+                    continue;
+
+                particleSystem.Clear(true);
+                particleSystem.Play(true);
+            }
         }
 
         private Area GetMapSelectArea(int index)
