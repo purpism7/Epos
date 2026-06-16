@@ -360,14 +360,22 @@ namespace Scene
             var worldPosition = camera.ScreenToWorldPoint(Input.mousePosition);
             worldPosition.z = 0f;
 
-            var clickedArea = GetMapSelectAreaAtWorldPosition(worldPosition);
-            if (clickedArea)
-                return clickedArea;
+            if (_selectedArea)
+            {
+                if (IsWorldPositionInsideMapSelectEffect(worldPosition))
+                    return _selectedArea;
+
+                var clickedArea = GetMapSelectAreaAtWorldPosition(worldPosition);
+                if (clickedArea && clickedArea != _selectedArea)
+                    return clickedArea;
+
+                return null;
+            }
 
             if (!IsWorldPositionInsideMapSelectEffect(worldPosition))
                 return null;
 
-            return _selectedArea ? _selectedArea : GetNearestMapSelectArea(worldPosition, float.MaxValue);
+            return GetNearestMapSelectArea(mapSelectEffectObject.transform.position, float.MaxValue);
         }
 
         private bool IsWorldPositionInsideMapSelectEffect(Vector3 worldPosition)
