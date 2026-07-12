@@ -93,7 +93,7 @@ namespace UI.Presenter
                 () =>
                 {
                     _timeScaleManager?.Set(0.2f);
-                }, 15f, new Vector3(0, -0.1f, 0));
+                }, 15f);
         }
         
         void IBattleMainPresenter.OnClickAggressive()
@@ -157,5 +157,4 @@ namespace UI.Presenter
         #endregion
     }
 }
-
 
