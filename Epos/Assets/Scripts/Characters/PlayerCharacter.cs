@@ -1,0 +1,20 @@
+using UnityEngine;
+
+namespace Characters
+{
+    public class PlayerCharacter : Character
+    {
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
+        {
+        
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+        
+        }
+    }
+}
+
