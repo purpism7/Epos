@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
+  m_Name: Knight_01_Atlas
+  m_EditorClassIdentifier: spine-unity::Spine.Unity.SpineAtlasAsset
+  textureLoadingMode: 0
+  onDemandTextureLoader: {fileID: 0}
+  atlasFile: {fileID: 4900000, guid: 9db391aac276a4817ad52679888a6a1a, type: 3}
+  materials:
+  - {fileID: 2100000, guid: 9fc59a9c979354495a61f8f772549939, type: 2}
+  - {fileID: 2100000, guid: 7459c063e46804c87b1eb5efc0cadd95, type: 2}
+  - {fileID: 2100000, guid: 74f7df837252d4a2a87ca133e0ea5e2f, type: 2}
+  - {fileID: 2100000, guid: 0596677c80ff348cca9353ec870509c4, type: 2}
+  - {fileID: 2100000, guid: fa606c8e76e1f4975956015e3344e610, type: 2}
+  - {fileID: 2100000, guid: 481a396933dc84560a8a8eab3e18b97e, type: 2}
+  - {fileID: 2100000, guid: 76c06d0510db5459eb14d6a1c9399403, type: 2}

@@ -492,8 +492,8 @@ namespace Creature
                 param = new V();
 
             var animationKey = _actor?.AnimationKey(act);
-            Debug.Log($"{_actor?.GetType()}" + animationKey);
-            param.SetAnimationKey(_actor?.AnimationKey(act));
+            // Debug.Log($"{_actor?.GetType()}" + animationKey);
+            param.SetAnimationKey(animationKey);
             
             // 이전 Act 종료 이벤트 발생
             if (isSet && _currIAct != null)
@@ -519,7 +519,7 @@ namespace Creature
         }
 
         private void SetCurrIAct(IAct iAct)
-        {
+        {   
             _currIAct = iAct;
             
             // Debug.Log(name + " = " + iAct?.GetType());

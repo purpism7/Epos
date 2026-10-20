@@ -102,7 +102,7 @@ namespace Creature.Actions
             if (skeletonAnimation == null)
                 return false;
 
-            return skeletonAnimation.PlayAnimation(animationName, loop, OnCompleted, out _duration);
+            return skeletonAnimation.PlayAnimation(animationName, loop, OnCompleted, out _);
         }
     }
 }

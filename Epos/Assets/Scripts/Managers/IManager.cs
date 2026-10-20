@@ -4,7 +4,8 @@ namespace Managers
 {
     public interface IManager
     {
-        void Initialize();
+        void Activate();
+        void Deactivate();
         
         void ChainUpdate();
         void ChainLateUpdate();

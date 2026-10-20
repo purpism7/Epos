@@ -4,16 +4,11 @@ namespace Characters
 {
     public class PlayerCharacter : Character
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        public override void Initialize()
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            base.Initialize();
+            
+            Debug.Log("PlayerCharacter Initialize");
         }
     }
 }
