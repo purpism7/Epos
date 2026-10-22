@@ -8,6 +8,7 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         private readonly CharacterManager _characterManager = new CharacterManager();
+        private readonly CameraManager _cameraManager = new CameraManager();
         private readonly InputManager _inputManager = new InputManager();
         
         private GameState _gameState = null;
@@ -23,6 +24,7 @@ namespace Managers
         private void Initialize()
         {
             _inputManager?.Initialize(_characterManager);
+            _cameraManager?.Initialize(_characterManager);
             _characterManager?.Initialize();
 
             Activate();
@@ -31,12 +33,14 @@ namespace Managers
         private void Activate()
         {
             _inputManager?.Activate();
+            _cameraManager?.Activate();
             _characterManager?.Activate();
         }
 
         private void Deactivate()
         {
             _inputManager?.Deactivate();
+            _cameraManager?.Deactivate();
             _characterManager?.Deactivate();
         }
 
@@ -45,6 +49,11 @@ namespace Managers
         {
             _characterManager?.ChainUpdate();
             _inputManager?.ChainUpdate();
+        }
+
+        private void LateUpdate()
+        {
+            _cameraManager?.ChainLateUpdate();
         }
 
         public void SetGameState(GameState gameState)
