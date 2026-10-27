@@ -30,19 +30,18 @@ namespace Commons
             
         }
     }
-
-    [DefaultExecutionOrder(-100)] 
+    
     public class MonoEntity : MonoBehaviour, IEntity
     {
         // 인터페이스 명세 구현
         public bool IsActive { get; protected set; } = false;
 
         // 자주 쓰이는 유니티 트랜스폼 캐싱 (성능 최적화)
-        public Transform CachedTransform { get; private set; }
+        protected Transform _cachedTransform = null;
         
         public virtual void Initialize()
         {
-            CachedTransform = transform;
+            _cachedTransform = transform;
         }
 
         public virtual void Activate()

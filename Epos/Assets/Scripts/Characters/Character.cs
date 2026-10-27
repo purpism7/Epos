@@ -11,7 +11,7 @@ namespace Characters
 {
     public abstract class Character : MonoEntity, IActor
     {
-        public Transform Transform => CachedTransform;
+        public Transform Transform => _cachedTransform;
         
         public SkeletonAnimation SkeletonAnimation => skeletonAnimation;
         public IActionController ActionController => actionController;
@@ -23,6 +23,8 @@ namespace Characters
         
         public override void Initialize()
         {
+            base.Initialize();
+            
             skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
             actionController = new ActionController(this);
