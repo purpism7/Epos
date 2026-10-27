@@ -76,9 +76,6 @@ namespace Characters.Actions
             where TAction : Action<TParam>, new()
             where TParam : ActionParam
         {
-            // if (_currentAction?.GetType() == typeof(TAction))
-            //     return;
-            
             if (_actions == null)
                 _actions = new();
             

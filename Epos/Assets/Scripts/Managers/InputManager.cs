@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Characters;
 using UnityEngine;
 
+using Characters;
+using Commons;
 using InputStates;
 
 namespace Managers
 {
-    public class InputManager : IManager
+    public class InputManager : Entity
     {
         private IInputState _inputState = null;
 
@@ -25,32 +26,31 @@ namespace Managers
             _characterManager = characterManager;
         }
 
-        public void Activate()
+        public override void Activate()
         {
             if (_characterManager == null)
                 return;
 
             _characterManager.OnMainPlayerChanged -= OnMainPlayerChanged;
             _characterManager.OnMainPlayerChanged += OnMainPlayerChanged;
+            
+            base.Activate();
         }
 
-        public void Deactivate()
+        public override void Deactivate()
         {
             if (_characterManager != null)
                 _characterManager.OnMainPlayerChanged -= OnMainPlayerChanged;
+            
+            base.Deactivate();
         }
 
-        public void ChainUpdate()
+        public override void ChainUpdate()
         {
             if (_inputState == null)
                 return;
             
             _inputState.ChainUpdate();
-        }
-
-        public void ChainLateUpdate()
-        {
-            
         }
 
         public void SetInputState(IInputState inputState)

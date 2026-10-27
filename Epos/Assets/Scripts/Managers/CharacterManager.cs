@@ -1,12 +1,12 @@
 using UnityEngine;
 using System;
 
-using Actor;
 using Characters;
+using Commons;
 
 namespace Managers
 {
-    public class CharacterManager : IManager
+    public class CharacterManager : Entity
     {
         public event Action<PlayerCharacter> OnMainPlayerChanged = null;
 
@@ -29,26 +29,27 @@ namespace Managers
             _mainPlayer = GameObject.FindAnyObjectByType<PlayerCharacter>(
                 FindObjectsInactive.Include
             );
+            
+            _mainPlayer?.Initialize();
         }
 
-        public void Activate()
+        public override void Activate()
         {
             ChangedMainPlayer(_mainPlayer);
-        }
-
-        public void Deactivate()
-        {
             
+            base.Activate();
         }
 
-        public void ChainUpdate()
+        public override void Deactivate()
         {
+            base.Deactivate();
+        }
+
+        public override void ChainUpdate()
+        {
+            base.ChainUpdate();
+            
             _mainPlayer?.ChainUpdate();
-        }
-
-        public void ChainLateUpdate()
-        {
-            
         }
         
         public void ChangedMainPlayer(PlayerCharacter player)

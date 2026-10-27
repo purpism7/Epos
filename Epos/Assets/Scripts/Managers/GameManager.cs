@@ -1,15 +1,18 @@
 using System;
 using UnityEngine;
 
+using Commons;
 using GameStates;
 
 namespace Managers
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoEntity
     {
         private readonly CharacterManager _characterManager = new CharacterManager();
         private readonly CameraManager _cameraManager = new CameraManager();
         private readonly InputManager _inputManager = new InputManager();
+
+        private readonly BattleManager _battleManager = new BattleManager();
         
         private GameState _gameState = null;
 
@@ -23,25 +26,31 @@ namespace Managers
 
         private void Initialize()
         {
+            _characterManager?.Initialize();
             _inputManager?.Initialize(_characterManager);
             _cameraManager?.Initialize(_characterManager);
-            _characterManager?.Initialize();
+            
+            _battleManager?.Initialize();
 
             Activate();
         }
 
-        private void Activate()
+        public override void Activate()
         {
             _inputManager?.Activate();
             _cameraManager?.Activate();
             _characterManager?.Activate();
+            
+            base.Activate();
         }
 
-        private void Deactivate()
+        public override void Deactivate()
         {
             _inputManager?.Deactivate();
             _cameraManager?.Deactivate();
             _characterManager?.Deactivate();
+            
+            base.Deactivate();
         }
 
         // Update is called once per frame

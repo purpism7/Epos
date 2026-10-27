@@ -2,10 +2,11 @@ using UnityEngine;
 
 using Characters;
 using Actor;
+using Commons;
 
 namespace Managers
 {
-    public class CameraManager : IManager
+    public class CameraManager : Entity
     {
         private Camera _camera = null;
         private CharacterManager _characterManager = null;
@@ -20,25 +21,22 @@ namespace Managers
             _camera = Camera.main;
         }
         
-        public void Activate()
+        public override void Activate()
         {
             if (_characterManager == null)
                 return;
 
             _characterManager.OnMainPlayerChanged -= OnMainPlayerChanged;
             _characterManager.OnMainPlayerChanged += OnMainPlayerChanged;
-        }
-
-        public void Deactivate()
-        {
             
+            base.Activate();
         }
 
-        public void ChainUpdate()
+        public override void Deactivate()
         {
-            
+            base.Deactivate();
         }
-
+        
         public void ChainLateUpdate()
         {
             UpdateFollowToTarget();

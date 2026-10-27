@@ -5,12 +5,14 @@ using Spine.Unity;
 
 using Actor;
 using Characters.Actions;
+using Commons;
 
 namespace Characters
 {
-    public abstract class Character : MonoBehaviour, IActor
+    public abstract class Character : MonoEntity, IActor
     {
-        public Transform Transform => transform;
+        public Transform Transform => CachedTransform;
+        
         public SkeletonAnimation SkeletonAnimation => skeletonAnimation;
         public IActionController ActionController => actionController;
         
@@ -19,31 +21,31 @@ namespace Characters
         
         private MeshRenderer _meshRenderer = null;
         
-        // 임시
-        void Awake()
-        {
-            Initialize();
-        }
-        
-        public virtual void Initialize()
+        public override void Initialize()
         {
             skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
 
             actionController = new ActionController(this);
         }
 
-        public virtual void Activate()
+        public override void Activate()
         {
-            actionController?.Activate();   
+            actionController?.Activate();
+
+            base.Activate();
         }
 
-        public virtual void Deactivate()
+        public override void Deactivate()
         {
             actionController?.Deactivate();
+
+            base.Deactivate();
         }
 
-        public virtual void ChainUpdate()
+        public override void ChainUpdate()
         {
+            base.ChainUpdate();
+            
             actionController?.ChainUpdate();
         }
         
@@ -54,18 +56,12 @@ namespace Characters
             if (_meshRenderer == null)
             {
                 if (SkeletonAnimation == null)
-                {
-                    // Debug.LogWarning($"Character.SortingOrder: SkeletonAnimation is null. CharacterId: {Id}");
                     return;
-                }
                 
                 _meshRenderer = SkeletonAnimation.GetComponent<MeshRenderer>();
-                
+
                 if (_meshRenderer == null)
-                {
-                    // Debug.LogWarning($"Character.SortingOrder: MeshRenderer is null. CharacterId: {Id}");
                     return;
-                }
             }
 
             // MeshRenderer가 비활성화되어 있으면 활성화
