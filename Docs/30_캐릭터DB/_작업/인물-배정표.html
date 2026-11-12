@@ -1229,6 +1229,8 @@ let DIR_STATE = 'none';      // none | prompt | granted | unsupported
 let OLD_ATT = [];            // 옛(v3) IndexedDB 첨부 — «옛 첨부 폴더로 옮기기» 대상
 let attUrls = [];            // 썸네일 object URL(다시 그릴 때 해제)
 const FS_OK = () => typeof window.showDirectoryPicker === 'function';
+// 맥은 한글 폴더 이름을 자모로 풀어서 돌려준다 — 합친 꼴(NFC)로 맞춰 비교한다
+const isRefDir = h => !!h && String(h.name || '').normalize('NFC') === '참고자료';
 const tabFolder = {people:'인물', regions:'지역', orders:'기사단'};
 const nameKeyOf = tab => (S.meta.tabs.find(t => t.key === tab) || {}).nameKey;
 const safeName = s => String(s || '이름없음').replace(/[\\/:*?"<>|]/g, '_').trim() || '이름없음';
@@ -1237,7 +1239,7 @@ function idbReq(store, mode, fn){ return idb().then(db => new Promise((res, rej)
 async function attLoad(){
   try{ OLD_ATT = await idbReq(IDB_STORE, 'readonly', st => st.getAll()) || []; }catch(e){ OLD_ATT = []; }
   if(!FS_OK()){ DIR_STATE = 'unsupported'; return; }
-  try{ const h = await idbReq(IDB_FS, 'readonly', st => st.get('root')); if(h && h.queryPermission && h.name === '참고자료'){ const p = await h.queryPermission({mode:'readwrite'}); DIRH = h; DIR_STATE = p === 'granted' ? 'granted' : 'prompt'; } }catch(e){}
+  try{ const h = await idbReq(IDB_FS, 'readonly', st => st.get('root')); if(h && h.queryPermission && isRefDir(h)){ const p = await h.queryPermission({mode:'readwrite'}); DIRH = h; DIR_STATE = p === 'granted' ? 'granted' : 'prompt'; } }catch(e){}
 }
 function setDirHandle(h, persist){ DIRH = h || null; DIR_STATE = h ? 'granted' : (FS_OK() ? 'none' : 'unsupported'); if(persist !== false && h){ idbReq(IDB_FS, 'readwrite', st => st.put(h, 'root')).catch(() => {}); } updateDirUI(); if(P.ri != null) rebuildPanel(); if(view === 'cards') renderCards(); }
 async function connectDir(){
@@ -1245,7 +1247,7 @@ async function connectDir(){
   try{
     if(DIRH && DIR_STATE === 'prompt'){ const p = await DIRH.requestPermission({mode:'readwrite'}); if(p === 'granted'){ DIR_STATE = 'granted'; updateDirUI(); if(P.ri != null) rebuildPanel(); if(view === 'cards') renderCards(); toast('참고자료 폴더 다시 연결됨: ' + DIRH.name); return true; } }
     const h = await window.showDirectoryPicker({mode:'readwrite', id:'epos-refs'});
-    if(h.name !== '참고자료'){ alert(`고른 폴더가 «${h.name}» 입니다 — 연결하지 않았습니다.\n\n이 HTML 옆 _작업/참고자료/ 폴더를 골라 주세요(폴더 이름이 «참고자료» 여야 합니다).`); return false; }
+    if(!isRefDir(h)){ alert(`고른 폴더가 «${h.name}» 입니다 — 연결하지 않았습니다.\n\n이 HTML 옆 _작업/참고자료/ 폴더를 골라 주세요(폴더 이름이 «참고자료» 여야 합니다).`); return false; }
     setDirHandle(h, true); toast('참고자료 폴더 연결됨: ' + h.name); return true;
   }catch(e){ if(e && e.name !== 'AbortError') alert('폴더 연결 실패: ' + e.message); return false; }
 }
