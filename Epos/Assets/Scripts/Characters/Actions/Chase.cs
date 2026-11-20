@@ -15,7 +15,7 @@ namespace Characters.Actions
             if (_actor == null)
                 return;
 
-            PlayAnimation("Run", true);
+            PlayAnimation(AnimationKey.Run, true);
         }
 
         public override void ChainUpdate()

@@ -12,7 +12,7 @@ namespace Characters.Actions
             if (_actor == null)
                 return;
 
-            PlayAnimation("Skill_01", true);
+            PlayAnimation(AnimationKey.Skill01, true);
         }
 
         public override void ChainUpdate()

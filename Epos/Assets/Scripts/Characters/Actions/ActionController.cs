@@ -45,12 +45,8 @@ namespace Characters.Actions
 
         void IActionController.Flip(float x)
         {
-            var skeletonAnimation = _actor?.SkeletonAnimation;
-            if (skeletonAnimation == null)
-                return;
-            
-            if (Mathf.Abs(x) > 0.01f)
-                skeletonAnimation.Skeleton.ScaleX = Mathf.Sign(x);
+            // 좌우 반전은 CharacterAnimator 한 곳에서만 한다(그림 기본 방향 반영, 문턱 0.01 동일, 앞뒤는 그대로).
+            _actor?.CharacterAnimator?.Face(new Vector2(x, 0f));
         }
 
         void IActionController.HandleMoveInput(Vector2 moveAxis)

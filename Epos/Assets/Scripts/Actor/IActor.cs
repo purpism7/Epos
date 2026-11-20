@@ -2,6 +2,7 @@ using UnityEngine;
 
 using Spine.Unity;
 
+using Characters;
 using Characters.Actions;
 
 namespace Actor
@@ -11,6 +12,7 @@ namespace Actor
         Transform Transform { get; }
         SkeletonAnimation  SkeletonAnimation { get; }
         IActionController ActionController { get; }
+        CharacterAnimator CharacterAnimator { get; }
         
         void SetSortingOrder(float sortingOrder);
     }
