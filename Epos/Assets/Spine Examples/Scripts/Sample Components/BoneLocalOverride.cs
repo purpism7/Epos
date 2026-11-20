@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using Spine;
@@ -47,28 +47,28 @@ namespace Spine.Unity.Examples {
 		public bool overrideRotation = true;
 		[Range(0, 360)] public float rotation = 0;
 
-		ISkeletonAnimation spineComponent;
+		ISkeletonRenderer spineComponent;
 		Bone bone;
 
 #if UNITY_EDITOR
 		void OnValidate () {
 			if (Application.isPlaying) return;
-			if (spineComponent == null) spineComponent = GetComponent<ISkeletonAnimation>();
+			if (spineComponent == null) spineComponent = GetComponent<ISkeletonRenderer>();
 			if (spineComponent.IsNullOrDestroyed()) return;
-			if (bone != null) bone.SetToSetupPose();
+			if (bone != null) bone.SetupPose();
 			OverrideLocal(spineComponent);
 		}
 #endif
 
 		void Awake () {
-			spineComponent = GetComponent<ISkeletonAnimation>();
+			spineComponent = GetComponent<ISkeletonRenderer>();
 			if (spineComponent == null) { this.enabled = false; return; }
 			spineComponent.UpdateLocal += OverrideLocal;
 
 			if (bone == null) { this.enabled = false; return; }
 		}
 
-		void OverrideLocal (ISkeletonAnimation animated) {
+		void OverrideLocal (ISkeletonRenderer skeletonRenderer) {
 			if (bone == null || bone.Data.Name != boneName) {
 				if (string.IsNullOrEmpty(boneName)) return;
 				bone = spineComponent.Skeleton.FindBone(boneName);
@@ -78,13 +78,14 @@ namespace Spine.Unity.Examples {
 				}
 			}
 
+			var bonePose = bone.Pose;
 			if (overridePosition) {
-				bone.X = Mathf.Lerp(bone.X, localPosition.x, alpha);
-				bone.Y = Mathf.Lerp(bone.Y, localPosition.y, alpha);
+				bonePose.X = Mathf.Lerp(bonePose.X, localPosition.x, alpha);
+				bonePose.Y = Mathf.Lerp(bonePose.Y, localPosition.y, alpha);
 			}
 
 			if (overrideRotation)
-				bone.Rotation = Mathf.Lerp(bone.Rotation, rotation, alpha);
+				bonePose.Rotation = Mathf.Lerp(bonePose.Rotation, rotation, alpha);
 		}
 
 	}

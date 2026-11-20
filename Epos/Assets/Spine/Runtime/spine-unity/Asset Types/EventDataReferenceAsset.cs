@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #define AUTOINIT_SPINEREFERENCE
@@ -40,6 +40,11 @@ namespace Spine.Unity {
 		[SerializeField, SpineEvent(dataField: "skeletonDataAsset")] protected string eventName;
 
 		EventData eventData;
+
+		public SkeletonDataAsset SkeletonDataAsset {
+			get { return skeletonDataAsset; }
+		}
+
 		public EventData EventData {
 			get {
 #if AUTOINIT_SPINEREFERENCE
@@ -48,6 +53,18 @@ namespace Spine.Unity {
 #endif
 				return eventData;
 			}
+		}
+
+#if UNITY_EDITOR
+		void OnValidate () {
+			Clear();
+		}
+#endif
+
+		/// <summary>Clears the cached event data corresponding to a loaded SkeletonData object.
+		/// Use this to force a reload for the next time EventData is called.</summary>
+		public void Clear () {
+			eventData = null;
 		}
 
 		public void Initialize () {

@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "com.esotericsoftware.spine.urp-shaders": {
-      "version": "file:com.esotericsoftware.spine.urp-shaders-4.2",
+      "version": "file:com.esotericsoftware.spine.urp-shaders-4.3",
       "depth": 0,
       "source": "embedded",
       "dependencies": {

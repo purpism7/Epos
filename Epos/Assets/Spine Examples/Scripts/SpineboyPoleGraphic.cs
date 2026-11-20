@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using Spine.Unity;
@@ -35,6 +35,7 @@ using UnityEngine;
 namespace Spine.Unity.Examples {
 	public class SpineboyPoleGraphic : MonoBehaviour {
 		public SkeletonGraphic skeletonGraphic;
+		public SkeletonAnimation skeletonAnimation;
 
 		[Space(18)]
 		public AnimationReferenceAsset run;
@@ -46,12 +47,14 @@ namespace Spine.Unity.Examples {
 		const float RunTimeScale = 1.5f;
 
 		IEnumerator Start () {
-			AnimationState state = skeletonGraphic.AnimationState;
+			if (skeletonAnimation == null && skeletonGraphic != null)
+				skeletonAnimation = skeletonGraphic.GetComponent<SkeletonAnimation>();
+			AnimationState state = skeletonAnimation.AnimationState;
 
 			while (true) {
 				// Run phase
 				SetXPosition(startX);
-				skeletonGraphic.enableSeparatorSlots = false; // Disable Separator during run.
+				skeletonAnimation.Renderer.EnableSeparatorSlots = false; // Disable Separator during run.
 				state.SetAnimation(0, run, true);
 				state.TimeScale = RunTimeScale;
 
@@ -62,7 +65,7 @@ namespace Spine.Unity.Examples {
 
 				// Hit phase
 				SetXPosition(endX);
-				skeletonGraphic.enableSeparatorSlots = true; // Enable Separator when hit
+				skeletonAnimation.Renderer.EnableSeparatorSlots = true; // Enable Separator when hit
 				TrackEntry poleTrack = state.SetAnimation(0, pole, false);
 				yield return new WaitForSpineAnimationComplete(poleTrack);
 				yield return new WaitForSeconds(1f);

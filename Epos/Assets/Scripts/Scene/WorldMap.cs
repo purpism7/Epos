@@ -154,7 +154,7 @@ namespace Scene
                 return;
             }
 
-            var trackEntry = cloudSkeletonAnimation.AnimationState?.GetCurrent(0);
+            var trackEntry = cloudSkeletonAnimation.AnimationState?.GetTrack(0);
             if (trackEntry != null)
             {
                 trackEntry.TrackTime = 0f;

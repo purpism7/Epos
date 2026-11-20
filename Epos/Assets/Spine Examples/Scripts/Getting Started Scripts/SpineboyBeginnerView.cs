@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using Spine.Unity;
@@ -34,7 +34,7 @@ using UnityEngine;
 namespace Spine.Unity.Examples {
 	public class SpineboyBeginnerView : MonoBehaviour {
 
-		#region Inspector
+#region Inspector
 		[Header("Components")]
 		public SpineboyBeginnerModel model;
 		public SkeletonAnimation skeletonAnimation;
@@ -49,7 +49,7 @@ namespace Spine.Unity.Examples {
 
 		[Header("Effects")]
 		public ParticleSystem gunParticles;
-		#endregion
+#endregion
 
 		SpineBeginnerBodyState previousViewState;
 
@@ -116,23 +116,23 @@ namespace Spine.Unity.Examples {
 		[ContextMenu("Check Tracks")]
 		void CheckTracks () {
 			AnimationState state = skeletonAnimation.AnimationState;
-			Debug.Log(state.GetCurrent(0));
-			Debug.Log(state.GetCurrent(1));
+			Debug.Log(state.GetTrack(0));
+			Debug.Log(state.GetTrack(1));
 		}
 
-		#region Transient Actions
+#region Transient Actions
 		public void PlayShoot () {
 			// Play the shoot animation on track 1.
 			TrackEntry shootTrack = skeletonAnimation.AnimationState.SetAnimation(1, shoot, false);
 			shootTrack.MixAttachmentThreshold = 1f;
 			shootTrack.SetMixDuration(0f, 0f);
-			skeletonAnimation.state.AddEmptyAnimation(1, 0.5f, 0.1f);
+			skeletonAnimation.AnimationState.AddEmptyAnimation(1, 0.5f, 0.1f);
 
 			// Play the aim animation on track 2 to aim at the mouse target.
 			TrackEntry aimTrack = skeletonAnimation.AnimationState.SetAnimation(2, aim, false);
 			aimTrack.MixAttachmentThreshold = 1f;
 			aimTrack.SetMixDuration(0f, 0f);
-			skeletonAnimation.state.AddEmptyAnimation(2, 0.5f, 0.1f);
+			skeletonAnimation.AnimationState.AddEmptyAnimation(2, 0.5f, 0.1f);
 
 			gunSource.pitch = GetRandomPitch(gunsoundPitchOffset);
 			gunSource.Play();
@@ -148,20 +148,20 @@ namespace Spine.Unity.Examples {
 		}
 
 		public void StopPlayingAim () {
-			skeletonAnimation.state.AddEmptyAnimation(2, 0.5f, 0.1f);
+			skeletonAnimation.AnimationState.AddEmptyAnimation(2, 0.5f, 0.1f);
 		}
 
 		public void Turn (bool facingLeft) {
 			skeletonAnimation.Skeleton.ScaleX = facingLeft ? -1f : 1f;
 			// Maybe play a transient turning animation too, then call ChangeStableAnimation.
 		}
-		#endregion
+#endregion
 
-		#region Utility
+#region Utility
 		public float GetRandomPitch (float maxPitchOffset) {
 			return 1f + Random.Range(-maxPitchOffset, maxPitchOffset);
 		}
-		#endregion
+#endregion
 	}
 
 }

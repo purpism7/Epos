@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using Spine.Unity.AttachmentTools;
@@ -43,8 +43,7 @@ namespace Spine.Unity.Examples {
 		Spine.Skin equipsSkin;
 		Spine.Skin collectedSkin;
 
-		public Material runtimeMaterial;
-		public Texture2D runtimeAtlas;
+		AtlasUtilities.RepackAttachmentsOutput repackingOutput;
 
 		void Start () {
 			equipsSkin = new Skin("Equips");
@@ -56,6 +55,11 @@ namespace Spine.Unity.Examples {
 
 			skeletonAnimation.Skeleton.Skin = equipsSkin;
 			RefreshSkeletonAttachments();
+		}
+
+		void OnDestroy () {
+			// Note: materials and textures returned by GetRepackedSkin() behave like 'new Texture2D()' and need to be destroyed
+			repackingOutput.DestroyGeneratedAssets();
 		}
 
 		public void Equip (int slotIndex, string attachmentName, Attachment attachment) {
@@ -72,13 +76,13 @@ namespace Spine.Unity.Examples {
 			collectedSkin.AddSkin(equipsSkin);
 
 			// 2. Create a repacked skin.
-			// Note: materials and textures returned by GetRepackedSkin() behave like 'new Texture2D()' and need to be destroyed
-			if (runtimeMaterial)
-				Destroy(runtimeMaterial);
-			if (runtimeAtlas)
-				Destroy(runtimeAtlas);
-			Skin repackedSkin = collectedSkin.GetRepackedSkin("Repacked skin", skeletonAnimation.SkeletonDataAsset.atlasAssets[0].PrimaryMaterial,
-				out runtimeMaterial, out runtimeAtlas, maxAtlasSize: 1024, clearCache: false);
+			// Note: materials and textures returned by previous GetRepackedSkin() calls behave like 'new Texture2D()'
+			// and need to be destroyed.
+			repackingOutput.DestroyGeneratedAssets();
+			AtlasUtilities.RepackAttachmentsSettings settings = AtlasUtilities.RepackAttachmentsSettings.Default;
+			settings.UseSourceMaterialsFrom(skeletonAnimation.SkeletonDataAsset);
+			settings.maxAtlasSize = 1024;
+			Skin repackedSkin = collectedSkin.GetRepackedSkin("repacked skin", settings, ref repackingOutput);
 			collectedSkin.Clear();
 
 			// You can optionally clear the textures cache after each ore multiple repack operations are done.
@@ -91,7 +95,7 @@ namespace Spine.Unity.Examples {
 		}
 
 		void RefreshSkeletonAttachments () {
-			skeletonAnimation.Skeleton.SetSlotsToSetupPose();
+			skeletonAnimation.Skeleton.SetupPoseSlots();
 			skeletonAnimation.AnimationState.Apply(skeletonAnimation.Skeleton); //skeletonAnimation.Update(0);
 		}
 

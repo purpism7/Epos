@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 using Spine.Unity.AttachmentTools;
@@ -80,8 +80,9 @@ namespace Spine.Unity.Examples {
 				SkeletonData skeletonData = skeletonDataAsset.GetSkeletonData(true);
 				Skin templateSkin = skeletonData.FindSkin(templateSkinName);
 				Attachment templateAttachment = templateSkin.GetAttachment(slotIndex, templateAttachmentName);
-				attachment = templateAttachment.GetRemappedClone(asset.sprite, sourceMaterial, premultiplyAlpha: this.applyPMA);
-				// Note: Each call to `GetRemappedClone()` with parameter `premultiplyAlpha` set to `true` creates
+				attachment = templateAttachment.Copy();
+				attachment.SetRegion(asset.sprite, sourceMaterial, premultiplyAlpha: this.applyPMA);
+				// Note: Each call to `SetRegion()` with parameter `premultiplyAlpha` set to `true` creates
 				// a cached Texture copy which can be cleared by calling AtlasUtilities.ClearCache() as shown in the method below.
 
 				cachedAttachments.Add(asset, attachment); // Cache this value for next time this asset is used.
@@ -92,7 +93,7 @@ namespace Spine.Unity.Examples {
 
 		public void Done () {
 			target.OptimizeSkin();
-			// `GetRepackedSkin()` and each call to `GetRemappedClone()` with parameter `premultiplyAlpha` set to `true`
+			// `GetRepackedSkin()` and each call to `SetRegion()` with parameter `premultiplyAlpha` set to `true`
 			// creates cached Texture copies which can be cleared by calling AtlasUtilities.ClearCache().
 			// You can optionally clear the textures cache after multiple repack operations.
 			// Just be aware that while this cleanup frees up memory, it is also a costly operation
