@@ -63,13 +63,15 @@ namespace Characters.Actions
             
         }
         
-        protected bool PlayAnimation(string animationName, bool loop)
+        // 표의 키로 재생한다. 지금 앞뒤에 맞는 이름은 CharacterAnimator 가 고른다.
+        // faceDirection 을 주면 그쪽을 먼저 본 뒤 한 번만 재생한다(이동 시작, 이후 #2 공격 대상 쪽 보기).
+        protected bool PlayAnimation(AnimationKey animationKey, bool loop, Vector2? faceDirection = null)
         {
-            var skeletonAnimation = _actor?.SkeletonAnimation;
-            if (skeletonAnimation == null)
+            var characterAnimator = _actor?.CharacterAnimator;
+            if (characterAnimator == null)
                 return false;
 
-            return skeletonAnimation.PlayAnimation(animationName, loop, OnCompleted, out _);
+            return characterAnimator.Play(animationKey, loop, OnCompleted, faceDirection);
         }
     }
 }

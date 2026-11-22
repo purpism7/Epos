@@ -19,7 +19,8 @@ namespace Characters.Actions
             if (_actor == null || _actionParam == null)
                 return;
             
-            if (PlayAnimation("Run", true))
+            // 이동 방향을 먼저 본 뒤 한 번만 재생한다 → 첫 프레임부터 맞는 앞/뒤 달리기가 나온다.
+            if (PlayAnimation(AnimationKey.Run, true, _actionParam.MoveAxis))
                 _isMoving = true;
         }
 
@@ -46,7 +47,8 @@ namespace Characters.Actions
             
             // var direction = movement - transform.position;
 
-            _actor?.ActionController?.Flip(axis.x);
+            // 좌우 반전 + 앞뒤 갱신. 앞뒤가 바뀌면 Execute 가 다시 불리지 않아도 달리기를 그쪽 그림으로 바꿔 튼다.
+            _actor?.CharacterAnimator?.Face(axis);
             _actor?.SetSortingOrder(transform.position.y);
 
             transform.position += movement * MoveSpeed * Time.deltaTime;
@@ -67,7 +69,7 @@ namespace Characters.Actions
             _isMoving = false;
 
             // TODO: Idle 애니메이션 재생 또는 액션 완료 이벤트 호출
-            PlayAnimation("Idle", true);
+            PlayAnimation(AnimationKey.Idle, true);
 
             Debug.Log("Move Completed");
         }

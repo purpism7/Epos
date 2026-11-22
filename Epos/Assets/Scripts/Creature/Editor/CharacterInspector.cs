@@ -32,7 +32,7 @@ public class CharacterInspector : Editor
             var currentAnimationName = "—";
             if (skeletonAnimation?.AnimationState != null)
             {
-                var trackEntry = skeletonAnimation.AnimationState.GetCurrent(0);
+                var trackEntry = skeletonAnimation.AnimationState.GetTrack(0);
                 currentAnimationName = trackEntry?.Animation?.Name ?? "—";
             }
             EditorGUILayout.LabelField("Current Animation", currentAnimationName);

@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #if UNITY_2018_1_OR_NEWER
@@ -39,6 +39,7 @@
 #define HAS_ON_POSTPROCESS_PREFAB
 #endif
 
+// Note: major_minor_OR_NEWER is automatically defined, but not major_minor_patch_OR_NEWER
 #if (UNITY_2020_3 && !(UNITY_2020_3_1 || UNITY_2020_3_2 || UNITY_2020_3_3 || UNITY_2020_3_4 || UNITY_2020_3_5 || UNITY_2020_3_6 || UNITY_2020_3_7 || UNITY_2020_3_8 || UNITY_2020_3_9 || UNITY_2020_3_10 || UNITY_2020_3_11 || UNITY_2020_3_12 || UNITY_2020_3_13 || UNITY_2020_3_14 || UNITY_2020_3_15))
 #define UNITY_2020_3_16_OR_NEWER
 #endif
@@ -46,10 +47,9 @@
 #define UNITY_2021_1_17_OR_NEWER
 #endif
 
-#if UNITY_2020_3_16_OR_NEWER || UNITY_2021_1_17_OR_NEWER
+#if UNITY_2020_3_16_OR_NEWER || UNITY_2021_1_17_OR_NEWER || UNITY_2021_2_OR_NEWER
 #define HAS_SAVE_ASSET_IF_DIRTY
 #endif
-
 #define SPINE_OPTIONAL_ON_DEMAND_LOADING
 
 using System.Collections.Generic;
@@ -68,20 +68,36 @@ namespace Spine.Unity.Editor {
 		static List<string> prefabsToRestore = new List<string>();
 #endif
 #if SPINE_OPTIONAL_ON_DEMAND_LOADING
+		/// <summary>Target textures replaced by placeholders of one loader at a material. A material may have
+		/// entries of multiple loaders.</summary>
+		struct OnDemandTexturesToRestore {
+			public Material material;
+			/// <summary>Asset path instead of a reference, as the loader asset might be unloaded during the build.</summary>
+			public string loaderPath;
+			public Texture[] targetTextures;
+		}
 		static List<string> textureLoadersToRestore = new List<string>();
+		static List<OnDemandTexturesToRestore> onDemandTexturesToRestoreAtMaterial = new List<OnDemandTexturesToRestore>();
 #endif
 		static Dictionary<string, string> spriteAtlasTexturesToRestore = new Dictionary<string, string>();
 
 		internal static void PreprocessBuild () {
 			isBuilding = true;
+			try {
 #if HAS_ON_POSTPROCESS_PREFAB
-			if (SpineEditorUtilities.Preferences.removePrefabPreviewMeshes)
-				PreprocessSpinePrefabMeshes();
+				if (SpineEditorUtilities.Preferences.removePrefabPreviewMeshes)
+					PreprocessSpinePrefabMeshes();
 #endif
 #if SPINE_OPTIONAL_ON_DEMAND_LOADING
-			PreprocessOnDemandTextureLoaders();
+				PreprocessOnDemandTextureLoaders();
+				PreprocessOnDemandMaterialAssets();
 #endif
-			PreprocessSpriteAtlases();
+				PreprocessSpriteAtlases();
+			} catch {
+				// revert any already applied pre-processing steps when aborting the build.
+				PostprocessBuild();
+				throw;
+			}
 		}
 
 		internal static void PostprocessBuild () {
@@ -91,6 +107,7 @@ namespace Spine.Unity.Editor {
 				PostprocessSpinePrefabMeshes();
 #endif
 #if SPINE_OPTIONAL_ON_DEMAND_LOADING
+			PostprocessOnDemandMaterialAssets();
 			PostprocessOnDemandTextureLoaders();
 #endif
 			PostprocessSpriteAtlases();
@@ -115,7 +132,6 @@ namespace Spine.Unity.Editor {
 						prefabsToRestore.Add(assetPath);
 					}
 				}
-				EditorUtility.UnloadUnusedAssetsImmediate();
 				AssetDatabase.StopAssetEditing();
 #if !HAS_SAVE_ASSET_IF_DIRTY
 				if (prefabAssets.Length > 0)
@@ -152,15 +168,38 @@ namespace Spine.Unity.Editor {
 		internal static void PreprocessOnDemandTextureLoaders () {
 			BuildUtilities.IsInSkeletonAssetBuildPreProcessing = true;
 			try {
-				AssetDatabase.StartAssetEditing();
 				textureLoadersToRestore.Clear();
+
+				// validate all active loaders before modifying any materials. Invalid loaders are skipped, so their
+				// materials keep the high-resolution textures instead of receiving wrong placeholder textures.
+				List<string> usedLoaderPaths = new List<string>();
+				List<OnDemandTextureLoader> skippedLoaders = new List<OnDemandTextureLoader>();
 				string[] loaderAssets = AssetDatabase.FindAssets("t:OnDemandTextureLoader");
 				foreach (string loaderAsset in loaderAssets) {
 					string assetPath = AssetDatabase.GUIDToAssetPath(loaderAsset);
 					OnDemandTextureLoader loader = AssetDatabase.LoadAssetAtPath<OnDemandTextureLoader>(assetPath);
-					bool isLoaderUsed = loader.atlasAsset && loader.atlasAsset.OnDemandTextureLoader == loader &&
+					bool isLoaderUsed = loader && loader.atlasAsset && loader.atlasAsset.OnDemandTextureLoader == loader &&
 						loader.atlasAsset.TextureLoadingMode == AtlasAssetBase.LoadingMode.OnDemand;
-					if (isLoaderUsed) {
+					if (!isLoaderUsed) continue;
+
+					if (!loader.ValidateSetup()) {
+						skippedLoaders.Add(loader);
+						continue;
+					}
+					usedLoaderPaths.Add(assetPath);
+				}
+
+				RestoreTargetTexturesAtSkippedLoaders(skippedLoaders);
+				foreach (OnDemandTextureLoader loader in skippedLoaders) {
+					Debug.LogWarning(string.Format("On-demand texture loader '{0}' is skipped when building due to the invalid setup " +
+						"reported above. Its textures are included in the build at full resolution and are not loaded on demand. " +
+						"Please hit 'Regenerate' at the loader.", AssetDatabase.GetAssetPath(loader)), loader);
+				}
+
+				AssetDatabase.StartAssetEditing();
+				try {
+					foreach (string assetPath in usedLoaderPaths) {
+						OnDemandTextureLoader loader = AssetDatabase.LoadAssetAtPath<OnDemandTextureLoader>(assetPath);
 						IEnumerable<Material> modifiedMaterials;
 						textureLoadersToRestore.Add(assetPath);
 						loader.AssignPlaceholderTextures(out modifiedMaterials);
@@ -171,9 +210,9 @@ namespace Spine.Unity.Editor {
 						}
 #endif
 					}
+				} finally {
+					AssetDatabase.StopAssetEditing();
 				}
-				EditorUtility.UnloadUnusedAssetsImmediate();
-				AssetDatabase.StopAssetEditing();
 #if !HAS_SAVE_ASSET_IF_DIRTY
 				if (textureLoadersToRestore.Count > 0)
 					AssetDatabase.SaveAssets();
@@ -181,6 +220,69 @@ namespace Spine.Unity.Editor {
 			} finally {
 				BuildUtilities.IsInSkeletonAssetBuildPreProcessing = false;
 			}
+		}
+
+		/// <summary>Recovers atlas, blend mode and copied material assets of skipped loaders before assigning any
+		/// build placeholders. Recovery scans once for all skipped loaders, even when the normal material scan is disabled.
+		/// Aborts the build if any of their placeholders cannot be restored.</summary>
+		static void RestoreTargetTexturesAtSkippedLoaders (List<OnDemandTextureLoader> loaders) {
+			if (loaders.Count == 0) return;
+
+			HashSet<Material> materialsToSave = new HashSet<Material>();
+			AssetDatabase.StartAssetEditing();
+			try {
+				foreach (OnDemandTextureLoader loader in loaders) {
+					List<Material> restoredMaterials;
+					if (!loader.RestoreTargetTextures(out restoredMaterials)) continue;
+					foreach (Material material in restoredMaterials)
+						materialsToSave.Add(material);
+				}
+
+				HashSet<string> materialAssetPaths = new HashSet<string>();
+				foreach (string guid in AssetDatabase.FindAssets("t:Material"))
+					materialAssetPaths.Add(AssetDatabase.GUIDToAssetPath(guid));
+				foreach (string assetPath in materialAssetPaths) {
+					foreach (UnityEngine.Object asset in AssetDatabase.LoadAllAssetsAtPath(assetPath)) {
+						Material material = asset as Material;
+						if (!material) continue;
+						foreach (OnDemandTextureLoader loader in loaders) {
+							if (loader.RestoreTargetTextures(material))
+								materialsToSave.Add(material);
+						}
+						foreach (OnDemandTextureLoader loader in loaders) {
+							if (loader.HasPlaceholderAssigned(material))
+								throw UnrestoredPlaceholderException(loader, material);
+						}
+					}
+				}
+
+				// Also check the loader's own materials, which need not all be persistent assets.
+				foreach (OnDemandTextureLoader loader in loaders) {
+					List<Material> placeholderMaterials;
+					if (loader.HasPlaceholderTexturesAssigned(out placeholderMaterials))
+						throw UnrestoredPlaceholderException(loader, placeholderMaterials[0]);
+				}
+			} finally {
+				AssetDatabase.StopAssetEditing();
+				// Save successful recoveries even if another material caused the build to abort.
+				foreach (Material material in materialsToSave) {
+					if (!material) continue;
+					EditorUtility.SetDirty(material);
+#if HAS_SAVE_ASSET_IF_DIRTY
+					AssetDatabase.SaveAssetIfDirty(material);
+#endif
+				}
+#if !HAS_SAVE_ASSET_IF_DIRTY
+				if (materialsToSave.Count > 0)
+					AssetDatabase.SaveAssets();
+#endif
+			}
+		}
+
+		static BuildFailedException UnrestoredPlaceholderException (OnDemandTextureLoader loader, Material material) {
+			return new BuildFailedException(string.Format("Cannot build: Material '{0}' ({1}) still references a placeholder of " +
+				"skipped on-demand texture loader '{2}'. Restore its target texture references and regenerate the loader before building.",
+				material.name, AssetDatabase.GetAssetPath(material), AssetDatabase.GetAssetPath(loader)));
 		}
 
 		internal static void PostprocessOnDemandTextureLoaders () {
@@ -206,6 +308,122 @@ namespace Spine.Unity.Editor {
 				BuildUtilities.IsInSkeletonAssetBuildPostProcessing = false;
 			}
 		}
+
+		internal static void PreprocessOnDemandMaterialAssets () {
+			BuildUtilities.IsInSkeletonAssetBuildPreProcessing = true;
+			try {
+				onDemandTexturesToRestoreAtMaterial.Clear();
+				if (!SpineEditorUtilities.Preferences.scanOnDemandMaterials || textureLoadersToRestore.Count == 0) return;
+
+				List<OnDemandTextureLoader> loaders = new List<OnDemandTextureLoader>(textureLoadersToRestore.Count);
+				List<string> loaderPaths = new List<string>(textureLoadersToRestore.Count);
+				foreach (string assetPath in textureLoadersToRestore) {
+					OnDemandTextureLoader loader = AssetDatabase.LoadAssetAtPath<OnDemandTextureLoader>(assetPath);
+					if (loader) {
+						loaders.Add(loader);
+						loaderPaths.Add(assetPath);
+					}
+				}
+				if (loaders.Count == 0) return;
+
+				HashSet<string> materialAssetPaths = new HashSet<string>();
+				string[] materialAssetGuids = AssetDatabase.FindAssets("t:Material");
+				foreach (string materialAssetGuid in materialAssetGuids)
+					materialAssetPaths.Add(AssetDatabase.GUIDToAssetPath(materialAssetGuid));
+
+				AssetDatabase.StartAssetEditing();
+				try {
+					foreach (string assetPath in materialAssetPaths) {
+						UnityEngine.Object[] assets = AssetDatabase.LoadAllAssetsAtPath(assetPath);
+						foreach (UnityEngine.Object asset in assets) {
+							Material material = asset as Material;
+							if (!material) continue;
+
+							// every loader gets its turn, a material might reference target textures of multiple loaders.
+							bool anyPlaceholderAssigned = false;
+							for (int loaderIndex = 0; loaderIndex < loaders.Count; ++loaderIndex) {
+								Texture[] targetTextures;
+								if (!loaders[loaderIndex].AssignPlaceholderTextures(material, out targetTextures)) continue;
+
+								onDemandTexturesToRestoreAtMaterial.Add(new OnDemandTexturesToRestore {
+									material = material,
+									loaderPath = loaderPaths[loaderIndex],
+									targetTextures = targetTextures
+								});
+								anyPlaceholderAssigned = true;
+							}
+							if (anyPlaceholderAssigned) {
+								EditorUtility.SetDirty(material);
+#if HAS_SAVE_ASSET_IF_DIRTY
+								AssetDatabase.SaveAssetIfDirty(material);
+#endif
+							}
+							LogUncoveredTargetTextures(material, assetPath, loaders);
+						}
+					}
+				} finally {
+					AssetDatabase.StopAssetEditing();
+				}
+#if !HAS_SAVE_ASSET_IF_DIRTY
+				if (onDemandTexturesToRestoreAtMaterial.Count > 0)
+					AssetDatabase.SaveAssets();
+#endif
+			} finally {
+				BuildUtilities.IsInSkeletonAssetBuildPreProcessing = false;
+			}
+		}
+
+		/// <summary>Logs a warning for each texture property of the material which still references an on-demand
+		/// target texture after placeholders have been assigned, e.g. a differently named normal map property of a
+		/// custom shader. Such high-resolution textures are included in the build instead of being loaded on demand.</summary>
+		internal static void LogUncoveredTargetTextures (Material material, string assetPath, List<OnDemandTextureLoader> loaders) {
+			string[] texturePropertyNames = OnDemandTextureLoader.GetTexturePropertyNames(material);
+			foreach (string propertyName in texturePropertyNames) {
+				Texture texture = material.GetTexture(propertyName);
+				if (!texture) continue;
+
+				foreach (OnDemandTextureLoader loader in loaders) {
+					if (!loader.IsTargetTexture(texture)) continue;
+					Debug.LogWarning(string.Format("On-demand target texture '{0}' is still referenced at texture property '{1}' " +
+						"of Material '{2}' after assigning placeholders, as the property is not covered by loader '{3}' " +
+						"(neither main texture nor listed in 'Additional Texture Properties'). " +
+						"The high-resolution texture will be included in the build instead of being loaded on demand.",
+						texture.name, propertyName, assetPath, loader.name), material);
+					break;
+				}
+			}
+		}
+
+		internal static void PostprocessOnDemandMaterialAssets () {
+			BuildUtilities.IsInSkeletonAssetBuildPostProcessing = true;
+			try {
+				if (onDemandTexturesToRestoreAtMaterial.Count == 0) return;
+				AssetDatabase.StartAssetEditing();
+				try {
+					foreach (OnDemandTexturesToRestore texturesToRestore in onDemandTexturesToRestoreAtMaterial) {
+						Material material = texturesToRestore.material;
+						if (!material) continue;
+						OnDemandTextureLoader loader = AssetDatabase.LoadAssetAtPath<OnDemandTextureLoader>(texturesToRestore.loaderPath);
+						if (!loader) continue;
+
+						loader.RestoreTargetTextures(material, texturesToRestore.targetTextures);
+						EditorUtility.SetDirty(material);
+#if HAS_SAVE_ASSET_IF_DIRTY
+						AssetDatabase.SaveAssetIfDirty(material);
+#endif
+					}
+				} finally {
+					AssetDatabase.StopAssetEditing();
+				}
+#if !HAS_SAVE_ASSET_IF_DIRTY
+				if (onDemandTexturesToRestoreAtMaterial.Count > 0)
+					AssetDatabase.SaveAssets();
+#endif
+				onDemandTexturesToRestoreAtMaterial.Clear();
+			} finally {
+				BuildUtilities.IsInSkeletonAssetBuildPostProcessing = false;
+			}
+		}
 #endif
 		internal static void PreprocessSpriteAtlases () {
 			BuildUtilities.IsInSpriteAtlasBuildPreProcessing = true;
@@ -226,7 +444,6 @@ namespace Spine.Unity.Editor {
 					AssetDatabase.SaveAssetIfDirty(atlasAsset);
 #endif
 				}
-				EditorUtility.UnloadUnusedAssetsImmediate();
 				AssetDatabase.StopAssetEditing();
 #if !HAS_SAVE_ASSET_IF_DIRTY
 				if (spriteAtlasAssets.Length > 0)

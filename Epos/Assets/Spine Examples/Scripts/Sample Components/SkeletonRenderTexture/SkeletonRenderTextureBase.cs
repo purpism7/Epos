@@ -1,16 +1,16 @@
 /******************************************************************************
  * Spine Runtimes License Agreement
- * Last updated July 28, 2023. Replaces all prior versions.
+ * Last updated April 5, 2025. Replaces all prior versions.
  *
- * Copyright (c) 2013-2023, Esoteric Software LLC
+ * Copyright (c) 2013-2026, Esoteric Software LLC
  *
  * Integration of the Spine Runtimes into software or otherwise creating
  * derivative works of the Spine Runtimes is permitted under the terms and
  * conditions of Section 2 of the Spine Editor License Agreement:
  * http://esotericsoftware.com/spine-editor-license
  *
- * Otherwise, it is permitted to integrate the Spine Runtimes into software or
- * otherwise create derivative works of the Spine Runtimes (collectively,
+ * Otherwise, it is permitted to integrate the Spine Runtimes into software
+ * or otherwise create derivative works of the Spine Runtimes (collectively,
  * "Products"), provided that each user of the Products must obtain their own
  * Spine Editor license and redistribution of the Products in any form must
  * include this license and copyright notice.
@@ -23,8 +23,8 @@
  * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES,
  * BUSINESS INTERRUPTION, OR LOSS OF USE, DATA, OR PROFITS) HOWEVER CAUSED AND
  * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THE
- * SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THE SPINE RUNTIMES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *****************************************************************************/
 
 #if UNITY_2017_2_OR_NEWER
@@ -136,8 +136,10 @@ namespace Spine.Unity.Examples {
 			Vector2 cameraSize = new Vector2(
 					targetCamera.orthographicSize * 2.0f * targetCamera.aspect,
 					targetCamera.orthographicSize * 2.0f);
-			Vector2 min = new Vector2(screenSpaceMin.x, screenSpaceMin.y) / fullSizePixels;
-			Vector2 max = new Vector2(screenSpaceMax.x, screenSpaceMax.y) / fullSizePixels;
+			// screenSpaceMin and screenSpaceMax are relative to the screen origin.
+			Vector2 viewportOrigin = targetCamera.pixelRect.position;
+			Vector2 min = (new Vector2(screenSpaceMin.x, screenSpaceMin.y) - viewportOrigin) / fullSizePixels;
+			Vector2 max = (new Vector2(screenSpaceMax.x, screenSpaceMax.y) - viewportOrigin) / fullSizePixels;
 			Vector2 centerOffset = new Vector2(-0.5f, -0.5f);
 			min = (min + centerOffset) * cameraSize;
 			max = (max + centerOffset) * cameraSize;
@@ -152,8 +154,10 @@ namespace Spine.Unity.Examples {
 			Vector2 planesSize = new Vector2(
 				frustumPlanes.right - frustumPlanes.left,
 				frustumPlanes.top - frustumPlanes.bottom);
-			Vector2 min = new Vector2(screenSpaceMin.x, screenSpaceMin.y) / fullSizePixels * planesSize;
-			Vector2 max = new Vector2(screenSpaceMax.x, screenSpaceMax.y) / fullSizePixels * planesSize;
+			// screenSpaceMin and screenSpaceMax are relative to the screen origin.
+			Vector2 viewportOrigin = targetCamera.pixelRect.position;
+			Vector2 min = (new Vector2(screenSpaceMin.x, screenSpaceMin.y) - viewportOrigin) / fullSizePixels * planesSize;
+			Vector2 max = (new Vector2(screenSpaceMax.x, screenSpaceMax.y) - viewportOrigin) / fullSizePixels * planesSize;
 			frustumPlanes.right = frustumPlanes.left + max.x;
 			frustumPlanes.top = frustumPlanes.bottom + max.y;
 			frustumPlanes.left += min.x;

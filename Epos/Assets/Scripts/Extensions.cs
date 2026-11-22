@@ -108,7 +108,7 @@ public static class Extensions
                 return false;
 
             animationState.ClearTracks();
-            skeletonAnimation.skeleton?.SetToSetupPose();
+            skeletonAnimation.skeleton?.SetupPose();
             
             var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
@@ -135,7 +135,10 @@ public static class Extensions
 
         try
         {
-            var animationState = skeletonGraphic?.AnimationState;
+            // 4.3: SkeletonGraphic 은 그리기만 하고, 애니메이션은 같은 오브젝트의 SkeletonAnimation 이 맡는다.
+            // (SkeletonGraphic.Animation 은 그 컴포넌트의 Awake 뒤에야 채워지므로 직접 찾는다.)
+            var skeletonAnimation = skeletonGraphic != null ? skeletonGraphic.GetComponent<SkeletonAnimation>() : null;
+            var animationState = skeletonAnimation?.AnimationState;
             if (animationState == null)
                 return false;
             
@@ -144,7 +147,7 @@ public static class Extensions
                 return false;
 
             animationState.ClearTracks();
-            skeletonGraphic.Skeleton?.SetToSetupPose();
+            skeletonGraphic.Skeleton?.SetupPose();
 
             var trackEntry = animationState.SetAnimation(0, resolvedAnimationName, loop);
             if (trackEntry == null)
@@ -155,7 +158,7 @@ public static class Extensions
 
             duration = trackEntry.Animation.Duration;
 
-            skeletonGraphic.Update(0);
+            skeletonAnimation.Update(0);
 
             return true;
         }

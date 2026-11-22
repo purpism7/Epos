@@ -15,10 +15,15 @@ namespace Characters
         
         public SkeletonAnimation SkeletonAnimation => skeletonAnimation;
         public IActionController ActionController => actionController;
+        public CharacterAnimator CharacterAnimator => _characterAnimator;
         
         protected SkeletonAnimation skeletonAnimation = null;
         protected ActionController actionController = null;
         
+        [Tooltip("스파인 원본 그림이 뒤집지 않은 상태(ScaleX = +1)에서 바라보는 좌우 방향. 좌우 반전은 이 값으로 정하므로 SkeletonRenderer 의 Initial Flip X 는 끈 채로 둔다.")]
+        [SerializeField] private HorizontalFacing artFacing = HorizontalFacing.Right;
+
+        private CharacterAnimator _characterAnimator = null;
         private MeshRenderer _meshRenderer = null;
         
         public override void Initialize()
@@ -26,6 +31,7 @@ namespace Characters
             base.Initialize();
             
             skeletonAnimation = GetComponentInChildren<SkeletonAnimation>();
+            _characterAnimator = new CharacterAnimator(skeletonAnimation, artFacing);
 
             actionController = new ActionController(this);
         }
