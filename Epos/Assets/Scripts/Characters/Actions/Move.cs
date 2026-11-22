@@ -9,7 +9,6 @@ namespace Characters.Actions
 
     public class Move : Action<MoveParam>
     {
-        private const float MoveSpeed = 5f;
         private const float ArriveDistance = 0.05f;
 
         private bool _isMoving = false;
@@ -26,32 +25,9 @@ namespace Characters.Actions
 
         public override void ChainUpdate()
         {
-            if (_actor == null || _actionParam == null)
-                return;
-
-            Vector2 axis = _actionParam.MoveAxis;
-            if (axis == Vector2.zero)
-            {
-                EndAction();
-                return;
-            }
-
-            var transform = _actor.Transform;
-            if (transform == null)
-            {
-                EndAction();
-                return;
-            }
-
-            Vector3 movement = new Vector3(axis.x, axis.y, 0f);
-            
-            // var direction = movement - transform.position;
-
-            // 좌우 반전 + 앞뒤 갱신. 앞뒤가 바뀌면 Execute 가 다시 불리지 않아도 달리기를 그쪽 그림으로 바꿔 튼다.
-            _actor?.CharacterAnimator?.Face(axis);
-            _actor?.SetSortingOrder(transform.position.y);
-
-            transform.position += movement * MoveSpeed * Time.deltaTime;
+            // 위치 · 바라보는 쪽 · 그리기 순서는 전투 시뮬 결과로 BattleUnitPresenter 가 프레임마다 맞춘다.
+            // 이동 액션은 달리기 그림만 맡는다(Execute). 속도는 데이터(BattleStatsSettings 의 moveSpeed)로 옮겼다.
+            return;
         }
 
         protected override void EndAction()
