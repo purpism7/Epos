@@ -26,8 +26,13 @@ namespace Managers
         private void Awake()
         {
             Debug.Log("GameManager Awake");
-            
-            // 임시 
+        }
+
+        private void Start()
+        {
+            // 임시
+            // GameInitializer 가 장면을 읽기 전에 만들기 때문에 Awake 에서는 장면 오브젝트가 아직 깨어나지 않아 비활성으로 보인다
+            // (꺼진 캐릭터로 여겨 전투에 넣지 못하고, 자식 컴포넌트 찾기도 실패할 수 있다). 장면이 모두 깨어난 뒤인 Start 에서 초기화한다.
             Initialize();
         }
 
