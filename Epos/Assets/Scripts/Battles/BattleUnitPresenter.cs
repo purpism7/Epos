@@ -42,6 +42,23 @@ namespace Battles
             _character = character;
         }
 
+        /// <summary>
+        /// 다시 하기(새 판): 보여 준 상태를 잊고 쓰러짐 표현을 걷는다. 다음 Present 가 새 유닛 상태로 그림을 처음부터 고른다.
+        /// HP 바는 Present 가 새 HP 를 보고 다시 켜고 채운다.
+        /// </summary>
+        public void ResetForNewBattle()
+        {
+            _hasShownActivity = false;
+            _shownActivity = BattleUnitActivity.Idle;
+            _shownAttackSerial = 0;
+            _consecutiveIdleTicks = 0;
+            _chasedSincePresent = false;
+
+            // 캐릭터가 파괴됐으면(유니티 null) 건너뛴다.
+            if (_character != null)
+                _character.CharacterAnimator?.ClearDownHold();
+        }
+
         /// <summary>시뮬 틱이 하나 끝날 때마다 부른다(그림은 바꾸지 않고 틱 단위 상태만 센다).</summary>
         public void ObserveTick(BattleUnit unit)
         {

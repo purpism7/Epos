@@ -6,7 +6,7 @@ namespace Characters
 {
     /// <summary>
     /// 캐릭터 한 명의 전투 능력치 — 인스펙터에서 고치는 ⚑ 임시값(캐릭터 · 프리팹마다).
-    /// 플레이를 시작할 때 BattleManager 가 한 번 읽어 순수 시뮬 값(BattleUnitStats)으로 바꾼다. 플레이 중에 고친 값은 다음 플레이부터 반영된다.
+    /// 판을 시작할 때(플레이 시작 · R 다시 하기) BattleManager 가 읽어 순수 시뮬 값(BattleUnitStats)으로 바꾼다. 판 도중에 고친 값은 다음 판부터 반영된다.
     /// 시간 값은 1/60초(틱) 단위로 반올림된다.
     /// </summary>
     [System.Serializable]

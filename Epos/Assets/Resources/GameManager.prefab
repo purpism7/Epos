@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c0b5a7c54134d1b8d23e7abdeea436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Managers.GameManager
+  battleResultFont: {fileID: 11400000, guid: 757d5c6a6fb7f594ba4b63f49bbe107e, type: 2}

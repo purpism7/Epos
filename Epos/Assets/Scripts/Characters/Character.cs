@@ -24,7 +24,7 @@ namespace Characters
         [Tooltip("스파인 원본 그림이 뒤집지 않은 상태(ScaleX = +1)에서 바라보는 좌우 방향. 좌우 반전은 이 값으로 정하므로 SkeletonRenderer 의 Initial Flip X 는 끈 채로 둔다.")]
         [SerializeField] private HorizontalFacing artFacing = HorizontalFacing.Right;
 
-        [Tooltip("전투 능력치 ⚑(임시값). 플레이를 시작할 때 한 번 읽어 전투 시뮬에 넘긴다(플레이 중에 바꾸면 다음 플레이부터). 공격 피해 0 = 공격하지 않는 허수아비, 이동 속도 0 = 제자리.")]
+        [Tooltip("전투 능력치 ⚑(임시값). 판을 시작할 때(플레이 시작 · R 다시 하기) 읽어 전투 시뮬에 넘긴다(판 도중에 바꾸면 다음 판부터). 공격 피해 0 = 공격하지 않는 허수아비, 이동 속도 0 = 제자리.")]
         [SerializeField] private BattleStatsSettings battleStats = new BattleStatsSettings();
 
         private CharacterAnimator _characterAnimator = null;
