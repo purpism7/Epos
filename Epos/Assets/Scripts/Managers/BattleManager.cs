@@ -29,7 +29,8 @@ namespace Managers
 
         /// <summary>
         /// 틱이 하나 끝날 때마다 그 틱의 이벤트를 생긴 순서대로 알린다(틱 도중에는 알리지 않는다).
-        /// #3 쓰러짐 표현 · UI 가 여기에 붙고(Down: Source = 마지막으로 때린 유닛, Target = 쓰러진 유닛), TryGetCharacter 로 캐릭터를 찾는다.
+        /// 연출 · 소리 · UI 가 여기에 붙고(Down: Source = 마지막으로 때린 유닛, Target = 쓰러진 유닛), TryGetCharacter 로 캐릭터를 찾는다.
+        /// (쓰러짐 그림 · 머리 위 HP 바는 이벤트가 아니라 시뮬 상태를 읽어 BattleUnitPresenter 가 맞춘다.)
         /// 받는 쪽은 읽기만 한다. 받는 쪽에서 ChainUpdate 를 다시 불러도 무시된다.
         /// </summary>
         public event System.Action<BattleEvent> OnBattleEvent = null;
