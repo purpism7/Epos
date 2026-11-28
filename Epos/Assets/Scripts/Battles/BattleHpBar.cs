@@ -9,7 +9,7 @@ namespace Battles
     /// 머리 위 HP 바(표현 전용). 시뮬 유닛을 읽기만 하고 바꾸지 않는다.
     /// - 캐릭터 아래에 바탕 · 채움 스프라이트 두 장을 만들어 붙인다(캐릭터와 함께 움직이고 함께 사라진다).
     /// - 채움 길이 = HP / 최대 HP. HP 가 바뀐 프레임에만 고친다.
-    /// - 채움 색은 편으로 가른다(아군 파랑 · 적 빨강 — 팀컬러 원리). 전투 불능이 되면 숨긴다(되돌리지 않는다).
+    /// - 채움 색은 편으로 가른다(아군 파랑 · 적 빨강 — 팀컬러 원리). 전투 불능이 되면 숨기고, 다시 하기로 일어서면 다시 켠다.
     /// - 높이는 처음 그려진 그림의 위 끝에서 한 번만 정한다(애니메이션마다 오르내리지 않게). 그 전에는 숨겨 둔다.
     /// </summary>
     public sealed class BattleHpBar
@@ -82,13 +82,12 @@ namespace Battles
                 return;
             }
 
-            if (!_isPlaced)
-            {
-                if (!TryPlaceAboveHead())
-                    return;
+            if (!_isPlaced && !TryPlaceAboveHead())
+                return;
 
+            // 처음 놓였을 때 · 다시 하기로 일어섰을 때 켠다.
+            if (!_rootObject.activeSelf)
                 _rootObject.SetActive(true);
-            }
 
             if (unit.Hp == _shownHp)
                 return;

@@ -34,6 +34,11 @@ namespace Characters
         private System.Action<TrackEntry> _requestedCompleted = null;
         private string _playingName = null;
 
+        // 쓰러짐 그림이 없을 때의 멈춤 · 어둡게(HoldDownWithoutAnimation). 다시 하기 때 원래 값으로 돌린다.
+        private bool _isHeldDown = false;
+        private float _timeScaleBeforeHold = 1f;
+        private Color _colorBeforeHold = Color.white;
+
         /// <param name="skeletonAnimation">null 이어도 된다(재생은 false, 좌우 반전은 건너뛴다).</param>
         /// <param name="artFacing">스파인 원본 그림이 뒤집지 않은 상태(ScaleX = +1)에서 바라보는 좌우 방향.</param>
         public CharacterAnimator(SkeletonAnimation skeletonAnimation, HorizontalFacing artFacing)
@@ -74,18 +79,42 @@ namespace Characters
 
         /// <summary>
         /// 쓰러짐(Death) 그림이 없는 캐릭터의 전투 불능 표현(⚑ 임시): 지금 모습에서 애니메이션을 멈추고 어둡게 한다.
-        /// 전투 불능은 되돌릴 수 없으므로 되돌리는 함수를 두지 않는다. 그 뒤의 Play · Face 도 멈춘 채로 둔다.
+        /// 한 판 안에서는 되돌리지 않는다(전투 불능은 되돌릴 수 없다) — 그 뒤의 Play · Face 도 멈춘 채로 둔다. 다시 하기 때만 ClearDownHold 로 걷는다.
         /// </summary>
         public void HoldDownWithoutAnimation()
         {
+            if (_isHeldDown || _skeletonAnimation == null || !_skeletonAnimation.IsValid)
+                return;
+
+            var animationState = _skeletonAnimation.AnimationState;
+            var skeleton = _skeletonAnimation.skeleton;
+
+            _isHeldDown = true;
+            _timeScaleBeforeHold = animationState != null ? animationState.TimeScale : 1f;
+            _colorBeforeHold = skeleton != null ? skeleton.GetColor() : Color.white;
+
+            if (animationState != null)
+                animationState.TimeScale = 0f;
+
+            skeleton?.SetColor(DownTintBrightness, DownTintBrightness, DownTintBrightness, DownTintAlpha);
+        }
+
+        /// <summary>다시 하기: HoldDownWithoutAnimation 의 멈춤 · 어둡게를 걷고 원래대로 돌린다. 쓰러짐 그림 자체는 다음 Play 가 갈음한다.</summary>
+        public void ClearDownHold()
+        {
+            if (!_isHeldDown)
+                return;
+
+            _isHeldDown = false;
+
             if (_skeletonAnimation == null || !_skeletonAnimation.IsValid)
                 return;
 
             var animationState = _skeletonAnimation.AnimationState;
             if (animationState != null)
-                animationState.TimeScale = 0f;
+                animationState.TimeScale = _timeScaleBeforeHold;
 
-            _skeletonAnimation.skeleton?.SetColor(DownTintBrightness, DownTintBrightness, DownTintBrightness, DownTintAlpha);
+            _skeletonAnimation.skeleton?.SetColor(_colorBeforeHold);
         }
 
         // 방향을 갱신하고 좌우 반전을 반영한다. 앞뒤가 바뀌었으면 true.
