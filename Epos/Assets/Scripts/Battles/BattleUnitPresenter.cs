@@ -8,7 +8,8 @@ namespace Battles
     /// <summary>
     /// 시뮬 유닛 하나를 캐릭터 그림에 옮기는 얇은 표현 어댑터. 시뮬을 읽기만 하고 바꾸지 않는다.
     /// - 프레임마다: 위치(시뮬 x, y · z 는 그대로) · 그리기 순서(y) · 바라보는 쪽(CharacterAnimator.Face).
-    /// - 행동 그림(Idle · Run · Skill01)은 하는 일이 바뀔 때만 ActionController 에 알린다.
+    /// - 머리 위 HP 바(BattleHpBar)를 맞춘다.
+    /// - 행동 그림(Idle · Run · Skill01 · Death)은 하는 일이 바뀔 때만 ActionController 에 알린다. 쓰러진 뒤에는 방향을 바꾸지 않는다.
     ///   공격은 새 휘두르기가 시작될 때마다(AttackSerial 이 바뀔 때) 처음부터 다시 튼다.
     /// - 한 프레임에 틱이 여럿 돌아도 마지막 상태만 보여 준다(보간 없음).
     /// - 쫓기 → 서기는 서기가 ChaseToIdleHoldTicks 틱 내리 이어진 뒤에야 바꾼다(움직이는 표적 앞 사거리 경계에서 시뮬이 쫓기 · 서기를
@@ -21,6 +22,9 @@ namespace Battles
         private const int ChaseToIdleHoldTicks = 6;
 
         private readonly Character _character = null;
+
+        // 머리 위 HP 바. 편을 알아야 색을 정하므로 첫 Present 에서 만든다.
+        private BattleHpBar _hpBar = null;
 
         // 마지막으로 그림에 반영한 상태. 같으면 다시 알리지 않는다.
         private bool _hasShownActivity = false;
@@ -70,9 +74,14 @@ namespace Battles
             transform.position = new Vector3(position.x, position.y, transform.position.z);
             _character.SetSortingOrder(position.y);
 
+            _hpBar ??= new BattleHpBar(_character, unit.Team);
+            _hpBar.Present(unit);
+
             // 그림을 먼저 고른다(새 그림은 이 쪽을 보고 한 번만 튼다). 그 뒤 바뀐 방향만 반영한다(같으면 아무 일 없음).
+            // 쓰러진 뒤에는 방향을 바꾸지 않는다(쓰러진 그림이 뒤집히지 않게).
             ShowActivity(unit);
-            _character.CharacterAnimator?.Face(unit.LookDirection);
+            if (unit.Activity != BattleUnitActivity.Down)
+                _character.CharacterAnimator?.Face(unit.LookDirection);
 
             _chasedSincePresent = false;
         }
@@ -109,9 +118,14 @@ namespace Battles
                         actionController.ShowChase(unit.LookDirection);
                     break;
 
+                case BattleUnitActivity.Down:
+                    // 휘두르기 그림을 기다리지 않는다. 전투 불능은 되돌릴 수 없으므로 한 번만 튼다.
+                    if (isNewActivity)
+                        actionController.ShowDown();
+                    break;
+
                 default:
-                    // Idle · Down(쓰러지는 그림은 #3 에서 이 앞에 case 를 더한다 — 그때는 휘두르기 그림을 기다리지 않는다).
-                    // 공격 그림이 아직 도는 중이면 바꾸지 않고 보여 준 것으로 적지도 않는다 → 다음 프레임에 다시 시도한다.
+                    // Idle. 공격 그림이 아직 도는 중이면 바꾸지 않고 보여 준 것으로 적지도 않는다 → 다음 프레임에 다시 시도한다.
                     if (isNewActivity)
                     {
                         // 쫓다가 섰으면 서기가 내리 이어질 때까지 달리기를 둔다(그사이 다시 쫓으면 달리기를 그대로 잇는다).

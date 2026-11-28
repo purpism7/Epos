@@ -15,6 +15,10 @@ namespace Characters
     /// </summary>
     public sealed class CharacterAnimator
     {
+        // 쓰러짐 그림이 없는 캐릭터가 전투 불능일 때 곱하는 색(⚑ 임시 표현 — 어둡고 조금 비친다).
+        private const float DownTintBrightness = 0.4f;
+        private const float DownTintAlpha = 0.75f;
+
         private readonly SkeletonAnimation _skeletonAnimation = null;
         private readonly HorizontalFacing _artFacing = HorizontalFacing.Right;
         private readonly bool[] _warnedKeys = new bool[AnimationNameTable.KeyCount];
@@ -66,6 +70,22 @@ namespace Characters
             _requestedCompleted = completed;
 
             return PlayRequested();
+        }
+
+        /// <summary>
+        /// 쓰러짐(Death) 그림이 없는 캐릭터의 전투 불능 표현(⚑ 임시): 지금 모습에서 애니메이션을 멈추고 어둡게 한다.
+        /// 전투 불능은 되돌릴 수 없으므로 되돌리는 함수를 두지 않는다. 그 뒤의 Play · Face 도 멈춘 채로 둔다.
+        /// </summary>
+        public void HoldDownWithoutAnimation()
+        {
+            if (_skeletonAnimation == null || !_skeletonAnimation.IsValid)
+                return;
+
+            var animationState = _skeletonAnimation.AnimationState;
+            if (animationState != null)
+                animationState.TimeScale = 0f;
+
+            _skeletonAnimation.skeleton?.SetColor(DownTintBrightness, DownTintBrightness, DownTintBrightness, DownTintAlpha);
         }
 
         // 방향을 갱신하고 좌우 반전을 반영한다. 앞뒤가 바뀌었으면 true.

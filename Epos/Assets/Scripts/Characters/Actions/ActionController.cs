@@ -23,6 +23,8 @@ namespace Characters.Actions
         void ShowChase(Vector2 faceDirection);
         /// <summary>같은 공격 액션이 돌고 있어도 처음부터 다시 튼다(새 휘두르기마다).</summary>
         void ShowAttack(Vector2 faceDirection);
+        /// <summary>전투 불능 그림(Down 액션). 공격 그림을 기다리지 않는다. 한 번만 튼 뒤 그 모습에 멈춘다(되돌리지 않는다).</summary>
+        void ShowDown();
     }
     
     public class ActionController : IActionController
@@ -106,6 +108,11 @@ namespace Characters.Actions
         {
             _attackParam.FaceDirection = faceDirection;
             ExecuteAction<Attack, AttackParam>(_attackParam, restart: true);
+        }
+
+        void IActionController.ShowDown()
+        {
+            ExecuteAction<Down, DownParam>();
         }
         #endregion
 
